@@ -1,7 +1,141 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="utf-8">
+<title>Le Bal de Linlin</title>
+</head>
+
+<script>
+document.createElement("myHero")
+</script>
+<style>
+myHero {
+    display: block;
+    background-color: #ddd;
+    padding: 50px;
+    font-size: 30px;
+}
+</style> 
+
 <body>
+
 <h1>Linlin</h1>
 <p>I'm hosted with GitHub Pages.</p>
+
+<myHero>我的第一个新元素</myHero>
+
+<img id="hidance" src="images/hidance.gif" alt="Hi Dance" width="222" height="277">
+
+<canvas id="myCanvas" width="200" height="100"
+style="border:1px solid #000000;">
+</canvas>
+
+<canvas id="myCanvas2" width="200" height="100"
+style="border:1px solid #000000;">
+</canvas>
+
+<canvas id="myCanvas3" width="200" height="100"
+style="border:1px solid #000000;">
+</canvas>
+
+<canvas id="myCanvas4" width="250" height="300"
+style="border:1px solid #d3d3d3;">
+</canvas>
+
+// 矢量图
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+   <polygon points="100,10 40,180 190,60 10,60 160,180"
+   style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;"/>
+</svg>
+
+<video width="1080" height="1920" controls>
+  <source src="videos/嘉儿 y 小胖 布鲁斯 en 成电2017年出师考 - 她说 by 林俊杰.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+  你的浏览器不支持 video 标签。
+</video>
+
+// 数学公式
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+		
+         <mrow>
+            <msup><mi>a</mi><mn>2</mn></msup>
+            <mo>+</mo>
+				
+            <msup><mi>b</mi><mn>2</mn></msup>
+            <mo>=</mo>
+				
+            <msup><mi>c</mi><mn>2</mn></msup>
+         </mrow>
+         
+         // 矩阵
+         <mrow>
+            <mi>A</mi>
+            <mo>=</mo>
+			
+            <mfenced open="[" close="]">
+			
+               <mtable>
+                  <mtr>
+                     <mtd><mi>x</mi></mtd>
+                     <mtd><mi>y</mi></mtd>
+                  </mtr>
+					
+                  <mtr>
+                     <mtd><mi>z</mi></mtd>
+                     <mtd><mi>w</mi></mtd>
+                  </mtr>
+               </mtable>
+               
+            </mfenced>
+         </mrow>
+			
+</math>
+
+<script>
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.fillStyle="#FF0000";
+ctx.fillRect(0,0,150,75);
+ctx.moveTo(0,0);
+ctx.lineTo(200,100);
+ctx.stroke();
+ctx.beginPath();
+ctx.arc(95,50,40,0,2*Math.PI);
+ctx.stroke();
+ctx.fillStyle="#000000";
+ctx.font="30px Arial";
+ctx.fillText("Hello World",10,50);
+
+var c=document.getElementById("myCanvas2");
+var ctx=c.getContext("2d");
+// 创建渐变
+var grd=ctx.createLinearGradient(0,0,200,0);
+grd.addColorStop(0,"red");
+grd.addColorStop(1,"white");
+// 填充渐变
+ctx.fillStyle=grd;
+ctx.fillRect(10,10,150,80);
+ctx.font="30px Arial";
+ctx.strokeText("Hello World",10,50);
+
+var c=document.getElementById("myCanvas3");
+var ctx=c.getContext("2d");
+// 创建渐变
+var grd=ctx.createRadialGradient(75,50,5,90,60,100);
+grd.addColorStop(0,"red");
+grd.addColorStop(1,"white");
+// 填充渐变
+ctx.fillStyle=grd;
+ctx.fillRect(10,10,150,80);
+
+var c=document.getElementById("myCanvas4");
+var ctx=c.getContext("2d");
+var img=document.getElementById("hidance");
+img.onload = function() {
+	ctx.drawImage(img,10,10);
+}
+
+</script>
+
 </body>
 </html>
