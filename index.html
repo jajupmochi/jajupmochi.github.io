@@ -1,79 +1,219 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>我是小林子</title>
-  </head>
+<html lang="en">
 
-  <script>
-  //document.createElement("myHero")
-            </script>
-  <style>
-  nothing1 {
-    padding: 50px;
-    font-size: 50px;
-    font-weight: 800;
-}
-nothing2 {
-    padding: 50px;
-    font-size: 60px;
-    font-weight: 900;
-}
-nothing3 {
-    padding: 50px;
-    font-size: 70px;
-    font-weight: 1000;
-}
-normal {
-    margin-top: 500;
-    font-size: 25px;
-}
-reallynormal {
-    font-weight: 300;
-    font-size: 20px;
-    margin-left: 20px;
-}
-            </style>
+	<!-- Head -->
+	<head>
 
-  <body>
+		<!-- Basic Page Needs
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<meta charset="utf-8">
+		<title>Linlin Jia</title>
+		<meta name="description" content="Linlin Jia's personal homepage.">
+		<meta name="author" content="Linlin Jia">
 
-    <p>
-      <nothing1>这儿什么也没有！</nothing1>
-    </p>
-    <p>
-      <nothing2>There is nothing at all!</nothing2>
-    </p>
-    <p>
-      <nothing3>Il n'y a RIEN ici!</nothing3>
-    </p>
+		<!-- Mobile Specific Metas
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br>  <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br>
+		<!-- FONT
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
 
-    <p><normal>fine, I will give u a bit... U WISH!<br>Now look for me all over the web!</normal></p>
+		<!-- CSS
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/skeleton.css">
+		<link rel="stylesheet" href="css/custom.css">
 
-    <h1>Research and coding.</h1>
-    <h2><a href="https://github.com/jajupmochi" target="_blank">Github</a><reallynormal>Includes my current PhD work about <a href="https://github.com/jajupmochi/py-graph" target="_blank">graph kernels</a> </reallynormal><h2>
-        <h2><a href="https://www.researchgate.net/profile/Linlin_Jia" target="_blank">Researchgate</a><reallynormal>Not a single thing yet... but won't hurt to follow me!</reallynormal><h2>
+		<!-- Scripts
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="js/site.js"></script>
 
+	</head>
 
-            <h1>Dance and fun.</h1>
-              <h2><a href="https://www.youtube.com/channel/UC182C7DWhj-Tf2JM78HLvdg/featured" target="_blank">YouTube</a><reallynormal>Dance videos and musics.</reallynormal><h2>
-              <h2><a href="https://www.zhihu.com/people/jia-lin-lin-39-46" target="_blank">知乎</a><reallynormal>包含两个专栏：<a href="https://zhuanlan.zhihu.com/socialdance" target="_blank">交谊舞</a>，<a href="https://zhuanlan.zhihu.com/food-cook" target="_blank">被自己养胖</a></reallynormal><h2>
+	<!-- Body -->
+	<body class="code-snippets-visible">
 
-                          <h1>Social networks.</h1>
-                          <h2>微信<reallynormal>jajupmochi</reallynormal><h2>
-                              <h2><a href="https://www.facebook.com/jajupmochi" target="_blank">Facebook</a><h2>
-                                  <h2><a href="https://twitter.com/jajupmochi" target="_blank">Twitter</a><h2>
-                                      <h2>QQ<reallynormal>1551866255</reallynormal><h2>
-                                          <h2><a href="http://weibo.com/xiaolinzi1992" target="_blank">微博</a><h2>
-                                              <h2><a href="https://www.instagram.com/jajupmochiwxxz/" target="_blank">Ins</a><h2>
-                                                  <h2><a href="https://www.linkedin.com/in/%E6%9E%97%E6%9E%97-%E8%B4%BE-b456a6a7/" target="_blank">Linkedin</a><h2>
+		<!-- Primary Page Layout
+		–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+		<div class="container" id="top">
 
-                                                      <h1>Contact me.</h1>
-                                                      <h2>Email (most use)<reallynormal>jajupmochi@gmail.com</reallynormal><h2>
-                                                          <h2>Email (only for work)<reallynormal>linlin.jia@insa-rouen.fr</reallynormal><h2>
-                                                              <h2>Skype</a><reallynormal>jajupmochi</reallynormal><h2>
-  <h2>Tel<reallynormal>if you really really really want it, email me~</reallynormal><h2>
+			<!-- Header -->
+			<section class="header">
+				<h2 class="title">Linlin Jia</h2>
+				<p>
+					Ph.D. candicate in in computer science<br>
+					Laboratoire d’Informatique, de Traitement de l’Information et des Systèmes (LITIS)<br>
+					INSA Rouen Normandie, France
+				</p>
+				<p>
+					linlin.jia@insa-rouen.fr<br>
+<!-- 					<script type="text/javascript">
+						var email="linlin.jia"
+						var domain="insa-rouen.fr"
+						document.write("<a href="+"mail"+"to:"+email+"@"+domain+">"+"[firstname].[lastname]@wzw.tum.de"+"<\/a>")
+					</script><br> -->
+					<a itemprop="sameAs" content="https://orcid.org/0000-0002-3834-1498" href="https://orcid.org/0000-0002-3834-1498" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon">orcid.org/0000-0002-3834-1498</a><br>
+					<Address>
+						685 Avenue de l'Université<br>
+						76800 Saint-Étienne-du-Rouvray<br>
+						France<br>
+					</Address>
+				</p>
+			</section>
 
-</body>
+			<!-- Navigation bar -->
+			<div class="navbar-spacer"></div>
+			<nav class="navbar">
+				<div class="container">
+					<ul class="navbar-list">
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#top">About Me</a>
+						</li>
+<!-- 						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#publications">Publications</a>
+						</li>
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#teaching">Teaching</a>
+						</li> -->
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#projects">Projects</a>
+						</li>
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#academic-activities">Academic Activities</a>
+						</li>
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#awards">Awards & Funding</a>
+						</li>
+						<li class="navbar-item navbar-desktop">
+							<a class="navbar-link" href="#volunteer-work">Volunteer Work</a>
+						</li>
+						<li class="navbar-item navbar-mobile">
+							<a class="navbar-link navbar-mobile-link" href="#" data-popover="#mobileNavPopover">Menu</a>
+							<div id="mobileNavPopover" class="popover">
+								<ul class="popover-list">
+									<li class="popover-item">
+										<a class="popover-link" href="#top">About Me</a>
+									</li>
+						<!-- 			<li class="popover-item">
+										<a class="popover-link" href="#publications">Publications</a>
+									</li>
+									<li class="popover-item">
+										<a class="popover-link" href="#teaching">Teaching</a>
+									</li> -->
+									<li class="popover-item">
+										<a class="popover-link" href="#projects">Projects</a>
+									</li>
+									<li class="popover-item">
+										<a class="popover-link" href="#academic-activities">Academic Activities</a>
+									</li>
+									<li class="popover-item">
+										<a class="popover-link" href="#awards">Awards & Funding</a>
+									</li>
+									<li class="popover-item">
+										<a class="popover-link" href="#volunteer-work">Volunteer Work</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<!-- About Me -->
+			<div class="docs-section" id="about-me">
+				<h6 class="docs-header">About Me</h6>
+				<div class="row">
+					<div class="five columns">
+						<img class="bio-pic" src="images/photo.jpg" height="220">
+					</div>
+					<div class="seven columns left-align">
+						<p class="bio">
+							Since 2017, I am a Ph.D. candidate in computer science in <a href="https://www.insa-rouen.fr/recherche/laboratoires/litis/" target="_blank">Laboratoire d’Informatique, de Traitement de l’Information et des Systèmes (LITIS)</a> in <a href="https://www.insa-rouen.fr/" target="_blank">INSA Rouen Normandie</a>, France, with a PH.D. thesis "machine learning and patterns recognition in chemoinformatics", focusing on graph kernels in machine learning and pre-image problems. I received the B.E. degree in information engineering, in 2014, and the M.E. degree in software engineering, in 2017, both from <a href="http://men.xjtu.edu.cn/" target="_blank">Xi’an Jiaotong University</a>, China. For more information, please download my <a href="res/CV_Linlin_Jia.pdf" target="_blank">CV</a> or visit my profile on <a href="https://www.linkedin.com/in/%E6%9E%97%E6%9E%97-%E8%B4%BE-b456a6a7/" target = "_blank">LinkedIn</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Projects -->
+			<div class="docs-section" id="projects">
+				<h6 class="docs-header">Projects</h6>
+				<p class="left-align">
+					For more detailed project descriptions, please visit my profile on <a href="https://github.com/jajupmochi" target="_blank">GitHub</a>.
+				</p>
+				<div class="row">
+					<div class="two columns">
+						<h6><a class="project-link" href="https://github.com/jajupmochi/py-graph/tree/ljia/pygraph" target="_blank">py-graph</a></h6>
+					</div>
+					<div class="ten columns left-align">
+						<p>
+							A python package for graph kernels.
+						<p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="two columns">
+						<h6><a class="project-link" href="https://github.com/jajupmochi/py-graph/tree/ljia/preimage" target="_blank">preimage</a></h6>
+					</div>
+					<div class="ten columns left-align">
+						<p>
+							A python package for resolusions of graph pre-image.
+						<p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Academic Activities -->
+			<div class="docs-section" id="academic-activities">
+				<h6 class="docs-header">Academic Activities</h6>
+				<dl class="left-align">
+					<dt><strong>2018.08</strong></dt>
+					<dd>
+						Attended <a href="http://mlss.ii.uam.es/mlss2018/index.html">Machine Learning Summer School 2018 Madrid</a> and presented a poster.
+					</dd>
+				</dl>
+			</div>
+
+			<!-- Awards & Funding -->
+			<div class="docs-section" id="awards">
+				<h6 class="docs-header">Awards & Funding</h6>
+				<dl class="left-align">
+					<dt><strong>2017.10 - 2021.04</strong></dt>
+					<dd>
+						Ph.D. grants from <a href="https://www.csc.edu.cn/">China Scholarship Council</a> (<a href="http://www-csc.utt.fr/">CSC China/UT-INSA Program</a>).
+					</dd>
+				</dl>
+			</div>
+
+			<!-- Volunteer Work -->
+			<div class="docs-section" id="volunteer-work">
+				<h6 class="docs-header">Volunteer Work</h6>
+				<dl class="left-align">
+					<dt><strong>2019.12 - Now</strong></dt>
+					<dd>
+						Proofreading for Chinese translation team of <a href="https://www.khanacademy.org/">Khan Academy</a>.
+					</dd>
+				</dl>
+			</div>
+	
+			<!-- Footer -->
+			<section class="footer">
+				&copy;2020 Linlin Jia. Designed with <a href="http://getskeleton.com/">Skeleton</a>.
+			</section>
+
+		</div>
+
+		<!-- Google Analytics -->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-103239654-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+
+	</body>
+
 </html>
