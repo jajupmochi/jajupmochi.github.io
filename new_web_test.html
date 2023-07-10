@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <script>
+        var svg = d3.select("body").append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
+
+        var nodes = [
+            {name: "Home", url: "index.html"},
+            {name: "About", url: "about.html"},
+            {name: "Research", url: "research.html"},
+            {name: "Publications", url: "publications.html"},
+            {name: "Teaching", url: "teaching.html"},
+            {name: "Contact", url: "contact.html"}
+        ];
+
+        var links = [
+            {source: "Home", target: "About"},
+            {source: "Home", target: "Research"},
+            {source: "Home", target: "Publications"},
+            {source: "Home", target: "Teaching"},
+            {source: "Home", target: "Contact"}
+        ];
+
+        var simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.name))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter(250, 250));
+
+        var link = svg.append("g")
+            .selectAll("line")
+            .data(links)
+            .enter().append("line")
+            .style("stroke", "#999")
+            .style("stroke-opacity", 0.6);
+
+        var node = svg.append("g")
+            .selectAll("circle")
+            .data(nodes)
+            .enter().append("circle")
+            .attr("r", 20)
+            .style("fill", "#69b3a2")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        node.append("title")
+            .text(d => d.name);
+
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+        });
+
+        function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    </script>
+</body>
+</html>
