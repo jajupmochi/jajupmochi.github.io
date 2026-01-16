@@ -1,0 +1,194 @@
+{
+  "nodes": [
+    {
+      "id": "core_me",
+      "group": "core",
+      "label": "Linlin Jia",
+      "val": 50,
+      "summary": "Ph.D. in Computer Science | Researcher in Graph Machine Learning",
+      "contentHTML": "<div class='profile-header'><h2>Linlin Jia</h2><p><strong>Postdoctoral Researcher @ University of Bern</strong></p><p>Specializing in Graph Machine Learning, Spatio-temporal Models, and Chemoinformatics.</p><hr><p>📧 <a href='mailto:linlin.jia@unibe.ch'>linlin.jia@unibe.ch</a> | <a href='mailto:jajupmochi@gmail.com'>jajupmochi@gmail.com</a></p><p>📍 Bern, Switzerland</p><p>Languages: Chinese (Native), English (Fluent), French (B2)</p></div>"
+    },
+    {
+      "id": "cat_exp",
+      "group": "category",
+      "label": "Experience",
+      "val": 35,
+      "summary": "Academic and Research Roles",
+      "contentHTML": "<h3>Professional Experience</h3><p>My career path in Switzerland, France, and China.</p>"
+    },
+    {
+      "id": "exp_unibe_current",
+      "group": "experience",
+      "label": "Univ. of Bern (Current)",
+      "val": 25,
+      "summary": "2025-Now: Postdoctoral Researcher",
+      "contentHTML": "<h4>Postdoctoral Researcher (2025 - Present)</h4><p><strong>University of Bern, Switzerland</strong> | Pattern Recognition Group (PRG)</p><p>Applying structural spatio-temporal models on Swiss river temperature forecasting.</p>"
+    },
+    {
+      "id": "exp_heia",
+      "group": "experience",
+      "label": "HEIA-FR",
+      "val": 25,
+      "summary": "2024-2025: Scientific Collaborator",
+      "contentHTML": "<h4>Scientific Collaborator (2024 - 2025)</h4><p><strong>University of Applied Sciences and Arts of Western Switzerland (HEIA-FR)</strong> | iCoSys Institute</p><p>Focused on utilizing Graph ML, Deep Learning, and LLMs for symbol detection in diagrams and handwriting analysis of historical documents.</p>"
+    },
+    {
+      "id": "exp_unibe_prev",
+      "group": "experience",
+      "label": "Univ. of Bern (2023)",
+      "val": 20,
+      "summary": "2023-2024: Postdoctoral Researcher",
+      "contentHTML": "<h4>Postdoctoral Researcher (2023 - 2024)</h4><p><strong>University of Bern, Switzerland</strong> | Pattern Recognition Group (PRG)</p><p>Researched graph-based machine learning theory and its applications.</p>"
+    },
+    {
+      "id": "exp_insa",
+      "group": "experience",
+      "label": "INSA Rouen",
+      "val": 20,
+      "summary": "2021-2022: Postdoc Researcher",
+      "contentHTML": "<h4>Postdoctoral Researcher (2021 - 2022)</h4><p><strong>INSA Rouen, Normandie Université, France</strong> | COBRA Lab</p><p>Applied Graph ML to polymer optimization (OCTOPUSSY project) and redox potential prediction.</p>"
+    },
+    {
+      "id": "cat_edu",
+      "group": "category",
+      "label": "Education",
+      "val": 35,
+      "summary": "Academic Background",
+      "contentHTML": "<h3>Education</h3>"
+    },
+    {
+      "id": "edu_phd",
+      "group": "education",
+      "label": "Ph.D. in CS",
+      "val": 30,
+      "summary": "2017-2021: INSA Rouen, France",
+      "contentHTML": "<h4>Ph.D. in Computer Science (2017 - 2021)</h4><p><strong>INSA Rouen, Normandie Université, France</strong></p><p>Lab: LITIS</p><p><strong>Thesis:</strong> Machine learning and pattern recognition in chemoinformatics.</p><p>Addressed open problems bridging graphs and ML (Graph Kernels, Edit Distances, Pre-image).</p><p><em>Funded by CSC Scholarship.</em></p>"
+    },
+    {
+      "id": "edu_msc",
+      "group": "education",
+      "label": "M.Sc. Software Eng",
+      "val": 20,
+      "summary": "2014-2017: Xi'an Jiaotong University",
+      "contentHTML": "<h4>M.Sc. in Software Engineering (2014 - 2017)</h4><p><strong>Xi'an Jiaotong University, China</strong></p><p>Honor of Outstanding Graduate Student.</p>"
+    },
+    {
+      "id": "cat_proj",
+      "group": "category",
+      "label": "Projects",
+      "val": 35,
+      "summary": "Research Grants & Industrial Projects",
+      "contentHTML": "<h3>Key Projects</h3><p>Selected research grants and industrial collaborations.</p>"
+    },
+    {
+      "id": "proj_river",
+      "group": "project",
+      "label": "River Temp Forecast",
+      "val": 25,
+      "summary": "Spatio-temporal GCNs for river temperatures",
+      "contentHTML": "<h4>Spatio-temporal Graph Convolutional Networks (2025-)</h4><p><strong>Funding:</strong> SNSF (Swiss National Science Foundation)</p><p><strong>Description:</strong> A novel deep learning approach to forecasting river temperatures. Collaboration between Uni Bern and BFH.</p><p><strong>Role:</strong> Key Contributor.</p>"
+    },
+    {
+      "id": "proj_handwriting",
+      "group": "project",
+      "label": "Handwriting Rec",
+      "val": 25,
+      "summary": "Combining Image and Graph NN",
+      "contentHTML": "<h4>Combining Image and Graph-based Neural Networks (2024-)</h4><p><strong>Funding:</strong> SNSF</p><p><strong>Description:</strong> Handwriting Recognition for historical documents. Collaboration between HEIA-FR and TU Dortmund.</p><p><strong>Role:</strong> Key Contributor.</p>"
+    },
+    {
+      "id": "proj_nbanker",
+      "group": "project",
+      "label": "N-Banker",
+      "val": 20,
+      "summary": "Neobank Information Platform",
+      "contentHTML": "<h4>N-Banker: 1st Global Neobank Research Center (2024-)</h4><p><strong>Partners:</strong> Digital Financial Services Research Center Ltd, Hong Kong PolyU.</p><p><strong>Description:</strong> Developing a platform for automated information retrieval and strategy consultation using ML and LLMs.</p><p><strong>Role:</strong> Principal Technology Leader.</p>"
+    },
+    {
+      "id": "proj_planalyser",
+      "group": "project",
+      "label": "PLANALYSER",
+      "val": 20,
+      "summary": "HVAC Audit using AI",
+      "contentHTML": "<h4>PLANALYSER (2024-2025)</h4><p><strong>Funding:</strong> Innosuisse</p><p><strong>Description:</strong> Automated HVAC-Concept Audit and Optimisation using AI. Collaboration with WATTELSE AG.</p>"
+    },
+    {
+      "id": "proj_octopussy",
+      "group": "project",
+      "label": "OCTOPUSSY",
+      "val": 20,
+      "summary": "Polymer Optimization",
+      "contentHTML": "<h4>OCTOPUSSY (2021-2023)</h4><p><strong>Description:</strong> Original Computational Techniques for the Optimization of Polymers Using Sustainable Synthesis.</p><p><strong>Role:</strong> Key Contributor. Applied Graph ML methods.</p>"
+    },
+    {
+      "id": "cat_pub",
+      "group": "category",
+      "label": "Publications",
+      "val": 30,
+      "summary": "Selected Journal & Conf Papers",
+      "contentHTML": "<h3>Selected Publications</h3><p>See full list in CV.</p>"
+    },
+    {
+      "id": "pub_j24",
+      "group": "paper",
+      "label": "J. Comp. Chem 2024",
+      "val": 15,
+      "summary": "Predicting Redox Potentials",
+      "contentHTML": "<h4>Predicting Redox Potentials by Graph-Based Machine Learning Methods</h4><p><em>Journal of Computational Chemistry, 2024</em></p><p><strong>Authors:</strong> Linlin Jia, Éric Brémond, et al.</p><p><a href='#'>[DOI]</a> <a href='#'>[Code]</a></p>"
+    },
+    {
+      "id": "pub_c23",
+      "group": "paper",
+      "label": "ACPR 2023",
+      "val": 15,
+      "summary": "Bridging Distinct Spaces",
+      "contentHTML": "<h4>Bridging Distinct Spaces in Graph-based Machine Learning</h4><p><em>Asian Conference on Pattern Recognition (ACPR), 2023</em></p><p><strong>Authors:</strong> Linlin Jia, Xiao Ning, et al.</p><p>Presented as Oral Presentation.</p>"
+    },
+    {
+      "id": "pub_j21",
+      "group": "paper",
+      "label": "graphkit-learn",
+      "val": 15,
+      "summary": "Python Library for Graph Kernels",
+      "contentHTML": "<h4>graphkit-learn: A Python Library for Graph Kernels Based on Linear Patterns</h4><p><em>Pattern Recognition Letters, 2021</em></p><p><strong>Authors:</strong> Linlin Jia, Benoit Gaüzère, Paul Honeine.</p><p><a href='https://github.com/jajupmochi/graphkit-learn' target='_blank'>[GitHub]</a></p>"
+    },
+    { "id": "skill_gml", "group": "skill", "label": "Graph ML", "val": 12, "summary": "Core Expertise" },
+    { "id": "skill_llm", "group": "skill", "label": "LLMs", "val": 10, "summary": "Large Language Models" },
+    { "id": "skill_chemo", "group": "skill", "label": "Chemoinformatics", "val": 10, "summary": "Interdisciplinary Application" },
+    { "id": "skill_python", "group": "skill", "label": "Python/C++", "val": 10, "summary": "Development" }
+  ],
+  "links": [
+    { "source": "core_me", "target": "cat_exp" },
+    { "source": "core_me", "target": "cat_edu" },
+    { "source": "core_me", "target": "cat_proj" },
+    { "source": "core_me", "target": "cat_pub" },
+    { "source": "cat_exp", "target": "exp_unibe_current" },
+    { "source": "cat_exp", "target": "exp_heia" },
+    { "source": "cat_exp", "target": "exp_unibe_prev" },
+    { "source": "cat_exp", "target": "exp_insa" },
+    { "source": "cat_edu", "target": "edu_phd" },
+    { "source": "cat_edu", "target": "edu_msc" },
+    { "source": "cat_proj", "target": "proj_river" },
+    { "source": "cat_proj", "target": "proj_handwriting" },
+    { "source": "cat_proj", "target": "proj_nbanker" },
+    { "source": "cat_proj", "target": "proj_planalyser" },
+    { "source": "cat_proj", "target": "proj_octopussy" },
+    { "source": "exp_unibe_current", "target": "proj_river" },
+    { "source": "exp_heia", "target": "proj_handwriting" },
+    { "source": "exp_heia", "target": "proj_planalyser" },
+    { "source": "exp_insa", "target": "proj_octopussy" },
+    { "source": "cat_pub", "target": "pub_j24" },
+    { "source": "cat_pub", "target": "pub_c23" },
+    { "source": "cat_pub", "target": "pub_j21" },
+    { "source": "proj_octopussy", "target": "pub_j24" },
+    { "source": "edu_phd", "target": "pub_j21" },
+    { "source": "skill_gml", "target": "proj_river" },
+    { "source": "skill_gml", "target": "proj_octopussy" },
+    { "source": "skill_gml", "target": "pub_c23" },
+    { "source": "skill_llm", "target": "proj_handwriting" },
+    { "source": "skill_llm", "target": "proj_nbanker" },
+    { "source": "skill_chemo", "target": "exp_insa" },
+    { "source": "skill_chemo", "target": "edu_phd" },
+    { "source": "skill_python", "target": "pub_j21" }
+  ]
+}

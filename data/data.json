@@ -1,0 +1,180 @@
+{
+  "nodes": [
+
+    {
+      "id": "core_me",
+      "group": "core",
+      "label": "Linlin Jia",
+      "val": 60,
+      "img": "/images/photo.jpg", 
+      "summary": "Ph.D. Researcher | Graph ML | Spatio-temporal Models",
+      "contentHTML": "<div class='profile-header'><h2>Linlin Jia</h2><p><strong>Postdoctoral Researcher @ University of Bern</strong></p><p>Specializing in Graph Machine Learning, Spatio-temporal Models, and Chemoinformatics[cite: 8, 147].</p><hr><p>📧 <a href='mailto:linlin.jia@unibe.ch'>linlin.jia@unibe.ch</a></p><p>📍 Bern, Switzerland</p></div>"
+    },
+
+
+    { "id": "cat_exp", "group": "category", "label": "Experience", "val": 40, "icon": "🏛️", "summary": "Work History" },
+    { "id": "cat_proj", "group": "category", "label": "Projects", "val": 40, "icon": "🚀", "summary": "Research & Engineering" },
+    { "id": "cat_pub", "group": "category", "label": "Publications", "val": 40, "icon": "📄", "summary": "Journal & Conf Papers" },
+    { "id": "cat_edu", "group": "category", "label": "Education", "val": 40, "icon": "🎓", "summary": "Academic Background" },
+    { "id": "cat_skill", "group": "category", "label": "Skills", "val": 35, "icon": "🛠️", "summary": "Tech Stack" },
+    { "id": "cat_life", "group": "category", "label": "Life & Hobby", "val": 35, "icon": "🧗‍♀️", "summary": "Dancing, Hiking, Volunteering" },
+
+
+    {
+      "id": "exp_unibe",
+      "group": "experience",
+      "label": "Univ. of Bern",
+      "val": 25,
+      "summary": "2023-Present: Postdoc Researcher",
+      "contentHTML": "<h4>University of Bern (PRG Group)</h4><p><strong>2023 - Present</strong></p><p>Developing spatio-temporal models for river temperature forecasting and theoretical graph ML[cite: 7, 11, 146, 151].</p>"
+    },
+    {
+      "id": "exp_heia",
+      "group": "experience",
+      "label": "HEIA-FR",
+      "val": 20,
+      "summary": "2024-2025: Scientific Collaborator",
+      "contentHTML": "<h4>HEIA-FR (iCoSys Institute)</h4><p><strong>2024 - 2025</strong></p><p>Applied Graph ML, Deep Learning, and LLMs for symbol detection and handwriting analysis[cite: 9, 148].</p>"
+    },
+    {
+      "id": "exp_insa",
+      "group": "experience",
+      "label": "INSA Rouen",
+      "val": 20,
+      "summary": "2021-2022: Postdoc Researcher",
+      "contentHTML": "<h4>INSA Rouen (COBRA Lab)</h4><p><strong>2021 - 2022</strong></p><p>Project OCTOPUSSY: Polymer optimization using sustainable synthesis[cite: 13, 153].</p>"
+    },
+
+
+    {
+      "id": "proj_river",
+      "group": "project",
+      "label": "River Temp Forecast",
+      "val": 25,
+      "summary": "Spatio-temporal GCNs (SNSF)",
+      "contentHTML": "<h4>Spatio-temporal Graph Convolutional Networks (2025-)</h4><p><strong>Funding:</strong> SNSF</p><p>Deep learning approach to forecasting river temperatures[cite: 57, 194].</p>"
+    },
+    {
+      "id": "proj_handwriting",
+      "group": "project",
+      "label": "Handwriting Rec",
+      "val": 22,
+      "summary": "Image + Graph NN (SNSF)",
+      "contentHTML": "<h4>Combining Image and Graph-based Neural Networks</h4><p><strong>Funding:</strong> SNSF</p><p>Handwriting Recognition for historical documents[cite: 60, 198].</p>"
+    },
+    {
+      "id": "proj_nbanker",
+      "group": "project",
+      "label": "N-Banker",
+      "val": 20,
+      "summary": "LLM for Fintech",
+      "contentHTML": "<h4>N-Banker (Neobank Research)</h4><p>Automated information retrieval using ML and LLMs for fintech strategies[cite: 63, 202].</p>"
+    },
+    {
+      "id": "proj_octopussy",
+      "group": "project",
+      "label": "OCTOPUSSY",
+      "val": 20,
+      "summary": "Polymer Optimization",
+      "contentHTML": "<h4>OCTOPUSSY</h4><p>Original Computational Techniques for the Optimization of Polymers[cite: 71, 215].</p>"
+    },
+    {
+      "id": "proj_graphkit",
+      "group": "project",
+      "label": "graphkit-learn",
+      "val": 18,
+      "summary": "Python Library",
+      "contentHTML": "<h4>graphkit-learn</h4><p>A Python library for Graph Kernels and Graph Edit Distances[cite: 40, 175]. <a href='https://github.com/jajupmochi/graphkit-learn' target='_blank'>View on GitHub</a></p>"
+    },
+
+
+    {
+      "id": "pub_j24",
+      "group": "paper",
+      "label": "J. Comp. Chem '24",
+      "val": 15,
+      "summary": "Redox Potentials Prediction",
+      "contentHTML": "<h4>Predicting Redox Potentials by Graph-Based ML</h4><p><em>Journal of Computational Chemistry, 2024</em>[cite: 120, 269].</p>"
+    },
+    {
+      "id": "pub_c23",
+      "group": "paper",
+      "label": "ACPR '23",
+      "val": 15,
+      "summary": "Bridging Graph Spaces",
+      "contentHTML": "<h4>Bridging Distinct Spaces in Graph-based ML</h4><p><em>Asian Conference on Pattern Recognition, 2023</em>[cite: 124, 276].</p>"
+    },
+    {
+      "id": "pub_j21",
+      "group": "paper",
+      "label": "PR Letters '21",
+      "val": 15,
+      "summary": "graphkit-learn library",
+      "contentHTML": "<h4>graphkit-learn: A Python Library for Graph Kernels</h4><p><em>Pattern Recognition Letters, 2021</em>[cite: 132, 284].</p>"
+    },
+
+
+    {
+      "id": "edu_phd",
+      "group": "education",
+      "label": "Ph.D. CS",
+      "val": 25,
+      "summary": "INSA Rouen (2017-2021)",
+      "contentHTML": "<h4>Ph.D. in Computer Science</h4><p><strong>INSA Rouen, France</strong></p><p>Thesis on Graph Kernels and Edit Distances in Chemoinformatics[cite: 18, 157].</p>"
+    },
+    {
+      "id": "edu_msc",
+      "group": "education",
+      "label": "M.Sc. SE",
+      "val": 20,
+      "summary": "Xi'an Jiaotong Univ.",
+      "contentHTML": "<h4>M.Sc. in Software Engineering</h4><p>Xi'an Jiaotong University[cite: 22, 160].</p>"
+    },
+
+    { "id": "skill_gml", "group": "skill", "label": "Graph ML/GNN", "val": 10, "summary": "Expertise" },
+    { "id": "skill_python", "group": "skill", "label": "Python/C++", "val": 10, "summary": "Coding [cite: 109, 259]" },
+    { "id": "skill_chemo", "group": "skill", "label": "Chemoinformatics", "val": 10, "summary": "RDKit, Gaussian [cite: 110, 259]" },
+    { "id": "life_hobbies", "group": "skill", "label": "Hobbies", "val": 12, "summary": "Dancing, Hiking [cite: 117, 265]" },
+    { "id": "life_vol", "group": "skill", "label": "Volunteer", "val": 12, "summary": "Khan Academy Translator [cite: 114, 263]" }
+  ],
+
+  "links": [
+
+    { "source": "core_me", "target": "cat_exp" },
+    { "source": "core_me", "target": "cat_proj" },
+    { "source": "core_me", "target": "cat_pub" },
+    { "source": "core_me", "target": "cat_edu" },
+    { "source": "core_me", "target": "cat_skill" },
+    { "source": "core_me", "target": "cat_life" },
+
+ 
+    { "source": "cat_exp", "target": "exp_unibe" },
+    { "source": "cat_exp", "target": "exp_heia" },
+    { "source": "cat_exp", "target": "exp_insa" },
+
+    { "source": "cat_proj", "target": "proj_river" },
+    { "source": "cat_proj", "target": "proj_handwriting" },
+    { "source": "cat_proj", "target": "proj_nbanker" },
+    { "source": "cat_proj", "target": "proj_octopussy" },
+    { "source": "cat_proj", "target": "proj_graphkit" },
+
+
+    { "source": "cat_pub", "target": "pub_j24" },
+    { "source": "cat_pub", "target": "pub_c23" },
+    { "source": "cat_pub", "target": "pub_j21" },
+
+
+    { "source": "cat_edu", "target": "edu_phd" },
+    { "source": "cat_edu", "target": "edu_msc" },
+
+
+    { "source": "cat_skill", "target": "skill_gml" },
+    { "source": "cat_skill", "target": "skill_python" },
+    { "source": "cat_skill", "target": "skill_chemo" },
+    { "source": "cat_life", "target": "life_hobbies" },
+    { "source": "cat_life", "target": "life_vol" },
+    
+
+    { "source": "proj_graphkit", "target": "pub_j21", "value": 1 }
+  ]
+}

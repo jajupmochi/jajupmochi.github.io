@@ -1,0 +1,183 @@
+:root {
+    --bg-color: #f4f4f7; /* 极淡的冷灰背景 */
+    --text-main: #1a1a1a;
+    --text-sub: #666;
+    --accent: #2563eb;
+    
+    /* 玻璃拟态参数 */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    --blur: blur(12px);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+/* --- 布局容器 --- */
+#graph-container {
+    position: fixed; /* 关键：固定定位 */
+    /* position: absolute; */
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0; /* 在最底层 */
+}
+
+/* --- UI 通用玻璃卡片样式 --- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 16px;
+    padding: 12px 24px;
+}
+
+/* --- 1. 顶部导航 --- */
+.top-bar {
+    position: absolute;
+    top: 24px; left: 24px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 90vw;
+}
+
+.brand h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
+.brand .subtitle { font-size: 0.85rem; color: var(--text-sub); font-weight: 400; }
+
+.social-links { display: flex; gap: 16px; border-left: 1px solid #ddd; padding-left: 16px;}
+.social-links a { text-decoration: none; color: var(--text-sub); font-size: 0.9rem; transition: color 0.2s;}
+.social-links a:hover { color: var(--text-main); }
+
+/* --- 2. 底部控制条 --- */
+.bottom-controls {
+    position: absolute;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    border-radius: 50px; /* 胶囊形状 */
+}
+
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-sub); }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.core { background: #e63946; }
+.dot.exp { background: #f4a261; }
+.dot.proj { background: #457b9d; }
+.dot.paper { background: #1d3557; }
+
+.separator { width: 1px; height: 16px; background: #ddd; }
+.icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #555; padding: 0 4px; }
+.icon-btn:hover { color: #000; }
+
+/* --- 3. 侧边详情栏 (Off-canvas) --- */
+.glass-sidebar {
+    position: fixed;
+    top: 16px; right: 16px; bottom: 16px;
+    width: 420px;
+    background: rgba(255, 255, 255, 0.9); /* 比普通卡片更实一点 */
+    backdrop-filter: blur(20px);
+    border: var(--glass-border);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.05);
+    border-radius: 20px;
+    z-index: 100;
+    transform: translateX(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Apple 风格弹簧动画 */
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-hidden { transform: translateX(120%); } /* 隐藏到屏幕外 */
+
+.close-icon {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: #f0f0f0; border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: #555; transition: background 0.2s;
+}
+.close-icon:hover { background: #e0e0e0; }
+
+.content-scroll {
+    padding: 40px 32px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* 内容排版优化 */
+.tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; }
+.preview-placeholder h2 { margin: 8px 0; font-size: 1.8rem; line-height: 1.2; letter-spacing: -0.02em;}
+.meta { color: var(--text-sub); margin-bottom: 24px; font-size: 0.9rem; }
+.preview-placeholder img { width: 100%; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.actions { display: flex; gap: 12px; margin-top: 24px; }
+.btn-primary { background: var(--text-main); color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; }
+.btn-secondary { background: #eee; color: #333; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; }
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .top-bar { flex-direction: column; align-items: flex-start; gap: 12px; top: 16px; left: 16px; padding: 16px;}
+    .social-links { display: none; } /* 手机上隐藏社交链接以免拥挤 */
+    .glass-sidebar { width: 100%; top: auto; bottom: 0; right: 0; left: 0; height: 80vh; border-radius: 24px 24px 0 0; }
+    .panel-hidden { transform: translateY(100%); }
+    .bottom-controls { width: 80%; justify-content: space-between; bottom: 30px; }
+}
+
+/* 2. 滚动叙事层容器 */
+#scrolly-overlay {
+    position: relative; /* 相对定位，参与文档流，撑开高度 */
+    z-index: 10;
+    width: 100%;
+    /* 让鼠标事件穿透这个透明容器，直接点到底下的图谱 */
+    pointer-events: none; 
+}
+
+/* 3. 每一个叙事段落 (一屏的高度) */
+.story-step {
+    height: 100vh; /* 每一段占满一屏 */
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: flex-start; /* 内容靠左 */
+    padding-left: 5%; /* 左侧留白 */
+    box-sizing: border-box;
+    /* 辅助线：调试时可以把下面这行解开，看看段落在哪 */
+    /* border-bottom: 1px dashed red; */
+}
+
+/* 4. 具体的文字卡片 */
+.story-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    max-width: 350px;
+    
+    /* 恢复鼠标事件，让文字可选，按钮可点 */
+    pointer-events: auto; 
+    
+    /* 动画效果：默认半透明并下沉 */
+    opacity: 0.3;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+/* 当这一段被激活时 */
+.story-step.active .story-card {
+    opacity: 1;
+    transform: translateY(0);
+    border-left: 5px solid #2563eb; /* 左侧亮条提示 */
+}
+
