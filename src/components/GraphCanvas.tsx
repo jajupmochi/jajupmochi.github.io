@@ -20,7 +20,7 @@ const GROUP_COLORS: Record<string, string> = {
 };
 
 const GraphCanvas: React.FC<GraphCanvasProps> = ({ data, onNodeClick, focusNodeId }) => {
-  const fgRef = useRef<ForceGraphMethods>();
+  const fgRef = useRef<any>();
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);

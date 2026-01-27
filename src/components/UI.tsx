@@ -1,9 +1,5 @@
 import React from 'react';
 
-interface UIOverlayProps {
-  onOpenSidebar: () => void;
-}
-
 export const TopBar: React.FC = () => {
   return (
     <header className="glass-panel" style={{
