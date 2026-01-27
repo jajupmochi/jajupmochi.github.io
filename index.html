@@ -1,26 +1,15 @@
-<script type="text/javascript">
-	window.location.href = "index_en.html"
-	//判断浏览器语言自动跳转开始
-	var type = navigator.appName
-	if (type == "Netscape"){
-		varlang = navigator.language
-	}
-	else{
-		varlang = navigator.userLanguage
-	}
-	var lang = lang.substr(0,2) // 取得浏览器语言的前两个字母
-	switch(lang){
-		case("zh"):
-			alert("进行中文页面跳转..."); // 进行中文跳转
-			window.location.href = "index_en.html"
-			break;
-		case("en"):
-			alert("Jumping to english version..."); // 进行中文跳转
-			window.location.href = "index_zh.html"
-			break;
-		default:
-			// 条件都不满足跳转到英文页面
-			window.location.href = "index_en.html"
-	}
-	//判断浏览器语言自动跳转结束
-</script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linlin Jia | Spatial Portfolio</title>
+    <!-- Preload fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

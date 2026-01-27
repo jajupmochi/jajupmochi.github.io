@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linlin Jia | Spatial Portfolio</title>
+    
+    <script src="//unpkg.com/d3"></script>
+    
+    <script src="//unpkg.com/force-graph"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="graph-container"></div>
+
+    <div id="scrolly-overlay">
+    
+        <section class="story-step" data-focus="core_me">
+            <div class="story-card">
+                <h1>Hi, I'm Linlin Jia 👋</h1>
+                <p>Welcome to my spatial portfolio.</p>
+                <p>I am a Postdoc Researcher specializing in <strong>Graph Machine Learning</strong> and Spatio-temporal Models.</p>
+                <p style="font-size: 0.8rem; color: #666;">↓ Scroll down to explore</p>
+            </div>
+        </section>
+
+        <section class="story-step" data-focus="cat_exp">
+            <div class="story-card">
+                <h2>Experience</h2>
+                <p>My academic journey across Switzerland, France, and China.</p>
+                <ul>
+                    <li>University of Bern</li>
+                    <li>HEIA-FR</li>
+                    <li>INSA Rouen</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="story-step" data-focus="cat_proj">
+            <div class="story-card">
+                <h2>Key Projects</h2>
+                <p>From theoretical Graph ML to applied river temperature forecasting.</p>
+            </div>
+        </section>
+
+        <section class="story-step" data-focus="cat_pub">
+            <div class="story-card">
+                <h2>Publications</h2>
+                <p>Selected works in J. Comp. Chem, ACPR, and Pattern Recognition Letters.</p>
+            </div>
+        </section>
+
+        <section class="story-step" style="height: 50vh;">
+            <div class="story-card">
+                <h2>Explore Freely</h2>
+                <p>Feel free to drag, zoom, and click on any node to learn more.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <header class="ui-layer glass-panel top-bar">
+        <div class="brand">
+            <h1>Linlin Jia</h1>
+            <span class="subtitle">Ph.D. Researcher / Graph ML / Spatio-temporal</span>
+        </div>
+        <div class="social-links">
+            <a href="mailto:linlin.jia@unibe.ch">Email</a>
+            <a href="https://jajupmochi.github.io/" target="_blank">Website</a>
+        </div>
+    </header>
+
+    <div class="ui-layer glass-panel bottom-controls">
+        <div class="legend-item"><span class="dot core"></span> Me</div>
+        <div class="legend-item"><span class="dot exp"></span> Experience</div>
+        <div class="legend-item"><span class="dot proj"></span> Projects</div>
+        <div class="legend-item"><span class="dot paper"></span> Papers</div>
+        <div class="separator"></div>
+        </div>
+
+    <aside id="side-panel" class="ui-layer glass-sidebar panel-hidden">
+        <button id="close-btn" class="close-icon">&times;</button>
+        <div id="panel-content" class="content-scroll">
+            </div>
+    </aside>
+
+    <script type="module">
+        import { initUIManager } from './js/ui-manager.js';
+        import { initGraph } from './js/graph-engine.js';
+        // 引入 scrolly
+        import { initScrolly } from './js/scrolly.js';
+        
+        // 确保 DOM 加载完毕再执行
+        document.addEventListener('DOMContentLoaded', () => {
+            const ui = initUIManager();
+            initGraph(ui);
+        });
+    </script>
+
+   
+</body>
+</html>

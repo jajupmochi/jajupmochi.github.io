@@ -1,0 +1,26 @@
+<script type="text/javascript">
+	window.location.href = "index_en.html"
+	//判断浏览器语言自动跳转开始
+	var type = navigator.appName
+	if (type == "Netscape"){
+		varlang = navigator.language
+	}
+	else{
+		varlang = navigator.userLanguage
+	}
+	var lang = lang.substr(0,2) // 取得浏览器语言的前两个字母
+	switch(lang){
+		case("zh"):
+			alert("进行中文页面跳转..."); // 进行中文跳转
+			window.location.href = "index_en.html"
+			break;
+		case("en"):
+			alert("Jumping to english version..."); // 进行中文跳转
+			window.location.href = "index_zh.html"
+			break;
+		default:
+			// 条件都不满足跳转到英文页面
+			window.location.href = "index_en.html"
+	}
+	//判断浏览器语言自动跳转结束
+</script>

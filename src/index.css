@@ -1,0 +1,16 @@
+
+/* Additional utility styles */
+body {
+  margin: 0;
+  overflow: hidden; /* Prevent body scroll, let scroll-container handle it */
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  padding: 12px 24px;
+}
