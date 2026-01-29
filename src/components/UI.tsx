@@ -1,5 +1,48 @@
 import React from 'react';
 
+interface NodeContentCardProps {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+  contentHTML: string;
+  onClick?: () => void;
+}
+
+export const NodeContentCard: React.FC<NodeContentCardProps> = ({
+  x,
+  y,
+  width = 320,
+  height = 200,
+  contentHTML,
+  onClick
+}) => {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: `${x}px`,
+        top: `${y}px`,
+        transform: 'translate(-50%, -50%)',
+        width: `${width}px`,
+        height: `${height}px`,
+        background: 'rgba(255, 255, 255, 0.95)',
+        border: '1px solid #d1d5db',
+        borderRadius: '12px',
+        padding: '16px',
+        overflow: 'auto',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        pointerEvents: 'auto',
+        fontSize: '14px',
+        lineHeight: '1.5',
+        zIndex: 5
+      }}
+      onClick={onClick}
+      dangerouslySetInnerHTML={{ __html: contentHTML }}
+    />
+  );
+};
+
 export const TopBar: React.FC = () => {
   return (
     <header className="glass-panel" style={{
