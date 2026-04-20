@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Run i18n parity check when any locales/*.json is staged. Noop otherwise.
+set -e
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^locales/[a-z]+\.json$' || true)
+if [ -n "$staged" ]; then
+    python3 scripts/check_i18n_parity.py
+fi

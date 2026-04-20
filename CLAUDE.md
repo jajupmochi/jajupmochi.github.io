@@ -53,3 +53,4 @@ Four themes switch via a navbar control: `ai-generated` (default purple/blue), `
 
 - `.claude/skills/` contains project skills: `/preview`, `/verify-visual`, `/new-round`, `/deploy-round`, `/i18n-sync`. See each SKILL.md for details.
 - `.claude/settings.json` runs a PostToolUse hook that validates JSON files after edits.
+- `.githooks/pre-commit` runs `scripts/check_i18n_parity.py` when any `locales/*.json` is staged — fails the commit if `zh/fr/de` diverge from the `en.json` key tree. **Enable once per clone:** `git config core.hooksPath .githooks`.
