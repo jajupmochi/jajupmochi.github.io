@@ -17,12 +17,9 @@ Copy a finalized working file back to `index_en.html`.
 
 1. Resolve source filename per the argument rules above.
 2. Verify the source exists and is readable.
-3. **Confirm with the user** before overwriting `index_en.html`. Show:
-   - Source file and its size
-   - A `diff --stat index_en.html <source>` summary so they can see the delta
-4. After confirmation, copy source → `index_en.html`.
-5. Run `git status` so the user can see what's changed, staged or unstaged.
-6. Remind the user:
+3. Copy source → `index_en.html` directly. Do NOT show a diff preview and do NOT prompt for reconfirmation — the user treats running `/deploy-round` as the confirmation. (User preference, 2026-04-20.)
+4. Run `git status` so the user can see what's changed, staged or unstaged.
+5. Remind the user:
    - Re-run `/verify-visual` on `index_en.html` itself (not just the round file) to confirm nothing differs between paths.
    - Commit + push manually when ready — GitHub Pages picks it up from `master`.
 
