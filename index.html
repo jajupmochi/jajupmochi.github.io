@@ -1,26 +1,21 @@
-<script type="text/javascript">
-	window.location.href = "index_en.html"
-	//判断浏览器语言自动跳转开始
-	var type = navigator.appName
-	if (type == "Netscape"){
-		varlang = navigator.language
-	}
-	else{
-		varlang = navigator.userLanguage
-	}
-	var lang = lang.substr(0,2) // 取得浏览器语言的前两个字母
-	switch(lang){
-		case("zh"):
-			alert("进行中文页面跳转..."); // 进行中文跳转
-			window.location.href = "index_en.html"
-			break;
-		case("en"):
-			alert("Jumping to english version..."); // 进行中文跳转
-			window.location.href = "index_zh.html"
-			break;
-		default:
-			// 条件都不满足跳转到英文页面
-			window.location.href = "index_en.html"
-	}
-	//判断浏览器语言自动跳转结束
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Linlin Jia, Ph.D. | ML Research Scientist</title>
+    <meta name="description" content="Linlin Jia - Machine Learning Research Scientist specializing in Graph Neural Networks, Deep Learning, and AI for Drug Discovery">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="0; url=index_en.html">
+    <link rel="canonical" href="https://jajupmochi.github.io/index_en.html">
+    <meta name="robots" content="noindex, follow">
+    <meta property="og:title" content="Linlin Jia, Ph.D. | ML Research Scientist">
+    <meta property="og:url" content="https://jajupmochi.github.io/index_en.html">
+    <meta property="og:image" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <script>window.location.replace('index_en.html');</script>
+</head>
+<body>
+    <p style="font-family:system-ui,sans-serif;padding:2rem;">
+        Redirecting to <a href="index_en.html">Linlin Jia's homepage</a>&hellip;
+    </p>
+</body>
+</html>
