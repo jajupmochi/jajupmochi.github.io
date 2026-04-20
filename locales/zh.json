@@ -10,47 +10,59 @@
     "blog": "博客"
   },
   "hero": {
-    "badge": "开放求职中",
-    "name": "贾琳琳",
-    "title": "机器学习研究员",
+    "badge": "开放 ML 研究科学家职位",
+    "name": "贾林林 博士",
+    "role": "<strong class=\"role-primary\">机器学习研究科学家</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">伯尔尼大学高级博士后</span>",
+    "title": "图机器学习 · 时空学习 · 图 AI 用于科学与工业 · LLM 系统与智能体",
     "contact": "联系我",
+    "cv": "下载简历"
+  },
+  "otw": {
+    "title": "寻找机会中",
+    "status": "正在积极申请 — 可立即入职",
+    "roles": "职位方向",
+    "locations": "工作地点",
+    "employment": "合作形式",
+    "contact": "就工作机会联系我",
     "cv": "下载简历"
   },
   "stats": {
     "citations": "引用",
     "publications": "论文",
-    "hindex": "h指数",
+    "hindex": "h 指数",
     "projects": "项目",
-    "collaborations": "合作",
-    "students": "学生"
+    "collaborations": "合作者",
+    "students": "学生",
+    "years": "年资"
   },
   "sections": {
     "news": "新闻动态",
     "about": "关于我",
     "research": "研究方向",
-    "experience": "工作经历",
+    "experience": "职业经历",
     "projects": "项目",
     "publications": "精选论文",
-    "software": "软件工具",
+    "software": "软件与工具",
     "services": "学术服务",
     "skills": "技能与技术",
     "contact": "联系方式"
   },
   "about": {
-    "p1": "我是瑞士伯尔尼大学模式识别组的高级博士后研究员，从事SNSF资助的前沿研究。我的专业领域涵盖图神经网络、时空深度学习和基于大语言模型的AI系统。",
-    "p2": "2021年，我在法国INSA Rouen获得博士学位，研究方向为图核和化学信息学。此后，我参与了计算化学、文档分析和环境科学等多个项目。",
-    "p3": "在学术之外，我担任N-Banker金融科技初创公司的首席AI官，负责AI战略和大语言模型代理开发。",
-    "p4": "我正在积极寻求AI驱动的药物发现、科学计算和生产级AI系统领域的机器学习研究员职位。"
+    "p1": "我是瑞士<strong>伯尔尼大学高级博士后研究员</strong>，在<a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">模式识别组</a>从事 SNSF 资助的研究。研究方向涵盖<strong>图表示学习</strong>、<strong>时空深度学习</strong>以及<strong>基于大语言模型的 AI 系统</strong>。",
+    "p2": "我于 2021 年在法国 INSA Rouen 诺曼底大学 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS 实验室</a>获得计算机科学博士学位，师从 <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> 教授与 <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a> 教授，聚焦于图机器学习与化学信息学中的模式识别。此后，我先后参与了多个项目：计算化学方向的图机器学习（聚合物优化、氧化还原预测）、文档分析（古代莎草纸、工程图纸）以及环境科学（河水温度预测）。我已指导 20 余位学生，并参与多项科研基金。",
+    "p3": "学术之外，我在金融科技创业公司 N-Banker 担任<strong>关键 AI 顾问</strong>，主导 AI 战略与大模型智能体研发。我也构建并参与过多个开源库、机器学习工具箱与 LLM 智能体系统。",
+    "p4": "我正在积极寻求学术界与工业界的<strong>机器学习研究科学家 / 工程师</strong>职位，聚焦于图机器学习、科学计算与 AI 驱动的发现。"
   },
   "contact": {
-    "address": "地址",
+    "address": "地点",
     "phone": "电话",
-    "email": "邮箱"
+    "email": "邮箱",
+    "openMaps": "在地图中打开"
   },
   "common": {
     "showMore": "展开更多",
     "showLess": "收起",
-    "search": "搜索...",
+    "search": "搜索…",
     "all": "全部",
     "newest": "最新优先",
     "oldest": "最早优先"

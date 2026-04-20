@@ -10,19 +10,30 @@
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Ouvert aux opportunités",
-    "name": "Linlin Jia",
-    "title": "Chercheur en Machine Learning",
+    "badge": "Ouvert à des postes de ML Research Scientist",
+    "name": "Linlin Jia, Ph.D.",
+    "role": "<strong class=\"role-primary\">Chercheur en Machine Learning</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">Postdoctorant senior à l'Université de Berne</span>",
+    "title": "ML sur graphes · Apprentissage spatio-temporel · IA sur graphes pour la science et l'industrie · Systèmes & agents LLM",
     "contact": "Me contacter",
-    "cv": "Télécharger CV"
+    "cv": "Télécharger le CV"
+  },
+  "otw": {
+    "title": "Ouvert à l'emploi",
+    "status": "Candidatures en cours — disponibilité immédiate",
+    "roles": "Postes",
+    "locations": "Lieux",
+    "employment": "Type de contrat",
+    "contact": "Me contacter pour un poste",
+    "cv": "Télécharger le CV"
   },
   "stats": {
     "citations": "Citations",
     "publications": "Publications",
     "hindex": "h-index",
     "projects": "Projets",
-    "collaborations": "Collaborations",
-    "students": "Étudiants"
+    "collaborations": "Collaborateurs",
+    "students": "Étudiants",
+    "years": "Années"
   },
   "sections": {
     "news": "Actualités",
@@ -31,28 +42,29 @@
     "experience": "Expérience professionnelle",
     "projects": "Projets",
     "publications": "Publications sélectionnées",
-    "software": "Logiciels & Outils",
+    "software": "Logiciels & outils",
     "services": "Services académiques",
-    "skills": "Compétences & Technologies",
+    "skills": "Compétences & technologies",
     "contact": "Contact"
   },
   "about": {
-    "p1": "Je suis chercheur postdoctoral avancé à l'Université de Berne, en Suisse, travaillant au sein du groupe Pattern Recognition sur des recherches financées par le SNSF. Mon expertise couvre les réseaux de neurones sur graphes, l'apprentissage profond spatio-temporel et les systèmes d'IA basés sur les LLM.",
-    "p2": "J'ai obtenu mon doctorat de l'INSA Rouen (France) en 2021, en me concentrant sur les noyaux de graphes et la chimio-informatique.",
-    "p3": "Au-delà du monde académique, je suis Chief AI Officer chez N-Banker, une startup FinTech.",
-    "p4": "Je recherche activement des opportunités de ML Research Scientist dans la découverte de médicaments par IA et le calcul scientifique."
+    "p1": "Je suis <strong>chercheur postdoctoral avancé</strong> à l'Université de Berne, en Suisse, au sein du <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">groupe Pattern Recognition</a>. Mon expertise couvre <strong>l'apprentissage de représentations sur graphes</strong>, <strong>l'apprentissage profond spatio-temporel</strong> et les <strong>systèmes d'IA basés sur les LLM</strong>.",
+    "p2": "J'ai obtenu mon doctorat en informatique en 2021 au <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">laboratoire LITIS</a>, INSA Rouen, Université de Normandie (France), sous la direction des Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> et <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, en me concentrant sur le machine learning sur graphes et la reconnaissance de motifs en chimio-informatique. Depuis, j'ai contribué à des projets en ML sur graphes pour la chimie computationnelle (optimisation de polymères, prédiction redox), l'analyse de documents (papyri anciens, plans techniques) et les sciences de l'environnement (prévision de température des rivières). J'ai encadré plus de 20 étudiant·e·s et contribué à plusieurs financements scientifiques.",
+    "p3": "Au-delà du monde académique, j'interviens comme <strong>conseiller IA clé</strong> chez N-Banker, une startup FinTech, où je pilote la stratégie IA et le développement d'agents LLM. J'ai également conçu et contribué à plusieurs bibliothèques open source, boîtes à outils ML et systèmes d'agents LLM.",
+    "p4": "Je recherche activement des opportunités de <strong>ML Research Scientist / Engineer</strong>, en milieu académique comme industriel — avec un accent sur l'apprentissage sur graphes, le calcul scientifique et la découverte pilotée par l'IA."
   },
   "contact": {
-    "address": "Adresse",
+    "address": "Lieu",
     "phone": "Téléphone",
-    "email": "E-mail"
+    "email": "E-mail",
+    "openMaps": "Ouvrir dans Maps"
   },
   "common": {
     "showMore": "Voir plus",
     "showLess": "Voir moins",
-    "search": "Rechercher...",
+    "search": "Rechercher…",
     "all": "Tous",
-    "newest": "Plus récent",
-    "oldest": "Plus ancien"
+    "newest": "Plus récent d'abord",
+    "oldest": "Plus ancien d'abord"
   }
 }

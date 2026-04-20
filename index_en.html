@@ -11,13 +11,29 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://jajupmochi.github.io/index_en.html">
 
+    <!-- Multilingual alternates — same URL, JS-switched via localStorage+fetch of locales/*.json.
+         Google treats this as a single page offered in multiple languages. -->
+    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="x-default" href="https://jajupmochi.github.io/index_en.html">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="Linlin Jia | ML Research Scientist">
-    <meta property="og:description" content="Machine Learning Research Scientist specializing in Graph Neural Networks, Deep Learning, and AI for Drug Discovery">
+    <meta property="og:title" content="Linlin Jia, Ph.D. | ML Research Scientist">
+    <meta property="og:description" content="Machine Learning Research Scientist — Graph ML, GNNs, Spatio-Temporal Forecasting, LLM Agents, AI for Science & Drug Discovery. Open to roles.">
     <meta property="og:type" content="profile">
     <meta property="og:url" content="https://jajupmochi.github.io/index_en.html">
-    <meta property="og:image" content="https://jajupmochi.github.io/images/photo.jpg">
-    <meta property="og:image:alt" content="Portrait of Linlin Jia, ML Research Scientist">
+    <meta property="og:image" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta property="og:image:secure_url" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Linlin Jia, Ph.D., Machine Learning Research Scientist at the University of Bern — Graph ML, GNNs, LLM Agents">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
     <meta property="profile:first_name" content="Linlin">
     <meta property="profile:last_name" content="Jia">
 
@@ -25,9 +41,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@jajupmochi">
     <meta name="twitter:creator" content="@jajupmochi">
-    <meta name="twitter:title" content="Linlin Jia | ML Research Scientist">
-    <meta name="twitter:description" content="Machine Learning Research Scientist specializing in Graph Neural Networks, Deep Learning, and AI for Drug Discovery">
-    <meta name="twitter:image" content="https://jajupmochi.github.io/images/photo.jpg">
+    <meta name="twitter:title" content="Linlin Jia, Ph.D. | ML Research Scientist">
+    <meta name="twitter:description" content="Machine Learning Research Scientist — Graph ML, GNNs, Spatio-Temporal Forecasting, LLM Agents. Open to roles.">
+    <meta name="twitter:image" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta name="twitter:image:alt" content="Linlin Jia, Ph.D., Machine Learning Research Scientist at the University of Bern">
 
     <!-- JSON-LD Person schema for Google Knowledge Graph and AI assistants (ChatGPT, Perplexity, Claude) -->
     <script type="application/ld+json">
@@ -39,7 +56,7 @@
       "familyName": "Jia",
       "honorificSuffix": "Ph.D.",
       "jobTitle": "Machine Learning Research Scientist",
-      "description": "Postdoctoral researcher specializing in Graph Neural Networks, Deep Learning, and AI for Drug Discovery.",
+      "description": "Postdoctoral researcher specializing in Graph Neural Networks, Large Language Models, and AI for Drug Discovery. Currently open to ML Research Scientist, ML Engineer, Applied Scientist, and AI Scientist roles — Switzerland / EU / UK on-site or hybrid; remote worldwide; relocation possible to North America, Asia, Australia.",
       "email": "mailto:linlin.jia@unibe.ch",
       "url": "https://jajupmochi.github.io/index_en.html",
       "image": "https://jajupmochi.github.io/images/photo.jpg",
@@ -52,10 +69,31 @@
       "knowsAbout": [
         "Machine Learning",
         "Graph Neural Networks",
+        "Graph Representation Learning",
+        "Graph Kernels",
+        "Graph Edit Distance",
+        "Weisfeiler-Lehman Kernel",
         "Deep Learning",
-        "Drug Discovery",
+        "Spatio-Temporal Deep Learning",
+        "Spatio-Temporal Forecasting",
+        "Large Language Models",
+        "LLM Agents",
+        "Retrieval-Augmented Generation",
+        "AI for Drug Discovery",
         "Computational Chemistry",
-        "Large Language Models"
+        "Cheminformatics",
+        "Pattern Recognition",
+        "Scientific Computing",
+        "PyTorch",
+        "JAX"
+      ],
+      "knowsLanguage": ["en", "zh", "fr"],
+      "seeks": [
+        {"@type": "Demand", "name": "Machine Learning Research Scientist"},
+        {"@type": "Demand", "name": "Machine Learning Engineer"},
+        {"@type": "Demand", "name": "Applied Scientist"},
+        {"@type": "Demand", "name": "AI Scientist"},
+        {"@type": "Demand", "name": "Research Scientist"}
       ],
       "sameAs": [
         "https://github.com/jajupmochi",
@@ -74,22 +112,146 @@
     }
     </script>
 
+    <!-- JSON-LD: selected publications as ScholarlyArticle + open-source code as SoftwareSourceCode.
+         Helps Google Scholar, Semantic Scholar, Perplexity, and LLM assistants correctly cite the work. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Predicting Redox Potentials by Graph-Based Machine Learning Methods",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Félicia Lapierre"},
+            {"@type": "Person", "name": "Arnaud Gautier"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"},
+            {"@type": "Person", "name": "Denis Bénard"}
+          ],
+          "datePublished": "2024",
+          "isPartOf": {"@type": "Periodical", "name": "Journal of Computational Chemistry", "issn": "1096-987X"},
+          "publisher": {"@type": "Organization", "name": "Wiley"},
+          "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.1002/jcc.27441"},
+          "sameAs": "https://doi.org/10.1002/jcc.27441",
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph neural networks, redox potential, computational chemistry, cheminformatics"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2022",
+          "isPartOf": {"@type": "Periodical", "name": "Expert Systems with Applications", "issn": "0957-4174"},
+          "publisher": {"@type": "Organization", "name": "Elsevier"},
+          "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.1016/j.eswa.2021.115983"},
+          "sameAs": "https://doi.org/10.1016/j.eswa.2021.115983",
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph kernels, linear patterns, graph machine learning, pattern recognition"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "The Weisfeiler-Lehman Kernel on Graphs: Methods and Comparisons",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2021",
+          "isPartOf": {"@type": "Periodical", "name": "Pattern Recognition", "issn": "0031-3203"},
+          "publisher": {"@type": "Organization", "name": "Elsevier"},
+          "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.1016/j.patcog.2020.107689"},
+          "sameAs": "https://doi.org/10.1016/j.patcog.2020.107689",
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "Weisfeiler-Lehman kernel, graph kernels, graph classification"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Bridging Distinct Spaces in Graph-Based Machine Learning",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Mathias Fuchs"},
+            {"@type": "Person", "name": "Kaspar Riesen"}
+          ],
+          "datePublished": "2023",
+          "isPartOf": {"@type": "PublicationEvent", "name": "Asian Conference on Pattern Recognition (ACPR)", "location": "Kitakyushu, Japan"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph machine learning, embedding, metric learning"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Learning for Graph Pre-image: A Unified Framework",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"},
+            {"@type": "Person", "name": "Luc Brun"}
+          ],
+          "datePublished": "2020",
+          "isPartOf": {"@type": "PublicationEvent", "name": "GRL+ Workshop at ICML 2020"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph pre-image, graph generation, representation learning"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Graph Edit Distance: A Comprehensive Review",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2019",
+          "isPartOf": {"@type": "Periodical", "name": "IEEE/ACM Transactions on Computational Biology and Bioinformatics", "issn": "1545-5963"},
+          "publisher": {"@type": "Organization", "name": "IEEE"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph edit distance, graph matching, structural pattern recognition"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "graphkit-learn",
+          "description": "Python library for graph kernels, graph edit distance, and graph pre-image — used to reproduce several Pattern Recognition / ESWA papers on graph ML.",
+          "codeRepository": "https://github.com/jajupmochi/graphkit-learn",
+          "programmingLanguage": "Python",
+          "license": "https://opensource.org/licenses/MIT",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "graph kernels, graph edit distance, graph machine learning"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "RedoxPrediction",
+          "description": "Graph-based machine learning pipeline for predicting molecular redox potentials — companion code for the J. Comp. Chem. 2024 paper.",
+          "codeRepository": "https://github.com/jajupmochi/RedoxPrediction",
+          "programmingLanguage": "Python",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "graph neural networks, redox prediction, computational chemistry"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Preconnect: warm up TLS handshakes for render-blocking CDNs (fonts, icons). Saves ~100-300ms LCP. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     
     <!-- Favicon -->
     <!-- Favicon - Dynamic based on theme -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%236366f1' width='32' height='32' rx='4'/%3E%3Ctext x='50%25' y='75%25' text-anchor='middle' fill='white' font-family='sans-serif' font-size='20' font-weight='bold'%3E林%3C/text%3E%3C/svg%3E" id="favicon">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E" id="favicon">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%231e3a8a' width='180' height='180' rx='40'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif' font-size='130' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
     
-    <!-- Leaflet for map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Confetti loaded lazily on first use via loadConfetti() helper (v7 round2) -->
 
     <style>
         /* ========================================
@@ -105,19 +267,19 @@
         
         /* Theme Variables - AI Generated (Default) */
         :root, [data-theme="ai"] {
-            --primary: #6366f1;
+            --primary: #4f46e5;          /* indigo-600 — WCAG AA on white (5.92:1) */
             --primary-light: #818cf8;
-            --primary-dark: #4f46e5;
+            --primary-dark: #4338ca;      /* indigo-700 — for hover / emphasis */
             --secondary: #10b981;
             --accent: #f59e0b;
             --text-primary: #111827;
             --text-secondary: #4b5563;
-            --text-muted: #9ca3af;
+            --text-muted: #6b7280;       /* gray-500 — WCAG AA on white (4.83:1) */
             --bg-white: #ffffff;
             --bg-light: #f9fafb;
             --bg-subtle: #f3f4f6;
             --border-light: #e5e7eb;
-            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6366f1 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4f46e5 100%);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             --radius-md: 8px;
@@ -167,9 +329,9 @@
         
         /* Theme: Fancy / Wonderland */
         [data-theme="fancy"] {
-            --primary: #ec4899;
+            --primary: #be185d;            /* pink-800 — WCAG AA on --bg-white (fancy pink) */
             --primary-light: #f472b6;
-            --primary-dark: #db2777;
+            --primary-dark: #9d174d;
             --secondary: #8b5cf6;
             --accent: #06b6d4;
             --text-primary: #4c1d95;
@@ -587,17 +749,45 @@
             backdrop-filter: blur(5px);
             position: relative;
             animation: beacon-pulse 2s infinite;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.18s ease, background-color 0.18s ease;
         }
-        
+        .hero-badge:hover,
+        .hero-badge:focus-visible {
+            transform: translateY(-1px);
+            background: rgba(255,255,255,0.22);
+            color: inherit;
+            text-decoration: none;
+        }
+        .hero-badge:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 3px;
+        }
+        .hero-badge .hero-badge-arrow {
+            font-size: 0.72rem;
+            opacity: 0.7;
+            transition: transform 0.18s ease;
+        }
+        .hero-badge:hover .hero-badge-arrow {
+            transform: translateY(2px);
+            opacity: 1;
+        }
+
         @keyframes beacon-pulse {
             0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
             70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
             100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
-        
+
         [data-theme="academic"] .hero-badge,
         [data-theme="fancy"] .hero-badge {
             background: rgba(0,0,0,0.08);
+        }
+        [data-theme="academic"] .hero-badge:hover,
+        [data-theme="fancy"] .hero-badge:hover {
+            background: rgba(0,0,0,0.14);
         }
         
         .hero-badge .status-dot {
@@ -617,16 +807,17 @@
             font-family: var(--font-display);
             font-size: 3.5rem;
             font-weight: 800;
-            line-height: 1.1;
-            margin: 0 0 1rem;
+            line-height: 1.15;
+            margin: 0 0 0.75rem;
             letter-spacing: -0.02em;
         }
-        
+
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 400;
-            opacity: 0.95;
+            opacity: 0.9;
             margin-bottom: 1rem;
+            letter-spacing: 0.01em;
         }
         
         .hero-tagline {
@@ -1744,7 +1935,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
-            background: var(--accent);
+            background: #b45309;  /* amber-700 — WCAG AA with white text (5.46:1) */
             color: white;
             font-size: 0.75rem;
             font-weight: 600;
@@ -2026,27 +2217,47 @@
             position: relative;
         }
         
-        .map-marker-overlay {
+        /* Small Swiss flag used inline in the Location contact card */
+        .contact-details .map-flag {
+            font-size: 1rem;
+            line-height: 1;
+            margin-right: 0.25rem;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
+        }
+
+        /* Click-through CTA to open location in Google Maps */
+        .map-open-link {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--bg-white);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-primary);
+            bottom: 12px;
+            right: 12px;
             z-index: 10;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: var(--radius-md);
+            padding: 0.45rem 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1f2937;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        
-        .map-marker-overlay i {
-            color: #ef4444;
-            font-size: 1.2rem;
+        .map-open-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+            color: #1f2937;
         }
+        .map-open-link i { font-size: 0.72rem; }
+        [data-theme="industrial"] .map-open-link {
+            background: rgba(17,24,39,0.92); color: #f9fafb; border-color: rgba(255,255,255,0.1);
+        }
+        [data-theme="industrial"] .map-open-link:hover { color: #f9fafb; }
+        [data-theme="fancy"] .map-open-link { background: #fff5fa; color: #9d174d; border-color: #f9a8d4; }
+        [data-theme="fancy"] .map-open-link:hover { color: #9d174d; }
         
         #map {
             height: 100%;
@@ -2420,6 +2631,204 @@
             .carousel-track .project-card, .carousel-track .pub-card { flex: 0 0 100%; }
             .filter-tags { flex-wrap: wrap; }
         }
+
+        /* ========================================
+           V7 ROUND2: OPEN-TO-WORK CARD (LinkedIn-style)
+           ======================================== */
+        /* Role line: two-level hierarchy — primary (job title) strong + accent,
+           secondary (affiliation) lighter. */
+        .hero-h1 .hero-h1-role {
+            display: block;
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 0.4em;           /* ~1.4rem at 3.5rem base */
+            line-height: 1.4;
+            letter-spacing: 0.005em;
+            opacity: 1;
+            margin-top: 0.75rem;
+        }
+        .hero-h1-role .role-primary {
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+        }
+        .hero-h1-role .role-secondary {
+            color: rgba(255,255,255,0.78);
+            font-weight: 400;
+        }
+        .hero-h1 .hero-h1-sep {
+            opacity: 0.45;
+            margin: 0 0.55em;
+            font-weight: 300;
+            color: rgba(255,255,255,0.65);
+        }
+        @media (max-width: 768px) {
+            .hero-h1 .hero-h1-role { font-size: 0.5em; }
+        }
+
+        /* Research-topic subtitle: clearly secondary to the role line.
+           Color tracks the theme's primary tone so it reads as an accent,
+           matching the get-in-touch button background in light-bg themes. */
+        .hero-subtitle {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: var(--primary-light);
+            opacity: 0.95;
+            margin: 0.7rem 0 1.1rem;
+        }
+        [data-theme="industrial"] .hero-subtitle { color: var(--primary-light); }
+        [data-theme="fancy"] .hero-subtitle { color: var(--primary); }
+        [data-theme="academic"] .hero-subtitle { color: var(--primary); opacity: 0.92; }
+        [data-theme="academic"] .hero-h1-role .role-primary { color: #111827; }
+        [data-theme="academic"] .hero-h1-role .role-secondary { color: rgba(17,24,39,0.65); }
+        [data-theme="academic"] .hero-h1 .hero-h1-sep { color: rgba(17,24,39,0.4); }
+        @media (max-width: 768px) {
+            .hero-subtitle { font-size: 0.9rem; }
+        }
+
+        .open-to-work-section { padding: 2rem 0 0; }
+
+        .otw-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-left: 4px solid #10b981;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 1.75rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .otw-header { display: flex; align-items: center; gap: 1rem; }
+        .otw-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .otw-title { font-size: 1.25rem; margin: 0; color: var(--text-primary); }
+        .otw-status {
+            font-size: 0.9rem; margin: 0.25rem 0 0; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .otw-dot {
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            background: #10b981; animation: otwPulse 2s ease-in-out infinite;
+        }
+        @keyframes otwPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); }
+            50%      { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        }
+        .otw-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+        .otw-label {
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+            font-weight: 700; color: var(--text-secondary); margin-bottom: 0.5rem;
+        }
+        .otw-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .otw-tag {
+            background: var(--bg-light, #f1f5f9); color: var(--text-primary);
+            padding: 0.3rem 0.7rem; border-radius: 999px;
+            font-size: 0.8rem; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            border: 1px solid transparent;
+        }
+        .otw-tag small { color: var(--text-secondary); font-weight: 400; font-size: 0.7rem; }
+        .otw-tag-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; font-weight: 600;
+        }
+        .otw-tag-loc { background: var(--bg-white); border-color: var(--border); }
+        .otw-tag-loc i { color: var(--primary, #6366f1); }
+        .otw-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; padding-top: 0.25rem; }
+        .btn-sm { padding: 0.55rem 1rem; font-size: 0.88rem; }
+
+        [data-theme="industrial"] .otw-card {
+            background: rgba(10,15,25,0.7);
+            border-color: rgba(255,255,255,0.12);
+            border-left-color: #00ff88;
+        }
+        [data-theme="industrial"] .otw-icon {
+            background: linear-gradient(135deg, #00ff88, #00cc70); color: #0a0f19;
+        }
+        [data-theme="industrial"] .otw-tag { background: rgba(255,255,255,0.06); }
+        [data-theme="industrial"] .otw-dot { background: #00ff88; }
+        [data-theme="industrial"] .otw-tag-primary {
+            background: linear-gradient(135deg, #00ff88, #00cc70); color: #0a0f19;
+        }
+        [data-theme="fancy"] .otw-card { border-left-color: #ec4899; }
+        [data-theme="fancy"] .otw-icon { background: linear-gradient(135deg, #ec4899, #a855f7); }
+        [data-theme="fancy"] .otw-tag-primary { background: linear-gradient(135deg, #ec4899, #a855f7); }
+
+        /* ========================================
+           V7 ROUND2: TOAST NOTIFICATION
+           ======================================== */
+        .toast-container {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            pointer-events: none;
+            max-width: min(380px, calc(100vw - 48px));
+        }
+        .toast {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary, #6366f1);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.1rem 1rem 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            display: flex; align-items: flex-start; gap: 0.7rem;
+            pointer-events: auto;
+            transform: translateX(420px); opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+        }
+        .toast.toast-show { transform: translateX(0); opacity: 1; }
+        .toast-icon { font-size: 1.3rem; flex-shrink: 0; line-height: 1; margin-top: 0.15rem; }
+        .toast-body {
+            flex: 1; font-size: 0.88rem; line-height: 1.45; color: var(--text-primary);
+        }
+        .toast-body strong { display: block; margin-bottom: 0.2rem; }
+        .toast-body a {
+            color: var(--primary, #6366f1); font-weight: 600;
+            text-decoration: underline; text-underline-offset: 2px;
+        }
+        .toast-close {
+            background: transparent; border: none; color: var(--text-secondary);
+            cursor: pointer; padding: 0.2rem; font-size: 0.9rem; line-height: 1;
+            flex-shrink: 0;
+        }
+        .toast-close:hover { color: var(--text-primary); }
+        [data-theme="industrial"] .toast {
+            background: rgba(10,15,25,0.95);
+            border-color: rgba(255,255,255,0.12);
+            border-left-color: #00ff88;
+        }
+        [data-theme="fancy"] .toast { border-left-color: #ec4899; }
+
+        /* About section paragraphs (extracted from inline styles for i18n support) */
+        .about-p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .about-p:last-child { margin-bottom: 0; }
+
+        /* ========================================
+           V7 ROUND2: PREFERS-REDUCED-MOTION (a11y)
+           ======================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body data-theme="ai">
@@ -2555,12 +2964,16 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text">
-                    <div class="hero-badge">
+                    <a href="#open-to-work" class="hero-badge" aria-label="Jump to Open to Work section">
                         <span class="status-dot"></span>
                         <span data-i18n="hero.badge">Open to ML Research Scientist Opportunities</span>
-                    </div>
-                    <h1 data-i18n="hero.name">Linlin Jia, Ph.D.</h1>
-                    <p class="hero-subtitle" data-i18n="hero.title">Machine Learning Research Scientist</p>
+                        <i class="fas fa-arrow-down-long hero-badge-arrow" aria-hidden="true"></i>
+                    </a>
+                    <h1 class="hero-h1">
+                        <span data-i18n="hero.name">Linlin Jia, Ph.D.</span>
+                        <span class="hero-h1-role" data-i18n-html="hero.role"><strong class="role-primary">Machine Learning Research Scientist</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Advanced Postdoc @ University of Bern</span></span>
+                    </h1>
+                    <p class="hero-subtitle" data-i18n="hero.title">Graph Machine Learning · Spatio-Temporal Learning · Graph AI for Science &amp; Industry · LLM Systems &amp; Agents</p>
                     <div class="hero-links">
                         <a href="https://github.com/jajupmochi" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
                         <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener" title="Google Scholar" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
@@ -2581,7 +2994,65 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="images/photo.jpg" alt="Linlin Jia" class="profile-image">
+                    <picture>
+                        <source srcset="images/photo.webp" type="image/webp">
+                        <img src="images/photo.jpg" alt="Linlin Jia, Ph.D. — Machine Learning Research Scientist" class="profile-image" width="960" height="960" loading="eager" decoding="async" fetchpriority="high">
+                    </picture>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open to Work card -->
+        <section class="open-to-work-section" id="open-to-work" aria-labelledby="otw-heading">
+            <div class="container">
+                <div class="otw-card">
+                    <div class="otw-header">
+                        <div class="otw-icon" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
+                        <div class="otw-headline">
+                            <h2 id="otw-heading" class="otw-title" data-i18n="otw.title">Open to Work</h2>
+                            <p class="otw-status">
+                                <span class="otw-dot" aria-hidden="true"></span>
+                                <span data-i18n="otw.status">Actively applying — available immediately</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="otw-grid">
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.roles">Roles</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag otw-tag-primary">ML Research Scientist</span>
+                                <span class="otw-tag">ML Engineer</span>
+                                <span class="otw-tag">Applied Scientist</span>
+                                <span class="otw-tag">AI Scientist</span>
+                                <span class="otw-tag">Research Scientist</span>
+                            </div>
+                        </div>
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.locations">Locations</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag otw-tag-loc"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> CH · EU · UK <small>(on-site / hybrid)</small></span>
+                                <span class="otw-tag otw-tag-loc"><i class="fas fa-plane" aria-hidden="true"></i> NA · Asia · AU <small>(open to relocation)</small></span>
+                                <span class="otw-tag otw-tag-loc"><i class="fas fa-globe" aria-hidden="true"></i> Remote worldwide</span>
+                            </div>
+                        </div>
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.employment">Employment</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag">Full-time <small>(preferred)</small></span>
+                                <span class="otw-tag">Part-time</span>
+                                <span class="otw-tag">Contract</span>
+                                <span class="otw-tag">Consulting</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="otw-cta">
+                        <a href="mailto:linlin.jia@unibe.ch?subject=Role%20opportunity%20for%20Linlin" class="btn btn-primary btn-sm">
+                            <i class="fas fa-envelope" aria-hidden="true"></i> <span data-i18n="otw.contact">Reach out about a role</span>
+                        </a>
+                        <a href="res/cv/CV_Linlin_Jia_en.pdf" class="btn btn-secondary btn-sm" target="_blank" rel="noopener">
+                            <i class="fas fa-file-pdf" aria-hidden="true"></i> <span data-i18n="otw.cv">Download CV</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2589,7 +3060,7 @@
         <!-- News -->
         <section class="news-section" id="news">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-newspaper"></i> News & Updates</h2>
+                <h2 class="section-title"><i class="fas fa-newspaper" aria-hidden="true"></i> <span data-i18n="sections.news">News & Updates</span></h2>
                 <div id="newsContainer">
                     <div class="news-table">
                         <!-- ICPR 2026 Accepted - Celebration on hover! -->
@@ -2633,41 +3104,29 @@
         <!-- About with Stats -->
         <section class="section" id="about">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
+                <h2 class="section-title"><i class="fas fa-user" aria-hidden="true"></i> <span data-i18n="sections.about">About Me</span></h2>
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
                     <div>
-                        <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1rem; line-height: 1.8;">
-                            I am an <strong>Postdoctoral Researcher</strong> at the University of Bern, Switzerland, 
-                            working at the <a href="https://prg.inf.unibe.ch/" target="_blank">Pattern Recognition Group</a>. My expertise spans 
-                            <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and 
-                            <strong>LLM-based AI systems</strong>.
+                        <p class="about-p" data-i18n-html="about.p1">
+                            I am an <strong>Advanced Postdoctoral Researcher</strong> at the University of Bern, Switzerland, working at the <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">Pattern Recognition Group</a>. My expertise spans <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and <strong>LLM-based AI systems</strong>.
                         </p>
-                        <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1rem; line-height: 1.8;">
-                            I received my Ph.D. in computer science in 2021 from the <a href="https://www.litislab.fr/" target="_blank">LITIS Lab</a>, INSA Rouen, Normandy University, France, 
-                            under the supervision of Prof. <a href="http://honeine.fr/wp/" target="_blank">Paul Honeine</a> and Prof. <a href="https://bgauzere.github.io/" target="_blank">Benoit Gaüzère</a>, 
-                            focusing on graph machine learning and patterns recognition in  
-                            chemoinformatics. Since then, I've contributed to projects in graph machine learning for computational chemistry 
-                            (polymer optimization, redox prediction), document analysis (historical papyrus, engineering drawings), 
-                            and environmental science (river temperature forecasting). I've supervised 20+ students and 
-                            contributed to multiple scientific grants.
+                        <p class="about-p" data-i18n-html="about.p2">
+                            I received my Ph.D. in Computer Science in 2021 from the <a href="https://www.litislab.fr/" target="_blank" rel="noopener">LITIS Lab</a>, INSA Rouen, Normandy University, France, under the supervision of Prof. <a href="http://honeine.fr/wp/" target="_blank" rel="noopener">Paul Honeine</a> and Prof. <a href="https://bgauzere.github.io/" target="_blank" rel="noopener">Benoit Gaüzère</a>, focusing on graph machine learning and pattern recognition in chemoinformatics. Since then, I've contributed to projects in graph ML for computational chemistry (polymer optimization, redox prediction), document analysis (historical papyri, engineering drawings), and environmental science (river-temperature forecasting). I've supervised 20+ students and contributed to multiple scientific grants.
                         </p>
-                        <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1rem; line-height: 1.8;">
-                            Beyond academia, I serve as <strong>the main AI advisor</strong> at N-Banker, a FinTech startup, 
-                            where I lead AI strategy and LLM agent development. I have built and contributed to multiple open-source 
-                            libraries, machine learning and LLM agent related systems. 
+                        <p class="about-p" data-i18n-html="about.p3">
+                            Beyond academia, I serve as the <strong>key AI advisor</strong> at N-Banker, a FinTech startup, where I lead AI strategy and LLM-agent development. I have also built and contributed to multiple open-source libraries, ML toolkits, and LLM-agent systems.
                         </p>
-                        <p style="color: var(--text-secondary); font-size: 1rem;">
-                            I am actively seeking <strong>ML Research Scientist and Engineering</strong> opportunities in both academia 
-                            and industry.
+                        <p class="about-p" data-i18n-html="about.p4">
+                            I am actively seeking <strong>ML Research Scientist / Engineer</strong> opportunities in both academia and industry — with a focus on graph-based learning, scientific computing, and AI-driven discovery.
                         </p>
                     </div>
                     <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
-                        <div class="stat-card"><div class="stat-number">130</div><div class="stat-label">Citations</div></div>
-                        <div class="stat-card"><div class="stat-number">9</div><div class="stat-label">Publications</div></div>
-                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Projects</div></div>
-                        <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label">Collaborators</div></div>
-                        <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label">Students</div></div>
-                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Years</div></div>
+                        <div class="stat-card"><div class="stat-number">130</div><div class="stat-label" data-i18n="stats.citations">Citations</div></div>
+                        <div class="stat-card"><div class="stat-number">9</div><div class="stat-label" data-i18n="stats.publications">Publications</div></div>
+                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.projects">Projects</div></div>
+                        <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label" data-i18n="stats.collaborations">Collaborators</div></div>
+                        <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label" data-i18n="stats.students">Students</div></div>
+                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.years">Years</div></div>
                     </div>
                 </div>
             </div>
@@ -2676,7 +3135,7 @@
         <!-- Research Outline -->
         <section class="section section-alt" id="research">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-microscope"></i> Research Outline</h2>
+                <h2 class="section-title"><i class="fas fa-microscope" aria-hidden="true"></i> <span data-i18n="sections.research">Research Outline</span></h2>
                 <div class="research-outline">
                     <div class="outline-item">
                         <div class="outline-icon"><i class="fas fa-project-diagram"></i></div>
@@ -2735,7 +3194,7 @@
         <!-- Experience -->
         <section class="section" id="experience">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-briefcase"></i> Professional Experience</h2>
+                <h2 class="section-title"><i class="fas fa-briefcase" aria-hidden="true"></i> <span data-i18n="sections.experience">Professional Experience</span></h2>
                 <div class="timeline">
                     <div class="timeline-item">
                         <span class="timeline-date">2025 - 2026</span>
@@ -2799,12 +3258,12 @@
         <!-- Projects -->
         <section class="section section-alt" id="projects">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-code-branch"></i> Projects</h2>
+                <h2 class="section-title"><i class="fas fa-code-branch" aria-hidden="true"></i> <span data-i18n="sections.projects">Projects</span></h2>
                 
                 <!-- Controls: Filter, Search, Sort -->
                 <div class="section-controls">
                     <div class="filter-tags">
-                        <button class="filter-tag active" data-filter="all">All</button>
+                        <button class="filter-tag active" data-filter="all" data-i18n="common.all">All</button>
                         <button class="filter-tag" data-filter="academia">Academia</button>
                         <button class="filter-tag" data-filter="industry">Industry</button>
                         <button class="filter-tag" data-filter="software">Software</button>
@@ -2814,11 +3273,11 @@
                     </div>
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search projects..." id="projectSearch">
+                        <input type="text" placeholder="Search projects..." data-i18n-placeholder="common.search" id="projectSearch">
                     </div>
                     <select class="sort-select" id="projectSort" aria-label="Sort projects">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
+                        <option value="newest" data-i18n="common.newest">Newest First</option>
+                        <option value="oldest" data-i18n="common.oldest">Oldest First</option>
                     </select>
                 </div>
                 
@@ -2839,7 +3298,7 @@
                             <div class="project-content">
                                 <div class="project-meta"><span class="project-badge">Industry</span><span class="project-date">2024 - Present</span></div>
                                 <h3 class="project-title">N-Banker FinTech AI Platform</h3>
-                                <p class="project-desc">As Chief AI Officer (CAIO), leading AI strategy and LLM agent development. Building LIULIAN platform with RAG systems for knowledge management.</p>
+                                <p class="project-desc">Key AI contributor leading AI strategy and LLM-agent development. Building LIULIAN platform with RAG systems for knowledge management.</p>
                                 <div class="project-tags"><span class="project-tag">LLMs</span><span class="project-tag">RAG</span><span class="project-tag">FinTech</span></div>
                             </div>
                         </a>
@@ -2894,7 +3353,7 @@
         <!-- Publications -->
         <section class="section" id="publications">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-file-alt"></i> Selected Publications</h2>
+                <h2 class="section-title"><i class="fas fa-file-alt" aria-hidden="true"></i> <span data-i18n="sections.publications">Selected Publications</span></h2>
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
                     <strong>130+ citations</strong> · 
                     <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank"><i class="ai ai-google-scholar"></i> Google Scholar</a>
@@ -2903,18 +3362,18 @@
                 <!-- Controls -->
                 <div class="section-controls">
                     <div class="filter-tags">
-                        <button class="filter-tag active" data-filter="all">All</button>
+                        <button class="filter-tag active" data-filter="all" data-i18n="common.all">All</button>
                         <button class="filter-tag" data-filter="journal">Journal</button>
                         <button class="filter-tag" data-filter="conference">Conference</button>
                         <button class="filter-tag" data-filter="preprint">Preprint</button>
                     </div>
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search publications..." id="pubSearch">
+                        <input type="text" placeholder="Search publications..." data-i18n-placeholder="common.search" id="pubSearch">
                     </div>
                     <select class="sort-select" id="pubSort" aria-label="Sort publications">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
+                        <option value="newest" data-i18n="common.newest">Newest First</option>
+                        <option value="oldest" data-i18n="common.oldest">Oldest First</option>
                         <option value="citations">Most Cited</option>
                     </select>
                 </div>
@@ -3009,7 +3468,7 @@
         <!-- Services -->
         <section class="section section-alt" id="services">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-hands-helping"></i> Academic Services</h2>
+                <h2 class="section-title"><i class="fas fa-hands-helping" aria-hidden="true"></i> <span data-i18n="sections.services">Academic Services</span></h2>
                 <div class="services-grid">
                     <div class="service-card">
                         <h3><i class="fas fa-users"></i> Supervision</h3>
@@ -3032,7 +3491,7 @@
         <!-- Skills - Categorized -->
         <section class="section" id="skills">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-tools"></i> Skills & Technologies</h2>
+                <h2 class="section-title"><i class="fas fa-tools" aria-hidden="true"></i> <span data-i18n="sections.skills">Skills & Technologies</span></h2>
                 <div class="skills-grid">
                     <div class="skill-category">
                         <div class="skill-category-title"><i class="fas fa-code"></i> Programming</div>
@@ -3102,14 +3561,14 @@
         <!-- Contact -->
         <section class="section section-alt" id="contact">
             <div class="container">
-                <h2 class="section-title"><i class="fas fa-envelope"></i> Contact</h2>
+                <h2 class="section-title"><i class="fas fa-envelope" aria-hidden="true"></i> <span data-i18n="sections.contact">Contact</span></h2>
                 <div class="contact-section">
                     <div class="contact-info">
                         <h3>Let's Connect</h3>
                         <div class="contact-item">
                             <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                             <div class="contact-details">
-                                <h4>Email</h4>
+                                <h4 data-i18n="contact.email">Email</h4>
                                 <p><a href="mailto:linlin.jia@unibe.ch">linlin.jia@unibe.ch</a></p>
                                 <p><a href="mailto:jajupmochi@gmail.com">jajupmochi@gmail.com</a></p>
                             </div>
@@ -3117,33 +3576,39 @@
                         <div class="contact-item">
                             <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="contact-details">
-                                <h4>Location</h4>
-                                <p>Schützenmattstrasse 14</p>
-                                <p>3012 Bern, Switzerland</p>
+                                <h4 data-i18n="contact.address">Location</h4>
+                                <p><strong>University of Bern</strong> · <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">Pattern Recognition Group</a></p>
+                                <p><span class="map-flag" aria-hidden="true">🇨🇭</span> Schützenmattstrasse 14, 3012 Bern, Switzerland</p>
                             </div>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon"><i class="fas fa-phone"></i></div>
                             <div class="contact-details">
-                                <h4>Phone</h4>
+                                <h4 data-i18n="contact.phone">Phone</h4>
                                 <p>+41 78 224 1419 (CH)</p>
                             </div>
                         </div>
                     </div>
-                    <!-- Google Maps Embed with location marker overlay -->
+                    <!-- Google Maps embed (marker set via q=). Cross-origin iframes
+                         can't emit pan/zoom events, so any overlay label would lie
+                         when the user drags the map. Institution name now sits in the
+                         Location contact card above instead. -->
                     <div class="contact-map">
                         <iframe
-                            title="Map showing the University of Bern, Switzerland"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2723.7454821899047!2d7.4286!3d46.9512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e39b8a5b1e5f7%3A0x5eb80b8e5eb4e9e0!2sUniversity%20of%20Bern!5e0!3m2!1sen!2sch!4v1680000000000!5m2!1sen!2sch"
-                            style="border:0; width:100%; height:100%; min-height:300px; border-radius: var(--radius-lg);"
+                            title="Map showing PRG at University of Bern"
+                            src="https://www.google.com/maps?q=Sch%C3%BCtzenmattstrasse+14,+3012+Bern,+Switzerland&z=16&output=embed"
+                            style="border:0; width:100%; height:100%; min-height:300px;"
                             allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
-                        <div class="map-marker-overlay">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>University of Bern</span>
-                        </div>
+                        <a class="map-open-link"
+                           href="https://www.google.com/maps/search/?api=1&amp;query=Sch%C3%BCtzenmattstrasse+14%2C+3012+Bern%2C+Switzerland"
+                           target="_blank" rel="noopener"
+                           aria-label="Open location in Google Maps">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <span data-i18n="contact.openMaps">Open in Maps</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -3332,15 +3797,6 @@
         </div>
     </footer>
 
-    <!-- Chatbot -->
-    <button class="chatbot-btn" onclick="openChatbot()" aria-label="Open chat assistant">
-        <i class="fas fa-comments"></i>
-        <div class="chatbot-tooltip">Chat with me! (Coming soon)</div>
-    </button>
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
     <script>
         // ========================================
         // INTERNATIONALIZATION (i18n) SYSTEM
@@ -3349,39 +3805,49 @@
         const translationsCache = {};
         let currentLang = 'en';
         
-        // Inline fallback translations (used when JSON files cannot be loaded)
+        // Inline fallback translations (used when JSON files cannot be loaded).
+        // Keep hero.role + hero.title in sync with locales/*.json so no stale
+        // "Machine Learning Research Scientist" line appears when fetch fails.
         const inlineFallback = {
             en: {
                 'nav.home': 'Home', 'nav.about': 'About', 'nav.research': 'Research',
                 'nav.projects': 'Projects', 'nav.publications': 'Publications',
                 'nav.services': 'Services', 'nav.personal': 'Personal', 'nav.blog': 'Blog',
-                'hero.badge': 'Open to Opportunities', 'hero.name': 'Linlin Jia',
-                'hero.title': 'Machine Learning Research Scientist',
+                'hero.badge': 'Open to ML Research Scientist Opportunities',
+                'hero.name': 'Linlin Jia, Ph.D.',
+                'hero.role': '<strong class="role-primary">Machine Learning Research Scientist</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Advanced Postdoc @ University of Bern</span>',
+                'hero.title': 'Graph Machine Learning · Spatio-Temporal Learning · Graph AI for Science & Industry · LLM Systems & Agents',
                 'hero.contact': 'Get in Touch', 'hero.cv': 'Download CV'
             },
             zh: {
                 'nav.home': '首页', 'nav.about': '关于', 'nav.research': '研究',
                 'nav.projects': '项目', 'nav.publications': '论文',
                 'nav.services': '服务', 'nav.personal': '个人', 'nav.blog': '博客',
-                'hero.badge': '开放求职中', 'hero.name': '贾琳琳',
-                'hero.title': '机器学习研究员',
+                'hero.badge': '开放 ML 研究科学家职位',
+                'hero.name': '贾林林 博士',
+                'hero.role': '<strong class="role-primary">机器学习研究科学家</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">伯尔尼大学高级博士后</span>',
+                'hero.title': '图机器学习 · 时空学习 · 图 AI 用于科学与工业 · LLM 系统与智能体',
                 'hero.contact': '联系我', 'hero.cv': '下载简历'
             },
             fr: {
                 'nav.home': 'Accueil', 'nav.about': 'À propos', 'nav.research': 'Recherche',
                 'nav.projects': 'Projets', 'nav.publications': 'Publications',
                 'nav.services': 'Services', 'nav.personal': 'Personnel', 'nav.blog': 'Blog',
-                'hero.badge': 'Ouvert aux opportunités', 'hero.name': 'Linlin Jia',
-                'hero.title': 'Chercheur en Machine Learning',
-                'hero.contact': 'Me contacter', 'hero.cv': 'Télécharger CV'
+                'hero.badge': 'Ouvert à des postes de ML Research Scientist',
+                'hero.name': 'Linlin Jia, Ph.D.',
+                'hero.role': '<strong class="role-primary">Chercheur en Machine Learning</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Postdoctorant senior à l\'Université de Berne</span>',
+                'hero.title': 'ML sur graphes · Apprentissage spatio-temporel · IA sur graphes pour la science et l\'industrie · Systèmes & agents LLM',
+                'hero.contact': 'Me contacter', 'hero.cv': 'Télécharger le CV'
             },
             de: {
                 'nav.home': 'Start', 'nav.about': 'Über', 'nav.research': 'Forschung',
                 'nav.projects': 'Projekte', 'nav.publications': 'Publikationen',
                 'nav.services': 'Dienste', 'nav.personal': 'Persönlich', 'nav.blog': 'Blog',
-                'hero.badge': 'Offen für Möglichkeiten', 'hero.name': 'Linlin Jia',
-                'hero.title': 'Machine Learning Forscher',
-                'hero.contact': 'Kontakt', 'hero.cv': 'CV herunterladen'
+                'hero.badge': 'Offen für ML-Research-Scientist-Stellen',
+                'hero.name': 'Linlin Jia, Ph.D.',
+                'hero.role': '<strong class="role-primary">Machine Learning Research Scientist</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Senior-Postdoc an der Universität Bern</span>',
+                'hero.title': 'Graph-ML · Räumlich-zeitliches Lernen · Graph-KI für Wissenschaft & Industrie · LLM-Systeme & -Agenten',
+                'hero.contact': 'Kontakt aufnehmen', 'hero.cv': 'CV herunterladen'
             }
         };
         
@@ -3427,19 +3893,35 @@
             currentLang = lang;
             const t = await loadTranslations(lang);
             
-            // Apply to elements with data-i18n attribute
+            // Apply to elements with data-i18n attribute (text content)
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) {
                     el.textContent = t[key];
                 }
             });
-            
+
+            // Apply to elements with data-i18n-html (HTML content — allows inline <strong>, <a>, etc.)
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                if (t[key]) {
+                    el.innerHTML = t[key];
+                }
+            });
+
             // Apply to placeholders
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder');
                 if (t[key]) {
                     el.placeholder = t[key];
+                }
+            });
+
+            // Apply to aria-labels
+            document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                const key = el.getAttribute('data-i18n-aria');
+                if (t[key]) {
+                    el.setAttribute('aria-label', t[key]);
                 }
             });
         }
@@ -3488,12 +3970,12 @@
         // NEW WELCOME SYSTEM - CELEBRATION STYLE
         // ========================================
         function openGiftBox() {
-            // Big confetti burst
-            confetti({
+            // Big confetti burst (lazy-loads canvas-confetti on first use)
+            loadConfetti().then(fn => fn({
                 particleCount: 150,
                 spread: 100,
                 origin: { x: 0.1, y: 0.8 }
-            });
+            }));
             
             // Show the postcard popup
             setTimeout(() => {
@@ -3541,12 +4023,12 @@
             
             // Small confetti for the bottle effect
             setTimeout(() => {
-                confetti({
+                loadConfetti().then(fn => fn({
                     particleCount: 30,
                     spread: 40,
                     origin: { x: 0.7, y: 0.6 },
                     colors: ['#3b82f6', '#06b6d4', '#10b981']
-                });
+                }));
             }, 500);
             
             setTimeout(() => {
@@ -3562,11 +4044,11 @@
             e.preventDefault();
             
             // Big celebration confetti
-            confetti({
+            loadConfetti().then(fn => fn({
                 particleCount: 200,
                 spread: 120,
                 origin: { y: 0.5 }
-            });
+            }));
             
             // Thank you message
             const postcard = document.querySelector('.welcome-postcard');
@@ -3582,15 +4064,81 @@
             setTimeout(closeWelcomeWithBottle, 2000);
         }
         
+        // ========================================
+        // V7 ROUND2: Confetti lazy-load + Toast helper
+        // ========================================
+        let _confettiPromise;
+        function loadConfetti() {
+            if (!_confettiPromise) {
+                _confettiPromise = new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+                    s.onload = () => resolve(window.confetti);
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+            return _confettiPromise;
+        }
+
+        function showToast({ icon = '💬', title = '', html = '', duration = 6000 } = {}) {
+            let container = document.getElementById('toastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toastContainer';
+                container.className = 'toast-container';
+                container.setAttribute('aria-live', 'polite');
+                container.setAttribute('aria-atomic', 'true');
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML =
+                '<span class="toast-icon" aria-hidden="true">' + icon + '</span>' +
+                '<div class="toast-body">' + (title ? '<strong>' + title + '</strong>' : '') + html + '</div>' +
+                '<button class="toast-close" aria-label="Dismiss">✕</button>';
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('toast-show'));
+            const close = () => {
+                toast.classList.remove('toast-show');
+                setTimeout(() => toast.remove(), 400);
+            };
+            toast.querySelector('.toast-close').addEventListener('click', close);
+            if (duration > 0) setTimeout(close, duration);
+        }
+
         function openChatbot() {
-            alert('Chatbot coming soon! Contact: linlin.jia@unibe.ch');
+            showToast({
+                icon: '🤖',
+                title: 'AI chat coming soon',
+                html: 'For now, the human version replies fast &rarr; <a href="mailto:linlin.jia@unibe.ch">linlin.jia@unibe.ch</a>',
+                duration: 7000
+            });
         }
         
         // ========================================
         // THEME & LANGUAGE SWITCHERS
         // ========================================
         const themeNames = { 'ai': 'AI', 'academic': 'Academic', 'industrial': 'Industrial', 'fancy': 'Wonderland' };
-        
+
+        // Tab identity ("林" monogram) — background + ink colors track the active theme.
+        const FAVICON_THEMES = {
+            ai:         { bg: '#1e3a8a', fg: '#ffffff' },
+            academic:   { bg: '#1e40af', fg: '#ffffff' },
+            industrial: { bg: '#0f172a', fg: '#f97316' },
+            fancy:      { bg: '#be185d', fg: '#ffffff' }
+        };
+        function updateFavicon(theme) {
+            const c = FAVICON_THEMES[theme] || FAVICON_THEMES.ai;
+            const svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>"
+                + "<rect fill='" + c.bg + "' width='32' height='32' rx='7'/>"
+                + "<text x='50%' y='74%' text-anchor='middle' fill='" + c.fg + "' "
+                + "font-family='PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif' "
+                + "font-size='22' font-weight='900'>林</text></svg>";
+            const el = document.getElementById('favicon');
+            if (el) el.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
+        }
+
         function setTheme(theme) {
             document.body.setAttribute('data-theme', theme);
             document.getElementById('currentTheme').textContent = themeNames[theme];
@@ -3599,14 +4147,8 @@
             closeAllDropdowns();
             localStorage.setItem('theme', theme);
             
-            // Update favicon based on theme
-            const faviconColors = { ai: '%236366f1', academic: '%231e40af', industrial: '%23f97316', fancy: '%23ec4899' };
-            const color = faviconColors[theme] || '%236366f1';
-            const favicon = document.querySelector('link[rel="icon"]');
-            if (favicon) {
-                favicon.href = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='${color}' width='32' height='32' rx='4'/%3E%3Ctext x='50%25' y='75%25' text-anchor='middle' fill='white' font-family='sans-serif' font-size='20' font-weight='bold'%3E林%3C/text%3E%3C/svg%3E`;
-            }
-            
+            updateFavicon(theme);
+
             // Update chatbot icon based on theme
             updateChatbotIcon();
             
@@ -3792,9 +4334,12 @@
             if (savedTheme) {
                 document.body.setAttribute('data-theme', savedTheme);
                 document.getElementById('currentTheme').textContent = themeNames[savedTheme];
+                updateFavicon(savedTheme);
                 if (savedTheme === 'fancy') {
                     initWonderlandEffects();
                 }
+            } else {
+                updateFavicon('ai');
             }
             
             // Load saved language and apply
@@ -3812,11 +4357,11 @@
                         const rect = icprNews.getBoundingClientRect();
                         const x = (rect.left + rect.width / 2) / window.innerWidth;
                         const y = (rect.top + rect.height / 2) / window.innerHeight;
-                        confetti({
+                        loadConfetti().then(fn => fn({
                             particleCount: 80,
                             spread: 70,
                             origin: { x: x, y: y }
-                        });
+                        }));
                         sessionStorage.setItem('icprConfettiShown', 'true');
                     }
                 });

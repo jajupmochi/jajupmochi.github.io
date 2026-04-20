@@ -10,10 +10,20 @@
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Offen für Möglichkeiten",
-    "name": "Linlin Jia",
-    "title": "Machine Learning Forscher",
-    "contact": "Kontakt",
+    "badge": "Offen für ML-Research-Scientist-Stellen",
+    "name": "Linlin Jia, Ph.D.",
+    "role": "<strong class=\"role-primary\">Machine Learning Research Scientist</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">Senior-Postdoc an der Universität Bern</span>",
+    "title": "Graph-ML · Räumlich-zeitliches Lernen · Graph-KI für Wissenschaft & Industrie · LLM-Systeme & -Agenten",
+    "contact": "Kontakt aufnehmen",
+    "cv": "CV herunterladen"
+  },
+  "otw": {
+    "title": "Offen für neue Rollen",
+    "status": "Aktive Bewerbungen — sofort verfügbar",
+    "roles": "Rollen",
+    "locations": "Orte",
+    "employment": "Anstellungsart",
+    "contact": "Über eine Rolle sprechen",
     "cv": "CV herunterladen"
   },
   "stats": {
@@ -22,7 +32,8 @@
     "hindex": "h-Index",
     "projects": "Projekte",
     "collaborations": "Kooperationen",
-    "students": "Studenten"
+    "students": "Studierende",
+    "years": "Jahre"
   },
   "sections": {
     "news": "Neuigkeiten",
@@ -31,26 +42,27 @@
     "experience": "Berufserfahrung",
     "projects": "Projekte",
     "publications": "Ausgewählte Publikationen",
-    "software": "Software & Tools",
+    "software": "Software & Werkzeuge",
     "services": "Akademische Dienste",
     "skills": "Fähigkeiten & Technologien",
     "contact": "Kontakt"
   },
   "about": {
-    "p1": "Ich bin Advanced Postdoctoral Researcher an der Universität Bern, Schweiz, und arbeite in der Pattern Recognition Gruppe an SNSF-geförderten Forschungsprojekten. Meine Expertise umfasst Graph Neural Networks, spatio-temporales Deep Learning und LLM-basierte KI-Systeme.",
-    "p2": "Ich habe 2021 an der INSA Rouen (Frankreich) promoviert mit Schwerpunkt auf Graph-Kerneln und Chemoinformatik.",
-    "p3": "Neben der Wissenschaft bin ich Chief AI Officer bei N-Banker, einem FinTech-Startup.",
-    "p4": "Ich suche aktiv nach ML Research Scientist Positionen in KI-gesteuerter Wirkstoffentdeckung und wissenschaftlichem Rechnen."
+    "p1": "Ich bin <strong>Advanced Postdoctoral Researcher</strong> an der Universität Bern, Schweiz, und arbeite in der <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. Meine Expertise umfasst <strong>Graph-Repräsentationslernen</strong>, <strong>räumlich-zeitliches Deep Learning</strong> und <strong>LLM-basierte KI-Systeme</strong>.",
+    "p2": "Meinen Ph.D. in Informatik habe ich 2021 am <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a> der INSA Rouen, Normandy University (Frankreich) erworben — unter Betreuung von Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> und Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, mit Fokus auf Graph-Machine-Learning und Mustererkennung in der Chemieinformatik. Seither habe ich an Projekten zu Graph-ML für Computerchemie (Polymeroptimierung, Redox-Vorhersage), Dokumentenanalyse (historische Papyri, Konstruktionszeichnungen) und Umweltwissenschaften (Flusswassertemperatur-Prognose) mitgewirkt. Ich habe über 20 Studierende betreut und zu mehreren Drittmittelprojekten beigetragen.",
+    "p3": "Neben der Wissenschaft wirke ich als <strong>Key AI Advisor</strong> bei N-Banker, einem FinTech-Startup, und verantworte dort die KI-Strategie und die Entwicklung von LLM-Agenten. Darüber hinaus habe ich mehrere Open-Source-Bibliotheken, ML-Toolkits und LLM-Agent-Systeme aufgebaut bzw. dazu beigetragen.",
+    "p4": "Ich suche aktiv <strong>ML Research Scientist / Engineer</strong>-Positionen in Wissenschaft und Industrie — mit Schwerpunkt auf graphbasiertem Lernen, wissenschaftlichem Rechnen und KI-gestützter Entdeckung."
   },
   "contact": {
-    "address": "Adresse",
+    "address": "Standort",
     "phone": "Telefon",
-    "email": "E-Mail"
+    "email": "E-Mail",
+    "openMaps": "In Karten öffnen"
   },
   "common": {
     "showMore": "Mehr anzeigen",
     "showLess": "Weniger anzeigen",
-    "search": "Suchen...",
+    "search": "Suchen…",
     "all": "Alle",
     "newest": "Neueste zuerst",
     "oldest": "Älteste zuerst"

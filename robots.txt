@@ -26,4 +26,31 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+# Chinese AI training crawlers
+User-agent: Bytespider
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Common Crawl — primary data source for Mistral, Aleph Alpha, and many EU/global LLMs
+User-agent: CCBot
+Allow: /
+
+# Other major AI training crawlers
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
 Sitemap: https://jajupmochi.github.io/sitemap.xml

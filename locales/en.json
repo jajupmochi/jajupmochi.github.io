@@ -10,10 +10,20 @@
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Open to Opportunities",
-    "name": "Linlin Jia",
-    "title": "Machine Learning Research Scientist",
+    "badge": "Open to ML Research Scientist Opportunities",
+    "name": "Linlin Jia, Ph.D.",
+    "role": "<strong class=\"role-primary\">Machine Learning Research Scientist</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">Advanced Postdoc @ University of Bern</span>",
+    "title": "Graph Machine Learning · Spatio-Temporal Learning · Graph AI for Science & Industry · LLM Systems & Agents",
     "contact": "Get in Touch",
+    "cv": "Download CV"
+  },
+  "otw": {
+    "title": "Open to Work",
+    "status": "Actively applying — available immediately",
+    "roles": "Roles",
+    "locations": "Locations",
+    "employment": "Employment",
+    "contact": "Reach out about a role",
     "cv": "Download CV"
   },
   "stats": {
@@ -21,8 +31,9 @@
     "publications": "Publications",
     "hindex": "h-index",
     "projects": "Projects",
-    "collaborations": "Collaborations",
-    "students": "Students"
+    "collaborations": "Collaborators",
+    "students": "Students",
+    "years": "Years"
   },
   "sections": {
     "news": "News & Updates",
@@ -37,20 +48,21 @@
     "contact": "Contact"
   },
   "about": {
-    "p1": "I am an Advanced Postdoctoral Researcher at the University of Bern, Switzerland, working at the Pattern Recognition Group on SNSF-funded research. My expertise spans graph neural networks, spatio-temporal deep learning, and LLM-based AI systems.",
-    "p2": "I received my Ph.D. from INSA Rouen (France) in 2021, focusing on graph kernels and chemoinformatics. Since then, I've contributed to projects in computational chemistry, document analysis, and environmental science.",
-    "p3": "Beyond academia, I serve as Chief AI Officer at N-Banker, a FinTech startup, where I lead AI strategy and LLM agent development.",
-    "p4": "I am actively seeking ML Research Scientist opportunities in AI-driven drug discovery, scientific computing, and production AI systems."
+    "p1": "I am an <strong>Advanced Postdoctoral Researcher</strong> at the University of Bern, Switzerland, working at the <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. My expertise spans <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and <strong>LLM-based AI systems</strong>.",
+    "p2": "I received my Ph.D. in Computer Science in 2021 from the <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, INSA Rouen, Normandy University, France, under the supervision of Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> and Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, focusing on graph machine learning and pattern recognition in chemoinformatics. Since then, I've contributed to projects in graph ML for computational chemistry (polymer optimization, redox prediction), document analysis (historical papyri, engineering drawings), and environmental science (river-temperature forecasting). I've supervised 20+ students and contributed to multiple scientific grants.",
+    "p3": "Beyond academia, I serve as the <strong>key AI advisor</strong> at N-Banker, a FinTech startup, where I lead AI strategy and LLM-agent development. I have also built and contributed to multiple open-source libraries, ML toolkits, and LLM-agent systems.",
+    "p4": "I am actively seeking <strong>ML Research Scientist / Engineer</strong> opportunities in both academia and industry — with a focus on graph-based learning, scientific computing, and AI-driven discovery."
   },
   "contact": {
-    "address": "Address",
+    "address": "Location",
     "phone": "Phone",
-    "email": "Email"
+    "email": "Email",
+    "openMaps": "Open in Maps"
   },
   "common": {
     "showMore": "Show more",
     "showLess": "Show less",
-    "search": "Search...",
+    "search": "Search…",
     "all": "All",
     "newest": "Newest First",
     "oldest": "Oldest First"
