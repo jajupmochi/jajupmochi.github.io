@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "home": "Start",
+    "about": "Über",
+    "research": "Forschung",
+    "projects": "Projekte",
+    "publications": "Publikationen",
+    "services": "Dienste",
+    "personal": "Persönlich",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Offen für Möglichkeiten",
+    "name": "Linlin Jia",
+    "title": "Machine Learning Forscher",
+    "contact": "Kontakt",
+    "cv": "CV herunterladen"
+  },
+  "stats": {
+    "citations": "Zitationen",
+    "publications": "Publikationen",
+    "hindex": "h-Index",
+    "projects": "Projekte",
+    "collaborations": "Kooperationen",
+    "students": "Studenten"
+  },
+  "sections": {
+    "news": "Neuigkeiten",
+    "about": "Über mich",
+    "research": "Forschungsschwerpunkte",
+    "experience": "Berufserfahrung",
+    "projects": "Projekte",
+    "publications": "Ausgewählte Publikationen",
+    "software": "Software & Tools",
+    "services": "Akademische Dienste",
+    "skills": "Fähigkeiten & Technologien",
+    "contact": "Kontakt"
+  },
+  "about": {
+    "p1": "Ich bin Advanced Postdoctoral Researcher an der Universität Bern, Schweiz, und arbeite in der Pattern Recognition Gruppe an SNSF-geförderten Forschungsprojekten. Meine Expertise umfasst Graph Neural Networks, spatio-temporales Deep Learning und LLM-basierte KI-Systeme.",
+    "p2": "Ich habe 2021 an der INSA Rouen (Frankreich) promoviert mit Schwerpunkt auf Graph-Kerneln und Chemoinformatik.",
+    "p3": "Neben der Wissenschaft bin ich Chief AI Officer bei N-Banker, einem FinTech-Startup.",
+    "p4": "Ich suche aktiv nach ML Research Scientist Positionen in KI-gesteuerter Wirkstoffentdeckung und wissenschaftlichem Rechnen."
+  },
+  "contact": {
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail"
+  },
+  "common": {
+    "showMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen",
+    "search": "Suchen...",
+    "all": "Alle",
+    "newest": "Neueste zuerst",
+    "oldest": "Älteste zuerst"
+  }
+}

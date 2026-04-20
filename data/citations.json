@@ -1,0 +1,45 @@
+{
+  "scholar_id": "cnlixw0AAAAJ",
+  "total_citations": 130,
+  "h_index": 7,
+  "i10_index": 5,
+  "last_updated": "2026-04-02T00:00:00Z",
+  "publications": [
+    {
+      "title": "Predicting Redox Potentials by Graph-Based Machine Learning Methods",
+      "year": 2024,
+      "citations": 9,
+      "doi": "10.1002/jcc.27441"
+    },
+    {
+      "title": "Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons",
+      "year": 2022,
+      "citations": 25,
+      "doi": "10.1016/j.eswa.2021.115983"
+    },
+    {
+      "title": "The Weisfeiler-Lehman Kernel on Graphs: Methods and Comparisons",
+      "year": 2021,
+      "citations": 70,
+      "doi": "10.1016/j.patcog.2020.107689"
+    },
+    {
+      "title": "Bridging Distinct Spaces in Graph-Based Machine Learning",
+      "year": 2023,
+      "citations": 5,
+      "venue": "ACPR 2023"
+    },
+    {
+      "title": "Learning for Graph Pre-image: A Unified Framework",
+      "year": 2020,
+      "citations": 15,
+      "venue": "ICML GRL+ Workshop"
+    },
+    {
+      "title": "Graph Edit Distance: A Comprehensive Review",
+      "year": 2019,
+      "citations": 20,
+      "venue": "IEEE/ACM TCBB"
+    }
+  ]
+}

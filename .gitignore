@@ -8,3 +8,7 @@ extra_info_work.md
 /index_en_backup.html
 /index_en_round*.html
 /index_en_v*_round*.html
+
+# Old iteration snapshots moved to /archive — keep local only
+/archive/
+/CV_Linlin_Jia_*_*.pdf

@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "research": "Recherche",
+    "projects": "Projets",
+    "publications": "Publications",
+    "services": "Services",
+    "personal": "Personnel",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Ouvert aux opportunités",
+    "name": "Linlin Jia",
+    "title": "Chercheur en Machine Learning",
+    "contact": "Me contacter",
+    "cv": "Télécharger CV"
+  },
+  "stats": {
+    "citations": "Citations",
+    "publications": "Publications",
+    "hindex": "h-index",
+    "projects": "Projets",
+    "collaborations": "Collaborations",
+    "students": "Étudiants"
+  },
+  "sections": {
+    "news": "Actualités",
+    "about": "À propos de moi",
+    "research": "Axes de recherche",
+    "experience": "Expérience professionnelle",
+    "projects": "Projets",
+    "publications": "Publications sélectionnées",
+    "software": "Logiciels & Outils",
+    "services": "Services académiques",
+    "skills": "Compétences & Technologies",
+    "contact": "Contact"
+  },
+  "about": {
+    "p1": "Je suis chercheur postdoctoral avancé à l'Université de Berne, en Suisse, travaillant au sein du groupe Pattern Recognition sur des recherches financées par le SNSF. Mon expertise couvre les réseaux de neurones sur graphes, l'apprentissage profond spatio-temporel et les systèmes d'IA basés sur les LLM.",
+    "p2": "J'ai obtenu mon doctorat de l'INSA Rouen (France) en 2021, en me concentrant sur les noyaux de graphes et la chimio-informatique.",
+    "p3": "Au-delà du monde académique, je suis Chief AI Officer chez N-Banker, une startup FinTech.",
+    "p4": "Je recherche activement des opportunités de ML Research Scientist dans la découverte de médicaments par IA et le calcul scientifique."
+  },
+  "contact": {
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "E-mail"
+  },
+  "common": {
+    "showMore": "Voir plus",
+    "showLess": "Voir moins",
+    "search": "Rechercher...",
+    "all": "Tous",
+    "newest": "Plus récent",
+    "oldest": "Plus ancien"
+  }
+}

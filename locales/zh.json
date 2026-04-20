@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "home": "首页",
+    "about": "关于",
+    "research": "研究",
+    "projects": "项目",
+    "publications": "论文",
+    "services": "服务",
+    "personal": "个人",
+    "blog": "博客"
+  },
+  "hero": {
+    "badge": "开放求职中",
+    "name": "贾琳琳",
+    "title": "机器学习研究员",
+    "contact": "联系我",
+    "cv": "下载简历"
+  },
+  "stats": {
+    "citations": "引用",
+    "publications": "论文",
+    "hindex": "h指数",
+    "projects": "项目",
+    "collaborations": "合作",
+    "students": "学生"
+  },
+  "sections": {
+    "news": "新闻动态",
+    "about": "关于我",
+    "research": "研究方向",
+    "experience": "工作经历",
+    "projects": "项目",
+    "publications": "精选论文",
+    "software": "软件工具",
+    "services": "学术服务",
+    "skills": "技能与技术",
+    "contact": "联系方式"
+  },
+  "about": {
+    "p1": "我是瑞士伯尔尼大学模式识别组的高级博士后研究员，从事SNSF资助的前沿研究。我的专业领域涵盖图神经网络、时空深度学习和基于大语言模型的AI系统。",
+    "p2": "2021年，我在法国INSA Rouen获得博士学位，研究方向为图核和化学信息学。此后，我参与了计算化学、文档分析和环境科学等多个项目。",
+    "p3": "在学术之外，我担任N-Banker金融科技初创公司的首席AI官，负责AI战略和大语言模型代理开发。",
+    "p4": "我正在积极寻求AI驱动的药物发现、科学计算和生产级AI系统领域的机器学习研究员职位。"
+  },
+  "contact": {
+    "address": "地址",
+    "phone": "电话",
+    "email": "邮箱"
+  },
+  "common": {
+    "showMore": "展开更多",
+    "showLess": "收起",
+    "search": "搜索...",
+    "all": "全部",
+    "newest": "最新优先",
+    "oldest": "最早优先"
+  }
+}

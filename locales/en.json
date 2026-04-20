@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "research": "Research",
+    "projects": "Projects",
+    "publications": "Publications",
+    "services": "Services",
+    "personal": "Personal",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Open to Opportunities",
+    "name": "Linlin Jia",
+    "title": "Machine Learning Research Scientist",
+    "contact": "Get in Touch",
+    "cv": "Download CV"
+  },
+  "stats": {
+    "citations": "Citations",
+    "publications": "Publications",
+    "hindex": "h-index",
+    "projects": "Projects",
+    "collaborations": "Collaborations",
+    "students": "Students"
+  },
+  "sections": {
+    "news": "News & Updates",
+    "about": "About Me",
+    "research": "Research Outline",
+    "experience": "Professional Experience",
+    "projects": "Projects",
+    "publications": "Selected Publications",
+    "software": "Software & Tools",
+    "services": "Academic Services",
+    "skills": "Skills & Technologies",
+    "contact": "Contact"
+  },
+  "about": {
+    "p1": "I am an Advanced Postdoctoral Researcher at the University of Bern, Switzerland, working at the Pattern Recognition Group on SNSF-funded research. My expertise spans graph neural networks, spatio-temporal deep learning, and LLM-based AI systems.",
+    "p2": "I received my Ph.D. from INSA Rouen (France) in 2021, focusing on graph kernels and chemoinformatics. Since then, I've contributed to projects in computational chemistry, document analysis, and environmental science.",
+    "p3": "Beyond academia, I serve as Chief AI Officer at N-Banker, a FinTech startup, where I lead AI strategy and LLM agent development.",
+    "p4": "I am actively seeking ML Research Scientist opportunities in AI-driven drug discovery, scientific computing, and production AI systems."
+  },
+  "contact": {
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email"
+  },
+  "common": {
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "search": "Search...",
+    "all": "All",
+    "newest": "Newest First",
+    "oldest": "Oldest First"
+  }
+}

@@ -3,34 +3,45 @@
 <head>
     <meta charset="utf-8">
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        .node-image {
+            clip-path: circle(100px at center);
+        }
+        .node:hover polygon, .node:hover circle {
+            fill: #E0E0E0;
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 <body>
     <script>
         var svg = d3.select("body").append("svg")
-            .attr("width", 500)
-            .attr("height", 500);
+            .attr("width", window.innerWidth)
+            .attr("height", window.innerHeight)
+            .attr("style", "outline: thin solid black;");
 
         var nodes = [
-            {name: "Home", url: "index.html"},
-            {name: "About", url: "about.html"},
-            {name: "Research", url: "research.html"},
-            {name: "Publications", url: "publications.html"},
-            {name: "Teaching", url: "teaching.html"},
-            {name: "Contact", url: "contact.html"}
+            {name: "Home", url: "index.html", color: "#fff", image: "https://jajupmochi.github.io/images/photo.jpg"},
+            {name: "RESEARCH INTERESTS", url: "research.html", color: "#f5f5f5"},
+            {name: "PROJECTS", url: "projects.html", color: "#f5f5f5"},
+            {name: "PUBLICATIONS", url: "publications.html", color: "#f5f5f5"},
+            {name: "LIBRARIES", url: "libraries.html", color: "#f5f5f5"},
+            {name: "ACADEMIC ACTIVITIES", url: "activities.html", color: "#f5f5f5"},
+            {name: "AWARDS & FUNDINGS", url: "awards.html", color: "#f5f5f5"},
+            {name: "VOLUNTEER WORK", url: "volunteer.html", color: "#f5f5f5"}
         ];
 
-        var links = [
-            {source: "Home", target: "About"},
-            {source: "Home", target: "Research"},
-            {source: "Home", target: "Publications"},
-            {source: "Home", target: "Teaching"},
-            {source: "Home", target: "Contact"}
-        ];
+        nodes.forEach(function(d) {
+            d.x = Math.random() * window.innerWidth;
+            d.y = Math.random() * window.innerHeight;
+        });
+
+        var links = nodes.slice(1).map(n => ({source: "Home", target: n.name}));
 
         var simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.name))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(250, 250));
+            .force("link", d3.forceLink(links).id(d => d.name).distance(500).strength(1))
+            .force("charge", d3.forceManyBody().strength(-1500))
+            .force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
 
         var link = svg.append("g")
             .selectAll("line")
@@ -42,16 +53,56 @@
         var node = svg.append("g")
             .selectAll("circle")
             .data(nodes)
-            .enter().append("circle")
-            .attr("r", 20)
-            .style("fill", "#69b3a2")
+            .enter()
+            .append("g")
+            .attr("class", "node")
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended));
 
+        node.append("circle")
+            .filter(d => d.name === "Home")
+            .attr("r", 100)
+            .attr("fill", d => `url(#${d.name}-image)`)
+            .style("stroke", "#999")
+            .style("stroke-width", "1px");
+
+        node.filter(d => d.name === "Home").append("defs")
+            .append("pattern")
+            .attr("id", "Home-image")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", "100%")
+            .attr("width", "100%")
+            .attr("viewBox", "0 0 1 1")
+            .append("image")
+            .attr("xlink:href", d => d.image)
+            .attr("height", "1")
+            .attr("width", "1")
+            .attr("preserveAspectRatio", "xMidYMid slice");
+
+        node.append("polygon")
+            .filter(d => d.name !== "Home")
+            .attr("points", d => "-100,-173 100,-173 150,0 100,173 -100,173 -150,0")
+            .style("fill", d => d.color)
+            .style("stroke", "#999")
+            .style("stroke-width", "1px");
+
         node.append("title")
             .text(d => d.name);
+
+        var labels = svg.append("g")
+            .selectAll("text")
+            .data(nodes)
+            .enter().append("text")
+            .filter(d => d.name !== "Home")
+            .text(d => d.name)
+            .attr("font-family", "Arial, sans-serif")
+            .attr("font-size", "18px")
+            .attr("fill", "#333")
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle");
 
         simulation.on("tick", () => {
             link
@@ -61,8 +112,11 @@
                 .attr("y2", d => d.target.y);
 
             node
-                .attr("cx", d => d.x)
-                .attr("cy", d => d.y);
+                .attr("transform", d => `translate(${d.x}, ${d.y})`);
+
+            labels
+                .attr("x", d => d.x)
+                .attr("y", d => d.y);
         });
 
         function dragstarted(d) {
@@ -84,3 +138,4 @@
     </script>
 </body>
 </html>
+
