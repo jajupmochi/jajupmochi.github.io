@@ -8,6 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
 
+    <!-- Security headers (meta-equiv; GH Pages doesn't let us set real HTTP headers).
+         See setup/security-headers.md for the rationale behind each directive. -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        img-src 'self' data: https:;
+        connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms;
+        frame-src https://www.google.com;
+        form-action 'self' https://script.google.com https://script.googleusercontent.com;
+        base-uri 'self';
+        object-src 'none';
+        upgrade-insecure-requests
+    ">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://jajupmochi.github.io/index_en.html">
 
@@ -660,14 +678,62 @@
             background: var(--bg-subtle);
         }
 
-        /* WCAG 2.5.5: ensure 44x44 touch target + inter-target spacing on mobile. */
+        /* Hamburger — hidden on desktop, shown on mobile. */
+        .nav-hamburger {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.15s;
+        }
+        .nav-hamburger:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Mobile: collapse navbar-center into a drawer triggered by hamburger. */
         @media (max-width: 768px) {
+            .nav-hamburger { display: inline-flex; }
+
+            .navbar-center {
+                position: absolute;
+                top: 56px;
+                left: 0;
+                right: 0;
+                transform: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-light);
+                box-shadow: var(--shadow-md);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.25s ease-out;
+            }
+            .navbar.nav-open .navbar-center {
+                max-height: calc(100vh - 56px);
+                overflow-y: auto;
+            }
             .nav-link {
                 min-height: 44px;
-                display: inline-flex;
+                display: flex;
                 align-items: center;
+                padding: 0.6rem 1.25rem;
+                border-radius: 0;
+                font-size: 0.95rem;
             }
-            .navbar-center { gap: 0.75rem; }
+            [data-theme="industrial"] .navbar-center {
+                background: rgba(24,24,27,0.98);
+            }
         }
 
         .navbar-right {
@@ -1125,113 +1191,197 @@
             font-size: 2.5rem;
         }
         
-        /* Postcard Style Popup */
+        /* ------------------------------------------------------------------
+           Postcard popup — minimalist by default, theme-adapted below.
+           Tokens (set per theme):
+             --pc-bg, --pc-border, --pc-accent, --pc-text, --pc-text-muted,
+             --pc-input-bg, --pc-stamp-bg, --pc-stamp-fg, --pc-radius
+           ------------------------------------------------------------------ */
         .welcome-postcard {
-            background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #ddd6fe 100%);
-            border-radius: 16px;
-            padding: 2rem;
+            /* default = ai/minimalist — other themes override via data-theme */
+            --pc-bg: #ffffff;
+            --pc-border: rgba(99, 102, 241, 0.2);
+            --pc-accent: var(--primary, #6366f1);
+            --pc-text: var(--text-primary, #1f2937);
+            --pc-text-muted: var(--text-secondary, #6b7280);
+            --pc-input-bg: #f9fafb;
+            --pc-stamp-bg: var(--primary, #6366f1);
+            --pc-stamp-fg: #ffffff;
+            --pc-radius: 14px;
+
+            background: var(--pc-bg);
+            border: 1px solid var(--pc-border);
+            border-radius: var(--pc-radius);
+            padding: 1.75rem 1.75rem 1.25rem;
             max-width: 420px;
             width: 90%;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-            transform: scale(0) rotateY(90deg);
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+            transform: scale(0.92) translateY(8px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
-            border: 3px solid #f59e0b;
+            color: var(--pc-text);
+            font-family: var(--font-main, 'Inter', sans-serif);
         }
-        
+
+        /* Stamp corner — small square in top-right, theme-colored. */
         .welcome-postcard::before {
-            content: '';
+            content: '✉';
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 60px;
-            height: 60px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ec4899' width='100' height='100' rx='5'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E✉%3C/text%3E%3C/svg%3E") center/contain no-repeat;
-            opacity: 0.5;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            background: var(--pc-stamp-bg);
+            color: var(--pc-stamp-fg);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            opacity: 0.85;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
-        
+
         .welcome-overlay.active .welcome-postcard {
-            transform: scale(1) rotateY(0deg);
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
-        
+
         .postcard-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            padding-right: 3rem; /* keep text clear of stamp */
         }
-        
+
         .postcard-header h2 {
-            font-size: 1.5rem;
-            color: #4c1d95;
-            margin: 0 0 0.25rem;
-            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--pc-text);
+            margin: 0 0 0.2rem;
+            font-family: var(--font-display, inherit);
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
-        
+
         .postcard-header p {
-            color: #7c3aed;
-            font-size: 0.9rem;
+            color: var(--pc-text-muted);
+            font-size: 0.85rem;
             margin: 0;
+            line-height: 1.4;
         }
-        
+
         .postcard-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ec4899, transparent);
-            margin: 1rem 0;
+            height: 1px;
+            background: var(--pc-border);
+            margin: 0.75rem 0 1rem;
         }
-        
+
         .postcard-form {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.6rem;
         }
-        
+
         .postcard-input {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e9d5ff;
-            border-radius: 25px;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--pc-border);
+            border-radius: 8px;
             font-size: 0.9rem;
-            background: white;
-            color: #4c1d95;
-            transition: border-color 0.2s;
+            background: var(--pc-input-bg);
+            color: var(--pc-text);
+            font-family: inherit;
+            transition: border-color 0.15s, box-shadow 0.15s;
         }
-        
+
         .postcard-input:focus {
             outline: none;
-            border-color: #ec4899;
+            border-color: var(--pc-accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--pc-accent) 15%, transparent);
         }
-        
-        .postcard-input::placeholder { color: #a78bfa; }
-        
-        .postcard-message {
-            border-radius: 12px;
-        }
-        
+
+        .postcard-input::placeholder { color: var(--pc-text-muted); opacity: 0.7; }
+
+        .postcard-message { resize: vertical; min-height: 2.5rem; }
+
         .postcard-submit {
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            color: white;
+            padding: 0.7rem 1.5rem;
+            background: var(--pc-accent);
+            color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 0.5rem;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
+            margin-top: 0.35rem;
         }
-        
+
         .postcard-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px color-mix(in srgb, var(--pc-accent) 30%, transparent);
+            filter: brightness(1.05);
         }
-        
+
         .postcard-skip {
             text-align: center;
-            margin-top: 0.75rem;
+            margin-top: 0.6rem;
         }
-        
+
         .postcard-skip a {
-            color: #7c3aed;
-            font-size: 0.85rem;
-            text-decoration: underline;
+            color: var(--pc-text-muted);
+            font-size: 0.8rem;
+            text-decoration: none;
+            border-bottom: 1px dotted var(--pc-text-muted);
+        }
+        .postcard-skip a:hover { color: var(--pc-accent); border-bottom-color: var(--pc-accent); }
+
+        /* --- Theme overrides -------------------------------------------- */
+
+        /* Academic: cream paper + serif + thin blue rule */
+        [data-theme="academic"] .welcome-postcard {
+            --pc-bg: #fdfbf5;
+            --pc-border: #d6c9a8;
+            --pc-accent: #1e3a8a;
+            --pc-text: #1f2937;
+            --pc-text-muted: #6b6455;
+            --pc-input-bg: #fffdf7;
+            --pc-stamp-bg: #1e3a8a;
+            --pc-radius: 6px;
+        }
+        [data-theme="academic"] .welcome-postcard::before {
+            content: '✉';
+            border-radius: 2px;
+        }
+
+        /* Industrial: dark slate + Orbitron + sharp edges */
+        [data-theme="industrial"] .welcome-postcard {
+            --pc-bg: #18181b;
+            --pc-border: rgba(56, 189, 248, 0.35);
+            --pc-accent: #38bdf8;
+            --pc-text: #e2e8f0;
+            --pc-text-muted: #94a3b8;
+            --pc-input-bg: #27272a;
+            --pc-stamp-bg: #38bdf8;
+            --pc-stamp-fg: #0f172a;
+            --pc-radius: 2px;
+        }
+        [data-theme="industrial"] .welcome-postcard {
+            box-shadow: 0 0 0 1px rgba(56,189,248,0.12), 0 25px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Fancy: soft wonderland pink, keeps the whimsy but quieter */
+        [data-theme="fancy"] .welcome-postcard {
+            --pc-bg: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 60%, #f5d0fe 100%);
+            --pc-border: #f5a6d3;
+            --pc-accent: #ec4899;
+            --pc-text: #4c1d95;
+            --pc-text-muted: #7c3aed;
+            --pc-input-bg: #ffffff;
+            --pc-stamp-bg: #ec4899;
+            --pc-radius: 18px;
+        }
+        [data-theme="fancy"] .welcome-postcard {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 60%, #f5d0fe 100%);
         }
         
         /* Drifting Bottle Close Animation */
@@ -2918,26 +3068,26 @@
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-postcard">
             <div class="postcard-header">
-                <h2>✨ Welcome, Friend! ✨</h2>
-                <p>So glad you found your way here</p>
+                <h2>Welcome</h2>
+                <p>Drop a quick note before you look around.</p>
             </div>
             <div class="postcard-divider"></div>
             <form class="postcard-form" onsubmit="submitWelcome(event)">
-                <input type="text" class="postcard-input" placeholder="Your name..." id="visitorName">
+                <input type="text" class="postcard-input" placeholder="Your name" id="visitorName">
                 <select class="postcard-input" id="visitorProfession" aria-label="What brings you here">
                     <option value="">What brings you here?</option>
-                    <option value="researcher">📚 Research & Academia</option>
-                    <option value="engineer">💻 ML/AI Engineering</option>
-                    <option value="student">🎓 Student</option>
-                    <option value="recruiter">🔍 Recruiting</option>
-                    <option value="industry">🏢 Industry</option>
-                    <option value="other">✨ Just Curious</option>
+                    <option value="researcher">Research &amp; Academia</option>
+                    <option value="engineer">ML/AI Engineering</option>
+                    <option value="student">Student</option>
+                    <option value="recruiter">Recruiting</option>
+                    <option value="industry">Industry</option>
+                    <option value="other">Just curious</option>
                 </select>
-                <textarea class="postcard-input postcard-message" placeholder="Leave a message? I'd love to hear from you!" rows="2" id="visitorMessage"></textarea>
-                <button type="submit" class="postcard-submit">Send with 💝</button>
+                <textarea class="postcard-input postcard-message" placeholder="Short note (optional)" rows="2" id="visitorMessage"></textarea>
+                <button type="submit" class="postcard-submit">Send</button>
             </form>
             <div class="postcard-skip">
-                <a href="#" onclick="closeWelcomeWithBottle(); return false;">Maybe later...</a>
+                <a href="#" onclick="closeWelcomeWithBottle(); return false;">Maybe later</a>
             </div>
         </div>
     </div>
@@ -2946,17 +3096,23 @@
     <nav class="navbar" id="navbar">
         <div class="container navbar-inner">
             <a href="#" class="navbar-brand">Linlin Jia</a>
-            
+
+            <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu"
+                    aria-controls="navbarCenter" aria-expanded="false"
+                    onclick="toggleMobileNav()">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <!-- Center Navigation Links -->
-            <div class="navbar-center">
-                <a href="#" onclick="showPage('main'); return false;" class="nav-link active" data-page="main" data-i18n="nav.home">Home</a>
-                <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
-                <a href="#research" class="nav-link" data-i18n="nav.research">Research</a>
-                <a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a>
-                <a href="#publications" class="nav-link" data-i18n="nav.publications">Publications</a>
-                <a href="#services" class="nav-link" data-i18n="nav.services">Services</a>
-                <a href="#" onclick="showPage('personal'); return false;" class="nav-link" data-page="personal" data-i18n="nav.personal">Personal</a>
-                <a href="#" onclick="showPage('blog'); return false;" class="nav-link" data-page="blog" data-i18n="nav.blog">Blog</a>
+            <div class="navbar-center" id="navbarCenter">
+                <a href="#" onclick="showPage('main'); closeMobileNav(); return false;" class="nav-link active" data-page="main" data-i18n="nav.home">Home</a>
+                <a href="#about" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.about">About</a>
+                <a href="#research" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.research">Research</a>
+                <a href="#projects" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.projects">Projects</a>
+                <a href="#publications" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.publications">Publications</a>
+                <a href="#services" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.services">Services</a>
+                <a href="#" onclick="showPage('personal'); closeMobileNav(); return false;" class="nav-link" data-page="personal" data-i18n="nav.personal">Personal</a>
+                <a href="#" onclick="showPage('blog'); closeMobileNav(); return false;" class="nav-link" data-page="blog" data-i18n="nav.blog">Blog</a>
             </div>
             
             <!-- Right Side: Theme & Language Switchers (Embedded) -->
@@ -4075,26 +4231,52 @@
             }, 1000);
         }
         
+        // Welcome-form backend endpoint (Google Apps Script Web App URL).
+        // See setup/form-backend-google-sheets.md for how to create it.
+        const WELCOME_FORM_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
         function submitWelcome(e) {
             e.preventDefault();
-            
+
+            const payload = {
+                name: document.getElementById('visitorName').value.trim(),
+                profession: document.getElementById('visitorProfession').value,
+                message: document.getElementById('visitorMessage').value.trim(),
+                theme: document.body.getAttribute('data-theme') || 'ai',
+                locale: (typeof currentLang !== 'undefined' ? currentLang : document.documentElement.lang) || 'en',
+                userAgent: navigator.userAgent,
+                referrer: document.referrer || '',
+            };
+
+            // Fire-and-forget POST. text/plain avoids CORS preflight on GAS Web Apps.
+            if (WELCOME_FORM_ENDPOINT && !WELCOME_FORM_ENDPOINT.startsWith('PASTE_')) {
+                fetch(WELCOME_FORM_ENDPOINT, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload),
+                }).catch(err => console.warn('[welcome-form] submit failed', err));
+            } else {
+                console.info('[welcome-form] endpoint not configured — submission discarded', payload);
+            }
+
             // Big celebration confetti
             loadConfetti().then(fn => fn({
                 particleCount: 200,
                 spread: 120,
                 origin: { y: 0.5 }
             }));
-            
-            // Thank you message
+
+            // Thank you message — inherits theme colors from .welcome-postcard vars.
             const postcard = document.querySelector('.welcome-postcard');
             postcard.innerHTML = `
-                <div style="text-align:center;padding:2rem;">
-                    <div style="font-size:4rem;margin-bottom:1rem;">💝</div>
-                    <h2 style="color:#4c1d95;margin:0 0 0.5rem;">Thank You!</h2>
-                    <p style="color:#7c3aed;">Your message is on its way...</p>
+                <div style="text-align:center;padding:1.5rem 1rem;">
+                    <div style="font-size:2.5rem;margin-bottom:0.75rem;">✉️</div>
+                    <h2 style="color:var(--pc-text);margin:0 0 0.35rem;font-family:var(--font-display,inherit);font-weight:600;">Thank you</h2>
+                    <p style="color:var(--pc-text-muted);margin:0;font-size:0.9rem;">Message delivered.</p>
                 </div>
             `;
-            
+
             // Close after delay with bottle effect
             setTimeout(closeWelcomeWithBottle, 2000);
         }
@@ -4310,13 +4492,40 @@
             closeAllDropdowns();
             if (!isOpen) dropdown.classList.add('open');
         }
-        
+
         function closeAllDropdowns() {
             document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
         }
-        
+
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dropdown')) closeAllDropdowns();
+        });
+
+        // Mobile hamburger menu toggle.
+        function toggleMobileNav() {
+            const navbar = document.getElementById('navbar');
+            const btn = document.getElementById('navHamburger');
+            const open = navbar.classList.toggle('nav-open');
+            btn.setAttribute('aria-expanded', String(open));
+            btn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+            const icon = btn.querySelector('i');
+            if (icon) icon.className = open ? 'fas fa-times' : 'fas fa-bars';
+        }
+        function closeMobileNav() {
+            const navbar = document.getElementById('navbar');
+            if (!navbar.classList.contains('nav-open')) return;
+            navbar.classList.remove('nav-open');
+            const btn = document.getElementById('navHamburger');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Open navigation menu');
+            const icon = btn.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        }
+        // Close mobile nav when clicking outside.
+        document.addEventListener('click', (e) => {
+            const navbar = document.getElementById('navbar');
+            if (!navbar || !navbar.classList.contains('nav-open')) return;
+            if (!e.target.closest('#navbar')) closeMobileNav();
         });
         
         // ========================================
@@ -4627,23 +4836,17 @@
     </script>
     
     <!--
-        Analytics: Universal Analytics (UA-113203183-2) was REMOVED on 2026-04-20 because
-        Google sunset UA on 2023-07-01. To resume tracking, replace this block with one of:
-
-        (A) GA4 — register at https://analytics.google.com, get a G-XXXXXXXXXX measurement ID:
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
-        </script>
-
-        (B) Plausible (privacy-friendly, paid):
-        <script defer data-domain="jajupmochi.github.io" src="https://plausible.io/js/script.js"></script>
-
-        (C) Umami (privacy-friendly, self-hostable):
-        <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR-ID"></script>
+        Analytics: Microsoft Clarity (free, heatmaps + session recordings).
+        Replace PASTE_CLARITY_PROJECT_ID below with your project id from
+        https://clarity.microsoft.com/ (project settings → tracking code).
+        See setup/analytics-clarity.md for the cookie-consent-free configuration.
     -->
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "PASTE_CLARITY_PROJECT_ID");
+    </script>
 </body>
 </html>

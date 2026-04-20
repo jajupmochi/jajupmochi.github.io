@@ -1,0 +1,38 @@
+name: backup-analytics
+
+on:
+  schedule:
+    # 04:17 UTC every Sunday. Off-peak for Clarity API; 4th cron slot of the hour
+    # to spread load vs other users on :00/:15/:30/:45.
+    - cron: '17 4 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch Clarity snapshot
+        env:
+          CLARITY_API_TOKEN: ${{ secrets.CLARITY_API_TOKEN }}
+        run: python3 scripts/fetch_clarity.py
+
+      - name: Commit snapshot (if any)
+        run: |
+          if [ -n "$(git status --porcelain data/analytics)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/analytics
+            git commit -m "chore: weekly clarity analytics snapshot"
+            git push
+          else
+            echo "no changes — skipping commit"
+          fi
