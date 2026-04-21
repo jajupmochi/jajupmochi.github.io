@@ -1,0 +1,139 @@
+# CLAUDE.zh.md
+
+> **Language:** [English](CLAUDE.md) | 中文
+
+本文件为 Claude Code (claude.ai/code) 在本仓库协作时提供规范。
+
+## Master TOC
+
+- [项目](#项目)
+- [主要文件](#主要文件)
+- [迭代工作流（混合模式）](#迭代工作流混合模式)
+- [硬规则](#硬规则)
+- [文档规范](#文档规范)
+    - [Master TOC 强制要求](#master-toc-强制要求)
+    - [PLAN.md — 路线图唯一来源](#planmd--路线图唯一来源)
+    - [UPDATES.md — 变更日志](#updatesmd--变更日志)
+    - [层级 + 状态符号体系](#层级--状态符号体系)
+    - [中英双语双文件规则](#中英双语双文件规则)
+- [预览](#预览)
+- [主题](#主题)
+- [Git / 部署](#git--部署)
+- [子代理 / 技能 / 钩子](#子代理--技能--钩子)
+
+## 项目
+
+Linlin Jia 的个人学术网站，托管于 GitHub Pages（`jajupmochi/jajupmochi.github.io`）。纯静态 HTML/CSS/JS — 无构建系统、无打包器。目标受众：ML Research Scientist 招聘方。
+
+## 主要文件
+
+- `index_en.html` — 部署的英文站，访客看到的就是这个。
+- `index_zh.html` — 历史遗留中文页面（年代久远，样式独立）。
+- `locales/{en,zh,fr,de}.json` — `index_en.html` 加载的 i18n 翻译。
+- `data/citations.json` — Google Scholar 引用数据（手工维护；无官方 API）。
+- `res/cv/CV_Linlin_Jia_{en,zh}.pdf` — 网站引用的 CV。
+- `new_web_test.html` — D3.js force-graph 设计参考，仅作灵感保留。
+- `blog/` 与 `docs/` — 独立的 Jekyll 子项目（Hux Blog boilerplate、minima theme），较旧，勿与主站混淆。
+
+## 迭代工作流（混合模式）
+
+- **小改动**（文案调整、单条样式修复、错别字）：直接编辑 `index_en.html`。
+- **大改动**（新增段落、重设计、新功能）：新建工作副本 `index_en_v{N}_round{N}.html`。每版 3 轮 — round1 主要改动、round2 打磨、round3 定稿。round3 批准后，将其内容拷贝回 `index_en.html`。
+- 下一个版本号 `N` 取现有 `index_en_v{N}_round*.html` 中最大值 + 1。
+- 历史 `v{N}_round{N}.html` 有意保留以供参考 — 未经允许不要删除。
+- `index_en_backup.html` 是重设计前的快照；不要动。
+
+## 硬规则
+
+- **必须做视觉验证。** 任何影响 UI 的改动必须通过 chrome-devtools MCP 插件（navigate、snapshot、inspect）在真实浏览器中验证后方可视为完成。仅靠代码审查通过或编辑成功不算数。
+- **JSON 有效性。** `locales/*.json` 和 `data/*.json` 必须保持合法 JSON — 语法错误会直接打挂已部署站点。改动后跑 `jq . <file>`。
+- **i18n key 对齐。** `locales/{en,zh,fr,de}.json` 四个文件的 key 树必须完全一致。若一个文件里加 key，四个全都要加（loader 有 inline 默认回退，但缺 key 会以原始英文露出来）。
+- **内容权威来源。** 更新职业相关内容（bio、publications、projects、experience）时，权威来源是 `res/cv/CV_Linlin_Jia_en_*.pdf` 和 `extra_info_work.md`。如果站点和权威不一致，改站点，不改权威。
+- **`UPDATES.md` 强制日志。** 本仓库的每一次改动（内容、代码、资源、文案、配置）都必须在**同一批 edit** 里加一条 `UPDATES.md` 条目。格式：今日日期做 `# YYYY-MM-DD` H1（UTC，用环境里的 `currentDate` 或跑 `date -u +%F`）；若当天有多次独立变更，在该日期下用 `## V1`、`## V2`、`## V3` H2 分组。每个条目是短 bullet 列表 — 改了什么、为什么。**没有对应 `UPDATES.md` 条目的 PR / commit 视为不完整。** 漏了就补。
+- **`PLAN.md` 同步。** 如果改动命中某个已存在的 `PLAN.md` 条目，必须在同一批 edit 里更新其状态符号（`[ ]`→`[~]`→`[✓]`）。如果引入新的计划工作（今天不发），则以新的 ID 加入对应的 Horizon / Milestone / Goal / Task。凡涉及路线图的改动未触及 `PLAN.md` 视为不完整。
+- **每份文档强制 Master TOC。** 本仓库的每份 markdown（根目录 `.md`、`setup/*.md`、`.claude/skills/*/SKILL.md`）都必须以 `## Master TOC`（或等价 "Table of contents" 段）开头，按下方层级规范把每个 `##` section 列为 bullet。例外：`UPDATES.md` 本身是时间序列，日期标题已起到 TOC 作用。
+- **中英双语双文件。** 所有仓库级文档必须以英文 + 中文两个独立文件形式存在。约定：`NAME.md`（英文，canonical）+ `NAME.zh.md`（中文镜像），并列存放。每份文件顶部都要一行语言切换器：`> **Language:** English | [中文](NAME.zh.md)`（或镜像写法）。代码、标识符、文件名、Horizon/Milestone/Goal/Task ID、以及 JSON/YAML 代码块内部两版都保持英文 — 只翻译散文。例外：`extra_info_work.md`（Linlin 个人素材）、`CLAUDE.local.md`（私有）、`.claude/skills/*/SKILL.md`（Claude 解析，必须保持英文；中文镜像可选）。
+
+## 文档规范
+
+### Master TOC 强制要求
+
+每份 markdown 文档的第一个大段落就是 TOC。格式：
+
+```markdown
+# Title
+
+> 一句话目标。
+
+## Master TOC
+
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+    - [Subsection 2.1](#subsection-21)
+```
+
+采用多级 bullet（内容复杂时至少 3 级）。AI agent 仅凭 TOC 就能快速定位。
+
+### PLAN.md — 路线图唯一来源
+
+仓库根目录的 `PLAN.md` 是**唯一**存放长期 / 中期 / 当前路线图的地方。不要在 README、CLAUDE.md 或代码注释里重复路线图信息 — 链接对应的 `PLAN.md` ID 即可。
+
+### UPDATES.md — 变更日志
+
+`UPDATES.md` 是时间序列的审计日志。每次改动以短 bullet 加到当日日期下。详见 `## 硬规则`。
+
+### 层级 + 状态符号体系
+
+用于 `PLAN.md`（以及任何有结构化 TODO 的文档）：
+
+**层级：**
+
+| 层 | ID | 范围 |
+|----|----|------|
+| **Horizon** | `H<n>` | 战略主题。月 → 年。 |
+| **Milestone** | `M<n>` | 具体交付物。周 → 月。 |
+| **Goal** | `G<n>` | Milestone 的可验证子块。天 → 周。 |
+| **Task** | `T<n>` | 原子动作，单次 edit batch。分钟 → 小时。 |
+
+ID 按创建顺序分配，**永不重新编号**。完整路径：`H1.M2.G3.T4`。
+
+**状态符号：**
+
+| 符号 | 含义 |
+|------|------|
+| `[✓]` | 已完成 — 上线、验证、代码已体现。 |
+| `[~]` | 进行中 — 本 session 正在做。 |
+| `[ ]` | 待办 — 入队，可立即领取。 |
+| `[!]` | 阻塞 — 等依赖 / 外部答复。 |
+| `[?]` | 等用户输入 — 需要 Linlin 做手动 / 外部操作。 |
+| `[x]` | 已取消 — 保留历史，附一行 "Why cancelled:" 注释。 |
+
+父级状态取最不完整子级。
+
+### 中英双语双文件规则
+
+详见上方硬规则最后一条。简述：`NAME.md`（英文）与 `NAME.zh.md`（中文）并存，代码 / 标识符 / ID 在两版都保持英文，仅翻译散文。
+
+## 预览
+
+```
+python3 -m http.server 8000
+```
+
+然后打开 `http://localhost:8000/index_en.html`。用 `file://` 访问会把 `fetch('locales/*.json')` 打挂（CORS）— 一定要走 HTTP server。代码里对这种情况有 inline-translation fallback，但做视觉验证必须走 server。
+
+## 主题
+
+顶栏有个切换控件能循环 4 个主题：`ai-generated`（默认紫蓝）、`academic`（亮色极简）、`industrial`（深色，Orbitron 字体）、`fancy`（童话粉带动画）。主题状态在 `body.className` 和 `localStorage`。改 CSS 时 4 个主题都要验证 — `ai-generated` 下看着对的改动可能打挂 `fancy`。
+
+## Git / 部署
+
+- 远程：`git@github.com:jajupmochi/jajupmochi.github.io.git`
+- 分支：`master`（GitHub Pages 自动部署 — 无需 CI 配置）。
+- 提交前：跑 `git status` 和 `git diff` 让用户过目。未经明确指示不要提交。
+
+## 子代理 / 技能 / 钩子
+
+- `.claude/skills/` 存项目技能：`/preview`、`/verify-visual`、`/new-round`、`/deploy-round`、`/i18n-sync`。各自的 SKILL.md 有细节。
+- `.claude/settings.json` 里的 PostToolUse 钩子会在编辑 JSON 文件后做校验。
+- `.githooks/pre-commit` 在任何 `locales/*.json` 进入暂存时跑 `scripts/check_i18n_parity.py` — 若 `zh/fr/de` 与 `en.json` 的 key 树有出入，提交会失败。**每个克隆只需启用一次：** `git config core.hooksPath .githooks`。

@@ -1,10 +1,24 @@
 # Analytics — Microsoft Clarity (cookie-consent-free)
 
+> **Language:** English | [中文](analytics-clarity.zh.md)
+
 Microsoft Clarity (free, unlimited) gives heatmaps, session recordings, rage-click
 detection, and basic visitor stats. It is injected via a tiny script in
 `index_en.html` (right before `</body>`).
 
 **Goal: run Clarity without showing the visitor a cookie-consent banner.**
+
+## Master TOC
+
+- [1. Create the Clarity project (~2 min)](#1-create-the-clarity-project-2-min)
+- [2. Paste the project id into the site](#2-paste-the-project-id-into-the-site)
+- [3. Enable cookie-less / consent-not-required mode](#3-enable-cookie-less--consent-not-required-mode)
+- [4. Privacy-policy mention (one-time)](#4-privacy-policy-mention-one-time)
+- [5. Masking — sanity check](#5-masking--sanity-check)
+- [6. Verify](#6-verify)
+- [Troubleshooting](#troubleshooting)
+
+PLAN.md cross-ref: `H2.M1.G2` (manual one-time setup). Weekly backup: `H2.M1.G4` + [analytics-backup.md](analytics-backup.md).
 
 Clarity supports a *cookie-less* mode — when enabled, it stores the visitor ID in
 `localStorage` only, no HTTP cookies are set, and under most jurisdictions

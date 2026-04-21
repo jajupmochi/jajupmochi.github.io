@@ -1,11 +1,26 @@
 # Welcome-form backend — Google Sheets via Apps Script
 
+> **Language:** English | [中文](form-backend-google-sheets.zh.md)
+
 The postcard form on `index_en.html` submits to a Google Apps Script (GAS) Web App
 that appends one row per submission to a Google Sheet you own. Zero servers, free
 tier is effectively unlimited for a personal site, and the data lives in your
 Google Drive (exportable / scriptable).
 
 **Time to set up: ~10 minutes.**
+
+## Master TOC
+
+- [1. Create the backing Sheet](#1-create-the-backing-sheet)
+- [2. Open the bound Apps Script project](#2-open-the-bound-apps-script-project)
+- [3. Deploy as a Web App](#3-deploy-as-a-web-app)
+- [4. Paste the URL into the site](#4-paste-the-url-into-the-site)
+- [5. Smoke-test](#5-smoke-test)
+- [Re-deploying after you edit the script](#re-deploying-after-you-edit-the-script)
+- [Troubleshooting](#troubleshooting)
+- [Spam mitigation options (if needed later)](#spam-mitigation-options-if-needed-later)
+
+PLAN.md cross-ref: `H2.M1.G1` (manual one-time setup). Spam mitigation: `H2.M2.G4`.
 
 ## 1. Create the backing Sheet
 

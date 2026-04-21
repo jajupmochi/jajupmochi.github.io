@@ -1,10 +1,36 @@
 # Update Log
 
+> **Language:** English | [中文](UPDATES.zh.md)
+>
 > Mandatory development log per `CLAUDE.md` Hard Rules. Every change set MUST add an entry here in the same edit batch.
 >
 > Format: `# YYYY-MM-DD` (UTC) as date heading. If a single day has multiple distinct change-sets, group each under `## V1`, `## V2`, `## V3` H2 sub-headings under the date. Bullet list items: short `- <what changed>` lines, optionally with a `<file>:<line>` pointer.
 
 # 2026-04-21
+
+## V3 — Documentation overhaul (Master Plan + bilingual dual-file convention)
+
+Goal: give every reader (visitor / maintainer / AI agent) an entry point sized for them, and keep the roadmap + changelog in sync. Rolls out the H/M/G/T hierarchy across all project docs. All new docs are bilingual (`NAME.md` + `NAME.zh.md`). Resolves `H4.M1.G1..G4` and `H4.M2.G1` in `PLAN.md`.
+
+- **`PLAN.md` (new)** — Master roadmap with status legend, ID system (`H<n>.M<n>.G<n>.T<n>`, never re-numbered), hierarchy convention (Horizon → Milestone → Goal → Task), Master TOC, and 5 populated Horizons: H1 (job-hunt asset), H2 (ops & maintenance, all `[?]` items surfaced), H3 (content expansion), H4 (docs / AI infra), H5 (career outreach). Maintenance protocol at the bottom.
+- **`PLAN.zh.md` (new)** — full Chinese mirror, preserving all H/M/G/T IDs in English, translating only prose.
+- **`CLAUDE.md`** — added 4 new hard rules: mandatory `UPDATES.md` daily log (pre-existing from V1, re-stated); mandatory `PLAN.md` sync in same edit batch when status changes; mandatory Master TOC on every markdown doc; mandatory bilingual dual-file rule (`NAME.md` canonical + `NAME.zh.md` mirror, language banner at top, code/IDs English in both). New "Documentation conventions" section explaining Master TOC / PLAN.md / UPDATES.md / hierarchy + status markers / bilingual rule.
+- **`CLAUDE.zh.md` (new)** — full Chinese mirror of CLAUDE.md.
+- **`README.md`** — rewrote with reader-segmented sections: "For visitors (recruiters, collaborators)" (homepage / CV / contact), "For the maintainer (Linlin / future me)" (quick actions table, manual one-time setup checklist with 4 items mapped to PLAN.md IDs, repo layout, where each feature is documented, how-to recipes), "For AI agents (Claude Code, etc.)" (entry-point files, roadmap + changelog, project skills). Open Graph card section, themes, deploy notes preserved.
+- **`README.zh.md` (new)** — full Chinese mirror.
+- **`UPDATES.md`** — added language banner + this V3 entry.
+- **`UPDATES.zh.md` (new)** — full Chinese mirror.
+- **`setup/README.md`** — added language banner + Master TOC with cross-refs to PLAN.md (`H2.M1` roadmap) + per-file detailed guide links.
+- **`setup/README.zh.md` (new)** — full Chinese mirror.
+- **`setup/form-backend-google-sheets.md`** — added language banner + Master TOC + PLAN.md cross-ref (`H2.M1.G1`, `H2.M2.G4`).
+- **`setup/form-backend-google-sheets.zh.md` (new)** — full Chinese mirror.
+- **`setup/analytics-clarity.md`** — added language banner + Master TOC + PLAN.md cross-ref (`H2.M1.G2`, `H2.M1.G4`).
+- **`setup/analytics-clarity.zh.md` (new)** — full Chinese mirror.
+- **`setup/analytics-backup.md`** — added language banner + Master TOC + PLAN.md cross-ref (`H2.M1.G4`, `H2.M3.G1`, `H2.M3.G2`).
+- **`setup/analytics-backup.zh.md` (new)** — full Chinese mirror.
+- **`setup/security-headers.md`** — added language banner + Master TOC + PLAN.md cross-ref (`H1.M2` SEO schema deps, `H2.M1.G1/G2` Sheets / Clarity origins).
+- **`setup/security-headers.zh.md` (new)** — full Chinese mirror.
+- **Status rollups (both `PLAN.md` + `PLAN.zh.md`)**: `H4.M1.G2.T1..T3` → `[✓]`; `H4.M1.G3.T1..T3` → `[✓]`; `H4.M2.G1.T1..T3` → `[✓]`. Added new `H4.M1.G4` Goal (Bilingual docs) with T1/T2/T3 `[✓]` + T4 `[ ]` (future pre-commit parity check). `M4.1` → `[✓]` (all goals done); `M4.2` → `[ ]` (G1 done, G2 how-tos pending); H4 aggregate → `[ ]` (M4.2/M4.3 still have pending work).
 
 ## V2 — SEO audit follow-through (6 warnings + 5 opportunities)
 

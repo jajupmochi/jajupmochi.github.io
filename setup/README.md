@@ -1,9 +1,29 @@
 # Deployment checklist
 
+> **Language:** English | [中文](README.zh.md)
+
 Before pushing `master` to GitHub Pages, complete the items below **in order**.
 Each section links to a detailed guide. The placeholder constants in
 `index_en.html` flagged with `PASTE_...` **must be replaced** or the feature
 silently no-ops.
+
+## Master TOC
+
+- [Order of operations](#order-of-operations)
+- [Placeholders to replace in `index_en.html`](#placeholders-to-replace-in-index_enhtml)
+- [Smoke test (recommended — do once after every deploy)](#smoke-test-recommended--do-once-after-every-deploy)
+- [Repo-local hooks & scripts](#repo-local-hooks--scripts)
+- [If something breaks](#if-something-breaks)
+- [Contact for this checklist](#contact-for-this-checklist)
+
+Cross-refs:
+- Roadmap for all manual setup items: [`../PLAN.md`](../PLAN.md) Horizon `H2.M1`.
+- Per-change audit log: [`../UPDATES.md`](../UPDATES.md).
+- Detailed guides in this folder:
+    - [`form-backend-google-sheets.md`](form-backend-google-sheets.md) — welcome form backend.
+    - [`analytics-clarity.md`](analytics-clarity.md) — cookie-less Clarity.
+    - [`analytics-backup.md`](analytics-backup.md) — weekly Clarity backup via GH Actions.
+    - [`security-headers.md`](security-headers.md) — CSP and related meta tags.
 
 ## Order of operations
 

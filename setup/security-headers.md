@@ -1,8 +1,23 @@
 # Security headers on GitHub Pages
 
+> **Language:** English | [中文](security-headers.zh.md)
+
 GitHub Pages does not let us set arbitrary HTTP response headers — so we use
 `<meta http-equiv>` tags where the browser accepts them. This covers most of
 the practical XSS / clickjacking / content-sniffing mitigations.
+
+## Master TOC
+
+- [What we set (in `index_en.html` head)](#what-we-set-in-index_enhtml-head)
+    - [Content-Security-Policy](#content-security-policy)
+    - [`unsafe-inline` — why it stays](#unsafe-inline--why-it-stays)
+    - [What doesn't work via meta (limitations)](#what-doesnt-work-via-meta-limitations)
+    - [`<meta name="referrer" content="strict-origin-when-cross-origin">`](#meta-namereferrer-contentstrict-origin-when-cross-origin)
+    - [`<meta http-equiv="X-Content-Type-Options" content="nosniff">`](#meta-http-equivx-content-type-options-contentnosniff)
+- [Verifying](#verifying)
+- [If you add a third-party script later](#if-you-add-a-third-party-script-later)
+
+PLAN.md cross-ref: this is relevant whenever you land a new CDN / external script. See tasks under `H1.M2` (SEO schema deps) and `H2.M1.G1/G2` (Sheets / Clarity origins).
 
 ## What we set (in `index_en.html` head)
 

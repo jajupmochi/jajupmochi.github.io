@@ -1,5 +1,7 @@
 # Analytics backup — automated to GitHub
 
+> **Language:** English | [中文](analytics-backup.zh.md)
+
 A weekly GitHub Actions cron pulls Microsoft Clarity aggregate data and commits
 snapshots to `data/analytics/clarity-YYYY-MM-DD.json` in this repo. This
 protects against Clarity ever going away (unlikely) or changing its free tier
@@ -9,6 +11,19 @@ without notice, and gives you version-controlled history you can diff.
 Those rows live in a private Google Sheet and may contain visitor names /
 messages. This repo is public, so committing them would leak personal data.
 See "Submissions backup" below for the recommended approach.
+
+## Master TOC
+
+- [What gets backed up](#what-gets-backed-up)
+- [1. Create a Clarity API token](#1-create-a-clarity-api-token)
+- [2. Add the token as a GitHub repository secret](#2-add-the-token-as-a-github-repository-secret)
+- [3. Enable GitHub Actions write access (one-time)](#3-enable-github-actions-write-access-one-time)
+- [4. First run](#4-first-run)
+- [Retention / pruning](#retention--pruning)
+- [Submissions backup (recommended approach)](#submissions-backup-recommended-approach)
+- [Troubleshooting](#troubleshooting)
+
+PLAN.md cross-ref: `H2.M1.G4` (secrets setup), `H2.M3.G1` (backup pipeline), `H2.M3.G2` (submissions backup).
 
 ## What gets backed up
 

@@ -1,6 +1,24 @@
 # CLAUDE.md
 
+> **Language:** English | [中文](CLAUDE.zh.md)
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Master TOC
+
+- [Project](#project)
+- [Main files](#main-files)
+- [Iterative workflow (mixed mode)](#iterative-workflow-mixed-mode)
+- [Hard rules](#hard-rules)
+- [Documentation conventions](#documentation-conventions)
+    - [Master TOC requirement](#master-toc-requirement)
+    - [PLAN.md — roadmap source of truth](#planmd--roadmap-source-of-truth)
+    - [UPDATES.md — per-change log](#updatesmd--per-change-log)
+    - [Hierarchy + status marker system](#hierarchy--status-marker-system)
+- [Preview](#preview)
+- [Themes](#themes)
+- [Git / deploy](#git--deploy)
+- [Subagents / skills / hooks](#subagents--skills--hooks)
 
 ## Project
 
@@ -31,6 +49,65 @@ Personal academic website for Linlin Jia, hosted on GitHub Pages (`jajupmochi/ja
 - **i18n key parity.** The 4 files `locales/{en,zh,fr,de}.json` must have identical key trees. If you add a key to one, add it to all four (the loader falls back to inline defaults but missing keys surface as visible English text).
 - **Content source of truth.** When updating professional content (bio, publications, projects, experience), the authoritative sources are `res/cv/CV_Linlin_Jia_en_*.pdf` and `extra_info_work.md`. If the site disagrees with these, fix the site, not the sources.
 - **Mandatory `UPDATES.md` log.** EVERY change to this repo (content, code, asset, copy, config) MUST add an entry to `UPDATES.md` in the same edit batch. Format: today's date as `# YYYY-MM-DD` H1 (UTC, use `currentDate` from environment or run `date -u +%F`); if multiple distinct change-sets land on the same day, group each under `## V1`, `## V2`, `## V3` H2 sub-headings under the date. Each entry is a short bullet list — what changed and why. **A PR / commit without a corresponding `UPDATES.md` entry is incomplete.** Backfill if missed.
+- **Mandatory `PLAN.md` sync.** If a change matches an existing `PLAN.md` item, update its status marker (`[ ]`→`[~]`→`[✓]`) in the same edit batch. If it introduces new planned work (not shipping today), add the new Horizon / Milestone / Goal / Task entries with fresh IDs. A PR that changes roadmap-relevant behavior without touching `PLAN.md` is incomplete.
+- **Mandatory Master TOC on every doc.** Every markdown file in this repo (root `.md`, `setup/*.md`, `.claude/skills/*/SKILL.md`) MUST start with a `## Master TOC` (or equivalent "Table of contents" section) listing every `##` section as a bullet, using the hierarchy conventions below. Exception: `UPDATES.md` — it is chronological, so the date headings themselves serve as the TOC.
+- **Bilingual docs — two files per doc.** Every repo-level doc MUST ship in both English and Chinese as **two separate files**. Convention: `NAME.md` (English, canonical) + `NAME.zh.md` (Chinese mirror) sitting side-by-side. The top of each file MUST include a one-line language switcher: `> **Language:** English | [中文](NAME.zh.md)` (or the mirror). Code, identifiers, filenames, Horizon/Milestone/Goal/Task IDs, and JSON/YAML inside code blocks stay in English in both versions — only prose is translated. Exceptions: `extra_info_work.md` (Linlin's content source), `CLAUDE.local.md` (private file), `.claude/skills/*/SKILL.md` (consumed by Claude, must stay in English — Chinese mirror optional).
+
+## Documentation conventions
+
+### Master TOC requirement
+
+The first major section of every markdown doc in this repo is its TOC. Format:
+
+```markdown
+# Title
+
+> One-sentence purpose.
+
+## Master TOC
+
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+    - [Subsection 2.1](#subsection-21)
+```
+
+Use multi-level bullets (at least 3 levels where the content warrants it). An AI agent scanning the file should be able to orient itself from the TOC alone.
+
+### PLAN.md — roadmap source of truth
+
+`PLAN.md` at the repo root is the **only** place the long-term / mid-term / current roadmap lives. Do not duplicate roadmap info in README, CLAUDE.md, or inline comments — link to the relevant `PLAN.md` ID instead.
+
+### UPDATES.md — per-change log
+
+`UPDATES.md` is the chronological audit log. Every change lands here as a short bullet under today's date. See `## Hard rules` above.
+
+### Hierarchy + status marker system
+
+Applied in `PLAN.md` and (where useful) in any doc with structured TODOs:
+
+**Hierarchy:**
+
+| Layer | ID | Scope |
+|-------|----|----|
+| **Horizon** | `H<n>` | Strategic theme. Months → years. |
+| **Milestone** | `M<n>` | Concrete deliverable. Weeks → months. |
+| **Goal** | `G<n>` | Testable piece of a Milestone. Days → weeks. |
+| **Task** | `T<n>` | Atomic action, one edit batch. Minutes → hours. |
+
+IDs are assigned in creation order and **never re-numbered**. Full path: `H1.M2.G3.T4`.
+
+**Status markers:**
+
+| Marker | Meaning |
+|--------|---------|
+| `[✓]` | Done — shipped, verified, in the codebase. |
+| `[~]` | In progress — actively being worked on this session. |
+| `[ ]` | Pending — queued, ready to pick up. |
+| `[!]` | Blocked — waiting on dependency / external answer. |
+| `[?]` | Awaiting user input — needs Linlin's manual / external action. |
+| `[x]` | Cancelled — kept for history with a one-line "Why cancelled:" note. |
+
+Parent status rolls up to the most-incomplete child.
 
 ## Preview
 
