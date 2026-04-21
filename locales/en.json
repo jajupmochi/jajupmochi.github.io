@@ -63,8 +63,72 @@
     "showMore": "Show more",
     "showLess": "Show less",
     "search": "Search…",
+    "search_projects": "Search projects...",
+    "search_publications": "Search publications...",
     "all": "All",
     "newest": "Newest First",
-    "oldest": "Oldest First"
+    "oldest": "Oldest First",
+    "most_cited": "Most Cited"
+  },
+  "outline": {
+    "graph_ml_title": "Graph Machine Learning",
+    "graph_ml_desc": "Bridging graph kernels, edit distances, GNNs, transformers. Pre-image and generation problems.",
+    "spatio_temporal_title": "Spatio-Temporal Learning",
+    "spatio_temporal_desc": "Time series with entity embeddings, spatial graphs for environmental forecasting.",
+    "graph_ai_sci_title": "Graph AI for science and industry",
+    "graph_ai_sci_desc": "Computational chemistry, smart engineering, hydrology, digital humanities, finance, healthcare.",
+    "llm_agents_title": "LLM Systems & Agents",
+    "llm_agents_desc": "RAG pipelines, fine-tuning (LoRA), agent orchestration for production AI."
+  },
+  "filters": {
+    "academia": "Academia",
+    "industry": "Industry",
+    "software": "Software",
+    "gnn": "GNN",
+    "llm": "LLM",
+    "chemistry": "Chemistry",
+    "journal": "Journal",
+    "conference": "Conference",
+    "preprint": "Preprint"
+  },
+  "exp": {
+    "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
+    "role_scientific_collab": "Scientific Collaborator",
+    "role_research_fellow": "Research Fellow",
+    "role_postdoc": "Postdoctoral Researcher",
+    "role_phd": "Ph.D. in Computer Science"
+  },
+  "services_cards": {
+    "supervision_title": "Supervision",
+    "supervision_i1": "20+ students supervised",
+    "supervision_i2": "Topics: GNNs, LLMs, Deep Learning",
+    "reviewing_title": "Reviewing",
+    "reviewing_i1": "Pattern Recognition Letters",
+    "reviewing_i2": "Expert Systems with Applications"
+  },
+  "skills_cats": {
+    "programming": "Programming",
+    "ml_ai": "ML/AI",
+    "tools": "Tools & Infra",
+    "domain": "Domain",
+    "languages": "Languages",
+    "ai_tools": "AI Tools"
+  },
+  "welcome": {
+    "title": "Welcome",
+    "subtitle": "Drop a quick note before you look around.",
+    "name_ph": "Your name",
+    "profession_ph": "What brings you here?",
+    "prof_researcher": "Research & Academia",
+    "prof_engineer": "ML/AI Engineering",
+    "prof_student": "Student",
+    "prof_recruiter": "Recruiting",
+    "prof_industry": "Industry",
+    "prof_other": "Just curious",
+    "message_ph": "Short note (optional)",
+    "submit": "Send",
+    "skip": "Maybe later",
+    "thanks_title": "Thank you",
+    "thanks_subtitle": "Message delivered."
   }
 }

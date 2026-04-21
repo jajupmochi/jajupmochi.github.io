@@ -63,8 +63,72 @@
     "showMore": "Mehr anzeigen",
     "showLess": "Weniger anzeigen",
     "search": "Suchen…",
+    "search_projects": "Projekte suchen…",
+    "search_publications": "Publikationen suchen…",
     "all": "Alle",
     "newest": "Neueste zuerst",
-    "oldest": "Älteste zuerst"
+    "oldest": "Älteste zuerst",
+    "most_cited": "Meistzitiert"
+  },
+  "outline": {
+    "graph_ml_title": "Graph-Machine-Learning",
+    "graph_ml_desc": "Brücken zwischen Graph-Kernels, Edit-Distanzen, GNNs und Transformers. Pre-Image- und Generierungsprobleme.",
+    "spatio_temporal_title": "Räumlich-zeitliches Lernen",
+    "spatio_temporal_desc": "Zeitreihen mit Entity-Embeddings, räumliche Graphen für Umweltprognosen.",
+    "graph_ai_sci_title": "Graph-KI für Wissenschaft und Industrie",
+    "graph_ai_sci_desc": "Computerchemie, Smart Engineering, Hydrologie, Digital Humanities, Finanzwesen, Gesundheitswesen.",
+    "llm_agents_title": "LLM-Systeme & -Agenten",
+    "llm_agents_desc": "RAG-Pipelines, Fine-Tuning (LoRA), Agenten-Orchestrierung für Produktions-KI."
+  },
+  "filters": {
+    "academia": "Wissenschaft",
+    "industry": "Industrie",
+    "software": "Software",
+    "gnn": "GNN",
+    "llm": "LLM",
+    "chemistry": "Chemie",
+    "journal": "Journal",
+    "conference": "Konferenz",
+    "preprint": "Preprint"
+  },
+  "exp": {
+    "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
+    "role_scientific_collab": "Wissenschaftlicher Mitarbeiter",
+    "role_research_fellow": "Research Fellow",
+    "role_postdoc": "Postdoctoral Researcher",
+    "role_phd": "Ph.D. in Informatik"
+  },
+  "services_cards": {
+    "supervision_title": "Betreuung",
+    "supervision_i1": "Über 20 Studierende betreut",
+    "supervision_i2": "Themen: GNNs, LLMs, Deep Learning",
+    "reviewing_title": "Reviewing",
+    "reviewing_i1": "Pattern Recognition Letters",
+    "reviewing_i2": "Expert Systems with Applications"
+  },
+  "skills_cats": {
+    "programming": "Programmierung",
+    "ml_ai": "ML/KI",
+    "tools": "Tools & Infra",
+    "domain": "Fachgebiet",
+    "languages": "Sprachen",
+    "ai_tools": "KI-Tools"
+  },
+  "welcome": {
+    "title": "Willkommen",
+    "subtitle": "Hinterlassen Sie kurz eine Nachricht, bevor Sie sich umsehen.",
+    "name_ph": "Ihr Name",
+    "profession_ph": "Was führt Sie hierher?",
+    "prof_researcher": "Forschung & Wissenschaft",
+    "prof_engineer": "ML/KI-Engineering",
+    "prof_student": "Studierende",
+    "prof_recruiter": "Recruiting",
+    "prof_industry": "Industrie",
+    "prof_other": "Einfach neugierig",
+    "message_ph": "Kurze Nachricht (optional)",
+    "submit": "Senden",
+    "skip": "Vielleicht später",
+    "thanks_title": "Vielen Dank",
+    "thanks_subtitle": "Nachricht zugestellt."
   }
 }

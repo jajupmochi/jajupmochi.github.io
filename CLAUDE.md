@@ -30,6 +30,7 @@ Personal academic website for Linlin Jia, hosted on GitHub Pages (`jajupmochi/ja
 - **JSON validity.** `locales/*.json` and `data/*.json` must stay valid JSON — a syntax error breaks the deployed site. Run `jq . <file>` after edits.
 - **i18n key parity.** The 4 files `locales/{en,zh,fr,de}.json` must have identical key trees. If you add a key to one, add it to all four (the loader falls back to inline defaults but missing keys surface as visible English text).
 - **Content source of truth.** When updating professional content (bio, publications, projects, experience), the authoritative sources are `res/cv/CV_Linlin_Jia_en_*.pdf` and `extra_info_work.md`. If the site disagrees with these, fix the site, not the sources.
+- **Mandatory `UPDATES.md` log.** EVERY change to this repo (content, code, asset, copy, config) MUST add an entry to `UPDATES.md` in the same edit batch. Format: today's date as `# YYYY-MM-DD` H1 (UTC, use `currentDate` from environment or run `date -u +%F`); if multiple distinct change-sets land on the same day, group each under `## V1`, `## V2`, `## V3` H2 sub-headings under the date. Each entry is a short bullet list — what changed and why. **A PR / commit without a corresponding `UPDATES.md` entry is incomplete.** Backfill if missed.
 
 ## Preview
 

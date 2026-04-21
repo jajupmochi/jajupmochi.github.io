@@ -63,8 +63,72 @@
     "showMore": "展开更多",
     "showLess": "收起",
     "search": "搜索…",
+    "search_projects": "搜索项目…",
+    "search_publications": "搜索论文…",
     "all": "全部",
     "newest": "最新优先",
-    "oldest": "最早优先"
+    "oldest": "最早优先",
+    "most_cited": "被引最多"
+  },
+  "outline": {
+    "graph_ml_title": "图机器学习",
+    "graph_ml_desc": "贯通图核、编辑距离、GNN 与 Transformer；处理预映像与图生成问题。",
+    "spatio_temporal_title": "时空学习",
+    "spatio_temporal_desc": "结合实体嵌入的时间序列、面向环境预测的空间图模型。",
+    "graph_ai_sci_title": "图 AI 用于科学与工业",
+    "graph_ai_sci_desc": "计算化学、智能工程、水文学、数字人文、金融、医疗健康。",
+    "llm_agents_title": "LLM 系统与智能体",
+    "llm_agents_desc": "RAG 管线、微调（LoRA）、面向生产 AI 的智能体编排。"
+  },
+  "filters": {
+    "academia": "学术",
+    "industry": "工业",
+    "software": "软件",
+    "gnn": "GNN",
+    "llm": "LLM",
+    "chemistry": "化学",
+    "journal": "期刊",
+    "conference": "会议",
+    "preprint": "预印本"
+  },
+  "exp": {
+    "role_advanced_postdoc": "高级博士后研究员",
+    "role_scientific_collab": "科研合作者",
+    "role_research_fellow": "研究员",
+    "role_postdoc": "博士后研究员",
+    "role_phd": "计算机科学博士"
+  },
+  "services_cards": {
+    "supervision_title": "指导",
+    "supervision_i1": "已指导 20+ 学生",
+    "supervision_i2": "方向：GNN、LLM、深度学习",
+    "reviewing_title": "审稿",
+    "reviewing_i1": "Pattern Recognition Letters",
+    "reviewing_i2": "Expert Systems with Applications"
+  },
+  "skills_cats": {
+    "programming": "编程",
+    "ml_ai": "ML/AI",
+    "tools": "工具与基础设施",
+    "domain": "领域",
+    "languages": "语言",
+    "ai_tools": "AI 工具"
+  },
+  "welcome": {
+    "title": "欢迎",
+    "subtitle": "浏览之前简单留个言吧。",
+    "name_ph": "您的姓名",
+    "profession_ph": "您为什么来到这里？",
+    "prof_researcher": "研究与学术",
+    "prof_engineer": "ML/AI 工程",
+    "prof_student": "学生",
+    "prof_recruiter": "招聘",
+    "prof_industry": "工业界",
+    "prof_other": "随便看看",
+    "message_ph": "简短留言（可选）",
+    "submit": "发送",
+    "skip": "稍后再说",
+    "thanks_title": "感谢您",
+    "thanks_subtitle": "信息已送达。"
   }
 }

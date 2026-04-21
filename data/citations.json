@@ -3,43 +3,62 @@
   "total_citations": 130,
   "h_index": 7,
   "i10_index": 5,
-  "last_updated": "2026-04-02T00:00:00Z",
+  "last_updated": "2026-04-21T00:00:00Z",
   "publications": [
+    {
+      "title": "Spatio-Temporal Transformers with Entity Embeddings for Swiss River Water Temperature Prediction",
+      "year": 2026,
+      "venue": "ICPR 2026 (accepted)"
+    },
     {
       "title": "Predicting Redox Potentials by Graph-Based Machine Learning Methods",
       "year": 2024,
       "citations": 9,
-      "doi": "10.1002/jcc.27441"
+      "doi": "10.1002/jcc.27441",
+      "venue": "Journal of Computational Chemistry"
     },
     {
-      "title": "Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons",
-      "year": 2022,
-      "citations": 25,
-      "doi": "10.1016/j.eswa.2021.115983"
-    },
-    {
-      "title": "The Weisfeiler-Lehman Kernel on Graphs: Methods and Comparisons",
-      "year": 2021,
-      "citations": 70,
-      "doi": "10.1016/j.patcog.2020.107689"
-    },
-    {
-      "title": "Bridging Distinct Spaces in Graph-Based Machine Learning",
+      "title": "Bridging Distinct Spaces in Graph-based Machine Learning",
       "year": 2023,
       "citations": 5,
       "venue": "ACPR 2023"
     },
     {
-      "title": "Learning for Graph Pre-image: A Unified Framework",
-      "year": 2020,
-      "citations": 15,
-      "venue": "ICML GRL+ Workshop"
+      "title": "Epi-DNNs: Epidemiological Priors Informed Deep Neural Networks For Modeling COVID-19 Dynamics",
+      "year": 2023,
+      "venue": "Computers in Biology and Medicine"
     },
     {
-      "title": "Graph Edit Distance: A Comprehensive Review",
-      "year": 2019,
-      "citations": 20,
-      "venue": "IEEE/ACM TCBB"
+      "title": "A Study on the Stability of Graph Edit Distance Heuristics",
+      "year": 2022,
+      "venue": "Electronics"
+    },
+    {
+      "title": "Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons",
+      "year": 2022,
+      "citations": 25,
+      "doi": "10.1016/j.eswa.2021.115983",
+      "venue": "Expert Systems with Applications"
+    },
+    {
+      "title": "graphkit-learn: A Python Library for Graph Kernels Based on Linear Patterns",
+      "year": 2021,
+      "venue": "Pattern Recognition Letters"
+    },
+    {
+      "title": "A Graph Pre-image Method Based on Graph Edit Distances",
+      "year": 2021,
+      "venue": "SPR/SSPR 2020 Workshops Proceedings"
+    },
+    {
+      "title": "A Metric Learning Approach to Graph Edit Costs for Regression",
+      "year": 2021,
+      "venue": "SPR/SSPR 2020 Workshops Proceedings"
+    },
+    {
+      "title": "A Kind of Name Data Network Mobility Switching Method Predicted Using ELM",
+      "year": 2016,
+      "venue": "China Patent CN106376041B"
     }
   ]
 }

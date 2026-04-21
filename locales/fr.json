@@ -63,8 +63,72 @@
     "showMore": "Voir plus",
     "showLess": "Voir moins",
     "search": "Rechercher…",
+    "search_projects": "Rechercher des projets…",
+    "search_publications": "Rechercher des publications…",
     "all": "Tous",
     "newest": "Plus récent d'abord",
-    "oldest": "Plus ancien d'abord"
+    "oldest": "Plus ancien d'abord",
+    "most_cited": "Plus cités"
+  },
+  "outline": {
+    "graph_ml_title": "Machine Learning sur graphes",
+    "graph_ml_desc": "Des noyaux de graphes et distances d'édition aux GNN et Transformers. Problèmes de pré-image et de génération.",
+    "spatio_temporal_title": "Apprentissage spatio-temporel",
+    "spatio_temporal_desc": "Séries temporelles avec embeddings d'entités, graphes spatiaux pour la prévision environnementale.",
+    "graph_ai_sci_title": "IA sur graphes pour la science et l'industrie",
+    "graph_ai_sci_desc": "Chimie computationnelle, ingénierie intelligente, hydrologie, humanités numériques, finance, santé.",
+    "llm_agents_title": "Systèmes & agents LLM",
+    "llm_agents_desc": "Pipelines RAG, fine-tuning (LoRA), orchestration d'agents pour l'IA en production."
+  },
+  "filters": {
+    "academia": "Académique",
+    "industry": "Industrie",
+    "software": "Logiciel",
+    "gnn": "GNN",
+    "llm": "LLM",
+    "chemistry": "Chimie",
+    "journal": "Revue",
+    "conference": "Conférence",
+    "preprint": "Preprint"
+  },
+  "exp": {
+    "role_advanced_postdoc": "Chercheur postdoctoral avancé",
+    "role_scientific_collab": "Collaborateur scientifique",
+    "role_research_fellow": "Chargé de recherche",
+    "role_postdoc": "Chercheur postdoctoral",
+    "role_phd": "Doctorat en informatique"
+  },
+  "services_cards": {
+    "supervision_title": "Encadrement",
+    "supervision_i1": "Plus de 20 étudiant·e·s encadré·e·s",
+    "supervision_i2": "Sujets : GNN, LLM, Deep Learning",
+    "reviewing_title": "Relecture",
+    "reviewing_i1": "Pattern Recognition Letters",
+    "reviewing_i2": "Expert Systems with Applications"
+  },
+  "skills_cats": {
+    "programming": "Programmation",
+    "ml_ai": "ML/IA",
+    "tools": "Outils & Infra",
+    "domain": "Domaine",
+    "languages": "Langues",
+    "ai_tools": "Outils IA"
+  },
+  "welcome": {
+    "title": "Bienvenue",
+    "subtitle": "Laissez un petit mot avant de vous balader.",
+    "name_ph": "Votre nom",
+    "profession_ph": "Qu'est-ce qui vous amène ?",
+    "prof_researcher": "Recherche & académique",
+    "prof_engineer": "Ingénierie ML/IA",
+    "prof_student": "Étudiant·e",
+    "prof_recruiter": "Recrutement",
+    "prof_industry": "Industrie",
+    "prof_other": "Simple curiosité",
+    "message_ph": "Petit mot (optionnel)",
+    "submit": "Envoyer",
+    "skip": "Plus tard",
+    "thanks_title": "Merci",
+    "thanks_subtitle": "Message bien reçu."
   }
 }
