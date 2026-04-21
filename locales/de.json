@@ -106,6 +106,14 @@
     "role_phd": "Ph.D. in Informatik",
     "desc_phd": "Dissertation: „Machine Learning and Pattern Recognition in Chemoinformatics\" — Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme."
   },
+  "thesis": {
+    "badge": "Dissertation · 2021",
+    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "institution": "LITIS Lab, INSA Rouen Normandie, Frankreich",
+    "subtitle": "Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme im Kontext des molekularen Graph-Learnings. Betreut von Paul Honeine und Benoit Gaüzère.",
+    "download": "Dissertation (PDF)",
+    "slides": "Verteidigungsfolien"
+  },
   "services_cards": {
     "supervision_title": "Betreuung",
     "supervision_i1": "Über 20 Studierende betreut",

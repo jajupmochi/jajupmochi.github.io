@@ -57,6 +57,7 @@
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
         - [G6 — 合作机构露出](#g6--合作机构露出) `[~]`
+        - [G7 — 博士论文接入（timeline + Publications）](#g7--博士论文接入timeline--publications) `[✓]`
     - [M1.2 — SEO + AI 搜索可见度](#m12--seo--ai-搜索可见度) `[~]`
         - [G1 — Schema.org 覆盖](#g1--schemaorg-覆盖) `[✓]`
         - [G2 — 多语言可爬取](#g2--多语言可爬取) `[✓]`
@@ -138,9 +139,17 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 - `[ ]` H1.M1.G5.T2 — 自动拉取 Google Scholar 引用数据（目前手工；见 H2.M2.G2）。
 
 #### G6 — 合作机构露出
-> 2026-04-21 V5 根据 Linlin 指令 #5 加入。决策：单独的 "Partners" 卡片网格会分散机构识别度，且与 Research Areas / Experience 在视觉权重上冲突；把合作机构放进一句 About 段落，信号强、占地小。
-- `[✓]` H1.M1.G6.T1 — `about.p5` 合作机构段（University of Basel、ETH Zürich、HES-SO Fribourg、University of Zürich、Inselspital Bern、AWS、N-Banker、China Pharmaceutical University），4 语种同步。
+> 2026-04-21 V5 根据 Linlin 指令 #5 加入。V6 (2026-04-21) 改方案：原本的 `about.p5` 大段合作机构段落根据 Linlin 反馈 "合作者不要加到 About Me，加到 projects 和 papers 对应部分" 被 revert。存活意图改为把每个合作机构嵌到对应的项目/论文卡片里，让关系紧挨具体产物。
+- `[x]` H1.M1.G6.T1 — （V6 取消）`about.p5` 合作机构段（University of Basel、ETH Zürich、HES-SO Fribourg、University of Zürich、Inselspital Bern、AWS、N-Banker、China Pharmaceutical University）。取消原因：段落级露出与 About Me 的个人履历定位冲突；卡级才是目标策略——由下方 T3 承接。
 - `[✓]` H1.M1.G6.T2 — Virtual Bodmer 项目伙伴（Université de Genève、Fondation Martin Bodmer、Archaeo-Scientific Lab）写进 Scientific Collaborator 时间线描述而非 About — 属具体项目资源，不是长期合作。
+- `[ ]` H1.M1.G6.T3 — 把合作机构嵌入到项目/论文卡片：N-Banker（AWS + FinTech 合作方）、OCTOPUSSY（Arkema + 工业高分子团队）、EpidNN（University of Basel + Inselspital Bern）、GraphInk（Université de Genève + Fondation Bodmer）。与 news-external 链接、论文 preprint/video/slides 元数据一起归并到 Batch B。
+
+#### G7 — 博士论文接入（timeline + Publications）
+> 2026-04-21 V7 加入。决策依据：博士论文原本只躺在 CV 里，站上完全不露；招聘方要翻开 CV PDF 才看到那 260 页的产物，Publications 区块又从 2026 ICPR 论文开场，奠基之作被排挤到视线外。两条动线各放一个触点——按时间线浏览 Experience 的读者 / 从 Publications 开始扫的读者都能在一屏内抵达论文。
+- `[✓]` H1.M1.G7.T1 — PhD 时间线条目新增 `.timeline-links` 行（`index_en.html:888`），包含 Thesis PDF + Defense slides 两个按钮；复用既有 `.pub-link` 样式，主题 hover 色直接继承。
+- `[✓]` H1.M1.G7.T2 — Publications 区块顶部新增 `.thesis-highlight` 特色卡（`index_en.html:1031`），位于 filter 控件之上，任意 filter / 排序组合下都常驻可见。
+- `[✓]` H1.M1.G7.T3 — 新增 6 条 `thesis.*` i18n 键（`badge` / `title` / `institution` / `subtitle` / `download` / `slides`）× 4 语种。当前共 119 键。按学术惯例 `thesis.title` 四个语种均保留英文原题。
+- `[✓]` H1.M1.G7.T4 — `.thesis-highlight*` + `.timeline-links` CSS（`css/main.css`）。chrome-devtools 跨主题视觉验证：`ai-generated` / `industrial` / `fancy`。
 
 ### M1.2 — SEO + AI 搜索可见度
 

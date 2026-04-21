@@ -106,6 +106,14 @@
     "role_phd": "Doctorat en informatique",
     "desc_phd": "Thèse : « Machine Learning and Pattern Recognition in Chemoinformatics » — Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image."
   },
+  "thesis": {
+    "badge": "Thèse de doctorat · 2021",
+    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "institution": "Laboratoire LITIS, INSA Rouen Normandie, France",
+    "subtitle": "Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image appliqués à l'apprentissage sur graphes moléculaires. Encadré par Paul Honeine et Benoit Gaüzère.",
+    "download": "PDF de la thèse",
+    "slides": "Diapos de soutenance"
+  },
   "services_cards": {
     "supervision_title": "Encadrement",
     "supervision_i1": "Plus de 20 étudiant·e·s encadré·e·s",

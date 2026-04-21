@@ -61,6 +61,7 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
         - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[~]`
+        - [G7 — Ph.D. thesis integration (timeline + Publications)](#g7--phd-thesis-integration-timeline--publications) `[✓]`
     - [M1.2 — SEO + AI-search visibility](#m12--seo--ai-search-visibility) `[~]`
         - [G1 — Schema.org coverage](#g1--schemaorg-coverage) `[✓]`
         - [G2 — Multilingual crawlability](#g2--multilingual-crawlability) `[✓]`
@@ -143,9 +144,17 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 - `[ ]` H1.M1.G5.T2 — Auto-pull citations from Google Scholar (currently manual; see H2.M2.G2).
 
 #### G6 — Partners / collaborators surface
-> Added 2026-04-21 V5 per Linlin directive #5. Rationale: a single collaborators paragraph keeps institutional recognition high-signal low-footprint — a dedicated "Partners" card grid would fragment identity and compete with Experience / Research Areas for visual weight.
-- `[✓]` H1.M1.G6.T1 — `about.p5` collaborators paragraph (University of Basel, ETH Zürich, HES-SO Fribourg, University of Zürich, Inselspital Bern, AWS, N-Banker, China Pharmaceutical University); 4-locale parity.
+> Added 2026-04-21 V5 per Linlin directive #5. Tactic changed in V6 (2026-04-21): the all-in-one `about.p5` paragraph was reverted on Linlin's feedback "合作者不要加到 About Me，加到 projects 和 papers 对应部分". Surviving intent: surface collaborators at the card level so each relationship lives next to its concrete artifact.
+- `[x]` H1.M1.G6.T1 — (cancelled in V6) `about.p5` collaborators paragraph (University of Basel, ETH Zürich, HES-SO Fribourg, University of Zürich, Inselspital Bern, AWS, N-Banker, China Pharmaceutical University). Why cancelled: paragraph-level surface competed with About Me's bio focus; card-level is the preferred tactic — superseded by T3 below.
 - `[✓]` H1.M1.G6.T2 — Virtual Bodmer project partners (Université de Genève, Fondation Martin Bodmer, Archaeo-Scientific Lab) mentioned in Scientific Collaborator timeline description rather than About — project-specific artifact, not a long-term collaboration.
+- `[ ]` H1.M1.G6.T3 — Surface collaborators on project / publication cards: N-Banker (AWS + FinTech partners), OCTOPUSSY (Arkema + industrial polymer team), EpidNN (University of Basel + Inselspital Bern), GraphInk (Université de Genève + Fondation Bodmer). Scheduled for Batch B alongside news-external links and pub preprint/video/slides metadata.
+
+#### G7 — Ph.D. thesis integration (timeline + Publications)
+> Added 2026-04-21 V7. Rationale: dissertation was listed in the CV but invisible on-site — recruiters had to dig into the CV PDF to see the ~260-page artifact, and the Publications section opened straight on a 2026 paper while the foundational work sat offstage. Dual surface (timeline action row + Publications highlight card) so both "I'm browsing Experience chronologically" and "I'm scanning Publications" readers arrive at the thesis.
+- `[✓]` H1.M1.G7.T1 — PhD timeline `.timeline-links` action row (`index_en.html:888`) with Thesis PDF + Defense slides buttons reusing the existing `.pub-link` style so theme hover tint carries over.
+- `[✓]` H1.M1.G7.T2 — `.thesis-highlight` featured card at top of Publications section (`index_en.html:1031`), placed above filter controls so it stays visible across every filter / sort combination.
+- `[✓]` H1.M1.G7.T3 — 6 new `thesis.*` i18n keys (`badge` / `title` / `institution` / `subtitle` / `download` / `slides`) × 4 locales. Parity now 119 keys. Thesis title kept as English in all 4 locales per academic convention.
+- `[✓]` H1.M1.G7.T4 — `.thesis-highlight*` + `.timeline-links` CSS (`css/main.css`). Cross-theme visual verify via chrome-devtools on `ai-generated` / `industrial` / `fancy`.
 
 ### M1.2 — SEO + AI-search visibility
 

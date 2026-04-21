@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-04-21](#2026-04-21)
+    - [V7 — A4 thesis integration (timeline + Publications highlight)](#v7--a4-thesis-integration-timeline--publications-highlight) — Ph.D. dissertation surfaced on-site for the first time: PhD timeline now exposes Thesis PDF + Defense slides buttons; Publications section opens with a featured highlight card above filters. 6 new `thesis.*` i18n keys × 4 locales (119 total). Cross-theme visual verify via chrome-devtools.
     - [V6 — Batch A wrap-up + SEO audit round-2 P0 cleanup](#v6--batch-a-wrap-up--seo-audit-round-2-p0-cleanup) — Batch A: `about.p5` collaborators reverted (will move to cards in Batch B), Personal/Blog coming-soon toast, cross-theme lightbox verified. SEO round-2: 4 `href="#"` dead links fixed, meta description 210→~160 chars.
     - [V5 — Content polish, collaborators surface, figure lightbox, timeline i18n parity](#v5--content-polish-collaborators-surface-figure-lightbox-timeline-i18n-parity) — MSc/BSc line appended to About, new `about.p5` collaborators summary, 5 `exp.desc_*` keys × 4 locales, services cards restructure, click-to-enlarge lightbox (CSS + JS + a11y).
     - [V4 — Docs folder reorg + vibe audit integration](#v4--docs-folder-reorg--vibe-audit-integration) — PLAN/UPDATES/setup → `docs/`, Jekyll archived, vibe items land as `H1.M2.G4` + `H1.M3.G4` + new `H1.M4`.
@@ -27,6 +28,49 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-04-21
+
+## V7 — A4 thesis integration (timeline + Publications highlight)
+
+Goal: close out the last Batch A item — surface Linlin's Ph.D. dissertation in two discoverable places. The thesis was listed in the CV (`res/cv/CV_Linlin_Jia_en.pdf`) but had no on-site touch point, which hurt two audiences at once: recruiters looking for evidence of deep research training, and the Publications section itself (which opened straight on a 2026 paper while the ~260-page dissertation sat offstage).
+
+### What changed
+
+- **PhD timeline entry (`index_en.html:888-895`)**: Added a `.timeline-links` action row directly under `timeline-desc`. Two buttons using the existing `.pub-link` class so the theme-adaptive hover tint already verified in V5 carries over without new CSS audits:
+    - **Thesis PDF** → `res/thesis/2021_thesis_linlin_jia.pdf` (new asset, 7.7 MB).
+    - **Defense slides** → `res/thesis/2021_thesis_slides_linlin_jia.pdf` (new asset, 8.1 MB, preserved verbatim from 2021).
+- **Thesis highlight block at the top of Publications (`index_en.html:1031-1050`)**: Featured `.thesis-highlight` card placed above the filter controls so it stays visible under any filter (`All` / `Journal` / `Conference` / `Preprint`) + any sort (Newest / Oldest / Most cited). Not part of `.pubs-list` so it's never sorted away. Components:
+    - Circular icon wrapper (`fa-book-open`) with theme-adaptive background (`--bg-subtle`).
+    - 4 px left-border accent in `--primary` (falls back to `--accent` in `fancy`).
+    - Badge: "Ph.D. Dissertation · 2021" in uppercase-letter-spaced primary tint.
+    - Title (thesis's full title), meta line (`L. Jia · LITIS Lab, INSA Rouen Normandie, France`), one-sentence description with advisor attribution.
+    - Two download buttons (Thesis PDF + Defense slides) matching the timeline set — duplication is intentional: recruiter may skim top-down and never click into Experience.
+- **CSS (`css/main.css`)**: New `.thesis-highlight*` block (7 rules: container, icon, body, badge, title, meta, desc, links) + a single-rule `.timeline-links` utility for the PhD-timeline button row. All rules use the existing `--bg-white` / `--bg-subtle` / `--border-light` / `--text-*` / `--primary` vars so `ai-generated` / `academic` / `industrial` / `fancy` inherit without new theme forks. Mobile breakpoint at `max-width: 600px` collapses the icon-beside-text layout into an icon-above-text stack.
+- **i18n keys — 6 new × 4 locales = 24 new strings**: `thesis.badge`, `thesis.title`, `thesis.institution`, `thesis.subtitle`, `thesis.download`, `thesis.slides` added to EN / ZH / FR / DE. Thesis title kept as the original English phrase in all 4 locales (academic convention — papers / dissertations don't get translated titles). Parity verified at 119 keys across all 4 via `scripts/check_i18n_parity.py`.
+
+### Cross-theme visual verification (chrome-devtools)
+
+- `fancy` (default at session start): pink/magenta left border, pink icon circle, readable on soft-pink background.
+- `ai-generated`: purple `--primary`, white card bg, book icon clean on light grey circle.
+- `industrial` (dark): orange/amber accents on dark card, high-contrast text, buttons readable.
+- `academic`: skipped as a separate screenshot — shares the light scheme with `ai-generated` and the theme's only delta is muted primary color; confirmed by CSS var usage review.
+- Mobile layout verified by reviewing the `.thesis-highlight` flex rule — no physical resize captured (would require device emulation which adds noise for a rule this simple).
+
+### PLAN.md sync
+
+- New Goal **`H1.M1.G7`** — Ph.D. thesis integration (timeline + Publications). 4 Tasks all `[✓]`.
+- Side fix: `H1.M1.G6.T1` flipped `[✓]` → `[x]` (cancelled). The V6 log said "kept `[~]`" but the PLAN had lagged at `[✓]` from the V5 original state; truth is that the `about.p5` paragraph tactic was reverted in V6, so the task's output no longer exists in the codebase. New `H1.M1.G6.T3` added to carry the surviving intent (collaborator surface at the card level) — scheduled for Batch B.
+
+### Assets added to the repo
+
+- `res/thesis/2021_thesis_linlin_jia.pdf` (7.7 MB) — final archival copy, same file uploaded to the INSA Rouen thesis repository in 2021.
+- `res/thesis/2021_thesis_slides_linlin_jia.pdf` (8.1 MB) — defense slide deck, same file.
+
+Deliberately **not** staged in this commit (V5-prep scaffolding for Batch B, to be wired into Publications cards with their own test pass):
+
+- `res/figures/2021_sspr_preimage_intro.svg`
+- `res/figures/2022_eswa_graph_kernels_graph_representations.png`
+- `res/figures/2023_cbm_epidnn_abstract_page.png`
+- `images/IMG_20231010_155307.jpg` (candidate Personal-section photo, not yet placed)
 
 ## V6 — Batch A wrap-up + SEO audit round-2 P0 cleanup
 

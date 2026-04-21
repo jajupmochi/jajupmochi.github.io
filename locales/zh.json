@@ -106,6 +106,14 @@
     "role_phd": "计算机科学博士",
     "desc_phd": "博士论文：《Machine Learning and Pattern Recognition in Chemoinformatics》——图核、图编辑距离与预映像问题。"
   },
+  "thesis": {
+    "badge": "博士论文 · 2021",
+    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "institution": "LITIS 实验室，INSA Rouen Normandie，法国",
+    "subtitle": "图核、图编辑距离与预映像问题在分子图学习中的应用。导师：Paul Honeine 与 Benoit Gaüzère。",
+    "download": "论文 PDF",
+    "slides": "答辩幻灯片"
+  },
   "services_cards": {
     "supervision_title": "指导",
     "supervision_i1": "已指导 20+ 学生",

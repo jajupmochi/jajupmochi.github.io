@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-04-21](#2026-04-21)
+    - [V7 — A4 博士论文接入（timeline + Publications 高亮块）](#v7--a4-博士论文接入timeline--publications-高亮块) — 博士论文首次在站上露出：PhD 时间线新增 Thesis PDF + Defense slides 按钮；Publications 区块顶部新增高亮卡片，位于 filter 之上保证始终可见。新增 6 个 `thesis.*` i18n 键 × 4 语种（共 119 键）。已通过 chrome-devtools 做跨主题视觉回归。
     - [V6 — Batch A 收尾 + SEO 审计第二轮 P0 清理](#v6--batch-a-收尾--seo-审计第二轮-p0-清理) — Batch A：`about.p5` 合作机构段 revert（Batch B 改进项目/论文卡）、Personal/Blog coming-soon toast、跨主题 lightbox 校验。SEO 第二轮：4 处 `href="#"` 死链修复、meta description 210→~160 字符。
     - [V5 — 内容润色、合作机构露出、figure 放大镜、时间线 i18n 补齐](#v5--内容润色合作机构露出figure-放大镜时间线-i18n-补齐) — About 追加 MSc/BSc 行、新增 `about.p5` 合作机构段、5 个 `exp.desc_*` 键 × 4 语种、服务卡重排、点击放大镜（CSS + JS + a11y）。
     - [V4 — docs 目录重组 + vibe 审计并入](#v4--docs-目录重组--vibe-审计并入) — PLAN/UPDATES/setup → `docs/`、Jekyll 归档、vibe 项落入 `H1.M2.G4` + `H1.M3.G4` + 新 `H1.M4`。
@@ -27,6 +28,49 @@
 - [2023-09-27](#2023-09-27) — 新增多篇论文 + CV。
 
 # 2026-04-21
+
+## V7 — A4 博士论文接入（timeline + Publications 高亮块）
+
+目标：完成 Batch A 最后一项——把 Linlin 的博士论文在站上以两个可发现的位置露出。论文原本只在 CV（`res/cv/CV_Linlin_Jia_en.pdf`）里列出，站上没有任何触点，两边都吃亏：招聘方没法快速判断你的深度研究积累；Publications 区块的第一眼又是 2026 年的 ICPR 论文，那本 260 页的博士论文反而被挤出视线。
+
+### 具体改动
+
+- **PhD 时间线条目（`index_en.html:888-895`）**：在 `timeline-desc` 下方新增一行 `.timeline-links` 按钮组，两个按钮复用 V5 已校验过的 `.pub-link` 样式，主题 hover 色直接继承，无需新一轮 CSS 审查：
+    - **Thesis PDF** → `res/thesis/2021_thesis_linlin_jia.pdf`（新资源，7.7 MB）。
+    - **Defense slides** → `res/thesis/2021_thesis_slides_linlin_jia.pdf`（新资源，8.1 MB，保持 2021 年原件）。
+- **Publications 区块顶部 thesis 高亮块（`index_en.html:1031-1050`）**：新 `.thesis-highlight` 特色卡放在 filter 控件之上——不属于 `.pubs-list`，不会被筛选/排序带走，任何 filter（`All` / `Journal` / `Conference` / `Preprint`）+ 任何排序（最新/最早/引用最多）组合下都常驻。组件：
+    - 圆形图标容器（`fa-book-open`），背景用 `--bg-subtle`，主题自适配。
+    - 4 px 左边框强调色，使用 `--primary`（`fancy` 主题回落到 `--accent`）。
+    - 徽标：`Ph.D. Dissertation · 2021`，大写 + 字母间距，主题强调色。
+    - 完整论文标题、学术信息行（`L. Jia · LITIS Lab, INSA Rouen Normandie, France`）、一行附带导师信息的描述。
+    - 两个下载按钮（Thesis PDF + Defense slides），与 timeline 那组重复——有意为之：招聘方可能只扫顶部就离开，绝不进 Experience。
+- **CSS（`css/main.css`）**：新增 7 条 `.thesis-highlight*` 规则（容器、图标、正文、徽标、标题、附注、描述、按钮组）+ 一条 `.timeline-links` 工具类。全部使用既有 `--bg-white` / `--bg-subtle` / `--border-light` / `--text-*` / `--primary` 变量，`ai-generated` / `academic` / `industrial` / `fancy` 不需要新增主题分支即可继承。`max-width: 600px` 移动端断点把图标在正文旁的横向布局折叠成图标在正文上方的纵向布局。
+- **i18n 键位——新增 6 条 × 4 语种 = 24 条字符串**：`thesis.badge`、`thesis.title`、`thesis.institution`、`thesis.subtitle`、`thesis.download`、`thesis.slides`，同步加入 EN / ZH / FR / DE。学术惯例论文/学位论文不译标题，故 4 个语种里 `thesis.title` 都保留英文原题。`scripts/check_i18n_parity.py` 校验：119 键四语种对齐。
+
+### 跨主题视觉验证（chrome-devtools）
+
+- `fancy`（会话开始默认值）：粉/洋红左边框，粉色图标圆，柔粉背景上字清晰。
+- `ai-generated`：紫色 `--primary`，白底卡，图标在浅灰圆里，整体干净。
+- `industrial`（深色）：深卡上橙/琥珀强调色，文字高对比，按钮清晰。
+- `academic`：没单独截图——与 `ai-generated` 共享亮色方案，差异只在主色更克制；已通过 CSS 变量使用审核确认。
+- 移动布局：通过审阅 `.thesis-highlight` 的 flex 规则确认，未做实机 resize 截图（这种简单规则加设备模拟反而噪音）。
+
+### PLAN.md 同步
+
+- 新增 Goal **`H1.M1.G7`** — 博士论文接入（timeline + Publications 高亮块）。4 条 Task 全部 `[✓]`。
+- 顺手修复：`H1.M1.G6.T1` 由 `[✓]` 改为 `[x]`（cancelled）。V6 日志声称 "kept `[~]`"，但 PLAN 实际还停在 V5 当初的 `[✓]`——这是个 sync 漏掉；`about.p5` 段在 V6 已经从代码里撤掉，该 Task 的产出已不在代码库中。新增 `H1.M1.G6.T3` 承接真正存活下来的合作机构卡级露出意图（归并进 Batch B）。
+
+### 新增资源
+
+- `res/thesis/2021_thesis_linlin_jia.pdf`（7.7 MB）——归档最终版本，与 2021 年 INSA Rouen 论文仓库同档。
+- `res/thesis/2021_thesis_slides_linlin_jia.pdf`（8.1 MB）——答辩幻灯片，同样保留原档。
+
+**本次有意不入库**（V5 准备的 Batch B 脚手架，等接入对应卡片后再单独走一次视觉验证）：
+
+- `res/figures/2021_sspr_preimage_intro.svg`
+- `res/figures/2022_eswa_graph_kernels_graph_representations.png`
+- `res/figures/2023_cbm_epidnn_abstract_page.png`
+- `images/IMG_20231010_155307.jpg`（候选 Personal 栏相片，还没决定放哪）
 
 ## V6 — Batch A 收尾 + SEO 审计第二轮 P0 清理
 
