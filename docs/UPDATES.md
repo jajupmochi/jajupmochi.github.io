@@ -9,6 +9,8 @@
 ## Master TOC
 
 - [2026-04-21](#2026-04-21)
+    - [V9 — SEO audit round-3 P0–P5 + UX polish + Projects 9-card CV-aligned refactor](#v9--seo-audit-round-3-p0p5--ux-polish--projects-9-card-cv-aligned-refactor) — SEO: sitemap broken-URL fix + 6 new figure URLs, `<h2>` i18n attrs for Beyond/Blog, title/description keyword tightening, citation counts into Person + 8 ScholarlyArticle schemas. UX: coming-soon toast glass-morphism rewrite, pub-thumbnail 180×140→220×172 with halved padding, thesis spacing above. Structural: Projects refactored to 9 CV-aligned cards — Virtual Bodmer deleted, OCTOPUSSY+RedoxPrediction merged, PLANALYSER/APi/SDN added, all `<a class="project-card">` → `<div>` with new `.project-links` footer widget + delegated JS click handler. 6 new i18n keys × 4 locales (124 total).
+    - [V8 — Batch-B preprocessing (thesis repositioned, pub figures, patent i18n, services icon)](#v8--batch-b-preprocessing-thesis-repositioned-pub-figures-patent-i18n-services-icon) — Four parallel polish items ahead of Batch B: thesis highlight moved from top → bottom of Publications, 6 pub cards gain real figures (+ figure-filename rename to `YYYY_venue_*`), patent link now locale-aware via new `data-i18n-href-map` attr, Associations card icon `fa-edit` → `fa-id-badge`.
     - [V7 — A4 thesis integration (timeline + Publications highlight)](#v7--a4-thesis-integration-timeline--publications-highlight) — Ph.D. dissertation surfaced on-site for the first time: PhD timeline now exposes Thesis PDF + Defense slides buttons; Publications section opens with a featured highlight card above filters. 6 new `thesis.*` i18n keys × 4 locales (119 total). Cross-theme visual verify via chrome-devtools.
     - [V6 — Batch A wrap-up + SEO audit round-2 P0 cleanup](#v6--batch-a-wrap-up--seo-audit-round-2-p0-cleanup) — Batch A: `about.p5` collaborators reverted (will move to cards in Batch B), Personal/Blog coming-soon toast, cross-theme lightbox verified. SEO round-2: 4 `href="#"` dead links fixed, meta description 210→~160 chars.
     - [V5 — Content polish, collaborators surface, figure lightbox, timeline i18n parity](#v5--content-polish-collaborators-surface-figure-lightbox-timeline-i18n-parity) — MSc/BSc line appended to About, new `about.p5` collaborators summary, 5 `exp.desc_*` keys × 4 locales, services cards restructure, click-to-enlarge lightbox (CSS + JS + a11y).
@@ -28,6 +30,116 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-04-21
+
+## V9 — SEO audit round-3 P0–P5 + UX polish + Projects 9-card CV-aligned refactor
+
+Goal: close out the SEO audit priority list (P0 sitemap hygiene through P5 citation-count signals), land the three UX fixes Linlin flagged after V8 (ugly coming-soon toast, undersized pub thumbnails, no breathing room above thesis highlight), and — the big one — reshape the Projects section to match the formal CV project list with per-card multi-link footers. Whole change-set is driven by "recruiters skimming the site should see the same projects, same titles, same scope as the PDF CV, plus every related URL one click away."
+
+### 1. SEO audit round-3 follow-through (P0–P5)
+
+- **P0 — `sitemap.xml` broken URLs fixed + 6 new figure URLs added** (`sitemap.xml:54-78`): Two `<image:loc>` entries pointed at filenames renamed in V8 (`icpr2026_*` → `2026_icpr_*`, `jcc2023_*` → `2023_jcc_*`); both would 404 on Google Images crawl. Patched. Added 6 new `<image:loc>` for V8's pub-card figures (EpidNN, Electronics stability, ESWA kernels, PRL accuracy, SSPR pre-image, SSPR GED metric) so the indexer discovers them without having to render the page.
+- **P1 — `<h2>` i18n attrs for Beyond Research + Blog** (`index_en.html:1423, 1543` + 4 locales): Both headings were static English under a `data-i18n` parent section but the `<h2>` itself had no attr — zh/fr/de visitors got mixed-language headings. Added `sections.beyond`, `sections.blog`, `beyond.subtitle`, `blog.label` keys to EN/ZH/FR/DE. Parity at 124 keys/locale.
+- **P2 — Title keyword tightening** (`index_en.html:5`): `Linlin Jia, Ph.D. — ML Research Scientist | Graph ML · LLM` (60 chars, on the Google SERP cutoff line). Trades the vaguer "AI Research" for the higher-intent "LLM" keyword Linlin is targeting this job search.
+- **P3 — Meta description trimmed to 148 chars** (`index_en.html:6`): Previous 160+ char description got ellipsized on Google SERPs. New: "Linlin Jia, Ph.D. — Graph ML, LLM Agents, Spatio-Temporal Forecasting, AI for Science. Postdoc at U. Bern. Open to ML Research Scientist roles." Keeps the 4 target keywords + role + availability signal.
+- **P4 — FAQPage / BreadcrumbList / WebSite schemas** — audit flagged as missing, verification showed they were already present at `index_en.html:340-428` (added in V2). No-op; marked complete for audit-trail clarity.
+- **P5 — Citation counts injected into all 9 publication schemas** (`index_en.html` Person block + 8 ScholarlyArticle blocks): Person schema now carries `interactionStatistic` with `@type: InteractionCounter`, `interactionType: https://schema.org/CiteAction`, `userInteractionCount: 130` (total per `data/citations.json`). Each ScholarlyArticle gets its own per-paper InteractionCounter: J24=9, ACPR=1, CBM=61, Electronics=2, ESWA=25, PRL=14, W21b=9, W21a=7. Google Scholar–indexed counts so Google / Scholar / LLM-assisted rankers see peer-validation signal without needing to scrape the page's visible `.citation-count` spans.
+
+### 2. UX polish (three Linlin flags)
+
+- **Coming-soon toast — glass-morphism rewrite** (`index_en.html:1609` + `css/main.css:~2935`): Previous toast was a plain translucent pill with tight body text — Linlin called it "太丑" (too ugly). Rewrite: centered card (280–420 px wide, clamped by viewport), 18 px backdrop blur + 160% saturation, 44×44 icon badge (`fa-screwdriver-wrench`), two-line title + subtitle, soft drop shadow + primary-tinted 1 px ring, subtle `scale(0.92) → 1.0` cubic-bezier entrance for springy bounce. Theme overrides: industrial → dark card + neon-green icon, fancy → pink gradient + slightly more saturation. New i18n keys `comingSoon.title` + `comingSoon.sub` replace single-line `comingSoon.text`. Cross-theme verified via chrome-devtools.
+- **Pub-thumbnail 180×140 → 220×172 + halved padding** (`index_en.html` 10 img dims + `css/main.css:~1841, ~1857`): Linlin's directive — "图片放大，左/上 padding 减半，下 padding 等于上 padding"（enlarge figure, halve left/top padding, bottom padding = top padding）. Card padding `1.5rem` → `0.75rem 1.5rem 0.75rem 0.75rem` (halved on top+left, bottom = top). Grid `180px 1fr` → `220px 1fr`, gap 1.5rem → 1.25rem. `.pub-thumbnail` max-width 180→220 px, height 140→172 px (preserved 5:4 aspect ratio). All 10 `<img>` elements inside pub-cards updated via `replace_all` with the unique string `" loading=\"lazy\" width=\"180\" height=\"140\">"` — project-card images (400×180) untouched.
+- **Thesis highlight — `margin-top: 2rem` above** (`css/main.css:~1767`): Without spacing the thesis card butted directly against the last pub card in the carousel, visually flattening the Ph.D. capstone into the list. Added breathing room so it reads as a closing statement rather than another list item.
+
+### 3. Projects 9-card CV-aligned refactor
+
+The big structural change. Re-reading V7 with Linlin's CV open, the Projects section was a pile of somewhat-arbitrary cards — some were grants, some were code repos, some were placeholder `#projects` anchors. None matched the CV's `Projects` section verbatim. Recruiters reading the CV + site together would see different names.
+
+- **Virtual Bodmer removed**: Card deleted entirely. Linlin's decision — project scope didn't materialize and the HES-SO link was weak.
+- **OCTOPUSSY + RedoxPrediction merged** into a single card "OCTOPUSSY — Optimization of Polymers Using Sustainable SYnthesis" (formal CV title). Redox was the implementation deliverable of OCTOPUSSY, and two separate cards was confusing. Merged card carries both the 2023_jcc_redox_framework figure and footer links to GitHub `RedoxPrediction` + JCC 2024 DOI.
+- **3 new cards added from CV**:
+    - **PLANALYSER — Automated HVAC-Concept Audit and Optimisation using AI** (2024-2025, INNOSUISSE, iCoSys + WATTELSE AG). Industry badge. Footer: ARAMIS/INNOSUISSE grant page + WATTELSE startup page.
+    - **APi — Apprivoiser la Pré-image** (2018-2021, ANR). Thesis-grant card. Footer: ANR grant page + LITIS project homepage + "Papers" anchor. Uses `2021_sspr_preimage_intro.svg` as figure.
+    - **Service-oriented Programmable Control and Scheduling for Software Defined Network** (2014-2017, M.Sc. research at XJTU). Footer: Google Patents page for CN106376041B. Uses `2016_patent_elm_google_patent_page.png` as figure.
+- **All 9 cards restructured** as `<div class="project-card" data-primary-href="…" role="link" tabindex="0">` instead of `<a class="project-card">`. Nested `<a>` (needed for the new footer link strip) is invalid HTML inside an `<a>`, so the outer wrapper became a div. Delegated JS click handler in `js/main.js:611-640` (`document.addEventListener('click', …)`): card-body click → navigate to `data-primary-href` (new tab if external); footer link clicks bubble to their own `<a>`; cmd/ctrl/middle-click opens new tab; keyboard Enter/Space works for a11y.
+- **Formal CV names + full descriptions**: Every title swapped to the exact CV wording (e.g. "Spatio-Temporal GNN for River Temperature Forecasting" → "Spatio-Temporal Graph Convolutional Networks for River Temperature Forecasting"), descriptions expanded to include funder + institutional collaborators + outputs as stated in CV.
+- **`.project-links` footer widget** (`css/main.css:1588-1625`): New block matching `.pub-link` visual idiom — dashed top border, flex-wrapped pills (background `--bg-subtle`, color `--primary`, hover → filled primary with 1 px translateY). Footer icons: `fa-file-signature` for funding pages, `fa-globe` for platform/project homepages, `fa-handshake` for partner pages, `fab fa-github` for code repos, `fa-file-lines` for linked papers, `fa-certificate` for patent.
+- **data-primary-href targets per card**: ST-GCN → SNSF 206352 grant; N-Banker → platform homepage; GraphInk → SNSF 217594 grant; graphkit-learn → GitHub repo; PLANALYSER → ARAMIS grant; Graph Matching → SNSF 188496 grant; OCTOPUSSY → RedoxPrediction GitHub; APi → LITIS project page; SDN → Google Patents.
+
+### Cross-theme visual verification (chrome-devtools)
+
+- Live page at `http://localhost:8000/index_en.html#projects` programmatically inspected: 9 `.project-card` elements, all `DIV` tags, all carrying valid `data-primary-href`, `role="link"`, `tabindex="0"`, cursor `pointer`. Per-card link counts: 3, 2, 1, 2, 2, 3, 2, 3, 1 — matches intent.
+- Default theme `ai-generated` screenshot: page 1 shows ST-GCN / N-Banker / GraphInk with footer strips reading `Funding · Code · Paper` / `Platform · Partner` / `Funding`; page 2 (graphkit-learn / PLANALYSER / Graph Matching); page 3 (OCTOPUSSY / APi / SDN with the distinctive Google Patents screenshot).
+- `industrial` theme: orange accents on footer pills, background switch to dark card, text readable. Orbitron headers render cleanly with the longer formal titles.
+- `fancy` theme: pink/magenta accents on footer pills, butterflies render around cards unaffected. Longer titles wrap gracefully (no overflow).
+- `academic` theme: not re-screenshot; CSS vars inherit from `ai-generated` except muted primary hue. Confirmed by rule-path review.
+
+### i18n parity
+
+- 6 new keys added / swapped in `locales/{en,zh,fr,de}.json`: `sections.beyond`, `sections.blog`, `beyond.subtitle`, `blog.label`, `comingSoon.title`, `comingSoon.sub`. Legacy `comingSoon.text` removed.
+- Total keys per locale: 124. Parity verified (identical key trees across all 4 files). Project card titles / descriptions deliberately NOT i18n'd — formal project names stay in their official language (same convention as paper titles).
+
+### PLAN.md sync
+
+- `H1.M1.G2.T*` (Projects) — three new tasks: T_ delete Bodmer, T_ merge OCTOPUSSY+Redox, T_ add PLANALYSER/APi/SDN with footer widget.
+- `H1.M2.G4.T*` (Head hygiene) — P0/P1/P2/P3/P5 marked `[✓]`, P4 closed as already-present.
+- `H1.M1.G6.T*` — closed (collaborators surfaced via project-card content + partner links).
+
+### Not in this change-set (deliberately)
+
+- Paper-to-project back-reference chips under each pub card (Linlin's "对应论文下的url标签也可依此更新" — optional per her "可以" wording). Skipped for this V; can land as V9.1 if desired.
+- `index_zh.html` sync — zh is a separate legacy page, re-styled project card refactor would require its own session.
+
+## V8 — Batch-B preprocessing (thesis repositioned, pub figures, patent i18n, services icon)
+
+Goal: four unrelated-but-small polish items staged ahead of the larger Batch B work (B1-B7 sequence that Linlin queued). Each item stands on its own but shares the "get the site visually correct first, then do the structural surgery" prelude. No new i18n keys, no schema changes, no CSS additions — the surgery touches HTML only plus a 12-line JS helper.
+
+### What changed
+
+- **Thesis highlight: top of Publications → bottom** (`index_en.html:1238-1260`): The V7 placement put the `.thesis-highlight` card above the filter controls, which pushed the 2026 ICPR accepted announcement below-the-fold on a recruiter's first scroll. Decision: let "what I'm shipping now" (ICPR 2026) open the section, and let the foundational 2021 thesis close it as a summary. Position verified via chrome-devtools `compareDocumentPosition` (`isAfterPubsList: true`) and visual screenshot showing the thesis card immediately above the Academic Services section.
+- **6 new figures attached to pub cards** (`index_en.html:1117-1220`): Publications cards J23 (CompBioMed EpidNN), J22b (Electronics GED stability), J22a (ESWA graph-kernel representations), J21 (PRL graphkit-learn), W21b (SSPR pre-image), W21a (SSPR GED metric learning) were still using bare Font Awesome icons as thumbnails. Swapped each for a `<img>` of a real figure from the paper:
+    - `res/figures/2023_cbm_epidnn_abstract_page.png`
+    - `res/figures/2022_electronics_ged_stability_results.png`
+    - `res/figures/2022_eswa_graph_kernels_graph_representations.png`
+    - `res/figures/2021_prl_gklearn_accuracy.svg`
+    - `res/figures/2021_sspr_preimage_intro.svg`
+    - `res/figures/2021_sspr_ged_learning_framework.png`
+    - All 6 verified in browser with `naturalWidth > 0` (734-3135 px source), preserving the existing overlay badge ("CompBioMed" / "Electronics" / etc.) on top of the image.
+- **Figure filename rename to `YYYY_venue_*` convention** (`index_en.html` 4 references): `icpr2026_swissriver_diagram.svg` → `2026_icpr_swissriver_diagram.svg` (2 usages: project card + pub card); `jcc2023_redox_framework.{svg,png}` → `2023_jcc_redox_framework.{svg,png}` (4 usages). The old filenames put the venue first and year second, which didn't sort chronologically in a directory listing. New convention aligns with how the other 2021–2026 figures are named.
+- **Patent link locale-aware href** (`index_en.html:1231` + `js/main.js:128-137`):
+    - New generic HTML attribute `data-i18n-href-map='{"zh":"…","en":"…/en","fr":"…/en","de":"…/en"}'` on the P16 patent anchor.
+    - New handler in `applyTranslations(lang)`: for every element carrying `data-i18n-href-map`, parse the JSON and swap the `href` to the locale-matching URL. Silent on malformed JSON (leaves href unchanged).
+    - Behavior: Chinese visitors land on the Chinese-language Google Patents page (`https://patents.google.com/patent/CN106376041B`); en / fr / de visitors land on the English-translated version (`/en` suffix). Verified in browser by calling `applyTranslations('zh' / 'fr' / 'de' / 'en')` and reading the live `href`: all four return the expected value.
+    - Generic enough to support future locale-differentiated external URLs (regional news coverage, translated video mirrors).
+- **Associations card icon `fa-edit` → `fa-id-badge`** (`index_en.html:1252`): `fa-edit` (a pencil-on-paper glyph) semantically fits "Reviewing" (editorial work on submitted papers) but mismatches "Associations" (membership in SAPR / Marie Curie Alumni / LITIS). Swapped to `fa-id-badge` — the member-card glyph matches the "I belong to these professional bodies" semantic. The Reviewing card at `:1260` deliberately keeps `fa-edit`.
+
+### Cross-theme visual verification (chrome-devtools)
+
+- Hard-reload with cache bypass, then programmatic checks in the live page:
+    - Thesis card present at bottom: ✓
+    - All 6 figures loaded (`naturalWidth` 734, 794, 1112, 1130, 1482, 3135 px): ✓
+    - Association icon class = `fas fa-id-badge`: ✓
+    - Patent initial href (EN default) = `…/en`: ✓
+    - `applyTranslations('zh')` swaps href to `…CN106376041B` (no `/en`): ✓
+    - `applyTranslations('fr' | 'de' | 'en')` swaps href back to `…CN106376041B/en`: ✓
+- Screenshot captured: `/tmp/thesis_at_bottom.png` — shows ACPR card → thesis highlight → Academic Services handoff in the default `ai-generated` theme; all styling preserved from V7.
+- `fancy` / `industrial` / `academic` not re-screenshot: the thesis block's CSS is unchanged from V7 (which was already verified on all 4 themes); only its DOM position moved. Position change doesn't trigger any theme-specific CSS path.
+
+### Figure asset hygiene
+
+- Six new figures now referenced by HTML, tracked by git:
+    - Previously untracked / moved-in from V7 prep staging; now actively used.
+- Three old filenames (`icpr2026_swissriver_diagram.svg`, `jcc2023_redox_framework.{png,svg}`) deleted; replaced with year-first variants.
+
+### PLAN.md sync
+
+- `H1.M1.G1.T3` (new) — figure renames + 6 pub-card attachments.
+- `H1.M1.G7.T5` (new) — thesis highlight relocation top → bottom.
+- `H1.M2.G2.T3` (new) — patent link locale-aware href via `data-i18n-href-map`.
+- `H1.M2.G4.T2` (new) — Associations icon `fa-edit` → `fa-id-badge`.
+
+### Not in this change-set (deliberately)
+
+- Batch B items B2 (collaborator surfacing on cards), B3 (pub preprint/video/slides metadata), B4 (news external links), B5 (LinkedIn skill regrouping), B6 (i18n staleness script), B7 (55 missing `data-i18n` elements). Those land in subsequent V's per Linlin's sequence "B1-B6-B2-B3 4 5 7".
 
 ## V7 — A4 thesis integration (timeline + Publications highlight)
 

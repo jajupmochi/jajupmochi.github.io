@@ -45,7 +45,15 @@
     "software": "Logiciels & outils",
     "services": "Services académiques",
     "skills": "Compétences & technologies",
-    "contact": "Contact"
+    "contact": "Contact",
+    "beyond": "Au-delà de la recherche",
+    "blog": "Blog"
+  },
+  "beyond": {
+    "subtitle": "Loisirs, bénévolat et vie en dehors du laboratoire"
+  },
+  "blog": {
+    "label": "Pensées & écrits"
   },
   "about": {
     "p1": "Je suis <strong>chercheur postdoctoral avancé</strong> à l'Université de Berne, en Suisse, au sein du <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">groupe Pattern Recognition</a>. Mon expertise couvre <strong>l'apprentissage de représentations sur graphes</strong>, <strong>l'apprentissage profond spatio-temporel</strong> et les <strong>systèmes d'IA basés sur les LLM</strong>.",
@@ -54,7 +62,8 @@
     "p4": "Je recherche activement des opportunités de <strong>ML Research Scientist / Engineer</strong>, en milieu académique comme industriel, avec un accent sur l'apprentissage sur graphes, l'apprentissage spatio-temporel, le calcul scientifique, et la découverte et les applications industrielles pilotées par l'IA."
   },
   "comingSoon": {
-    "text": "Bientôt disponible — page en construction"
+    "title": "Bientôt disponible",
+    "sub": "Cette page est encore en construction — revenez bientôt."
   },
   "contact": {
     "address": "Lieu",

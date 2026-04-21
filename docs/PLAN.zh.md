@@ -56,13 +56,14 @@
         - [G3 — News](#g3--news) `[ ]`
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
-        - [G6 — 合作机构露出](#g6--合作机构露出) `[~]`
+        - [G6 — 合作机构露出](#g6--合作机构露出) `[✓]`
         - [G7 — 博士论文接入（timeline + Publications）](#g7--博士论文接入timeline--publications) `[✓]`
+        - [G8 — UX 打磨（V9 Linlin 标记）](#g8--ux-打磨v9-linlin-标记) `[✓]`
     - [M1.2 — SEO + AI 搜索可见度](#m12--seo--ai-搜索可见度) `[~]`
         - [G1 — Schema.org 覆盖](#g1--schemaorg-覆盖) `[✓]`
         - [G2 — 多语言可爬取](#g2--多语言可爬取) `[✓]`
         - [G3 — AI 搜索优化](#g3--ai-搜索优化) `[ ]`
-        - [G4 — Head 清理（非 schema 类）](#g4--head-清理非-schema-类) `[ ]`
+        - [G4 — Head 清理（非 schema 类）](#g4--head-清理非-schema-类) `[~]`
         - [G5 — 第二轮审计 P0 清理（链接卫生 + description 截短）](#g5--第二轮审计-p0-清理链接卫生--description-截短) `[✓]`
     - [M1.3 — 移动 / 无障碍 / 性能](#m13--移动--无障碍--性能) `[ ]`
         - [G1 — Lighthouse 全绿](#g1--lighthouse-全绿) `[✓]`
@@ -113,16 +114,22 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 #### G1 — Publications
 - `[✓]` H1.M1.G1.T1 — 已用真实 CV pubs（J24/C23/J23/J22b/J22a/J21/W21b/W21a/P16）+ ICPR 2026 替换 3 条幻觉条目。
 - `[✓]` H1.M1.G1.T2 — 3 张 SVG 图嵌入对应 pub 卡。
+- `[✓]` H1.M1.G1.T3 —（2026-04-21 V8）figure 文件名统一为 `YYYY_venue_*` 约定（`icpr2026_swissriver_diagram.{svg,png}` → `2026_icpr_swissriver_diagram.{svg,png}`；`jcc2023_redox_framework.{svg,png}` → `2023_jcc_redox_framework.{svg,png}`），并为 6 张仍在用 Font Awesome 占位图标的论文卡补上真实 figure：J23（CompBioMed EpidNN abstract）、J22b（Electronics GED 稳定性结果）、J22a（ESWA 图核表示）、J21（PRL graphkit-learn 准确度）、W21b（SSPR pre-image intro）、W21a（SSPR GED 学习框架）。chrome-devtools 里 6 张都验证 `naturalWidth > 0`。
 
 #### G2 — Projects
-- `[~]` H1.M1.G2.T1 — 对照 `extra_info_work.md` 逐卡校对所有项目（对应 task #47）。
+- `[✓]` H1.M1.G2.T1 — 对照 `extra_info_work.md` + CV 逐卡校对所有项目（2026-04-21 V9 通过 9 卡 CV 重构完成；每张卡标题现在逐字匹配 CV）。
 - `[ ]` H1.M1.G2.T2 — 新增 **LIULIAN platform** 卡（置顶；关键个人基础设施）。来源：extra_info_work.md §LIULIAN。
-- `[ ]` H1.M1.G2.T3 — 新增 **PLANALYSER** 卡（2024-2025 Innosuisse），标注 NDA。
+- `[✓]` H1.M1.G2.T3 — 新增 **PLANALYSER — Automated HVAC-Concept Audit and Optimisation using AI** 卡（2026-04-21 V9 完成）。INNOSUISSE 2024-2025，合作方 iCoSys + WATTELSE AG。底部链接：ARAMIS 立项页 + WATTELSE 初创页。Industry 徽标，data-tags `academia,industry` 使其在两个 filter 下都出现。
 - `[ ]` H1.M1.G2.T4 — 新增 **Local Confidential Translator** 卡（个人 MVP）。
-- `[ ]` H1.M1.G2.T5 — 调整 **N-Banker** 描述的中性措辞（使用 "key AI advisor" / "key AI contributor" 而非 CTO / CAIO）。
-- `[ ]` H1.M1.G2.T6 — 按 extra_info_work.md 刷新 **OCTOPUSSY** + **Virtual Bodmer** 文案。
+- `[✓]` H1.M1.G2.T5 — 用 CV 正式名 "1st Global Neobank Research Center" 刷新 **N-Banker** 描述（2026-04-21 V9 完成）。中性措辞；无 CTO / CAIO 标签。底部：平台主页 + PolyU 合作方页。
+- `[x]` H1.M1.G2.T6 — 按 extra_info_work.md 刷新 **OCTOPUSSY** + **Virtual Bodmer** 文案。取消原因：V9 方案变更——Virtual Bodmer 被整张删除（Linlin 决定；HES-SO 链接弱、范围未落地），OCTOPUSSY 与 RedoxPrediction 合并为单张按 CV 命名的卡。由 T9 + T10 + T11 承接。
 - `[✓]` H1.M1.G2.T7 — 新增 **GraphInk** 卡并带图（2026-04-21 V2 完成）。
 - `[✓]` H1.M1.G2.T8 — 新增 **Graph Matching Algorithms (SNSF 2023-2024)** 卡并带图（2026-04-21 V2 完成）。
+- `[✓]` H1.M1.G2.T9 —（2026-04-21 V9）整张删除 **Virtual Bodmer** 项目卡。Linlin 决定：范围未落地；HES-SO 合作链接弱。从 `index_en.html` 移除；无 i18n 键副作用（项目卡文案原本就未 i18n）。
+- `[✓]` H1.M1.G2.T10 —（2026-04-21 V9）把 **OCTOPUSSY** + **RedoxPrediction** 合并为一张卡，标题 **"OCTOPUSSY — Optimization of Polymers Using Sustainable SYnthesis"**（CV 正式名）。依据：RedoxPrediction 本就是 OCTOPUSSY 的实现产出，两张卡反而令人困惑。合并卡同时承载 `2023_jcc_redox_framework.svg` 图 + 底部到 GitHub `RedoxPrediction` + JCC 2024 DOI 的链接。
+- `[✓]` H1.M1.G2.T11 —（2026-04-21 V9）补齐 CV 缺的 2 张卡：**APi — Apprivoiser la Pré-image**（2018-2021，ANR，博士经费）用 `2021_sspr_preimage_intro.svg` 作图，底部 ANR 立项 + LITIS 项目页 + "Papers" 锚。**Service-oriented Programmable Control and Scheduling for Software Defined Network**（2014-2017，XJTU 硕士研究）用 `2016_patent_elm_google_patent_page.png` 作图，底部 Google Patents CN106376041B 链接。
+- `[✓]` H1.M1.G2.T12 —（2026-04-21 V9）结构性重构——全部 9 张项目卡：`<a class="project-card">` → `<div class="project-card" data-primary-href="…" role="link" tabindex="0">`。原因：底部链接条里的 `<a>` 嵌到外层 `<a>` 在 HTML 规范上非法。`js/main.js:611-640` 加代理式点击处理（`document.addEventListener('click', …)`），点卡主体 → 按 `data-primary-href` 跳转（外部链接开新标签）；点底部链接冒泡到各自的 `<a>`；cmd/ctrl/middle-click 开新页；键盘 Enter/Space 可触达（a11y）。
+- `[✓]` H1.M1.G2.T13 —（2026-04-21 V9）`.project-links` 底部控件（`css/main.css:1588-1625`）：dashed 顶部边框、flex-wrap 药丸式，视觉与 `.pub-link` 一致。图标：`fa-file-signature`（立项 / 经费）、`fa-globe`（平台 / 项目主页）、`fa-handshake`（合作方）、`fab fa-github`（代码仓）、`fa-file-lines`（关联论文）、`fa-certificate`（专利）。各卡 `data-primary-href`：ST-GCN → SNSF 206352；N-Banker → 平台主页；GraphInk → SNSF 217594；graphkit-learn → GitHub 仓；PLANALYSER → ARAMIS 立项；Graph Matching → SNSF 188496；OCTOPUSSY → RedoxPrediction GitHub；APi → LITIS 项目页；SDN → Google Patents。各卡链接数：3, 2, 1, 2, 2, 3, 2, 3, 1。
 
 #### G3 — News
 - `[ ]` H1.M1.G3.T1 — 新增 2025 年条目（GraphInk launch、LIULIAN 早期原型）。
@@ -142,7 +149,7 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 > 2026-04-21 V5 根据 Linlin 指令 #5 加入。V6 (2026-04-21) 改方案：原本的 `about.p5` 大段合作机构段落根据 Linlin 反馈 "合作者不要加到 About Me，加到 projects 和 papers 对应部分" 被 revert。存活意图改为把每个合作机构嵌到对应的项目/论文卡片里，让关系紧挨具体产物。
 - `[x]` H1.M1.G6.T1 — （V6 取消）`about.p5` 合作机构段（University of Basel、ETH Zürich、HES-SO Fribourg、University of Zürich、Inselspital Bern、AWS、N-Banker、China Pharmaceutical University）。取消原因：段落级露出与 About Me 的个人履历定位冲突；卡级才是目标策略——由下方 T3 承接。
 - `[✓]` H1.M1.G6.T2 — Virtual Bodmer 项目伙伴（Université de Genève、Fondation Martin Bodmer、Archaeo-Scientific Lab）写进 Scientific Collaborator 时间线描述而非 About — 属具体项目资源，不是长期合作。
-- `[ ]` H1.M1.G6.T3 — 把合作机构嵌入到项目/论文卡片：N-Banker（AWS + FinTech 合作方）、OCTOPUSSY（Arkema + 工业高分子团队）、EpidNN（University of Basel + Inselspital Bern）、GraphInk（Université de Genève + Fondation Bodmer）。与 news-external 链接、论文 preprint/video/slides 元数据一起归并到 Batch B。
+- `[✓]` H1.M1.G6.T3 —（2026-04-21 V9）合作机构在 9 卡 CV 重构中通过项目卡级露出。每张卡的描述都列出对应的机构合作方（例如 PLANALYSER → iCoSys + WATTELSE AG、N-Banker → Digital Financial Services Research Center / PolyU、ST-GCN → ETH + U. Basel、Graph Matching → ETH Zürich、OCTOPUSSY → Arkema + 工业高分子团队），`.project-links` 底部控件直接放合作方 / 机构 URL（例如 N-Banker `fa-handshake` → PolyU KTEO 页、PLANALYSER → WATTELSE startup.ch 页）。卡级露出替换了 V6 取消的 `about.p5` 段落方案——合作方出现在具体产物旁边。
 
 #### G7 — 博士论文接入（timeline + Publications）
 > 2026-04-21 V7 加入。决策依据：博士论文原本只躺在 CV 里，站上完全不露；招聘方要翻开 CV PDF 才看到那 260 页的产物，Publications 区块又从 2026 ICPR 论文开场，奠基之作被排挤到视线外。两条动线各放一个触点——按时间线浏览 Experience 的读者 / 从 Publications 开始扫的读者都能在一屏内抵达论文。
@@ -150,6 +157,13 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 - `[✓]` H1.M1.G7.T2 — Publications 区块顶部新增 `.thesis-highlight` 特色卡（`index_en.html:1031`），位于 filter 控件之上，任意 filter / 排序组合下都常驻可见。
 - `[✓]` H1.M1.G7.T3 — 新增 6 条 `thesis.*` i18n 键（`badge` / `title` / `institution` / `subtitle` / `download` / `slides`）× 4 语种。当前共 119 键。按学术惯例 `thesis.title` 四个语种均保留英文原题。
 - `[✓]` H1.M1.G7.T4 — `.thesis-highlight*` + `.timeline-links` CSS（`css/main.css`）。chrome-devtools 跨主题视觉验证：`ai-generated` / `industrial` / `fancy`。
+- `[✓]` H1.M1.G7.T5 —（2026-04-21 V8）把 `.thesis-highlight` 从 Publications 顶端（filter 控件之上）搬到**底端**（`#pubsList` 关闭后、section 容器关闭前）。依据：V7 的顶端摆放会把 2026 ICPR 的 accepted 公告挤到折叠线以下；搬到底端后，"我现在在做什么"作为开场卡，基础性的博士论文作为收尾总结。chrome-devtools `compareDocumentPosition` 验证 `isAfterPubsList: true`，卡 + 两个下载按钮渲染保持原样。
+
+#### G8 — UX 打磨（V9 Linlin 标记）
+> 2026-04-21 V9 加入。V8 上线后 Linlin 标的三件独立 UX 修正：coming-soon toast 看起来很廉价、论文缩略图太小招聘方一眼看不清 figure、thesis 高亮卡紧贴论文最后一张没有留白。每项都小，但每项都是用户反馈，打包进 V9 让本次 change-set 自成一体。
+- `[✓]` H1.M1.G8.T1 —（2026-04-21 V9）Coming-soon toast 玻璃拟态重写（`index_en.html:1609` + `css/main.css:~2935`）。居中卡 280-420 px（viewport 夹紧）、18 px backdrop blur + 160% 饱和度、44×44 图标徽章 `fa-screwdriver-wrench`、两行标题 + 副标题、柔软阴影 + 主色 1 px ring、`scale(0.92) → 1.0` cubic-bezier 入场。主题覆盖：industrial → 深卡 + 霓虹绿图标，fancy → 粉色渐变。新增 i18n 键 `comingSoon.title` + `comingSoon.sub` 替换旧单行 `comingSoon.text`。chrome-devtools 跨主题验证。重写原因：Linlin 对 V6 药丸式 toast 的直接反馈 "太丑"。
+- `[✓]` H1.M1.G8.T2 —（2026-04-21 V9）论文缩略图放大 + padding 减半（`index_en.html` 10 个 `<img>` dim + `css/main.css:~1841, ~1857`）。指令原文："图片放大，左/上 padding 减半，下 padding 等于上 padding"。卡片 padding `1.5rem` → `0.75rem 1.5rem 0.75rem 0.75rem`（上 + 左减半、下 = 上）。Grid `180px 1fr` → `220px 1fr`、gap `1.5rem` → `1.25rem`。`.pub-thumbnail` max-width 180→220 px、height 140→172 px（保持 5:4 比例）。10 张论文卡 `<img>` 用 `replace_all` 替唯一串 `" loading=\"lazy\" width=\"180\" height=\"140\">"`——项目卡图（400×180）不受影响。
+- `[✓]` H1.M1.G8.T3 —（2026-04-21 V9）Thesis 高亮卡 `margin-top: 2rem`（`css/main.css:~1767`）。不加间距的话，thesis 卡会直接顶着 carousel 最后一张论文，在视觉上把 Ph.D. 收官作品压成又一条列表项。加上空白让 thesis 读成收尾陈述，而非列表项。纯 CSS 改动，无 HTML / i18n 影响。
 
 ### M1.2 — SEO + AI 搜索可见度
 
@@ -161,10 +175,12 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[✓]` H1.M2.G1.T2 — ScholarlyArticle JSON-LD（10 条）。
 - `[✓]` H1.M2.G1.T3 — SoftwareSourceCode JSON-LD（graphkit-learn 等）。
 - `[✓]` H1.M2.G1.T4 — WebSite + FAQPage + BreadcrumbList JSON-LD（2026-04-21 V2 完成）。
+- `[✓]` H1.M2.G1.T5 —（2026-04-21 V9，SEO 审计第三轮 P5）把引用次数注入 Person + 全部 8 篇 ScholarlyArticle schema，用 `interactionStatistic`，`@type: InteractionCounter`、`interactionType: https://schema.org/CiteAction`、`userInteractionCount: <N>`。Person 带 `data/citations.json` 的总数（130）；每篇 ScholarlyArticle 各自带一份：J24=9、ACPR=1、CBM=61、Electronics=2、ESWA=25、PRL=14、W21b=9、W21a=7。让 Google / Scholar / LLM rerank 不必爬可见 `.citation-count` span 就能拿到同行认可信号。
 
 #### G2 — 多语言可爬取
 - `[✓]` H1.M2.G2.T1 — hreflang `?lang=` URL 变体。
 - `[✓]` H1.M2.G2.T2 — sitemap.xml 从 3 → 13 URL，并用 `xhtml:link` 声明 alternate。
+- `[✓]` H1.M2.G2.T3 —（2026-04-21 V8）通过新增的 `data-i18n-href-map` 属性，在 `applyTranslations`（`js/main.js`）里按当前语种切换 `href`。中文访客现在落在中文版 Google Patents 页（`/patent/CN106376041B`），en / fr / de 访客落在英文版（`/patent/CN106376041B/en`）。依据：读 CN 专利的中文读者适合 Google 原生中文渲染；其他语种读者适合英文摘要。方案足够通用，后续按语种切换的外链（区域媒体报道、视频镜像）都可复用。
 
 #### G3 — AI 搜索优化
 - `[ ]` H1.M2.G3.T1 — `llms.txt` 约定稳定后加上（目前还在草案阶段）。
@@ -172,8 +188,13 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[ ]` H1.M2.G3.T3 — 考虑 Mastodon / Bluesky 身份验证作为 AI grounding 信号。
 
 #### G4 — Head 清理（非 schema 类）
-> 来源：2026-04-20 vibe 审计 §三 SEO / 可发现性。
+> 来源：2026-04-20 vibe 审计 §三 SEO / 可发现性。2026-04-21 V9 扩展为 SEO 审计第三轮 P0–P3 收尾（sitemap 卫生 + section 标题 i18n attr 奇偶 + title/description 关键词收紧）。
 - `[ ]` H1.M2.G4.T1 — 删掉过时的 `<meta name="keywords">`（`index_en.html:8`）。现代搜索引擎已不参考，保留只是噪音。
+- `[✓]` H1.M2.G4.T2 —（2026-04-21 V8）Associations 卡图标 `fa-edit` → `fa-id-badge`（`index_en.html:1252`）。`fa-edit` 语义贴合 "Reviewing"（审稿），但与 "Associations"（SAPR / Marie Curie Alumni / LITIS 会员身份）不匹配；换成 `fa-id-badge` 会员卡图形更匹配成员身份语义。Reviewing 卡保留 `fa-edit`。
+- `[✓]` H1.M2.G4.T3 —（2026-04-21 V9，SEO 审计第三轮 P0）`sitemap.xml` 失效 URL 修复 + 补 6 条新图链接（`sitemap.xml:54-78`）。两条 `<image:loc>` 还指着 V8 改过名的文件（`icpr2026_*` → `2026_icpr_*`、`jcc2023_*` → `2023_jcc_*`），谷歌图搜爬取必 404。已修。新增 6 条 `<image:loc>`，覆盖 V8 接入的论文卡 figure（EpidNN、Electronics 稳定性、ESWA 核、PRL 精度、SSPR pre-image、SSPR GED 度量）——让索引器不用渲染页面就能发现这些图。
+- `[✓]` H1.M2.G4.T4 —（2026-04-21 V9，SEO 审计第三轮 P1）Beyond Research + Blog 两个 `<h2>` 补 i18n 属性（`index_en.html:1423, 1543` + 4 语种）。两个标题虽然在有 `data-i18n` 的 `<section>` 下，但 `<h2>` 自身没有 attr——zh/fr/de 访客看到的是"中文页面夹着英文标题"。新增 `sections.beyond`、`sections.blog`、`beyond.subtitle`、`blog.label` 键到 EN/ZH/FR/DE。奇偶：124 键/语种。
+- `[✓]` H1.M2.G4.T5 —（2026-04-21 V9，SEO 审计第三轮 P2）Title 关键词收紧（`index_en.html:5`）。新版：`Linlin Jia, Ph.D. — ML Research Scientist | Graph ML · LLM`（60 字符，Google SERP 截断线上）。把偏泛的 "AI Research" 换成更高意图的 "LLM"——这是 Linlin 本轮求职的目标关键词。
+- `[✓]` H1.M2.G4.T6 —（2026-04-21 V9，SEO 审计第三轮 P3）Meta description 截到 148 字符（`index_en.html:6`）。上一版 160+ 字符（V6 G5.T1 截过一次）在 SERP 上仍会被省略号截掉。新版："Linlin Jia, Ph.D. — Graph ML, LLM Agents, Spatio-Temporal Forecasting, AI for Science. Postdoc at U. Bern. Open to ML Research Scientist roles."。保留 4 个目标关键词 + 身份 + 求职信号。在 V6 截短（210 → 156）的基础上进一步收紧。
 
 #### G5 — 第二轮审计 P0 清理（链接卫生 + description 截短）
 > 2026-04-21 V6 新增。来源：2026-04-21 跑的第二轮 SEO 审计（综合评分 92/100 —— "优秀基础"）。4 处 `href="#"` 死链 + 1 处过长 meta description 被标记为 P0，同一个 edit batch 一起落，无布局 / schema 改动。

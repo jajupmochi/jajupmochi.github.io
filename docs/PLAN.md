@@ -60,13 +60,14 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G3 — News](#g3--news) `[ ]`
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
-        - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[~]`
+        - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[✓]`
         - [G7 — Ph.D. thesis integration (timeline + Publications)](#g7--phd-thesis-integration-timeline--publications) `[✓]`
+        - [G8 — UX polish (V9 Linlin flags)](#g8--ux-polish-v9-linlin-flags) `[✓]`
     - [M1.2 — SEO + AI-search visibility](#m12--seo--ai-search-visibility) `[~]`
         - [G1 — Schema.org coverage](#g1--schemaorg-coverage) `[✓]`
         - [G2 — Multilingual crawlability](#g2--multilingual-crawlability) `[✓]`
         - [G3 — AI-search optimization](#g3--ai-search-optimization) `[ ]`
-        - [G4 — Head hygiene (non-schema cleanup)](#g4--head-hygiene-non-schema-cleanup) `[ ]`
+        - [G4 — Head hygiene (non-schema cleanup)](#g4--head-hygiene-non-schema-cleanup) `[~]`
         - [G5 — Round-2 audit P0 cleanup (link hygiene + description trim)](#g5--round-2-audit-p0-cleanup-link-hygiene--description-trim) `[✓]`
     - [M1.3 — Mobile / a11y / performance](#m13--mobile--a11y--performance) `[ ]`
         - [G1 — Lighthouse all-green](#g1--lighthouse-all-green) `[✓]`
@@ -118,16 +119,22 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 #### G1 — Publications
 - `[✓]` H1.M1.G1.T1 — Replaced 3 hallucinated entries with real CV pubs (J24/C23/J23/J22b/J22a/J21/W21b/W21a/P16) + ICPR 2026.
 - `[✓]` H1.M1.G1.T2 — Embedded 3 SVG figures in matching pub cards.
+- `[✓]` H1.M1.G1.T3 — (2026-04-21 V8) Rename figure filenames to `YYYY_venue_*` convention (`icpr2026_swissriver_diagram.{svg,png}` → `2026_icpr_swissriver_diagram.{svg,png}`; `jcc2023_redox_framework.{svg,png}` → `2023_jcc_redox_framework.{svg,png}`) and attach 6 new real figures to pub cards whose thumbnails were still Font Awesome icons: J23 (CompBioMed EpidNN abstract), J22b (Electronics GED stability results), J22a (ESWA graph-kernel representations), J21 (PRL graphkit-learn accuracy), W21b (SSPR pre-image intro), W21a (SSPR GED learning framework). All verified via chrome-devtools — 6 images load with `naturalWidth > 0`.
 
 #### G2 — Projects
-- `[~]` H1.M1.G2.T1 — Verify every project card against `extra_info_work.md` (task #47).
+- `[✓]` H1.M1.G2.T1 — Verify every project card against `extra_info_work.md` + CV (done 2026-04-21 V9 via 9-card CV-aligned refactor; every card title now matches CV verbatim).
 - `[ ]` H1.M1.G2.T2 — Add **LIULIAN platform** card (top-of-list; key personal infra). Source: extra_info_work.md §LIULIAN.
-- `[ ]` H1.M1.G2.T3 — Add **PLANALYSER** card (2024-2025 Innosuisse). Note NDA.
+- `[✓]` H1.M1.G2.T3 — Add **PLANALYSER — Automated HVAC-Concept Audit and Optimisation using AI** card (done 2026-04-21 V9). INNOSUISSE 2024-2025 with iCoSys + WATTELSE AG partners. Footer links: ARAMIS grant page + WATTELSE startup page. Industry badge, data-tags `academia,industry` so it appears in both filters.
 - `[ ]` H1.M1.G2.T4 — Add **Local Confidential Translator** card (personal MVP).
-- `[ ]` H1.M1.G2.T5 — Refresh **N-Banker** description with neutral wording ("key AI advisor" / "key AI contributor", not CTO / CAIO).
-- `[ ]` H1.M1.G2.T6 — Refresh **OCTOPUSSY** + **Virtual Bodmer** copy from extra_info_work.md.
+- `[✓]` H1.M1.G2.T5 — Refresh **N-Banker** description with formal CV title "1st Global Neobank Research Center" (done 2026-04-21 V9). Neutral wording; no CTO / CAIO labels. Footer: platform homepage + PolyU partner page.
+- `[x]` H1.M1.G2.T6 — Refresh **OCTOPUSSY** + **Virtual Bodmer** copy from extra_info_work.md. Why cancelled: approach changed in V9 — Virtual Bodmer deleted entirely (Linlin decision; HES-SO link weak, scope unmaterialized), OCTOPUSSY merged with RedoxPrediction into a single CV-named card. Superseded by T9 + T10 + T11.
 - `[✓]` H1.M1.G2.T7 — Add **GraphInk** card with figure (done 2026-04-21 V2).
 - `[✓]` H1.M1.G2.T8 — Add **Graph Matching Algorithms (SNSF 2023-2024)** card with figure (done 2026-04-21 V2).
+- `[✓]` H1.M1.G2.T9 — (2026-04-21 V9) Delete **Virtual Bodmer** project card entirely. Linlin decision: scope didn't materialize; HES-SO partner link was weak. Removed from `index_en.html`; no i18n-key side effects (project card copy was never i18n'd).
+- `[✓]` H1.M1.G2.T10 — (2026-04-21 V9) Merge **OCTOPUSSY** + **RedoxPrediction** into a single card titled **"OCTOPUSSY — Optimization of Polymers Using Sustainable SYnthesis"** (formal CV title). Rationale: RedoxPrediction was the implementation deliverable of OCTOPUSSY, two separate cards was confusing. Merged card carries the `2023_jcc_redox_framework.svg` figure + footer links to GitHub `RedoxPrediction` + JCC 2024 DOI.
+- `[✓]` H1.M1.G2.T11 — (2026-04-21 V9) Add 2 missing CV cards: **APi — Apprivoiser la Pré-image** (2018-2021, ANR, thesis grant) with `2021_sspr_preimage_intro.svg` figure + footer links ANR grant + LITIS project page + "Papers" anchor. **Service-oriented Programmable Control and Scheduling for Software Defined Network** (2014-2017, M.Sc. research at XJTU) with `2016_patent_elm_google_patent_page.png` figure + Google Patents footer link for CN106376041B.
+- `[✓]` H1.M1.G2.T12 — (2026-04-21 V9) Structural refactor — all 9 project cards: `<a class="project-card">` → `<div class="project-card" data-primary-href="…" role="link" tabindex="0">`. Reason: nested `<a>` (required for the new per-card footer link strip) is invalid HTML inside an outer `<a>`. Delegated JS click handler in `js/main.js:611-640` (`document.addEventListener('click', …)`) navigates to `data-primary-href` on card-body click (new tab for external); footer-link clicks bubble to their own `<a>`; cmd/ctrl/middle-click opens new tab; keyboard Enter/Space works for a11y.
+- `[✓]` H1.M1.G2.T13 — (2026-04-21 V9) `.project-links` footer widget (`css/main.css:1588-1625`): dashed top border, flex-wrap pill style mirroring `.pub-link`. Icons: `fa-file-signature` (funding/grant pages), `fa-globe` (platform / project homepages), `fa-handshake` (partner pages), `fab fa-github` (code repos), `fa-file-lines` (linked papers), `fa-certificate` (patent). Per-card `data-primary-href`: ST-GCN → SNSF 206352; N-Banker → platform homepage; GraphInk → SNSF 217594; graphkit-learn → GitHub repo; PLANALYSER → ARAMIS grant; Graph Matching → SNSF 188496; OCTOPUSSY → RedoxPrediction GitHub; APi → LITIS project page; SDN → Google Patents. Per-card link counts: 3, 2, 1, 2, 2, 3, 2, 3, 1.
 
 #### G3 — News
 - `[ ]` H1.M1.G3.T1 — Add 2025 entries (GraphInk launch, LIULIAN early prototype).
@@ -147,7 +154,7 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 > Added 2026-04-21 V5 per Linlin directive #5. Tactic changed in V6 (2026-04-21): the all-in-one `about.p5` paragraph was reverted on Linlin's feedback "合作者不要加到 About Me，加到 projects 和 papers 对应部分". Surviving intent: surface collaborators at the card level so each relationship lives next to its concrete artifact.
 - `[x]` H1.M1.G6.T1 — (cancelled in V6) `about.p5` collaborators paragraph (University of Basel, ETH Zürich, HES-SO Fribourg, University of Zürich, Inselspital Bern, AWS, N-Banker, China Pharmaceutical University). Why cancelled: paragraph-level surface competed with About Me's bio focus; card-level is the preferred tactic — superseded by T3 below.
 - `[✓]` H1.M1.G6.T2 — Virtual Bodmer project partners (Université de Genève, Fondation Martin Bodmer, Archaeo-Scientific Lab) mentioned in Scientific Collaborator timeline description rather than About — project-specific artifact, not a long-term collaboration.
-- `[ ]` H1.M1.G6.T3 — Surface collaborators on project / publication cards: N-Banker (AWS + FinTech partners), OCTOPUSSY (Arkema + industrial polymer team), EpidNN (University of Basel + Inselspital Bern), GraphInk (Université de Genève + Fondation Bodmer). Scheduled for Batch B alongside news-external links and pub preprint/video/slides metadata.
+- `[✓]` H1.M1.G6.T3 — (2026-04-21 V9) Surface collaborators on project cards as part of the 9-card CV-aligned refactor. Each card's description now names its institutional collaborators (e.g. PLANALYSER → iCoSys + WATTELSE AG, N-Banker → Digital Financial Services Research Center / PolyU, ST-GCN → ETH + U. Basel, Graph Matching → ETH Zürich, OCTOPUSSY → Arkema + industrial polymer team), and the `.project-links` footer widget surfaces the actual partner / institution URLs (e.g. `fa-handshake` link to PolyU KTEO page from N-Banker, to WATTELSE startup.ch page from PLANALYSER). Card-level surface replaces the cancelled V6 `about.p5` paragraph tactic — partner shows up next to its concrete artifact.
 
 #### G7 — Ph.D. thesis integration (timeline + Publications)
 > Added 2026-04-21 V7. Rationale: dissertation was listed in the CV but invisible on-site — recruiters had to dig into the CV PDF to see the ~260-page artifact, and the Publications section opened straight on a 2026 paper while the foundational work sat offstage. Dual surface (timeline action row + Publications highlight card) so both "I'm browsing Experience chronologically" and "I'm scanning Publications" readers arrive at the thesis.
@@ -155,6 +162,13 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 - `[✓]` H1.M1.G7.T2 — `.thesis-highlight` featured card at top of Publications section (`index_en.html:1031`), placed above filter controls so it stays visible across every filter / sort combination.
 - `[✓]` H1.M1.G7.T3 — 6 new `thesis.*` i18n keys (`badge` / `title` / `institution` / `subtitle` / `download` / `slides`) × 4 locales. Parity now 119 keys. Thesis title kept as English in all 4 locales per academic convention.
 - `[✓]` H1.M1.G7.T4 — `.thesis-highlight*` + `.timeline-links` CSS (`css/main.css`). Cross-theme visual verify via chrome-devtools on `ai-generated` / `industrial` / `fancy`.
+- `[✓]` H1.M1.G7.T5 — (2026-04-21 V8) Relocate `.thesis-highlight` block from the top of Publications (above filter controls) to the **bottom** of the section (after `#pubsList` close, before the section container close). Rationale: the V7 top-placement pushed the 2026 ICPR accepted announcement below-the-fold; moving the thesis to the bottom keeps "what I'm shipping now" as the opening card while the foundational dissertation acts as a closing summary. Position verified via chrome-devtools `compareDocumentPosition` → `isAfterPubsList: true`. Card + both download buttons render unchanged.
+
+#### G8 — UX polish (V9 Linlin flags)
+> Added 2026-04-21 V9. Three standalone UX fixes Linlin flagged after V8 shipped: the coming-soon toast looked cheap, the publication thumbnails were too small for recruiters to see the figure at a glance, and the thesis highlight butted against the last pub card with no breathing room. Each fix is small but each was a user-reported annoyance; batching them keeps the V9 change-set self-contained.
+- `[✓]` H1.M1.G8.T1 — (2026-04-21 V9) Coming-soon toast glass-morphism rewrite (`index_en.html:1609` + `css/main.css:~2935`). Centered card 280-420 px (viewport-clamped), 18 px backdrop blur + 160% saturation, 44×44 icon badge with `fa-screwdriver-wrench`, two-line title + subtitle, soft drop shadow + primary-tinted 1 px ring, `scale(0.92) → 1.0` cubic-bezier entrance. Theme overrides: industrial → dark card + neon-green icon, fancy → pink gradient. New i18n keys `comingSoon.title` + `comingSoon.sub` replace single-line `comingSoon.text`. Cross-theme verified via chrome-devtools. Reason for rewrite: Linlin's direct feedback "太丑" (too ugly) on the V6 pill-style toast.
+- `[✓]` H1.M1.G8.T2 — (2026-04-21 V9) Publication thumbnail enlargement + padding halved (`index_en.html` 10 `<img>` dims + `css/main.css:~1841, ~1857`). Directive verbatim: "图片放大，左/上 padding 减半，下 padding 等于上 padding". Card padding `1.5rem` → `0.75rem 1.5rem 0.75rem 0.75rem` (halved on top + left, bottom = top). Grid `180px 1fr` → `220px 1fr`, gap `1.5rem` → `1.25rem`. `.pub-thumbnail` max-width 180→220 px, height 140→172 px (preserved 5:4 aspect ratio). All 10 pub-card `<img>` elements updated via `replace_all` with the unique string `" loading=\"lazy\" width=\"180\" height=\"140\">"` — project-card images (400×180) untouched.
+- `[✓]` H1.M1.G8.T3 — (2026-04-21 V9) Thesis highlight `margin-top: 2rem` (`css/main.css:~1767`). Without spacing, the thesis card butted directly against the last pub card in the carousel, visually flattening the Ph.D. capstone into the list. Added breathing room so the thesis reads as a closing statement rather than another list item. CSS-only change; no HTML or i18n impact.
 
 ### M1.2 — SEO + AI-search visibility
 
@@ -167,10 +181,12 @@ when asked about graph ML researchers.
 - `[✓]` H1.M2.G1.T2 — ScholarlyArticle JSON-LD (10 entries).
 - `[✓]` H1.M2.G1.T3 — SoftwareSourceCode JSON-LD (graphkit-learn, etc.).
 - `[✓]` H1.M2.G1.T4 — WebSite + FAQPage + BreadcrumbList JSON-LD (done 2026-04-21 V2).
+- `[✓]` H1.M2.G1.T5 — (2026-04-21 V9, SEO audit round-3 P5) Inject citation counts into Person + all 8 ScholarlyArticle schemas via `interactionStatistic` with `@type: InteractionCounter`, `interactionType: https://schema.org/CiteAction`, `userInteractionCount: <N>`. Person carries the total from `data/citations.json` (130); each paper gets its own count: J24=9, ACPR=1, CBM=61, Electronics=2, ESWA=25, PRL=14, W21b=9, W21a=7. Machine-readable peer-validation signal for Google / Scholar / LLM rerankers; avoids forcing them to scrape the page's visible `.citation-count` spans.
 
 #### G2 — Multilingual crawlability
 - `[✓]` H1.M2.G2.T1 — hreflang `?lang=` URL variants.
 - `[✓]` H1.M2.G2.T2 — sitemap.xml expanded 3 → 13 URLs with `xhtml:link` alternates.
+- `[✓]` H1.M2.G2.T3 — (2026-04-21 V8) Per-locale patent-link swap via new `data-i18n-href-map` attribute handled in `applyTranslations` (`js/main.js`). Chinese visitors now land on the Chinese-language Google Patents page (`/patent/CN106376041B`), while en / fr / de visitors land on the English version (`/patent/CN106376041B/en`). Rationale: Chinese readers reading a CN patent benefit from Google's native CN rendering; other-language readers get the English-translated abstract. Generic enough to support other locale-differentiated external URLs in the future (video mirrors, regional press coverage).
 
 #### G3 — AI-search optimization
 - `[ ]` H1.M2.G3.T1 — Add `llms.txt` once the convention stabilizes (currently nascent draft spec).
@@ -178,8 +194,13 @@ when asked about graph ML researchers.
 - `[ ]` H1.M2.G3.T3 — Consider Mastodon / Bluesky verification for AI grounding signals.
 
 #### G4 — Head hygiene (non-schema cleanup)
-> Source: 2026-04-20 vibe audit §三 SEO / 可发现性.
+> Source: 2026-04-20 vibe audit §三 SEO / 可发现性. Extended 2026-04-21 V9 with SEO audit round-3 P0–P3 follow-through (sitemap hygiene + i18n attr parity on section headings + title/description keyword tightening).
 - `[ ]` H1.M2.G4.T1 — Remove obsolete `<meta name="keywords">` tag (`index_en.html:8`). Modern search engines ignore it; keeping it adds noise.
+- `[✓]` H1.M2.G4.T2 — (2026-04-21 V8) Association card icon `fa-edit` → `fa-id-badge` (`index_en.html:1252`). `fa-edit` semantically fits "Reviewing" (editorial work) but not "Associations" (membership / affiliation) — swapped to `fa-id-badge` so the icon matches the member-card semantic. Reviewing card keeps `fa-edit` as appropriate.
+- `[✓]` H1.M2.G4.T3 — (2026-04-21 V9, SEO audit round-3 P0) `sitemap.xml` broken URLs fixed + 6 new figure URLs added (`sitemap.xml:54-78`). Two `<image:loc>` entries pointed at filenames renamed in V8 (`icpr2026_*` → `2026_icpr_*`, `jcc2023_*` → `2023_jcc_*`); both would 404 on Google Images crawl. Patched. Added 6 new `<image:loc>` for V8's pub-card figures (EpidNN abstract, Electronics stability, ESWA kernels, PRL accuracy, SSPR pre-image, SSPR GED metric) so the indexer discovers them without having to render the page.
+- `[✓]` H1.M2.G4.T4 — (2026-04-21 V9, SEO audit round-3 P1) Beyond Research + Blog `<h2>` i18n attrs (`index_en.html:1423, 1543` + 4 locales). Both headings were static English under a `data-i18n` parent section but the `<h2>` itself had no attr — zh/fr/de visitors got mixed-language headings. Added `sections.beyond`, `sections.blog`, `beyond.subtitle`, `blog.label` keys to EN/ZH/FR/DE. Parity verified at 124 keys/locale.
+- `[✓]` H1.M2.G4.T5 — (2026-04-21 V9, SEO audit round-3 P2) Title keyword tightening (`index_en.html:5`). New: `Linlin Jia, Ph.D. — ML Research Scientist | Graph ML · LLM` (60 chars, on the Google SERP cutoff line). Trades the vaguer "AI Research" for the higher-intent "LLM" keyword Linlin is targeting this job search.
+- `[✓]` H1.M2.G4.T6 — (2026-04-21 V9, SEO audit round-3 P3) Meta description trimmed to 148 chars (`index_en.html:6`). Previous 160+ char description (from V6 G5.T1) was getting ellipsized on Google SERPs. New: "Linlin Jia, Ph.D. — Graph ML, LLM Agents, Spatio-Temporal Forecasting, AI for Science. Postdoc at U. Bern. Open to ML Research Scientist roles." Keeps the 4 target keywords + role + availability signal. Supersedes the V6 trim (210 → 156) with a further tightening.
 
 #### G5 — Round-2 audit P0 cleanup (link hygiene + description trim)
 > Added 2026-04-21 V6. Source: the second SEO audit run on 2026-04-21 (scored 92/100 — "excellent foundation"). Four `href="#"` dead links and one overlong meta description were flagged as P0. All shipped in the same edit batch; no layout or schema changes.

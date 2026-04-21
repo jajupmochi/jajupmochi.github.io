@@ -45,7 +45,15 @@
     "software": "Software & Tools",
     "services": "Academic Services",
     "skills": "Skills & Technologies",
-    "contact": "Contact"
+    "contact": "Contact",
+    "beyond": "Beyond Research",
+    "blog": "Blog"
+  },
+  "beyond": {
+    "subtitle": "Hobbies, volunteer work, and life outside the lab"
+  },
+  "blog": {
+    "label": "Thoughts & Writing"
   },
   "about": {
     "p1": "I am an <strong>Advanced Postdoctoral Researcher</strong> at the University of Bern, Switzerland, working at the <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. My expertise spans <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and <strong>LLM-based AI systems</strong>.",
@@ -60,7 +68,8 @@
     "openMaps": "Open in Maps"
   },
   "comingSoon": {
-    "text": "Coming soon — page under construction"
+    "title": "Coming soon",
+    "sub": "This page is still being built — check back shortly."
   },
   "common": {
     "showMore": "Show more",

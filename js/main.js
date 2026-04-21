@@ -124,6 +124,18 @@
                     el.setAttribute('aria-label', t[key]);
                 }
             });
+
+            // Apply per-locale href swaps (e.g. patent link: zh → Chinese page, others → /en)
+            document.querySelectorAll('[data-i18n-href-map]').forEach(el => {
+                try {
+                    const map = JSON.parse(el.getAttribute('data-i18n-href-map'));
+                    if (map && map[lang]) {
+                        el.setAttribute('href', map[lang]);
+                    }
+                } catch (e) {
+                    // Malformed JSON in data-i18n-href-map — leave href unchanged.
+                }
+            });
         }
         
         // Translation helper function (for JS code)
@@ -595,6 +607,37 @@
             });
         });
         
+        // Project cards: <div> with data-primary-href. Body click → navigate to primary.
+        // Clicks inside .project-links (footer icon strip) bubble to their own <a>.
+        // Supports cmd/ctrl/middle-click → new tab, keyboard Enter/Space for a11y.
+        document.addEventListener('click', function(e) {
+            const card = e.target.closest('.project-card[data-primary-href]');
+            if (!card) return;
+            if (e.target.closest('.project-links a, a, button')) return;
+            const href = card.dataset.primaryHref;
+            if (!href) return;
+            const external = /^https?:/i.test(href);
+            if (e.metaKey || e.ctrlKey || e.button === 1) {
+                window.open(href, '_blank', 'noopener,noreferrer');
+            } else if (external) {
+                window.open(href, '_blank', 'noopener,noreferrer');
+            } else {
+                window.location.href = href;
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const card = e.target.closest('.project-card[data-primary-href]');
+            if (!card || card !== e.target) return;
+            e.preventDefault();
+            const href = card.dataset.primaryHref;
+            if (/^https?:/i.test(href)) {
+                window.open(href, '_blank', 'noopener,noreferrer');
+            } else {
+                window.location.href = href;
+            }
+        });
+
         // ========================================
         // INIT ON LOAD
         // ========================================

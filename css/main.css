@@ -1584,7 +1584,43 @@
             padding: 2px 8px;
             border-radius: 4px;
         }
-        
+
+        /* Multi-link footer widget for project cards.
+           Matches pub-link styling so projects/publications feel consistent.
+           Cards are <div> with data-primary-href; JS delegates body clicks to the primary URL.
+           Footer <a> tags stop propagation so they navigate to their own href. */
+        div.project-card { cursor: pointer; }
+        div.project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.85rem;
+            padding-top: 0.85rem;
+            border-top: 1px dashed var(--border-light);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-subtle);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .project-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
         /* Filter/Search/Sort Controls */
         .section-controls {
             display: flex;
@@ -1763,11 +1799,13 @@
             border-radius: 3px;
         }
         
-        /* Thesis highlight block — featured above the filtered publication list. */
+        /* Thesis highlight block — rendered below the filtered publication list.
+           margin-top creates visual separation from the preceding pubs-list scroller. */
         .thesis-highlight {
             display: flex;
             gap: 1.25rem;
             padding: 1.25rem 1.5rem;
+            margin-top: 2rem;
             margin-bottom: 1.75rem;
             background: var(--bg-white);
             border: 1px solid var(--border-light);
@@ -1842,21 +1880,21 @@
             background: var(--bg-white);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            padding: 1.5rem;
+            padding: 0.75rem 1.5rem 0.75rem 0.75rem;
             display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 220px 1fr;
+            gap: 1.25rem;
             transition: all 0.25s;
         }
-        
+
         .pub-card:hover {
             box-shadow: var(--shadow-md);
             border-color: var(--primary-light);
         }
-        
+
         .pub-thumbnail {
-            width: 180px;
-            height: 140px;
+            width: 220px;
+            height: 172px;
             background: var(--bg-subtle);
             border-radius: var(--radius-md);
             display: flex;
@@ -2931,33 +2969,89 @@
         .lightbox-close:focus-visible { background: rgba(255,255,255,0.25); outline: none; }
         body.lightbox-open { overflow: hidden; }
 
-        /* Coming-soon toast (for Personal / Blog placeholder pages) */
+        /* Coming-soon toast (for Personal / Blog placeholder pages).
+           Glass-morphism card styled per theme: uses translucent background +
+           backdrop-filter blur, accent-colored icon badge, and a title + sub-copy
+           layout. All tokens resolve from the active theme's --primary / --bg /
+           --text variables so the four themes adapt without duplicated rules. */
         .coming-soon-toast {
             position: fixed;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%) scale(0.92);
             z-index: 10000;
-            background: var(--bg-secondary, #1a1a2e);
-            color: var(--text-primary, #fff);
-            padding: 1rem 1.5rem;
-            border-radius: 14px;
-            border: 1px solid var(--border-color, rgba(255,255,255,0.15));
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            min-width: 280px;
+            max-width: min(420px, calc(100vw - 2rem));
+            padding: 1.15rem 1.5rem;
+            border-radius: 18px;
+            background: color-mix(in srgb, var(--bg-white, #fff) 82%, transparent);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid color-mix(in srgb, var(--border-light, rgba(0,0,0,0.08)) 100%, transparent);
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.18),
+                0 0 0 1px color-mix(in srgb, var(--primary, #6366f1) 12%, transparent);
+            color: var(--text-primary, #0f172a);
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 500;
+            gap: 1rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.22s ease, transform 0.22s ease;
+            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .coming-soon-toast[aria-hidden="false"] {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
-        .coming-soon-icon { font-size: 1.35rem; line-height: 1; }
+        .coming-soon-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            background: color-mix(in srgb, var(--primary, #6366f1) 16%, transparent);
+            color: var(--primary, #6366f1);
+        }
+        .coming-soon-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+        }
+        .coming-soon-title {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-primary, #0f172a);
+        }
+        .coming-soon-sub {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--text-secondary, #475569);
+        }
+        /* Industrial theme — dark panel with neon-green accent */
+        [data-theme="industrial"] .coming-soon-toast {
+            background: color-mix(in srgb, #0a0f19 80%, transparent);
+            border-color: rgba(255,255,255,0.1);
+            color: #e8f4ff;
+        }
+        [data-theme="industrial"] .coming-soon-icon {
+            background: rgba(0,255,136,0.14);
+            color: #00ff88;
+        }
+        [data-theme="industrial"] .coming-soon-title { color: #e8f4ff; }
+        [data-theme="industrial"] .coming-soon-sub { color: rgba(232,244,255,0.72); }
+        /* Fancy theme — soft pink wash with magenta accent */
+        [data-theme="fancy"] .coming-soon-toast {
+            background: color-mix(in srgb, #fff0f7 82%, transparent);
+        }
+        [data-theme="fancy"] .coming-soon-icon {
+            background: rgba(236,72,153,0.16);
+            color: #ec4899;
+        }
         @media (prefers-reduced-motion: reduce) {
             .coming-soon-toast { transition: opacity 0.1s ease; }
         }

@@ -45,7 +45,15 @@
     "software": "软件与工具",
     "services": "学术服务",
     "skills": "技能与技术",
-    "contact": "联系方式"
+    "contact": "联系方式",
+    "beyond": "研究之外",
+    "blog": "博客"
+  },
+  "beyond": {
+    "subtitle": "爱好、志愿服务与实验室之外的生活"
+  },
+  "blog": {
+    "label": "所思所写"
   },
   "about": {
     "p1": "我是瑞士<strong>伯尔尼大学高级博士后研究员</strong>，在<a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">模式识别组</a>从事 SNSF 资助的研究。研究方向涵盖<strong>图表示学习</strong>、<strong>时空深度学习</strong>以及<strong>基于大语言模型的 AI 系统</strong>。",
@@ -54,7 +62,8 @@
     "p4": "我正在积极寻求学术界与工业界的<strong>机器学习研究科学家 / 工程师</strong>职位，聚焦于图机器学习、时空学习、科学计算与 AI 驱动的科学发现及工业应用。"
   },
   "comingSoon": {
-    "text": "敬请期待 — 页面建设中"
+    "title": "敬请期待",
+    "sub": "此页面仍在建设中 — 请稍后再来。"
   },
   "contact": {
     "address": "地点",

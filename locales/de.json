@@ -45,7 +45,15 @@
     "software": "Software & Werkzeuge",
     "services": "Akademische Dienste",
     "skills": "Fähigkeiten & Technologien",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "beyond": "Jenseits der Forschung",
+    "blog": "Blog"
+  },
+  "beyond": {
+    "subtitle": "Hobbys, ehrenamtliche Arbeit und Leben außerhalb des Labors"
+  },
+  "blog": {
+    "label": "Gedanken & Texte"
   },
   "about": {
     "p1": "Ich bin <strong>Advanced Postdoctoral Researcher</strong> an der Universität Bern, Schweiz, und arbeite in der <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. Meine Expertise umfasst <strong>Graph-Repräsentationslernen</strong>, <strong>räumlich-zeitliches Deep Learning</strong> und <strong>LLM-basierte KI-Systeme</strong>.",
@@ -54,7 +62,8 @@
     "p4": "Ich suche aktiv <strong>ML Research Scientist / Engineer</strong>-Positionen in Wissenschaft und Industrie — mit Schwerpunkt auf graphbasiertem Lernen, raumzeitlichem Lernen, wissenschaftlichem Rechnen sowie KI-gestützter Entdeckung und industriellen Anwendungen."
   },
   "comingSoon": {
-    "text": "Demnächst verfügbar — Seite im Aufbau"
+    "title": "Demnächst verfügbar",
+    "sub": "Diese Seite wird noch gebaut — schauen Sie bald wieder vorbei."
   },
   "contact": {
     "address": "Standort",
