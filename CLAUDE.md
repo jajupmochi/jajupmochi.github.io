@@ -32,7 +32,8 @@ Personal academic website for Linlin Jia, hosted on GitHub Pages (`jajupmochi/ja
 - `data/citations.json` — Google Scholar citation data (manually maintained; no official API).
 - `res/cv/CV_Linlin_Jia_{en,zh}.pdf` — CVs linked from the site.
 - `new_web_test.html` — D3.js force-graph design reference, kept for inspiration.
-- `blog/` and `docs/` — separate Jekyll projects (Hux Blog boilerplate, minima theme). Older, do not conflate with the main site.
+- `docs/` — project documentation home. Contains `PLAN.md`, `UPDATES.md`, `setup/` (one-time setup guides), `vibe/` (audit / research notes), and `_archive-jekyll-minima/` (archived Jekyll subproject). Index: `docs/README.md`.
+- `blog/` — legacy Jekyll subproject (Hux Blog boilerplate). Separate from the main site; kept for history.
 
 ## Iterative workflow (mixed mode)
 
@@ -48,9 +49,9 @@ Personal academic website for Linlin Jia, hosted on GitHub Pages (`jajupmochi/ja
 - **JSON validity.** `locales/*.json` and `data/*.json` must stay valid JSON — a syntax error breaks the deployed site. Run `jq . <file>` after edits.
 - **i18n key parity.** The 4 files `locales/{en,zh,fr,de}.json` must have identical key trees. If you add a key to one, add it to all four (the loader falls back to inline defaults but missing keys surface as visible English text).
 - **Content source of truth.** When updating professional content (bio, publications, projects, experience), the authoritative sources are `res/cv/CV_Linlin_Jia_en_*.pdf` and `extra_info_work.md`. If the site disagrees with these, fix the site, not the sources.
-- **Mandatory `UPDATES.md` log.** EVERY change to this repo (content, code, asset, copy, config) MUST add an entry to `UPDATES.md` in the same edit batch. Format: today's date as `# YYYY-MM-DD` H1 (UTC, use `currentDate` from environment or run `date -u +%F`); if multiple distinct change-sets land on the same day, group each under `## V1`, `## V2`, `## V3` H2 sub-headings under the date. Each entry is a short bullet list — what changed and why. **A PR / commit without a corresponding `UPDATES.md` entry is incomplete.** Backfill if missed.
-- **Mandatory `PLAN.md` sync.** If a change matches an existing `PLAN.md` item, update its status marker (`[ ]`→`[~]`→`[✓]`) in the same edit batch. If it introduces new planned work (not shipping today), add the new Horizon / Milestone / Goal / Task entries with fresh IDs. A PR that changes roadmap-relevant behavior without touching `PLAN.md` is incomplete.
-- **Mandatory Master TOC on every doc.** Every markdown file in this repo (root `.md`, `setup/*.md`, `.claude/skills/*/SKILL.md`) MUST start with a `## Master TOC` (or equivalent "Table of contents" section) listing every `##` section as a bullet, using the hierarchy conventions below. Exception: `UPDATES.md` — it is chronological, so the date headings themselves serve as the TOC.
+- **Mandatory `docs/UPDATES.md` log.** EVERY change to this repo (content, code, asset, copy, config) MUST add an entry to `docs/UPDATES.md` in the same edit batch. Format: today's date as `# YYYY-MM-DD` H1 (UTC, use `currentDate` from environment or run `date -u +%F`), **newest day on top**. If multiple distinct change-sets land on the same day, group each under `## V1`, `## V2`, `## V3` H2 sub-headings **with the highest V number on top** (most recent work first). Each entry is a short bullet list — what changed and why. Keep the `## Master TOC` at the file's top in sync in the same edit — add a bullet for every new day, and a sub-bullet for every new V with a one-line hook. **A PR / commit without a corresponding `docs/UPDATES.md` entry (and TOC update) is incomplete.** Backfill if missed.
+- **Mandatory `docs/PLAN.md` sync.** If a change matches an existing `docs/PLAN.md` item, update its status marker (`[ ]`→`[~]`→`[✓]`) in the same edit batch. If it introduces new planned work (not shipping today), add the new Horizon / Milestone / Goal / Task entries with fresh IDs. A PR that changes roadmap-relevant behavior without touching `docs/PLAN.md` is incomplete.
+- **Mandatory Master TOC on every doc.** Every markdown file in this repo (root `.md`, `docs/**/*.md`, `.claude/skills/*/SKILL.md`) MUST start with a `## Master TOC` (or equivalent "Table of contents" section) listing every `##` section as a bullet, using the hierarchy conventions below. `docs/UPDATES.md` also carries a Master TOC — nested bullets by date → `V<n>` with a one-line hook each. Keep it in sync when appending entries.
 - **Bilingual docs — two files per doc.** Every repo-level doc MUST ship in both English and Chinese as **two separate files**. Convention: `NAME.md` (English, canonical) + `NAME.zh.md` (Chinese mirror) sitting side-by-side. The top of each file MUST include a one-line language switcher: `> **Language:** English | [中文](NAME.zh.md)` (or the mirror). Code, identifiers, filenames, Horizon/Milestone/Goal/Task IDs, and JSON/YAML inside code blocks stay in English in both versions — only prose is translated. Exceptions: `extra_info_work.md` (Linlin's content source), `CLAUDE.local.md` (private file), `.claude/skills/*/SKILL.md` (consumed by Claude, must stay in English — Chinese mirror optional).
 
 ## Documentation conventions
@@ -75,11 +76,11 @@ Use multi-level bullets (at least 3 levels where the content warrants it). An AI
 
 ### PLAN.md — roadmap source of truth
 
-`PLAN.md` at the repo root is the **only** place the long-term / mid-term / current roadmap lives. Do not duplicate roadmap info in README, CLAUDE.md, or inline comments — link to the relevant `PLAN.md` ID instead.
+`docs/PLAN.md` is the **only** place the long-term / mid-term / current roadmap lives. Do not duplicate roadmap info in README, CLAUDE.md, or inline comments — link to the relevant `docs/PLAN.md` ID instead.
 
 ### UPDATES.md — per-change log
 
-`UPDATES.md` is the chronological audit log. Every change lands here as a short bullet under today's date. See `## Hard rules` above.
+`docs/UPDATES.md` is the chronological audit log. Every change lands here as a short bullet under today's date. See `## Hard rules` above.
 
 ### Hierarchy + status marker system
 

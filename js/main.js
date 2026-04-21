@@ -147,7 +147,20 @@
             // Scroll to top
             window.scrollTo(0, 0);
         }
-        
+
+        // Coming-soon toast for pages not yet ready (Personal, Blog).
+        let comingSoonTimer = null;
+        function showComingSoon(page) {
+            const toast = document.getElementById('comingSoonToast');
+            if (!toast) return;
+            if (comingSoonTimer) { clearTimeout(comingSoonTimer); comingSoonTimer = null; }
+            toast.setAttribute('aria-hidden', 'false');
+            comingSoonTimer = setTimeout(() => {
+                toast.setAttribute('aria-hidden', 'true');
+                comingSoonTimer = null;
+            }, 2500);
+        }
+
         // ========================================
         // SMOOTH SCROLL FOR ANCHOR LINKS
         // ========================================
@@ -854,6 +867,83 @@
             if (sortSelect) {
                 sortSelect.addEventListener('change', (e) => sortCards(e.target.value));
             }
-            
+
             updateList();
         }
+
+        // ========================================
+        // IMAGE LIGHTBOX
+        // Injects a zoom button into every .project-image / .pub-thumbnail
+        // that wraps a real figure (<object data=…> or <img>). Clicking the
+        // button (or the image area itself) opens a fullscreen modal. ESC or
+        // backdrop click closes. Returns focus to the trigger on close.
+        // ========================================
+        (function initImageLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox) return;
+            const imgEl   = lightbox.querySelector('.lightbox-img');
+            const capEl   = lightbox.querySelector('.lightbox-caption');
+            const closeEl = lightbox.querySelector('.lightbox-close');
+            let lastFocused = null;
+
+            function openLightbox(src, alt) {
+                lastFocused = document.activeElement;
+                imgEl.src = src;
+                imgEl.alt = alt || '';
+                capEl.textContent = alt || '';
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('lightbox-open');
+                closeEl.focus();
+            }
+            function closeLightbox() {
+                if (!lightbox.classList.contains('is-open')) return;
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('lightbox-open');
+                imgEl.src = '';
+                if (lastFocused && typeof lastFocused.focus === 'function') {
+                    lastFocused.focus();
+                }
+            }
+
+            closeEl.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+
+            function attach(container) {
+                const picture = container.querySelector('object[data], img');
+                if (!picture) return;
+                let src, alt;
+                if (picture.tagName === 'OBJECT') {
+                    src = picture.getAttribute('data');
+                    const inner = picture.querySelector('img');
+                    alt = (inner && inner.getAttribute('alt'))
+                        || picture.getAttribute('aria-label') || '';
+                } else {
+                    src = picture.getAttribute('src');
+                    alt = picture.getAttribute('alt') || '';
+                }
+                if (!src) return;
+
+                container.classList.add('has-zoom');
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'img-zoom-btn';
+                btn.setAttribute('aria-label', 'Enlarge image');
+                btn.innerHTML = '<i class="fas fa-search-plus" aria-hidden="true"></i>';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openLightbox(src, alt);
+                });
+                container.appendChild(btn);
+            }
+
+            document.querySelectorAll('.project-image, .pub-thumbnail').forEach(attach);
+        })();

@@ -49,19 +49,19 @@ Nothing else in this repository is meant for visitor consumption — everything 
 | Big redesign | `/new-round` → iterate on `index_en_v{N}_round{M}.html` → `/deploy-round` |
 | Verify a UI change in a real browser | `/verify-visual` (uses chrome-devtools MCP) |
 | Check i18n key parity | `/i18n-sync` |
-| See what's on the roadmap | [`PLAN.md`](PLAN.md) |
-| Check what changed recently | [`UPDATES.md`](UPDATES.md) |
+| See what's on the roadmap | [`docs/PLAN.md`](docs/PLAN.md) |
+| Check what changed recently | [`docs/UPDATES.md`](docs/UPDATES.md) |
 
 ### Manual one-time setup checklist
 
-These steps live **outside this repo** (dashboards, tokens). Until done, the matching feature silently no-ops on the live site. Detailed instructions are in `setup/`.
+These steps live **outside this repo** (dashboards, tokens). Until done, the matching feature silently no-ops on the live site. Detailed instructions are in `docs/setup/`.
 
-- [ ] **Welcome form backend** → `setup/form-backend-google-sheets.md` — create Google Sheet + Apps Script; replace `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` in `index_en.html`. *(PLAN.md: `H2.M1.G1`)*
-- [ ] **Microsoft Clarity analytics** → `setup/analytics-clarity.md` — create Clarity project; replace `PASTE_CLARITY_PROJECT_ID` in `index_en.html`; enable cookie-less mode. *(PLAN.md: `H2.M1.G2`)*
-- [ ] **Pre-commit hook** → run **once per clone**: `git config core.hooksPath .githooks`. *(PLAN.md: `H2.M1.G3`)*
-- [ ] **Clarity weekly backup** → `setup/analytics-backup.md` — generate Clarity API token, add as repo secret `CLARITY_API_TOKEN`, enable GH Actions write permissions. *(PLAN.md: `H2.M1.G4`)*
+- [ ] **Welcome form backend** → `docs/setup/form-backend-google-sheets.md` — create Google Sheet + Apps Script; replace `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` in `index_en.html`. *(PLAN: `H2.M1.G1`)*
+- [ ] **Microsoft Clarity analytics** → `docs/setup/analytics-clarity.md` — create Clarity project; replace `PASTE_CLARITY_PROJECT_ID` in `index_en.html`; enable cookie-less mode. *(PLAN: `H2.M1.G2`)*
+- [ ] **Pre-commit hook** → run **once per clone**: `git config core.hooksPath .githooks`. *(PLAN: `H2.M1.G3`)*
+- [ ] **Clarity weekly backup** → `docs/setup/analytics-backup.md` — generate Clarity API token, add as repo secret `CLARITY_API_TOKEN`, enable GH Actions write permissions. *(PLAN: `H2.M1.G4`)*
 
-Check off each item and update the matching `PLAN.md` entry (`[?]` → `[✓]`).
+Check off each item and update the matching `docs/PLAN.md` entry (`[?]` → `[✓]`).
 
 ### Repository layout
 
@@ -77,9 +77,9 @@ Check off each item and update the matching `PLAN.md` entry (`[?]` → `[✓]`).
 | `res/figures/` | Research diagrams (SVG + PNG fallback) embedded in project + publication cards. |
 | `images/` | Photos, favicon, Open Graph social cards, hero photo in AVIF / WebP / JPEG. |
 | `scripts/` | Local utilities — OG card generation, i18n parity check, Clarity fetch, Apps Script template. |
-| `setup/` | Manual one-time setup guides (see below). |
+| `docs/` | Project documentation home — `PLAN.md`, `UPDATES.md`, `setup/` one-time guides, `vibe/` audit notes, `_archive-jekyll-minima/`. See `docs/README.md`. |
 | `sitemap.xml`, `robots.txt` | SEO crawl control. |
-| `blog/`, `docs/` | Separate Jekyll subprojects (Hux Blog / minima). Older, unrelated to the main site. |
+| `blog/` | Legacy Jekyll subproject (Hux Blog boilerplate). Older, unrelated to the main site. |
 | `archive/` | Old redesign rounds that have been superseded. |
 | `index_en_v{N}_round{M}.html` | In-flight redesign rounds; `v{N}_round3` is the approved version for that generation. Don't delete. |
 | `index_en_backup.html` | Pre-redesign snapshot. Don't touch. |
@@ -90,26 +90,26 @@ Check off each item and update the matching `PLAN.md` entry (`[?]` → `[✓]`).
 | Feature | Doc | Reader |
 |---------|-----|--------|
 | Overall maintenance workflow | [`CLAUDE.md`](CLAUDE.md) (hard rules, skills, hooks) | maintainer + AI |
-| Roadmap / pending work | [`PLAN.md`](PLAN.md) (Horizon / Milestone / Goal / Task) | maintainer + AI |
-| Per-change audit log | [`UPDATES.md`](UPDATES.md) (daily, V1/V2/… sub-headings) | maintainer + AI |
-| Welcome-form backend (Google Sheets + Apps Script) | [`setup/form-backend-google-sheets.md`](setup/form-backend-google-sheets.md) | maintainer (one-time) |
-| Microsoft Clarity analytics (cookie-less) | [`setup/analytics-clarity.md`](setup/analytics-clarity.md) | maintainer (one-time) |
-| Clarity weekly backup (GitHub Actions cron) | [`setup/analytics-backup.md`](setup/analytics-backup.md) | maintainer (one-time) |
-| CSP / Referrer-Policy / X-Content-Type meta | [`setup/security-headers.md`](setup/security-headers.md) | maintainer (when adding a new CDN) |
-| Deployment checklist index | [`setup/README.md`](setup/README.md) | maintainer |
+| Roadmap / pending work | [`docs/PLAN.md`](docs/PLAN.md) (Horizon / Milestone / Goal / Task) | maintainer + AI |
+| Per-change audit log | [`docs/UPDATES.md`](docs/UPDATES.md) (daily, V1/V2/… sub-headings) | maintainer + AI |
+| Welcome-form backend (Google Sheets + Apps Script) | [`docs/setup/form-backend-google-sheets.md`](docs/setup/form-backend-google-sheets.md) | maintainer (one-time) |
+| Microsoft Clarity analytics (cookie-less) | [`docs/setup/analytics-clarity.md`](docs/setup/analytics-clarity.md) | maintainer (one-time) |
+| Clarity weekly backup (GitHub Actions cron) | [`docs/setup/analytics-backup.md`](docs/setup/analytics-backup.md) | maintainer (one-time) |
+| CSP / Referrer-Policy / X-Content-Type meta | [`docs/setup/security-headers.md`](docs/setup/security-headers.md) | maintainer (when adding a new CDN) |
+| Deployment checklist index | [`docs/setup/README.md`](docs/setup/README.md) | maintainer |
 | OG card regeneration | This file, [Open Graph social card](#open-graph-social-card) | maintainer (when copy changes) |
 | i18n key parity | [`CLAUDE.md`](CLAUDE.md#hard-rules) + `/i18n-sync` skill | maintainer + AI |
 | Redesign workflow | [`CLAUDE.md`](CLAUDE.md#iterative-workflow-mixed-mode) + `/new-round`, `/deploy-round` skills | maintainer + AI |
-| Pre-commit hook (i18n parity check) | `.githooks/pre-commit` + [`setup/README.md`](setup/README.md) | maintainer (one-time) |
+| Pre-commit hook (i18n parity check) | `.githooks/pre-commit` + [`docs/setup/README.md`](docs/setup/README.md) | maintainer (one-time) |
 | PostToolUse JSON validation hook | `.claude/settings.json` + [`CLAUDE.md`](CLAUDE.md#subagents--skills--hooks) | AI |
 | Content source of truth | `res/cv/CV_Linlin_Jia_en.pdf` + `extra_info_work.md` | maintainer + AI |
 
 ### How to …
 
-- **Add a new project card:** edit the `#projectsTrack` carousel in `index_en.html`. If the project has a research figure, drop an SVG + PNG in `res/figures/` and embed via `<object type="image/svg+xml">` with the PNG as `<img>` fallback. Update the Person → SoftwareSourceCode JSON-LD if the project has a public repo. (TODO: extract this into a dedicated `setup/add-project-card.md` — see PLAN.md `H4.M2.G2.T1`.)
+- **Add a new project card:** edit the `#projectsTrack` carousel in `index_en.html`. If the project has a research figure, drop an SVG + PNG in `res/figures/` and embed via `<object type="image/svg+xml">` with the PNG as `<img>` fallback. Update the Person → SoftwareSourceCode JSON-LD if the project has a public repo. (TODO: extract this into a dedicated `docs/setup/add-project-card.md` — see `docs/PLAN.md` `H4.M2.G2.T1`.)
 - **Add a new publication:** edit the publications section in `index_en.html` AND add the ScholarlyArticle JSON-LD block in `<head>`. Bump the stats counter.
-- **Add a new locale (e.g. ja):** duplicate `locales/en.json` → `locales/ja.json`, translate values, keep the key tree identical. Add `ja` to the language list in `js/main.js`. Add a new `?lang=ja` entry to `sitemap.xml`. Run `/i18n-sync`. (TODO: extract into `setup/add-locale.md` — PLAN.md `H4.M2.G2.T2`.)
-- **Extend CSP for a new third-party CDN:** edit the `<meta http-equiv="Content-Security-Policy">` tag in `index_en.html`. Add the origin to both `script-src` and `connect-src`. Verify in DevTools Console — any CSP error starts with `Refused to …`. Details in [`setup/security-headers.md`](setup/security-headers.md).
+- **Add a new locale (e.g. ja):** duplicate `locales/en.json` → `locales/ja.json`, translate values, keep the key tree identical. Add `ja` to the language list in `js/main.js`. Add a new `?lang=ja` entry to `sitemap.xml`. Run `/i18n-sync`. (TODO: extract into `docs/setup/add-locale.md` — `docs/PLAN.md` `H4.M2.G2.T2`.)
+- **Extend CSP for a new third-party CDN:** edit the `<meta http-equiv="Content-Security-Policy">` tag in `index_en.html`. Add the origin to both `script-src` and `connect-src`. Verify in DevTools Console — any CSP error starts with `Refused to …`. Details in [`docs/setup/security-headers.md`](docs/setup/security-headers.md).
 
 ---
 
@@ -118,13 +118,13 @@ Check off each item and update the matching `PLAN.md` entry (`[?]` → `[✓]`).
 ### Entry-point files
 
 1. [`CLAUDE.md`](CLAUDE.md) — hard rules, conventions, skills.
-2. [`PLAN.md`](PLAN.md) — full roadmap with Horizon / Milestone / Goal / Task IDs and status markers.
-3. [`UPDATES.md`](UPDATES.md) — chronological change log; tail the top of file for recent context.
+2. [`docs/PLAN.md`](docs/PLAN.md) — full roadmap with Horizon / Milestone / Goal / Task IDs and status markers.
+3. [`docs/UPDATES.md`](docs/UPDATES.md) — chronological change log; tail the top of file for recent context.
 4. [`extra_info_work.md`](extra_info_work.md) — Linlin's extended professional info (content source of truth alongside the CV PDF).
 
 ### Roadmap + change log
 
-The Horizon / Milestone / Goal / Task hierarchy in `PLAN.md` uses stable numeric IDs (`H1.M2.G3.T4`). Before starting work, locate the matching Task ID. After finishing, update the status marker (`[ ]`→`[~]`→`[✓]`) and add a matching bullet to `UPDATES.md` in the same edit batch. See [`CLAUDE.md#documentation-conventions`](CLAUDE.md#documentation-conventions).
+The Horizon / Milestone / Goal / Task hierarchy in `docs/PLAN.md` uses stable numeric IDs (`H1.M2.G3.T4`). Before starting work, locate the matching Task ID. After finishing, update the status marker (`[ ]`→`[~]`→`[✓]`) and add a matching bullet to `docs/UPDATES.md` in the same edit batch. See [`CLAUDE.md#documentation-conventions`](CLAUDE.md#documentation-conventions).
 
 ### Project skills
 
@@ -166,7 +166,7 @@ Requires ImageMagick v6 (`sudo apt install imagemagick` on Debian/Ubuntu). The s
 bash scripts/rotate-og-card.sh
 ```
 
-Overwrites `og-card.jpg` with a random pick. Nothing invokes this automatically — run by hand, or enable the weekly cron in `.github/workflows/rotate-og-card.yml` (see PLAN.md `H2.M2.G3.T1`).
+Overwrites `og-card.jpg` with a random pick. Nothing invokes this automatically — run by hand, or enable the weekly cron in `.github/workflows/rotate-og-card.yml` (see `docs/PLAN.md` `H2.M2.G3.T1`).
 
 ---
 
@@ -187,7 +187,7 @@ Theme state lives as `data-theme="…"` on `<body>`. When editing CSS, verify al
 
 Pushing to `master` deploys automatically via GitHub Pages. No build step.
 
-Before pushing, walk through the checklist in [`setup/README.md`](setup/README.md) — it covers the PASTE_ placeholder replacement, CSP directives, and a smoke test.
+Before pushing, walk through the checklist in [`docs/setup/README.md`](docs/setup/README.md) — it covers the PASTE_ placeholder replacement, CSP directives, and a smoke test.
 
 ---
 
@@ -196,4 +196,4 @@ Before pushing, walk through the checklist in [`setup/README.md`](setup/README.m
 - `locales/*.json` and `data/*.json` must stay valid JSON — a syntax error breaks the deployed site. Run `jq . <file>` after edits.
 - `locales/{en,zh,fr,de}.json` must share identical key trees; missing keys surface as visible English defaults.
 - Redesign workflow (`index_en_v{N}_round{M}.html`) and other project conventions live in [`CLAUDE.md`](CLAUDE.md).
-- The roadmap lives in [`PLAN.md`](PLAN.md). Every change should also land as a bullet in [`UPDATES.md`](UPDATES.md) on the current date.
+- The roadmap lives in [`docs/PLAN.md`](docs/PLAN.md). Every change should also land as a bullet in [`docs/UPDATES.md`](docs/UPDATES.md) on the current date.

@@ -49,9 +49,12 @@
   },
   "about": {
     "p1": "Je suis <strong>chercheur postdoctoral avancé</strong> à l'Université de Berne, en Suisse, au sein du <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">groupe Pattern Recognition</a>. Mon expertise couvre <strong>l'apprentissage de représentations sur graphes</strong>, <strong>l'apprentissage profond spatio-temporel</strong> et les <strong>systèmes d'IA basés sur les LLM</strong>.",
-    "p2": "J'ai obtenu mon doctorat en informatique en 2021 au <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">laboratoire LITIS</a>, INSA Rouen, Université de Normandie (France), sous la direction des Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> et <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, en me concentrant sur le machine learning sur graphes et la reconnaissance de motifs en chimio-informatique. Depuis, j'ai contribué à des projets en ML sur graphes pour la chimie computationnelle (optimisation de polymères, prédiction redox), l'analyse de documents (papyri anciens, plans techniques) et les sciences de l'environnement (prévision de température des rivières). J'ai encadré plus de 20 étudiant·e·s et contribué à plusieurs financements scientifiques.",
+    "p2": "J'ai obtenu mon doctorat en informatique en 2021 au <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">laboratoire LITIS</a>, INSA Rouen, Université de Normandie (France), sous la direction des Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> et <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, en me concentrant sur le machine learning sur graphes et la reconnaissance de motifs en chimio-informatique. Depuis, j'ai contribué à des projets en ML sur graphes pour la chimie computationnelle (optimisation de polymères, prédiction redox), l'analyse de documents (papyri anciens, plans techniques) et les sciences de l'environnement (prévision de température des rivières). J'ai encadré plus de 20 étudiant·e·s et contribué à plusieurs financements scientifiques. Auparavant, j'ai obtenu mon <strong>M.Sc. en génie logiciel</strong> (2017) et ma <strong>licence en génie de l'information</strong> (2014), tous deux à l'<strong>Université Jiaotong de Xi'an</strong>, en Chine.",
     "p3": "Au-delà du monde académique, j'interviens comme <strong>conseiller IA clé</strong> chez N-Banker, une startup FinTech, où je pilote la stratégie IA et le développement d'agents LLM. J'ai également conçu et contribué à plusieurs bibliothèques open source, boîtes à outils ML et systèmes d'agents LLM.",
-    "p4": "Je recherche activement des opportunités de <strong>ML Research Scientist / Engineer</strong>, en milieu académique comme industriel — avec un accent sur l'apprentissage sur graphes, le calcul scientifique et la découverte pilotée par l'IA."
+    "p4": "Je recherche activement des opportunités de <strong>ML Research Scientist / Engineer</strong>, en milieu académique comme industriel, avec un accent sur l'apprentissage sur graphes, l'apprentissage spatio-temporel, le calcul scientifique, et la découverte et les applications industrielles pilotées par l'IA."
+  },
+  "comingSoon": {
+    "text": "Bientôt disponible — page en construction"
   },
   "contact": {
     "address": "Lieu",
@@ -93,18 +96,26 @@
   },
   "exp": {
     "role_advanced_postdoc": "Chercheur postdoctoral avancé",
+    "desc_advanced_postdoc": "Recherche financée par le FNS sur les réseaux convolutionnels sur graphes spatio-temporels et les LLM pour la prévision de la température des rivières suisses. Développement d'architectures Transformer avec embeddings d'entités et structures de graphes. Article accepté à ICPR 2026.",
     "role_scientific_collab": "Collaborateur scientifique",
+    "desc_scientific_collab": "Application de l'apprentissage profond topologique sur graphes et en vision pour la détection de symboles, la prédiction de connexions et la construction de graphes dans les plans techniques et l'analyse de documents manuscrits. Contribution au projet Virtual Bodmer (accepté) financé par le FNS, pour la reconstruction numérique 3D de papyri anciens.",
     "role_research_fellow": "Chargé de recherche",
+    "desc_research_fellow": "Recherche financée par le FNS sur de nouveaux algorithmes d'appariement de graphes. Publication à ACPR 2023 sur la mise en relation d'espaces distincts en apprentissage sur graphes.",
     "role_postdoc": "Chercheur postdoctoral",
-    "role_phd": "Doctorat en informatique"
+    "desc_postdoc": "Application du ML sur graphes à l'optimisation de polymères (projet OCTOPUSSY) et à la prédiction de potentiels redox. Publication dans Journal of Computational Chemistry (2024).",
+    "role_phd": "Doctorat en informatique",
+    "desc_phd": "Thèse : « Machine Learning and Pattern Recognition in Chemoinformatics » — Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image."
   },
   "services_cards": {
     "supervision_title": "Encadrement",
     "supervision_i1": "Plus de 20 étudiant·e·s encadré·e·s",
-    "supervision_i2": "Sujets : GNN, LLM, Deep Learning",
+    "supervision_i2": "Sujets : vision par ordinateur, apprentissage sur graphes, ingénierie intelligente, deep learning, LLM, systèmes d'agents",
+    "association_title": "Associations",
+    "association_i1": "Membre de la Swiss Association for Pattern Recognition (SAPR) (2024-)",
+    "association_i2": "Membre du chapitre chinois de la Marie Curie Alumni Association (2024)",
+    "association_i3": "Membre associé du laboratoire LITIS (2022)",
     "reviewing_title": "Relecture",
-    "reviewing_i1": "Pattern Recognition Letters",
-    "reviewing_i2": "Expert Systems with Applications"
+    "reviewing_i1": "International Conference on Pattern Recognition 2024"
   },
   "skills_cats": {
     "programming": "Programmation",

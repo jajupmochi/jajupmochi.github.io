@@ -33,7 +33,8 @@ Linlin Jia 的个人学术网站，托管于 GitHub Pages（`jajupmochi/jajupmoc
 - `data/citations.json` — Google Scholar 引用数据（手工维护；无官方 API）。
 - `res/cv/CV_Linlin_Jia_{en,zh}.pdf` — 网站引用的 CV。
 - `new_web_test.html` — D3.js force-graph 设计参考，仅作灵感保留。
-- `blog/` 与 `docs/` — 独立的 Jekyll 子项目（Hux Blog boilerplate、minima theme），较旧，勿与主站混淆。
+- `docs/` — 项目文档主目录。包含 `PLAN.md`、`UPDATES.md`、`setup/`（一次性配置指南）、`vibe/`（审计 / 研究笔记）与 `_archive-jekyll-minima/`（归档的 Jekyll 子项目）。索引见 `docs/README.md`。
+- `blog/` — 历史遗留 Jekyll 子项目（Hux Blog boilerplate）。与主站无关，保留作为历史。
 
 ## 迭代工作流（混合模式）
 
@@ -49,9 +50,9 @@ Linlin Jia 的个人学术网站，托管于 GitHub Pages（`jajupmochi/jajupmoc
 - **JSON 有效性。** `locales/*.json` 和 `data/*.json` 必须保持合法 JSON — 语法错误会直接打挂已部署站点。改动后跑 `jq . <file>`。
 - **i18n key 对齐。** `locales/{en,zh,fr,de}.json` 四个文件的 key 树必须完全一致。若一个文件里加 key，四个全都要加（loader 有 inline 默认回退，但缺 key 会以原始英文露出来）。
 - **内容权威来源。** 更新职业相关内容（bio、publications、projects、experience）时，权威来源是 `res/cv/CV_Linlin_Jia_en_*.pdf` 和 `extra_info_work.md`。如果站点和权威不一致，改站点，不改权威。
-- **`UPDATES.md` 强制日志。** 本仓库的每一次改动（内容、代码、资源、文案、配置）都必须在**同一批 edit** 里加一条 `UPDATES.md` 条目。格式：今日日期做 `# YYYY-MM-DD` H1（UTC，用环境里的 `currentDate` 或跑 `date -u +%F`）；若当天有多次独立变更，在该日期下用 `## V1`、`## V2`、`## V3` H2 分组。每个条目是短 bullet 列表 — 改了什么、为什么。**没有对应 `UPDATES.md` 条目的 PR / commit 视为不完整。** 漏了就补。
-- **`PLAN.md` 同步。** 如果改动命中某个已存在的 `PLAN.md` 条目，必须在同一批 edit 里更新其状态符号（`[ ]`→`[~]`→`[✓]`）。如果引入新的计划工作（今天不发），则以新的 ID 加入对应的 Horizon / Milestone / Goal / Task。凡涉及路线图的改动未触及 `PLAN.md` 视为不完整。
-- **每份文档强制 Master TOC。** 本仓库的每份 markdown（根目录 `.md`、`setup/*.md`、`.claude/skills/*/SKILL.md`）都必须以 `## Master TOC`（或等价 "Table of contents" 段）开头，按下方层级规范把每个 `##` section 列为 bullet。例外：`UPDATES.md` 本身是时间序列，日期标题已起到 TOC 作用。
+- **`docs/UPDATES.md` 强制日志。** 本仓库的每一次改动（内容、代码、资源、文案、配置）都必须在**同一批 edit** 里加一条 `docs/UPDATES.md` 条目。格式：今日日期做 `# YYYY-MM-DD` H1（UTC，用环境里的 `currentDate` 或跑 `date -u +%F`），**最新日期放在最上面**。当天若有多次独立变更，在该日期下用 `## V1`、`## V2`、`## V3` H2 分组，**V 号最大的在最上**（最新工作优先落入）。每个条目是短 bullet 列表 — 改了什么、为什么。同批 edit 内同步更新文件顶部的 `## Master TOC` — 每新增一天加一个 bullet，每新增一个 V 加一个带一句 hook 的子 bullet。**没有对应 `docs/UPDATES.md` 条目（含 TOC）的 PR / commit 视为不完整。** 漏了就补。
+- **`docs/PLAN.md` 同步。** 如果改动命中某个已存在的 `docs/PLAN.md` 条目，必须在同一批 edit 里更新其状态符号（`[ ]`→`[~]`→`[✓]`）。如果引入新的计划工作（今天不发），则以新的 ID 加入对应的 Horizon / Milestone / Goal / Task。凡涉及路线图的改动未触及 `docs/PLAN.md` 视为不完整。
+- **每份文档强制 Master TOC。** 本仓库的每份 markdown（根目录 `.md`、`docs/**/*.md`、`.claude/skills/*/SKILL.md`）都必须以 `## Master TOC`（或等价 "Table of contents" 段）开头，按下方层级规范把每个 `##` section 列为 bullet。`docs/UPDATES.md` 也同样带 Master TOC — 用嵌套 bullet 按 日期 → `V<n>` 排列，每条一句 hook。新增条目时同批 edit 内保持同步。
 - **中英双语双文件。** 所有仓库级文档必须以英文 + 中文两个独立文件形式存在。约定：`NAME.md`（英文，canonical）+ `NAME.zh.md`（中文镜像），并列存放。每份文件顶部都要一行语言切换器：`> **Language:** English | [中文](NAME.zh.md)`（或镜像写法）。代码、标识符、文件名、Horizon/Milestone/Goal/Task ID、以及 JSON/YAML 代码块内部两版都保持英文 — 只翻译散文。例外：`extra_info_work.md`（Linlin 个人素材）、`CLAUDE.local.md`（私有）、`.claude/skills/*/SKILL.md`（Claude 解析，必须保持英文；中文镜像可选）。
 
 ## 文档规范
@@ -76,11 +77,11 @@ Linlin Jia 的个人学术网站，托管于 GitHub Pages（`jajupmochi/jajupmoc
 
 ### PLAN.md — 路线图唯一来源
 
-仓库根目录的 `PLAN.md` 是**唯一**存放长期 / 中期 / 当前路线图的地方。不要在 README、CLAUDE.md 或代码注释里重复路线图信息 — 链接对应的 `PLAN.md` ID 即可。
+`docs/PLAN.md` 是**唯一**存放长期 / 中期 / 当前路线图的地方。不要在 README、CLAUDE.md 或代码注释里重复路线图信息 — 链接对应的 `docs/PLAN.md` ID 即可。
 
 ### UPDATES.md — 变更日志
 
-`UPDATES.md` 是时间序列的审计日志。每次改动以短 bullet 加到当日日期下。详见 `## 硬规则`。
+`docs/UPDATES.md` 是时间序列的审计日志。每次改动以短 bullet 加到当日日期下。详见 `## 硬规则`。
 
 ### 层级 + 状态符号体系
 

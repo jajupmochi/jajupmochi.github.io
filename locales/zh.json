@@ -49,9 +49,12 @@
   },
   "about": {
     "p1": "我是瑞士<strong>伯尔尼大学高级博士后研究员</strong>，在<a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">模式识别组</a>从事 SNSF 资助的研究。研究方向涵盖<strong>图表示学习</strong>、<strong>时空深度学习</strong>以及<strong>基于大语言模型的 AI 系统</strong>。",
-    "p2": "我于 2021 年在法国 INSA Rouen 诺曼底大学 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS 实验室</a>获得计算机科学博士学位，师从 <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> 教授与 <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a> 教授，聚焦于图机器学习与化学信息学中的模式识别。此后，我先后参与了多个项目：计算化学方向的图机器学习（聚合物优化、氧化还原预测）、文档分析（古代莎草纸、工程图纸）以及环境科学（河水温度预测）。我已指导 20 余位学生，并参与多项科研基金。",
+    "p2": "我于 2021 年在法国 INSA Rouen 诺曼底大学 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS 实验室</a>获得计算机科学博士学位，师从 <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> 教授与 <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a> 教授，聚焦于图机器学习与化学信息学中的模式识别。此后，我先后参与了多个项目：计算化学方向的图机器学习（聚合物优化、氧化还原预测）、文档分析（古代莎草纸、工程图纸）以及环境科学（河水温度预测）。我已指导 20 余位学生，并参与多项科研基金。此前，我于 2017 年获得<strong>软件工程硕士学位</strong>，于 2014 年获得<strong>信息工程学士学位</strong>，均毕业于<strong>西安交通大学</strong>。",
     "p3": "学术之外，我在金融科技创业公司 N-Banker 担任<strong>关键 AI 顾问</strong>，主导 AI 战略与大模型智能体研发。我也构建并参与过多个开源库、机器学习工具箱与 LLM 智能体系统。",
-    "p4": "我正在积极寻求学术界与工业界的<strong>机器学习研究科学家 / 工程师</strong>职位，聚焦于图机器学习、科学计算与 AI 驱动的发现。"
+    "p4": "我正在积极寻求学术界与工业界的<strong>机器学习研究科学家 / 工程师</strong>职位，聚焦于图机器学习、时空学习、科学计算与 AI 驱动的科学发现及工业应用。"
+  },
+  "comingSoon": {
+    "text": "敬请期待 — 页面建设中"
   },
   "contact": {
     "address": "地点",
@@ -93,18 +96,26 @@
   },
   "exp": {
     "role_advanced_postdoc": "高级博士后研究员",
+    "desc_advanced_postdoc": "SNSF 资助研究，聚焦用于瑞士河流水温预测的时空图卷积网络与 LLM，开发基于实体嵌入与图结构的 Transformer 架构。论文被 ICPR 2026 接收。",
     "role_scientific_collab": "科研合作者",
+    "desc_scientific_collab": "将拓扑感知图与视觉深度学习应用于工程图纸与手写文档中的符号检测、连接预测与图构建。参与 SNSF 资助的 Virtual Bodmer 项目（已获批），开展古代莎草纸的 3D 数字重建。",
     "role_research_fellow": "研究员",
+    "desc_research_fellow": "SNSF 资助的新型图匹配算法研究。在 ACPR 2023 发表关于弥合图机器学习中不同空间的工作。",
     "role_postdoc": "博士后研究员",
-    "role_phd": "计算机科学博士"
+    "desc_postdoc": "将图机器学习应用于聚合物优化（OCTOPUSSY 项目）与氧化还原电位预测。成果发表于 Journal of Computational Chemistry (2024)。",
+    "role_phd": "计算机科学博士",
+    "desc_phd": "博士论文：《Machine Learning and Pattern Recognition in Chemoinformatics》——图核、图编辑距离与预映像问题。"
   },
   "services_cards": {
     "supervision_title": "指导",
     "supervision_i1": "已指导 20+ 学生",
-    "supervision_i2": "方向：GNN、LLM、深度学习",
+    "supervision_i2": "方向：计算机视觉、图学习、智能工程、深度学习、LLM、智能体系统",
+    "association_title": "协会成员",
+    "association_i1": "瑞士模式识别协会 (SAPR) 会员 (2024-)",
+    "association_i2": "玛丽·居里学者联盟中国分会会员 (2024)",
+    "association_i3": "LITIS 实验室准会员 (2022)",
     "reviewing_title": "审稿",
-    "reviewing_i1": "Pattern Recognition Letters",
-    "reviewing_i2": "Expert Systems with Applications"
+    "reviewing_i1": "International Conference on Pattern Recognition 2024"
   },
   "skills_cats": {
     "programming": "编程",

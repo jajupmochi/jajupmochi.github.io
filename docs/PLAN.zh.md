@@ -56,11 +56,24 @@
         - [G3 — News](#g3--news) `[ ]`
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
+        - [G6 — 合作机构露出](#g6--合作机构露出) `[~]`
     - [M1.2 — SEO + AI 搜索可见度](#m12--seo--ai-搜索可见度) `[~]`
         - [G1 — Schema.org 覆盖](#g1--schemaorg-覆盖) `[✓]`
         - [G2 — 多语言可爬取](#g2--多语言可爬取) `[✓]`
         - [G3 — AI 搜索优化](#g3--ai-搜索优化) `[ ]`
-    - [M1.3 — 移动 / 无障碍 / 性能](#m13--移动--无障碍--性能) `[✓]`
+        - [G4 — Head 清理（非 schema 类）](#g4--head-清理非-schema-类) `[ ]`
+        - [G5 — 第二轮审计 P0 清理（链接卫生 + description 截短）](#g5--第二轮审计-p0-清理链接卫生--description-截短) `[✓]`
+    - [M1.3 — 移动 / 无障碍 / 性能](#m13--移动--无障碍--性能) `[ ]`
+        - [G1 — Lighthouse 全绿](#g1--lighthouse-全绿) `[✓]`
+        - [G2 — 触控目标](#g2--触控目标) `[✓]`
+        - [G3 — LCP / CLS / INP](#g3--lcp--cls--inp) `[✓]`
+        - [G4 — 性能打磨（vibe 审计补漏）](#g4--性能打磨vibe-审计补漏) `[ ]`
+        - [G5 — Figure 放大镜（点击放大）](#g5--figure-放大镜点击放大) `[~]`
+    - [M1.4 — 招聘官记忆点差异化](#m14--招聘官记忆点差异化) `[ ]`
+        - [G1 — Live Citation Graph](#g1--live-citation-graph) `[ ]`
+        - [G2 — Redox prediction 交互 demo](#g2--redox-prediction-交互-demo) `[ ]`
+        - [G3 — "/now" 页面](#g3--now-页面) `[ ]`
+        - [G4 — 默认主题 → academic](#g4--默认主题--academic) `[ ]`
 - **[H2 — 站点运营与维护](#h2--站点运营与维护)** `[?]`
     - [M2.1 — 手动一次性配置](#m21--手动一次性配置) `[?]`
         - [G1 — Welcome 表单后端](#g1--welcome-表单后端) `[?]`
@@ -124,6 +137,11 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 - `[ ]` H1.M1.G5.T1 — 发表数量从 9 → 10（含 ICPR 2026 与修正后的 pubs）。
 - `[ ]` H1.M1.G5.T2 — 自动拉取 Google Scholar 引用数据（目前手工；见 H2.M2.G2）。
 
+#### G6 — 合作机构露出
+> 2026-04-21 V5 根据 Linlin 指令 #5 加入。决策：单独的 "Partners" 卡片网格会分散机构识别度，且与 Research Areas / Experience 在视觉权重上冲突；把合作机构放进一句 About 段落，信号强、占地小。
+- `[✓]` H1.M1.G6.T1 — `about.p5` 合作机构段（University of Basel、ETH Zürich、HES-SO Fribourg、University of Zürich、Inselspital Bern、AWS、N-Banker、China Pharmaceutical University），4 语种同步。
+- `[✓]` H1.M1.G6.T2 — Virtual Bodmer 项目伙伴（Université de Genève、Fondation Martin Bodmer、Archaeo-Scientific Lab）写进 Scientific Collaborator 时间线描述而非 About — 属具体项目资源，不是长期合作。
+
 ### M1.2 — SEO + AI 搜索可见度
 
 **终态：** 站点在 Google 正常被索引，`Linlin Jia` + `graph machine learning`
@@ -144,6 +162,17 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[ ]` H1.M2.G3.T2 — 季度检查：被问 "tell me about graph ML researchers" 时，ChatGPT / Perplexity / Claude 是否引用本站？
 - `[ ]` H1.M2.G3.T3 — 考虑 Mastodon / Bluesky 身份验证作为 AI grounding 信号。
 
+#### G4 — Head 清理（非 schema 类）
+> 来源：2026-04-20 vibe 审计 §三 SEO / 可发现性。
+- `[ ]` H1.M2.G4.T1 — 删掉过时的 `<meta name="keywords">`（`index_en.html:8`）。现代搜索引擎已不参考，保留只是噪音。
+
+#### G5 — 第二轮审计 P0 清理（链接卫生 + description 截短）
+> 2026-04-21 V6 新增。来源：2026-04-21 跑的第二轮 SEO 审计（综合评分 92/100 —— "优秀基础"）。4 处 `href="#"` 死链 + 1 处过长 meta description 被标记为 P0，同一个 edit batch 一起落，无布局 / schema 改动。
+- `[✓]` H1.M2.G5.T1 — Meta description 截短 210 → 156 字符（`index_en.html:6`）。开头堆关键词密集的职位 + 研究方向。
+- `[✓]` H1.M2.G5.T2 — ACPR 2023 PDF 按钮 → Google Scholar 单篇引用 URL（`index_en.html:1106`）。无公开 preprint；Scholar 页面是可爬取的 fallback。图标 `fa-file-pdf` → `ai-google-scholar`，文字 "PDF" → "Scholar"。
+- `[✓]` H1.M2.G5.T3 — N-Banker（`:936`）+ OCTOPUSSY（`:989`）项目卡：`href="#"` → `href="#projects"`（自指向空锚 no-op 模式，对齐 `:954` 的 GraphInk 卡）。
+- `[✓]` H1.M2.G5.T4 — RSS Feed 死链移除（`:1521`）。博客还是 "coming soon"，没有 feed 可指。
+
 ### M1.3 — 移动 / 无障碍 / 性能
 
 #### G1 — Lighthouse 全绿
@@ -156,6 +185,39 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[✓]` H1.M3.G3.T1 — LCP < 2.5 s，靠 AVIF hero + preconnect + fetchpriority。
 - `[✓]` H1.M3.G3.T2 — CLS < 0.1（所有 `<img>` 有显式 width/height）。
 - `[✓]` H1.M3.G3.T3 — JS 抽离后 INP 进入预算。
+
+#### G4 — 性能打磨（vibe 审计补漏）
+> 来源：2026-04-20 vibe 审计 §二 性能与依赖臃肿 + §四 4.3 chatbot `alert()`。Lighthouse ≥90 覆盖不到这些 — 都是依赖重量 / UX 细节层面的打磨，招聘官第一眼就能感受到。
+- `[ ]` H1.M3.G4.T1 — 字体家族精简。保留 Inter（正文）+ JetBrains Mono（代码）。`fancy` 主题放弃 Playfair Display，`industrial` 主题放弃 Orbitron → 两主题改用系统字体。省约 200-400 KB + 一次 DNS / TLS 握手。
+- `[ ]` H1.M3.G4.T2 — `canvas-confetti` 改为 dynamic import，只有庆祝触发（如 ICPR accepted 按钮）才加载。目前每次打开页面都加载。
+- `[ ]` H1.M3.G4.T3 — 加 `@media (prefers-reduced-motion: reduce)` CSS 规则。当前约 70 处 `@keyframes` / transition 忽略了这个 OS 级偏好。
+- `[ ]` H1.M3.G4.T4 — 地图栈去重：Leaflet（JS）与 Google Maps iframe 共存，留一个。Google Maps iframe 同时是 a11y 失败项（`frame-title` 缺失）。
+- `[ ]` H1.M3.G4.T5 — `openChatbot()` 把 native `alert()` 改成 toast 组件或直接 `mailto:`。native alert 会卡住 chrome-devtools 自动化，也是 UX 反模式。
+
+#### G5 — Figure 放大镜（点击放大）
+> 2026-04-21 V5 根据 Linlin 指令 #6 加入。决策：项目与出版卡的缩略图很小（~120×80 px），招聘官需要看到 SVG 的细节（graph-kernel 架构、GNN message-passing、redox demo）才能 grasp 研究内容。Lightbox 保留全分辨率 SVG 清晰度，不必为每张图单独建页。
+- `[~]` H1.M3.G5.T1 — CSS + JS + a11y（role=dialog、aria-modal、ESC / backdrop 关闭、焦点还原）+ 4 主题 CSS 变量同步。`ai-generated` 已验证；academic / industrial / fancy 跨主题验证待补。
+
+### M1.4 — 招聘官记忆点差异化
+
+> 来源：2026-04-20 vibe 审计 §五（独特性建议）+ §七（立刻做的 3 件事）。目标：给招聘官留一个**具体的"wow"点**，让 ta 能记住并描述给同事 — 把本站从 Karpathy / Olah / Beyer 参考集里拉开。默认主题和 `/now` 是同一 Milestone 下的轻量级补强项。
+
+#### G1 — Live Citation Graph
+- `[ ]` H1.M4.G1.T1 — 在 publications 区块用 D3.js 力导向图。节点 = 论文，边 = 共同作者。数据源：`data/citations.json` + 内联作者列表。骨架参考：`new_web_test.html`（已经是可运行原型）。
+- `[ ]` H1.M4.G1.T2 — 点节点 → 平滑滚动到对应 publication 卡。
+- `[ ]` H1.M4.G1.T3 — 用 IntersectionObserver 延迟初始化，避免吃 LCP 预算。
+
+#### G2 — Redox prediction 交互 demo
+- `[ ]` H1.M4.G2.T1 — 在 RedoxPrediction 项目卡上放小型交互 demo：SMILES 输入 → 渲染分子图 → 可视化 GNN message-passing forward pass。预置 3-5 个已知分子，招聘官不打字也能点进去看。
+- `[ ]` H1.M4.G2.T2 — 为 `prefers-reduced-motion` 用户与无 canvas 支持的浏览器提供静态 fallback 图 / 动画。
+- `[ ]` H1.M4.G2.T3 — 把 demo 从 hero "Research" 关键词与 RedoxPrediction 项目卡醒目入口引流过去 — 这是 graph-ML 药物发现科学家的 3 秒电梯演讲。
+
+#### G3 — "/now" 页面
+- `[ ]` H1.M4.G3.T1 — 仿 <https://nownownow.com/> 风格加 `now.html`：一段话讲当前重点（N-Banker LLM agent + SNSF Bodmer + 求职状态）。每月更新。
+- `[ ]` H1.M4.G3.T2 — 在 navbar（"Now" 槽位）与 `index_en.html` 的 footer 链接过去。
+
+#### G4 — 默认主题 → academic
+- `[ ]` H1.M4.G4.T1 — `js/main.js` 主题初始化里把默认主题从 `ai-generated` 改为 `academic`。已有 `localStorage` 偏好仍然尊重。主题 / 语言切换器位置不动（vibe 审计 "降到 footer" 建议 Linlin 不采纳）。
 
 ---
 

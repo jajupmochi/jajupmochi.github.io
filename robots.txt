@@ -4,7 +4,6 @@ User-agent: *
 Allow: /
 
 # Disallow utility / archived pages from indexing
-Disallow: /archive/
 Disallow: /index_en_backup.html
 Disallow: /index_20200202.html
 Disallow: /index-deprecated.html

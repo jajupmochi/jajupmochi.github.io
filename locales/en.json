@@ -49,15 +49,18 @@
   },
   "about": {
     "p1": "I am an <strong>Advanced Postdoctoral Researcher</strong> at the University of Bern, Switzerland, working at the <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. My expertise spans <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and <strong>LLM-based AI systems</strong>.",
-    "p2": "I received my Ph.D. in Computer Science in 2021 from the <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, INSA Rouen, Normandy University, France, under the supervision of Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> and Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, focusing on graph machine learning and pattern recognition in chemoinformatics. Since then, I've contributed to projects in graph ML for computational chemistry (polymer optimization, redox prediction), document analysis (historical papyri, engineering drawings), and environmental science (river-temperature forecasting). I've supervised 20+ students and contributed to multiple scientific grants.",
+    "p2": "I received my Ph.D. in Computer Science in 2021 from the <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, INSA Rouen, Normandy University, France, under the supervision of Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> and Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, focusing on graph machine learning and pattern recognition in chemoinformatics. Since then, I've contributed to projects in graph ML for computational chemistry (polymer optimization, redox prediction), document analysis (historical papyri, engineering drawings), and environmental science (river-temperature forecasting). I've supervised 20+ students and contributed to multiple scientific grants. Prior to that, I earned my <strong>M.Sc. in Software Engineering</strong> (2017) and <strong>B.S. in Information Engineering</strong> (2014), both from <strong>Xi'an Jiaotong University</strong>, China.",
     "p3": "Beyond academia, I serve as the <strong>key AI advisor</strong> at N-Banker, a FinTech startup, where I lead AI strategy and LLM-agent development. I have also built and contributed to multiple open-source libraries, ML toolkits, and LLM-agent systems.",
-    "p4": "I am actively seeking <strong>ML Research Scientist / Engineer</strong> opportunities in both academia and industry — with a focus on graph-based learning, scientific computing, and AI-driven discovery."
+    "p4": "I am actively seeking <strong>ML Research Scientist / Engineer</strong> opportunities in both academia and industry, with a focus on graph-based learning, spatio-temporal learning, scientific computing, and AI-driven discovery and industrial applications."
   },
   "contact": {
     "address": "Location",
     "phone": "Phone",
     "email": "Email",
     "openMaps": "Open in Maps"
+  },
+  "comingSoon": {
+    "text": "Coming soon — page under construction"
   },
   "common": {
     "showMore": "Show more",
@@ -93,18 +96,26 @@
   },
   "exp": {
     "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
+    "desc_advanced_postdoc": "SNSF-funded research on spatio-temporal graph convolutional networks and LLMs for Swiss river temperature forecasting. Developing transformer architectures with entity embeddings and graph structures. Paper accepted by ICPR 2026.",
     "role_scientific_collab": "Scientific Collaborator",
+    "desc_scientific_collab": "Applied topology-aware graph and vision deep learning for symbol detection, connection prediction, and graph construction in engineering diagrams and handwritten document analysis. Contributed to SNSF-funded Virtual Bodmer project (accepted) for 3D digital reconstruction of ancient papyrus.",
     "role_research_fellow": "Research Fellow",
+    "desc_research_fellow": "SNSF-funded research on novel graph matching algorithms. Published at ACPR 2023 on bridging distinct spaces in graph-based machine learning.",
     "role_postdoc": "Postdoctoral Researcher",
-    "role_phd": "Ph.D. in Computer Science"
+    "desc_postdoc": "Applied graph ML to polymer optimization (OCTOPUSSY project) and redox potential prediction. Published in Journal of Computational Chemistry (2024).",
+    "role_phd": "Ph.D. in Computer Science",
+    "desc_phd": "Thesis: \"Machine Learning and Pattern Recognition in Chemoinformatics\" — Graph kernels, graph edit distances, and pre-image problems."
   },
   "services_cards": {
     "supervision_title": "Supervision",
     "supervision_i1": "20+ students supervised",
-    "supervision_i2": "Topics: GNNs, LLMs, Deep Learning",
+    "supervision_i2": "Topics: Computer vision, Graph-based learning, Smart engineering, Deep learning, LLMs, Agent systems",
+    "association_title": "Associations",
+    "association_i1": "Member of the Swiss Association for Pattern Recognition (SAPR) (2024-)",
+    "association_i2": "Member of the Marie Curie Alumni Association China Chapter (2024)",
+    "association_i3": "Associated member of the LITIS lab (2022)",
     "reviewing_title": "Reviewing",
-    "reviewing_i1": "Pattern Recognition Letters",
-    "reviewing_i2": "Expert Systems with Applications"
+    "reviewing_i1": "International Conference on Pattern Recognition 2024"
   },
   "skills_cats": {
     "programming": "Programming",

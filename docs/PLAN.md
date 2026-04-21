@@ -60,11 +60,24 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G3 — News](#g3--news) `[ ]`
         - [G4 — Skills](#g4--skills) `[ ]`
         - [G5 — Stats](#g5--stats) `[ ]`
+        - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[~]`
     - [M1.2 — SEO + AI-search visibility](#m12--seo--ai-search-visibility) `[~]`
         - [G1 — Schema.org coverage](#g1--schemaorg-coverage) `[✓]`
         - [G2 — Multilingual crawlability](#g2--multilingual-crawlability) `[✓]`
         - [G3 — AI-search optimization](#g3--ai-search-optimization) `[ ]`
-    - [M1.3 — Mobile / a11y / performance](#m13--mobile--a11y--performance) `[✓]`
+        - [G4 — Head hygiene (non-schema cleanup)](#g4--head-hygiene-non-schema-cleanup) `[ ]`
+        - [G5 — Round-2 audit P0 cleanup (link hygiene + description trim)](#g5--round-2-audit-p0-cleanup-link-hygiene--description-trim) `[✓]`
+    - [M1.3 — Mobile / a11y / performance](#m13--mobile--a11y--performance) `[ ]`
+        - [G1 — Lighthouse all-green](#g1--lighthouse-all-green) `[✓]`
+        - [G2 — Touch targets](#g2--touch-targets) `[✓]`
+        - [G3 — LCP / CLS / INP](#g3--lcp--cls--inp) `[✓]`
+        - [G4 — Performance polish (post-vibe-audit gaps)](#g4--performance-polish-post-vibe-audit-gaps) `[ ]`
+        - [G5 — Figure lightbox (click-to-enlarge)](#g5--figure-lightbox-click-to-enlarge) `[~]`
+    - [M1.4 — Unique differentiators for recruiter memorability](#m14--unique-differentiators-for-recruiter-memorability) `[ ]`
+        - [G1 — Live Citation Graph](#g1--live-citation-graph) `[ ]`
+        - [G2 — Redox prediction interactive demo](#g2--redox-prediction-interactive-demo) `[ ]`
+        - [G3 — "/now" page](#g3--now-page) `[ ]`
+        - [G4 — Default theme → academic](#g4--default-theme--academic) `[ ]`
 - **[H2 — Site Operations & Maintenance](#h2--site-operations--maintenance)** `[?]`
     - [M2.1 — Manual one-time setup](#m21--manual-one-time-setup) `[?]`
         - [G1 — Welcome form backend](#g1--welcome-form-backend) `[?]`
@@ -129,6 +142,11 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 - `[ ]` H1.M1.G5.T1 — Update publication count from 9 → 10 (ICPR 2026 + corrected pubs).
 - `[ ]` H1.M1.G5.T2 — Auto-pull citations from Google Scholar (currently manual; see H2.M2.G2).
 
+#### G6 — Partners / collaborators surface
+> Added 2026-04-21 V5 per Linlin directive #5. Rationale: a single collaborators paragraph keeps institutional recognition high-signal low-footprint — a dedicated "Partners" card grid would fragment identity and compete with Experience / Research Areas for visual weight.
+- `[✓]` H1.M1.G6.T1 — `about.p5` collaborators paragraph (University of Basel, ETH Zürich, HES-SO Fribourg, University of Zürich, Inselspital Bern, AWS, N-Banker, China Pharmaceutical University); 4-locale parity.
+- `[✓]` H1.M1.G6.T2 — Virtual Bodmer project partners (Université de Genève, Fondation Martin Bodmer, Archaeo-Scientific Lab) mentioned in Scientific Collaborator timeline description rather than About — project-specific artifact, not a long-term collaboration.
+
 ### M1.2 — SEO + AI-search visibility
 
 **End-state:** Site is indexed correctly across Google, ranks for `Linlin Jia`
@@ -150,6 +168,17 @@ when asked about graph ML researchers.
 - `[ ]` H1.M2.G3.T2 — Quarterly check: is the site cited by ChatGPT / Perplexity / Claude when asked "tell me about graph ML researchers"?
 - `[ ]` H1.M2.G3.T3 — Consider Mastodon / Bluesky verification for AI grounding signals.
 
+#### G4 — Head hygiene (non-schema cleanup)
+> Source: 2026-04-20 vibe audit §三 SEO / 可发现性.
+- `[ ]` H1.M2.G4.T1 — Remove obsolete `<meta name="keywords">` tag (`index_en.html:8`). Modern search engines ignore it; keeping it adds noise.
+
+#### G5 — Round-2 audit P0 cleanup (link hygiene + description trim)
+> Added 2026-04-21 V6. Source: the second SEO audit run on 2026-04-21 (scored 92/100 — "excellent foundation"). Four `href="#"` dead links and one overlong meta description were flagged as P0. All shipped in the same edit batch; no layout or schema changes.
+- `[✓]` H1.M2.G5.T1 — Meta description trim 210 → 156 chars (`index_en.html:6`). Leads with keyword-dense role + research areas.
+- `[✓]` H1.M2.G5.T2 — ACPR 2023 PDF button → Google Scholar citation URL (`index_en.html:1106`). No public preprint; Scholar page is the crawlable fallback. Icon `fa-file-pdf` → `ai-google-scholar`, label "PDF" → "Scholar".
+- `[✓]` H1.M2.G5.T3 — N-Banker (`:936`) + OCTOPUSSY (`:989`) project cards: `href="#"` → `href="#projects"` (self-anchor no-op pattern, matching GraphInk card at `:954`).
+- `[✓]` H1.M2.G5.T4 — RSS Feed dead link removed (`:1521`). Blog page is still "coming soon" — no feed to point to.
+
 ### M1.3 — Mobile / a11y / performance
 
 #### G1 — Lighthouse all-green
@@ -162,6 +191,39 @@ when asked about graph ML researchers.
 - `[✓]` H1.M3.G3.T1 — LCP < 2.5 s with AVIF hero + preconnect + fetchpriority.
 - `[✓]` H1.M3.G3.T2 — CLS < 0.1 (explicit width/height on all `<img>`).
 - `[✓]` H1.M3.G3.T3 — INP within budget after JS extraction.
+
+#### G4 — Performance polish (post-vibe-audit gaps)
+> Source: 2026-04-20 vibe audit §二 性能与依赖臃肿 + §四 设计与独特性 / 4.3 chatbot `alert()`. Lighthouse ≥90 does not cover these — they are dependency-weight / UX-polish gaps a recruiter will feel on first paint.
+- `[ ]` H1.M3.G4.T1 — Font family trim. Keep Inter (body) + JetBrains Mono (code). Drop Playfair Display (fancy only) + Orbitron (industrial only) → swap to system fonts for those two themes. Saves ~200-400 KB and one DNS / TLS round-trip.
+- `[ ]` H1.M3.G4.T2 — `canvas-confetti` → dynamic import, only loaded when the celebration trigger fires (ICPR-accepted etc.). Currently always loaded on page load.
+- `[ ]` H1.M3.G4.T3 — Add `@media (prefers-reduced-motion: reduce)` CSS rule. ~70 `@keyframes` / transitions currently ignore the OS preference.
+- `[ ]` H1.M3.G4.T4 — Dedup map stack. Leaflet (JS) and Google Maps iframe both coexist; keep one. Google Maps iframe is also an a11y fail (`frame-title` missing).
+- `[ ]` H1.M3.G4.T5 — `openChatbot()` → replace native `alert()` with a toast component or direct `mailto:`. Native alert breaks chrome-devtools automation and is a UX anti-pattern.
+
+#### G5 — Figure lightbox (click-to-enlarge)
+> Added 2026-04-21 V5 per Linlin directive #6. Rationale: project and publication cards have small (~120×80 px) thumbnails; recruiters need to see the SVG detail (graph-kernel architecture, GNN message-passing, redox demo) to understand the research. Lightbox preserves full-resolution SVG fidelity without committing to a per-figure dedicated page.
+- `[~]` H1.M3.G5.T1 — CSS + JS + a11y (role=dialog, aria-modal, ESC / backdrop close, focus restore) + 4-theme CSS variable parity. `ai-generated` verified; academic / industrial / fancy cross-theme verification pending.
+
+### M1.4 — Unique differentiators for recruiter memorability
+
+> Source: 2026-04-20 vibe audit §五 (独特性建议) + §七 (立刻做的 3 件事). Goal: give a recruiter one concrete "wow" element they will remember and describe to colleagues — something that sets this site apart from the Karpathy / Olah / Beyer reference set. Default theme & `/now` are lower-lift items in the same Milestone.
+
+#### G1 — Live Citation Graph
+- `[ ]` H1.M4.G1.T1 — D3.js force-graph in the publications section. Nodes = papers, edges = shared co-authors. Data source: `data/citations.json` + inline author lists. Skeleton reference: `new_web_test.html` (already a working prototype).
+- `[ ]` H1.M4.G1.T2 — Click a node → smooth-scroll to matching publication card.
+- `[ ]` H1.M4.G1.T3 — Lazy-init the graph with IntersectionObserver so it doesn't cost LCP budget on initial load.
+
+#### G2 — Redox prediction interactive demo
+- `[ ]` H1.M4.G2.T1 — Small interactive demo on the RedoxPrediction project card: SMILES input → render molecular graph → visualize GNN message-passing forward pass. Pre-compute 3-5 known molecules so recruiters can click-through without typing.
+- `[ ]` H1.M4.G2.T2 — Static fallback image / animation for `prefers-reduced-motion` users and browsers without canvas.
+- `[ ]` H1.M4.G2.T3 — Link the demo prominently from hero "Research" keywords and the RedoxPrediction project card — it is the 3-second elevator pitch for a graph-ML drug-discovery scientist.
+
+#### G3 — "/now" page
+- `[ ]` H1.M4.G3.T1 — Add `now.html` in the spirit of <https://nownownow.com/>: a single short paragraph on current focus (N-Banker LLM agent + SNSF Bodmer project + job-hunt status). Refreshed monthly.
+- `[ ]` H1.M4.G3.T2 — Link from navbar ("Now" slot) and from the footer of `index_en.html`.
+
+#### G4 — Default theme → academic
+- `[ ]` H1.M4.G4.T1 — Switch default theme from `ai-generated` to `academic` in `js/main.js` theme bootstrap. Any existing `localStorage` preference is respected. Theme / language switcher position stays unchanged (vibe-audit "move to footer" recommendation declined by Linlin).
 
 ---
 
