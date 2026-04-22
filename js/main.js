@@ -542,6 +542,10 @@
                 const activeTheme = document.body.getAttribute('data-theme') || 'academic';
                 const ct = document.getElementById('currentTheme');
                 if (ct) ct.textContent = getThemeName(activeTheme);
+                // Re-translate dynamically rendered widgets (visit map top-countries list)
+                if (typeof window.__refreshVisitStats === 'function') {
+                    try { window.__refreshVisitStats(); } catch (e) { /* non-fatal */ }
+                }
             });
         }
         
@@ -1091,6 +1095,13 @@
                 publications: 'Publications', experience: 'Experience',
                 services: 'Services', beyond: 'Beyond', thesis: 'Thesis'
             };
+            // Locale-aware label lookup. Falls through to English baseline above.
+            const getSectionLabel = (section) => {
+                try {
+                    const t = translationsCache && translationsCache[currentLang];
+                    return (t && t['search.section_' + section]) || SECTION_LABELS[section] || section;
+                } catch (e) { return SECTION_LABELS[section] || section; }
+            };
 
             let index = [];
             let currentMatches = [];
@@ -1104,7 +1115,7 @@
             function pushItem(items, section, title, snippet, target) {
                 if (!target) return;
                 if (!title && !snippet) return;
-                items.push({ section, title: title || SECTION_LABELS[section] || section,
+                items.push({ section, title: title || getSectionLabel(section),
                              snippet: (snippet || '').slice(0, 180), target });
             }
 
@@ -1222,7 +1233,7 @@
                 }
                 results.innerHTML = currentMatches.map((m, i) => `
                     <button type="button" class="site-search-result${i === 0 ? ' is-active' : ''}" role="option" data-idx="${i}">
-                        <span class="site-search-result-section">${escapeHtml(SECTION_LABELS[m.section] || m.section)}</span>
+                        <span class="site-search-result-section">${escapeHtml(getSectionLabel(m.section))}</span>
                         <span class="site-search-result-title">${highlight(m.title, q)}</span>
                         <span class="site-search-result-snippet">${highlight(m.snippet, q)}</span>
                     </button>`).join('');
@@ -1430,6 +1441,14 @@
                     });
             }
 
+            // Look up locale-specific country display name; fall through to atlas English.
+            function localizeCountry(name) {
+                try {
+                    const t = translationsCache && translationsCache[currentLang];
+                    return (t && t['countries.' + name]) || name;
+                } catch (e) { return name; }
+            }
+
             function renderStats(countries) {
                 const total = Array.from(countries.values()).reduce((a, b) => a + b, 0);
                 const totalEl = document.getElementById('visitTotalCount');
@@ -1446,7 +1465,7 @@
                     .forEach(([name, count]) => {
                         const li = document.createElement('li');
                         li.innerHTML =
-                            `<span class="country-name">${escapeHtml(name)}</span>` +
+                            `<span class="country-name">${escapeHtml(localizeCountry(name))}</span>` +
                             `<span class="country-count">${count.toLocaleString()}</span>`;
                         ol.appendChild(li);
                     });
@@ -1483,6 +1502,9 @@
 
                 renderChoropleth(world, countries);
                 renderStats(countries);
+                // Expose a hook so language switches re-translate the top-countries list
+                // (choropleth tooltips re-render naturally on next hover; the side-panel list does not).
+                window.__refreshVisitStats = () => renderStats(countries);
                 block.hidden = false;
             }
 

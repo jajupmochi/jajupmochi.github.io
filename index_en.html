@@ -66,6 +66,10 @@
     <meta name="twitter:image" content="https://jajupmochi.github.io/images/og-card.jpg">
     <meta name="twitter:image:alt" content="Linlin Jia, Ph.D., Machine Learning Research Scientist at the University of Bern">
 
+    <!-- Site name + mobile browser chrome color (deepens favicon cohesion on iOS / Android Chrome address bar). -->
+    <meta property="og:site_name" content="Linlin Jia — ML Research Scientist">
+    <meta name="theme-color" content="#1e3a8a">
+
     <!-- JSON-LD Person schema for Google Knowledge Graph and AI assistants (ChatGPT, Perplexity, Claude) -->
     <script type="application/ld+json">
     {
@@ -1158,8 +1162,8 @@
             <div class="container">
                 <h2 class="section-title"><i class="fas fa-file-alt" aria-hidden="true"></i> <span data-i18n="sections.publications">Selected Publications</span></h2>
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                    <strong>130+ citations</strong> ·
-                    <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener noreferrer"><i class="ai ai-google-scholar"></i> Google Scholar</a>
+                    <span data-i18n-html="pub.summary_pre"><strong>130+ citations</strong> · </span>
+                    <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener noreferrer"><i class="ai ai-google-scholar"></i> <span data-i18n="pub.gscholar_link">Google Scholar</span></a>
                 </p>
 
                 <!-- Controls -->
@@ -1193,15 +1197,15 @@
                             <div class="pub-thumbnail-overlay">ICPR</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Conference • 2026 · Accepted</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.conf_2026_accepted">Conference • 2026 · Accepted</span>
                             <div class="pub-title">Benchmarking Transformers on Spatio-Temporal River Water Temperature Modeling</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, et al.</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">International Conference on Pattern Recognition (ICPR) 2026 — accepted</div>
                             <div class="pub-links">
-                                <a href="#news" class="pub-link"><i class="fas fa-clock"></i> In press</a>
+                                <a href="#news" class="pub-link"><i class="fas fa-clock"></i> <span data-i18n="pub.in_press">In press</span></a>
                             </div>
                             <div class="pub-links">
-                                <a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
                             </div>
                         </div>
                     </div>
@@ -1214,15 +1218,15 @@
                             <div class="pub-thumbnail-overlay">J. Comp. Chem.</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Journal • 2024</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2024">Journal • 2024</span>
                             <div class="pub-title">Predicting Redox Potentials by Graph-Based Machine Learning Methods</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, É. Brémond, L. Zaida, B. Gaüzère, V. Tognetti, L. Joubert</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Journal of Computational Chemistry, 2024</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="https://www.researchgate.net/publication/381676453_Predicting_redox_potentials_by_graph-based_machine_learning_methods" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
-                                <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://www.researchgate.net/publication/381676453_Predicting_redox_potentials_by_graph-based_machine_learning_methods" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
                             </div>
                         </div>
                     </div>
@@ -1235,15 +1239,15 @@
                             <div class="pub-thumbnail-overlay">ACPR</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Conference • 2023</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.conf_2023">Conference • 2023</span>
                             <div class="pub-title">Bridging Distinct Spaces in Graph-based Machine Learning</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, X. Ning, B. Gaüzère, P. Honeine, K. Riesen</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Asian Conference on Pattern Recognition (ACPR) 2023, Kitakyushu, Japan</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">1</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">1</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1007/978-3-031-47637-2_1" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="res/papers/acpr2023.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="https://github.com/jajupmochi/ged-cost-learn-framework" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://doi.org/10.1007/978-3-031-47637-2_1" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="res/papers/acpr2023.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.pdf">PDF</span></a>
+                                <a href="https://github.com/jajupmochi/ged-cost-learn-framework" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
                             </div>
                         </div>
                     </div>
@@ -1254,13 +1258,13 @@
                             <div class="pub-thumbnail-overlay">CompBioMed</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Journal • 2023</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2023">Journal • 2023</span>
                             <div class="pub-title">Epi-DNNs: Epidemiological Priors Informed Deep Neural Networks for Modeling COVID-19 Dynamics</div>
                             <div class="pub-authors">X. Ning, <strong>L. Jia</strong>, Y. Wei, X.-A. Li, F. Chen</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Computers in Biology and Medicine, 2023</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">61</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">61</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1016/j.compbiomed.2023.106693" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
+                                <a href="https://doi.org/10.1016/j.compbiomed.2023.106693" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
                             </div>
                         </div>
                     </div>
@@ -1271,14 +1275,14 @@
                             <div class="pub-thumbnail-overlay">Electronics</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Journal • 2022</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2022">Journal • 2022</span>
                             <div class="pub-title">A Study on the Stability of Graph Edit Distance Heuristics</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, V. Tognetti, L. Joubert, B. Gaüzère, P. Honeine</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Electronics, 2022</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">2</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">2</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.3390/electronics11203312" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="https://www.researchgate.net/publication/364383236_A_Study_on_the_Stability_of_Graph_Edit_Distance_Heuristics" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
+                                <a href="https://doi.org/10.3390/electronics11203312" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://www.researchgate.net/publication/364383236_A_Study_on_the_Stability_of_Graph_Edit_Distance_Heuristics" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
                             </div>
                         </div>
                     </div>
@@ -1289,15 +1293,15 @@
                             <div class="pub-thumbnail-overlay">ESWA</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Journal • 2022</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2022">Journal • 2022</span>
                             <div class="pub-title">Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Expert Systems with Applications, 2022</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">25</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">25</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1016/j.eswa.2021.116095" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-02053946/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
-                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://doi.org/10.1016/j.eswa.2021.116095" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-02053946/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
                             </div>
                         </div>
                     </div>
@@ -1308,15 +1312,15 @@
                             <div class="pub-thumbnail-overlay">PRL</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Journal • 2021</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2021">Journal • 2021</span>
                             <div class="pub-title">graphkit-learn: A Python Library for Graph Kernels Based on Linear Patterns</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Pattern Recognition Letters, 2021</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">14</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">14</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1016/j.patrec.2021.01.003" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-03111016/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
-                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://doi.org/10.1016/j.patrec.2021.01.003" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-03111016/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
                             </div>
                         </div>
                     </div>
@@ -1327,16 +1331,16 @@
                             <div class="pub-thumbnail-overlay">SSPR</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Workshop • 2021</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.workshop_2021">Workshop • 2021</span>
                             <div class="pub-title">A Graph Pre-image Method Based on Graph Edit Distances</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">IAPR Joint International Workshops SPR &amp; SSPR 2020 — Springer LNCS, 2021</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1007/978-3-030-73973-7_21" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphpreimage.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
-                                <a href="res/slides/Report_S_SSPR_2020_Preimage_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> Slides</a>
-                                <a href="https://youtu.be/GnzBXM3L3pQ" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1A54y1s7zJ/","en":"https://youtu.be/GnzBXM3L3pQ","fr":"https://youtu.be/GnzBXM3L3pQ","de":"https://youtu.be/GnzBXM3L3pQ"}'><i class="fas fa-film"></i> Video</a>
+                                <a href="https://doi.org/10.1007/978-3-030-73973-7_21" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphpreimage.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="res/slides/Report_S_SSPR_2020_Preimage_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> <span data-i18n="pub_link.slides">Slides</span></a>
+                                <a href="https://youtu.be/GnzBXM3L3pQ" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1A54y1s7zJ/","en":"https://youtu.be/GnzBXM3L3pQ","fr":"https://youtu.be/GnzBXM3L3pQ","de":"https://youtu.be/GnzBXM3L3pQ"}'><i class="fas fa-film"></i> <span data-i18n="pub_link.video">Video</span></a>
                             </div>
                         </div>
                     </div>
@@ -1347,16 +1351,16 @@
                             <div class="pub-thumbnail-overlay">SSPR</div>
                         </div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Workshop • 2021</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.workshop_2021">Workshop • 2021</span>
                             <div class="pub-title">A Metric Learning Approach to Graph Edit Costs for Regression</div>
                             <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, F. Yger, P. Honeine</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">IAPR Joint International Workshops SPR &amp; SSPR 2020 — Springer LNCS, 2021</div>
-                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">7</span> citations</span>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">7</span> <span data-i18n="pub.citations_label">citations</span></span>
                             <div class="pub-links">
-                                <a href="https://doi.org/10.1007/978-3-030-73973-7_23" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> DOI</a>
-                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphregression.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> Preprint</a>
-                                <a href="res/slides/Report_S_SSPR_2020_GED_cost_learning_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> Slides</a>
-                                <a href="https://youtu.be/-NGWQYLFa6k" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1ho4y1o7Bk/","en":"https://youtu.be/-NGWQYLFa6k","fr":"https://youtu.be/-NGWQYLFa6k","de":"https://youtu.be/-NGWQYLFa6k"}'><i class="fas fa-film"></i> Video</a>
+                                <a href="https://doi.org/10.1007/978-3-030-73973-7_23" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphregression.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="res/slides/Report_S_SSPR_2020_GED_cost_learning_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> <span data-i18n="pub_link.slides">Slides</span></a>
+                                <a href="https://youtu.be/-NGWQYLFa6k" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1ho4y1o7Bk/","en":"https://youtu.be/-NGWQYLFa6k","fr":"https://youtu.be/-NGWQYLFa6k","de":"https://youtu.be/-NGWQYLFa6k"}'><i class="fas fa-film"></i> <span data-i18n="pub_link.video">Video</span></a>
                             </div>
                         </div>
                     </div>
@@ -1364,12 +1368,12 @@
                     <div class="pub-card" data-tags="patent" data-year="2016">
                         <div class="pub-thumbnail has-zoom"><img src="res/figures/2016_patent_elm_google_patent_page.png" alt="Google Patents page for China patent CN106376041B on ELM-based SDN mobility prediction" loading="lazy" width="220" height="172"><div class="pub-thumbnail-overlay">Patent</div></div>
                         <div class="pub-content">
-                            <span class="pub-venue-badge">Patent • 2016</span>
+                            <span class="pub-venue-badge" data-i18n="pub_v.patent_2016">Patent • 2016</span>
                             <div class="pub-title">A Kind of Name Data Network Mobility Switching Method Predicted Using ELM</div>
                             <div class="pub-authors">Qu Hua, Zhao Jihong, Wu Jinkang, <strong>Jia Linlin</strong>, et al.</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">China Patent CN106376041B</div>
                             <div class="pub-links">
-                                <a href="https://patents.google.com/patent/CN106376041B/en" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://patents.google.com/patent/CN106376041B","en":"https://patents.google.com/patent/CN106376041B/en","fr":"https://patents.google.com/patent/CN106376041B/en","de":"https://patents.google.com/patent/CN106376041B/en"}'><i class="fas fa-external-link-alt"></i> Patent</a>
+                                <a href="https://patents.google.com/patent/CN106376041B/en" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://patents.google.com/patent/CN106376041B","en":"https://patents.google.com/patent/CN106376041B/en","fr":"https://patents.google.com/patent/CN106376041B/en","de":"https://patents.google.com/patent/CN106376041B/en"}'><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.patent">Patent</span></a>
                             </div>
                         </div>
                     </div>
@@ -1618,7 +1622,7 @@
                     <!-- Hobbies -->
                     <div class="personal-card">
                         <div class="personal-card-header">
-                            <h3><i class="fas fa-heart"></i> Hobbies</h3>
+                            <h3><i class="fas fa-heart"></i> <span data-i18n="beyond.hobbies_title">Hobbies</span></h3>
                         </div>
                         <div class="personal-card-content">
                             <div class="hobby-item">
@@ -1655,7 +1659,7 @@
                     <!-- Photos -->
                     <div class="personal-card">
                         <div class="personal-card-header">
-                            <h3><i class="fas fa-camera"></i> Photo Gallery</h3>
+                            <h3><i class="fas fa-camera"></i> <span data-i18n="beyond.gallery_title">Photo Gallery</span></h3>
                         </div>
                         <div class="personal-card-content">
                             <div class="photo-gallery">
@@ -1675,7 +1679,7 @@
                     <!-- Volunteer Work -->
                     <div class="personal-card">
                         <div class="personal-card-header">
-                            <h3><i class="fas fa-hands-helping"></i> Volunteer Work</h3>
+                            <h3><i class="fas fa-hands-helping"></i> <span data-i18n="beyond.volunteer_title">Volunteer Work</span></h3>
                         </div>
                         <div class="personal-card-content">
                             <div class="volunteer-item">
@@ -1696,7 +1700,7 @@
                     <!-- Social Links -->
                     <div class="personal-card">
                         <div class="personal-card-header">
-                            <h3><i class="fas fa-share-alt"></i> Social Platforms</h3>
+                            <h3><i class="fas fa-share-alt"></i> <span data-i18n="beyond.social_title">Social Platforms</span></h3>
                         </div>
                         <div class="personal-card-content">
                             <div class="social-links-personal">
@@ -1797,9 +1801,9 @@
             </div>
             <div id="siteSearchResults" class="site-search-results" role="listbox" aria-label="Search results"></div>
             <div class="site-search-hint">
-                <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate</span>
-                <span><kbd>Enter</kbd> open</span>
-                <span><kbd>Esc</kbd> close</span>
+                <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span data-i18n="search.kbd_navigate">navigate</span></span>
+                <span><kbd>Enter</kbd> <span data-i18n="search.kbd_open">open</span></span>
+                <span><kbd>Esc</kbd> <span data-i18n="search.kbd_close">close</span></span>
             </div>
         </div>
     </div>

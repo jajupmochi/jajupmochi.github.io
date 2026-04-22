@@ -76,6 +76,75 @@
     "project_page": "Page projet",
     "platform": "Plateforme"
   },
+  "pub": {
+    "summary_pre": "<strong>130+ citations</strong> · ",
+    "gscholar_link": "Google Scholar",
+    "citations_label": "citations",
+    "in_press": "Sous presse"
+  },
+  "pub_v": {
+    "conf_2026_accepted": "Conférence • 2026 · Accepté",
+    "journal_2024": "Revue • 2024",
+    "conf_2023": "Conférence • 2023",
+    "journal_2023": "Revue • 2023",
+    "journal_2022": "Revue • 2022",
+    "journal_2021": "Revue • 2021",
+    "workshop_2021": "Atelier • 2021",
+    "patent_2016": "Brevet • 2016"
+  },
+  "pub_link": {
+    "doi": "DOI",
+    "code": "Code",
+    "preprint": "Préprint",
+    "pdf": "PDF",
+    "slides": "Diapos",
+    "video": "Vidéo",
+    "patent": "Brevet"
+  },
+  "countries": {
+    "United States of America": "États-Unis",
+    "United Kingdom": "Royaume-Uni",
+    "China": "Chine",
+    "Taiwan": "Taïwan",
+    "Hong Kong S.A.R.": "Hong Kong",
+    "Switzerland": "Suisse",
+    "Germany": "Allemagne",
+    "France": "France",
+    "Italy": "Italie",
+    "Spain": "Espagne",
+    "Netherlands": "Pays-Bas",
+    "Belgium": "Belgique",
+    "Austria": "Autriche",
+    "Portugal": "Portugal",
+    "Poland": "Pologne",
+    "Czechia": "Tchéquie",
+    "Sweden": "Suède",
+    "Norway": "Norvège",
+    "Finland": "Finlande",
+    "Denmark": "Danemark",
+    "Ireland": "Irlande",
+    "Romania": "Roumanie",
+    "Greece": "Grèce",
+    "Hungary": "Hongrie",
+    "Canada": "Canada",
+    "Mexico": "Mexique",
+    "Brazil": "Brésil",
+    "Argentina": "Argentine",
+    "Japan": "Japon",
+    "South Korea": "Corée du Sud",
+    "India": "Inde",
+    "Singapore": "Singapour",
+    "Australia": "Australie",
+    "New Zealand": "Nouvelle-Zélande",
+    "Russia": "Russie",
+    "Ukraine": "Ukraine",
+    "Turkey": "Turquie",
+    "Israel": "Israël",
+    "Saudi Arabia": "Arabie saoudite",
+    "United Arab Emirates": "Émirats arabes unis",
+    "South Africa": "Afrique du Sud",
+    "Egypt": "Égypte"
+  },
   "proj_tag": {
     "platform": "Plateforme",
     "spatio_temporal": "Spatio-temporel",
@@ -188,7 +257,11 @@
     "blog": "Blog"
   },
   "beyond": {
-    "subtitle": "Loisirs, bénévolat et vie en dehors du laboratoire"
+    "subtitle": "Loisirs, bénévolat et vie en dehors du laboratoire",
+    "hobbies_title": "Loisirs",
+    "gallery_title": "Galerie photo",
+    "volunteer_title": "Bénévolat",
+    "social_title": "Réseaux sociaux"
   },
   "blog": {
     "label": "Pensées & écrits"
@@ -235,7 +308,18 @@
     "placeholder": "Rechercher sur le site…",
     "aria": "Rechercher sur le site",
     "empty": "Commencez à taper pour rechercher sur le site…",
-    "no_results": "Aucun résultat."
+    "no_results": "Aucun résultat.",
+    "kbd_navigate": "naviguer",
+    "kbd_open": "ouvrir",
+    "kbd_close": "fermer",
+    "section_about": "À propos",
+    "section_news": "Actualités",
+    "section_projects": "Projets",
+    "section_publications": "Publications",
+    "section_experience": "Expérience",
+    "section_services": "Services",
+    "section_beyond": "Au-delà",
+    "section_thesis": "Thèse"
   },
   "outline": {
     "graph_ml_title": "Machine Learning sur graphes",

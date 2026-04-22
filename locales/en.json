@@ -76,6 +76,75 @@
     "project_page": "Project page",
     "platform": "Platform"
   },
+  "pub": {
+    "summary_pre": "<strong>130+ citations</strong> · ",
+    "gscholar_link": "Google Scholar",
+    "citations_label": "citations",
+    "in_press": "In press"
+  },
+  "pub_v": {
+    "conf_2026_accepted": "Conference • 2026 · Accepted",
+    "journal_2024": "Journal • 2024",
+    "conf_2023": "Conference • 2023",
+    "journal_2023": "Journal • 2023",
+    "journal_2022": "Journal • 2022",
+    "journal_2021": "Journal • 2021",
+    "workshop_2021": "Workshop • 2021",
+    "patent_2016": "Patent • 2016"
+  },
+  "pub_link": {
+    "doi": "DOI",
+    "code": "Code",
+    "preprint": "Preprint",
+    "pdf": "PDF",
+    "slides": "Slides",
+    "video": "Video",
+    "patent": "Patent"
+  },
+  "countries": {
+    "United States of America": "United States of America",
+    "United Kingdom": "United Kingdom",
+    "China": "China",
+    "Taiwan": "Taiwan",
+    "Hong Kong S.A.R.": "Hong Kong S.A.R.",
+    "Switzerland": "Switzerland",
+    "Germany": "Germany",
+    "France": "France",
+    "Italy": "Italy",
+    "Spain": "Spain",
+    "Netherlands": "Netherlands",
+    "Belgium": "Belgium",
+    "Austria": "Austria",
+    "Portugal": "Portugal",
+    "Poland": "Poland",
+    "Czechia": "Czechia",
+    "Sweden": "Sweden",
+    "Norway": "Norway",
+    "Finland": "Finland",
+    "Denmark": "Denmark",
+    "Ireland": "Ireland",
+    "Romania": "Romania",
+    "Greece": "Greece",
+    "Hungary": "Hungary",
+    "Canada": "Canada",
+    "Mexico": "Mexico",
+    "Brazil": "Brazil",
+    "Argentina": "Argentina",
+    "Japan": "Japan",
+    "South Korea": "South Korea",
+    "India": "India",
+    "Singapore": "Singapore",
+    "Australia": "Australia",
+    "New Zealand": "New Zealand",
+    "Russia": "Russia",
+    "Ukraine": "Ukraine",
+    "Turkey": "Turkey",
+    "Israel": "Israel",
+    "Saudi Arabia": "Saudi Arabia",
+    "United Arab Emirates": "United Arab Emirates",
+    "South Africa": "South Africa",
+    "Egypt": "Egypt"
+  },
   "proj_tag": {
     "platform": "Platform",
     "spatio_temporal": "Spatio-Temporal",
@@ -188,7 +257,11 @@
     "blog": "Blog"
   },
   "beyond": {
-    "subtitle": "Hobbies, volunteer work, and life outside the lab"
+    "subtitle": "Hobbies, volunteer work, and life outside the lab",
+    "hobbies_title": "Hobbies",
+    "gallery_title": "Photo Gallery",
+    "volunteer_title": "Volunteer Work",
+    "social_title": "Social Platforms"
   },
   "blog": {
     "label": "Thoughts & Writing"
@@ -235,7 +308,18 @@
     "placeholder": "Search the site…",
     "aria": "Search the site",
     "empty": "Start typing to search across the site…",
-    "no_results": "No matches found."
+    "no_results": "No matches found.",
+    "kbd_navigate": "navigate",
+    "kbd_open": "open",
+    "kbd_close": "close",
+    "section_about": "About",
+    "section_news": "News",
+    "section_projects": "Projects",
+    "section_publications": "Publications",
+    "section_experience": "Experience",
+    "section_services": "Services",
+    "section_beyond": "Beyond",
+    "section_thesis": "Thesis"
   },
   "outline": {
     "graph_ml_title": "Graph Machine Learning",

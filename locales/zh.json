@@ -76,6 +76,75 @@
     "project_page": "项目主页",
     "platform": "平台"
   },
+  "pub": {
+    "summary_pre": "<strong>130+ 次引用</strong> · ",
+    "gscholar_link": "Google 学术",
+    "citations_label": "次引用",
+    "in_press": "出版中"
+  },
+  "pub_v": {
+    "conf_2026_accepted": "会议 • 2026 · 已录用",
+    "journal_2024": "期刊 • 2024",
+    "conf_2023": "会议 • 2023",
+    "journal_2023": "期刊 • 2023",
+    "journal_2022": "期刊 • 2022",
+    "journal_2021": "期刊 • 2021",
+    "workshop_2021": "研讨会 • 2021",
+    "patent_2016": "专利 • 2016"
+  },
+  "pub_link": {
+    "doi": "DOI",
+    "code": "代码",
+    "preprint": "预印本",
+    "pdf": "PDF",
+    "slides": "幻灯片",
+    "video": "视频",
+    "patent": "专利"
+  },
+  "countries": {
+    "United States of America": "美国",
+    "United Kingdom": "英国",
+    "China": "中国",
+    "Taiwan": "台湾",
+    "Hong Kong S.A.R.": "中国香港",
+    "Switzerland": "瑞士",
+    "Germany": "德国",
+    "France": "法国",
+    "Italy": "意大利",
+    "Spain": "西班牙",
+    "Netherlands": "荷兰",
+    "Belgium": "比利时",
+    "Austria": "奥地利",
+    "Portugal": "葡萄牙",
+    "Poland": "波兰",
+    "Czechia": "捷克",
+    "Sweden": "瑞典",
+    "Norway": "挪威",
+    "Finland": "芬兰",
+    "Denmark": "丹麦",
+    "Ireland": "爱尔兰",
+    "Romania": "罗马尼亚",
+    "Greece": "希腊",
+    "Hungary": "匈牙利",
+    "Canada": "加拿大",
+    "Mexico": "墨西哥",
+    "Brazil": "巴西",
+    "Argentina": "阿根廷",
+    "Japan": "日本",
+    "South Korea": "韩国",
+    "India": "印度",
+    "Singapore": "新加坡",
+    "Australia": "澳大利亚",
+    "New Zealand": "新西兰",
+    "Russia": "俄罗斯",
+    "Ukraine": "乌克兰",
+    "Turkey": "土耳其",
+    "Israel": "以色列",
+    "Saudi Arabia": "沙特阿拉伯",
+    "United Arab Emirates": "阿联酋",
+    "South Africa": "南非",
+    "Egypt": "埃及"
+  },
   "proj_tag": {
     "platform": "平台",
     "spatio_temporal": "时空建模",
@@ -188,7 +257,11 @@
     "blog": "博客"
   },
   "beyond": {
-    "subtitle": "爱好、志愿服务与实验室之外的生活"
+    "subtitle": "爱好、志愿服务与实验室之外的生活",
+    "hobbies_title": "爱好",
+    "gallery_title": "照片墙",
+    "volunteer_title": "志愿者工作",
+    "social_title": "社交平台"
   },
   "blog": {
     "label": "所思所写"
@@ -235,7 +308,18 @@
     "placeholder": "搜索整个网站…",
     "aria": "搜索网站",
     "empty": "开始输入以搜索整个网站…",
-    "no_results": "没有找到匹配项。"
+    "no_results": "没有找到匹配项。",
+    "kbd_navigate": "切换",
+    "kbd_open": "打开",
+    "kbd_close": "关闭",
+    "section_about": "关于",
+    "section_news": "新闻",
+    "section_projects": "项目",
+    "section_publications": "发表",
+    "section_experience": "经历",
+    "section_services": "学术服务",
+    "section_beyond": "生活",
+    "section_thesis": "博士论文"
   },
   "outline": {
     "graph_ml_title": "图机器学习",
