@@ -59,6 +59,111 @@
     "c_eswa": "论文发表于 <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> — <i>核模式对比研究</i>。",
     "c_phd_defense": "在法国 <strong>INSA Rouen</strong> 完成博士论文答辩。"
   },
+  "proj_badge": {
+    "academia": "学术界",
+    "industry": "产业界",
+    "software": "软件",
+    "fun": "趣味",
+    "dual": "学术 + 产业"
+  },
+  "proj_link": {
+    "code": "代码",
+    "paper": "论文",
+    "papers": "论文",
+    "funding": "资助",
+    "partner": "合作伙伴",
+    "patent": "专利",
+    "project_page": "项目主页",
+    "platform": "平台"
+  },
+  "proj_tag": {
+    "platform": "平台",
+    "spatio_temporal": "时空建模",
+    "graph_ml": "图机器学习",
+    "llms": "大模型",
+    "agents": "智能体",
+    "gnns": "图神经网络",
+    "transformers": "Transformer",
+    "timellms": "TimeLLM",
+    "stllms": "时空大模型",
+    "rag": "RAG",
+    "fintech": "金融科技",
+    "cv": "计算机视觉",
+    "document_analysis": "文档分析",
+    "python": "Python",
+    "graph_kernels": "图核",
+    "open_source": "开源",
+    "smart_engineering": "智能工程",
+    "graph_matching": "图匹配",
+    "ged": "图编辑距离",
+    "chemoinformatics": "化学信息学",
+    "materials": "材料",
+    "preimage": "预映像",
+    "elm": "极限学习机",
+    "sdn": "SDN",
+    "patent": "专利",
+    "local_llm": "本地大模型",
+    "privacy": "隐私",
+    "docker": "Docker",
+    "fun": "趣味"
+  },
+  "proj": {
+    "liulian": {
+      "title": "LIULIAN — 面向交互式自适应网络的液态智能与统一逻辑",
+      "date": "2026 - 至今",
+      "desc": "<li><strong>时空数据平台</strong>：面向科学与工程领域的数据采集、处理、分析与可视化。</li><li><strong>多模态科学图数据基准</strong>。</li><li><strong>LLM 驱动的数据交互界面与 BI 智能体系统</strong>。</li><li>整合<strong>博士与博士后阶段的图机器学习研究</strong>（核方法、GED、GNN、预映像）。</li><li>正在准备 <strong>Innosuisse 创新项目</strong>资助申请。</li>"
+    },
+    "river": {
+      "title": "用于河流温度预测的时空图卷积网络",
+      "date": "2025 - 至今",
+      "desc": "<li>由 <strong>SNSF 资助</strong>，研究基于图的瑞士河流水温预测。</li><li>开发<strong>时空 Transformer 与 LLM 架构</strong>，融合实体嵌入与图结构。</li><li>论文被 <strong>ICPR 2026</strong> 接收。</li><li class=\"project-partners\">🤝 <strong>合作方：</strong>伯尔尼大学模式识别组 (UniBE) × 伯尔尼应用科学大学 (BFH)。</li>"
+    },
+    "nbanker": {
+      "title": "N-Banker：全球首个新型银行研究中心",
+      "date": "2024 - 至今",
+      "desc": "<li><strong>主导 Neobank 研究中心平台的 AI 战略与 LLM 智能体开发</strong>。</li><li>为业务伙伴提供<strong>复杂信息检索、分析与战略咨询的自动化</strong>。</li><li>基于<strong>机器学习 + LLM 技术栈</strong>构建（RAG、智能体、金融科技流水线）。</li><li class=\"project-partners\">🤝 <strong>合作方：</strong>数字金融服务研究中心 × 香港理工大学。</li>"
+    },
+    "graphink": {
+      "title": "结合图像与图神经网络的手写体识别",
+      "date": "2024 - 至今",
+      "desc": "<li>由 <strong>SNSF 资助</strong>，研究历史手写文档的分析方法。</li><li>结合<strong>基于图像的语义信息与基于图的拓扑结构进行深度学习</strong>。</li><li><strong>论文修订中</strong>。</li><li class=\"project-partners\">🤝 <strong>合作方：</strong>iCoSys 研究所（HEIA，HES-SO Fribourg）× 多特蒙德工业大学。</li>"
+    },
+    "gklearn": {
+      "title": "graphkit-learn",
+      "date": "2020 - 至今",
+      "desc": "<li>用于图核、图编辑距离与图预映像问题的 <strong>Python 库</strong>。</li><li><strong>全球范围</strong>用于图分类与回归。</li><li>APi（ANR）基金资助下的 <strong>开源成果</strong>。</li>"
+    },
+    "planalyser": {
+      "title": "PLANALYSER — 基于 AI 的暖通空调方案自动审查与优化",
+      "date": "2024 - 2025",
+      "desc": "<li>由 <strong>Innosuisse 资助</strong>，对工程图纸进行 AI 驱动的暖通空调方案审查与优化。</li><li>贡献：<strong>数据预处理、模型开发</strong>（符号 / 连接 / 拓扑提取）、流水线设计。</li><li class=\"project-partners\">🤝 <strong>合作方：</strong>iCoSys 研究所（HEIA，HES-SO Fribourg）× WATTELSE AG。</li>"
+    },
+    "gmatch": {
+      "title": "新型先进图匹配算法",
+      "date": "2023 - 2024",
+      "desc": "<li>由 <strong>SNSF 资助</strong>的新型图匹配算法研究。</li><li>打通<strong>图核、图编辑距离与 GNN 嵌入空间</strong>。</li><li>发表于 <strong>ACPR 2023</strong>：<i>Bridging Distinct Spaces in Graph-based Machine Learning</i>。</li><li class=\"project-host\"><strong>承担单位：</strong>伯尔尼大学模式识别研究组。</li>"
+    },
+    "octopussy": {
+      "title": "OCTOPUSSY — 基于可持续合成路径的聚合物优化",
+      "date": "2021 - 2024",
+      "desc": "<li><strong>基于图的机器学习</strong>与<strong>化学描述符设计</strong>，用于聚合物优化与氧化还原电位预测。</li><li>发表于 <strong>Journal of Computational Chemistry (2024)</strong>。</li><li><strong>RedoxPrediction</strong> 软件包开源了相关实现。</li><li class=\"project-partners\">🤝 <strong>合作方：</strong>COBRA × LITIS（鲁昂大学）× CSCT（巴斯大学）。</li>"
+    },
+    "api": {
+      "title": "APi — Apprivoiser la Pré-image（驯服预映像）",
+      "date": "2018 - 2021",
+      "desc": "<li>由 <strong>ANR 资助</strong>的博士论文研究，聚焦结构化数据机器学习中的预映像问题。</li><li>研究方向：<strong>离散结构化空间中的模式识别</strong>。</li><li>产出 <strong>3 篇期刊论文、2 篇会议工作坊论文及 graphkit-learn 库</strong>。</li><li class=\"project-host\"><strong>承担单位：</strong>LITIS 实验室（鲁昂诺曼底大学）。</li>"
+    },
+    "sdn": {
+      "title": "面向服务的可编程控制与软件定义网络调度",
+      "date": "2014 - 2017",
+      "desc": "<li><strong>硕士研究</strong>：面向服务的 SDN 可编程控制。</li><li>应用<strong>极限学习机（ELM）</strong>预测命名数据网络中的网络移动性。</li><li>形成<strong>一项中国发明专利（CN106376041B）</strong>。</li><li class=\"project-host\"><strong>承担单位：</strong>西安交通大学。</li>"
+    },
+    "translator": {
+      "title": "本地保密翻译器",
+      "date": "2026 - 至今",
+      "desc": "<li>由本地大模型驱动的<strong>完全离线、隐私优先的文档翻译</strong>。</li><li><strong>MIT 协议开源</strong>，单条 Docker 命令即可部署。</li><li>通过 <strong>AI 辅助（vibe）编码</strong>端到端构建；MVP1 测试中。</li>"
+    }
+  },
   "stats": {
     "citations": "引用",
     "publications": "论文",

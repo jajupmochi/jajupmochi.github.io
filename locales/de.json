@@ -59,6 +59,111 @@
     "c_eswa": "Paper veröffentlicht in <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> — <i>Kernel-Mustervergleiche</i>.",
     "c_phd_defense": "Doktorarbeit verteidigt an der <strong>INSA Rouen</strong>, Frankreich."
   },
+  "proj_badge": {
+    "academia": "Akademie",
+    "industry": "Industrie",
+    "software": "Software",
+    "fun": "Fun",
+    "dual": "Akademie + Industrie"
+  },
+  "proj_link": {
+    "code": "Code",
+    "paper": "Paper",
+    "papers": "Paper",
+    "funding": "Förderung",
+    "partner": "Partner",
+    "patent": "Patent",
+    "project_page": "Projektseite",
+    "platform": "Plattform"
+  },
+  "proj_tag": {
+    "platform": "Plattform",
+    "spatio_temporal": "Räumlich-zeitlich",
+    "graph_ml": "Graph ML",
+    "llms": "LLMs",
+    "agents": "Agenten",
+    "gnns": "GNNs",
+    "transformers": "Transformer",
+    "timellms": "TimeLLMs",
+    "stllms": "ST-LLMs",
+    "rag": "RAG",
+    "fintech": "FinTech",
+    "cv": "Computer Vision",
+    "document_analysis": "Dokumentanalyse",
+    "python": "Python",
+    "graph_kernels": "Graph-Kernel",
+    "open_source": "Open Source",
+    "smart_engineering": "Smart Engineering",
+    "graph_matching": "Graph Matching",
+    "ged": "GED",
+    "chemoinformatics": "Chemoinformatik",
+    "materials": "Materialien",
+    "preimage": "Pre-image",
+    "elm": "ELM",
+    "sdn": "SDN",
+    "patent": "Patent",
+    "local_llm": "Lokales LLM",
+    "privacy": "Datenschutz",
+    "docker": "Docker",
+    "fun": "Fun"
+  },
+  "proj": {
+    "liulian": {
+      "title": "LIULIAN — Liquid Intelligence and Unified Logic for Interactive Adaptive Networks",
+      "date": "2026 - heute",
+      "desc": "<li><strong>Räumlich-zeitliche Datenplattform</strong>: Erfassung, Verarbeitung, Analyse und Visualisierung für Wissenschaft und Industrie.</li><li><strong>Multimodale wissenschaftliche Graph-Benchmarks</strong>.</li><li><strong>LLM-gesteuerte Datenschnittstellen und BI-Agentensysteme</strong>.</li><li>Bündelt die <strong>Promotions- und Postdoc-Forschung in Graph ML</strong> (Kernel, GED, GNNs, Pre-image).</li><li>Förderantrag für <strong>Innosuisse Innovation Project</strong> in Vorbereitung.</li>"
+    },
+    "river": {
+      "title": "Räumlich-zeitliche Graph Convolutional Networks zur Vorhersage der Flusstemperatur",
+      "date": "2025 - heute",
+      "desc": "<li>Vom <strong>SNF gefördertes</strong> Projekt zur graphbasierten Vorhersage der Schweizer Flusswassertemperatur.</li><li>Entwicklung <strong>räumlich-zeitlicher Transformer- und LLM-Architekturen</strong> mit Entity-Embeddings und Graphstrukturen.</li><li>Paper bei <strong>ICPR 2026</strong> angenommen.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> Pattern Recognition Group (UniBE) × Berner Fachhochschule (BFH).</li>"
+    },
+    "nbanker": {
+      "title": "N-Banker: 1. globales Neobank-Forschungszentrum",
+      "date": "2024 - heute",
+      "desc": "<li><strong>Leitung der KI-Strategie und LLM-Agentenentwicklung</strong> für die Neobank-Research-Center-Plattform.</li><li>Automatisierung von <strong>komplexer Informationssuche, Analyse und strategischer Beratung</strong> für Geschäftspartner.</li><li>Aufbau auf einem <strong>Machine-Learning- und LLM-Stack</strong> (RAG, Agenten, FinTech-Pipelines).</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> Digital Financial Services Research Center × Hong Kong Polytechnic University.</li>"
+    },
+    "graphink": {
+      "title": "Kombination von Bild- und Graph-basierten neuronalen Netzen zur Handschrifterkennung",
+      "date": "2024 - heute",
+      "desc": "<li>Vom <strong>SNF gefördertes</strong> Projekt zur Analyse historischer handschriftlicher Dokumente.</li><li>Verbindet <strong>bildbasierte Semantik mit graphbasierter Topologie für Deep Learning</strong>.</li><li><strong>Paper in Überarbeitung</strong>.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> iCoSys-Institut (HEIA, HES-SO Fribourg) × TU Dortmund.</li>"
+    },
+    "gklearn": {
+      "title": "graphkit-learn",
+      "date": "2020 - heute",
+      "desc": "<li><strong>Python-Bibliothek</strong> für Graph-Kernel, Graph-Edit-Distance und das Graph-Pre-image-Problem.</li><li><strong>Weltweit eingesetzt</strong> für Graphklassifikation und -regression.</li><li><strong>Open-Source-Ergebnis</strong> des APi (ANR)-Projekts.</li>"
+    },
+    "planalyser": {
+      "title": "PLANALYSER — Automatisierte HKL-Konzept-Audits und -Optimierung mit KI",
+      "date": "2024 - 2025",
+      "desc": "<li>Von <strong>Innosuisse gefördertes</strong> Projekt zur KI-gestützten Auditierung und Optimierung von HKL-Konzepten anhand technischer Pläne.</li><li>Beiträge: <strong>Datenvorverarbeitung, Modellentwicklung</strong> (Symbol- / Kanten- / Topologie-Extraktion), Pipeline-Design.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> iCoSys-Institut (HEIA, HES-SO Fribourg) × WATTELSE AG.</li>"
+    },
+    "gmatch": {
+      "title": "Neue State-of-the-Art-Algorithmen für Graph Matching",
+      "date": "2023 - 2024",
+      "desc": "<li>Vom <strong>SNF geförderte</strong> Forschung zu neuen Graph-Matching-Algorithmen.</li><li>Verbindet <strong>Graph-Kernel, Graph-Edit-Distance und GNN-Embedding-Räume</strong>.</li><li>Veröffentlicht bei <strong>ACPR 2023</strong>: <i>Bridging Distinct Spaces in Graph-based Machine Learning</i>.</li><li class=\"project-host\"><strong>Host:</strong> Pattern Recognition Group, Universität Bern.</li>"
+    },
+    "octopussy": {
+      "title": "OCTOPUSSY — Polymeroptimierung durch nachhaltige Synthese",
+      "date": "2021 - 2024",
+      "desc": "<li><strong>Graphbasiertes Machine Learning</strong> und <strong>Design chemischer Deskriptoren</strong> für Polymeroptimierung und Redoxpotenzial-Vorhersage.</li><li>Veröffentlicht im <strong>Journal of Computational Chemistry (2024)</strong>.</li><li>Das Paket <strong>RedoxPrediction</strong> macht die Implementierung Open Source.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> COBRA × LITIS (Univ. Rouen) × CSCT (Univ. Bath).</li>"
+    },
+    "api": {
+      "title": "APi — Apprivoiser la Pré-image",
+      "date": "2018 - 2021",
+      "desc": "<li>Vom <strong>ANR geförderte</strong> Promotionsforschung zum Pre-image-Problem im ML für strukturierte Daten.</li><li>Fokus: <strong>Mustererkennung in diskreten strukturierten Räumen</strong>.</li><li>Ergebnis: <strong>3 Zeitschriftenartikel, 2 Workshop-Paper und die graphkit-learn-Bibliothek</strong>.</li><li class=\"project-host\"><strong>Host:</strong> LITIS-Labor (Université Rouen Normandie).</li>"
+    },
+    "sdn": {
+      "title": "Service-orientierte programmierbare Steuerung und Scheduling für Software-defined Networks",
+      "date": "2014 - 2017",
+      "desc": "<li><strong>Master-Forschung</strong> zur service-orientierten programmierbaren Steuerung für SDN.</li><li>Anwendung von <strong>Extreme Learning Machines (ELM)</strong> zur Vorhersage der Netzwerkmobilität in Named Data Networks.</li><li>Resultierte in <strong>einem chinesischen Patent (CN106376041B)</strong>.</li><li class=\"project-host\"><strong>Host:</strong> Xi'an Jiaotong University.</li>"
+    },
+    "translator": {
+      "title": "Lokaler vertraulicher Übersetzer",
+      "date": "2026 - heute",
+      "desc": "<li><strong>Vollständig offline, datenschutzorientierte Dokumentübersetzung</strong> mit lokalen LLMs.</li><li><strong>Open Source unter MIT-Lizenz</strong>, mit einem einzigen Docker-Befehl deploybar.</li><li>Ende-zu-Ende über <strong>KI-gestütztes (Vibe-)Coding</strong> gebaut; MVP1 im Test.</li>"
+    }
+  },
   "stats": {
     "citations": "Zitationen",
     "publications": "Publikationen",
