@@ -56,9 +56,9 @@ get hard to track. Prefer flat lists of small `T`s.
 - **[H1 — Site as a Job-Hunt Asset](#h1--site-as-a-job-hunt-asset)** `[~]`
     - [M1.1 — Content fidelity vs. CV / extra_info](#m11--content-fidelity-vs-cv--extra_info) `[~]`
         - [G1 — Publications](#g1--publications) `[✓]`
-        - [G2 — Projects](#g2--projects) `[~]`
+        - [G2 — Projects](#g2--projects) `[✓]`
         - [G3 — News](#g3--news) `[ ]`
-        - [G4 — Skills](#g4--skills) `[ ]`
+        - [G4 — Skills](#g4--skills) `[✓]`
         - [G5 — Stats](#g5--stats) `[ ]`
         - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[✓]`
         - [G7 — Ph.D. thesis integration (timeline + Publications)](#g7--phd-thesis-integration-timeline--publications) `[✓]`
@@ -75,11 +75,13 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G3 — LCP / CLS / INP](#g3--lcp--cls--inp) `[✓]`
         - [G4 — Performance polish (post-vibe-audit gaps)](#g4--performance-polish-post-vibe-audit-gaps) `[ ]`
         - [G5 — Figure lightbox (click-to-enlarge)](#g5--figure-lightbox-click-to-enlarge) `[~]`
-    - [M1.4 — Unique differentiators for recruiter memorability](#m14--unique-differentiators-for-recruiter-memorability) `[ ]`
+    - [M1.4 — Unique differentiators for recruiter memorability](#m14--unique-differentiators-for-recruiter-memorability) `[~]`
         - [G1 — Live Citation Graph](#g1--live-citation-graph) `[ ]`
         - [G2 — Redox prediction interactive demo](#g2--redox-prediction-interactive-demo) `[ ]`
         - [G3 — "/now" page](#g3--now-page) `[ ]`
         - [G4 — Default theme → academic](#g4--default-theme--academic) `[ ]`
+        - [G5 — Cmd+K command palette search](#g5--cmdk-command-palette-search) `[✓]`
+        - [G6 — Visit Map (visitor-country choropleth)](#g6--visit-map-visitor-country-choropleth) `[?]`
 - **[H2 — Site Operations & Maintenance](#h2--site-operations--maintenance)** `[?]`
     - [M2.1 — Manual one-time setup](#m21--manual-one-time-setup) `[?]`
         - [G1 — Welcome form backend](#g1--welcome-form-backend) `[?]`
@@ -123,9 +125,9 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 
 #### G2 — Projects
 - `[✓]` H1.M1.G2.T1 — Verify every project card against `extra_info_work.md` + CV (done 2026-04-21 V9 via 9-card CV-aligned refactor; every card title now matches CV verbatim).
-- `[ ]` H1.M1.G2.T2 — Add **LIULIAN platform** card (top-of-list; key personal infra). Source: extra_info_work.md §LIULIAN.
+- `[✓]` H1.M1.G2.T2 — (2026-04-22 V1, V10 backfill) Added **LIULIAN platform** card at top of project grid. Personal-infra badge, `data-tags="industry,llm,agents,software"`, footer links to platform homepage + GitHub org. Source extracted from `extra_info_work.md §LIULIAN`.
 - `[✓]` H1.M1.G2.T3 — Add **PLANALYSER — Automated HVAC-Concept Audit and Optimisation using AI** card (done 2026-04-21 V9). INNOSUISSE 2024-2025 with iCoSys + WATTELSE AG partners. Footer links: ARAMIS grant page + WATTELSE startup page. Industry badge, data-tags `academia,industry` so it appears in both filters.
-- `[ ]` H1.M1.G2.T4 — Add **Local Confidential Translator** card (personal MVP).
+- `[✓]` H1.M1.G2.T4 — (2026-04-22 V1, V10 backfill) Added **Local Confidential Translator** card. Personal-MVP badge, `data-tags="software,llm,fun"`, footer links to GitHub repo. Highlights local-LLM + privacy positioning so the card is differentiated from N-Banker / OCTOPUSSY.
 - `[✓]` H1.M1.G2.T5 — Refresh **N-Banker** description with formal CV title "1st Global Neobank Research Center" (done 2026-04-21 V9). Neutral wording; no CTO / CAIO labels. Footer: platform homepage + PolyU partner page.
 - `[x]` H1.M1.G2.T6 — Refresh **OCTOPUSSY** + **Virtual Bodmer** copy from extra_info_work.md. Why cancelled: approach changed in V9 — Virtual Bodmer deleted entirely (Linlin decision; HES-SO link weak, scope unmaterialized), OCTOPUSSY merged with RedoxPrediction into a single CV-named card. Superseded by T9 + T10 + T11.
 - `[✓]` H1.M1.G2.T7 — Add **GraphInk** card with figure (done 2026-04-21 V2).
@@ -142,9 +144,10 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 - `[ ]` H1.M1.G3.T3 — Add 2026 entry (N-Banker chatbot demo at InnoEx 2026 HK).
 
 #### G4 — Skills
-- `[ ]` H1.M1.G4.T1 — Add **agent-skills** tags (`python-backend-creator`, `project-adaptor`).
-- `[ ]` H1.M1.G4.T2 — Add **vibe-coding tooling** tags (Claude Code, Codex, Antigravity, OpenCode, GitHub Copilot).
-- `[ ]` H1.M1.G4.T3 — Add **agent / LLM systems** tags (CrewAI, Ollama, vLLM, RAG, GRPO, LoRA).
+- `[✓]` H1.M1.G4.T1 — (2026-04-22 V1) Added **agent-skills** tags (`python-backend-creator`, `project-adaptor`) under the new `ai_tools` skills category.
+- `[✓]` H1.M1.G4.T2 — (2026-04-22 V1) Added **vibe-coding tooling** tags (Claude Code, Codex, Antigravity, OpenCode, GitHub Copilot) under `ai_tools`.
+- `[✓]` H1.M1.G4.T3 — (2026-04-22 V1) Added **agent / LLM systems** tags (CrewAI, Ollama, vLLM, RAG, GRPO, LoRA) under the `ml_ai` category alongside graph-ML / GNN tags.
+- `[✓]` H1.M1.G4.T4 — (2026-04-22 V1) 6-category Skills restructure: `programming` / `ml_ai` / `tools` / `domain` / `languages` / `ai_tools`. New `skills_cats.ai_tools` i18n key added across all 4 locales. Patent + ELM (Extreme Learning Machine) reclassified into `domain` so they live next to chemoinformatics / hydrology rather than inflating the `ml_ai` chip count.
 
 #### G5 — Stats
 - `[ ]` H1.M1.G5.T1 — Update publication count from 9 → 10 (ICPR 2026 + corrected pubs).
@@ -187,6 +190,7 @@ when asked about graph ML researchers.
 - `[✓]` H1.M2.G2.T1 — hreflang `?lang=` URL variants.
 - `[✓]` H1.M2.G2.T2 — sitemap.xml expanded 3 → 13 URLs with `xhtml:link` alternates.
 - `[✓]` H1.M2.G2.T3 — (2026-04-21 V8) Per-locale patent-link swap via new `data-i18n-href-map` attribute handled in `applyTranslations` (`js/main.js`). Chinese visitors now land on the Chinese-language Google Patents page (`/patent/CN106376041B`), while en / fr / de visitors land on the English version (`/patent/CN106376041B/en`). Rationale: Chinese readers reading a CN patent benefit from Google's native CN rendering; other-language readers get the English-translated abstract. Generic enough to support other locale-differentiated external URLs in the future (video mirrors, regional press coverage).
+- `[✓]` H1.M2.G2.T4 — (2026-04-22 V1) Per-locale image `src` swap via new `data-i18n-src-map` attribute handled in `applyTranslations` (`js/main.js`). Sister to T3 but for `<img>` rather than `<a>` — used so the contact-section static map screenshot can render in the visitor's chosen language (en/zh/fr/de Google Maps tiles). Loader treats missing locale entry as a no-op (keeps the default `src`).
 
 #### G3 — AI-search optimization
 - `[ ]` H1.M2.G3.T1 — Add `llms.txt` once the convention stabilizes (currently nascent draft spec).
@@ -255,6 +259,22 @@ when asked about graph ML researchers.
 #### G4 — Default theme → academic
 - `[ ]` H1.M4.G4.T1 — Switch default theme from `ai-generated` to `academic` in `js/main.js` theme bootstrap. Any existing `localStorage` preference is respected. Theme / language switcher position stays unchanged (vibe-audit "move to footer" recommendation declined by Linlin).
 
+#### G5 — Cmd+K command palette search
+> Added 2026-04-22 V1 (V11 backfill). Rationale: site has grown to 9 project cards + 10 publications + 4 themes + 4 locales — recruiters lose time scrolling. Cmd+K (or "/") opens a Mac-style palette indexing every section / project / publication / skill, with fuzzy match, keyboard nav, and ESC close. One concrete "wow" element on the H1.M4 list.
+- `[✓]` H1.M4.G5.T1 — (2026-04-22 V1) Palette HTML in `index_en.html` (focus-trap, role=dialog, aria-modal, ESC + backdrop close, focus restore). Indexes section anchors + project / publication titles + skill chips into a single in-memory list, scored on substring match with token-prefix weighting.
+- `[✓]` H1.M4.G5.T2 — (2026-04-22 V1) Cmd+K (macOS) / Ctrl+K (Win/Linux) / "/" (anywhere outside a text input) global keybinds. Shortcut hint badge inside the palette + tooltip on the navbar magnifier icon.
+- `[✓]` H1.M4.G5.T3 — (2026-04-22 V1) i18n parity: 4 new `search.*` keys (`placeholder`, `aria`, `empty`, `no_results`) + 3 `common.search_*` placeholders (search, search_projects, search_publications) across en / zh / fr / de.
+- `[✓]` H1.M4.G5.T4 — (2026-04-22 V1) Cross-theme verified via chrome-devtools on `ai-generated` / `academic` / `industrial` / `fancy` — palette card + ring color follow `--primary` per theme.
+
+#### G6 — Visit Map (visitor-country choropleth)
+> Added 2026-04-22 V1 (Phase 4). Rationale: turn the existing Microsoft Clarity weekly backup pipeline into a visible artifact at the bottom of the Contact section so recruiters see organic global reach without leaving the page. Self-built / no extra third-party tracker; reuses the snapshot JSON already committed under `data/analytics/`.
+- `[✓]` H1.M4.G6.T1 — (2026-04-22 V1) `.visit-map-block` markup at the bottom of the Contact section in `index_en.html`. Stays `hidden` until JS verifies a snapshot exists; graceful no-op when no data is present.
+- `[✓]` H1.M4.G6.T2 — (2026-04-22 V1) `initVisitMap` IIFE in `js/main.js`: `findLatestSnapshotPath` HEAD-probes back 90 days, `extractCountryCounts` walks Clarity's `data[*].information[*]` fields with `COUNTRY_ALIAS` ISO-2 → world-atlas English-name normalization, lazy-loads D3 v7.9.0 + topojson-client v3.1.0 from jsDelivr (script-src already allow-listed), renders `geoNaturalEarth1` projection with `scaleSequential` from `rgba(120,144,180,0.18)` → `--primary`. Renders Top-Countries `<ol>` + total / countries / window stats.
+- `[✓]` H1.M4.G6.T3 — (2026-04-22 V1) Bundled `data/world-atlas/countries-110m.json` (~108 KB) locally instead of widening CSP `connect-src` to jsDelivr. Trade-off: one-time 108 KB cost vs. tighter CSP.
+- `[✓]` H1.M4.G6.T4 — (2026-04-22 V1) i18n parity: 7 new `visitMap.*` keys (`title`, `totalVisits`, `countries`, `window`, `source`, `topCountries`, `svgTitle`) across en / zh / fr / de. Locale parity verified at 141 keys.
+- `[✓]` H1.M4.G6.T5 — (2026-04-22 V1) Theme parity verified via chrome-devtools on `ai-generated` / `industrial` / `fancy` (with mock fixture; deleted before commit). Known v1 limitation: choropleth color is captured from `--primary` at first render — a runtime theme switch requires page reload to recolor (acceptable; future fix could `MutationObserver` `[data-theme]`).
+- `[?]` H1.M4.G6.T6 — Production data fill: blocked on H2.M1.G4.T2 (`CLARITY_API_TOKEN` repo secret). Once Linlin sets the secret + re-triggers the workflow, the first real `data/analytics/clarity-YYYY-MM-DD.json` lands and the block self-activates on next page load.
+
 ---
 
 ## H2 — Site Operations & Maintenance
@@ -290,7 +310,7 @@ periodic checks. This Horizon tracks both.
 - `[?]` H2.M1.G4.T1 — Generate Clarity API token (Settings → Data Export).
 - `[?]` H2.M1.G4.T2 — Add as repo secret `CLARITY_API_TOKEN` in GitHub Settings.
 - `[?]` H2.M1.G4.T3 — Enable "Read and write permissions" in Settings → Actions → General.
-- `[?]` H2.M1.G4.T4 — Trigger first manual run (Actions → backup-analytics → Run workflow).
+- `[~]` H2.M1.G4.T4 — (2026-04-22 V1) Workflow now live on `master`; first manual run triggered (run id 24780197033) but **failed with `error: CLARITY_API_TOKEN env var not set`** — blocked on T1 + T2. Re-trigger after the secret lands.
 
 ### M2.2 — Automation
 
@@ -314,7 +334,7 @@ periodic checks. This Horizon tracks both.
 ### M2.3 — Backup & resilience
 
 #### G1 — Clarity weekly backup
-- `[~]` H2.M3.G1.T1 — Workflow exists; activation depends on H2.M1.G4.
+- `[~]` H2.M3.G1.T1 — (2026-04-22 V1) Workflow file `.github/workflows/backup-analytics.yml` pushed to `origin/master` (commit range `f64a27a..3ddd46a`); cron `'17 4 * * 0'` armed for next Sunday 04:17 UTC and `workflow_dispatch` available. First manual trigger executed; activation still depends on H2.M1.G4 (secret).
 
 #### G2 — Welcome submissions backup
 - `[ ]` H2.M3.G2.T1 — Set up private repo `linlin-site-submissions-backup` with weekly published-CSV mirror.

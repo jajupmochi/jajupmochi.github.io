@@ -6,6 +6,15 @@ Microsoft Clarity（免费、无限量）提供热图、会话回放、愤怒点
 
 **目标：让 Clarity 运行起来，且不向访客弹 cookie 同意横幅。**
 
+> ⚠️ **Clarity 有两个凭证 — 别搞混。**
+>
+> | 凭证 | 可见性 | 存放位置 | 用途 | 配置文档 |
+> |---|---|---|---|---|
+> | `CLARITY_PROJECT_ID` | 公开（10 字符 id） | `index_en.html`（内联追踪 snippet） | 浏览器→把数据**送进**你的 Clarity 项目 | **本文档**（步骤 1–2） |
+> | `CLARITY_API_TOKEN` | 私密（按密码对待） | GitHub repo **Secret** | 每周 GH Actions workflow→把数据作为 JSON snapshot **拉出** | [analytics-backup.md](analytics-backup.md) |
+>
+> 配了一个不等于配了另一个。首页的 **Visit Map** 块（PLAN.md 里的 `H1.M4.G6`）需要**两个都有**：PROJECT_ID 让 Clarity 采到访客国家，API_TOKEN 让 workflow 把它们拉回 `data/analytics/clarity-*.json` 给地图渲染用。
+
 ## Master TOC
 
 - [1. 创建 Clarity 项目（~2 分钟）](#1-创建-clarity-项目2-分钟)
@@ -38,6 +47,9 @@ Clarity 支持 *cookie-less* 模式 — 启用后仅在 `localStorage` 中存访
 ```
 
 把 `PASTE_CLARITY_PROJECT_ID` 替换成第 1.3 步拿到的 id。提交。
+
+> Project ID 与 API token **不是同一个东西**。如果还要每周 JSON snapshot 备份
+> （以及首页 Visit Map），等 Clarity 采到几次访问后再去 [analytics-backup.md](analytics-backup.md) 配 API token。
 
 ## 3. 启用无 cookie / 无同意要求模式
 

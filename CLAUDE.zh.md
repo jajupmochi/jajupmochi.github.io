@@ -10,6 +10,9 @@
 - [主要文件](#主要文件)
 - [迭代工作流（混合模式）](#迭代工作流混合模式)
 - [硬规则](#硬规则)
+    - 更新文档前先询问 — 批量合并而非每次 edit 都落
+    - SEO 审计前先询问 — 长报告会撑大 context
+    - JSON 有效性、i18n 对齐、中英双语双文件、内容权威来源、Master TOC 强制要求
 - [文档规范](#文档规范)
     - [Master TOC 强制要求](#master-toc-强制要求)
     - [PLAN.md — 路线图唯一来源](#planmd--路线图唯一来源)
@@ -51,6 +54,7 @@ Linlin Jia 的个人学术网站，托管于 GitHub Pages（`jajupmochi/jajupmoc
 - **i18n key 对齐。** `locales/{en,zh,fr,de}.json` 四个文件的 key 树必须完全一致。若一个文件里加 key，四个全都要加（loader 有 inline 默认回退，但缺 key 会以原始英文露出来）。
 - **内容权威来源。** 更新职业相关内容（bio、publications、projects、experience）时，权威来源是 `res/cv/CV_Linlin_Jia_en_*.pdf` 和 `extra_info_work.md`。如果站点和权威不一致，改站点，不改权威。
 - **更新文档前先询问（2026-04-21 新增）。** 下面两条强制规则仍然适用，**但不要在会话进行中自动落到文档里。** 每批 edit 结束时，先问 Linlin 是否现在更新 `docs/UPDATES.md` + `docs/PLAN.md`，还是推迟。若她选择推迟，把待落的文档变更记在内部 running list（task 笔记 / scratchpad），等她说"更新文档" / "update docs" / "sync docs" 时一次性合并落下去。原因：长会话中每批都更一次文档会制造噪音 — 批量合并后历史和 commit 都读着更干净。下方"漏了就补"子条款仍然适用：commit 出去之前，相应的 UPDATES + PLAN 条目必须已经就位。
+- **SEO 审计前先询问（2026-04-21 新增）。** SEO 相关的 skill / plugin / 脚本（`searchfit-seo:seo-audit`、任何 SEO 检查工具、对 `index_en.html` 的人工 SEO 审计）即使命中任务语境也**禁止自动触发**。每次必须先问 Linlin（"要不要跑一次 SEO audit？" / "Run an SEO audit?"）并等她点头。原因：SEO 审计报告冗长、要反复读很多文件，会撑大 context 并加速 Claude Code 的自动压缩 — Linlin 想自己决定什么时候付这个成本。本条规则在 SEO 场景下**覆盖** `CLAUDE.local.md` 里"工具主动性"的通用偏好。
 - **`docs/UPDATES.md` 强制日志。** 本仓库的每一次改动（内容、代码、资源、文案、配置）都必须在**同一批 edit** 里加一条 `docs/UPDATES.md` 条目。格式：今日日期做 `# YYYY-MM-DD` H1（UTC，用环境里的 `currentDate` 或跑 `date -u +%F`），**最新日期放在最上面**。当天若有多次独立变更，在该日期下用 `## V1`、`## V2`、`## V3` H2 分组，**V 号最大的在最上**（最新工作优先落入）。每个条目是短 bullet 列表 — 改了什么、为什么。同批 edit 内同步更新文件顶部的 `## Master TOC` — 每新增一天加一个 bullet，每新增一个 V 加一个带一句 hook 的子 bullet。**没有对应 `docs/UPDATES.md` 条目（含 TOC）的 PR / commit 视为不完整。** 漏了就补。时机：遵循上面的"更新文档前先询问"规则 — 等 Linlin 点头再一次性落。
 - **`docs/PLAN.md` 同步。** 如果改动命中某个已存在的 `docs/PLAN.md` 条目，必须在同一批 edit 里更新其状态符号（`[ ]`→`[~]`→`[✓]`）。如果引入新的计划工作（今天不发），则以新的 ID 加入对应的 Horizon / Milestone / Goal / Task。凡涉及路线图的改动未触及 `docs/PLAN.md` 视为不完整。时机：遵循上面的"更新文档前先询问"规则 — 等 Linlin 点头再一次性落。
 - **每份文档强制 Master TOC。** 本仓库的每份 markdown（根目录 `.md`、`docs/**/*.md`、`.claude/skills/*/SKILL.md`）都必须以 `## Master TOC`（或等价 "Table of contents" 段）开头，按下方层级规范把每个 `##` section 列为 bullet。`docs/UPDATES.md` 也同样带 Master TOC — 用嵌套 bullet 按 日期 → `V<n>` 排列，每条一句 hook。新增条目时同批 edit 内保持同步。

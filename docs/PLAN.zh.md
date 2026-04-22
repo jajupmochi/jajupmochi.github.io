@@ -52,9 +52,9 @@
 - **[H1 — Site as a Job-Hunt Asset](#h1--site-as-a-job-hunt-asset)** `[~]`
     - [M1.1 — 内容对齐 CV / extra_info](#m11--内容对齐-cv--extra_info) `[~]`
         - [G1 — Publications](#g1--publications) `[✓]`
-        - [G2 — Projects](#g2--projects) `[~]`
+        - [G2 — Projects](#g2--projects) `[✓]`
         - [G3 — News](#g3--news) `[ ]`
-        - [G4 — Skills](#g4--skills) `[ ]`
+        - [G4 — Skills](#g4--skills) `[✓]`
         - [G5 — Stats](#g5--stats) `[ ]`
         - [G6 — 合作机构露出](#g6--合作机构露出) `[✓]`
         - [G7 — 博士论文接入（timeline + Publications）](#g7--博士论文接入timeline--publications) `[✓]`
@@ -71,11 +71,13 @@
         - [G3 — LCP / CLS / INP](#g3--lcp--cls--inp) `[✓]`
         - [G4 — 性能打磨（vibe 审计补漏）](#g4--性能打磨vibe-审计补漏) `[ ]`
         - [G5 — Figure 放大镜（点击放大）](#g5--figure-放大镜点击放大) `[~]`
-    - [M1.4 — 招聘官记忆点差异化](#m14--招聘官记忆点差异化) `[ ]`
+    - [M1.4 — 招聘官记忆点差异化](#m14--招聘官记忆点差异化) `[~]`
         - [G1 — Live Citation Graph](#g1--live-citation-graph) `[ ]`
         - [G2 — Redox prediction 交互 demo](#g2--redox-prediction-交互-demo) `[ ]`
         - [G3 — "/now" 页面](#g3--now-页面) `[ ]`
         - [G4 — 默认主题 → academic](#g4--默认主题--academic) `[ ]`
+        - [G5 — Cmd+K 命令面板搜索](#g5--cmdk-命令面板搜索) `[✓]`
+        - [G6 — Visit Map（访客国家地图）](#g6--visit-map访客国家地图) `[?]`
 - **[H2 — 站点运营与维护](#h2--站点运营与维护)** `[?]`
     - [M2.1 — 手动一次性配置](#m21--手动一次性配置) `[?]`
         - [G1 — Welcome 表单后端](#g1--welcome-表单后端) `[?]`
@@ -118,9 +120,9 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 
 #### G2 — Projects
 - `[✓]` H1.M1.G2.T1 — 对照 `extra_info_work.md` + CV 逐卡校对所有项目（2026-04-21 V9 通过 9 卡 CV 重构完成；每张卡标题现在逐字匹配 CV）。
-- `[ ]` H1.M1.G2.T2 — 新增 **LIULIAN platform** 卡（置顶；关键个人基础设施）。来源：extra_info_work.md §LIULIAN。
+- `[✓]` H1.M1.G2.T2 —（2026-04-22 V1, V10 回填）已新增 **LIULIAN platform** 卡，置于项目网格顶部。Personal-infra 徽标，`data-tags="industry,llm,agents,software"`，底部链接到平台主页 + GitHub 组织页。素材出处：`extra_info_work.md §LIULIAN`。
 - `[✓]` H1.M1.G2.T3 — 新增 **PLANALYSER — Automated HVAC-Concept Audit and Optimisation using AI** 卡（2026-04-21 V9 完成）。INNOSUISSE 2024-2025，合作方 iCoSys + WATTELSE AG。底部链接：ARAMIS 立项页 + WATTELSE 初创页。Industry 徽标，data-tags `academia,industry` 使其在两个 filter 下都出现。
-- `[ ]` H1.M1.G2.T4 — 新增 **Local Confidential Translator** 卡（个人 MVP）。
+- `[✓]` H1.M1.G2.T4 —（2026-04-22 V1, V10 回填）已新增 **Local Confidential Translator** 卡。Personal-MVP 徽标，`data-tags="software,llm,fun"`，底部链接到 GitHub 仓库。突出本地 LLM + 隐私定位，与 N-Banker / OCTOPUSSY 形成区分。
 - `[✓]` H1.M1.G2.T5 — 用 CV 正式名 "1st Global Neobank Research Center" 刷新 **N-Banker** 描述（2026-04-21 V9 完成）。中性措辞；无 CTO / CAIO 标签。底部：平台主页 + PolyU 合作方页。
 - `[x]` H1.M1.G2.T6 — 按 extra_info_work.md 刷新 **OCTOPUSSY** + **Virtual Bodmer** 文案。取消原因：V9 方案变更——Virtual Bodmer 被整张删除（Linlin 决定；HES-SO 链接弱、范围未落地），OCTOPUSSY 与 RedoxPrediction 合并为单张按 CV 命名的卡。由 T9 + T10 + T11 承接。
 - `[✓]` H1.M1.G2.T7 — 新增 **GraphInk** 卡并带图（2026-04-21 V2 完成）。
@@ -137,9 +139,10 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 - `[ ]` H1.M1.G3.T3 — 新增 2026 年条目（InnoEx 2026 HK 上 N-Banker chatbot 展示）。
 
 #### G4 — Skills
-- `[ ]` H1.M1.G4.T1 — 新增 **agent-skills** 标签（`python-backend-creator`、`project-adaptor`）。
-- `[ ]` H1.M1.G4.T2 — 新增 **vibe-coding 工具** 标签（Claude Code、Codex、Antigravity、OpenCode、GitHub Copilot）。
-- `[ ]` H1.M1.G4.T3 — 新增 **agent / LLM 系统** 标签（CrewAI、Ollama、vLLM、RAG、GRPO、LoRA）。
+- `[✓]` H1.M1.G4.T1 —（2026-04-22 V1）已新增 **agent-skills** 标签（`python-backend-creator`、`project-adaptor`），归入新增的 `ai_tools` 技能分类。
+- `[✓]` H1.M1.G4.T2 —（2026-04-22 V1）已新增 **vibe-coding 工具** 标签（Claude Code、Codex、Antigravity、OpenCode、GitHub Copilot），同样归入 `ai_tools`。
+- `[✓]` H1.M1.G4.T3 —（2026-04-22 V1）已新增 **agent / LLM 系统** 标签（CrewAI、Ollama、vLLM、RAG、GRPO、LoRA），归入 `ml_ai` 与 graph-ML / GNN 标签并列。
+- `[✓]` H1.M1.G4.T4 —（2026-04-22 V1）Skills 6 分类重构：`programming` / `ml_ai` / `tools` / `domain` / `languages` / `ai_tools`。新增 `skills_cats.ai_tools` i18n 键，4 个语种全部补齐。专利 + ELM (Extreme Learning Machine) 重新归到 `domain`，与 chemoinformatics / hydrology 一起，避免吹大 `ml_ai` 标签数量。
 
 #### G5 — Stats
 - `[ ]` H1.M1.G5.T1 — 发表数量从 9 → 10（含 ICPR 2026 与修正后的 pubs）。
@@ -181,6 +184,7 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[✓]` H1.M2.G2.T1 — hreflang `?lang=` URL 变体。
 - `[✓]` H1.M2.G2.T2 — sitemap.xml 从 3 → 13 URL，并用 `xhtml:link` 声明 alternate。
 - `[✓]` H1.M2.G2.T3 —（2026-04-21 V8）通过新增的 `data-i18n-href-map` 属性，在 `applyTranslations`（`js/main.js`）里按当前语种切换 `href`。中文访客现在落在中文版 Google Patents 页（`/patent/CN106376041B`），en / fr / de 访客落在英文版（`/patent/CN106376041B/en`）。依据：读 CN 专利的中文读者适合 Google 原生中文渲染；其他语种读者适合英文摘要。方案足够通用，后续按语种切换的外链（区域媒体报道、视频镜像）都可复用。
+- `[✓]` H1.M2.G2.T4 —（2026-04-22 V1）按语种切换图片 `src` 的新属性 `data-i18n-src-map`，同样在 `applyTranslations`（`js/main.js`）里处理。是 T3 的姊妹（`<img>` 而非 `<a>`），用于 Contact 区块里的静态地图截图按访客语种切换 en/zh/fr/de Google Maps tile。loader 把缺少的语种条目当作 no-op（保留默认 `src`）。
 
 #### G3 — AI 搜索优化
 - `[ ]` H1.M2.G3.T1 — `llms.txt` 约定稳定后加上（目前还在草案阶段）。
@@ -249,6 +253,22 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 #### G4 — 默认主题 → academic
 - `[ ]` H1.M4.G4.T1 — `js/main.js` 主题初始化里把默认主题从 `ai-generated` 改为 `academic`。已有 `localStorage` 偏好仍然尊重。主题 / 语言切换器位置不动（vibe 审计 "降到 footer" 建议 Linlin 不采纳）。
 
+#### G5 — Cmd+K 命令面板搜索
+> 2026-04-22 V1 加入（V11 回填）。决策依据：站点已经长到 9 个项目卡 + 10 篇论文 + 4 主题 + 4 语种 — 招聘官靠滚动找内容很费时。Cmd+K（或 "/"）打开 Mac 风格 palette，把所有 section / 项目 / 论文 / 技能索引在一处，支持模糊匹配 + 键盘导航 + ESC 关闭。是 H1.M4 上一个具体的 "wow" 点。
+- `[✓]` H1.M4.G5.T1 —（2026-04-22 V1）`index_en.html` 内 palette 标记（focus-trap、role=dialog、aria-modal、ESC + backdrop 关闭、焦点还原）。把 section 锚点 + 项目 / 论文标题 + 技能 chip 索引到内存列表，按子串匹配 + token 前缀加权打分。
+- `[✓]` H1.M4.G5.T2 —（2026-04-22 V1）Cmd+K（macOS）/ Ctrl+K（Win/Linux）/ "/"（在文本输入框外）全局键位。Palette 内显示快捷键徽章 + navbar 放大镜 icon 上加 tooltip。
+- `[✓]` H1.M4.G5.T3 —（2026-04-22 V1）i18n 奇偶：新增 4 条 `search.*` 键（`placeholder`、`aria`、`empty`、`no_results`）+ 3 条 `common.search_*` 占位（search、search_projects、search_publications），覆盖 en / zh / fr / de。
+- `[✓]` H1.M4.G5.T4 —（2026-04-22 V1）chrome-devtools 跨主题验证 `ai-generated` / `academic` / `industrial` / `fancy` — palette 卡 + ring 颜色按主题 `--primary` 跟着走。
+
+#### G6 — Visit Map（访客国家地图）
+> 2026-04-22 V1 加入（Phase 4）。决策依据：把现有 Microsoft Clarity 每周备份管线变成可见的"展示物"，挂在 Contact 区块底部，让招聘官看到自然的全球访问量而不必离站。完全自建 / 不再加新的第三方 tracker；复用已经 commit 在 `data/analytics/` 的 snapshot JSON。
+- `[✓]` H1.M4.G6.T1 —（2026-04-22 V1）`.visit-map-block` 标记加在 Contact 区块底端。在 JS 验证 snapshot 存在前保持 `hidden`；无数据时静默 no-op。
+- `[✓]` H1.M4.G6.T2 —（2026-04-22 V1）`js/main.js` 内 `initVisitMap` IIFE：`findLatestSnapshotPath` HEAD 探测最近 90 天，`extractCountryCounts` 解析 Clarity 的 `data[*].information[*]` 字段，用 `COUNTRY_ALIAS` 把 ISO-2 → world-atlas 英文短名做归一化，然后从 jsDelivr（script-src 已经允许）懒加载 D3 v7.9.0 + topojson-client v3.1.0，用 `geoNaturalEarth1` 投影 + `scaleSequential` 从 `rgba(120,144,180,0.18)` → `--primary` 渲染 choropleth。同时渲染 Top-Countries `<ol>` + 总访问数 / 国家数 / 时间窗统计。
+- `[✓]` H1.M4.G6.T3 —（2026-04-22 V1）world-atlas TopoJSON（约 108 KB）打包到本地 `data/world-atlas/countries-110m.json`，避免把 CSP `connect-src` 放宽到 jsDelivr。trade-off：一次性 108 KB 体积换更紧的 CSP。
+- `[✓]` H1.M4.G6.T4 —（2026-04-22 V1）i18n 奇偶：新增 7 条 `visitMap.*` 键（`title`、`totalVisits`、`countries`、`window`、`source`、`topCountries`、`svgTitle`），覆盖 en / zh / fr / de。当前奇偶 141 键 / 语种。
+- `[✓]` H1.M4.G6.T5 —（2026-04-22 V1）chrome-devtools 跨主题验证 `ai-generated` / `industrial` / `fancy`（用 mock fixture，验证后已删）。已知 v1 限制：choropleth 颜色是首次渲染时从 `--primary` 取的，运行时切换主题需要刷新页面才会重染（可接受；未来可加 `MutationObserver` 监听 `[data-theme]` 修复）。
+- `[?]` H1.M4.G6.T6 — 真实数据填充：被 H2.M1.G4.T2（`CLARITY_API_TOKEN` repo secret）卡住。Linlin 设好 secret 并重新跑一次 workflow 后，第一份真实 `data/analytics/clarity-YYYY-MM-DD.json` 落地，块下次访问时自动激活。
+
 ---
 
 ## H2 — 站点运营与维护
@@ -283,7 +303,7 @@ Actions）。每个都需要仓库外一次性配置，加上定期检查。这�
 - `[?]` H2.M1.G4.T1 — 在 Clarity 里生成 API token（Settings → Data Export）。
 - `[?]` H2.M1.G4.T2 — 以 `CLARITY_API_TOKEN` 加为 GitHub 仓库 secret。
 - `[?]` H2.M1.G4.T3 — 开启 Settings → Actions → General 里的 "Read and write permissions"。
-- `[?]` H2.M1.G4.T4 — 首次手动触发（Actions → backup-analytics → Run workflow）。
+- `[~]` H2.M1.G4.T4 —（2026-04-22 V1）workflow 已经在 `master` 上线；首次手动触发（run id 24780197033）已发起，但**因 `error: CLARITY_API_TOKEN env var not set` 失败** — 被 T1 + T2 卡住。secret 落地后重新触发。
 
 ### M2.2 — 自动化
 
@@ -307,7 +327,7 @@ Actions）。每个都需要仓库外一次性配置，加上定期检查。这�
 ### M2.3 — 备份与韧性
 
 #### G1 — Clarity 每周备份
-- `[~]` H2.M3.G1.T1 — workflow 已存在；激活取决于 H2.M1.G4。
+- `[~]` H2.M3.G1.T1 —（2026-04-22 V1）workflow 文件 `.github/workflows/backup-analytics.yml` 已 push 到 `origin/master`（commit 范围 `f64a27a..3ddd46a`）；cron `'17 4 * * 0'` 已挂上下个周日 04:17 UTC，`workflow_dispatch` 也可用。首次手动触发已执行；激活仍取决于 H2.M1.G4（secret）。
 
 #### G2 — Welcome 提交备份
 - `[ ]` H2.M3.G2.T1 — 建私仓 `linlin-site-submissions-backup` 每周镜像 Sheet 的 published-CSV。

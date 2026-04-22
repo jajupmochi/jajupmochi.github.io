@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-04-22](#2026-04-22)
+    - [V1 — Deferred backfill (V10 LIULIAN/Fun + V11 Cmd+K search) + today's batch (Skills restructure, Patent category, Map i18n, 7-paper pub-links, empty-filter UX, Visit Map)](#v1--deferred-backfill-v10-liulianfun--v11-cmdk-search--todays-batch-skills-restructure-patent-category-map-i18n-7-paper-pub-links-empty-filter-ux-visit-map) — One consolidated V covering three sittings: (A) V10 backfill — LIULIAN + Confidential Translator project cards, new "Fun" filter, card-polish pass. (B) V11 backfill — full-site Cmd+K / Ctrl+K search modal indexing sections / projects / pubs / news. (C) Today: Skills section restructured to 6 categories × 44 tags (ML/AI first, Languages last); new `patent` filter chip + ELM reclassified preprint→patent; Maps iframe + "Open in Maps" link i18n via parallel `data-i18n-src-map` + `data-i18n-href-map` attrs (new JS handler); 7 publications gain Preprint/Slides/Video links incl. YouTube↔Bilibili per-locale swap; filter chips with zero matches auto-disable; **Visit Map (Phase 4)** — Contact-section choropleth of visitor countries from weekly Clarity backup, lazy D3 + topojson + locally bundled world-atlas (`data/world-atlas/countries-110m.json`, ~108KB) to keep CSP `connect-src` tight. i18n: 124 → 141 keys/locale.
 - [2026-04-21](#2026-04-21)
     - [V9 — SEO audit round-3 P0–P5 + UX polish + Projects 9-card CV-aligned refactor](#v9--seo-audit-round-3-p0p5--ux-polish--projects-9-card-cv-aligned-refactor) — SEO: sitemap broken-URL fix + 6 new figure URLs, `<h2>` i18n attrs for Beyond/Blog, title/description keyword tightening, citation counts into Person + 8 ScholarlyArticle schemas. UX: coming-soon toast glass-morphism rewrite, pub-thumbnail 180×140→220×172 with halved padding, thesis spacing above. Structural: Projects refactored to 9 CV-aligned cards — Virtual Bodmer deleted, OCTOPUSSY+RedoxPrediction merged, PLANALYSER/APi/SDN added, all `<a class="project-card">` → `<div>` with new `.project-links` footer widget + delegated JS click handler. 6 new i18n keys × 4 locales (124 total).
     - [V8 — Batch-B preprocessing (thesis repositioned, pub figures, patent i18n, services icon)](#v8--batch-b-preprocessing-thesis-repositioned-pub-figures-patent-i18n-services-icon) — Four parallel polish items ahead of Batch B: thesis highlight moved from top → bottom of Publications, 6 pub cards gain real figures (+ figure-filename rename to `YYYY_venue_*`), patent link now locale-aware via new `data-i18n-href-map` attr, Associations card icon `fa-edit` → `fa-id-badge`.
@@ -28,6 +30,154 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-04-22
+
+## V1 — Deferred backfill (V10 LIULIAN/Fun + V11 Cmd+K search) + today's batch (Skills restructure, Patent category, Map i18n, 7-paper pub-links, empty-filter UX, Visit Map)
+
+One consolidated V — three logical chunks were deferred from per-batch logging per the new "Ask before doc updates" hard rule (added 2026-04-21) and are now landing together. Driven by Linlin's job-hunt push: differentiator features (Visit Map, Cmd+K search) + content fidelity (Skills, Patent reclass, pub completeness) + UX correctness (empty-filter affordance, map locale).
+
+### A. Backfill — V10: LIULIAN + Confidential Translator + Fun filter + project-card polish
+
+- New project card **LIULIAN** (graph + LLM hybrid agent prototype) with `2026_liulian_architecture.png` figure.
+- New project card **Confidential Translator** with `2026_confidential_translator_presentation.gif` figure (animated demo).
+- New `fun` filter chip in Projects (`filters.fun` × 4 locales) so personal / playful work surfaces alongside formal projects without diluting the recruiter-track filters.
+- General card polish: spacing, figure sizing consistency, hover behavior alignment with V9's `.project-links` footer widget.
+
+### B. Backfill — V11: Full-site search (Cmd+K)
+
+- New IIFE `(function initSiteSearch() { ... })()` at `js/main.js:1075-1295`: builds a flat index of section titles, project cards, publication cards, news items at DOM-ready, exposes a centered modal triggered by `Cmd+K` / `Ctrl+K` (or the navbar search icon).
+- Keyboard nav (↑/↓/Enter/Esc), filtered live as user types, hits scroll the target into view + flash-highlight on the receiving element.
+- New `search.*` i18n keys (`placeholder`, `aria`, `empty`, `no_results`) × 4 locales.
+
+### C. Today's batch (2026-04-22)
+
+#### 1. Skills section restructured — 6 categories × 44 tags
+
+`index_en.html:1477-1545`. Linlin's directive: **ML/AI first, Languages last; no TensorFlow; Graph Kernels / Edit Distances / Pre-image belong in ML/AI; add Java to Programming**. Final order:
+
+- **ML/AI (13)** — GNNs★, LLMs★, Transformers★, Graph Kernels, Graph Edit Distances, Pre-image, Agents, Vision Transformer, Computer Vision, Deep Learning, Machine Learning, Time series, scikit-learn.
+- **Programming (9)** — Python★, PyTorch★, C++, Java, JavaScript, Cython, MATLAB, Spring Boot, React.js.
+- **Tools & Infra (8)** — Docker, FastAPI, Git, Cloud, Linux, CI/CD, HPC, LaTeX.
+- **Domain (6)** — RDKit, DeepChem, Gaussian, Chemoinformatics, Hydrology, Spatio-Temporal Analysis.
+- **AI Tools (5)** — unchanged from V10 layout.
+- **Languages (3)** — unchanged.
+
+★ = "primary" tag styling (heavier weight, accent color).
+
+#### 2. Patent filter category + ELM reclassification
+
+- New `patent` filter chip in Publications (`index_en.html` filter row): `<button class="filter-tag" data-filter="patent" data-i18n="filters.patent">Patent</button>`. New i18n key `filters.patent` × 4 locales (`Patent` / `专利` / `Brevet` / `Patent`).
+- ELM card (CN106376041B Service-oriented Programmable Control and Scheduling for SDN) reclassified `data-tags="preprint"` → `data-tags="patent"` — it's a granted patent at XJTU, not a preprint.
+- Preprint chip kept (other genuine preprints fall under it).
+
+#### 3. Map i18n — `data-i18n-src-map` for `<iframe>` `src` attr
+
+`index_en.html:1612, 1620` + new JS handler `js/main.js:~140-150`. Existing `data-i18n-href-map` only swaps `<a href>`; the Google Maps `<iframe src>` was always English. Added a parallel attribute `data-i18n-src-map` and an 8-line handler in `applyTranslations()`:
+
+```js
+document.querySelectorAll('[data-i18n-src-map]').forEach(el => {
+    try {
+        const map = JSON.parse(el.getAttribute('data-i18n-src-map'));
+        if (map && map[lang]) el.setAttribute('src', map[lang]);
+    } catch (e) {}
+});
+```
+
+Each locale gets the right `hl=` (`en|zh-CN|fr|de`) for both the embedded map and the "Open in Maps" link.
+
+#### 4. Seven publications gain new `pub-links`
+
+Per Linlin's curated list (preprints / slides / videos):
+
+- **[J24] RedoxPrediction** — + ResearchGate Preprint.
+- **[C23] ACPR 2023** — + PDF (`res/papers/acpr2023.pdf`).
+- **[J22b] GED Stability** — + ResearchGate Preprint.
+- **[J22a] Graph Kernels** — + HAL Preprint.
+- **[J21] graphkit-learn** — + HAL Preprint.
+- **[W21b] Pre-image** — + honeine.fr Preprint + Slides + Video (YouTube/Bilibili swap via `data-i18n-href-map`).
+- **[W21a] Metric Learning** — + honeine.fr Preprint + Slides + Video (YouTube/Bilibili swap via `data-i18n-href-map`).
+
+Video link is locale-aware: zh users get the Bilibili mirror (`BV1A54y1s7zJ` etc.), all other locales get the original YouTube URL — Linlin's call to respect the dominant video platform per region.
+
+#### 5. Empty filter chips auto-disable
+
+`js/main.js` in BOTH `initFilterableCarousel` and `initFilterableList`:
+
+```js
+filterBtns.forEach(btn => {
+    const tag = btn.dataset.filter;
+    if (tag === 'all') return;
+    const matchCount = allCards.filter(c =>
+        c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag)
+    ).length;
+    if (matchCount === 0) {
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+    }
+});
+```
+
+CSS (`css/main.css:~1722`): disabled chips get muted bg + 0.45 opacity + `cursor: not-allowed` + `pointer-events: none`. Triggered Linlin's request "preprint按钮保留，但是把无内容的按钮变成无法点击" — auto-recompute means future content changes update button state with no manual gate-keeping.
+
+#### 6. Visit Map (Phase 4) — Contact-section choropleth
+
+Self-built lightweight visit stats + source-distribution map (Linlin chose option C — no third-party widget, reuse the existing Clarity backup pipeline as the data source).
+
+- **HTML** (`index_en.html` Contact section, after `.contact-section`): new `#visitMapBlock` (hidden by default, JS unhides on data hit). Header line: `total visits · countries · past 3 days · via Microsoft Clarity`. Body: `<svg id="visitMapSvg">` (left) + `<ol id="visitTopList">` Top-5 list (right). Mobile: list collapses below map.
+- **JS** (`js/main.js` end-of-file IIFE `(function initVisitMap() { ... })()`):
+    - Probe back up to 90 days for newest `data/analytics/clarity-YYYY-MM-DD.json` via HEAD requests (newest-first).
+    - Walk Clarity payload's `data[*].information[*]` for `Country` field + `totalSessionCount`; aggregate to a Map.
+    - `COUNTRY_ALIAS` table normalizes ISO-2 codes → world-atlas English short names (US → "United States of America", CH → "Switzerland", etc.).
+    - Lazy-load D3 v7.9.0 + topojson-client v3.1.0 from jsDelivr (already in CSP `script-src`); fetch local `data/world-atlas/countries-110m.json` (~108KB bundled — chosen over `connect-src` allowlist extension to keep CSP tight).
+    - Render: `geoNaturalEarth1` projection, `scaleSequential` interpolating `rgba(120,144,180,0.18)` → `--primary` (theme-aware at first render), `<title>` tooltip per country.
+    - Empty state: block stays `hidden` if no snapshot, no D3, or zero countries — Contact section degrades silently.
+- **CSS** (`css/main.css:~2384`, before `#map`): `.visit-map-block` w/ top border, 2-column body grid (1fr / 220px), responsive single-column mobile, theme overrides for industrial (dark) + fancy (pink).
+- **i18n**: 7 new keys under `visitMap.*` (title / totalVisits / countries / window / source / topCountries / svgTitle) × 4 locales.
+- **CSP**: no changes — D3+topojson scripts use existing `script-src https://cdn.jsdelivr.net`; world atlas is local; no `connect-src` widening.
+- **Verified** (chrome-devtools, mock fixture deleted before commit):
+    - 12-country mock → 181 total visits, 5-row top list, 12 colored country paths in 177-feature SVG.
+    - ai-generated theme: purple choropleth, top list with primary-color counts. Chinese i18n verified ("全球访客分布 / 总访问数 / 过去 3 天 / 数据来自 Microsoft Clarity").
+    - Industrial theme: dark card, orange accents.
+    - Fancy theme: pink card, pink choropleth.
+    - Empty state (no snapshot): block `hidden=true`, `display: none`, no rendered SVG paths, no console errors.
+
+### Pipeline state — what's needed for real data
+
+The Clarity backup workflow IS pushed (master 14 commits ahead → caught up). First `gh workflow run backup-analytics.yml` failed: `CLARITY_API_TOKEN` repo secret not set. Linlin's manual step:
+
+1. Clarity dashboard → Settings → Data Export → Generate API token.
+2. GitHub repo → Settings → Secrets and variables → Actions → New repository secret `CLARITY_API_TOKEN`.
+3. Re-trigger workflow (`gh workflow run backup-analytics.yml`); it commits `data/analytics/clarity-2026-04-22.json` to master.
+4. `git pull` → site shows real visitor distribution.
+
+(Full setup walkthrough: `docs/setup/analytics-backup.md` §1–§4.)
+
+### i18n parity
+
+124 → **141 keys/locale**. New keys this V:
+
+- `filters.fun` (V10 backfill).
+- `search.placeholder`, `search.aria`, `search.empty`, `search.no_results` (V11 backfill).
+- `filters.patent` (today).
+- `visitMap.title`, `visitMap.totalVisits`, `visitMap.countries`, `visitMap.window`, `visitMap.source`, `visitMap.topCountries`, `visitMap.svgTitle` (today, Phase 4).
+
+Pre-commit i18n hook + `python3 scripts/check_i18n_parity.py` both green.
+
+### PLAN.md sync (this V's deltas)
+
+- `H1.M1.G2` (Projects): LIULIAN + Confidential Translator + Fun filter `[✓]`.
+- `H1.M1.G4` (Skills): 6-category 44-tag restructure `[✓]`.
+- `H1.M1.G2` (Publications): 7-paper pub-links + Patent category + ELM reclass `[✓]`.
+- `H1.M2.G2` (Multilingual crawlability): Map i18n via `data-i18n-src-map` `[✓]`.
+- `H1.M4` (Unique differentiators): Cmd+K search + Visit-map choropleth `[✓]`.
+- `H2.M3.G1` (Analytics backup): pipeline live `[~]` (awaiting `CLARITY_API_TOKEN` secret to mark `[✓]`).
+
+### Known follow-ups
+
+- Choropleth color is captured at first render from `--primary`; theme switch doesn't recolor the rendered SVG (page reload does). Acceptable v1 — could add a `MutationObserver` on `[data-theme]` later if Linlin notices.
+- After `CLARITY_API_TOKEN` lands, first workflow run + repo pull → real choropleth on production. Until then, block stays hidden and section degrades gracefully.
+- `index_zh.html` (legacy page) not synced for any of A/B/C — out of scope.
 
 # 2026-04-21
 

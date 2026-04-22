@@ -12,6 +12,19 @@ Those rows live in a private Google Sheet and may contain visitor names /
 messages. This repo is public, so committing them would leak personal data.
 See "Submissions backup" below for the recommended approach.
 
+> ⚠️ **`CLARITY_API_TOKEN` ≠ `CLARITY_PROJECT_ID`.**
+>
+> The **project id** (10-char public string) lives in `index_en.html` and powers
+> the in-browser Clarity tracking snippet — set up in
+> [analytics-clarity.md](analytics-clarity.md). The **API token** (this file) is
+> a private, password-grade credential that lives only in GitHub repo secrets
+> and lets the weekly backup workflow call Clarity's Data Export API.
+>
+> Both must be configured for the homepage **Visit Map** block to populate
+> (PLAN.md `H1.M4.G6`): without PROJECT_ID, Clarity collects nothing; without
+> API_TOKEN, the workflow can't pull what was collected back into
+> `data/analytics/clarity-*.json`.
+
 ## Master TOC
 
 - [What gets backed up](#what-gets-backed-up)
@@ -90,3 +103,5 @@ Since this repo is public, the safer pattern for the welcome-form submissions is
 | `git push` fails in workflow | Write permission not enabled | Redo step 3 |
 | Response shape changed | Clarity updated API | Adjust `scripts/fetch_clarity.py` accordingly |
 | No snapshot after first run | Low traffic → empty response | Expected for brand-new projects |
+| Snapshot lands but every `information: []` | Clarity hasn't yet aggregated past-3-day traffic with `Browser` / `Country` dimensions (fresh projects can lag up to ~24h after the first visit) | Visit the live site once or twice in a non-incognito session, wait, then re-trigger the workflow manually |
+| Visit Map block on the live site stays hidden | Either no snapshot file under `data/analytics/clarity-*.json` (workflow hasn't run yet) **or** the snapshot's `data[*].information[*]` arrays are empty (no Country dimension yet) | First check `data/analytics/` on `master`; if missing, trigger workflow. If present but empty, see row above. |

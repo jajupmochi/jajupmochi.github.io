@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-04-22](#2026-04-22)
+    - [V1 — Deferred 回填（V10 LIULIAN/Fun + V11 Cmd+K 搜索）+ 本日批次（Skills 重构、Patent 类、地图 i18n、7 篇论文新链接、空 filter UX、访客地图）](#v1--deferred-回填v10-liulianfun--v11-cmdk-搜索--本日批次skills-重构patent-类地图-i18n7-篇论文新链接空-filter-ux访客地图) — 一个合并的 V，覆盖三段工作：(A) V10 回填——LIULIAN + Confidential Translator 项目卡、新增 "Fun" filter、卡片打磨。(B) V11 回填——全站 Cmd+K / Ctrl+K 搜索弹窗，索引 sections / projects / pubs / news。(C) 本日：Skills 重构为 6 类 × 44 标签（ML/AI 在最前，Languages 在最后）；新增 `patent` filter chip + ELM 从 preprint 改为 patent；地图 iframe + "在地图中打开" 链接通过新增的 `data-i18n-src-map` + 已有的 `data-i18n-href-map` 双轨实现按语种切换（含新 JS handler）；7 篇论文补 Preprint/Slides/Video 链接，含 YouTube↔Bilibili 按语种切换；空匹配的 filter chip 自动禁用；**访客地图（Phase 4）**——Contact 区按国家 choropleth，数据源自每周 Clarity 备份，懒加载 D3 + topojson + 本地打包的 world-atlas（`data/world-atlas/countries-110m.json`，~108KB），从而保住 CSP `connect-src` 不外扩。i18n 键数：124 → 141。
 - [2026-04-21](#2026-04-21)
     - [V9 — SEO 审计第三轮 P0–P5 + UX 打磨 + Projects 九卡按简历重构](#v9--seo-审计第三轮-p0p5--ux-打磨--projects-九卡按简历重构) — SEO：sitemap 失效 URL 修复 + 补 6 条新图链接、Beyond/Blog 两个 `<h2>` 补 i18n 属性、title/description 关键词收紧、引用次数写入 Person + 8 篇 ScholarlyArticle 的 schema。UX：coming-soon toast 玻璃拟态重写、论文缩略图 180×140→220×172 并把 padding 减半、thesis 卡上方加间距。结构性改动：Projects 按 CV 重构成 9 张卡——删除 Virtual Bodmer、合并 OCTOPUSSY+RedoxPrediction、新增 PLANALYSER/APi/SDN，全部 `<a class="project-card">` → `<div>`，新增 `.project-links` 底部多链接控件 + 代理式 JS 点击处理。6 个新 i18n 键 × 4 语种（合计 124 键）。
     - [V8 — Batch-B 前置打磨（thesis 搬底、论文图、专利 i18n、服务图标）](#v8--batch-b-前置打磨thesis-搬底论文图专利-i18n服务图标) — Batch B 前 4 项并行小改：thesis 高亮卡从 Publications 顶端搬到底部、6 张论文卡补上真实 figure（+ figure 文件名改成 `YYYY_venue_*` 约定）、专利外链通过新增的 `data-i18n-href-map` 属性按语种切换、Associations 卡图标 `fa-edit` → `fa-id-badge`。
@@ -28,6 +30,154 @@
 - [2023-12-13](#2023-12-13) — CV 大幅更新。
 - [2023-10-24](#2023-10-24) — 新增一篇论文 + CV。
 - [2023-09-27](#2023-09-27) — 新增多篇论文 + CV。
+
+# 2026-04-22
+
+## V1 — Deferred 回填（V10 LIULIAN/Fun + V11 Cmd+K 搜索）+ 本日批次（Skills 重构、Patent 类、地图 i18n、7 篇论文新链接、空 filter UX、访客地图）
+
+一个合并的 V——三段工作因新硬规则 "Ask before doc updates"（2026-04-21 加入）被推迟到现在一并落账。背景驱动：Linlin 求职冲刺——差异化功能（访客地图、Cmd+K 搜索）+ 内容保真（Skills、Patent 重分类、论文链接补全）+ UX 正确性（空 filter 视觉反馈、地图本地化）。
+
+### A. 回填 — V10：LIULIAN + Confidential Translator + Fun filter + 项目卡打磨
+
+- 新增项目卡 **LIULIAN**（图 + LLM 混合 agent 原型），配图 `2026_liulian_architecture.png`。
+- 新增项目卡 **Confidential Translator**，配图 `2026_confidential_translator_presentation.gif`（动图演示）。
+- 新增 `fun` filter chip（`filters.fun` × 4 语种）：让个人 / 趣味性工作能在 Projects 区出现而又不稀释招聘向 filter 信号。
+- 整体卡片打磨：间距、figure 尺寸一致性、hover 行为对齐 V9 引入的 `.project-links` 底部控件。
+
+### B. 回填 — V11：全站搜索（Cmd+K）
+
+- 新增 IIFE `(function initSiteSearch() { ... })()` 位于 `js/main.js:1075-1295`：DOMContentLoaded 时构建一份扁平索引（section 标题 / 项目卡 / 论文卡 / news），通过 `Cmd+K` / `Ctrl+K`（或导航栏搜索图标）打开居中弹窗。
+- 键盘导航（↑/↓/Enter/Esc）、输入实时过滤、点击命中后滚动到目标并对接收元素做 flash 高亮。
+- 新增 `search.*` i18n 键（`placeholder` / `aria` / `empty` / `no_results`）× 4 语种。
+
+### C. 本日批次（2026-04-22）
+
+#### 1. Skills 区重构为 6 类 × 44 标签
+
+`index_en.html:1477-1545`。Linlin 指令：**ML/AI 在最前、Languages 在最后；不要 TensorFlow；Graph Kernels / Edit Distances / Pre-image 归到 ML/AI；Programming 加上 Java**。最终顺序：
+
+- **ML/AI（13）** — GNNs★、LLMs★、Transformers★、Graph Kernels、Graph Edit Distances、Pre-image、Agents、Vision Transformer、Computer Vision、Deep Learning、Machine Learning、Time series、scikit-learn。
+- **Programming（9）** — Python★、PyTorch★、C++、Java、JavaScript、Cython、MATLAB、Spring Boot、React.js。
+- **Tools & Infra（8）** — Docker、FastAPI、Git、Cloud、Linux、CI/CD、HPC、LaTeX。
+- **Domain（6）** — RDKit、DeepChem、Gaussian、Chemoinformatics、Hydrology、Spatio-Temporal Analysis。
+- **AI Tools（5）** — 沿用 V10 布局未动。
+- **Languages（3）** — 未动。
+
+★ = "primary" 标签样式（更粗、强调色）。
+
+#### 2. Patent filter 类别 + ELM 重分类
+
+- Publications 新增 `patent` filter chip：`<button class="filter-tag" data-filter="patent" data-i18n="filters.patent">Patent</button>`。新 i18n 键 `filters.patent` × 4 语种（`Patent` / `专利` / `Brevet` / `Patent`）。
+- ELM 卡（CN106376041B 面向 SDN 的服务化可编程控制与调度方法）从 `data-tags="preprint"` 改为 `data-tags="patent"`——它是 XJTU 时期的授权专利，不是 preprint。
+- Preprint chip 保留（其他真正的 preprint 仍归在它下面）。
+
+#### 3. 地图 i18n —— 给 `<iframe>` `src` 加上 `data-i18n-src-map`
+
+`index_en.html:1612, 1620` + `js/main.js:~140-150` 新 handler。原有的 `data-i18n-href-map` 只能切 `<a href>`，Google Maps `<iframe src>` 永远是英文。新加平行属性 `data-i18n-src-map` + `applyTranslations()` 中 8 行 handler：
+
+```js
+document.querySelectorAll('[data-i18n-src-map]').forEach(el => {
+    try {
+        const map = JSON.parse(el.getAttribute('data-i18n-src-map'));
+        if (map && map[lang]) el.setAttribute('src', map[lang]);
+    } catch (e) {}
+});
+```
+
+每语种 `hl=` 不同（`en|zh-CN|fr|de`），iframe 嵌入图 + "在地图中打开" 外链都会跟着切换。
+
+#### 4. 七篇论文补 `pub-links`
+
+按 Linlin 整理的清单（preprints / slides / videos）：
+
+- **[J24] RedoxPrediction** —— 新增 ResearchGate Preprint。
+- **[C23] ACPR 2023** —— 新增 PDF（`res/papers/acpr2023.pdf`）。
+- **[J22b] GED Stability** —— 新增 ResearchGate Preprint。
+- **[J22a] Graph Kernels** —— 新增 HAL Preprint。
+- **[J21] graphkit-learn** —— 新增 HAL Preprint。
+- **[W21b] Pre-image** —— 新增 honeine.fr Preprint + Slides + Video（YouTube/Bilibili 按 `data-i18n-href-map` 切换）。
+- **[W21a] Metric Learning** —— 新增 honeine.fr Preprint + Slides + Video（YouTube/Bilibili 切换）。
+
+视频链接做了语种感知：zh 用户跳 Bilibili 镜像（`BV1A54y1s7zJ` 等），其它语种走 YouTube 原片——Linlin 的判断：尊重各地区主流视频平台。
+
+#### 5. 空 filter chip 自动禁用
+
+`js/main.js` 在 `initFilterableCarousel` 与 `initFilterableList` 两处都加：
+
+```js
+filterBtns.forEach(btn => {
+    const tag = btn.dataset.filter;
+    if (tag === 'all') return;
+    const matchCount = allCards.filter(c =>
+        c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag)
+    ).length;
+    if (matchCount === 0) {
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+    }
+});
+```
+
+CSS（`css/main.css:~1722`）：禁用态 chip 用 muted 背景 + 0.45 透明度 + `cursor: not-allowed` + `pointer-events: none`。响应 Linlin 原话 "preprint按钮保留，但是把无内容的按钮变成无法点击"——自动重算意味着以后内容变更，按钮态自动跟着更新，不用人工 gate。
+
+#### 6. 访客地图（Phase 4）—— Contact 区 choropleth
+
+自建轻量访问统计 + 来源分布地图（Linlin 选 C 方案——不上第三方 widget，复用已有 Clarity 备份管线作数据源）。
+
+- **HTML**（`index_en.html` Contact 区，`.contact-section` 之后）：新增 `#visitMapBlock`（默认 hidden，JS 命中数据后才取消隐藏）。Header 行：`总访问数 · 国家/地区 · 过去 3 天 · 数据来自 Microsoft Clarity`。Body：左 `<svg id="visitMapSvg">`，右 `<ol id="visitTopList">` Top-5 列表。移动端：列表换行到地图下方。
+- **JS**（`js/main.js` 文件末 IIFE `(function initVisitMap() { ... })()`）：
+    - 反向探测最近 90 天，找最新一份 `data/analytics/clarity-YYYY-MM-DD.json`（HEAD 请求探活，从今往回找）。
+    - 走 Clarity payload `data[*].information[*]` 取 `Country` 字段 + `totalSessionCount`，聚合到 Map。
+    - `COUNTRY_ALIAS` 表把 ISO-2 码归一到 world-atlas 的英文短名（US → "United States of America"，CH → "Switzerland" 等）。
+    - 从 jsDelivr 懒加载 D3 v7.9.0 + topojson-client v3.1.0（已在 CSP `script-src` 白名单里）；本地 fetch `data/world-atlas/countries-110m.json`（~108KB 已打包入 repo——比起把 jsDelivr 加到 `connect-src`，更稳更快、CSP 也能继续收紧）。
+    - 渲染：`geoNaturalEarth1` 投影、`scaleSequential` 从 `rgba(120,144,180,0.18)` 插值到 `--primary`（首次渲染时跟当前主题），每国 `<title>` 浮窗。
+    - 空态：拿不到快照、加载不到 D3、或者解析后为零国家——block 保持 `hidden`，Contact 区静默降级。
+- **CSS**（`css/main.css:~2384`，紧接 `#map` 之前）：`.visit-map-block` 顶部加分隔线、body 用 2 列网格（1fr / 220px），mobile 单列、industrial（暗色卡）+ fancy（粉）做主题覆盖。
+- **i18n**：`visitMap.*` 7 个新键（title / totalVisits / countries / window / source / topCountries / svgTitle）× 4 语种。
+- **CSP**：未动——D3+topojson 走原本就允许的 `script-src https://cdn.jsdelivr.net`，世界地图本地化，`connect-src` 不外扩。
+- **校验**（chrome-devtools，mock fixture 验证后已删除）：
+    - 12 国 mock → 总 181 次访问、Top 5 列表、177 国 SVG 中 12 国上色。
+    - ai-generated 主题：紫色 choropleth、Top 列表强调色计数。中文 i18n 验证（"全球访客分布 / 总访问数 / 过去 3 天 / 数据来自 Microsoft Clarity"）。
+    - Industrial 主题：暗色卡、橙色强调。
+    - Fancy 主题：粉色卡、粉色 choropleth。
+    - 空态（无快照）：block `hidden=true` / `display: none`、SVG 无渲染路径、控制台无报错。
+
+### 真实数据待打通的最后一步
+
+Clarity 备份 workflow 已经 push（master 之前比 origin 领先 14 commit，已对齐）。第一次 `gh workflow run backup-analytics.yml` 失败：repo secret `CLARITY_API_TOKEN` 未设。Linlin 手动操作：
+
+1. Clarity dashboard → Settings → Data Export → Generate API token。
+2. GitHub repo → Settings → Secrets and variables → Actions → 新增 secret `CLARITY_API_TOKEN`。
+3. 重新触发 workflow（`gh workflow run backup-analytics.yml`）；它会把 `data/analytics/clarity-2026-04-22.json` commit 进 master。
+4. `git pull` → 站点显示真实访问者分布。
+
+（完整步骤参考 `docs/setup/analytics-backup.zh.md` §1–§4。）
+
+### i18n 奇偶校验
+
+124 → **141 键 / 语种**。本 V 新增键：
+
+- `filters.fun`（V10 回填）。
+- `search.placeholder` / `search.aria` / `search.empty` / `search.no_results`（V11 回填）。
+- `filters.patent`（本日）。
+- `visitMap.title` / `visitMap.totalVisits` / `visitMap.countries` / `visitMap.window` / `visitMap.source` / `visitMap.topCountries` / `visitMap.svgTitle`（本日，Phase 4）。
+
+pre-commit i18n 钩子 + `python3 scripts/check_i18n_parity.py` 都过。
+
+### PLAN.md 同步（本 V 增量）
+
+- `H1.M1.G2`（Projects）：LIULIAN + Confidential Translator + Fun filter `[✓]`。
+- `H1.M1.G4`（Skills）：6 类 × 44 标签重构 `[✓]`。
+- `H1.M1.G2`（Publications）：7 篇论文链接 + Patent 类 + ELM 重分类 `[✓]`。
+- `H1.M2.G2`（多语种可爬性）：地图 i18n 通过 `data-i18n-src-map` `[✓]`。
+- `H1.M4`（差异化亮点）：Cmd+K 搜索 + 访客 choropleth `[✓]`。
+- `H2.M3.G1`（分析备份）：管线已活 `[~]`（等 `CLARITY_API_TOKEN` secret 才能转 `[✓]`）。
+
+### 已知后续
+
+- Choropleth 颜色在首次渲染时从 `--primary` 取色固化，主题切换不重渲（刷页才更新）。v1 可接受——以后 Linlin 觉得碍事可以加 `MutationObserver` 监听 `[data-theme]` 重渲。
+- `CLARITY_API_TOKEN` 一落，第一次 workflow + repo pull → 生产页就有真实 choropleth。在那之前 block 保持隐藏，Contact 区优雅降级。
+- `index_zh.html`（legacy 页）A/B/C 三段都未同步——本 V 范围之外。
 
 # 2026-04-21
 

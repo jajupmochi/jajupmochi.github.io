@@ -8,6 +8,15 @@ detection, and basic visitor stats. It is injected via a tiny script in
 
 **Goal: run Clarity without showing the visitor a cookie-consent banner.**
 
+> ⚠️ **Two Clarity credentials — don't confuse them.**
+>
+> | Credential | Visibility | Lives in | Used by | Set up in |
+> |---|---|---|---|---|
+> | `CLARITY_PROJECT_ID` | Public (10-char id) | `index_en.html` (inline tracking snippet) | Browser → sends data **into** your Clarity project | **This file** (steps 1–2) |
+> | `CLARITY_API_TOKEN` | Private (treat like a password) | GitHub repo **Secret** | Weekly GH Actions workflow → pulls data **out** as JSON snapshots | [analytics-backup.md](analytics-backup.md) |
+>
+> Setting one does **not** set the other. The homepage **Visit Map** block (`H1.M4.G6` in PLAN.md) needs **both**: PROJECT_ID so Clarity captures visitor countries, and API_TOKEN so the workflow pulls them back into `data/analytics/clarity-*.json` for the choropleth.
+
 ## Master TOC
 
 - [1. Create the Clarity project (~2 min)](#1-create-the-clarity-project-2-min)
@@ -44,6 +53,11 @@ Open `index_en.html`. Near the bottom find:
 ```
 
 Replace `PASTE_CLARITY_PROJECT_ID` with the id from step 1.3. Commit.
+
+> The Project ID is **not** the same as the API token. If you also want the
+> weekly JSON-snapshot backup (and the homepage Visit Map), continue with
+> [analytics-backup.md](analytics-backup.md) once Clarity has captured at least
+> a few visits.
 
 ## 3. Enable cookie-less / consent-not-required mode
 

@@ -6,6 +6,17 @@
 
 **本备份故意**不包含 welcome 表单提交。**那些行存在一个私有 Google Sheet 里，可能含访客姓名 / 留言。本仓库公开，所以提交它们会泄漏个人数据。推荐做法见下方 "Submissions backup"。
 
+> ⚠️ **`CLARITY_API_TOKEN` ≠ `CLARITY_PROJECT_ID`。**
+>
+> **Project id**（10 字符公开串）写在 `index_en.html` 里，给浏览器端的 Clarity
+> 追踪 snippet 用 — 配置见 [analytics-clarity.md](analytics-clarity.zh.md)。
+> **API token**（本文档）是密码级的私密凭证，只放在 GitHub repo Secrets 里，
+> 让每周备份 workflow 能调用 Clarity 的 Data Export API。
+>
+> 首页 **Visit Map**（PLAN.md `H1.M4.G6`）需要**两个都配**：没有 PROJECT_ID
+> 时 Clarity 什么都采不到；没有 API_TOKEN 时 workflow 拉不回采到的数据存到
+> `data/analytics/clarity-*.json`。
+
 ## Master TOC
 
 - [备份的是什么](#备份的是什么)
@@ -72,3 +83,5 @@ workflow 需要把快照 commit 回仓库，所以要写权限：
 | workflow 里 `git push` 失败 | 未开启写权限 | 重做步骤 3 |
 | Response 形状变了 | Clarity 更新了 API | 相应调整 `scripts/fetch_clarity.py` |
 | 首次运行后无快照 | 流量低 → 返回空 | 新项目预期行为 |
+| 快照落地了，但每个 `information: []` 都是空的 | Clarity 还没把过去 3 天的流量按 `Browser` / `Country` 维度聚合好（新项目首次访问后可能滞后约 24 小时） | 用非无痕窗口访问线上站 1–2 次，等一会儿，再手动重跑 workflow |
+| 线上站 Visit Map 区块一直 hidden | 要么 `data/analytics/` 下没有 `clarity-*.json`（workflow 还没跑过），要么 snapshot 的 `data[*].information[*]` 都是空数组（没有 Country 维度） | 先看 `master` 上的 `data/analytics/`：缺文件就触发 workflow；有文件但是空的看上一行 |
