@@ -82,6 +82,12 @@
     "oldest": "Oldest First",
     "most_cited": "Most Cited"
   },
+  "search": {
+    "placeholder": "Search the site…",
+    "aria": "Search the site",
+    "empty": "Start typing to search across the site…",
+    "no_results": "No matches found."
+  },
   "outline": {
     "graph_ml_title": "Graph Machine Learning",
     "graph_ml_desc": "Bridging graph kernels, edit distances, GNNs, transformers. Pre-image and generation problems.",
@@ -96,12 +102,17 @@
     "academia": "Academia",
     "industry": "Industry",
     "software": "Software",
-    "gnn": "GNN",
+    "graph": "Graph",
     "llm": "LLM",
-    "chemistry": "Chemistry",
+    "agents": "Agents",
+    "vision": "Vision",
+    "spatio_temporal": "Spatio-temporal",
+    "chemoinformatics": "Chemoinformatics",
+    "fun": "Fun",
     "journal": "Journal",
     "conference": "Conference",
-    "preprint": "Preprint"
+    "preprint": "Preprint",
+    "patent": "Patent"
   },
   "exp": {
     "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
@@ -121,7 +132,8 @@
     "institution": "LITIS Lab, INSA Rouen Normandie, France",
     "subtitle": "Graph kernels, graph edit distances, and pre-image problems applied to molecular graph learning. Advised by Paul Honeine and Benoit Gaüzère.",
     "download": "Thesis PDF",
-    "slides": "Defense slides"
+    "slides": "Defense slides",
+    "video": "Defense video"
   },
   "services_cards": {
     "supervision_title": "Supervision",
@@ -158,5 +170,17 @@
     "skip": "Maybe later",
     "thanks_title": "Thank you",
     "thanks_subtitle": "Message delivered."
+  },
+  "visitMap": {
+    "title": "Visitors around the world",
+    "totalVisits": "total visits",
+    "countries": "countries",
+    "window": "past 3 days",
+    "source": "via Microsoft Clarity",
+    "topCountries": "Top countries",
+    "svgTitle": "World map of visitor countries"
+  },
+  "footer": {
+    "privacy": "This site uses <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (cookie-less mode) for anonymous heatmaps and session replay. No personal data is stored; inputs are masked by default. See <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsoft&rsquo;s privacy statement</a>."
   }
 }

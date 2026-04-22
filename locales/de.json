@@ -82,6 +82,12 @@
     "oldest": "Älteste zuerst",
     "most_cited": "Meistzitiert"
   },
+  "search": {
+    "placeholder": "Website durchsuchen…",
+    "aria": "Website durchsuchen",
+    "empty": "Tippen, um die Website zu durchsuchen…",
+    "no_results": "Keine Treffer gefunden."
+  },
   "outline": {
     "graph_ml_title": "Graph-Machine-Learning",
     "graph_ml_desc": "Brücken zwischen Graph-Kernels, Edit-Distanzen, GNNs und Transformers. Pre-Image- und Generierungsprobleme.",
@@ -96,12 +102,17 @@
     "academia": "Wissenschaft",
     "industry": "Industrie",
     "software": "Software",
-    "gnn": "GNN",
+    "graph": "Graph",
     "llm": "LLM",
-    "chemistry": "Chemie",
+    "agents": "Agenten",
+    "vision": "Vision",
+    "spatio_temporal": "Räumlich-zeitlich",
+    "chemoinformatics": "Chemoinformatik",
+    "fun": "Spaß",
     "journal": "Journal",
     "conference": "Konferenz",
-    "preprint": "Preprint"
+    "preprint": "Preprint",
+    "patent": "Patent"
   },
   "exp": {
     "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
@@ -121,7 +132,8 @@
     "institution": "LITIS Lab, INSA Rouen Normandie, Frankreich",
     "subtitle": "Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme im Kontext des molekularen Graph-Learnings. Betreut von Paul Honeine und Benoit Gaüzère.",
     "download": "Dissertation (PDF)",
-    "slides": "Verteidigungsfolien"
+    "slides": "Verteidigungsfolien",
+    "video": "Verteidigungsvideo"
   },
   "services_cards": {
     "supervision_title": "Betreuung",
@@ -158,5 +170,17 @@
     "skip": "Vielleicht später",
     "thanks_title": "Vielen Dank",
     "thanks_subtitle": "Nachricht zugestellt."
+  },
+  "visitMap": {
+    "title": "Besucher weltweit",
+    "totalVisits": "Besuche insgesamt",
+    "countries": "Länder",
+    "window": "letzte 3 Tage",
+    "source": "via Microsoft Clarity",
+    "topCountries": "Top-Länder",
+    "svgTitle": "Weltkarte der Besucherländer"
+  },
+  "footer": {
+    "privacy": "Diese Website verwendet <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (Cookie-loser Modus) für anonyme Heatmaps und Sitzungsaufzeichnungen. Es werden keine personenbezogenen Daten gespeichert; Eingabefelder sind standardmäßig maskiert. Siehe <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsofts Datenschutzerklärung</a>."
   }
 }

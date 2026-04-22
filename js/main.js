@@ -136,6 +136,18 @@
                     // Malformed JSON in data-i18n-href-map — leave href unchanged.
                 }
             });
+
+            // Apply per-locale src swaps (e.g. Google Maps embed iframe: hl=<lang>)
+            document.querySelectorAll('[data-i18n-src-map]').forEach(el => {
+                try {
+                    const map = JSON.parse(el.getAttribute('data-i18n-src-map'));
+                    if (map && map[lang]) {
+                        el.setAttribute('src', map[lang]);
+                    }
+                } catch (e) {
+                    // Malformed JSON in data-i18n-src-map — leave src unchanged.
+                }
+            });
         }
         
         // Translation helper function (for JS code)
@@ -736,29 +748,39 @@
         
         // Projects and Publications Filter/Search/Sort
         function initFilterableCarousel(containerId, trackId, prevId, nextId, dotsId, filterBtns, searchInput, sortSelect) {
+            const container = document.getElementById(containerId);
             const track = document.getElementById(trackId);
             if (!track) return;
             const allCards = Array.from(track.querySelectorAll('.project-card, .pub-card'));
             const prevBtn = document.getElementById(prevId);
             const nextBtn = document.getElementById(nextId);
             const dotsContainer = document.getElementById(dotsId);
-            
+
             let currentPage = 0;
-            const cardsPerPage = 3;
             let visibleCards = [...allCards];
-            
+
+            function cardsPerPage() {
+                const w = window.innerWidth;
+                if (w <= 600) return 1;
+                if (w <= 900) return 2;
+                return 3;
+            }
+
             function updateCarousel() {
-                const totalPages = Math.max(1, Math.ceil(visibleCards.length / cardsPerPage));
+                const perPage = cardsPerPage();
+                const totalPages = Math.max(1, Math.ceil(visibleCards.length / perPage));
                 currentPage = Math.min(currentPage, totalPages - 1);
-                
+
                 // Hide all, show visible
                 allCards.forEach(c => c.style.display = 'none');
                 visibleCards.forEach(c => c.style.display = '');
-                
-                // Calculate offset
-                const offset = -currentPage * 100;
-                track.style.transform = `translateX(${offset}%)`;
-                
+
+                // Pixel-based offset that accounts for flex gap — prevents page-2+ right-edge clipping
+                const gapPx = parseFloat(getComputedStyle(track).gap) || 0;
+                const containerWidth = container ? container.clientWidth : track.parentElement.clientWidth;
+                const pageOffsetPx = currentPage * (containerWidth + gapPx);
+                track.style.transform = `translateX(-${pageOffsetPx}px)`;
+
                 // Update dots
                 dotsContainer.innerHTML = '';
                 for (let i = 0; i < totalPages; i++) {
@@ -767,33 +789,34 @@
                     dot.addEventListener('click', () => { currentPage = i; updateCarousel(); });
                     dotsContainer.appendChild(dot);
                 }
-                
+
                 // Update buttons
                 prevBtn.disabled = currentPage === 0;
                 nextBtn.disabled = currentPage >= totalPages - 1;
             }
-            
+
             function filterCards(tag) {
                 if (tag === 'all') {
-                    visibleCards = [...allCards];
+                    // Exclude Fun category from the default All view
+                    visibleCards = allCards.filter(c => !(c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes('fun')));
                 } else {
-                    visibleCards = allCards.filter(c => c.dataset.tags && c.dataset.tags.includes(tag));
+                    visibleCards = allCards.filter(c => c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag));
                 }
                 currentPage = 0;
                 updateCarousel();
             }
-            
+
             function searchCards(query) {
                 const q = query.toLowerCase().trim();
                 if (!q) {
-                    visibleCards = [...allCards];
+                    visibleCards = allCards.filter(c => !(c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes('fun')));
                 } else {
                     visibleCards = allCards.filter(c => c.textContent.toLowerCase().includes(q));
                 }
                 currentPage = 0;
                 updateCarousel();
             }
-            
+
             function sortCards(sortBy) {
                 if (sortBy === 'newest') {
                     visibleCards.sort((a, b) => (b.dataset.year || 0) - (a.dataset.year || 0));
@@ -802,11 +825,13 @@
                 } else if (sortBy === 'citations') {
                     visibleCards.sort((a, b) => (b.dataset.citations || 0) - (a.dataset.citations || 0));
                 }
-                // Re-order in DOM
                 visibleCards.forEach(c => track.appendChild(c));
                 updateCarousel();
             }
-            
+
+            // Default visible = exclude Fun
+            visibleCards = allCards.filter(c => !(c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes('fun')));
+
             // Bind filter buttons
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -815,21 +840,59 @@
                     filterCards(btn.dataset.filter);
                 });
             });
-            
-            // Bind search
+
+            // Disable filter buttons whose category currently has zero cards
+            filterBtns.forEach(btn => {
+                const tag = btn.dataset.filter;
+                if (tag === 'all') return;
+                const matchCount = allCards.filter(c =>
+                    c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag)
+                ).length;
+                if (matchCount === 0) {
+                    btn.disabled = true;
+                    btn.setAttribute('aria-disabled', 'true');
+                }
+            });
+
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => searchCards(e.target.value));
             }
-            
-            // Bind sort
+
             if (sortSelect) {
                 sortSelect.addEventListener('change', (e) => sortCards(e.target.value));
             }
-            
+
             // Navigation buttons
             prevBtn.addEventListener('click', () => { currentPage = Math.max(0, currentPage - 1); updateCarousel(); });
             nextBtn.addEventListener('click', () => { currentPage++; updateCarousel(); });
-            
+
+            // Keyboard navigation (← →) when the carousel area has focus
+            if (container) {
+                if (!container.hasAttribute('tabindex')) container.setAttribute('tabindex', '0');
+                container.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') { prevBtn.click(); e.preventDefault(); }
+                    else if (e.key === 'ArrowRight') { nextBtn.click(); e.preventDefault(); }
+                });
+
+                // Horizontal wheel / trackpad swipe / shift+wheel
+                let wheelLock = false;
+                container.addEventListener('wheel', (e) => {
+                    const absX = Math.abs(e.deltaX);
+                    const absY = Math.abs(e.deltaY);
+                    const horizontal = absX > absY || e.shiftKey;
+                    if (!horizontal) return;
+                    e.preventDefault();
+                    if (wheelLock) return;
+                    wheelLock = true;
+                    setTimeout(() => { wheelLock = false; }, 450);
+                    const delta = e.shiftKey ? e.deltaY : e.deltaX;
+                    if (delta > 0) nextBtn.click(); else prevBtn.click();
+                }, { passive: false });
+            }
+
+            // Keep offset accurate when the viewport resizes (perPage can change)
+            window.addEventListener('resize', () => updateCarousel());
+
             updateCarousel();
         }
         
@@ -902,11 +965,24 @@
                     filterCards(btn.dataset.filter);
                 });
             });
-            
+
+            // Disable filter buttons whose category currently has zero cards
+            filterBtns.forEach(btn => {
+                const tag = btn.dataset.filter;
+                if (tag === 'all') return;
+                const matchCount = allCards.filter(c =>
+                    c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag)
+                ).length;
+                if (matchCount === 0) {
+                    btn.disabled = true;
+                    btn.setAttribute('aria-disabled', 'true');
+                }
+            });
+
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => searchCards(e.target.value));
             }
-            
+
             if (sortSelect) {
                 sortSelect.addEventListener('change', (e) => sortCards(e.target.value));
             }
@@ -989,4 +1065,425 @@
             }
 
             document.querySelectorAll('.project-image, .pub-thumbnail').forEach(attach);
+        })();
+
+        // ========================================
+        // Site-wide search (Cmd/Ctrl+K)
+        // Indexes About/News/Projects/Publications/Experience/Services/Beyond/Thesis
+        // Keyboard nav, scroll-to + flash highlight on select.
+        // ========================================
+        (function initSiteSearch() {
+            const btn      = document.getElementById('navSearchBtn');
+            const modal    = document.getElementById('siteSearchModal');
+            const backdrop = document.getElementById('siteSearchBackdrop');
+            const input    = document.getElementById('siteSearchInput');
+            const results  = document.getElementById('siteSearchResults');
+            const closeBtn = document.getElementById('siteSearchClose');
+            if (!btn || !modal || !input || !results) return;
+
+            const SECTION_LABELS = {
+                about: 'About', news: 'News', projects: 'Projects',
+                publications: 'Publications', experience: 'Experience',
+                services: 'Services', beyond: 'Beyond', thesis: 'Thesis'
+            };
+
+            let index = [];
+            let currentMatches = [];
+            let activeIdx = -1;
+            let lastFocused = null;
+
+            const clean = (text) => (text || '').replace(/\s+/g, ' ').trim();
+            const pick = (el, sel) => el && el.querySelector(sel);
+            const text = (el, sel) => clean(pick(el, sel)?.textContent);
+
+            function pushItem(items, section, title, snippet, target) {
+                if (!target) return;
+                if (!title && !snippet) return;
+                items.push({ section, title: title || SECTION_LABELS[section] || section,
+                             snippet: (snippet || '').slice(0, 180), target });
+            }
+
+            function buildIndex() {
+                const items = [];
+                // About
+                document.querySelectorAll('#about .about-p').forEach((el) => {
+                    pushItem(items, 'about', 'About Me', clean(el.textContent),
+                             document.getElementById('about'));
+                });
+                // News
+                document.querySelectorAll('#news .news-row').forEach((el) => {
+                    const date = text(el, '.news-date');
+                    const content = text(el, '.news-content');
+                    pushItem(items, 'news', date ? `News · ${date}` : 'News', content, el);
+                });
+                // Projects
+                document.querySelectorAll('#projects .project-card').forEach((el) => {
+                    const title = text(el, '.project-title');
+                    const desc = clean(el.textContent).replace(title, '').trim();
+                    pushItem(items, 'projects', title, desc, el);
+                });
+                // Publications
+                document.querySelectorAll('#publications .pub-entry').forEach((el) => {
+                    const title = text(el, '.pub-title');
+                    const authors = text(el, '.pub-authors');
+                    const venue = text(el, '.pub-venue') || text(el, '.pub-meta');
+                    pushItem(items, 'publications', title,
+                             [authors, venue].filter(Boolean).join(' · '), el);
+                });
+                // Experience
+                document.querySelectorAll('#experience .timeline-item').forEach((el) => {
+                    const role = text(el, '.timeline-title');
+                    const org = text(el, '.timeline-org');
+                    const desc = text(el, '.timeline-desc');
+                    pushItem(items, 'experience', role, [org, desc].filter(Boolean).join(' — '), el);
+                });
+                // Services
+                document.querySelectorAll('#services .service-card').forEach((el) => {
+                    const title = text(el, 'h3');
+                    pushItem(items, 'services', title, clean(el.textContent).replace(title, '').trim(), el);
+                });
+                // Beyond: personal-cards + hobby items
+                document.querySelectorAll('.personal-section .personal-card').forEach((el) => {
+                    const title = text(el, '.personal-card-header h3');
+                    pushItem(items, 'beyond', title, clean(el.textContent).replace(title, '').trim(), el);
+                });
+                document.querySelectorAll('.personal-section .hobby-item').forEach((el) => {
+                    const title = text(el, '.hobby-info h4');
+                    const desc = text(el, '.hobby-info p');
+                    pushItem(items, 'beyond', title, desc, el);
+                });
+                // Thesis
+                document.querySelectorAll('.thesis-highlight').forEach((el) => {
+                    const title = text(el, '.thesis-highlight-title');
+                    const desc = text(el, '.thesis-highlight-desc');
+                    pushItem(items, 'thesis', title, desc, el);
+                });
+                index = items;
+            }
+
+            function escapeHtml(s) {
+                return (s || '').replace(/[&<>"']/g, c => ({
+                    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+                }[c]));
+            }
+            function highlight(raw, q) {
+                const s = raw || '';
+                if (!q) return escapeHtml(s);
+                const lo = s.toLowerCase();
+                const qLo = q.toLowerCase();
+                const idx = lo.indexOf(qLo);
+                if (idx < 0) return escapeHtml(s);
+                return escapeHtml(s.slice(0, idx)) +
+                       '<mark>' + escapeHtml(s.slice(idx, idx + q.length)) + '</mark>' +
+                       escapeHtml(s.slice(idx + q.length));
+            }
+
+            function match(query) {
+                const q = (query || '').toLowerCase().trim();
+                if (!q) return [];
+                const scored = [];
+                for (const item of index) {
+                    const title = (item.title || '').toLowerCase();
+                    const snippet = (item.snippet || '').toLowerCase();
+                    let score = 0;
+                    if (title.includes(q)) score += 10;
+                    if (title.startsWith(q)) score += 5;
+                    if (snippet.includes(q)) score += 2;
+                    if (score > 0) scored.push({ ...item, score });
+                }
+                return scored.sort((a, b) => b.score - a.score).slice(0, 12);
+            }
+
+            function i18nText(key, fallback) {
+                try {
+                    const t = translationsCache && translationsCache[currentLang];
+                    return (t && t[key]) || fallback;
+                } catch (e) { return fallback; }
+            }
+
+            function renderResults(query) {
+                const q = query || '';
+                currentMatches = match(q);
+                activeIdx = currentMatches.length ? 0 : -1;
+                if (!q.trim()) {
+                    results.innerHTML = `<div class="site-search-empty">${escapeHtml(
+                        i18nText('search.empty', 'Start typing to search across the site…'))}</div>`;
+                    return;
+                }
+                if (!currentMatches.length) {
+                    results.innerHTML = `<div class="site-search-empty">${escapeHtml(
+                        i18nText('search.no_results', 'No matches found.'))}</div>`;
+                    return;
+                }
+                results.innerHTML = currentMatches.map((m, i) => `
+                    <button type="button" class="site-search-result${i === 0 ? ' is-active' : ''}" role="option" data-idx="${i}">
+                        <span class="site-search-result-section">${escapeHtml(SECTION_LABELS[m.section] || m.section)}</span>
+                        <span class="site-search-result-title">${highlight(m.title, q)}</span>
+                        <span class="site-search-result-snippet">${highlight(m.snippet, q)}</span>
+                    </button>`).join('');
+                results.querySelectorAll('.site-search-result').forEach(r => {
+                    r.addEventListener('click', () => {
+                        activeIdx = parseInt(r.dataset.idx, 10);
+                        go();
+                    });
+                    r.addEventListener('mouseenter', () => {
+                        setActive(parseInt(r.dataset.idx, 10));
+                    });
+                });
+            }
+
+            function setActive(i) {
+                if (!currentMatches.length) return;
+                const n = currentMatches.length;
+                activeIdx = ((i % n) + n) % n;
+                const rows = results.querySelectorAll('.site-search-result');
+                rows.forEach((el, idx) => {
+                    el.classList.toggle('is-active', idx === activeIdx);
+                    if (idx === activeIdx) el.scrollIntoView({ block: 'nearest' });
+                });
+            }
+
+            function go() {
+                if (activeIdx < 0 || !currentMatches[activeIdx]) return;
+                const target = currentMatches[activeIdx].target;
+                close();
+                if (!target) return;
+                try { if (typeof showPage === 'function') showPage('main'); } catch (e) {}
+                setTimeout(() => {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.classList.add('site-search-flash');
+                    setTimeout(() => target.classList.remove('site-search-flash'), 1800);
+                }, 60);
+            }
+
+            function open() {
+                lastFocused = document.activeElement;
+                buildIndex();
+                modal.hidden = false;
+                document.body.classList.add('site-search-open');
+                input.value = '';
+                renderResults('');
+                setTimeout(() => input.focus(), 30);
+            }
+
+            function close() {
+                modal.hidden = true;
+                document.body.classList.remove('site-search-open');
+                if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+            }
+
+            btn.addEventListener('click', open);
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            if (backdrop) backdrop.addEventListener('click', close);
+
+            input.addEventListener('input', () => renderResults(input.value));
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx + 1); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIdx - 1); }
+                else if (e.key === 'Enter')   { e.preventDefault(); go(); }
+                else if (e.key === 'Escape')  { e.preventDefault(); close(); }
+            });
+
+            // Global shortcut: Cmd+K (mac) / Ctrl+K (win/linux)
+            document.addEventListener('keydown', (e) => {
+                if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    if (modal.hidden) open(); else close();
+                }
+            });
+        })();
+
+        // ========================================
+        // VISIT MAP — choropleth of visitor countries
+        // Data: latest data/analytics/clarity-YYYY-MM-DD.json (weekly Clarity backup).
+        // World atlas is bundled locally (data/world-atlas/countries-110m.json) so the
+        // CSP connect-src allowlist can stay tight (no jsDelivr fetch). D3 + topojson
+        // load via <script> from jsDelivr (already permitted in script-src).
+        // Block stays hidden if no snapshot is found, so the section degrades silently.
+        // ========================================
+        (function initVisitMap() {
+            const block = document.getElementById('visitMapBlock');
+            if (!block) return;
+
+            const D3_URL = 'https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js';
+            const TOPOJSON_URL = 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';
+            const ATLAS_URL = 'data/world-atlas/countries-110m.json';
+            const SNAPSHOT_DIR = 'data/analytics/';
+            const SEARCH_DAYS = 90; // Look back at most 90 days for the most recent snapshot
+
+            // ISO-3166 alpha-2 → country name aliases used in world-atlas (English short).
+            // Clarity may emit either codes or names; we normalize to atlas names.
+            // Only countries we expect to plausibly appear are listed; others fall through to raw value.
+            const COUNTRY_ALIAS = {
+                'US': 'United States of America', 'USA': 'United States of America', 'United States': 'United States of America',
+                'UK': 'United Kingdom', 'GB': 'United Kingdom',
+                'CN': 'China', 'TW': 'Taiwan', 'HK': 'Hong Kong S.A.R.',
+                'CH': 'Switzerland', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain',
+                'NL': 'Netherlands', 'BE': 'Belgium', 'AT': 'Austria', 'PT': 'Portugal',
+                'PL': 'Poland', 'CZ': 'Czechia', 'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland', 'DK': 'Denmark',
+                'IE': 'Ireland', 'RO': 'Romania', 'GR': 'Greece', 'HU': 'Hungary',
+                'CA': 'Canada', 'MX': 'Mexico', 'BR': 'Brazil', 'AR': 'Argentina',
+                'JP': 'Japan', 'KR': 'South Korea', 'IN': 'India', 'SG': 'Singapore',
+                'AU': 'Australia', 'NZ': 'New Zealand',
+                'RU': 'Russia', 'UA': 'Ukraine', 'TR': 'Turkey',
+                'IL': 'Israel', 'SA': 'Saudi Arabia', 'AE': 'United Arab Emirates',
+                'ZA': 'South Africa', 'EG': 'Egypt'
+            };
+
+            // Try snapshot files newest-first via HEAD requests until one resolves 200.
+            async function findLatestSnapshotPath() {
+                const today = new Date();
+                for (let i = 0; i < SEARCH_DAYS; i++) {
+                    const d = new Date(today.getTime() - i * 86400000);
+                    const iso = d.toISOString().slice(0, 10);
+                    const path = `${SNAPSHOT_DIR}clarity-${iso}.json`;
+                    try {
+                        const res = await fetch(path, { method: 'HEAD', cache: 'no-store' });
+                        if (res.ok) return path;
+                    } catch (_) { /* keep walking back */ }
+                }
+                return null;
+            }
+
+            // Walk Clarity payload and aggregate session counts by atlas-friendly country name.
+            function extractCountryCounts(snapshot) {
+                const counts = new Map();
+                const data = snapshot && snapshot.data;
+                if (!Array.isArray(data)) return counts;
+                for (const entry of data) {
+                    if (!entry || !Array.isArray(entry.information)) continue;
+                    for (const row of entry.information) {
+                        const raw = row.Country || row.country || row.dimension2 || row.dimension1;
+                        if (!raw || raw === 'Unknown' || raw === '') continue;
+                        const sessions = parseInt(
+                            row.totalSessionCount || row.sessions || row.totalSession || row.sessionCount || '0',
+                            10
+                        ) || 0;
+                        if (!sessions) continue;
+                        const name = COUNTRY_ALIAS[raw] || raw;
+                        counts.set(name, (counts.get(name) || 0) + sessions);
+                    }
+                }
+                return counts;
+            }
+
+            function loadScriptOnce(url) {
+                return new Promise((resolve, reject) => {
+                    if (document.querySelector(`script[data-src="${url}"]`)) { resolve(); return; }
+                    const s = document.createElement('script');
+                    s.src = url;
+                    s.dataset.src = url;
+                    s.onload = () => resolve();
+                    s.onerror = () => reject(new Error(`failed to load ${url}`));
+                    document.head.appendChild(s);
+                });
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+            }
+
+            function renderChoropleth(world, countries) {
+                const svg = window.d3.select('#visitMapSvg');
+                const width = 960, height = 480;
+                const features = window.topojson.feature(world, world.objects.countries).features;
+                const maxCount = Math.max(...countries.values(), 1);
+
+                // Lighten/darken from CSS var --primary so the choropleth picks up the theme.
+                // Fallback: a calm steel-blue.
+                const themeColor = (getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
+                    || getComputedStyle(document.body).getPropertyValue('--primary').trim()
+                    || '#3b82f6');
+                const colorScale = window.d3.scaleSequential()
+                    .domain([0, maxCount])
+                    .interpolator(window.d3.interpolateRgb('rgba(120,144,180,0.18)', themeColor));
+
+                const projection = window.d3.geoNaturalEarth1().fitSize([width, height - 10], { type: 'Sphere' });
+                const path = window.d3.geoPath(projection);
+
+                svg.selectAll('path').remove();
+                svg.append('g')
+                    .selectAll('path')
+                    .data(features)
+                    .enter().append('path')
+                    .attr('d', path)
+                    .attr('class', d => {
+                        const name = d.properties && d.properties.name;
+                        return countries.has(name) ? 'country-fill' : 'country-base';
+                    })
+                    .attr('fill', d => {
+                        const name = d.properties && d.properties.name;
+                        const c = countries.get(name);
+                        return c ? colorScale(c) : null;
+                    })
+                    .append('title')
+                    .text(d => {
+                        const name = d.properties && d.properties.name;
+                        const c = countries.get(name);
+                        return name + (c ? ` — ${c}` : '');
+                    });
+            }
+
+            function renderStats(countries) {
+                const total = Array.from(countries.values()).reduce((a, b) => a + b, 0);
+                const totalEl = document.getElementById('visitTotalCount');
+                const countriesEl = document.getElementById('visitCountriesCount');
+                if (totalEl) totalEl.textContent = total.toLocaleString();
+                if (countriesEl) countriesEl.textContent = countries.size.toLocaleString();
+
+                const ol = document.getElementById('visitTopList');
+                if (!ol) return;
+                ol.innerHTML = '';
+                Array.from(countries.entries())
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5)
+                    .forEach(([name, count]) => {
+                        const li = document.createElement('li');
+                        li.innerHTML =
+                            `<span class="country-name">${escapeHtml(name)}</span>` +
+                            `<span class="country-count">${count.toLocaleString()}</span>`;
+                        ol.appendChild(li);
+                    });
+            }
+
+            async function run() {
+                const snapshotPath = await findLatestSnapshotPath();
+                if (!snapshotPath) return;
+
+                let snapshot;
+                try {
+                    const r = await fetch(snapshotPath, { cache: 'no-store' });
+                    if (!r.ok) return;
+                    snapshot = await r.json();
+                } catch (_) { return; }
+
+                const countries = extractCountryCounts(snapshot);
+                if (!countries.size) return;
+
+                try {
+                    await loadScriptOnce(D3_URL);
+                    await loadScriptOnce(TOPOJSON_URL);
+                } catch (e) {
+                    console.warn('visit-map: failed to load D3/topojson', e);
+                    return;
+                }
+
+                let world;
+                try {
+                    const r = await fetch(ATLAS_URL);
+                    if (!r.ok) return;
+                    world = await r.json();
+                } catch (_) { return; }
+
+                renderChoropleth(world, countries);
+                renderStats(countries);
+                block.hidden = false;
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', run, { once: true });
+            } else {
+                run();
+            }
         })();

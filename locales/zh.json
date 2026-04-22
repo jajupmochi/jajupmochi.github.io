@@ -82,6 +82,12 @@
     "oldest": "最早优先",
     "most_cited": "被引最多"
   },
+  "search": {
+    "placeholder": "搜索整个网站…",
+    "aria": "搜索网站",
+    "empty": "开始输入以搜索整个网站…",
+    "no_results": "没有找到匹配项。"
+  },
   "outline": {
     "graph_ml_title": "图机器学习",
     "graph_ml_desc": "贯通图核、编辑距离、GNN 与 Transformer；处理预映像与图生成问题。",
@@ -96,12 +102,17 @@
     "academia": "学术",
     "industry": "工业",
     "software": "软件",
-    "gnn": "GNN",
+    "graph": "图",
     "llm": "LLM",
-    "chemistry": "化学",
+    "agents": "智能体",
+    "vision": "视觉",
+    "spatio_temporal": "时空",
+    "chemoinformatics": "化学信息学",
+    "fun": "趣味",
     "journal": "期刊",
     "conference": "会议",
-    "preprint": "预印本"
+    "preprint": "预印本",
+    "patent": "专利"
   },
   "exp": {
     "role_advanced_postdoc": "高级博士后研究员",
@@ -121,7 +132,8 @@
     "institution": "LITIS 实验室，INSA Rouen Normandie，法国",
     "subtitle": "图核、图编辑距离与预映像问题在分子图学习中的应用。导师：Paul Honeine 与 Benoit Gaüzère。",
     "download": "论文 PDF",
-    "slides": "答辩幻灯片"
+    "slides": "答辩幻灯片",
+    "video": "答辩视频"
   },
   "services_cards": {
     "supervision_title": "指导",
@@ -158,5 +170,17 @@
     "skip": "稍后再说",
     "thanks_title": "感谢您",
     "thanks_subtitle": "信息已送达。"
+  },
+  "visitMap": {
+    "title": "全球访客分布",
+    "totalVisits": "总访问数",
+    "countries": "个国家/地区",
+    "window": "过去 3 天",
+    "source": "数据来自 Microsoft Clarity",
+    "topCountries": "访问最多的国家/地区",
+    "svgTitle": "访客所在国家/地区世界地图"
+  },
+  "footer": {
+    "privacy": "本站使用 <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a>（cookie-less 模式）做匿名热图与会话回放。不存储个人数据，输入框默认遮蔽。详见 <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsoft 隐私声明</a>。"
   }
 }

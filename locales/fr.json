@@ -82,6 +82,12 @@
     "oldest": "Plus ancien d'abord",
     "most_cited": "Plus cités"
   },
+  "search": {
+    "placeholder": "Rechercher sur le site…",
+    "aria": "Rechercher sur le site",
+    "empty": "Commencez à taper pour rechercher sur le site…",
+    "no_results": "Aucun résultat."
+  },
   "outline": {
     "graph_ml_title": "Machine Learning sur graphes",
     "graph_ml_desc": "Des noyaux de graphes et distances d'édition aux GNN et Transformers. Problèmes de pré-image et de génération.",
@@ -96,12 +102,17 @@
     "academia": "Académique",
     "industry": "Industrie",
     "software": "Logiciel",
-    "gnn": "GNN",
+    "graph": "Graphe",
     "llm": "LLM",
-    "chemistry": "Chimie",
+    "agents": "Agents",
+    "vision": "Vision",
+    "spatio_temporal": "Spatio-temporel",
+    "chemoinformatics": "Chémoinformatique",
+    "fun": "Loisir",
     "journal": "Revue",
     "conference": "Conférence",
-    "preprint": "Preprint"
+    "preprint": "Preprint",
+    "patent": "Brevet"
   },
   "exp": {
     "role_advanced_postdoc": "Chercheur postdoctoral avancé",
@@ -121,7 +132,8 @@
     "institution": "Laboratoire LITIS, INSA Rouen Normandie, France",
     "subtitle": "Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image appliqués à l'apprentissage sur graphes moléculaires. Encadré par Paul Honeine et Benoit Gaüzère.",
     "download": "PDF de la thèse",
-    "slides": "Diapos de soutenance"
+    "slides": "Diapos de soutenance",
+    "video": "Vidéo de soutenance"
   },
   "services_cards": {
     "supervision_title": "Encadrement",
@@ -158,5 +170,17 @@
     "skip": "Plus tard",
     "thanks_title": "Merci",
     "thanks_subtitle": "Message bien reçu."
+  },
+  "visitMap": {
+    "title": "Visiteurs dans le monde",
+    "totalVisits": "visites au total",
+    "countries": "pays",
+    "window": "3 derniers jours",
+    "source": "via Microsoft Clarity",
+    "topCountries": "Top pays",
+    "svgTitle": "Carte mondiale des pays des visiteurs"
+  },
+  "footer": {
+    "privacy": "Ce site utilise <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (mode sans cookie) pour des heatmaps et rediffusions de session anonymes. Aucune donnée personnelle n&rsquo;est stockée ; les champs de saisie sont masqués par défaut. Voir la <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">déclaration de confidentialité de Microsoft</a>."
   }
 }
