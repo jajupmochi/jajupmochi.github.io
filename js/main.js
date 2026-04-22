@@ -386,7 +386,11 @@
         // ========================================
         // THEME & LANGUAGE SWITCHERS
         // ========================================
-        const themeNames = { 'ai': 'AI', 'academic': 'Academic', 'industrial': 'Industrial', 'fancy': 'Wonderland' };
+        const THEME_NAME_FALLBACK = { 'ai': 'AI', 'academic': 'Academic', 'industrial': 'Industrial', 'fancy': 'Wonderland' };
+        function getThemeName(theme) {
+            const t = translationsCache[currentLang] || {};
+            return t['themes.' + theme] || THEME_NAME_FALLBACK[theme] || theme;
+        }
 
         // Tab identity ("林" monogram) — background + ink colors track the active theme.
         const FAVICON_THEMES = {
@@ -408,7 +412,7 @@
 
         function setTheme(theme) {
             document.body.setAttribute('data-theme', theme);
-            document.getElementById('currentTheme').textContent = themeNames[theme];
+            document.getElementById('currentTheme').textContent = getThemeName(theme);
             document.querySelectorAll('#themeDropdown .dropdown-item').forEach(item => item.classList.remove('active'));
             event.target.classList.add('active');
             closeAllDropdowns();
@@ -533,7 +537,12 @@
             localStorage.setItem('language', lang);
             
             // Apply translations instead of redirecting
-            applyTranslations(lang);
+            applyTranslations(lang).then(() => {
+                // Refresh currentTheme display since theme name is locale-dependent
+                const activeTheme = document.body.getAttribute('data-theme') || 'academic';
+                const ct = document.getElementById('currentTheme');
+                if (ct) ct.textContent = getThemeName(activeTheme);
+            });
         }
         
         function toggleDropdown(id) {
@@ -657,7 +666,7 @@
             // Load saved theme and initialize effects
             const savedTheme = localStorage.getItem('theme') || 'academic';
             document.body.setAttribute('data-theme', savedTheme);
-            document.getElementById('currentTheme').textContent = themeNames[savedTheme];
+            document.getElementById('currentTheme').textContent = getThemeName(savedTheme);
             updateFavicon(savedTheme);
             if (savedTheme === 'fancy') {
                 initWonderlandEffects();

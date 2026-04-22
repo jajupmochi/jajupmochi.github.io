@@ -69,7 +69,18 @@
     "address": "地点",
     "phone": "电话",
     "email": "邮箱",
-    "openMaps": "在地图中打开"
+    "openMaps": "在地图中打开",
+    "connect": "联系方式"
+  },
+  "themes": {
+    "ai": "AI",
+    "academic": "学术",
+    "industrial": "工业",
+    "fancy": "仙境",
+    "ai_full": "AI 生成",
+    "academic_full": "学术",
+    "industrial_full": "工业",
+    "fancy_full": "仙境"
   },
   "common": {
     "showMore": "展开更多",
@@ -181,6 +192,9 @@
     "svgTitle": "访客所在国家/地区世界地图"
   },
   "footer": {
+    "tagline": "Linlin Jia 博士",
+    "contact_line": "linlin.jia@unibe.ch | 瑞士伯尔尼",
+    "copyright": "© 2026 Linlin Jia. 寻求机器学习研究科学家与工程师机会。",
     "privacy": "本站使用 <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a>（cookie-less 模式）做匿名热图与会话回放。不存储个人数据，输入框默认遮蔽。详见 <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsoft 隐私声明</a>。"
   }
 }

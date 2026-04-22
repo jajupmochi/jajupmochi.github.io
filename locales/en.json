@@ -65,7 +65,18 @@
     "address": "Location",
     "phone": "Phone",
     "email": "Email",
-    "openMaps": "Open in Maps"
+    "openMaps": "Open in Maps",
+    "connect": "Let's Connect"
+  },
+  "themes": {
+    "ai": "AI",
+    "academic": "Academic",
+    "industrial": "Industrial",
+    "fancy": "Wonderland",
+    "ai_full": "AI-Generated",
+    "academic_full": "Academic",
+    "industrial_full": "Industrial",
+    "fancy_full": "Wonderland"
   },
   "comingSoon": {
     "title": "Coming soon",
@@ -181,6 +192,9 @@
     "svgTitle": "World map of visitor countries"
   },
   "footer": {
+    "tagline": "Linlin Jia, Ph.D.",
+    "contact_line": "linlin.jia@unibe.ch | Bern, Switzerland",
+    "copyright": "© 2026 Linlin Jia. Open to ML Research Scientist & Engineer opportunities.",
     "privacy": "This site uses <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (cookie-less mode) for anonymous heatmaps and session replay. No personal data is stored; inputs are masked by default. See <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsoft&rsquo;s privacy statement</a>."
   }
 }

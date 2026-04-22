@@ -69,7 +69,18 @@
     "address": "Standort",
     "phone": "Telefon",
     "email": "E-Mail",
-    "openMaps": "In Karten öffnen"
+    "openMaps": "In Karten öffnen",
+    "connect": "Lass uns in Kontakt bleiben"
+  },
+  "themes": {
+    "ai": "KI",
+    "academic": "Akademisch",
+    "industrial": "Industriell",
+    "fancy": "Wunderland",
+    "ai_full": "KI-generiert",
+    "academic_full": "Akademisch",
+    "industrial_full": "Industriell",
+    "fancy_full": "Wunderland"
   },
   "common": {
     "showMore": "Mehr anzeigen",
@@ -181,6 +192,9 @@
     "svgTitle": "Weltkarte der Besucherländer"
   },
   "footer": {
+    "tagline": "Linlin Jia, Ph.D.",
+    "contact_line": "linlin.jia@unibe.ch | Bern, Schweiz",
+    "copyright": "© 2026 Linlin Jia. Offen für ML-Research-Scientist- und -Engineer-Positionen.",
     "privacy": "Diese Website verwendet <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (Cookie-loser Modus) für anonyme Heatmaps und Sitzungsaufzeichnungen. Es werden keine personenbezogenen Daten gespeichert; Eingabefelder sind standardmäßig maskiert. Siehe <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsofts Datenschutzerklärung</a>."
   }
 }
