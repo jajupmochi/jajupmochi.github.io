@@ -124,11 +124,11 @@
     "role_postdoc": "博士后研究员",
     "desc_postdoc": "将图机器学习应用于聚合物优化（OCTOPUSSY 项目）与氧化还原电位预测。成果发表于 Journal of Computational Chemistry (2024)。",
     "role_phd": "计算机科学博士",
-    "desc_phd": "博士论文：《Machine Learning and Pattern Recognition in Chemoinformatics》——图核、图编辑距离与预映像问题。"
+    "desc_phd": "博士论文：《Bridging graph and kernel spaces: a pre-image perspective》——图核、图编辑距离与预映像问题。"
   },
   "thesis": {
     "badge": "博士论文 · 2021",
-    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "title": "Bridging graph and kernel spaces: a pre-image perspective",
     "institution": "LITIS 实验室，INSA Rouen Normandie，法国",
     "subtitle": "图核、图编辑距离与预映像问题在分子图学习中的应用。导师：Paul Honeine 与 Benoit Gaüzère。",
     "download": "论文 PDF",
@@ -141,8 +141,8 @@
     "supervision_i2": "方向：计算机视觉、图学习、智能工程、深度学习、LLM、智能体系统",
     "association_title": "协会成员",
     "association_i1": "瑞士模式识别协会 (SAPR) 会员 (2024-)",
-    "association_i2": "玛丽·居里学者联盟中国分会会员 (2024)",
-    "association_i3": "LITIS 实验室准会员 (2022)",
+    "association_i2": "玛丽居里学者华人学会会员 (2024)",
+    "association_i3": "LITIS 实验室附属会员 (2022)",
     "reviewing_title": "审稿",
     "reviewing_i1": "International Conference on Pattern Recognition 2024"
   },

@@ -2407,8 +2407,9 @@
         .visit-map-subtitle .visit-map-sep { margin: 0 0.5rem; opacity: 0.5; }
         .visit-map-body {
             display: grid;
-            grid-template-columns: 1fr 220px;
-            gap: 2rem;
+            grid-template-columns: minmax(0, 520px) 200px;
+            gap: 1.75rem;
+            justify-content: center;
             align-items: start;
         }
         .visit-map-svg-wrap {

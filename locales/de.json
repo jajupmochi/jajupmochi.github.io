@@ -124,11 +124,11 @@
     "role_postdoc": "Postdoctoral Researcher",
     "desc_postdoc": "Anwendung von Graph-ML auf Polymeroptimierung (OCTOPUSSY-Projekt) und Redox-Potenzial-Vorhersage. Publikation im Journal of Computational Chemistry (2024).",
     "role_phd": "Ph.D. in Informatik",
-    "desc_phd": "Dissertation: „Machine Learning and Pattern Recognition in Chemoinformatics\" — Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme."
+    "desc_phd": "Dissertation: „Bridging graph and kernel spaces: a pre-image perspective\" — Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme."
   },
   "thesis": {
     "badge": "Dissertation · 2021",
-    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "title": "Bridging graph and kernel spaces: a pre-image perspective",
     "institution": "LITIS Lab, INSA Rouen Normandie, Frankreich",
     "subtitle": "Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme im Kontext des molekularen Graph-Learnings. Betreut von Paul Honeine und Benoit Gaüzère.",
     "download": "Dissertation (PDF)",

@@ -655,16 +655,12 @@
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved theme and initialize effects
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.body.setAttribute('data-theme', savedTheme);
-                document.getElementById('currentTheme').textContent = themeNames[savedTheme];
-                updateFavicon(savedTheme);
-                if (savedTheme === 'fancy') {
-                    initWonderlandEffects();
-                }
-            } else {
-                updateFavicon('ai');
+            const savedTheme = localStorage.getItem('theme') || 'academic';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.getElementById('currentTheme').textContent = themeNames[savedTheme];
+            updateFavicon(savedTheme);
+            if (savedTheme === 'fancy') {
+                initWonderlandEffects();
             }
             
             // Load saved language and apply. Priority: URL ?lang= param > localStorage > system detect.

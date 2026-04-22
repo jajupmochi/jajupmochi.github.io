@@ -124,11 +124,11 @@
     "role_postdoc": "Chercheur postdoctoral",
     "desc_postdoc": "Application du ML sur graphes à l'optimisation de polymères (projet OCTOPUSSY) et à la prédiction de potentiels redox. Publication dans Journal of Computational Chemistry (2024).",
     "role_phd": "Doctorat en informatique",
-    "desc_phd": "Thèse : « Machine Learning and Pattern Recognition in Chemoinformatics » — Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image."
+    "desc_phd": "Thèse : « Bridging graph and kernel spaces: a pre-image perspective » — Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image."
   },
   "thesis": {
     "badge": "Thèse de doctorat · 2021",
-    "title": "Machine Learning and Pattern Recognition in Chemoinformatics",
+    "title": "Bridging graph and kernel spaces: a pre-image perspective",
     "institution": "Laboratoire LITIS, INSA Rouen Normandie, France",
     "subtitle": "Noyaux de graphes, distances d'édition de graphes et problèmes de pré-image appliqués à l'apprentissage sur graphes moléculaires. Encadré par Paul Honeine et Benoit Gaüzère.",
     "download": "PDF de la thèse",
