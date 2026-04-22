@@ -24,7 +24,40 @@
     "locations": "工作地点",
     "employment": "合作形式",
     "contact": "就工作机会联系我",
-    "cv": "下载简历"
+    "cv": "下载简历",
+    "tag": {
+      "role_ml_research_scientist": "机器学习研究科学家",
+      "role_ml_engineer": "机器学习工程师",
+      "role_applied_scientist": "应用科学家",
+      "role_ai_scientist": "AI 科学家",
+      "role_research_scientist": "研究科学家",
+      "loc_eu": "<i class=\"fas fa-map-marker-alt\" aria-hidden=\"true\"></i> 瑞士 · 欧盟 · 英国 <small>（现场 / 混合）</small>",
+      "loc_intl": "<i class=\"fas fa-plane\" aria-hidden=\"true\"></i> 北美 · 亚洲 · 澳洲 <small>（可接受外派）</small>",
+      "loc_remote": "<i class=\"fas fa-globe\" aria-hidden=\"true\"></i> 全球远程",
+      "emp_full_time": "全职 <small>（优先）</small>",
+      "emp_part_time": "兼职",
+      "emp_contract": "合同制",
+      "emp_consulting": "顾问咨询"
+    }
+  },
+  "news": {
+    "d_2026_04": "2026年4月",
+    "d_2026_01": "2026年1月",
+    "d_2025": "2025",
+    "d_2024_06": "2024年6月",
+    "d_2024": "2024",
+    "d_2023_11": "2023年11月",
+    "d_2022": "2022",
+    "d_2021": "2021",
+    "c_neobanker": "<a href=\"https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Neobanker 亮相 #InnoEX！</strong></a> 全球首批具备智能体能力的数字金融信息平台之一。",
+    "c_icpr": "<strong>论文被 ICPR 2026 接收！</strong> <i>用于瑞士河流温度预测的时空 Transformer</i>。",
+    "c_nbanker": "开启与 <strong>N-Banker</strong> 的合作，主导 AI 战略与 LLM 智能体开发。",
+    "c_bodmer": "<strong>SNSF Virtual Bodmer</strong> 项目获资助 — AI 用于 3D 纸莎草重建。",
+    "c_graphadon": "受邀于 <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON 暑期学校</strong></a> 演讲，法国鲁昂。",
+    "c_jcc": "论文发表于 <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a> — <i>基于图的氧化还原电位预测</i>。",
+    "c_acpr": "于 <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a> 大会作口头报告，日本北九州。",
+    "c_eswa": "论文发表于 <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> — <i>核模式对比研究</i>。",
+    "c_phd_defense": "在法国 <strong>INSA Rouen</strong> 完成博士论文答辩。"
   },
   "stats": {
     "citations": "引用",

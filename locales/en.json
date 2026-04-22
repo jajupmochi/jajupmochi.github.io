@@ -24,7 +24,40 @@
     "locations": "Locations",
     "employment": "Employment",
     "contact": "Reach out about a role",
-    "cv": "Download CV"
+    "cv": "Download CV",
+    "tag": {
+      "role_ml_research_scientist": "ML Research Scientist",
+      "role_ml_engineer": "ML Engineer",
+      "role_applied_scientist": "Applied Scientist",
+      "role_ai_scientist": "AI Scientist",
+      "role_research_scientist": "Research Scientist",
+      "loc_eu": "<i class=\"fas fa-map-marker-alt\" aria-hidden=\"true\"></i> CH · EU · UK <small>(on-site / hybrid)</small>",
+      "loc_intl": "<i class=\"fas fa-plane\" aria-hidden=\"true\"></i> NA · Asia · AU <small>(open to relocation)</small>",
+      "loc_remote": "<i class=\"fas fa-globe\" aria-hidden=\"true\"></i> Remote worldwide",
+      "emp_full_time": "Full-time <small>(preferred)</small>",
+      "emp_part_time": "Part-time",
+      "emp_contract": "Contract",
+      "emp_consulting": "Consulting"
+    }
+  },
+  "news": {
+    "d_2026_04": "Apr 2026",
+    "d_2026_01": "Jan 2026",
+    "d_2025": "2025",
+    "d_2024_06": "Jun 2024",
+    "d_2024": "2024",
+    "d_2023_11": "Nov 2023",
+    "d_2022": "2022",
+    "d_2021": "2021",
+    "c_neobanker": "<a href=\"https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Neobanker is live at #InnoEX!</strong></a> One of the first agentic digital financial information platforms.",
+    "c_icpr": "<strong>Paper accepted at ICPR 2026!</strong> <i>Spatio-temporal transformers for Swiss river temperature prediction</i>.",
+    "c_nbanker": "Started the cooperation with <strong>N-Banker</strong>, leading AI strategy and LLM agent development.",
+    "c_bodmer": "<strong>SNSF Virtual Bodmer</strong> project accepted - AI for 3D papyrus reconstruction.",
+    "c_graphadon": "Invited speaker at <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON Summer School</strong></a>, Rouen, France.",
+    "c_jcc": "Paper published in <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a> - <i>Graph-based redox potential prediction</i>.",
+    "c_acpr": "Oral presentation at <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.",
+    "c_eswa": "Paper published in <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> - <i>Kernel pattern comparisons</i>.",
+    "c_phd_defense": "Ph.D. thesis defended at <strong>INSA Rouen</strong>, France."
   },
   "stats": {
     "citations": "Citations",
