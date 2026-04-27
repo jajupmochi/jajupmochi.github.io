@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>中文 Body 字体 Round 2 — 找比 Zhi Mang Xing 更清晰的手写体</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts (all SIL OFL — open source, free for personal + commercial) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=ZCOOL+XiaoWei&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=LXGW+WenKai+TC&family=Liu+Jian+Mao+Cao&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500&family=Klee+One:wght@400;600&family=Spectral:ital,wght@0,400;1,400&display=swap">
+
+<style>
+:root {
+    --ink: oklch(0.20 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+    --ink-muted: oklch(0.55 0.05 35);
+    --gold: oklch(0.62 0.13 70);
+    --gold-deep: oklch(0.45 0.12 50);
+    --primary: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif;
+    color: var(--ink);
+    min-height: 100%;
+    background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
+                oklch(0.93 0.030 78);
+}
+header {
+    text-align: center;
+    padding: 36px 24px 22px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--ink);
+}
+header .sub {
+    margin: 0 auto;
+    max-width: 760px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+header .sub strong { color: var(--ink); }
+header .sub code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.locked {
+    text-align: center;
+    margin: 18px auto 0;
+    padding: 12px 18px;
+    max-width: 760px;
+    background: oklch(0.92 0.06 60 / 0.35);
+    border: 1px dashed oklch(0.45 0.12 50 / 0.45);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+.locked .name {
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1.0;
+    display: block;
+    margin: 4px 0 2px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.candidate {
+    background: oklch(0.96 0.020 78 / 0.6);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    backdrop-filter: blur(2px);
+}
+.cand-head {
+    padding: 12px 22px 10px;
+    border-bottom: 1px dashed var(--rule);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.cand-head .num {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--gold-deep);
+    font-weight: 700;
+    line-height: 1;
+}
+.cand-head h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+}
+.cand-head .verdict {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-family: 'Spectral', serif;
+}
+.cand-head .meta {
+    width: 100%;
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-family: monospace;
+    margin-top: 2px;
+}
+
+.body-sample {
+    padding: 22px 30px 28px;
+    line-height: 1.85;
+}
+.body-sample .small  { font-size: 14px; margin: 0 0 10px; }
+.body-sample .normal { font-size: 17px; margin: 0 0 10px; }
+.body-sample .big    { font-size: 22px; margin: 0; }
+.body-sample p { color: var(--ink); }
+
+/* Per-candidate font assignments */
+.f-zhimangxing       { font-family: 'Zhi Mang Xing', cursive; }
+.f-qingke-huangyou   { font-family: 'ZCOOL QingKe HuangYou', sans-serif; }
+.f-zcool-xiaowei     { font-family: 'ZCOOL XiaoWei', serif; }
+.f-zcool-kuaile      { font-family: 'ZCOOL KuaiLe', sans-serif; }
+.f-lxgw-wenkai       { font-family: 'LXGW WenKai TC', 'LXGW WenKai', serif; }
+.f-klee-one          { font-family: 'Klee One', serif; }
+.f-noto-serif        { font-family: 'Noto Serif SC', serif; }
+.f-ma-shan-zheng-body { font-family: 'Ma Shan Zheng', cursive; }
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 36px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0 auto;
+}
+.controls code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>中文 Body Round 2 · 找比 Zhi Mang Xing 更清晰的手写体</h1>
+    <p class="sub">
+        Hero 名字已锁定 № 4 <strong>Zhi Mang Xing 钟茫行</strong>（毛笔行书）。<br>
+        但 Body 用 № 4 略潦草。下面 6 个候选都是 <strong>开源 SIL OFL</strong>（个人 + 商用 OK），都比 № 4 更清晰可读，但保留了不同程度的"手写感"。
+    </p>
+    <div class="locked">
+        Hero 名字将固定使用：
+        <span class="name">林林佳，博士</span>
+        <span style="font-family:monospace;font-size:11px">Zhi Mang Xing — 已确认</span>
+    </div>
+</header>
+
+<div class="grid">
+
+    <!-- A. BASELINE — Zhi Mang Xing (what we're comparing against) -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">A</span>
+            <h3>Zhi Mang Xing 钟茫行</h3>
+            <span class="verdict">基线 · Linlin 觉得太潦草</span>
+            <div class="meta">Google Fonts · OFL · 行书风格</div>
+        </div>
+        <div class="body-sample f-zhimangxing">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- B. ZCOOL QingKe HuangYou — bold vintage handwriting -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">B</span>
+            <h3>ZCOOL QingKe HuangYou 站酷庆科黄油体</h3>
+            <span class="verdict">★ 最 vintage · 圆头粗笔，复古手写</span>
+            <div class="meta">Google Fonts · OFL · 70 年代手写体</div>
+        </div>
+        <div class="body-sample f-qingke-huangyou">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- C. ZCOOL XiaoWei — calligraphy serif blend -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">C</span>
+            <h3>ZCOOL XiaoWei 站酷小薇</h3>
+            <span class="verdict">★ 衬线手写感 · 优雅书法 + 印刷感平衡</span>
+            <div class="meta">Google Fonts · OFL · 衬线书法</div>
+        </div>
+        <div class="body-sample f-zcool-xiaowei">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- D. ZCOOL KuaiLe — cheerful sans-handwritten -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">D</span>
+            <h3>ZCOOL KuaiLe 站酷快乐体</h3>
+            <span class="verdict">★ 最清晰 · 卡通愉悦感，工整</span>
+            <div class="meta">Google Fonts · OFL · 圆润手写</div>
+        </div>
+        <div class="body-sample f-zcool-kuaile">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- E. LXGW WenKai — readable kaiti script-feeling serif -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">E</span>
+            <h3>LXGW WenKai 霞鹜文楷</h3>
+            <span class="verdict">★★ 最 readable · 楷体笔意，正式文档质感</span>
+            <div class="meta">jsDelivr · OFL · 楷体改进版</div>
+        </div>
+        <div class="body-sample f-lxgw-wenkai">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- F. Klee One — pen-style handwriting, balanced & humanistic -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">F</span>
+            <h3>Klee One 钢笔楷</h3>
+            <span class="verdict">★ 钢笔笔触 + 整齐 · 介于 № 4 与楷体之间</span>
+            <div class="meta">Google Fonts · OFL · 日式钢笔手写（CJK 兼容）</div>
+        </div>
+        <div class="body-sample f-klee-one">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- G. Ma Shan Zheng (毛笔楷体) used as body — bonus for comparison -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">G</span>
+            <h3>Ma Shan Zheng 马山政（作 body 试用）</h3>
+            <span class="verdict">★ 毛笔楷体 · 与 Hero 同字体，全文统一感最强</span>
+            <div class="meta">Google Fonts · OFL · 毛笔楷书</div>
+        </div>
+        <div class="body-sample f-ma-shan-zheng-body">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+    <!-- H. Noto Serif SC — clean serif, baseline for max readability comparison -->
+    <div class="candidate">
+        <div class="cand-head">
+            <span class="num">H</span>
+            <h3>Noto Serif SC 思源宋体（无手写感参照）</h3>
+            <span class="verdict">参照基线 · 最 readable 但失去手写感</span>
+            <div class="meta">Google Fonts · OFL · 衬线印刷体</div>
+        </div>
+        <div class="body-sample f-noto-serif">
+            <p class="small">小字测试：博士论文研究图核与图编辑距离，以及它们在化学信息学中的应用。</p>
+            <p class="normal">中字测试：用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，已获 130+ 引用。现为伯尔尼大学博士后研究员。</p>
+            <p class="big">大字测试：图人工智能魔法学徒</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="controls">
+    <p>挑一个字母（A–H）告诉我，例如 "<code>用 F Klee One</code>"。我把所选字体接到 <code>parchment-overrides.css</code> 作为 <code>index_parchment.html</code> 的中文 body 字体。</p>
+    <p style="font-size:11px;color:var(--ink-muted);margin-top:18px">
+        所有字体均开源 SIL OFL · 全部来自 Google Fonts：<br>
+        Zhi Mang Xing · ZCOOL XiaoWei · ZCOOL QingKe HuangYou · ZCOOL KuaiLe · LXGW WenKai TC · Klee One · Ma Shan Zheng · Noto Serif SC
+    </p>
+</div>
+
+</body>
+</html>
