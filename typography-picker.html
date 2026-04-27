@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Typography Picker — handwritten / scholarly font combos for parchment</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts (all OFL / SIL Open Font License — open source, personal + commercial OK) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,400;0,600;1,400&family=Patrick+Hand&family=Liu+Jian+Mao+Cao&family=Tangerine:wght@400;700&family=Long+Cang&family=Architects+Daughter&family=Zhi+Mang+Xing&family=Reenie+Beanie&family=ZCOOL+XiaoWei&family=Indie+Flower&family=LXGW+WenKai+TC&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+:root {
+    --ink: oklch(0.20 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+    --ink-muted: oklch(0.55 0.05 35);
+    --gold: oklch(0.62 0.13 70);
+    --gold-deep: oklch(0.45 0.12 50);
+    --primary: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lora', 'Spectral', Georgia, serif;
+    color: var(--ink);
+    min-height: 100%;
+    background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
+                oklch(0.93 0.030 78);
+}
+header {
+    text-align: center;
+    padding: 36px 24px 18px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--ink);
+}
+header .sub {
+    margin: 0 auto;
+    max-width: 760px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+header .sub code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.lang-toggle {
+    text-align: center;
+    margin: 16px 0 0;
+}
+.lang-btn {
+    background: oklch(0.92 0.040 75 / 0.55);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    padding: 6px 18px;
+    margin: 0 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    border-radius: 999px;
+    transition: all 0.2s;
+}
+.lang-btn.active {
+    background: var(--primary);
+    color: oklch(0.96 0.04 60);
+    border-color: var(--primary);
+}
+.lang-btn:hover { transform: translateY(-1px); }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 28px;
+    padding: 28px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+.combo {
+    background: oklch(0.96 0.020 78 / 0.55);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: blur(2px);
+}
+.combo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px oklch(0.20 0.06 30 / 0.18);
+}
+.combo-head {
+    padding: 14px 22px 8px;
+    border-bottom: 1px dashed var(--rule);
+}
+.combo-head .num {
+    font-family: 'Caveat', cursive;
+    font-size: 14px;
+    color: var(--gold-deep);
+    font-weight: 700;
+}
+.combo-head h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+}
+.combo-head .meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+    font-family: monospace;
+}
+
+.sample {
+    padding: 22px 28px 24px;
+    transition: opacity 0.3s;
+}
+.sample h2 { margin: 0 0 6px; }
+.sample .role { margin: 0 0 16px; }
+.sample p { margin: 0 0 12px; line-height: 1.7; }
+
+/* Hide the inactive language sample */
+body.lang-en .sample.zh { display: none; }
+body.lang-zh .sample.en { display: none; }
+body.lang-both .sample { display: block; }
+body.lang-both .sample.zh { border-top: 1px dashed var(--rule); padding-top: 18px; margin-top: 4px; }
+
+/* ===== Combo 1: Manuscript (current grimoire baseline) ===== */
+.c1 .display { font-family: 'Caveat', cursive; font-size: 38px; font-weight: 700; color: var(--ink); }
+.c1 .role    { font-family: 'Spectral', serif; font-style: italic; font-size: 16px; color: var(--ink-soft); }
+.c1 .body    { font-family: 'Spectral', Georgia, serif; font-size: 16px; }
+.c1 .display.zh { font-family: 'Ma Shan Zheng', cursive; font-size: 42px; }
+.c1 .body.zh    { font-family: 'LXGW WenKai TC', 'LXGW WenKai', serif; font-size: 16px; }
+
+/* ===== Combo 2: Notebook (casual diary) ===== */
+.c2 .display { font-family: 'Patrick Hand', cursive; font-size: 36px; color: var(--ink); }
+.c2 .role    { font-family: 'Patrick Hand', cursive; font-size: 17px; color: var(--ink-soft); }
+.c2 .body    { font-family: 'Patrick Hand', cursive; font-size: 18px; }
+.c2 .display.zh { font-family: 'Liu Jian Mao Cao', cursive; font-size: 44px; line-height: 1.1; }
+.c2 .body.zh    { font-family: 'Liu Jian Mao Cao', cursive; font-size: 19px; line-height: 1.5; }
+
+/* ===== Combo 3: Calligrapher (formal swash) ===== */
+.c3 .display { font-family: 'Tangerine', cursive; font-size: 56px; font-weight: 700; line-height: 1; color: var(--ink); }
+.c3 .role    { font-family: 'Spectral', serif; font-style: italic; font-size: 17px; color: var(--ink-soft); }
+.c3 .body    { font-family: 'Spectral', Georgia, serif; font-size: 16px; }
+.c3 .display.zh { font-family: 'Long Cang', cursive; font-size: 50px; line-height: 1.05; }
+.c3 .body.zh    { font-family: 'LXGW WenKai TC', 'LXGW WenKai', serif; font-size: 16px; }
+
+/* ===== Combo 4: Architect (steady draftsman) ===== */
+.c4 .display { font-family: 'Architects Daughter', cursive; font-size: 30px; color: var(--ink); }
+.c4 .role    { font-family: 'Architects Daughter', cursive; font-size: 14px; color: var(--ink-soft); }
+.c4 .body    { font-family: 'Architects Daughter', cursive; font-size: 15px; }
+.c4 .display.zh { font-family: 'Zhi Mang Xing', cursive; font-size: 36px; line-height: 1.1; }
+.c4 .body.zh    { font-family: 'Zhi Mang Xing', cursive; font-size: 17px; line-height: 1.5; }
+
+/* ===== Combo 5: Scholar (note-taker) ===== */
+.c5 .display { font-family: 'Reenie Beanie', cursive; font-size: 42px; color: var(--ink); line-height: 1; }
+.c5 .role    { font-family: 'Lora', serif; font-style: italic; font-size: 16px; color: var(--ink-soft); }
+.c5 .body    { font-family: 'Lora', Georgia, serif; font-size: 15px; }
+.c5 .display.zh { font-family: 'ZCOOL XiaoWei', serif; font-size: 36px; }
+.c5 .body.zh    { font-family: 'ZCOOL XiaoWei', serif; font-size: 16px; }
+
+/* ===== Combo 6: Storyteller (softest, friendly) ===== */
+.c6 .display { font-family: 'Indie Flower', cursive; font-size: 34px; color: var(--ink); }
+.c6 .role    { font-family: 'Indie Flower', cursive; font-size: 16px; color: var(--ink-soft); }
+.c6 .body    { font-family: 'Indie Flower', cursive; font-size: 17px; }
+.c6 .display.zh { font-family: 'LXGW WenKai TC', 'LXGW WenKai', serif; font-size: 36px; font-weight: 700; }
+.c6 .body.zh    { font-family: 'LXGW WenKai TC', 'LXGW WenKai', serif; font-size: 16px; }
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 36px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0 auto;
+}
+.controls code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.controls a { color: var(--gold-deep); }
+</style>
+</head>
+<body class="lang-en">
+
+<header>
+    <h1>Typography Picker · 手写体组合</h1>
+    <p class="sub">6 open-source font combos for parchment background. All from <a href="https://fonts.google.com" target="_blank">Google Fonts</a> under <strong>OFL / SIL Open Font License</strong> — fully open, personal + commercial use, no attribution required (but recommended in code).</p>
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+        <button class="lang-btn" onclick="setLang('both')">Both 中英</button>
+    </div>
+</header>
+
+<div class="grid">
+
+    <!-- ===== 1. MANUSCRIPT — current grimoire baseline ===== -->
+    <div class="combo c1">
+        <div class="combo-head">
+            <div class="num">№ 1</div>
+            <h3>Manuscript &nbsp;·&nbsp; 手稿（当前 grimoire 基线）</h3>
+            <div class="meta">EN: Caveat &nbsp; ZH: Ma Shan Zheng &nbsp; Body: Spectral / LXGW WenKai</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built <em>graphkit-learn</em> — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+    <!-- ===== 2. NOTEBOOK — casual diary ===== -->
+    <div class="combo c2">
+        <div class="combo-head">
+            <div class="num">№ 2</div>
+            <h3>Notebook &nbsp;·&nbsp; 笔记本（随手写）</h3>
+            <div class="meta">EN: Patrick Hand &nbsp; ZH: Liu Jian Mao Cao 柳建毛草</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built graphkit-learn — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+    <!-- ===== 3. CALLIGRAPHER — formal swash ===== -->
+    <div class="combo c3">
+        <div class="combo-head">
+            <div class="num">№ 3</div>
+            <h3>Calligrapher &nbsp;·&nbsp; 书法家（正式 swash）</h3>
+            <div class="meta">EN: Tangerine &nbsp; ZH: Long Cang 龙藏 &nbsp; Body: Spectral / LXGW</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built <em>graphkit-learn</em> — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+    <!-- ===== 4. ARCHITECT — steady draftsman ===== -->
+    <div class="combo c4">
+        <div class="combo-head">
+            <div class="num">№ 4</div>
+            <h3>Architect &nbsp;·&nbsp; 工程师（稳重制图体）</h3>
+            <div class="meta">EN: Architects Daughter &nbsp; ZH: Zhi Mang Xing 钟茫行</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built graphkit-learn — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+    <!-- ===== 5. SCHOLAR — note-taker ===== -->
+    <div class="combo c5">
+        <div class="combo-head">
+            <div class="num">№ 5</div>
+            <h3>Scholar &nbsp;·&nbsp; 学者（边读边写笔记）</h3>
+            <div class="meta">EN: Reenie Beanie &nbsp; ZH: ZCOOL XiaoWei 站酷小薇 &nbsp; Body: Lora</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built <em>graphkit-learn</em> — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+    <!-- ===== 6. STORYTELLER — softest, friendly ===== -->
+    <div class="combo c6">
+        <div class="combo-head">
+            <div class="num">№ 6</div>
+            <h3>Storyteller &nbsp;·&nbsp; 讲故事的人（友好阅读）</h3>
+            <div class="meta">EN: Indie Flower &nbsp; ZH: LXGW WenKai 霞鹜文楷</div>
+        </div>
+        <div class="sample en">
+            <h2 class="display">Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p class="body">Spatio-temporal Transformers for river-water forecasting (ICPR 2026, accepted). Built graphkit-learn — a graph-kernel toolkit reaching 130+ citations. Currently postdoc at University of Bern.</p>
+        </div>
+        <div class="sample zh">
+            <h2 class="display zh">林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p class="body zh">用时空 Transformer 做瑞士河水温度预测（ICPR 2026 已录用）。开发 graphkit-learn 图核工具包，130+ 引用。现为伯尔尼大学博士后研究员。</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="controls">
+    <p>Pick your favorite combo number (1–6) and tell me, e.g. "<code>用 № 2 Notebook</code>". I'll wire it into <code>css/parchment-overrides.css</code> as the global typography for <code>index_parchment.html</code>.</p>
+    <p>Also feel free to mix — e.g. "<code>用 № 3 的英文 + № 6 的中文</code>" — combos are decoupled.</p>
+    <p style="font-size:11px;color:var(--ink-muted);margin-top:18px">
+        All fonts are from <a href="https://fonts.google.com" target="_blank">Google Fonts</a> under SIL Open Font License (OFL).
+        EN: Caveat / Patrick Hand / Tangerine / Architects Daughter / Reenie Beanie / Indie Flower · Body: Spectral, Lora.
+        ZH: Ma Shan Zheng / Liu Jian Mao Cao / Long Cang / Zhi Mang Xing / ZCOOL XiaoWei · Body: LXGW WenKai TC.
+    </p>
+</div>
+
+<script>
+function setLang(lang) {
+    document.body.classList.remove('lang-en', 'lang-zh', 'lang-both');
+    document.body.classList.add('lang-' + lang);
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim().startsWith({en:'English', zh:'中文', both:'Both'}[lang])));
+}
+</script>
+</body>
+</html>
