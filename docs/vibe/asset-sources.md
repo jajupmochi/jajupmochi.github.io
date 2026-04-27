@@ -17,11 +17,20 @@
 - [§D · Textures (羊皮纸 / 纸 / 布 / 木)](#d--textures-羊皮纸--纸--布--木)
 - [§E · Game art assets (props / sprites / tiles)](#e--game-art-assets-props--sprites--tiles)
 - [§F · Chinese style assets (水墨 / 国画 / 朱砂)](#f--chinese-style-assets-水墨--国画--朱砂)
-- [§G · 3D / Lottie / Rive (motion)](#g--3d--lottie--rive-motion)
+- [§G · 3D / Lottie / Rive (motion 资产)](#g--3d--lottie--rive-motion-资产)
 - [§H · Photos (only when essential)](#h--photos-only-when-essential)
 - [§I · Tools (creation, conversion, optimization)](#i--tools-creation-conversion-optimization)
 - [§J · 我们项目本地资产库 (现状)](#j--我们项目本地资产库-现状)
 - [§K · 用法手册 (机器可读)](#k--用法手册-机器可读)
+- [§L · Motion & Sound — 动画 / 音效 (新增 2026-04-27)](#l--motion--sound--动画--音效-新增-2026-04-27)
+    - [§L.1 Lottie 动画素材库](#l1-lottie-动画素材库)
+    - [§L.2 Rive 互动动画素材](#l2-rive-互动动画素材)
+    - [§L.3 CSS 动画预设库 (paste-and-go)](#l3-css-动画预设库-paste-and-go)
+    - [§L.4 JavaScript 动画引擎](#l4-javascript-动画引擎)
+    - [§L.5 Stock 视频背景](#l5-stock-视频背景)
+    - [§L.6 SVG spinner / loader](#l6-svg-spinner--loader)
+    - [§L.7 Audio / 音效 / 配乐](#l7-audio--音效--配乐)
+    - [§L.8 本项目动效用例 (mapping)](#l8-本项目动效用例-mapping)
 
 ---
 
@@ -204,7 +213,9 @@ Recommended:
 
 ---
 
-## §G · 3D / Lottie / Rive (motion)
+## §G · 3D / Lottie / Rive (motion 资产)
+
+> 历史分区，仅作 **入门索引**。深度内容请直接看 **§L Motion & Sound**（更新于 2026-04-27，覆盖 Lottie / Rive / CSS / JS / 视频 / SVG / 音效全栈）。
 
 For: 小林 robot animation, 入场 choreography, ambient particles.
 
@@ -328,6 +339,32 @@ need_to_source:
   motion_animation:
     preferred: ["lottiefiles.com free", "rive.app community"]
     fallback: ["css-keyframes-handcoded"]
+    detailed_in: "§L Motion & Sound"
+
+  css_animation_preset:
+    preferred: ["animista.net", "animate.style"]   # CSS-only, paste-and-go
+    fallback: ["uiverse.io", "hover.css"]
+    detailed_in: "§L.3"
+
+  js_animation_engine:
+    preferred: ["motion.dev"]                       # MIT, modern
+    fallback: ["gsap.com (free as of 2024)", "animejs.com"]
+    detailed_in: "§L.4"
+
+  video_background:
+    preferred: ["mixkit.co", "coverr.co", "pexels.com/videos"]
+    avoid: ["youtube embeds (privacy + perf)"]
+    detailed_in: "§L.5"
+
+  svg_loader_spinner:
+    preferred: ["uiverse.io/loaders", "github.com/n3r4zzurr0/svg-spinners"]
+    fallback: ["loading.io (CC0)"]
+    detailed_in: "§L.6"
+
+  ui_sound_effect:
+    preferred: ["freesound.org (filter CC0)", "pixabay.com/sound-effects (cc0)", "mixkit.co/free-sound-effects"]
+    fallback: ["kenney.nl audio packs"]
+    detailed_in: "§L.7"
 
   photo_background:
     avoid: true  # default for grimoire — keep hand-drawn world
@@ -348,6 +385,224 @@ rules:
 
 ---
 
+## §L · Motion & Sound — 动画 / 音效 (新增 2026-04-27)
+
+> **新增分区**：覆盖**所有动画相关素材** — Lottie / Rive / CSS preset / JS engine / 视频 / SVG loader / 音效。
+> **核心原则同上**：CC0 / MIT / CC-BY 优先；本地下载，不 hotlink；署名义务在 `LICENSE.md`。
+> **本项目用例索引**：见 §L.8 mapping。
+
+---
+
+### §L.1 Lottie 动画素材库
+
+Lottie = 矢量动画 JSON（来自 After Effects 通过 Bodymovin 导出），渲染为可缩放、可着色、轻量的 SVG/CSS/Canvas 动画。**单个 .json ~5–50KB，远比视频小**。
+
+| 库 | URL | License | 数量 | 用途 / 风格 | 商用 |
+|---|---|---|---|---|---|
+| 🌟 **LottieFiles** | https://lottiefiles.com/free-animations | 多数 Free with attribution / 部分 Premium | 100,000+ | 综合最大库；**入门首选** | ✅（免费部分需检查 per-asset） |
+| **LottieFlow** by Webflow | https://lottieflow.com/ | Free | 数百 | 网页定制（Webflow 社区） | ✅ |
+| **Flicker.design** | https://flicker.design/ | Freebies + Premium | 数百 | 高质量、design-forward 精品 | ✅（免费部分需 attribution） |
+| **IconScout Lottie** | https://iconscout.com/lottie-animations/free | Free with attribution | 数千 | 商业项目可用，需 attribution | ⚠️ 需署名 |
+| **Icons8 Animated** | https://icons8.com/animated-icons | Linkware（链接署名） | 数千 | 风格统一的 icon-style 动画 | ✅（需 visible link） |
+| **Creattie** (前 Iconscout) | https://creattie.com/ | Mixed | 大量 | 综合资源 | ⚠️ |
+| **MiroMiro** | https://miromiro.app/ | Free | 精选 | 设计师精选 | ✅ |
+| **Lottie 官方 Community** | https://lottie.github.io/ | 多数 MIT | — | 官方仓库，开发者友好 | ✅ |
+
+**推荐对应 §L.8**：小林 robot idle 用 LottieFiles 搜 "owl mechanical idle / clockwork bird"。
+
+**集成方式**（HTML/JS）：
+```html
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.0/dist/dotlottie-wc.js" type="module"></script>
+<dotlottie-wc src="res/grimoire/lottie/owl-idle.lottie" autoplay loop style="width: 120px;"></dotlottie-wc>
+```
+本站可下载 `.lottie` 或 `.json`，放到 `res/grimoire/lottie/`。
+
+---
+
+### §L.2 Rive 互动动画素材
+
+Rive = 比 Lottie 更先进的互动动画格式（**state machine + interaction listener**），可实现"鼠标进/出/点击"驱动的多状态动画。**适合做小林 robot 这种有人格的角色。**
+
+| 库 | URL | License | 用途 |
+|---|---|---|---|
+| 🌟 **Rive Community** | https://rive.app/community/files/ | per-file（多数 Public Use / CC-BY） | 主源；标"Public Use"即可商用 |
+| **Rive 官方 Awesome** | https://github.com/rive-app/awesome-rive | MIT (curated list) | 社区精选 |
+| **Rive Animations repo** | https://github.com/rive-app/animations | MIT | 官方示例 |
+| **LottieFiles Rive** | https://lottiefiles.com/free-animations/rive | Mixed | LottieFiles 上的 Rive 动画 |
+
+**Runtimes**: rive-js / rive-react / rive-canvas — **MIT License**, 可商用。
+
+**集成示例**：
+```html
+<canvas id="rive-canvas" width="120" height="120"></canvas>
+<script src="https://unpkg.com/@rive-app/canvas"></script>
+<script>
+  new rive.Rive({
+    src: "res/grimoire/rive/xiaolin-robot.riv",
+    canvas: document.getElementById("rive-canvas"),
+    autoplay: true,
+    stateMachines: "Idle"
+  });
+</script>
+```
+
+**何时选 Rive 优于 Lottie**：需要 hover / click 触发不同状态时（小林机器人响应用户）。否则用 Lottie（更简单）。
+
+---
+
+### §L.3 CSS 动画预设库 (paste-and-go)
+
+不是资产文件，而是**直接 paste 进 CSS 的 keyframes 库**。零依赖、零运行时、性能最好。
+
+| 库 | URL | License | 描述 |
+|---|---|---|---|
+| 🌟 **Animate.css** | https://animate.style/ | MIT | 75+ 经典 entrance/exit/attention 动画。`<div class="animate__animated animate__fadeIn">` 即用 |
+| 🌟 **Animista** | https://animista.net/ | MIT | **可视化生成器 + 下载**，按需选择，无冗余。本项目最推荐 |
+| **Hover.css** | https://ianlunn.github.io/Hover/ | MIT | 60+ 鼠标悬停效果（pulse / wobble / glow / etc.） |
+| **Magic Animations** | https://www.minimamente.com/project/magic/ | MIT | 魔法主题（puff / vanish / open）— 与本站 grimoire 主题 100% 契合！ |
+| **AnimXYZ** | https://animxyz.com/ | MIT | CSS variables 驱动，可组合，Vue/React/SCSS 友好 |
+| **Vivify** | https://vivify.mkcreative.cz/ | MIT | Animate.css 增强版，更多 effects |
+| **CSS Hover Effect Ideas** (Tympanus) | https://tympanus.net/codrops/ | MIT (per-tutorial) | Codrops 的高质量 hover 效果原型 |
+| **Magic Mouse** | https://github.com/dixonandmoe/rellax | MIT | 鼠标 trail 效果 |
+
+**对本站的特殊价值**：**Magic Animations** 的 `magic`、`puffIn`、`vanishOut`、`fadeMagic`、`bombFire` 与"魔法师之书"主题完美契合，可直接替换现有 entrance/exit。
+
+**集成示例**：
+```html
+<link rel="stylesheet" href="https://unpkg.com/magic.css@1.1.0/dist/magic.min.css">
+<div class="magictime puffIn">魔法书内容浮现</div>
+```
+
+---
+
+### §L.4 JavaScript 动画引擎
+
+需要**编程控制时间轴 / 链式动画 / scroll trigger / SVG morphing** 时用。
+
+| 引擎 | URL | License | 大小 | 何时用 |
+|---|---|---|---|---|
+| 🌟 **Motion (motion.dev)** | https://motion.dev | **MIT** | ~18KB | **2024+ 首选**。Framer Motion 衍生，独立开源，性能最好 |
+| 🌟 **GSAP 3** | https://gsap.com/ | **2024 起 100% 免费**（含原 Club 插件 SplitText / MorphSVG / DrawSVG） | ~30KB core | 老牌之王，时间轴最强 |
+| **anime.js v4** | https://animejs.com/ | MIT | ~17KB | 轻量、易用、SVG morphing |
+| **Theatre.js** | https://www.theatrejs.com/ | Apache 2.0 | ~50KB | 复杂场景 + 可视化编辑器 |
+| **Framer Motion** | https://www.framer.com/motion/ | MIT | ~50KB (React only) | React 生态 |
+| **AutoAnimate** | https://auto-animate.formkit.com/ | MIT | ~3KB | DOM 增删自动 layout 动画 |
+| **Three.js** | https://threejs.org/ | MIT | ~600KB | 真 3D，本站 force-graph 已用 D3 而非 Three |
+| **Lenis** by Studio Freight | https://github.com/darkroomengineering/lenis | MIT | ~5KB | 平滑滚动（grimoire 拖拽已有，可补 wheel） |
+
+**对本站推荐**：
+- 当前 grimoire 自实现了 pan / drag / pointer / parallax — **足够，不需要引入大引擎**
+- 若 v8+ 需要做 scroll-trigger 入场（如往下滚露出更多卷轴），引 Motion (~18KB) 比手写 IntersectionObserver 优雅
+- 入场动画当前用 CSS keyframes，已经 OK，不用上 GSAP
+
+---
+
+### §L.5 Stock 视频背景
+
+> **本站默认不用视频背景**（与 hand-drawn 世界冲突）。仅在以下场景考虑：hero 区微妙 ambient loop（如蜡烛火光 video）、welcome modal 背景。
+
+| 库 | URL | License | 商用 | 4K |
+|---|---|---|---|---|
+| 🌟 **Mixkit** | https://mixkit.co/free-stock-video/ | Mixkit License (≈ CC0) | ✅ 无需署名 | ✅ |
+| 🌟 **Pexels Videos** | https://www.pexels.com/videos/ | Pexels License (≈ CC0) | ✅ 无需署名 | ✅ |
+| 🌟 **Coverr** | https://coverr.co/ | Coverr License | ✅ | ✅ |
+| **Pixabay Video** | https://pixabay.com/videos/ | Pixabay License | ✅ | ✅ |
+| **Videvo** | https://www.videvo.net/ | Mixed (filter free) | ⚠️ 检查 | ✅ |
+| **Dareful** | https://dareful.com/ | CC-BY 4.0 | ✅ 需署名 | ✅ |
+
+**优化**：下载后用 ffmpeg 转 webm + h.264 双格式，控制 < 2MB（hero 视频需要 < 1.5s 加载）：
+```bash
+ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 32 -b:v 0 -c:a libopus output.webm
+ffmpeg -i input.mp4 -c:v libx264 -crf 28 -preset slow -c:a aac output.mp4
+```
+
+---
+
+### §L.6 SVG spinner / loader
+
+小型 UI 反馈动画（form submit / 加载状态 / Howler "letter sealing" 反馈）。
+
+| 库 | URL | License | 数量 |
+|---|---|---|---|
+| 🌟 **n3r4zzurr0/svg-spinners** | https://github.com/n3r4zzurr0/svg-spinners | MIT | 24 个精选 24×24 SVG (CSS + SMIL) |
+| 🌟 **UIVerse Loaders** | https://uiverse.io/loaders | MIT | 1183+ 社区贡献 loader（CSS / Tailwind） |
+| **SamHerbert/SVG-Loaders** | https://github.com/SamHerbert/SVG-Loaders | MIT | 经典 SVG 加载图（音波 / 三点 / oval） |
+| **CSS Script** SVG spinner 集 | https://www.cssscript.com/svg-loading-spinners/ | Mixed | 100+ 风格 |
+| **loading.io** | https://loading.io/ | CSS spinners CC0 / SVG/PNG/GIF 免费下载 | 数百 |
+| **CSSPin** | https://csspin.css-loaders.com/ | MIT | 纯 CSS pin 风格 loader |
+
+**对本站**：当前 Howler 提交后**没有 loading 反馈** — 可以加一个 SVG spinner（比如 `n3r4zzurr0` 的 `90-ring` 用蜡封红色），这是 v8+ 的细节优化点。
+
+---
+
+### §L.7 Audio / 音效 / 配乐
+
+> **当前 grimoire 有铃铛 mute toggle 但 no audio file** — 这是已知 v8+ TODO。
+
+| 库 | URL | License | 类型 | 推荐用途 |
+|---|---|---|---|---|
+| 🌟 **Freesound.org** | https://freesound.org/ | per-asset (filter CC0 / CC-BY) | 综合 social audio db | 主源，搜 "page turn" / "quill writing" / "wax seal" / "owl hoot" |
+| 🌟 **Pixabay Sound Effects** | https://pixabay.com/sound-effects/search/cc0/ | CC0 | 综合 | 第二选，无需 attribution |
+| 🌟 **Mixkit SFX** | https://mixkit.co/free-sound-effects/ | Mixkit (≈ CC0) | UI / cinematic / nature | 优质精选 |
+| **Kenney audio packs** | https://kenney.nl/assets?q=audio | CC0 | game UI / impacts | UI 反馈音 |
+| **OpenGameArt audio** | https://opengameart.org/art-search?keys=&type=art&field_art_type_tid%5B%5D=12 | per-asset (filter CC0) | game music / SFX | 综合 |
+| **BBC Sound Effects** | https://sound-effects.bbcrewind.co.uk/ | RemArc License (个人 + 教育 OK，商业受限) | 历史录音 | ⚠️ 商业用途有限制 |
+| **ZapSplat** | https://www.zapsplat.com/ | per-asset (有 CC0 子集) | 综合 | 数量大，但需筛选 |
+| **Storyblocks** | https://www.storyblocks.com/ | 订阅制 | — | 跳过（非免费） |
+
+**针对本站的 SFX 候选**（Freesound 搜索关键词）：
+- 蜡烛点燃: `match strike`, `candle ignite`
+- 翻书页: `page turn`, `book flip`
+- 蘸笔写字: `quill writing`, `pen scratch`
+- 蜡封盖章: `wax seal`, `stamp impression`
+- 信封拉开: `paper rip`, `envelope open`
+- 猫头鹰: `owl hoot`, `mechanical owl`
+- 铃铛: `desk bell`, `bell ding small`
+- 水晶球: `magical chime`, `crystal ring`
+
+**集成示例（Web Audio）**：
+```javascript
+const sfx = {};
+['page-turn', 'wax-seal', 'bell-ding'].forEach(name => {
+  sfx[name] = new Audio(`res/grimoire/sfx/${name}.mp3`);
+  sfx[name].volume = 0.3;
+});
+// On Howler send: sfx['wax-seal'].play();
+```
+
+**性能**：每个 SFX MP3 应 < 30KB（短音效），用 ffmpeg 压：
+```bash
+ffmpeg -i input.wav -ac 1 -ar 22050 -b:a 64k output.mp3
+```
+
+---
+
+### §L.8 本项目动效用例 (mapping)
+
+机器可读：每个 grimoire 元素 → 它需要什么动画 → 推荐源。
+
+| 元素 | 需要的动效 | 推荐源 (按 §L.x) | 备注 |
+|---|---|---|---|
+| 小林机器人 idle | 缓慢呼吸 + 偶尔抬头 | §L.2 Rive (state machine: idle / look-up / wave) | 唯一最适合 Rive 的元素 |
+| 入场动画 (页面加载) | scale + fade + 卷轴展开 | §L.3 Magic Animations `puffIn` 或自家 CSS keyframes | 已有，可换 magic |
+| Howler URGENT 摇晃 | shake + jiggle | 已有 CSS @keyframes howl-shake | 保留 |
+| Wax-seal pulse on hover | scale 1.06 cycle | 已有 `seal-pulse` keyframes | 保留 |
+| Owl bobbing | translateY 3px | 已有 `owl-bob` keyframes | 保留 |
+| Candle flame flicker | opacity 0.65↔0.95 | 已有 `deco-flicker` keyframes | 保留 |
+| Page hover lift | translateY -4px | CSS transition | 已有 |
+| Vines fade-in (engagement) | stroke-dashoffset → 0 + opacity | 已有 SVG SMIL | 保留 |
+| Atlas 力图全屏入场 | fade + scale | CSS | 已有 |
+| Form submit loading | spinner | §L.6 svg-spinners `90-ring` | TODO v8+ |
+| 铃铛点击音 | bell ding short | §L.7 Freesound `desk bell` | TODO v8+ |
+| 翻页音 (导航切换) | page turn | §L.7 Freesound `page turn` | TODO v8+ (optional) |
+| 蜡封提交音 | stamp impression | §L.7 Freesound `wax seal stamp` | TODO v8+ |
+| Hero ambient bg | 蜡烛火光 ambient loop | §L.5 Mixkit `candle flame loop` | optional, 谨慎用 |
+| 水晶球 idle | 内部缓慢旋转 + glow pulse | 自家 SVG + CSS keyframes | 不用引外部 |
+
+**Hard rule**：能用 CSS keyframes 解决的，**永远不引 JS 动画引擎或外部 Lottie**。性能 + 可控性都更好。Lottie / Rive 仅用于"小林"这种**多状态有人格**的角色。
+
+---
+
 ## 附：本月 Top-3 立刻可用素材
 
 如果立刻要补充我们 grimoire 主页的视觉，最高 ROI 的三件事：
@@ -361,6 +616,8 @@ rules:
 ---
 
 > Sources for this asset list:
+>
+> **Static assets (§A–§K, original 2026-04-27 batch):**
 > - [Best Free Illustration Libraries 2026 (Muzli)](https://muz.li/blog/best-free-illustration-libraries-for-designers-2026/)
 > - [25+ Free Open-Source Illustrations Library (Toolfolio)](https://toolfolio.io/productive-value/free-open-source-illustrations-library)
 > - [Best Open Source Illustration Libraries (toools.design)](https://www.toools.design/free-open-source-illustrations)
@@ -371,6 +628,26 @@ rules:
 > - [Kenney.nl](https://kenney.nl/)
 > - [CC0 Textures](https://cc0-textures.com/c/paper)
 > - [Lost & Taken Textures](https://lostandtaken.com/textures/)
+>
+> **Motion + Sound (§L, added 2026-04-27 batch 2):**
+> - [8 Best Free Lottie Animation Sites — MiroMiro](https://miromiro.app/blog/free-lottie-animations-best-resources)
+> - [10 Best Free Lottie Animation Libraries (Moonb.io)](https://www.moonb.io/blog/free-lottie-animations)
+> - [LottieFiles awesome-lottie (curated)](https://github.com/LottieFiles/awesome-lottie)
+> - [Best Animation Libraries 2026 — Motion / GSAP / Lottie (Alignify)](https://alignify.co/tools/animation-library)
+> - [Rive Community Marketplace](https://rive.app/community/files/)
+> - [rive-app/awesome-rive](https://github.com/rive-app/awesome-rive)
+> - [Top 10 JavaScript Animation Libraries (DEV)](https://dev.to/hadil/top-10-javascript-animation-libraries-in-2025-2ch5)
+> - [50+ Free CSS Animation Libraries (Medium)](https://er-raj-aryan.medium.com/50-free-css-animation-libraries-that-actually-make-ui-feel-alive-24c58abc1f63)
+> - [Animista — On-demand CSS animations](https://animista.net/)
+> - [GSAP is now 100% free (greensock)](https://gsap.com/)
+> - [Motion (motion.dev)](https://motion.dev)
+> - [Mixkit free stock video](https://mixkit.co/free-stock-video/)
+> - [n3r4zzurr0/svg-spinners](https://github.com/n3r4zzurr0/svg-spinners)
+> - [UIVerse Loaders](https://uiverse.io/loaders)
+> - [Loading.io (CC0 spinners)](https://loading.io/)
+> - [Freesound.org](https://freesound.org/)
+> - [Pixabay CC0 Sound Effects](https://pixabay.com/sound-effects/search/cc0/)
+> - [Mixkit free SFX](https://mixkit.co/free-sound-effects/)
 > - [Vecteezy Chinese Ink Painting](https://www.vecteezy.com/free-vector/chinese-ink-painting)
 > - [Inkscape](https://inkscape.org/)
 > - [Free open-source icon libraries (TOOOLS.design)](https://www.toools.design/free-open-source-icon-libraries)

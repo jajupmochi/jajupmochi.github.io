@@ -1788,6 +1788,27 @@ CSS data-attribute 架构：
 | 角色 apprentice（当前 ChatGPT crop） | **保留**（已是参考图工作流的最终产物，无需替换） | — |
 | Awards / News / Skills 装饰边框 | 手画 SVG 边框 + Lucide / Phosphor | Lucide / Phosphor |
 
+### 22.4.5 动效 / 音效素材库（asset-sources.md §L 新增 2026-04-27）
+
+第二批资产研究：动画 + 音效。增量补到 `asset-sources.md` 的 **§L · Motion & Sound**：
+
+- **§L.1** Lottie 动画（LottieFiles / LottieFlow / Flicker.design / IconScout / Icons8 / MiroMiro）
+- **§L.2** Rive 互动动画（Rive Community / Awesome Rive）— **小林机器人首选**
+- **§L.3** CSS 动画预设（Animate.css / Animista / Hover.css / **Magic Animations** / AnimXYZ / Vivify）
+- **§L.4** JS 动画引擎（**Motion MIT** / **GSAP 2024 起完全免费** / anime.js / Theatre.js / Framer Motion / AutoAnimate / Lenis）
+- **§L.5** Stock 视频背景（Mixkit / Pexels Video / Coverr — 默认禁用，仅特殊场景）
+- **§L.6** SVG spinner（n3r4zzurr0 / UIVerse Loaders / loading.io CC0）
+- **§L.7** Audio / SFX（**Freesound** / Pixabay CC0 / Mixkit / Kenney / OpenGameArt）
+- **§L.8** 本项目动效用例 mapping — 每个 grimoire 元素 → 推荐源 + TODO 标记
+
+**关键发现 / 决策**：
+- **Magic Animations 100% 主题契合**（puffIn / vanishOut / fadeMagic）→ v8+ 可替代部分入场 keyframes
+- **小林机器人**唯一适合用 Rive（state machine 处理 hover/click 多状态），其他元素 CSS keyframes 已够
+- **Howler 提交反馈缺 spinner + 音效** → v8+ 用 svg-spinners + Freesound `wax seal` SFX
+- **GSAP 现在完全免费**（包含 SplitText / MorphSVG）→ 如未来需要文字逐字动画可直接引
+
+**Hard rule 增订**：能用 CSS keyframes 解决的，**永远不引 JS 引擎或 Lottie/Rive**。Lottie / Rive 仅用于多状态有人格的元素（小林）。
+
 ### 22.5 与早期内容的冲突说明
 
 本节 §22 **覆盖**早期 mindstorm-02 中以下提法：
