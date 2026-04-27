@@ -207,22 +207,22 @@ body, p, li, span, td, th, blockquote, .news-item, .news-content,
     font-family: 'Indie Flower', 'Spectral', Georgia, serif !important;
     font-weight: 400 !important;
 }
-/* Make body text slightly larger — handwritten fonts read smaller than serif at same px.
-   Desktop bumps further: handwritten EN/ZH need ~21–22px to match a 16-17px serif's
-   apparent size. Mobile stays modest to fit short lines. */
+/* Body text scaling — handwritten fonts read smaller, but Linlin: too big now.
+   Tightened: mobile 1.05, desktop 1.15, wide 1.20. Headings scaled proportionally. */
 body, p, li, .news-content, .about-text {
-    font-size: 1.08em !important;
-    line-height: 1.75 !important;
+    font-size: 1.05em !important;
+    line-height: 1.7 !important;
 }
 @media (min-width: 769px) {
-    body, p, li, .news-content, .about-text { font-size: 1.30em !important; }
-    .hero-tagline, .hero-subtitle { font-size: 1.18em !important; }
-    .hero-h1 { font-size: 4rem !important; }
-    .section-title { font-size: 2.6rem !important; }
+    body, p, li, .news-content, .about-text { font-size: 1.15em !important; }
+    .hero-tagline, .hero-subtitle { font-size: 1.08em !important; }
+    .hero-h1 { font-size: 3.2rem !important; }
+    .section-title { font-size: 1.85rem !important; }
 }
 @media (min-width: 1200px) {
-    body, p, li, .news-content, .about-text { font-size: 1.38em !important; }
-    .hero-h1 { font-size: 4.6rem !important; }
+    body, p, li, .news-content, .about-text { font-size: 1.20em !important; }
+    .hero-h1 { font-size: 3.6rem !important; }
+    .section-title { font-size: 2rem !important; }
 }
 
 /* English hero name — Reenie Beanie (Scholar) */
@@ -259,20 +259,20 @@ html[lang="zh"] .hero-h1 .hero-h1-name {
     font-size: 1.25em !important;
     letter-spacing: 0.04em !important;
 }
-/* Chinese mode: bump body size to compensate for the brush font's smaller x-height */
+/* Chinese mode: tightened — too big before */
 html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li {
-    font-size: 1.12em !important;
-    line-height: 1.85 !important;
+    font-size: 1.08em !important;
+    line-height: 1.8 !important;
 }
 @media (min-width: 769px) {
-    html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li { font-size: 1.36em !important; }
-    html[lang="zh"] .hero-tagline, html[lang="zh"] .hero-subtitle { font-size: 1.22em !important; }
-    html[lang="zh"] .hero-h1 { font-size: 4.2rem !important; }
-    html[lang="zh"] .section-title { font-size: 2.7rem !important; }
+    html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li { font-size: 1.18em !important; }
+    html[lang="zh"] .hero-tagline, html[lang="zh"] .hero-subtitle { font-size: 1.10em !important; }
+    html[lang="zh"] .hero-h1 { font-size: 3.4rem !important; }
+    html[lang="zh"] .section-title { font-size: 2rem !important; }
 }
 @media (min-width: 1200px) {
-    html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li { font-size: 1.45em !important; }
-    html[lang="zh"] .hero-h1 { font-size: 4.8rem !important; }
+    html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li { font-size: 1.24em !important; }
+    html[lang="zh"] .hero-h1 { font-size: 3.8rem !important; }
 }
 
 /* Keep monospace / icon-font / interactive controls in their default — don't overwrite these */
@@ -460,4 +460,92 @@ a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-second
     text-shadow:
         -1px -1px 0 rgba(255, 240, 200, 0.5),
          1px  1px 1px rgba(20, 8, 0, 0.55) !important;
+}
+
+/* ============================================================================
+ * §ICON. Protect ALL icon fonts (FontAwesome 6 + Bootstrap Icons + emoji
+ *   fallbacks) from font-family / weight / shadow / color overrides. This must
+ *   be LAST so it wins any later cascade. AGGRESSIVE: catches every nested
+ *   <i class="fa..."> / <i class="fab..."> / <span class="bi-..."> regardless
+ *   of parent selectors.
+ * ========================================================================= */
+.fa, .fab, .fas, .far, .fal, .fad, .fass, .fasr,
+[class*="fa-"], [class^="fa-"],
+[class*="bi-"], [class^="bi-"],
+i.fa, i.fab, i.fas, i.far,
+.icon, .material-icons, .material-symbols-outlined,
+code, kbd, pre, samp, tt {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "bootstrap-icons", "Material Symbols Outlined", monospace !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
+    font-style: normal !important;
+    /* color stays inherited from parent (so accent colors still work) */
+}
+/* FA Brands need their own family — separate */
+.fab, [class*="fa-brands"], i.fab {
+    font-family: "Font Awesome 6 Brands" !important;
+    font-weight: 400 !important;
+}
+/* code / kbd / pre / samp use mono only, not icon font */
+code, kbd, pre, samp, tt {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 400 !important;
+}
+/* Form controls — let UA defaults apply */
+input, select, textarea, button.icon-btn {
+    font-family: revert !important;
+    font-weight: revert !important;
+    text-shadow: none !important;
+}
+
+/* ============================================================================
+ * §HEADERS-COVERAGE. Cover ALL headers / labels / metric values that the
+ * earlier rules missed. Apply Reenie Beanie (en) / Zhi Mang Xing or Ma Shan
+ * Zheng (zh) consistently across every text element.
+ * ========================================================================= */
+.section-title, .hero h1, .hero-h1,
+.stat-card .stat-label, .pub-card h3, .project-card h3,
+.timeline-card .place, .timeline-card .yr,
+.award-card h3, .award-card h4, .talk-card h3, .talk-card h4,
+.contact-info h3, .contact-details h4,
+.skill-category-title, .news-celebration,
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5,
+.thesis-highlight h3, .thesis-highlight-title,
+.research-outline h2, .research-outline h3 {
+    font-family: 'Reenie Beanie', 'Indie Flower', cursive !important;
+    font-weight: 400 !important;
+    color: var(--ink-deep) !important;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55) !important;
+}
+/* Smaller headers (h4/h5/h6 inside cards) — slightly less heavy emboss */
+.stat-card .stat-label, .timeline-card .yr, .news-date {
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 240, 200, 0.4),
+         0.5px  0.5px 1px rgba(20, 8, 0, 0.4) !important;
+}
+/* ZH: same but use Zhi Mang Xing for big titles, Ma Shan Zheng for sub */
+html[lang="zh"] .section-title,
+html[lang="zh"] .hero h1, html[lang="zh"] .hero-h1,
+html[lang="zh"] h1, html[lang="zh"] h2 {
+    font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', 'Reenie Beanie', cursive !important;
+    letter-spacing: 0.04em !important;
+}
+html[lang="zh"] .pub-card h3, html[lang="zh"] .project-card h3,
+html[lang="zh"] .timeline-card .place, html[lang="zh"] .award-card h3,
+html[lang="zh"] .award-card h4, html[lang="zh"] .talk-card h3,
+html[lang="zh"] .talk-card h4, html[lang="zh"] .contact-info h3,
+html[lang="zh"] .contact-details h4, html[lang="zh"] .skill-category-title,
+html[lang="zh"] h3, html[lang="zh"] h4, html[lang="zh"] h5 {
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', cursive !important;
+}
+
+/* News / contact / about content — inherit body font but ensure cover */
+.news-content, .news-content *, .news-row,
+.contact-details, .contact-details *,
+.about-bullets, .about-bullets *,
+.timeline-card *, .pub-card *, .project-card *,
+.award-card *, .talk-card *, .stat-card * {
+    font-family: inherit;  /* let parent take over */
 }
