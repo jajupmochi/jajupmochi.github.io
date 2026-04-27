@@ -65,43 +65,94 @@ body { background: transparent !important; color: var(--text-primary); }
     border-color: oklch(0.45 0.12 50 / 0.45) !important;
 }
 
-/* ---------- 6. Navbar — keep semi-translucent so it stays legible when scrolled ---------- */
+/* ---------- 6. Navbar — fully transparent (per Linlin: 融入羊皮纸主背景) ---------- */
 .navbar {
-    background: oklch(0.85 0.050 75 / 0.78) !important;
-    backdrop-filter: blur(10px) saturate(1.05);
-    -webkit-backdrop-filter: blur(10px) saturate(1.05);
-    border-bottom: 1px solid oklch(0.45 0.10 50 / 0.18) !important;
-    box-shadow: 0 1px 12px oklch(0.20 0.06 30 / 0.10) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.20) !important;
+    box-shadow: none !important;
 }
-.navbar.scrolled { box-shadow: 0 2px 16px oklch(0.20 0.06 30 / 0.18) !important; }
+.navbar.scrolled {
+    background: oklch(0.92 0.050 75 / 0.55) !important;  /* very faint tint when scrolled, no blur */
+    box-shadow: 0 1px 8px oklch(0.20 0.06 30 / 0.08) !important;
+}
+/* Bigger nav-link font (was 0.8rem in main.css) */
+.nav-link {
+    font-size: 1.0rem !important;
+    font-weight: 600 !important;
+    color: var(--ink-deep) !important;
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 240, 200, 0.4),
+         0.5px  0.5px 1px rgba(20, 8, 0, 0.35) !important;
+}
+.navbar-brand {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+}
+@media (min-width: 1200px) {
+    .nav-link { font-size: 1.05rem !important; }
+    .navbar-brand { font-size: 1.3rem !important; }
+}
 
-/* ---------- 7. Welcome popup — REVERT every parchment override; main.css owns it ----------
-   Linlin: "明信片不要变，就用原来的就挺好的" — undo all font/color/bg/shadow overrides
-   inside .wp-overlay so the original postcard design from main.css cascades through. */
+/* ---------- 7. Welcome popup — restore main.css design explicitly ----------
+   Linlin: 明信片不要变. NOTE: 'revert !important' goes to UA default (transparent),
+   which broke wp-overlay. Instead, only neutralize the font/text-shadow/color
+   overrides I added — leave background/opacity/etc to main.css's cascade. */
 .wp-overlay, .wp-overlay *,
-.wp-card, .wp-card *,
-.wp-overlay strong, .wp-overlay em, .wp-overlay b,
-.wp-overlay .wp-submit, .wp-overlay button,
-.wp-overlay .wp-h2, .wp-overlay h1, .wp-overlay h2, .wp-overlay h3, .wp-overlay h4,
-.wp-overlay textarea, .wp-overlay input, .wp-overlay select {
+.wp-card, .wp-card * {
     font-family: revert !important;
     font-weight: revert !important;
     font-style: revert !important;
-    font-size: revert !important;
-    line-height: revert !important;
     color: revert !important;
     text-shadow: none !important;
-    background: revert !important;
-    background-image: revert !important;
-    border: revert !important;
-    box-shadow: revert !important;
-    animation: revert !important;
     letter-spacing: revert !important;
+    /* DO NOT override animation here — main.css's wp-postcard-in opens the card */
+}
+/* Restore main.css's wp-overlay backdrop bg explicitly (since my §X.body bg-overrides
+   may have leaked, and revert sent it to UA default = transparent). */
+.wp-overlay {
+    background: rgba(15, 23, 42, 0.55) !important;
+}
+/* Restore wp-card open-state surface — main.css sets these via active class */
+.wp-overlay.active .wp-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+.wp-card {
+    background-image: none !important;  /* don't leak parchment grid bg into card */
 }
 
-/* ---------- 8. Image lightbox + modal dialogs — preserve dark overlay ---------- */
-.lightbox-backdrop, .modal-backdrop, .search-modal-backdrop {
+/* ---------- 8. Image lightbox — preserve dark overlay (only for image zoom) ---------- */
+.lightbox-backdrop, .modal-backdrop {
     background: oklch(0.10 0.04 30 / 0.78) !important;
+}
+
+/* ---------- 8.5 Site search modal — keep on parchment, not gray/white default ---------- */
+.site-search-backdrop,
+body[data-theme="academic"] .site-search-backdrop {
+    background: oklch(0.85 0.05 75 / 0.55) !important;  /* warm parchment tint */
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+}
+.site-search-panel {
+    background: oklch(0.94 0.030 78) !important;        /* light cream parchment */
+    background-image: url("../res/parchment-options/wm-02-pergament-aged.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border: 1px solid oklch(0.45 0.10 50 / 0.4) !important;
+    box-shadow: 0 24px 60px oklch(0.20 0.06 30 / 0.5) !important;
+    color: var(--ink-deep) !important;
+}
+.site-search-panel input, .site-search-input {
+    background: transparent !important;
+    color: var(--ink-deep) !important;
+    border-color: oklch(0.45 0.10 50 / 0.3) !important;
+}
+
+/* ---------- 8.6 Howler tip label — hide per Linlin (no need for "尖叫信" caption) ---------- */
+.howl-tip {
+    display: none !important;
 }
 
 /* ---------- 9. News + ticker — keep content visible without panel chrome ---------- */
@@ -176,6 +227,23 @@ footer, .site-footer {
 /* ---------- 18. Images themselves — slight warm cast so they don't pop too white ---------- */
 img.profile-photo, .project-image img, .pub-thumbnail img {
     filter: sepia(0.06) brightness(1.0);
+}
+
+/* Profile photo — INK-WASH effect: 让它感觉像画在卷轴上而不是贴上去
+   Combination: multiply blend (parchment shows through), warm sepia, slight desaturate,
+   feathered edge mask (vignette-style fade into background) */
+.profile-image, img.profile-image, .hero-image img {
+    mix-blend-mode: multiply !important;
+    filter: sepia(0.32) saturate(0.85) brightness(1.05) contrast(1.05) !important;
+    /* Soft round mask so edges fade into parchment instead of hard circle */
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.5) 80%, transparent 96%) !important;
+            mask-image: radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.5) 80%, transparent 96%) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.hero-image {
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 /* ---------- 19. Hover micro-feedback — flat by default, but lift + tint on hover
