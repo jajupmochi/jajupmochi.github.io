@@ -74,8 +74,10 @@ body { background: transparent !important; color: var(--text-primary); }
     box-shadow: none !important;
 }
 .navbar.scrolled {
-    background: oklch(0.92 0.050 75 / 0.55) !important;  /* very faint tint when scrolled, no blur */
-    box-shadow: 0 1px 8px oklch(0.20 0.06 30 / 0.08) !important;
+    /* Linlin: 滚动时颜色不要变. Stay fully transparent like initial state. */
+    background: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.20) !important;
 }
 /* Bigger nav-link font (was 0.8rem in main.css) */
 .nav-link {
@@ -95,32 +97,64 @@ body { background: transparent !important; color: var(--text-primary); }
     .navbar-brand { font-size: 1.3rem !important; }
 }
 
-/* ---------- 7. Welcome popup — restore main.css design explicitly ----------
-   Linlin: 明信片不要变. NOTE: 'revert !important' goes to UA default (transparent),
-   which broke wp-overlay. Instead, only neutralize the font/text-shadow/color
-   overrides I added — leave background/opacity/etc to main.css's cascade. */
-.wp-overlay, .wp-overlay *,
-.wp-card, .wp-card * {
-    font-family: revert !important;
-    font-weight: revert !important;
-    font-style: revert !important;
-    color: revert !important;
-    text-shadow: none !important;
-    letter-spacing: revert !important;
-    /* DO NOT override animation here — main.css's wp-postcard-in opens the card */
-}
-/* Restore main.css's wp-overlay backdrop bg explicitly (since my §X.body bg-overrides
-   may have leaked, and revert sent it to UA default = transparent). */
+/* ---------- 7. Welcome popup — FULLY restore main.css design (one-by-one) ----------
+   Linlin: 明信片要和 index_en.html 完全一样. Approach: explicitly set every
+   property back to main.css values for every key element inside wp-overlay,
+   so the parchment-edition cascade doesn't leak in. */
+
+/* 7.1 Overlay shell */
 .wp-overlay {
     background: rgba(15, 23, 42, 0.55) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
 }
-/* Restore wp-card open-state surface — main.css sets these via active class */
+
+/* 7.2 All descendants — neutralize my font + color + shadow overrides */
+.wp-overlay, .wp-overlay *,
+.wp-card, .wp-card * {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    color: var(--wp-ink, #3f3a36) !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+    background-image: none !important;
+}
+
+/* 7.3 Specific weight + style restorations from main.css */
+.wp-overlay strong, .wp-overlay b, .wp-overlay .wp-strong { font-weight: 700 !important; }
+.wp-overlay em, .wp-overlay i { font-style: italic !important; }
+
+/* 7.4 Title (Caveat handwriting) — main.css uses --wp-script-font / --wp-title-font */
+.wp-overlay .wp-h2, .wp-overlay h1, .wp-overlay h2 {
+    font-family: var(--wp-title-font, 'Spectral', 'Iowan Old Style', serif) !important;
+    font-weight: 600 !important;
+    color: var(--wp-ink, #3f3a36) !important;
+}
+.wp-overlay .wp-script, .wp-overlay .wp-script-label {
+    font-family: var(--wp-script-font, 'Caveat', cursive) !important;
+}
+html[lang="zh"] .wp-overlay .wp-h2 { font-style: normal !important; }
+html[lang="zh"] .wp-overlay .wp-script,
+html[lang="zh"] .wp-overlay .wp-script-label { font-style: normal !important; }
+
+/* 7.5 Submit button — main.css styles win */
+.wp-overlay .wp-submit, .wp-overlay button {
+    font-family: var(--wp-title-font, 'Spectral', serif) !important;
+    color: revert !important;
+    background: revert !important;
+    box-shadow: revert !important;
+    text-shadow: none !important;
+    animation: none !important;
+}
+
+/* 7.6 wp-card open-state animation owned by main.css; restore explicit visibility */
 .wp-overlay.active .wp-card {
     opacity: 1 !important;
     visibility: visible !important;
 }
-.wp-card {
-    background-image: none !important;  /* don't leak parchment grid bg into card */
+
+/* 7.7 Inputs / textarea inherit wp-body-font */
+.wp-overlay textarea, .wp-overlay input, .wp-overlay select {
+    font-family: var(--wp-body-font, 'Spectral', serif) !important;
 }
 
 /* ---------- 8. Image lightbox — preserve dark overlay (only for image zoom) ---------- */
@@ -229,17 +263,18 @@ img.profile-photo, .project-image img, .pub-thumbnail img {
     filter: sepia(0.06) brightness(1.0);
 }
 
-/* Profile photo — INK-WASH effect: 让它感觉像画在卷轴上而不是贴上去
-   Combination: multiply blend (parchment shows through), warm sepia, slight desaturate,
-   feathered edge mask (vignette-style fade into background) */
+/* Profile photo — "WINDOW into the scroll-world" effect
+   Linlin: 不要 sepia 死人感, 要活人. 把照片当成羊皮纸世界里开的一扇窗 — 中心
+   完全保留原色 + 周围渐变 fade 到羊皮纸. NO 黄色/sepia 滤镜. */
 .profile-image, img.profile-image, .hero-image img {
-    mix-blend-mode: multiply !important;
-    filter: sepia(0.32) saturate(0.85) brightness(1.05) contrast(1.05) !important;
-    /* Soft round mask so edges fade into parchment instead of hard circle */
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.5) 80%, transparent 96%) !important;
-            mask-image: radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.5) 80%, transparent 96%) !important;
-    box-shadow: none !important;
+    mix-blend-mode: normal !important;          /* 完全不混合，保持原色 */
+    filter: contrast(1.04) saturate(1.02) !important;  /* 微微提色，远离 sepia */
+    /* 软渐变 mask: 中心 70% 完全显示，到边缘渐渐淡入羊皮纸（像窗口的 vignette） */
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 99%) !important;
+            mask-image: radial-gradient(circle at 50% 50%, black 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 99%) !important;
+    box-shadow: 0 0 30px rgba(255, 245, 220, 0.4) !important;  /* 极淡暖光晕，模拟从羊皮纸里"透出来" */
     border: none !important;
+    border-radius: 50% !important;
 }
 .hero-image {
     background: transparent !important;
