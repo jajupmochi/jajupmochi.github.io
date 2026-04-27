@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Color + Highlight Picker — text palettes for parchment</title>
+<title>Letter Style Picker — text effects on parchment (no background highlights)</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,60 +12,73 @@
 
 <style>
 :root {
+    --parchment: oklch(0.85 0.05 75);
     --rule: oklch(0.45 0.10 50 / 0.30);
+    /* ink palette tuned to the wm-01 parchment */
+    --ink-deep:   #2a1d11;   /* near-black sepia */
+    --ink-warm:   #3a2818;   /* warm dark sepia */
+    --ink-faded:  #5a4631;   /* faded sepia */
+    --gold-deep:  #8a6520;
+    --gold-mid:   #c8973f;
+    --gold-light: #f3d77a;
+    --iron-deep:  #2c2c2c;
+    --iron-mid:   #555555;
+    --iron-light: #b6b3a8;
+    --wax-red:    #8e1c1c;
+    --wax-light:  #d65454;
 }
 * { box-sizing: border-box; }
 html, body {
     margin: 0; padding: 0;
     font-family: 'Indie Flower', 'Spectral', Georgia, serif;
-    color: oklch(0.20 0.04 30);
+    color: var(--ink-deep);
     min-height: 100%;
     background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
-                oklch(0.93 0.030 78);
+                var(--parchment);
     font-size: 18px;
     line-height: 1.7;
 }
 
 header {
     text-align: center;
-    padding: 36px 24px 20px;
+    padding: 36px 24px 18px;
     border-bottom: 1px dashed var(--rule);
 }
 header h1 {
-    margin: 0 0 6px;
+    margin: 0;
     font-family: 'Reenie Beanie', cursive;
-    font-size: 38px;
-    color: oklch(0.20 0.04 30);
-    line-height: 1.1;
+    font-size: 44px;
+    color: var(--ink-deep);
+    line-height: 1.05;
+    text-shadow: 1px 1px 0 oklch(0.95 0.04 75 / 0.6);
 }
 header .sub {
-    margin: 8px auto 0;
+    margin: 10px auto 0;
     max-width: 760px;
-    font-size: 16px;
-    color: oklch(0.40 0.05 30);
+    font-size: 17px;
+    color: var(--ink-warm);
+    line-height: 1.6;
 }
 header .sub code {
-    background: oklch(0.88 0.020 75 / 0.6);
+    background: oklch(0.88 0.020 75 / 0.55);
     padding: 1px 6px;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 14px;
     font-family: monospace;
 }
-
 .lang-toggle {
     text-align: center;
-    margin: 12px 0 0;
-    font-family: 'Indie Flower', cursive;
+    margin: 14px 0 0;
 }
 .lang-btn {
     background: oklch(0.92 0.040 75 / 0.55);
     border: 1px solid var(--rule);
-    color: oklch(0.20 0.04 30);
+    color: var(--ink-deep);
     padding: 6px 18px;
     margin: 0 4px;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 16px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
     border-radius: 999px;
     transition: all 0.2s;
 }
@@ -75,223 +88,290 @@ header .sub code {
     border-color: oklch(0.45 0.16 27);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
-    gap: 24px;
-    padding: 28px;
-    max-width: 1700px;
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding: 32px 24px;
+    max-width: 920px;
     margin: 0 auto;
 }
 
-.combo {
-    background: oklch(0.96 0.020 78 / 0.55);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    backdrop-filter: blur(2px);
-}
-.combo:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px oklch(0.20 0.06 30 / 0.18);
-}
-
-.combo-head {
-    padding: 14px 22px 10px;
+.letter {
+    /* No background — sit directly on the page parchment */
+    padding: 20px 8px 32px;
     border-bottom: 1px dashed var(--rule);
 }
-.combo-head .num {
+.letter:last-child { border-bottom: none; }
+
+.letter-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+.letter-head .num {
     font-family: 'Reenie Beanie', cursive;
-    font-size: 22px;
+    font-size: 28px;
+    color: var(--gold-deep);
     line-height: 1;
 }
-.combo-head h3 {
+.letter-head h3 {
+    margin: 0;
     font-family: 'Reenie Beanie', cursive;
-    margin: 4px 0 0;
-    font-size: 26px;
-    line-height: 1.1;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--ink-deep);
 }
-.combo-head .verdict {
+.letter-head .verdict {
+    margin-left: auto;
     font-style: italic;
     font-size: 13px;
-    margin-top: 4px;
+    color: var(--ink-faded);
     font-family: 'Spectral', serif;
-    color: oklch(0.40 0.05 30);
+    text-align: right;
+    max-width: 320px;
+    line-height: 1.4;
 }
+.tech {
+    margin: 0 0 18px;
+    font-size: 12px;
+    color: var(--ink-faded);
+    font-family: monospace;
+    letter-spacing: 0.02em;
+}
+.tech b { color: var(--ink-warm); font-weight: 400; }
 
-.swatches {
-    display: flex;
-    padding: 10px 22px;
-    gap: 4px;
-    border-bottom: 1px dashed var(--rule);
+.body-letter {
+    padding: 0 4px;
 }
-.sw {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 1px solid oklch(0.30 0.05 30 / 0.3);
-}
-
-.sample {
-    padding: 22px 28px 26px;
-}
-.sample p { margin: 0 0 12px; }
-.sample h2 {
-    font-family: 'Reenie Beanie', cursive;
-    font-size: 30px;
-    margin: 0 0 6px;
+.body-letter h2 {
+    margin: 0 0 4px;
+    font-size: 38px;
     line-height: 1.1;
 }
-.sample .role {
+.body-letter .role {
     font-style: italic;
-    font-size: 14px;
-    margin: 0 0 14px;
+    font-size: 16px;
+    margin: 0 0 16px;
+    color: var(--ink-faded);
 }
-.sample a {
-    text-decoration: none;
-    transition: color 0.2s, background 0.2s, border-bottom 0.2s;
+.body-letter p {
+    margin: 0 0 12px;
+    font-size: 17px;
 }
-.sample a:hover {
-    /* per-combo overrides below */
+.body-letter a { text-decoration: none; cursor: pointer; transition: all 0.25s; }
+.body-letter .key { /* "highlighted" — replaced background bg with a text effect */ }
+
+.body-letter.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 44px; letter-spacing: 0.04em; }
+.body-letter.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; font-size: 18px; line-height: 1.85; }
+
+body.lang-en .body-letter.zh { display: none; }
+body.lang-zh .body-letter.en { display: none; }
+
+/* ==================== STYLE 1: QUILL LETTER ====================
+   Pure sepia ink, flat, like a hand-written letter. No effects beyond color.
+   Highlights = slightly thicker / darker ink (no fancy stuff). */
+.l1 .body-letter h2 {
+    font-family: 'Reenie Beanie', cursive;
+    color: var(--ink-deep);
+    font-weight: 400;
 }
-.sample mark {
-    background: var(--hl-bg);
-    color: var(--hl-text, inherit);
-    padding: 1px 4px;
-    border-radius: 2px;
+.l1 .body-letter p, .l1 .body-letter .role { color: var(--ink-warm); }
+.l1 .body-letter a {
+    color: var(--ink-deep);
+    border-bottom: 1px solid var(--ink-warm);
+    padding-bottom: 1px;
 }
-.sample button {
-    margin-top: 6px;
-    padding: 6px 14px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 15px;
+.l1 .body-letter a:hover {
+    color: #000;
+    border-bottom-color: #000;
+}
+.l1 .body-letter .key {
+    color: var(--ink-deep);
+    font-weight: 700;
+    border-bottom: 1px dotted var(--ink-warm);
+    padding-bottom: 1px;
 }
 
-/* Hide the inactive language */
-body.lang-en .sample.zh { display: none; }
-body.lang-zh .sample.en { display: none; }
+/* ==================== STYLE 2: PRESSED MANUSCRIPT (LETTERPRESS) ====================
+   Body sunken into the page (debossed). Headings raised up (embossed).
+   Links are debossed gold. Highlight = chiseled into the page. */
+.l2 .body-letter h2 {
+    /* Embossed: dark text + light shadow above + dark below = raised */
+    color: var(--ink-deep);
+    text-shadow:
+        -1px -1px 0 rgba(255,255,255,0.55),
+         1px  1px 0 rgba(0,0,0,0.45);
+    font-family: 'Reenie Beanie', cursive;
+}
+.l2 .body-letter p, .l2 .body-letter .role {
+    /* Debossed: dark text + light highlight below = sunken */
+    color: var(--ink-warm);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+.l2 .body-letter a {
+    color: var(--gold-deep);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+    border-bottom: 1px solid var(--gold-deep);
+}
+.l2 .body-letter a:hover {
+    color: #6c4d10;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.4);
+}
+.l2 .body-letter .key {
+    color: var(--ink-deep);
+    text-shadow:
+         0  1px 0 rgba(255,255,255,0.55),
+         0 -1px 1px rgba(0,0,0,0.5);  /* deeper chisel */
+    font-weight: 700;
+}
 
-/* ChineseFont stacks for ZH samples */
-.sample.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 36px; }
-.sample.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; }
+/* ==================== STYLE 3: GILDED PAGE (GOLD LEAF) ====================
+   Hero name = gold leaf with shimmer. Highlights = gold foil with glint.
+   Body = warm sepia ink. */
+.l3 .body-letter h2 {
+    background-image: linear-gradient(180deg,
+        #f8e9a7 0%, #e0b94f 25%, #c8973f 55%, #8a6520 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.18), 0 2px 6px rgba(70,40,8,0.25);
+    font-family: 'Reenie Beanie', cursive;
+    filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4));
+    background-size: 100% 200%;
+    background-position: 0 0;
+    animation: gold-shimmer 3.6s ease-in-out infinite;
+}
+@keyframes gold-shimmer {
+    0%, 100% { background-position: 0 0; }
+    50%      { background-position: 0 100%; }
+}
+.l3 .body-letter p, .l3 .body-letter .role { color: var(--ink-warm); }
+.l3 .body-letter a {
+    background-image: linear-gradient(180deg, #c8973f, #8a6520);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    border-bottom: 1px solid var(--gold-mid);
+    padding-bottom: 1px;
+}
+.l3 .body-letter a:hover {
+    background-image: linear-gradient(180deg, #f3d77a, #8a6520);
+    -webkit-background-clip: text; background-clip: text;
+    border-bottom-color: var(--gold-deep);
+}
+.l3 .body-letter .key {
+    background-image: linear-gradient(180deg, #f8e9a7 0%, #e0b94f 50%, #8a6520 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    font-weight: 700;
+    background-size: 100% 200%;
+    animation: gold-shimmer 4.2s ease-in-out infinite;
+    animation-delay: -1.2s;
+}
 
-/* ===================== COMBO 1: Sepia Ink (warm monochrome) ===================== */
-.c1 .sample            { color: oklch(0.20 0.05 30); }
-.c1 .sample h2         { color: oklch(0.18 0.05 30); }
-.c1 .sample .role      { color: oklch(0.42 0.05 30); }
-.c1 .sample a          { color: oklch(0.30 0.08 30); border-bottom: 1px solid oklch(0.35 0.06 30 / 0.4); }
-.c1 .sample a:hover    { color: oklch(0.18 0.10 30); border-bottom-color: oklch(0.18 0.10 30); }
-.c1 { --hl-bg: oklch(0.85 0.06 70 / 0.5); --hl-text: oklch(0.20 0.06 30); }
-.c1 button             { background: oklch(0.30 0.08 30); color: oklch(0.95 0.05 75); }
-.c1 button:hover       { background: oklch(0.18 0.10 30); }
-.c1 .sw1 { background: oklch(0.20 0.05 30); }
-.c1 .sw2 { background: oklch(0.42 0.05 30); }
-.c1 .sw3 { background: oklch(0.30 0.08 30); }
-.c1 .sw4 { background: oklch(0.85 0.06 70); }
-.c1 .sw5 { background: oklch(0.55 0.04 35); }
+/* ==================== STYLE 4: IRON ENGRAVED ====================
+   Hero name = chiseled steel/iron with deep shadow.
+   Highlights = engraved into a gray plate (cool gray inset). */
+.l4 .body-letter h2 {
+    color: var(--iron-mid);
+    text-shadow:
+         0  1px 0 rgba(255,255,255,0.4),
+         0 -1px 1px rgba(0,0,0,0.7),
+         1px 0 1px rgba(0,0,0,0.3);
+    letter-spacing: 0.01em;
+    font-family: 'Reenie Beanie', cursive;
+}
+.l4 .body-letter p, .l4 .body-letter .role { color: var(--ink-warm); }
+.l4 .body-letter a {
+    color: var(--iron-deep);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+    border-bottom: 1px solid var(--iron-mid);
+}
+.l4 .body-letter a:hover {
+    color: #000;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.4);
+}
+.l4 .body-letter .key {
+    color: var(--iron-deep);
+    text-shadow:
+         0  1px 0 rgba(255,255,255,0.5),
+         0 -1px 2px rgba(0,0,0,0.65);  /* engraved into plate */
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
 
-/* ===================== COMBO 2: Burgundy Scholar (academic red) ===================== */
-.c2 .sample            { color: oklch(0.22 0.04 30); }
-.c2 .sample h2         { color: oklch(0.30 0.10 27); }
-.c2 .sample .role      { color: oklch(0.42 0.05 30); }
-.c2 .sample a          { color: oklch(0.45 0.16 27); border-bottom: 1px solid oklch(0.45 0.16 27 / 0.4); }
-.c2 .sample a:hover    { color: oklch(0.32 0.16 27); border-bottom-color: oklch(0.32 0.16 27); }
-.c2 { --hl-bg: oklch(0.78 0.14 75 / 0.5); --hl-text: oklch(0.22 0.10 30); }
-.c2 button             { background: oklch(0.45 0.16 27); color: oklch(0.96 0.04 60); }
-.c2 button:hover       { background: oklch(0.32 0.16 27); }
-.c2 .sw1 { background: oklch(0.22 0.04 30); }
-.c2 .sw2 { background: oklch(0.30 0.10 27); }
-.c2 .sw3 { background: oklch(0.45 0.16 27); }
-.c2 .sw4 { background: oklch(0.78 0.14 75); }
-.c2 .sw5 { background: oklch(0.62 0.13 70); }
+/* ==================== STYLE 5: WAX-SEALED LETTER ====================
+   Hero name = embossed wax red. Body = sepia ink. Highlights = wax red pressed. */
+.l5 .body-letter h2 {
+    color: var(--wax-red);
+    text-shadow:
+        -1px -1px 0 rgba(255,200,200,0.4),
+         1px  1px 1px rgba(60,8,8,0.55);
+    font-family: 'Reenie Beanie', cursive;
+}
+.l5 .body-letter p, .l5 .body-letter .role { color: var(--ink-warm); }
+.l5 .body-letter a {
+    color: var(--wax-red);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    border-bottom: 1px solid var(--wax-light);
+}
+.l5 .body-letter a:hover {
+    color: #5a0d0d;
+    border-bottom-color: var(--wax-red);
+}
+.l5 .body-letter .key {
+    color: var(--wax-red);
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255,200,200,0.4),
+         0.5px  1px 1px rgba(60,8,8,0.55);
+    font-weight: 700;
+    font-style: italic;
+}
 
-/* ===================== COMBO 3: Forest Library (green + bronze) ===================== */
-.c3 .sample            { color: oklch(0.22 0.04 30); }
-.c3 .sample h2         { color: oklch(0.32 0.08 145); }
-.c3 .sample .role      { color: oklch(0.42 0.05 30); }
-.c3 .sample a          { color: oklch(0.40 0.12 145); border-bottom: 1px dotted oklch(0.40 0.12 145 / 0.55); }
-.c3 .sample a:hover    { color: oklch(0.50 0.14 50); border-bottom-color: oklch(0.50 0.14 50); }
-.c3 { --hl-bg: oklch(0.85 0.10 130 / 0.4); --hl-text: oklch(0.22 0.08 145); }
-.c3 button             { background: oklch(0.40 0.12 145); color: oklch(0.96 0.04 70); }
-.c3 button:hover       { background: oklch(0.50 0.14 50); }
-.c3 .sw1 { background: oklch(0.22 0.04 30); }
-.c3 .sw2 { background: oklch(0.32 0.08 145); }
-.c3 .sw3 { background: oklch(0.40 0.12 145); }
-.c3 .sw4 { background: oklch(0.85 0.10 130); }
-.c3 .sw5 { background: oklch(0.50 0.14 50); }
-
-/* ===================== COMBO 4: Royal Manuscript (navy + gold) ===================== */
-.c4 .sample            { color: oklch(0.20 0.04 30); }
-.c4 .sample h2         { color: oklch(0.25 0.10 250); }
-.c4 .sample .role      { color: oklch(0.42 0.05 30); }
-.c4 .sample a          { color: oklch(0.32 0.13 240); border-bottom: 1px solid oklch(0.32 0.13 240 / 0.5); }
-.c4 .sample a:hover    { color: oklch(0.55 0.14 75); border-bottom-color: oklch(0.55 0.14 75); }
-.c4 { --hl-bg: oklch(0.82 0.13 75 / 0.55); --hl-text: oklch(0.22 0.04 30); }
-.c4 button             { background: oklch(0.25 0.10 250); color: oklch(0.96 0.04 60); }
-.c4 button:hover       { background: oklch(0.55 0.14 75); color: oklch(0.18 0.06 30); }
-.c4 .sw1 { background: oklch(0.20 0.04 30); }
-.c4 .sw2 { background: oklch(0.25 0.10 250); }
-.c4 .sw3 { background: oklch(0.32 0.13 240); }
-.c4 .sw4 { background: oklch(0.82 0.13 75); }
-.c4 .sw5 { background: oklch(0.55 0.14 75); }
-
-/* ===================== COMBO 5: Charcoal Modernist (black + red) ===================== */
-.c5 .sample            { color: oklch(0.14 0.02 30); }
-.c5 .sample h2         { color: oklch(0.10 0.02 30); }
-.c5 .sample .role      { color: oklch(0.36 0.04 30); }
-.c5 .sample a          { color: oklch(0.45 0.18 27); border-bottom: 1px solid oklch(0.45 0.18 27); }
-.c5 .sample a:hover    { color: oklch(0.10 0.02 30); border-bottom-color: oklch(0.10 0.02 30); }
-.c5 { --hl-bg: oklch(0.82 0.20 75 / 0.45); --hl-text: oklch(0.10 0.02 30); }
-.c5 button             { background: oklch(0.10 0.02 30); color: oklch(0.96 0.04 60); }
-.c5 button:hover       { background: oklch(0.45 0.18 27); }
-.c5 .sw1 { background: oklch(0.10 0.02 30); }
-.c5 .sw2 { background: oklch(0.14 0.02 30); }
-.c5 .sw3 { background: oklch(0.45 0.18 27); }
-.c5 .sw4 { background: oklch(0.82 0.20 75); }
-.c5 .sw5 { background: oklch(0.36 0.04 30); }
-
-/* ===================== COMBO 6: Watercolor Wash (teal + ocher, painterly) ===================== */
-.c6 .sample            { color: oklch(0.24 0.06 30); }
-.c6 .sample h2         { color: oklch(0.32 0.10 200); }
-.c6 .sample .role      { color: oklch(0.42 0.06 30); }
-.c6 .sample a          {
-    color: oklch(0.40 0.13 200);
-    background: linear-gradient(180deg, transparent 75%, oklch(0.78 0.14 200 / 0.5) 75%);
+/* ==================== STYLE 6: WATERCOLOR ANNOTATION ====================
+   Hero name = soft inked, slightly faded. Body = warm sepia. Highlights =
+   a faint watercolor wash UNDER the text — but the text itself doesn't
+   change. (Still readable — the wash is parchment-tinted, not contrasting.) */
+.l6 .body-letter h2 {
+    color: var(--ink-deep);
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+    font-family: 'Reenie Beanie', cursive;
+}
+.l6 .body-letter p, .l6 .body-letter .role { color: var(--ink-warm); }
+.l6 .body-letter a {
+    color: var(--ink-deep);
+    background-image: linear-gradient(180deg, transparent 70%, rgba(140,100,40,0.25) 70%);
     padding: 0 2px;
 }
-.c6 .sample a:hover    {
-    background: linear-gradient(180deg, transparent 65%, oklch(0.78 0.14 200 / 0.7) 65%);
-    color: oklch(0.28 0.13 200);
+.l6 .body-letter a:hover {
+    background-image: linear-gradient(180deg, transparent 60%, rgba(180,130,55,0.4) 60%);
 }
-.c6 { --hl-bg: oklch(0.82 0.16 75 / 0.55); --hl-text: oklch(0.22 0.08 30); }
-.c6 button             {
-    background: oklch(0.40 0.13 200); color: oklch(0.96 0.04 60);
-    border-radius: 14px;
-    font-family: 'Indie Flower', cursive;
+.l6 .body-letter .key {
+    color: var(--ink-deep);
+    background-image: linear-gradient(120deg,
+        rgba(220,180,80,0.0) 0%,
+        rgba(220,180,80,0.32) 30%,
+        rgba(220,180,80,0.18) 70%,
+        rgba(220,180,80,0.0) 100%);
+    padding: 0 3px;
+    font-weight: 600;
 }
-.c6 button:hover       { background: oklch(0.55 0.14 75); }
-.c6 .sw1 { background: oklch(0.24 0.06 30); }
-.c6 .sw2 { background: oklch(0.32 0.10 200); }
-.c6 .sw3 { background: oklch(0.40 0.13 200); }
-.c6 .sw4 { background: oklch(0.82 0.16 75); }
-.c6 .sw5 { background: oklch(0.55 0.14 75); }
 
 .controls {
     text-align: center;
-    padding: 18px 24px 36px;
-    font-size: 15px;
-    color: oklch(0.40 0.05 30);
+    padding: 18px 24px 50px;
+    font-size: 16px;
+    color: var(--ink-warm);
     max-width: 760px;
     margin: 0 auto;
 }
 .controls code {
-    background: oklch(0.88 0.020 75 / 0.6);
+    background: oklch(0.88 0.020 75 / 0.55);
     padding: 1px 6px;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 14px;
     font-family: monospace;
 }
 </style>
@@ -299,153 +379,145 @@ body.lang-zh .sample.en { display: none; }
 <body class="lang-en">
 
 <header>
-    <h1>Color &amp; Highlight Picker</h1>
-    <p class="sub">6 color palettes for the parchment edition. Each combo defines: <strong>body text</strong>, <strong>headings</strong>, <strong>links + hover</strong>, <strong>highlighted text</strong> (mark/keyword), and <strong>buttons</strong>. All tones designed to feel native to the warm parchment background.</p>
+    <h1>Letter Style Picker · 信笺刻印</h1>
+    <p class="sub">6 ways to make text feel like it belongs on the parchment — using <strong>text effects</strong>, not background highlights. Each style is one cohesive "letter":<br>different parts of the same passage get different surface treatments (letterpress, gold leaf, iron engraving, wax seal, watercolor wash).<br>All 6 share the same parchment background and handwritten font.</p>
     <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">English</button>
         <button class="lang-btn" onclick="setLang('zh')">中文</button>
     </div>
 </header>
 
-<div class="grid">
+<div class="stack">
 
-    <!-- ========== Combo 1: Sepia Ink ========== -->
-    <div class="combo c1">
-        <div class="combo-head">
+    <!-- ===== STYLE 1: QUILL LETTER ===== -->
+    <div class="letter l1">
+        <div class="letter-head">
             <span class="num">№ 1</span>
-            <h3>Sepia Ink &nbsp;·&nbsp; 沉墨棕</h3>
-            <p class="verdict">Most native to parchment — every color stays in the warm-brown family. Quiet, subtle, monochrome.</p>
+            <h3>Quill Letter &nbsp;·&nbsp; 鹅毛笔信</h3>
+            <p class="verdict">Pure flat ink. No tricks. The most authentic "just written" feel — like a recently dried letter.</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>solid sepia color only</b> · headings + body same ink, links underlined, "key terms" via dotted underline + bold</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
-    <!-- ========== Combo 2: Burgundy Scholar ========== -->
-    <div class="combo c2">
-        <div class="combo-head">
+    <!-- ===== STYLE 2: PRESSED MANUSCRIPT (LETTERPRESS) ===== -->
+    <div class="letter l2">
+        <div class="letter-head">
             <span class="num">№ 2</span>
-            <h3>Burgundy Scholar &nbsp;·&nbsp; 学者酒红 ★</h3>
-            <p class="verdict">Academic warm red for links + gold highlights. Serious, scholarly, the most "Oxford library" feel.</p>
+            <h3>Pressed Manuscript &nbsp;·&nbsp; 凸印手稿</h3>
+            <p class="verdict">Hero name <em>raised</em> off the page (embossed). Body text <em>sunken in</em> (debossed/letterpress). Key terms chiseled into the page.</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>text-shadow inset</b> + light highlight + dark depth · CSS letterpress / emboss · subtle relief, no animation</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
-    <!-- ========== Combo 3: Forest Library ========== -->
-    <div class="combo c3">
-        <div class="combo-head">
+    <!-- ===== STYLE 3: GILDED PAGE (GOLD LEAF) ===== -->
+    <div class="letter l3">
+        <div class="letter-head">
             <span class="num">№ 3</span>
-            <h3>Forest Library &nbsp;·&nbsp; 林海铜雀</h3>
-            <p class="verdict">Forest-green links with bronze hover. Quietly distinctive, suggests nature + scholarship.</p>
+            <h3>Gilded Page &nbsp;·&nbsp; 烫金页 ★</h3>
+            <p class="verdict">Hero name in <em>gold leaf with shimmer</em>. Key terms gilded with subtle glint. Body in sepia ink. Most "illuminated manuscript".</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>linear-gradient + background-clip:text</b> · subtle drop-shadow + 3.6s shimmer animation · prefers-reduced-motion respected via animation-disable optional</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
-    <!-- ========== Combo 4: Royal Manuscript ========== -->
-    <div class="combo c4">
-        <div class="combo-head">
+    <!-- ===== STYLE 4: IRON ENGRAVED ===== -->
+    <div class="letter l4">
+        <div class="letter-head">
             <span class="num">№ 4</span>
-            <h3>Royal Manuscript &nbsp;·&nbsp; 御制经典</h3>
-            <p class="verdict">Deep navy headings + lapis-blue links + gold-leaf hover. Most "manuscript-like" hierarchy.</p>
+            <h3>Iron Engraved &nbsp;·&nbsp; 铁版镌刻</h3>
+            <p class="verdict">Hero name in <em>cold steel</em> chiseled into the page. Key terms deeply engraved (gray-dark with sharp shadow). Most architectural / serious.</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>cool gray tones</b> + sharp text-shadow stack · darker top + lighter bottom = chisel illusion · no chroma, all about depth</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
-    <!-- ========== Combo 5: Charcoal Modernist ========== -->
-    <div class="combo c5">
-        <div class="combo-head">
+    <!-- ===== STYLE 5: WAX-SEALED LETTER ===== -->
+    <div class="letter l5">
+        <div class="letter-head">
             <span class="num">№ 5</span>
-            <h3>Charcoal Modernist &nbsp;·&nbsp; 炭黑现代</h3>
-            <p class="verdict">Highest-contrast: near-black text + bold red links. Reads as confident, modern, less ornamental.</p>
+            <h3>Wax-Sealed Letter &nbsp;·&nbsp; 蜡封信笺</h3>
+            <p class="verdict">Hero name in <em>embossed wax red</em>. Key terms in italic wax script. Body sepia. Like a private letter sealed with red wax.</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>wax-red color</b> + asymmetric text-shadow (light upper-left + dark lower-right) · italic key terms for "scribbled" feel</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
-    <!-- ========== Combo 6: Watercolor Wash ========== -->
-    <div class="combo c6">
-        <div class="combo-head">
+    <!-- ===== STYLE 6: WATERCOLOR ANNOTATION ===== -->
+    <div class="letter l6">
+        <div class="letter-head">
             <span class="num">№ 6</span>
-            <h3>Watercolor Wash &nbsp;·&nbsp; 水彩洗笔</h3>
-            <p class="verdict">Teal links painted with a watercolor wash underline + ocher highlights. Most artistic, soft, painterly.</p>
+            <h3>Watercolor Annotation &nbsp;·&nbsp; 水彩批注</h3>
+            <p class="verdict">All text in sepia ink. Key terms get a soft <em>watercolor wash</em> swept under them — readable, parchment-toned, painterly.</p>
         </div>
-        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
-        <div class="sample en">
+        <p class="tech">tech: <b>linear-gradient bg under text</b> · ochre wash, transparent edges, blends with parchment · NOT a flat highlight bar</p>
+        <div class="body-letter en">
             <h2>Linlin Jia, Ph.D.</h2>
             <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
-            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
-            <button>Get In Touch</button>
+            <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a> on Google Scholar. Currently postdoc at <a href="#">University of Bern</a>, funded by <span class="key">SNSF</span> and Innosuisse.</p>
         </div>
-        <div class="sample zh">
+        <div class="body-letter zh">
             <h2>林林佳，博士</h2>
             <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
-            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
-            <button>联系我</button>
+            <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为 <a href="#">伯尔尼大学</a> 博士后，受 <span class="key">SNSF</span> 与 Innosuisse 资助。</p>
         </div>
     </div>
 
 </div>
 
 <div class="controls">
-    <p>Pick the number you want, e.g. "<code>用 № 2 Burgundy Scholar</code>". I'll wire all 5 colors (body / heading / link / hover / highlight) into <code>parchment-overrides.css</code>.</p>
-    <p style="font-size:13px;margin-top:12px">Mix &amp; match welcome too — e.g. "<code>№ 2 但用 № 6 的 watercolor 链接 hover</code>".</p>
+    <p>选一个编号告诉我，例如 "<code>用 № 3 Gilded Page</code>"。我把对应的 text-effect stack 接到 <code>parchment-overrides.css</code>。也可混搭：如 "<code>名字用 № 3 烫金，body 用 № 1 鹅毛笔，highlight 用 № 2 凸印</code>"。</p>
+    <p style="font-size:13px;color:var(--ink-faded);margin-top:14px">
+        所有效果都用纯 CSS 实现：<br>
+        <code>text-shadow</code> · <code>background-clip:text</code> · <code>linear-gradient</code> · <code>filter:drop-shadow</code><br>
+        无背景色块，无图片素材依赖，文字全部直接落在羊皮纸上。
+    </p>
 </div>
 
 <script>
