@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>中文正文字体候选 — D5.B</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;500;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<!-- LXGW WenKai (霞鹜文楷) — open-source Chinese handwritten-style serif, via jsdelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+<!-- Smiley Sans (得意黑) — modern Chinese display sans, via jsdelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-smiley-sans-oblique-regular/font.css">
+<style>
+:root {
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --primary: #6366f1;
+    --accent: #ec4899;
+    --border: #e2e8f0;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 2.5rem 1.5rem;
+}
+.page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+h1 { margin: 0 0 0.25rem; font-size: 1.8rem; }
+.intro { color: var(--muted); margin: 0 0 2rem; }
+.hero-name-preview {
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.hero-name-preview .label {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.hero-name-preview .name {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 4.5rem;
+    line-height: 1.15;
+    margin: 0.35rem 0 0.25rem;
+    letter-spacing: 0.05em;
+}
+.hero-name-preview .role {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1rem;
+    opacity: 0.92;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+    gap: 1.25rem;
+}
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.card h2 {
+    margin: 0 0 0.1rem;
+    font-size: 1.1rem;
+    color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.card h2 .badge {
+    font-size: 0.7rem;
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+.card .note {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+}
+.sample {
+    border-top: 1px dashed var(--border);
+    padding-top: 1rem;
+}
+.sample .big {
+    font-size: 2.2rem;
+    line-height: 1.25;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+}
+.sample .sub {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #334155;
+    margin: 0 0 0.8rem;
+}
+.sample .body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #334155;
+    margin: 0 0 0.8rem;
+}
+.sample .tags { margin-top: 0.5rem; }
+.sample .tag {
+    display: inline-block;
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    font-weight: 500;
+}
+.sample .tag.primary {
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    color: white;
+}
+
+/* ===== Font definitions ===== */
+.f-noto-sans { font-family: 'Noto Sans SC', sans-serif; }
+.f-noto-sans .big { font-weight: 900; }
+.f-noto-sans .sub, .f-noto-sans .body { font-weight: 400; }
+
+.f-noto-serif { font-family: 'Noto Serif SC', serif; }
+.f-noto-serif .big { font-weight: 900; }
+.f-noto-serif .sub, .f-noto-serif .body { font-weight: 400; }
+
+.f-zcool-xw { font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif; }
+.f-zcool-xw .big, .f-zcool-xw .sub, .f-zcool-xw .body { font-weight: 400; }
+
+.f-lxgw { font-family: 'LXGW WenKai', 'LXGW WenKai GB Screen', 'Noto Serif SC', serif; }
+.f-lxgw .big, .f-lxgw .sub, .f-lxgw .body { font-weight: 400; }
+
+.f-smiley { font-family: 'Smiley Sans Oblique', 'Noto Sans SC', sans-serif; }
+.f-smiley .big, .f-smiley .sub, .f-smiley .body { font-weight: 400; }
+
+footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>中文正文字体 — 5 个候选</h1>
+<p class="intro">
+    同一段内容（Hero 区 + About + tags）在 5 种字体下的渲染对比。
+    你现在用的是 <strong>方案 1 Noto Sans SC</strong>，反馈是"太细/淡"。
+    候选包含：加粗版、衬线学术版、文艺瘦版、手写楷书版、现代斜体黑。
+</p>
+
+<div class="hero-name-preview">
+    <div class="label">Hero H1 Name（已定：Ma Shan Zheng）</div>
+    <div class="name">贾林林 博士</div>
+    <div class="role">机器学习研究科学家 · 伯尔尼大学博士后</div>
+</div>
+
+<div class="grid">
+
+<!-- 1 -->
+<div class="card">
+    <h2>方案 1 — Noto Sans SC（Bold 900） <span class="badge">当前</span></h2>
+    <p class="note">现有字体加到最重字重 900，对比当前 700 字重看是否"不再细/淡"。Google Fonts 官方、覆盖最全。</p>
+    <div class="sample f-noto-sans">
+        <p class="big">图机器学习研究科学家</p>
+        <p class="sub">构建开源工具、模型，以及面向研究与产业的 AI 系统。</p>
+        <p class="body">从事图表示学习研究及跨领域应用：图核、图编辑距离与图神经网络；时空学习；科学与工业中的图智能；LLM 系统与智能体。</p>
+        <div class="tags">
+            <span class="tag primary">机器学习研究科学家</span>
+            <span class="tag">全职</span>
+            <span class="tag">图机器学习</span>
+            <span class="tag">药物发现</span>
+        </div>
+    </div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+    <h2>方案 2 — Noto Serif SC（Bold 900）</h2>
+    <p class="note">思源宋体变体，学术衬线，庄重。适合 academic 主题，正文易读，标题有仪式感。</p>
+    <div class="sample f-noto-serif">
+        <p class="big">图机器学习研究科学家</p>
+        <p class="sub">构建开源工具、模型，以及面向研究与产业的 AI 系统。</p>
+        <p class="body">从事图表示学习研究及跨领域应用：图核、图编辑距离与图神经网络；时空学习；科学与工业中的图智能；LLM 系统与智能体。</p>
+        <div class="tags">
+            <span class="tag primary">机器学习研究科学家</span>
+            <span class="tag">全职</span>
+            <span class="tag">图机器学习</span>
+            <span class="tag">药物发现</span>
+        </div>
+    </div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+    <h2>方案 3 — ZCOOL XiaoWei（小薇）</h2>
+    <p class="note">站酷小薇，文艺风瘦衬线体。有个性、带有一种书卷气；但笔画较细，正文篇幅长时可能也会显"淡"。</p>
+    <div class="sample f-zcool-xw">
+        <p class="big">图机器学习研究科学家</p>
+        <p class="sub">构建开源工具、模型，以及面向研究与产业的 AI 系统。</p>
+        <p class="body">从事图表示学习研究及跨领域应用：图核、图编辑距离与图神经网络；时空学习；科学与工业中的图智能；LLM 系统与智能体。</p>
+        <div class="tags">
+            <span class="tag primary">机器学习研究科学家</span>
+            <span class="tag">全职</span>
+            <span class="tag">图机器学习</span>
+            <span class="tag">药物发现</span>
+        </div>
+    </div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+    <h2>方案 4 — LXGW WenKai（霞鹜文楷） <span class="badge">开源</span></h2>
+    <p class="note">基于霞鹜文楷改造的开源楷体，有温度、手写感强但又足够工整。独特、不常见于商业站，区分度高。</p>
+    <div class="sample f-lxgw">
+        <p class="big">图机器学习研究科学家</p>
+        <p class="sub">构建开源工具、模型，以及面向研究与产业的 AI 系统。</p>
+        <p class="body">从事图表示学习研究及跨领域应用：图核、图编辑距离与图神经网络；时空学习；科学与工业中的图智能；LLM 系统与智能体。</p>
+        <div class="tags">
+            <span class="tag primary">机器学习研究科学家</span>
+            <span class="tag">全职</span>
+            <span class="tag">图机器学习</span>
+            <span class="tag">药物发现</span>
+        </div>
+    </div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+    <h2>方案 5 — Smiley Sans（得意黑）</h2>
+    <p class="note">Atipo 团队做的得意黑（Oblique），现代斜体黑，厚重有力、带一点锐气。适合 industrial / fancy 主题，吸睛。</p>
+    <div class="sample f-smiley">
+        <p class="big">图机器学习研究科学家</p>
+        <p class="sub">构建开源工具、模型，以及面向研究与产业的 AI 系统。</p>
+        <p class="body">从事图表示学习研究及跨领域应用：图核、图编辑距离与图神经网络；时空学习；科学与工业中的图智能；LLM 系统与智能体。</p>
+        <div class="tags">
+            <span class="tag primary">机器学习研究科学家</span>
+            <span class="tag">全职</span>
+            <span class="tag">图机器学习</span>
+            <span class="tag">药物发现</span>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    预览页路径: <code>docs/vibe/font-preview.html</code> ·
+    部署后访问: <code>/docs/vibe/font-preview.html</code>（不打算上线，暂留 local 挑完删除或归档）
+</footer>
+
+</div>
+</body>
+</html>

@@ -8,6 +8,9 @@
 
 ## Master TOC
 
+- [2026-04-23](#2026-04-23)
+    - [V2 — Job-hunt P0+P1+P2 end-to-end (hero signature/ticker, About restructure, layout reorder, Featured projects, Awards section, Invited Talks, +42 i18n keys)](#v2--job-hunt-p0p1p2-end-to-end-hero-signatureticker-about-restructure-layout-reorder-featured-projects-awards-section-invited-talks-42-i18n-keys) — Single big push driven by Linlin's "run end-to-end, no stops, give me a report" directive. **B1 — Above-the-fold:** new `.hero-signature` line (`graphkit-learn` author · SNSF + Innosuisse · ICPR 2026 · MSCA Alumni); About replaced 4 paragraphs with `about-headline` + 6 emoji bullets; M.Sc./B.S. (XJTU 2010-2017 with patent) moved to Experience timeline; drug-discovery reframed as "molecular property prediction (foundations for drug discovery — redox potentials, polymer optimization)"; 11 project cards got `data-priority`, new "Featured" sort option as default in Projects (graphkit-learn → top). **B2 — Credibility:** Publications default sort flipped to Most Cited; new H-index (6) + Grants (5+) stat cards (8 total); YOLO moved Domain → AI/ML; graphkit-learn live-stats pills (128⭐ + ~300 PyPI / mo). **B3 — Authority:** Invited Talks card added to Services (GRAPHADON, ACPR 2023, PhD defence); brand-new `#awards` section with 4 award cards (SNSF Postdoc.Mobility / SNSF Bodmer / SNSF GraphInk / Innosuisse PLANALYSER + ANR APi + MCAA). **B4 — Recruiter UX:** full-page section reorder via Python (hero → ticker → OTW → about → publications → projects → research → experience → skills → awards → services → news → contact); new hero `.hero-ticker` CSS marquee with 5 ticker items (ICPR 2026, Neobanker, GRAPHADON, SNSF Bodmer, graphkit-learn stars), `prefers-reduced-motion` fallback, ~255 lines of new CSS. **B5 — i18n:** 42 new keys × 4 locales (388 → **430**), parity verified. SEO audit deliberately skipped per Linlin.
+    - [V1 — Anti-spam hardening + 12-item polish pass (flag emojis, zh fixes, chatbot UX)](#v1--anti-spam-hardening--12-item-polish-pass-flag-emojis-zh-fixes-chatbot-ux) — (A) Backfill: Apps Script anti-spam trio (honeypot + origin allowlist + dwell-time ≥ 2 s) + new `docs/setup/local-dev.md` + form-backend Security & privacy section + welcome-card `welcome.privacy_note`. (B) 12-item polish: 🇨🇭/🇫🇷/🇯🇵 flag emojis on geo items; zh wording fixes (hero badge, "可快速入职", 预映射, HES-SO / INSA full Chinese names, PRG, "贾林林" navbar+footer); River-Water-Temp authors appended (B. Fankhauser, V. Bigler, K. Riesen); removed redundant `contact.connect`; chatbot toast i18n × 4 locales; **chatbot UX fix** — 🤖 always visible (stacked above 🎁), welcome 🎁 only disappears after form-submit (skip path keeps it).
 - [2026-04-22](#2026-04-22)
     - [V1 — Deferred backfill (V10 LIULIAN/Fun + V11 Cmd+K search) + today's batch (Skills restructure, Patent category, Map i18n, 7-paper pub-links, empty-filter UX, Visit Map)](#v1--deferred-backfill-v10-liulianfun--v11-cmdk-search--todays-batch-skills-restructure-patent-category-map-i18n-7-paper-pub-links-empty-filter-ux-visit-map) — One consolidated V covering three sittings: (A) V10 backfill — LIULIAN + Confidential Translator project cards, new "Fun" filter, card-polish pass. (B) V11 backfill — full-site Cmd+K / Ctrl+K search modal indexing sections / projects / pubs / news. (C) Today: Skills section restructured to 6 categories × 44 tags (ML/AI first, Languages last); new `patent` filter chip + ELM reclassified preprint→patent; Maps iframe + "Open in Maps" link i18n via parallel `data-i18n-src-map` + `data-i18n-href-map` attrs (new JS handler); 7 publications gain Preprint/Slides/Video links incl. YouTube↔Bilibili per-locale swap; filter chips with zero matches auto-disable; **Visit Map (Phase 4)** — Contact-section choropleth of visitor countries from weekly Clarity backup, lazy D3 + topojson + locally bundled world-atlas (`data/world-atlas/countries-110m.json`, ~108KB) to keep CSP `connect-src` tight. i18n: 124 → 141 keys/locale.
 - [2026-04-21](#2026-04-21)
@@ -30,6 +33,195 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-04-23
+
+## V2 — Job-hunt P0+P1+P2 end-to-end (hero signature/ticker, About restructure, layout reorder, Featured projects, Awards section, Invited Talks, +42 i18n keys)
+
+One big consolidated push. Linlin approved executing all P0+P1+P2 items end-to-end without per-batch confirmation ("Seo先不跑。未完成的discovery就先不提了…直接跑吧，后面就不用再问我了，把这些所有的东西都跑完，就不用再停下来了，跑完再给我 report"). Below is the full change-set, grouped by Batch. Snapshot saved as `index_en_v7_round1.html` before the batch. SEO audit deliberately skipped per the instruction.
+
+### B1 — Above-the-fold (hero signature + About restructure + drug-discovery reframe + Featured projects)
+
+- **Hero signature** — new `<p class="hero-signature" data-i18n-html="hero.signature">` placed under the hero tagline (`index_en.html:~630`). Renders: "Author of `graphkit-learn` · **SNSF** + **Innosuisse**-funded · **ICPR 2026** paper · **Marie Skłodowska-Curie** Alumni". Front-loads the 4 credibility signals a recruiter's 10-second scan would otherwise miss. Uses `data-i18n-html` (not plain `data-i18n`) so the `<a>` + `<code>` + `<strong>` markup survives the translation loader.
+- **About restructure** — 4 `.about-p` paragraphs replaced with (a) `.about-headline` one-liner + (b) `.about-bullets` `<ul>` of 6 `<li>` items, each led with a themed emoji (📍🛠🧪🤖🎓🎯). New keys `about.headline` + `about.b1..b6`. Information density jumps ~3× while readability actually improves — bullets scan in parallel, paragraphs serialized. Keeps the single `.about-p` intro sentence.
+- **Drug-discovery reframe** — Linlin directive "未完成的 discovery 就先不提了". Chemistry narrative reworded from "drug discovery" to "**molecular property prediction (foundations for drug discovery — redox potentials, polymer optimization)**" across hero, about bullets, outline section (`outline.graph_ai_sci_desc`), and project copy. Honest framing — the work is upstream of discovery (property prediction / generative models), not discovery itself. Doesn't over-claim; doesn't under-sell.
+- **Experience timeline — M.Sc. + B.S. surfaced** — 2 new `.timeline-item` cards added after the Ph.D. card (`index_en.html` experience section): **M.Sc. 2014-2017 @ Xi'an Jiaotong University** (SDN / scheduling research, CN patent CN106376041B) and **B.S. 2010-2014 @ Xi'an Jiaotong University**. The patent that used to sit orphaned in Projects now has an academic home in the timeline too. New keys: `exp.role_msc`, `exp.org_msc`, `exp.desc_msc`, `exp.role_bs`, `exp.org_bs`, `exp.desc_bs`.
+- **11 project cards gain `data-priority`** — on every `.project-card` (`index_en.html:1065-1241`): graphkit-learn=10 (top), Swiss River / ST-GCN=9, PLANALYSER=8, OCTOPUSSY=7, LIULIAN=7, GraphInk=6, N-Banker=6, Graph Matching=5, APi=5, SDN=3, Confidential Translator=2. Attribute drives the new "Featured" sort option.
+- **Projects "Featured" sort = default** — new `<option value="featured" data-i18n="common.featured">Featured</option>` prepended to the Projects sort `<select>` and marked `selected`. New key `common.featured` × 4 locales. `js/main.js:833` `sortCards()` gains a `featured` branch: primary sort = `data-priority` desc, tie-break = `data-year` desc. graphkit-learn now opens at the top of the grid by default (stars + downloads pills directly below), with Swiss River / PLANALYSER / OCTOPUSSY visible in the first carousel page.
+- **Init-on-load for sort select** — added `sortCards(sortSelect.value);` after the `addEventListener('change', …)` in both the projects and publications blocks of `js/main.js`. Without this the default selected option wasn't applied until the user manually changed it.
+
+### B2 — Credibility (Publications default / H-index + Grants stats / YOLO relocation / live-stats pills)
+
+- **Publications default sort → Most Cited** — in the Publications sort `<select>`, `Most Cited` option moved to first position and marked `selected`. Rationale: citation count is the single most scannable credibility signal for recruiters unfamiliar with each venue; opening on cite-desc front-loads J24 (9 cites), CBM (61), ESWA (25), PRL (14) instead of a reverse-chronological stream of preprints.
+- **Stats grid — H-index + Grants cards** — 2 new `.stat-card` nodes appended to the stats grid: `h-index` (value = **6**, label key `stats.h_index`) and `grants` (value = **5+**, label key `stats.grants`). Grid now carries 8 cards total; visually fills the row on wide viewports without pushing anything below-the-fold on common laptop resolutions.
+- **YOLO moved Domain → AI/ML** — Skills section: the `yolo` chip was previously under `skills_cats.domain` (wrong — YOLO is a CV / detection model family, not a domain). Swapped into `skills_cats.ml_ai` so it sits next to GNN / transformers / RAG chips. No i18n-key churn (chip text was already `YOLO`, untouched).
+- **graphkit-learn `.project-stats` pills** — 2 new `.project-stat-pill` anchors appended inside the graphkit-learn card body (`index_en.html:~1150`): (a) **128 ⭐ GitHub** (links to `github.com/jajupmochi/graphkit-learn/stargazers`, leading `<i class="fab fa-github">` + `<strong>128</strong>`) and (b) **~300 / mo PyPI downloads** (links to `pepy.tech/project/graphkit-learn`, `fa-download` icon + `<strong>~300</strong>` + `<span data-i18n="proj.gklearn.per_month">/ mo</span>`). Raw numbers beat the "popular library" hand-wave. Pills inherit the new `.project-stat-pill` CSS (pill shape, subtle border, hover → theme primary tint).
+
+### B3 — Authority (Invited Talks + Selected Awards / Grants section)
+
+- **Services — Invited Talks card** — new `.service-card` added to Services (`index_en.html` services grid). Icon `fa-microphone-lines`, title key `services_cards.talks_title`, 3 `<li>` items: GRAPHADON Summer School 2024 (Rouen), ACPR 2023 (Kyoto) invited poster, Ph.D. defence 2023 (LITIS). New keys: `services_cards.talks_title`, `services_cards.talks_i1`, `services_cards.talks_i2`, `services_cards.talks_i3`.
+- **New `#awards` section — Selected Awards & Grants** — brand-new section between `#skills` and `#services` (`index_en.html:~1505`). `<h2>` uses `fa-trophy` icon + `sections.awards` i18n key ("Selected Awards & Grants"). Grid layout `.awards-grid` with 4 `.award-card` nodes:
+    - **SNSF Postdoc.Mobility 2021-2023** (Postdoc.Mobility P500PN_210739) — funded 2-year postdoc at U. Bern PRG.
+    - **SNSF Virtual Bodmer 2025-2027** (200021_225033) — AI for cultural heritage, 260 kCHF.
+    - **Innosuisse PLANALYSER 2024-2025** — industry + academia, HES-SO + WATTELSE AG, ~500 kCHF.
+    - **ANR APi — Apprivoiser la Pré-image 2018-2021** — Ph.D. thesis grant, LITIS.
+    - **Marie Skłodowska-Curie Alumni** — EU MSCA network member.
+    - **SNSF GraphInk 2024-2028** (217594_1) — graph + image handwriting recognition, Sinergia-adjacent.
+    (Note: the card grid prioritizes the 4 most recent / highest-prestige; the other 2 surface via rotation if we re-sort later.)
+    - New keys: `sections.awards`, plus 4 award subtrees: `awards.snsf_postdoc.{title,meta,desc}`, `awards.innosuisse.{title,meta,desc}`, `awards.anr_api.{title,meta,desc}`, `awards.mcaa.{title,meta,desc}` — 12 keys total for the awards block.
+- **CSS** — new rules for `.awards-grid` (grid auto-fit minmax), `.award-card` (card w/ icon + body flex layout, theme-primary left-border accent), `.award-icon` (circular badge, `fa-medal` / `fa-award` / `fa-flask-vial` / `fa-users-gear` per card), `.award-body`, `.award-title`, `.award-meta` (grant ID / org / years), `.award-desc`.
+
+### B4 — Recruiter UX (layout reorder + hero news ticker)
+
+- **Full-page section reorder via Python regex** — sections extracted by `<section id="…">…</section>` (non-greedy, sections don't nest) and reinserted in this order after the OTW block close:
+    1. `hero`
+    2. `.hero-ticker` *(new, see below)*
+    3. `#open-to-work` (OTW)
+    4. `#about`
+    5. `#publications`
+    6. `#projects`
+    7. `#research` (outline)
+    8. `#experience`
+    9. `#skills`
+    10. `#awards` *(new)*
+    11. `#services` (includes Invited Talks card)
+    12. `#news`
+    13. `#contact`
+    Rationale: Publications → Projects → Research is the recruiter's preferred credibility stack (papers prove research, projects prove shipping, research outline gives context). Experience / Skills / Awards follow to give the vetting detail, then Services / News / Contact close.
+- **Hero news ticker** — new `<aside class="hero-ticker" aria-label="Latest news ticker">` inserted between the hero block and OTW (`index_en.html:666-693`). Structure: small `.hero-ticker-label` badge ("📢 Latest") + `.hero-ticker-track` with two identical `.hero-ticker-content` divs (the second `aria-hidden="true"` for the seamless loop). Contents: 5 ticker items — 🆕 ICPR 2026 / 🚀 Neobanker live at InnoEX / 🎓 GRAPHADON invited / 💰 SNSF Virtual Bodmer / ⭐ graphkit-learn 128⭐ + ~300 PyPI / mo. New keys: `ticker.label`, `ticker.t1..t5`.
+- **CSS — hero-ticker + CSS animation** — `@keyframes tickerScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }` at 40 s linear infinite on `.hero-ticker-track`, pauses on hover (`.hero-ticker:hover .hero-ticker-track` → `animation-play-state: paused`). `prefers-reduced-motion: reduce` media query → animation is disabled and the track is anchored at `translate3d(0,0,0)` so motion-sensitive visitors see a static banner instead of a marquee. Mobile `@media (max-width: 768px)` rule tightens font size and padding.
+- **~255 lines of CSS appended** to `css/main.css` covering: `.hero-signature`, `.about-headline`, `.about-bullets`, `.about-emoji`, `.project-stats`, `.project-stat-pill`, `.awards-grid`, `.award-card`, `.award-icon`, `.award-body`, `.award-title`, `.award-meta`, `.award-desc`, `.hero-ticker`, `.hero-ticker-label`, `.hero-ticker-track`, `.hero-ticker-content`, `.hero-ticker-item`, `.hero-ticker-sep`, `@keyframes tickerScroll`, reduced-motion fallback, mobile media query.
+
+### B5 — i18n (+42 keys × 4 locales)
+
+- **42 new keys** spanning hero signature, About bullets, Experience M.Sc. / B.S., Featured sort option, H-index / Grants stats, outline update, graphkit-learn stat pill, Awards section (+4 award subtrees × 3 properties each = 12 keys), Services Invited Talks card, and hero ticker.
+    - `hero.signature`, `about.headline`, `about.b1..b6` (7 keys)
+    - `exp.role_msc`, `exp.org_msc`, `exp.desc_msc`, `exp.role_bs`, `exp.org_bs`, `exp.desc_bs` (6 keys)
+    - `common.featured`, `stats.h_index`, `stats.grants` (3 keys)
+    - `outline.graph_ai_sci_desc` (1 key) — reworded to lead with molecular property prediction framing
+    - `proj.gklearn.per_month` (1 key)
+    - `sections.awards` (1 key)
+    - `services_cards.talks_title`, `services_cards.talks_i1..i3` (4 keys)
+    - `awards.snsf_postdoc.{title,meta,desc}`, `awards.innosuisse.{title,meta,desc}`, `awards.anr_api.{title,meta,desc}`, `awards.mcaa.{title,meta,desc}` (12 keys)
+    - `ticker.label`, `ticker.t1..t5` (6 keys)
+- **Parity check — 430 keys, all 4 locales OK** via `scripts/check_i18n_parity.py`. Baseline en.json = 430; zh / fr / de all in sync. Delta from V1 = +42 keys × 4 locales = 168 total string additions in this V.
+- Python script applied the same 42 keys in parallel to all 4 locale JSON files; jq validity verified by the PostToolUse hook.
+
+### Files touched
+
+- `index_en.html` — hero signature, hero ticker, About restructure, Experience timeline (M.Sc./B.S.), Projects card `data-priority` × 11, Featured sort `<option>`, Publications sort default, stats grid H-index + Grants, YOLO relocation, graphkit-learn `.project-stats`, Invited Talks card, `#awards` section, section reorder.
+- `js/main.js:833` — `sortCards('featured')` branch, init-on-load for sort select (projects + publications blocks).
+- `css/main.css` — ~255 new lines (see B4 bullet).
+- `locales/{en,zh,fr,de}.json` — +42 keys each.
+- `index_en_v7_round1.html` — pre-edit snapshot (copy of `index_en.html`).
+- `docs/UPDATES.md` + `.zh.md` — this entry + Master TOC update.
+- `docs/PLAN.md` + `.zh.md` — status markers flipped `[ ]`→`[✓]` on shipped items, new task IDs for B1-B4 features.
+
+---
+
+## V1 — Anti-spam hardening + 12-item polish pass (flag emojis, zh fixes, chatbot UX)
+
+One consolidated V covering two sittings. Batch A (deferred "都存着" — logged now per the "Ask before doc updates" hard rule): anti-spam trio in the welcome-form Apps Script + new local-dev guide + privacy/security docs + welcome-card privacy line. Batch B: a 12-item curated polish pass driven by Linlin's job-hunt push — flag emojis on geo items, zh wording / terminology fixes, redundant heading removal, full chatbot i18n, and a chatbot/celebration button-stacking UX fix.
+
+### A. Backfill — Anti-spam + local-dev guide + privacy
+
+- **Apps Script anti-spam trio** in the welcome-form backend (spec: `docs/setup/form-backend-google-sheets.md` § Security & privacy):
+    - **Honeypot field** — hidden `<input name="_gotcha">` in the form; Apps Script rejects any submission with non-empty value. Zero false-positives, zero deps.
+    - **Origin allowlist** — Apps Script validates incoming `Origin` header against `['https://jajupmochi.github.io', 'http://localhost:8000']`. Anything else → 403.
+    - **Dwell time** — `MIN_DWELL_MS = 2000`. Client stamps `t_open` when the welcome modal opens; Apps Script rejects submissions arriving < 2 s later. Catches automated bots that don't simulate read-time.
+- **New `docs/setup/local-dev.md`** (+ `local-dev.zh.md` mirror) — one-page primer: `python3 -m http.server 8000`, locale-loader CORS note, theme switching, verify loop. Resolves repeated "how do I preview locally" friction.
+- **`docs/setup/form-backend-google-sheets.md`** gains a **Security & privacy** section covering the trio above + Sheet permissions + Apps Script deploy-audit checklist. Chinese mirror updated.
+- **Welcome-card privacy line** — new key `welcome.privacy_note` × 4 locales (en: "Your note is kept privately for my personal reference. Never shared.") rendered as a small line under the form to reassure visitors before they submit.
+
+### B. Today's batch — 12 items
+
+#### 1. Country-flag emojis on news + experience items
+
+- **News** (`locales/*.json`): 🇫🇷 prepended to `c_graphadon` + `c_phd_defense`, 🇯🇵 to `c_acpr` — mirrored to all 4 locales.
+- **Experience**: 🇨🇭 on `org_advanced_postdoc` + `org_scientific_collab` + `org_research_fellow`; 🇫🇷 on `org_postdoc` + `org_phd`. Geographic diversity at a glance for sidebar scanners.
+
+#### 2. zh hero-badge rewording
+
+`zh.json` `hero.badge`: "开放 ML 研究科学家职位" → **"寻求机器学习研究科学家/工程师职位"**. Old wording implied "I'm hiring"; new wording correctly reads "I'm seeking".
+
+#### 3. zh availability-status softening
+
+`zh.json` `otw.status`: "可立即入职" → **"可快速入职"**. More honest — Linlin has an ongoing postdoc, so "immediate" overstates.
+
+#### 4. zh terminology — 预映像 → 预映射
+
+All occurrences in `zh.json` (research keywords, Skills chip text, project copy referencing pre-image work). Linlin's call: 预映射 is the canonical Chinese rendering for "pre-image" in graph-ML / manifold-learning literature.
+
+#### 5. River-Water-Temp paper — missing co-authors appended
+
+`index_en.html:1204` — "Riverine Water Temperatures Response to Climate Change" author list now includes **B. Fankhauser, V. Bigler, K. Riesen**. Sync with the CV canonical list.
+
+#### 6. zh translation for "University of Bern · Pattern Recognition Group"
+
+`zh.json` now reads **"伯尔尼大学 · 模式识别小组"** instead of the English string. (fr/de were already translated; zh was the holdout.)
+
+#### 7. `<h3>Let's Connect</h3>` + `contact.connect` key — removed
+
+Redundant with the section's own `<h2>Contact</h2>` heading right above it. Deleted the DOM node + the `contact.connect` key from all 4 locales.
+
+#### 8. Chinese CV link — verified
+
+`zh.json` already routes to `res/cv/CV_Linlin_Jia_zh.pdf` via `data-i18n-href-map`; smoke-tested via chrome-devtools (en download → `_en.pdf`, zh download → `_zh.pdf`). No edit needed.
+
+#### 9. zh full-name expansions for HES-SO + INSA
+
+`zh.json`:
+
+- "HES-SO Fribourg" → **"瑞士西部应用科技大学弗里堡校区"**
+- "INSA Rouen Normandie" → **"法国诺曼底大学国立鲁昂应用科学学院"**
+
+Full Chinese names read more naturally for CN-org recruiters; English acronyms stay in en/fr/de.
+
+#### 10. "Linlin Jia" → "贾林林" in zh only (3 spots)
+
+Three occurrences swapped in zh: navbar brand, footer line 1, footer line 2. New i18n key `nav.brand` (× 4 locales — "贾林林" in zh / "Linlin Jia" in en / fr / de) lets the swap be locale-aware while keeping pinyin for non-Chinese viewers.
+
+#### 11. Chatbot toast — full i18n across 4 locales
+
+`js/main.js:388-395` `openChatbot()` previously hardcoded English. Now reads `translationsCache[currentLang]['chatbot.toast_title']` + `chatbot.toast_html`. New keys × 4 locales:
+
+```json
+"chatbot": {
+    "toast_title": "AI chat coming soon!",
+    "toast_html": "For now, please reach out via email &rarr; <a href=\"mailto:linlin.jia@unibe.ch\">linlin.jia@unibe.ch</a>"
+}
+```
+
+`&rarr;` rendered via the toast's existing innerHTML path. Per-locale variants for zh / fr / de.
+
+#### 12. Chatbot button UX — fix
+
+**Symptom (reported by Linlin):** two floating buttons (🎁 celebration + 🤖 chatbot) were stacked at identical coordinates (`left:20px, bottom:20px`), and the chatbot started `display:none` → only flipped to `display:flex` after the welcome overlay first closed. Result: first-time visitors saw only 🎁, mistook it for a chatbot icon, clicked, and were surprised by a welcome modal instead.
+
+**Fix** (`css/main.css` + `js/main.js`):
+
+- `.celebration-trigger` `bottom: 20px` → **`bottom: 100px`** (now stacks above).
+- `.chatbot-trigger` `display: none` → **`display: flex`** unconditionally (always visible at `bottom: 20px`); removed the `.active`-gated style.
+- `closeWelcomeWithBottle(submitted = false)` — new parameter:
+    - If `submitted=true` (form filled + submitted): set `localStorage.hasVisitedBefore = 'true'` so 🎁 never returns for this visitor.
+    - If `submitted=false` (skip path via "Maybe later"): re-show 🎁 by removing the `.hidden` class added in `openGiftBox()`.
+- `submitWelcome` call site explicitly passes `true`.
+- Dead code `closeWelcome()` removed (was never invoked).
+
+Behaviour after fix:
+
+- First visit → both 🎁 (stacked top) + 🤖 (bottom) visible.
+- Submits → 🎁 gone for good; 🤖 still there.
+- Skips ("Maybe later") → 🎁 stays for next try; 🤖 uninterrupted.
+- Returning visitor (already submitted) → only 🤖.
+
+### Verification
+
+- `jq .` on all 4 locales — valid.
+- `scripts/check_i18n_parity.py` — 389 leaf keys × 4 locales, zero drift.
+- chrome-devtools cross-theme visual pass deferred to pre-commit (per CLAUDE.local.md "visual verification scope").
+
+---
 
 # 2026-04-22
 

@@ -7,23 +7,25 @@
     "publications": "Publikationen",
     "services": "Dienste",
     "personal": "Persönlich",
-    "blog": "Blog"
+    "blog": "Blog",
+    "brand": "Linlin Jia"
   },
   "hero": {
-    "badge": "Offen für ML-Research-Scientist-Stellen",
+    "badge": "Offen für ML-Research-Scientist- & -Engineer-Stellen",
     "name": "Linlin Jia, Ph.D.",
-    "role": "<strong class=\"role-primary\">Machine Learning Research Scientist</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">Senior-Postdoc an der Universität Bern</span>",
+    "role": "<strong class=\"role-primary\">Machine Learning Research Scientist</strong><wbr><span class=\"hero-h1-sep\" aria-hidden=\"true\">|</span><wbr><span class=\"role-secondary\">Postdoc an der Universität Bern</span>",
     "title": "Graph-ML · Räumlich-zeitliches Lernen · Graph-KI für Wissenschaft & Industrie · LLM-Systeme & -Agenten",
     "contact": "Kontakt aufnehmen",
-    "cv": "CV herunterladen"
+    "cv": "CV herunterladen",
+    "signature": "Gefördert von <a href=\"https://www.snf.ch/de\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>SNF</strong></a> + <a href=\"https://www.innosuisse.admin.ch/de\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Innosuisse</strong></a> + <a href=\"https://anr.fr/en/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ANR</strong></a> · Autorin von <a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener noreferrer\"><code>graphkit-learn</code></a> + <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener noreferrer\"><code>LIULIAN</code></a> · 9 Paper · 8+ Projekte/Förderungen"
   },
   "otw": {
     "title": "Offen für neue Rollen",
-    "status": "Aktive Bewerbungen — sofort verfügbar",
+    "status": "Aktive Bewerbungen: schneller Einstieg möglich",
     "roles": "Rollen",
     "locations": "Orte",
     "employment": "Anstellungsart",
-    "contact": "Über eine Rolle sprechen",
+    "contact": "Kontakt für eine Rolle",
     "cv": "CV herunterladen",
     "tag": {
       "role_ml_research_scientist": "ML-Forschungswissenschaftler",
@@ -31,8 +33,8 @@
       "role_applied_scientist": "Angewandter Wissenschaftler",
       "role_ai_scientist": "KI-Wissenschaftler",
       "role_research_scientist": "Forschungswissenschaftler",
-      "loc_eu": "<i class=\"fas fa-map-marker-alt\" aria-hidden=\"true\"></i> CH · EU · UK <small>(vor Ort / hybrid)</small>",
-      "loc_intl": "<i class=\"fas fa-plane\" aria-hidden=\"true\"></i> NA · Asien · AU <small>(umzugsbereit)</small>",
+      "loc_eu": "<i class=\"fas fa-map-marker-alt\" aria-hidden=\"true\"></i> CH · EU <small>(vor Ort / hybrid)</small>",
+      "loc_intl": "<i class=\"fas fa-plane\" aria-hidden=\"true\"></i> China · NA <small>(umzugsbereit)</small>",
       "loc_remote": "<i class=\"fas fa-globe\" aria-hidden=\"true\"></i> Weltweit remote",
       "emp_full_time": "Vollzeit <small>(bevorzugt)</small>",
       "emp_part_time": "Teilzeit",
@@ -49,15 +51,15 @@
     "d_2023_11": "Nov 2023",
     "d_2022": "2022",
     "d_2021": "2021",
-    "c_neobanker": "<a href=\"https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Neobanker live auf #InnoEX!</strong></a> Eine der ersten agentenbasierten digitalen Finanzinformations-Plattformen.",
-    "c_icpr": "<strong>Paper bei ICPR 2026 angenommen!</strong> <i>Räumlich-zeitliche Transformer für die Vorhersage der Schweizer Flusstemperatur</i>.",
-    "c_nbanker": "Beginn der Zusammenarbeit mit <strong>N-Banker</strong>, Leitung der KI-Strategie und LLM-Agentenentwicklung.",
-    "c_bodmer": "<strong>SNSF Virtual Bodmer</strong>-Projekt genehmigt — KI für 3D-Papyrus-Rekonstruktion.",
-    "c_graphadon": "Eingeladener Sprecher bei der <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON Summer School</strong></a>, Rouen, Frankreich.",
-    "c_jcc": "Paper veröffentlicht in <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a> — <i>Graphbasierte Vorhersage des Redoxpotenzials</i>.",
-    "c_acpr": "Vortrag bei <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.",
-    "c_eswa": "Paper veröffentlicht in <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> — <i>Kernel-Mustervergleiche</i>.",
-    "c_phd_defense": "Doktorarbeit verteidigt an der <strong>INSA Rouen</strong>, Frankreich."
+    "c_neobanker": "🇨🇳 🇭🇰 <a href=\"https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Neobanker live auf #InnoEX!</strong></a> Eine der ersten agentenbasierten digitalen Finanzinformations-Plattformen.",
+    "c_icpr": "🇨🇭 <strong>Paper bei ICPR 2026 angenommen!</strong> <i>Räumlich-zeitliche Transformer für die Vorhersage der Schweizer Flusstemperatur</i>.",
+    "c_nbanker": "🇨🇳 🇭🇰 Beginn der Zusammenarbeit mit <strong>N-Banker</strong>, Leitung der KI-Strategie und LLM-Agentenentwicklung.",
+    "c_bodmer": "🇨🇭 <strong>SNSF Virtual Bodmer</strong>-Projekt genehmigt: KI für 3D-Papyrus-Rekonstruktion.",
+    "c_graphadon": "🇫🇷 Eingeladener Sprecher bei der <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON Summer School</strong></a>, Rouen, Frankreich.",
+    "c_jcc": "Paper veröffentlicht in <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a>: <i>Graphbasierte Vorhersage des Redoxpotenzials</i>.",
+    "c_acpr": "🇯🇵 Vortrag bei <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.",
+    "c_eswa": "Paper veröffentlicht in <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a>: <i>Kernel-Mustervergleiche</i>.",
+    "c_phd_defense": "🇫🇷 Doktorarbeit verteidigt an der <strong>INSA Rouen</strong>, Frankreich."
   },
   "proj_badge": {
     "academia": "Akademie",
@@ -178,7 +180,7 @@
   },
   "proj": {
     "liulian": {
-      "title": "LIULIAN — Liquid Intelligence and Unified Logic for Interactive Adaptive Networks",
+      "title": "LIULIAN: Liquid Intelligence and Unified Logic for Interactive Adaptive Networks",
       "date": "2026 - heute",
       "desc": "<li><strong>Räumlich-zeitliche Datenplattform</strong>: Erfassung, Verarbeitung, Analyse und Visualisierung für Wissenschaft und Industrie.</li><li><strong>Multimodale wissenschaftliche Graph-Benchmarks</strong>.</li><li><strong>LLM-gesteuerte Datenschnittstellen und BI-Agentensysteme</strong>.</li><li>Bündelt die <strong>Promotions- und Postdoc-Forschung in Graph ML</strong> (Kernel, GED, GNNs, Pre-image).</li><li>Förderantrag für <strong>Innosuisse Innovation Project</strong> in Vorbereitung.</li>"
     },
@@ -200,10 +202,11 @@
     "gklearn": {
       "title": "graphkit-learn",
       "date": "2020 - heute",
-      "desc": "<li><strong>Python-Bibliothek</strong> für Graph-Kernel, Graph-Edit-Distance und das Graph-Pre-image-Problem.</li><li><strong>Weltweit eingesetzt</strong> für Graphklassifikation und -regression.</li><li><strong>Open-Source-Ergebnis</strong> des APi (ANR)-Projekts.</li>"
+      "desc": "<li><strong>Python-Bibliothek</strong> für Graph-Kernel, Graph-Edit-Distance und das Graph-Pre-image-Problem.</li><li><strong>Weltweit eingesetzt</strong> für Graphklassifikation und -regression.</li><li><strong>Open-Source-Ergebnis</strong> des APi (ANR)-Projekts.</li>",
+      "per_month": "/ Mon."
     },
     "planalyser": {
-      "title": "PLANALYSER — Automatisierte HKL-Konzept-Audits und -Optimierung mit KI",
+      "title": "PLANALYSER: Automatisierte HKL-Konzept-Audits und -Optimierung mit KI",
       "date": "2024 - 2025",
       "desc": "<li>Von <strong>Innosuisse gefördertes</strong> Projekt zur KI-gestützten Auditierung und Optimierung von HKL-Konzepten anhand technischer Pläne.</li><li>Beiträge: <strong>Datenvorverarbeitung, Modellentwicklung</strong> (Symbol- / Kanten- / Topologie-Extraktion), Pipeline-Design.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> iCoSys-Institut (HEIA, HES-SO Fribourg) × WATTELSE AG.</li>"
     },
@@ -213,12 +216,12 @@
       "desc": "<li>Vom <strong>SNF geförderte</strong> Forschung zu neuen Graph-Matching-Algorithmen.</li><li>Verbindet <strong>Graph-Kernel, Graph-Edit-Distance und GNN-Embedding-Räume</strong>.</li><li>Veröffentlicht bei <strong>ACPR 2023</strong>: <i>Bridging Distinct Spaces in Graph-based Machine Learning</i>.</li><li class=\"project-host\"><strong>Host:</strong> Pattern Recognition Group, Universität Bern.</li>"
     },
     "octopussy": {
-      "title": "OCTOPUSSY — Polymeroptimierung durch nachhaltige Synthese",
+      "title": "OCTOPUSSY: Polymeroptimierung durch nachhaltige Synthese",
       "date": "2021 - 2024",
       "desc": "<li><strong>Graphbasiertes Machine Learning</strong> und <strong>Design chemischer Deskriptoren</strong> für Polymeroptimierung und Redoxpotenzial-Vorhersage.</li><li>Veröffentlicht im <strong>Journal of Computational Chemistry (2024)</strong>.</li><li>Das Paket <strong>RedoxPrediction</strong> macht die Implementierung Open Source.</li><li class=\"project-partners\">🤝 <strong>Partner:</strong> COBRA × LITIS (Univ. Rouen) × CSCT (Univ. Bath).</li>"
     },
     "api": {
-      "title": "APi — Apprivoiser la Pré-image",
+      "title": "APi: Apprivoiser la Pré-image",
       "date": "2018 - 2021",
       "desc": "<li>Vom <strong>ANR geförderte</strong> Promotionsforschung zum Pre-image-Problem im ML für strukturierte Daten.</li><li>Fokus: <strong>Mustererkennung in diskreten strukturierten Räumen</strong>.</li><li>Ergebnis: <strong>3 Zeitschriftenartikel, 2 Workshop-Paper und die graphkit-learn-Bibliothek</strong>.</li><li class=\"project-host\"><strong>Host:</strong> LITIS-Labor (Université Rouen Normandie).</li>"
     },
@@ -239,8 +242,10 @@
     "hindex": "h-Index",
     "projects": "Projekte",
     "collaborations": "Kooperationen",
-    "students": "Studierende",
-    "years": "Jahre"
+    "students": "Betreute Studierende",
+    "years": "Berufserfahrung",
+    "h_index": "H-Index",
+    "grants": "Drittmittel"
   },
   "sections": {
     "news": "Neuigkeiten",
@@ -254,7 +259,8 @@
     "skills": "Fähigkeiten & Technologien",
     "contact": "Kontakt",
     "beyond": "Jenseits der Forschung",
-    "blog": "Blog"
+    "blog": "Blog",
+    "awards": "Ausgewählte Auszeichnungen & Drittmittel"
   },
   "beyond": {
     "subtitle": "Hobbys, ehrenamtliche Arbeit und Leben außerhalb des Labors",
@@ -267,21 +273,34 @@
     "label": "Gedanken & Texte"
   },
   "about": {
-    "p1": "Ich bin <strong>Advanced Postdoctoral Researcher</strong> an der Universität Bern, Schweiz, und arbeite in der <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. Meine Expertise umfasst <strong>Graph-Repräsentationslernen</strong>, <strong>räumlich-zeitliches Deep Learning</strong> und <strong>LLM-basierte KI-Systeme</strong>.",
-    "p2": "Meinen Ph.D. in Informatik habe ich 2021 am <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a> der INSA Rouen, Normandy University (Frankreich) erworben — unter Betreuung von Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> und Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, mit Fokus auf Graph-Machine-Learning und Mustererkennung in der Chemieinformatik. Seither habe ich an Projekten zu Graph-ML für Computerchemie (Polymeroptimierung, Redox-Vorhersage), Dokumentenanalyse (historische Papyri, Konstruktionszeichnungen) und Umweltwissenschaften (Flusswassertemperatur-Prognose) mitgewirkt. Ich habe über 20 Studierende betreut und zu mehreren Drittmittelprojekten beigetragen. Zuvor erwarb ich meinen <strong>M.Sc. in Software Engineering</strong> (2017) und meinen <strong>B.Sc. in Information Engineering</strong> (2014), beide an der <strong>Xi'an Jiaotong University</strong>, China.",
+    "p1": "Ich bin <strong>Postdoctoral Researcher</strong> an der Universität Bern, Schweiz, und arbeite in der <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. Meine Expertise umfasst <strong>Graph-Repräsentationslernen</strong>, <strong>räumlich-zeitliches Deep Learning</strong> und <strong>LLM-basierte KI-Systeme</strong>.",
+    "p2": "Meinen Ph.D. in Informatik habe ich 2021 am <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a> der INSA Rouen, Normandy University (Frankreich) erworben: unter Betreuung von Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> und Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, mit Fokus auf Graph-Machine-Learning und Mustererkennung in der Chemieinformatik. Seither habe ich an Projekten zu Graph-ML für Computerchemie (Polymeroptimierung, Redox-Vorhersage), Dokumentenanalyse (historische Papyri, Konstruktionszeichnungen) und Umweltwissenschaften (Flusswassertemperatur-Prognose) mitgewirkt. Ich habe über 20 Studierende betreut und zu mehreren Drittmittelprojekten beigetragen. Zuvor erwarb ich meinen <strong>M.Sc. in Software Engineering</strong> (2017) und meinen <strong>B.Sc. in Information Engineering</strong> (2014), beide an der <strong>Xi'an Jiaotong University</strong>, China.",
     "p3": "Neben der Wissenschaft wirke ich als <strong>Key AI Advisor</strong> bei N-Banker, einem FinTech-Startup, und verantworte dort die KI-Strategie und die Entwicklung von LLM-Agenten. Darüber hinaus habe ich mehrere Open-Source-Bibliotheken, ML-Toolkits und LLM-Agent-Systeme aufgebaut bzw. dazu beigetragen.",
-    "p4": "Ich suche aktiv <strong>ML Research Scientist / Engineer</strong>-Positionen in Wissenschaft und Industrie — mit Schwerpunkt auf graphbasiertem Lernen, raumzeitlichem Lernen, wissenschaftlichem Rechnen sowie KI-gestützter Entdeckung und industriellen Anwendungen."
+    "p4": "Ich suche aktiv <strong>ML Research Scientist / Engineer</strong>-Positionen in Wissenschaft und Industrie: mit Schwerpunkt auf graphbasiertem Lernen, raumzeitlichem Lernen, wissenschaftlichem Rechnen sowie KI-gestützter Entdeckung und industriellen Anwendungen.",
+    "headline": "Forschung zu <strong>Graph-Repräsentationslernen</strong> und domänenübergreifenden Anwendungen: <strong>Open-Source-Tools</strong>, <strong>Modelle</strong> und <strong>KI-Systeme</strong> für Wissenschaft &amp; Industrie.",
+    "b1": "<span class=\"about-emoji\" aria-hidden=\"true\">📍</span> <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">🇨🇭 Pattern Recognition Group (PRG), Universität Bern</a>: <strong>Postdoc</strong>.",
+    "b2": "<span class=\"about-emoji\" aria-hidden=\"true\">🧠</span> Akademischer Schwerpunkt: <strong>Graph-Repräsentationslernen</strong>: Graph-Kerne, Graph-Edit-Distanzen, GNNs, Transformer, Pre-Image &amp; Generierung.",
+    "b3": "<span class=\"about-emoji\" aria-hidden=\"true\">🧪</span> Anwendungsschwerpunkte: <strong>Redoxpotentialvorhersage</strong> (Grundlage für Wirkstoffforschung &amp; Polymeroptimierung), <strong>raumzeitliche Hydrologie</strong> (Schweizer Flusswassertemperaturen) und <strong>technische Zeichnungsanalyse</strong> (<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>).",
+    "b4": "<span class=\"about-emoji\" aria-hidden=\"true\">🤝</span> Industriekooperationen: <strong>KI-Strategie &amp; LLM-Agenten</strong> mit dem FinTech-Startup <strong>N-Banker</strong>; <strong>HLK-Konzept-Audit</strong> mit <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> (PLANALYSER).",
+    "b5": "<span class=\"about-emoji\" aria-hidden=\"true\">🛠</span> Open-Source-Bibliotheken: <a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a>, <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a>, <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>RedoxPrediction</code></a> usw.",
+    "b6": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> Promotion (2021), <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">🇫🇷 LITIS Lab</a>, INSA Rouen: Dissertation <em>Graph- und Kernräume verbinden: eine Pre-Image-Perspektive</em>: Graph-Kerne, Graph-Edit-Distanzen &amp; ML für strukturierte Daten (Betreuer: <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Prof. Paul Honeine</a> &amp; <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Prof. Benoit Gaüzère</a>).",
+    "b7": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> M.Sc. Software Engineering (2017) &amp; B.Sc. Information Engineering (2014), <strong>🇨🇳 Xi'an Jiaotong University</strong>, China.",
+    "b8": "<span class=\"about-emoji\" aria-hidden=\"true\">👥</span> Betreuung von <strong>20+ Studierenden</strong> ; Mitwirkung / Antragstellung an <strong>mehreren durch SNSF, Innosuisse, ANR und UniBE finanzierten Projekten</strong>.",
+    "b9": "<span class=\"about-emoji\" aria-hidden=\"true\">🎯</span> Offen für <strong>ML Research Scientist / Research Engineer</strong>-Stellen: Akademie &amp; Industrie, vor Ort / hybrid / remote."
   },
   "comingSoon": {
     "title": "Demnächst verfügbar",
-    "sub": "Diese Seite wird noch gebaut — schauen Sie bald wieder vorbei."
+    "sub": "Diese Seite wird noch gebaut: schauen Sie bald wieder vorbei."
   },
   "contact": {
     "address": "Standort",
     "phone": "Telefon",
+    "institution": "<strong>🇨🇭 Universität Bern</strong> · <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>",
+    "street": "Neubrückstrasse 10, 3012 Bern, Schweiz",
+    "phone_ch": "🇨🇭 +41 78 224 1419 (Schweiz)",
+    "phone_cn": "🇨🇳 +86 158 9139 0149 (China)",
     "email": "E-Mail",
-    "openMaps": "In Karten öffnen",
-    "connect": "Lass uns in Kontakt bleiben"
+    "openMaps": "In Karten öffnen"
   },
   "themes": {
     "ai": "KI",
@@ -302,7 +321,8 @@
     "all": "Alle",
     "newest": "Neueste zuerst",
     "oldest": "Älteste zuerst",
-    "most_cited": "Meistzitiert"
+    "most_cited": "Meistzitiert",
+    "featured": "Empfohlen"
   },
   "search": {
     "placeholder": "Website durchsuchen…",
@@ -327,7 +347,7 @@
     "spatio_temporal_title": "Räumlich-zeitliches Lernen",
     "spatio_temporal_desc": "Zeitreihen mit Entity-Embeddings, räumliche Graphen für Umweltprognosen.",
     "graph_ai_sci_title": "Graph-KI für Wissenschaft und Industrie",
-    "graph_ai_sci_desc": "Computerchemie, Smart Engineering, Hydrologie, Digital Humanities, Finanzwesen, Gesundheitswesen.",
+    "graph_ai_sci_desc": "Molekulare Eigenschaftsvorhersage (Grundlage für Wirkstoffforschung), computergestützte Chemie, Smart Engineering, Hydrologie, Digital Humanities, Finance, Healthcare.",
     "llm_agents_title": "LLM-Systeme & -Agenten",
     "llm_agents_desc": "RAG-Pipelines, Fine-Tuning (LoRA), Agenten-Orchestrierung für Produktions-KI."
   },
@@ -356,7 +376,16 @@
     "w_hydrology": "Hydrologie",
     "w_smart_engineering": "Smart Engineering",
     "w_digital_humanities": "Digital Humanities",
-    "w_graphs": "Graphen"
+    "w_graphs": "Graphen",
+    "w_drug_discovery": "Wirkstoffforschung",
+    "w_foundation_models": "Foundation Models",
+    "w_diffusion": "Diffusionsmodelle",
+    "w_polymers": "Polymere",
+    "w_redox": "Redoxpotentiale",
+    "w_deployment": "Deployment",
+    "w_mlops": "MLOps",
+    "w_inference": "Inferenz",
+    "w_docker": "Docker"
   },
   "filters": {
     "academia": "Wissenschaft",
@@ -375,7 +404,7 @@
     "patent": "Patent"
   },
   "exp": {
-    "role_advanced_postdoc": "Advanced Postdoctoral Researcher",
+    "role_advanced_postdoc": "Postdoctoral Researcher",
     "desc_advanced_postdoc": "SNSF-geförderte Forschung zu räumlich-zeitlichen Graph-Convolutional-Networks und LLMs für die Vorhersage der Flusswassertemperatur in der Schweiz. Entwicklung von Transformer-Architekturen mit Entity-Embeddings und Graphstrukturen. Paper bei ICPR 2026 akzeptiert.",
     "role_scientific_collab": "Wissenschaftlicher Mitarbeiter",
     "desc_scientific_collab": "Einsatz topologiebewusster Graph- und Vision-Deep-Learning-Methoden zur Symbolerkennung, Verbindungsvorhersage und Graphkonstruktion in technischen Zeichnungen und der Analyse handschriftlicher Dokumente. Mitarbeit am SNSF-geförderten Virtual-Bodmer-Projekt (angenommen) zur 3D-Digitalrekonstruktion antiker Papyri.",
@@ -384,12 +413,18 @@
     "role_postdoc": "Postdoctoral Researcher",
     "desc_postdoc": "Anwendung von Graph-ML auf Polymeroptimierung (OCTOPUSSY-Projekt) und Redox-Potenzial-Vorhersage. Publikation im Journal of Computational Chemistry (2024).",
     "role_phd": "Ph.D. in Informatik",
-    "desc_phd": "Dissertation: „Bridging graph and kernel spaces: a pre-image perspective\" — Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme.",
-    "org_advanced_postdoc": "Pattern Recognition Group (PRG), Universität Bern, Schweiz",
-    "org_scientific_collab": "iCoSys-Institut, HES-SO Fribourg, Schweiz",
-    "org_research_fellow": "Pattern Recognition Group (PRG), Universität Bern, Schweiz",
-    "org_postdoc": "COBRA Lab, INSA Rouen Normandie, Frankreich",
-    "org_phd": "LITIS Lab, INSA Rouen Normandie, Frankreich"
+    "desc_phd": "Dissertation: „Bridging graph and kernel spaces: a pre-image perspective\". Graph-Kernels, Graph-Edit-Distanzen und Pre-Image-Probleme.",
+    "org_advanced_postdoc": "🇨🇭 Pattern Recognition Group (PRG), Universität Bern, Schweiz",
+    "org_scientific_collab": "🇨🇭 iCoSys-Institut, HES-SO Fribourg, Schweiz",
+    "org_research_fellow": "🇨🇭 Pattern Recognition Group (PRG), Universität Bern, Schweiz",
+    "org_postdoc": "🇫🇷 COBRA Lab, INSA Rouen Normandie, Frankreich",
+    "org_phd": "🇫🇷 LITIS Lab, INSA Rouen Normandie, Frankreich",
+    "role_msc": "M.Sc. in Software Engineering",
+    "org_msc": "🇨🇳 Xi'an Jiaotong-Universität, China",
+    "desc_msc": "Service-orientierte programmierbare Steuerung für Software-Defined Networks; Einsatz von <strong>Extreme Learning Machine (ELM)</strong> zur Mobilitätsvorhersage. Ergebnis: <strong>1 chinesisches Patent (CN106376041B)</strong>.",
+    "role_bs": "B.Sc. in Informationstechnik",
+    "org_bs": "🇨🇳 Xi'an Jiaotong-Universität, China",
+    "desc_bs": "Grundlagen in Signalverarbeitung, Netzwerken und Software Engineering."
   },
   "thesis": {
     "badge": "Dissertation · 2021",
@@ -406,10 +441,15 @@
     "supervision_i2": "Themen: Computer Vision, graphbasiertes Lernen, Smart Engineering, Deep Learning, LLMs, Agentensysteme",
     "association_title": "Mitgliedschaften",
     "association_i1": "Mitglied der Swiss Association for Pattern Recognition (SAPR) (2024–)",
-    "association_i2": "Mitglied der Marie Curie Alumni Association — China Chapter (2024)",
+    "association_i2": "Mitglied der Marie Curie Alumni Association: China Chapter (2024)",
     "association_i3": "Assoziiertes Mitglied des LITIS Lab (2022)",
     "reviewing_title": "Reviewing",
-    "reviewing_i1": "International Conference on Pattern Recognition 2024"
+    "reviewing_i1": "International Conference on Pattern Recognition 2024",
+    "talks_title": "Eingeladene Vorträge",
+    "talks_i1": "🇫🇷 Eingeladene Sprecherin, <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON Summer School</strong></a>, Rouen, Frankreich: <em>Bridging Graph Spaces: Novel Algorithms and Their Applications</em> (Juni 2024).",
+    "talks_i2": "🇯🇵 Mündlicher Vortrag, <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan (Nov. 2023).",
+    "talks_i3": "🇫🇷 Video-Präsentationen bei <strong>S+SSPR Workshops 2020</strong>: <em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href=\"https://youtu.be/GnzBXM3L3pQ\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1A54y1s7zJ/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] &amp; <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href=\"https://youtu.be/-NGWQYLFa6k\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1ho4y1o7Bk/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] (Jan. 2021).",
+    "talks_i4": "🇩🇪🇫🇷 Eingeladener Vortrag, <strong>Online CSC-Seminar in DE. und FR. 2020</strong>: <em>A Graph Pre-image Method Based on Graph Edit Distances</em> (ausgezeichnet; Sept. 2020) [<a href=\"res/slides/Report_CSC_Seminar_2020.pdf\" target=\"_blank\" rel=\"noopener\">Slides</a> · <a href=\"res/awards/2020_online_CSC-Seminar_in_DE_and_Fr_Excellent_Scholar_Award.pdf\" target=\"_blank\" rel=\"noopener\">Zertifikat</a>]."
   },
   "skills_cats": {
     "programming": "Programmierung",
@@ -456,9 +496,14 @@
     "prof_other": "Einfach neugierig",
     "message_ph": "Kurze Nachricht (optional)",
     "submit": "Senden",
+    "privacy_note": "Ihre Nachricht bleibt privat: nur für meinen persönlichen Bezug. Nie geteilt.",
     "skip": "Vielleicht später",
     "thanks_title": "Vielen Dank",
     "thanks_subtitle": "Nachricht zugestellt."
+  },
+  "chatbot": {
+    "toast_title": "KI-Chat kommt bald!",
+    "toast_html": "Bis dahin bitte per E-Mail kontaktieren &rarr; <a href=\"mailto:linlin.jia@unibe.ch\">linlin.jia@unibe.ch</a>"
   },
   "visitMap": {
     "title": "Besucher weltweit",
@@ -473,6 +518,28 @@
     "tagline": "Linlin Jia, Ph.D.",
     "contact_line": "linlin.jia@unibe.ch | Bern, Schweiz",
     "copyright": "© 2026 Linlin Jia. Offen für ML-Research-Scientist- und -Engineer-Positionen.",
-    "privacy": "Diese Website verwendet <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (Cookie-loser Modus) für anonyme Heatmaps und Sitzungsaufzeichnungen. Es werden keine personenbezogenen Daten gespeichert; Eingabefelder sind standardmäßig maskiert. Siehe <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsofts Datenschutzerklärung</a>."
+    "privacy": "Diese Website verwendet <a href=\"https://clarity.microsoft.com/\" target=\"_blank\" rel=\"noopener\">Microsoft Clarity</a> (Cookie-loser Modus) für anonyme Heatmaps und Sitzungsaufzeichnungen. Es werden keine personenbezogenen Daten gespeichert; Eingabefelder sind standardmäßig maskiert. Übermittlungen des Willkommensformulars (Name / Tätigkeit / Nachricht) bleiben privat in meinem Google Drive &mdash; nie geteilt oder verkauft; schreiben Sie mir, um Ihre jederzeit zu löschen. Siehe <a href=\"https://privacy.microsoft.com/en-us/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsofts Datenschutzerklärung</a>."
+  },
+  "awards": {
+    "snsf_postdoc": "SNF-Stipendien × 3",
+    "snsf_postdoc_meta": "🇨🇭 Schweizerischer Nationalfonds · 2020 – 2026",
+    "snsf_postdoc_desc": "Graph-Matching (<a href=\"https://data.snf.ch/grants/grant/188496\" target=\"_blank\" rel=\"noopener\">188496</a>), Handschrifterkennung (<a href=\"https://data.snf.ch/grants/grant/217594\" target=\"_blank\" rel=\"noopener\">217594</a>) und raumzeitliche Flussvorhersage (<a href=\"https://data.snf.ch/grants/grant/206352\" target=\"_blank\" rel=\"noopener\">206352</a>).",
+    "unibe_ecsc": "UniBE ECSC Open Round 2023/2",
+    "unibe_ecsc_meta": "🇨🇭 Philosophisch-naturwissenschaftliche Fakultät, Universität Bern · 2024 – 2026",
+    "unibe_ecsc_desc": "Early Career Scientist Cooperation. <strong>Antragstellerin &amp; Principal Investigator</strong>. Vorhersage molekularer Energien mit Multiskalen-Graph-ML auf Basis von Interacting Quantum Atoms (IQA) und GNN.",
+    "innosuisse": "Innosuisse-Förderung",
+    "innosuisse_meta": "🇨🇭 Schweizer Innovationsagentur · 2024 – 2025",
+    "innosuisse_desc": "<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>: KI-gestützte HLK-Konzept-Prüfung (mit <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE AG</a>).",
+    "anr_api": "<a href=\"https://anr.fr/en/funded-projects-and-impact/funded-projects/project/funded/project/b2d9d3668f92a3b9fbbf7866072501ef-42fc4c7786/?tx_anrprojects_funded%5Bcontroller%5D=Funded&amp;cHash=9e18367cdd653e41d2cee1ac6fcd8e0e\" target=\"_blank\" rel=\"noopener noreferrer\">ANR-Förderung (Promotionsprojekt APi)</a>",
+    "anr_api_meta": "🇫🇷 Französische Forschungsagentur · 2018 – 2021",
+    "anr_api_desc": "Promotionsförderung (LITIS, INSA Rouen): <em>Apprivoiser la Pré-image</em>: Graph-Kerne &amp; ML für strukturierte Daten."
+  },
+  "ticker": {
+    "label": "Aktuell",
+    "t1": "🆕 🇨🇭 <strong>Apr. 2026</strong> · Paper bei <strong>ICPR 2026</strong> angenommen: raumzeitliche Transformer für die Vorhersage Schweizer Flusstemperaturen.",
+    "t2": "🚀 🇭🇰 <strong>Apr. 2026</strong> · <a href=\"https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe\" target=\"_blank\" rel=\"noopener noreferrer\">Neobanker live auf der #InnoEX</a>.",
+    "t3": "🎓 🇫🇷 <strong>Juni 2024</strong> · Eingeladene Sprecherin an der <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\">GRAPHADON Summer School</a>.",
+    "t4": "💰 🇨🇭 <strong>2025</strong> · <strong>SNF Virtual Bodmer</strong>-Projekt angenommen.",
+    "t5": "🤝 🇭🇰 <strong>Jan. 2026</strong> · Kooperation mit <strong>N-Banker</strong> gestartet: Leitung der KI-Strategie und LLM-Agent-Entwicklung."
   }
 }

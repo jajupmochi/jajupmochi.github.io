@@ -10,7 +10,7 @@ silently no-ops.
 ## Master TOC
 
 - [Order of operations](#order-of-operations)
-- [Placeholders to replace in `index_en.html`](#placeholders-to-replace-in-index_enhtml)
+- [Placeholders to replace](#placeholders-to-replace)
 - [Smoke test (recommended — do once after every deploy)](#smoke-test-recommended--do-once-after-every-deploy)
 - [Repo-local hooks & scripts](#repo-local-hooks--scripts)
 - [If something breaks](#if-something-breaks)
@@ -20,6 +20,7 @@ Cross-refs:
 - Roadmap for all manual setup items: [`../PLAN.md`](../PLAN.md) Horizon `H2.M1`.
 - Per-change audit log: [`../UPDATES.md`](../UPDATES.md).
 - Detailed guides in this folder:
+    - [`local-dev.md`](local-dev.md) — run the site locally (CORS / locale URLs / welcome debug).
     - [`form-backend-google-sheets.md`](form-backend-google-sheets.md) — welcome form backend.
     - [`analytics-clarity.md`](analytics-clarity.md) — cookie-less Clarity.
     - [`analytics-backup.md`](analytics-backup.md) — weekly Clarity backup via GH Actions.
@@ -35,14 +36,15 @@ Cross-refs:
 | 4 | Add `CLARITY_API_TOKEN` repo secret + enable Actions write perms | ~5 min | weekly backup | [analytics-backup.md](analytics-backup.md) |
 | 5 | Skim CSP directives; add new CDN origins if you embed new services later | — | any new 3rd-party | [security-headers.md](security-headers.md) |
 
-## Placeholders to replace in `index_en.html`
+## Placeholders to replace
 
-Search the file for each literal string:
+Search the two files below for each literal string. Both must be replaced
+with real values before the corresponding feature works.
 
-| Placeholder | Replace with | From |
-|-------------|--------------|------|
-| `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` | GAS Web App URL (looks like `https://script.google.com/macros/s/.../exec`) | Step 1 |
-| `PASTE_CLARITY_PROJECT_ID` | 10-char Clarity project id | Step 2 |
+| Placeholder | File | Replace with | From |
+|-------------|------|--------------|------|
+| `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` | `js/main.js` (~line 282) | GAS Web App URL (looks like `https://script.google.com/macros/s/.../exec`) | Step 1 |
+| `PASTE_CLARITY_PROJECT_ID` | `index_en.html` (end of `<body>`) | 10-char Clarity project id | Step 2 |
 
 Optional (only if using the weekly backup workflow):
 

@@ -29,10 +29,10 @@
             --radius-md: 8px;
             --radius-lg: 12px;
             --radius-full: 9999px;
-            --font-main: 'Inter', sans-serif;
-            --font-display: 'Inter', sans-serif;
+            --font-main: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            --font-display: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
         }
-        
+
         /* Theme: Academic */
         [data-theme="academic"] {
             --primary: #1e40af;
@@ -48,10 +48,10 @@
             --bg-subtle: #f5f5f5;
             --border-light: #e5e5e5;
             --gradient-hero: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-            --font-main: 'Inter', serif;
-            --font-display: 'Playfair Display', serif;
+            --font-main: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
+            --font-display: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
         }
-        
+
         /* Theme: Industrial */
         [data-theme="industrial"] {
             --primary: #f97316;
@@ -67,8 +67,8 @@
             --bg-subtle: #3f3f46;
             --border-light: #52525b;
             --gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --font-main: 'Orbitron', sans-serif;
-            --font-display: 'Orbitron', sans-serif;
+            --font-main: 'Orbitron', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            --font-display: 'Orbitron', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
         }
         
         /* Theme: Fancy / Wonderland */
@@ -86,8 +86,8 @@
             --bg-subtle: #f5d0fe;
             --border-light: #e879f9;
             --gradient-hero: linear-gradient(135deg, #fce7f3 0%, #ddd6fe 50%, #a5f3fc 100%);
-            --font-main: 'Playfair Display', serif;
-            --font-display: 'Playfair Display', serif;
+            --font-main: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
+            --font-display: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
         }
         
         /* Wonderland Magical Effects */
@@ -346,21 +346,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 0.75rem;
             height: 56px;
         }
-        
+
         .navbar-brand {
             font-weight: 700;
             font-size: 1.1rem;
             color: var(--text-primary);
+            flex-shrink: 0;
         }
-        
+
+        /* Desktop: let navbar-center flow between brand and navbar-right so long
+           EN/DE/FR nav labels can't overlap the search button. Mobile overrides
+           below reassert absolute positioning for the drawer menu. */
         .navbar-center {
             display: flex;
             gap: 0.25rem;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            flex: 1 1 auto;
+            justify-content: center;
+            min-width: 0;
         }
         
         .nav-link {
@@ -440,6 +445,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            flex-shrink: 0;
         }
         
         .dropdown { position: relative; }
@@ -731,7 +737,7 @@
         .celebration-trigger {
             position: fixed;
             left: 20px;
-            bottom: 20px;
+            bottom: 100px;
             width: 70px;
             height: 70px;
             border-radius: 50%;
@@ -780,8 +786,10 @@
         
         .celebration-trigger.hidden { display: none; }
         
-        /* Chatbot Button (shows after welcome completed) */
+        /* Chatbot Button — temporarily hidden (no chatbot wired up yet).
+           Re-enable by removing `display: none` when the chatbot UI is ready. */
         .chatbot-trigger {
+            display: none !important;
             position: fixed;
             left: 20px;
             bottom: 20px;
@@ -790,7 +798,6 @@
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            display: none;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
@@ -799,8 +806,6 @@
             transition: all 0.3s ease;
             overflow: hidden;
         }
-        
-        .chatbot-trigger.active { display: flex; }
         
         .chatbot-trigger:hover {
             transform: scale(1.1);
@@ -1226,6 +1231,10 @@
            ======================================== */
         .section { padding: 3.5rem 0; }
         .section-alt { background: var(--bg-light); }
+
+        /* Tighter spacing from About onwards (mid-page modules) */
+        #about.section,
+        #about.section ~ .section { padding: 2.25rem 0; }
         
         /* Use News-style titles for all sections */
         .section-title {
@@ -2338,7 +2347,134 @@
             height: 300px;
             position: relative;
         }
-        
+
+        /* Inline Amap host. Fills the .contact-map.contact-map-amap wrapper
+           just like the Google iframe does. Amap injects its own canvas/DOM
+           inside this div once the SDK loads. */
+        .amap-inline-host {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Hide Amap's default watermark/logo overlays if they clash with the
+           card corners; optional visual polish. */
+        .contact-map-amap .amap-logo,
+        .contact-map-amap .amap-copyright {
+            opacity: 0.7;
+        }
+
+        /* China-visitor fallback map card. Shown only when IP/timezone indicates
+           the visitor is in mainland China AND inline Amap is unavailable
+           (key not configured, or SDK load failed). */
+        .contact-map-cn {
+            border-radius: var(--radius-lg);
+            min-height: 300px;
+            padding: 1.25rem;
+            background: linear-gradient(135deg,
+                rgba(88, 99, 210, 0.08), rgba(125, 147, 255, 0.04) 60%,
+                rgba(233, 65, 65, 0.06));
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Safety: `.contact-map-cn` / `.contact-map-amap` set explicit
+           `display: flex` / `display: block`, which outranks the UA default
+           `[hidden] { display: none }`. Force-hide the three map variants so
+           JS can reliably swap between Google / Amap / link-card. */
+        .contact-map[hidden],
+        .contact-map-cn[hidden],
+        .contact-map-amap[hidden] { display: none !important; }
+        .amap-fallback {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.1rem 1.2rem 1rem;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+        }
+        .amap-fallback-top {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+        }
+        .amap-fallback-icon {
+            flex: 0 0 auto;
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary), #7d93ff);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .amap-fallback-text { min-width: 0; }
+        .amap-fallback-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.98rem;
+            line-height: 1.35;
+        }
+        .amap-fallback-addr {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-top: 0.2rem;
+        }
+        .amap-fallback-coord {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.78rem;
+            opacity: 0.75;
+            margin-top: 0.15rem;
+        }
+        .amap-fallback-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .amap-fallback-btn {
+            flex: 1 1 160px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+        }
+        .amap-fallback-btn-gaode {
+            background: #0088ff;
+            color: #fff;
+        }
+        .amap-fallback-btn-baidu {
+            background: #2e79d8;
+            color: #fff;
+        }
+        .amap-fallback-btn:hover,
+        .amap-fallback-btn:focus-visible {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .amap-fallback-note {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            line-height: 1.55;
+            opacity: 0.85;
+        }
+
         /* Small Swiss flag used inline in the Location contact card */
         .contact-details .map-flag {
             font-size: 1rem;
@@ -2898,6 +3034,23 @@
             opacity: 1;
             margin-top: 0.75rem;
         }
+        /* Handwritten hero name — less formal, more personable */
+        .hero-h1 .hero-h1-name {
+            font-family: 'Dancing Script', 'Caveat', 'Playfair Display', cursive;
+            font-weight: 700;
+            font-size: 1.08em;
+            letter-spacing: 0.005em;
+            line-height: 1.1;
+            display: inline-block;
+            padding-bottom: 0.05em;
+        }
+        /* Chinese hero name: Ma Shan Zheng — Chinese handwritten brush script (Google Fonts CJK). */
+        html[lang="zh"] .hero-h1 .hero-h1-name {
+            font-family: 'Ma Shan Zheng', 'LXGW WenKai', var(--font-display);
+            font-weight: 400;
+            font-size: 1.15em;
+            letter-spacing: 0.05em;
+        }
         .hero-h1-role .role-primary {
             color: #ffffff;
             font-weight: 600;
@@ -2937,6 +3090,22 @@
         [data-theme="academic"] .hero-h1 .hero-h1-sep { color: rgba(17,24,39,0.4); }
         @media (max-width: 768px) {
             .hero-subtitle { font-size: 0.9rem; }
+        }
+
+        /* OTW location tag — highlight the primary on-site region (CH · EU) */
+        .otw-tag-loc--primary {
+            background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, transparent), color-mix(in srgb, var(--primary) 6%, transparent)) !important;
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+            font-weight: 600;
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+        }
+        .otw-tag-loc--primary small {
+            color: inherit !important;
+            opacity: 0.85;
+        }
+        .otw-tag-loc--primary i {
+            color: var(--primary) !important;
         }
 
         .open-to-work-section { padding: 2rem 0 0; }
@@ -3534,3 +3703,449 @@
             .site-search-panel { max-height: 82vh; }
         }
 
+
+/* ============================================================
+   B1-B4 additions (2026-04-23 V2): hero signature, about bullets,
+   project live-stats, awards grid, hero news ticker.
+   ============================================================ */
+
+/* Hero signature line — under hero-subtitle (lighter, distinct from subtitle) */
+.hero-signature {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 640px;
+    opacity: 0.92;
+}
+.hero-signature code {
+    background: rgba(127, 127, 127, 0.12);
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.88em;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    color: var(--primary);
+}
+.hero-signature a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(127, 127, 127, 0.35);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.hero-signature a:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+.hero-signature strong {
+    font-weight: 600;
+    color: inherit;
+}
+
+/* About — headline + bullets layout */
+.about-headline {
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--primary);
+}
+.about-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+.about-bullets li {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    text-align: left;
+    padding-left: 2rem;
+    text-indent: -2rem;
+}
+.about-bullets li strong { color: var(--text-primary); }
+.about-bullets a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: border-color 0.2s ease;
+}
+.about-bullets a:hover { border-bottom-color: var(--primary); }
+.about-emoji {
+    display: inline-block;
+    font-size: 1.05rem;
+    width: 1.4rem;
+    margin-right: 0.45rem;
+    text-align: center;
+    text-indent: 0;
+}
+/* ========== Theme-aware award logos ========== */
+/* Light (default) variant visible on all non-dark themes; dark variant hidden.
+   Doubled class selectors keep specificity above `.award-icon` (grid display)
+   defined later in the file. */
+.award-icon.award-icon--theme-dark { display: none; }
+[data-theme="industrial"] .award-icon.award-icon--theme-light { display: none; }
+[data-theme="industrial"] .award-icon.award-icon--theme-dark { display: block; }
+
+/* SNF + UniBe square crops keep their native light background — wrap in a subtle
+   white chip on industrial (dark) theme so the cropped motif stays legible. */
+/* !important needed because `.award-icon--brand` sets background:transparent!important. */
+[data-theme="industrial"] .award-icon--snsf,
+[data-theme="industrial"] .award-icon--unibern {
+    background: #fff !important;
+    padding: 4px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* ========== Chinese (zh) font stack — Noto Sans/Serif SC as primary webfont ========== */
+html[lang="zh"] {
+    --font-main: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+}
+html[lang="zh"][data-theme="academic"] {
+    --font-main: 'Inter', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+}
+html[lang="zh"][data-theme="industrial"] {
+    --font-main: 'Orbitron', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-display: 'Orbitron', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+html[lang="zh"][data-theme="fancy"] {
+    --font-main: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+}
+
+/* CJK text rendering: drop aggressive palt/halt (which squished punctuation together),
+   keep text-spacing-trim for leading-edge punctuation, add tiny letter-spacing to breathe. */
+html[lang="zh"] body,
+html[lang="zh"] .about-bullets li,
+html[lang="zh"] .news-content,
+html[lang="zh"] .ticker-content,
+html[lang="zh"] .hero-subtitle,
+html[lang="zh"] .about-headline,
+html[lang="zh"] p,
+html[lang="zh"] li {
+    font-feature-settings: normal;
+    text-spacing-trim: trim-start;
+    letter-spacing: 0.015em;
+    word-spacing: 0.02em;
+}
+html[lang="zh"] h1,
+html[lang="zh"] h2,
+html[lang="zh"] h3 {
+    letter-spacing: 0.02em;
+}
+.about-bullets code {
+    background: rgba(127, 127, 127, 0.12);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.88em;
+}
+
+/* Project live-stats pills (under desc list, before tags) */
+.project-stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 0.6rem;
+}
+.project-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.18rem 0.6rem;
+    background: rgba(127, 127, 127, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+.project-stat-pill:hover {
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.project-stat-pill strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Awards & Grants grid */
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+.award-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.15rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.award-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border-color: var(--primary);
+}
+.award-icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent, var(--primary)));
+    color: white;
+    border-radius: 10px;
+    font-size: 1.15rem;
+}
+/* Real brand wordmarks (SNF / Innosuisse / UniBE / ANR), pre-cropped to square
+   motifs so every card has a uniformly-sized logo at card-top. `display` is
+   left to the theme-light/theme-dark rules above so the wrong variant stays
+   hidden per theme. */
+.award-icon--brand {
+    background: transparent !important;
+    border-radius: 0;
+    padding: 0;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    object-position: center;
+}
+.award-body { width: 100%; min-width: 0; }
+.award-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.2rem;
+    color: var(--text-primary);
+    line-height: 1.35;
+}
+.award-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0 0 0.4rem;
+}
+.award-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+}
+.award-desc a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+}
+.award-desc a:hover { border-bottom-color: var(--primary); }
+
+/* Hero news ticker — scrolling marquee under hero */
+.hero-ticker {
+    background: linear-gradient(to right, rgba(127, 127, 127, 0.06), transparent 30%, transparent 70%, rgba(127, 127, 127, 0.06));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 0.45rem 0;
+}
+.hero-ticker-label {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    color: #fbbf24;                 /* amber-400 — pops across all 4 themes */
+    font-size: 1.25rem;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.55)) drop-shadow(0 0 2px rgba(251, 191, 36, 0.8));
+    animation: tickerBullhornPulse 2.4s ease-in-out infinite;
+}
+[data-theme="industrial"] .hero-ticker-label { color: #fde047; filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.7)); }
+[data-theme="academic"]  .hero-ticker-label { color: #d97706; filter: drop-shadow(0 0 6px rgba(217, 119, 6, 0.45)); }
+[data-theme="fancy"]     .hero-ticker-label { color: #f472b6; filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.65)); }
+.hero-ticker-label i { font-size: 1.25rem; }
+@keyframes tickerBullhornPulse {
+    0%, 100% { transform: rotate(-8deg) scale(1); }
+    50%      { transform: rotate(8deg) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-ticker-label { animation: none; transform: none; }
+}
+.hero-ticker-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+.hero-ticker-viewport {
+    flex: 1;
+    position: relative;
+    height: 1.6em;
+    overflow: hidden;
+    min-width: 0;
+}
+.hero-ticker-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100%;
+}
+.hero-ticker-track {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    gap: 2rem;
+    white-space: nowrap;
+    mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+.hero-ticker-content {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    animation: tickerScroll 60s linear infinite;
+    padding-right: 2rem;
+}
+.hero-ticker-item {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+}
+/* Celebration-style ticker items mirror News row: gradient bg, glow, 🎉, hover confetti */
+.hero-ticker-list .hero-ticker-item.news-celebration {
+    margin: 0;
+    padding: 0.2rem 3rem 0.2rem 0.8rem;
+    border-radius: var(--radius-md);
+}
+.hero-ticker-list .hero-ticker-item.news-celebration::after {
+    content: '🎉';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    animation: bounce 1s infinite;
+    z-index: 1;
+}
+/* Vertical-rotation items inside the new viewport. Items overlay-stack and
+   slide up one at a time. The non-active items default to the leaving state
+   so the first activation animates in cleanly. */
+.hero-ticker-list .hero-ticker-item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transform: translateY(110%);
+    transition: opacity 0.45s ease, transform 0.55s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+}
+.hero-ticker-list .hero-ticker-item.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.hero-ticker-list .hero-ticker-item.is-leaving {
+    opacity: 0;
+    transform: translateY(-110%);
+}
+.hero-ticker-item strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.hero-ticker-item code {
+    background: rgba(127, 127, 127, 0.12);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.88em;
+    color: var(--primary);
+}
+.hero-ticker-item a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: border-color 0.2s ease;
+}
+.hero-ticker-item a:hover { border-bottom-color: var(--primary); }
+/* Mirror News row layout: date pill + content, single line */
+.ticker-date {
+    flex: 0 0 auto;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-right: 0.9rem;
+    white-space: nowrap;
+}
+.ticker-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    will-change: transform;
+}
+/* Long items horizontally scroll their own content inside the clipped parent.
+   `overflow: clip` keeps the scrolling glyphs inside the .ticker-content box,
+   otherwise the left edge of the marquee bleeds into the ticker-date column. */
+.hero-ticker-item.is-marquee .ticker-content {
+    overflow: clip;
+    text-overflow: clip;
+    animation: tickerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+}
+@keyframes tickerMarquee {
+    0%, 12%   { transform: translateX(0); }
+    88%, 100% { transform: translateX(calc(var(--marquee-shift, 0px) * -1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-ticker-item.is-marquee .ticker-content { animation: none; transform: none; }
+}
+.ticker-content strong { color: var(--text-primary); font-weight: 600; }
+.ticker-content a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    border-bottom: none;
+    transition: color 0.18s, text-decoration-thickness 0.18s;
+}
+.ticker-content a:hover,
+.ticker-content a:focus-visible {
+    color: var(--primary-dark, var(--primary));
+    text-decoration-thickness: 2px;
+}
+.ticker-content a strong { color: inherit; }
+.hero-ticker-sep {
+    color: var(--border);
+    font-weight: 700;
+    font-size: 1rem;
+}
+@keyframes tickerScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-100%, 0, 0); }
+}
+.hero-ticker-track:hover .hero-ticker-content { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-ticker-content { animation: none; }
+    .hero-ticker-track { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+}
+@media (max-width: 720px) {
+    .hero-ticker-label {
+        font-size: 0.68rem;
+        padding: 0.18rem 0.55rem;
+        margin-left: 0.5rem;
+    }
+    .hero-ticker-item { font-size: 0.78rem; }
+    .hero-ticker-content { animation-duration: 40s; gap: 1rem; }
+}

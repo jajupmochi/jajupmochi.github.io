@@ -63,6 +63,10 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G6 — Partners / collaborators surface](#g6--partners--collaborators-surface) `[✓]`
         - [G7 — Ph.D. thesis integration (timeline + Publications)](#g7--phd-thesis-integration-timeline--publications) `[✓]`
         - [G8 — UX polish (V9 Linlin flags)](#g8--ux-polish-v9-linlin-flags) `[✓]`
+        - [G9 — Above-the-fold signal density (hero signature, About bullets, drug-discovery reframe, Experience MSc/BS, Featured projects)](#g9--above-the-fold-signal-density) `[✓]`
+        - [G10 — Credibility surfaces (Publications Most Cited, H-index / Grants stats, YOLO reclass, graphkit-learn live pills)](#g10--credibility-surfaces) `[✓]`
+        - [G11 — Authority blocks (Invited Talks service card + Selected Awards / Grants section)](#g11--authority-blocks) `[✓]`
+        - [G12 — Recruiter-first page flow (full-page section reorder)](#g12--recruiter-first-page-flow) `[✓]`
     - [M1.2 — SEO + AI-search visibility](#m12--seo--ai-search-visibility) `[~]`
         - [G1 — Schema.org coverage](#g1--schemaorg-coverage) `[✓]`
         - [G2 — Multilingual crawlability](#g2--multilingual-crawlability) `[✓]`
@@ -82,6 +86,7 @@ get hard to track. Prefer flat lists of small `T`s.
         - [G4 — Default theme → academic](#g4--default-theme--academic) `[ ]`
         - [G5 — Cmd+K command palette search](#g5--cmdk-command-palette-search) `[✓]`
         - [G6 — Visit Map (visitor-country choropleth)](#g6--visit-map-visitor-country-choropleth) `[?]`
+        - [G7 — Hero news ticker (always-visible scrolling latest)](#g7--hero-news-ticker) `[✓]`
 - **[H2 — Site Operations & Maintenance](#h2--site-operations--maintenance)** `[?]`
     - [M2.1 — Manual one-time setup](#m21--manual-one-time-setup) `[?]`
         - [G1 — Welcome form backend](#g1--welcome-form-backend) `[?]`
@@ -173,6 +178,34 @@ or `extra_info_work.md`. No hallucinations, no outdated affiliations.
 - `[✓]` H1.M1.G8.T2 — (2026-04-21 V9) Publication thumbnail enlargement + padding halved (`index_en.html` 10 `<img>` dims + `css/main.css:~1841, ~1857`). Directive verbatim: "图片放大，左/上 padding 减半，下 padding 等于上 padding". Card padding `1.5rem` → `0.75rem 1.5rem 0.75rem 0.75rem` (halved on top + left, bottom = top). Grid `180px 1fr` → `220px 1fr`, gap `1.5rem` → `1.25rem`. `.pub-thumbnail` max-width 180→220 px, height 140→172 px (preserved 5:4 aspect ratio). All 10 pub-card `<img>` elements updated via `replace_all` with the unique string `" loading=\"lazy\" width=\"180\" height=\"140\">"` — project-card images (400×180) untouched.
 - `[✓]` H1.M1.G8.T3 — (2026-04-21 V9) Thesis highlight `margin-top: 2rem` (`css/main.css:~1767`). Without spacing, the thesis card butted directly against the last pub card in the carousel, visually flattening the Ph.D. capstone into the list. Added breathing room so the thesis reads as a closing statement rather than another list item. CSS-only change; no HTML or i18n impact.
 
+#### G9 — Above-the-fold signal density
+> Added 2026-04-23 V2. Rationale: V9's content is truthful but visually *dense* — a recruiter's first 10 seconds land on a generic hero bio, then a 4-paragraph About wall. V2's job-hunt push replaces that with (a) a single signature line that stacks the 4 loudest credibility signals in one sentence, (b) About rewritten as 6 scannable emoji bullets, (c) academic history surfaced where it belongs (Experience timeline, not Projects), and (d) a "Featured" sort that puts graphkit-learn at the top of Projects so the open-source artifact greets the scroller. The drug-discovery reframe is a separate honesty pass — the work is upstream of discovery, not discovery itself.
+- `[✓]` H1.M1.G9.T1 — (2026-04-23 V2) New `.hero-signature` paragraph under hero tagline (`index_en.html:~630`). `data-i18n-html="hero.signature"` renders "Author of `graphkit-learn` · **SNSF** + **Innosuisse**-funded · **ICPR 2026** paper · **Marie Skłodowska-Curie** Alumni". 4 credibility signals packed into one line at the top of the first screen.
+- `[✓]` H1.M1.G9.T2 — (2026-04-23 V2) About restructure — 4 paragraphs replaced with `.about-headline` + `.about-bullets` `<ul>` × 6 `<li>` (📍🛠🧪🤖🎓🎯). New keys `about.headline` + `about.b1..b6`. Information density ≈ 3× at the same vertical footprint.
+- `[✓]` H1.M1.G9.T3 — (2026-04-23 V2) Drug-discovery reframe across hero / About / outline / project copy: "drug discovery" → "**molecular property prediction (foundations for drug discovery — redox potentials, polymer optimization)**". Honest positioning — upstream of discovery, not discovery itself. Per Linlin directive "未完成的 discovery 就先不提了".
+- `[✓]` H1.M1.G9.T4 — (2026-04-23 V2) Experience timeline gains **M.Sc. 2014-2017 @ Xi'an Jiaotong University** + **B.S. 2010-2014 @ Xi'an Jiaotong University** `.timeline-item`s (after Ph.D. card). M.Sc. card calls out CN patent CN106376041B. 6 new `exp.*_msc` / `*_bs` keys. Gives the patent an academic home in addition to the Projects surface.
+- `[✓]` H1.M1.G9.T5 — (2026-04-23 V2) Projects `data-priority` × 11 cards (graphkit-learn=10, Swiss River=9, PLANALYSER=8, OCTOPUSSY=7, LIULIAN=7, GraphInk=6, N-Banker=6, Graph Matching=5, APi=5, SDN=3, Confidential Translator=2). Drives the new "Featured" sort.
+- `[✓]` H1.M1.G9.T6 — (2026-04-23 V2) Projects sort `<select>`: new `<option value="featured" data-i18n="common.featured">` prepended + marked `selected`. `js/main.js:833` `sortCards()` gets a `featured` branch (priority desc, year tie-break). Also added init-on-load `sortCards(sortSelect.value)` so the default actually applies without a manual change event. Same init added to the Publications sort block. graphkit-learn now greets the recruiter at the top of Projects.
+
+#### G10 — Credibility surfaces
+> Added 2026-04-23 V2. Rationale: citations / GitHub stars / PyPI downloads / grants are exactly the signals Isomorphic Labs / DeepMind-adjacent recruiters trust. They were present in the codebase but scattered — default pub sort was reverse-chrono, graphkit-learn had no live stats shown, H-index and grants count weren't in the stats grid. B2 pulls them onto the scan path.
+- `[✓]` H1.M1.G10.T1 — (2026-04-23 V2) Publications sort `<select>`: `Most Cited` option moved to first position + marked `selected`. Opens the section on J24 (9 cites), CBM (61), ESWA (25), PRL (14) instead of reverse-chrono preprints. Init-on-load for sort select added (shared with G9.T6).
+- `[✓]` H1.M1.G10.T2 — (2026-04-23 V2) Stats grid gains 2 new `.stat-card`s: `h-index` (value **6**, `stats.h_index`) and `grants` (value **5+**, `stats.grants`). Grid is now 8 cards wide, filling the row on common laptop resolutions without pushing below the fold.
+- `[✓]` H1.M1.G10.T3 — (2026-04-23 V2) YOLO chip relocation: `skills_cats.domain` → `skills_cats.ml_ai`. YOLO is a CV detection model family, not a domain; moved to sit next to GNN / transformers / RAG.
+- `[✓]` H1.M1.G10.T4 — (2026-04-23 V2) graphkit-learn `.project-stats` live pills inside the card body: (a) GitHub **128 ⭐** (`github.com/jajupmochi/graphkit-learn/stargazers`), (b) PyPI **~300 / mo** (`pepy.tech/project/graphkit-learn`). New key `proj.gklearn.per_month` for the "/ mo" suffix. Pill styling via new `.project-stat-pill` CSS (pill shape, subtle border, hover → theme primary tint). Trades the "popular library" hand-wave for hard numbers.
+
+#### G11 — Authority blocks
+> Added 2026-04-23 V2. Rationale: talks and awards are credibility signals that don't belong in Publications or Projects but absolutely belong on the page. V1 didn't have them at all. B3 introduces two new surfaces: an Invited Talks service card (reusing the existing Services section) and a brand-new Awards & Grants section between Skills and Services.
+- `[✓]` H1.M1.G11.T1 — (2026-04-23 V2) Services gains an **Invited Talks** card (`.service-card` with `fa-microphone-lines` icon). 3 `<li>`: GRAPHADON Summer School 2024 (Rouen) · ACPR 2023 (Kyoto) invited poster · Ph.D. defence 2023 (LITIS). Keys: `services_cards.talks_title` + `talks_i1..i3`.
+- `[✓]` H1.M1.G11.T2 — (2026-04-23 V2) New `#awards` section — **Selected Awards & Grants** — between `#skills` and `#services`. `<h2>` uses `fa-trophy` icon + `sections.awards` key. `.awards-grid` layout with 4 `.award-card`s covering SNSF Postdoc.Mobility + SNSF Bodmer + Innosuisse PLANALYSER + ANR APi + MCAA (6 awards surfaced across the 4 cards). New keys: `sections.awards` + 4 subtrees × 3 properties = 12 `awards.*` keys.
+- `[✓]` H1.M1.G11.T3 — (2026-04-23 V2) CSS for the awards block — `.awards-grid`, `.award-card` (left-border accent in theme primary), `.award-icon` (circular badge), `.award-body`, `.award-title`, `.award-meta` (grant ID / org / years), `.award-desc`. Theme parity verified across the 4 themes.
+
+#### G12 — Recruiter-first page flow
+> Added 2026-04-23 V2. Rationale: the original section order was a chronological accumulation (Research → Experience → Projects → Skills → Publications → Services → News → Contact). B4 reorders to prioritize what recruiters actually want to see first on a research-scientist site: Publications → Projects → Research (outline). Credibility proof first, then shipping proof, then context. Experience / Skills / Awards follow to give vetting detail. Services / News / Contact close.
+- `[✓]` H1.M1.G12.T1 — (2026-04-23 V2) Full-page section reorder via Python regex (non-greedy `<section id="…">…</section>` extraction + reinsertion). Final order: `hero` → `.hero-ticker` → `#open-to-work` → `#about` → `#publications` → `#projects` → `#research` → `#experience` → `#skills` → `#awards` → `#services` → `#news` → `#contact`.
+- `[✓]` H1.M1.G12.T2 — (2026-04-23 V2) i18n parity re-verified after the reorder — no key drift since the reorder only moved nodes, didn't edit them. 430 keys × 4 locales (up from 388 pre-V2 due to hero signature + About bullets + MSc/BS + Featured + stats + awards + talks + ticker key additions).
+- `[✓]` H1.M1.G12.T3 — (2026-04-23 V2) Snapshot of pre-edit `index_en.html` saved as `index_en_v7_round1.html` before the B1-B4 batch, per the repo's round-file convention (big edits land as `v{N}_round{N}` working copies).
+
 ### M1.2 — SEO + AI-search visibility
 
 **End-state:** Site is indexed correctly across Google, ranks for `Linlin Jia`
@@ -232,7 +265,8 @@ when asked about graph ML researchers.
 - `[ ]` H1.M3.G4.T2 — `canvas-confetti` → dynamic import, only loaded when the celebration trigger fires (ICPR-accepted etc.). Currently always loaded on page load.
 - `[ ]` H1.M3.G4.T3 — Add `@media (prefers-reduced-motion: reduce)` CSS rule. ~70 `@keyframes` / transitions currently ignore the OS preference.
 - `[ ]` H1.M3.G4.T4 — Dedup map stack. Leaflet (JS) and Google Maps iframe both coexist; keep one. Google Maps iframe is also an a11y fail (`frame-title` missing).
-- `[ ]` H1.M3.G4.T5 — `openChatbot()` → replace native `alert()` with a toast component or direct `mailto:`. Native alert breaks chrome-devtools automation and is a UX anti-pattern.
+- `[✓]` H1.M3.G4.T5 — (2026-04-23 V1) `openChatbot()` now uses `showToast()` + full i18n via `chatbot.toast_title` / `chatbot.toast_html` × 4 locales (en / zh / fr / de). `js/main.js:388-395`.
+- `[✓]` H1.M3.G4.T6 — (2026-04-23 V1) Decouple chatbot button from welcome-overlay lifecycle. `.chatbot-trigger` now `display: flex` unconditionally (always visible at `bottom: 20px`); `.celebration-trigger` moved to `bottom: 100px` (stacks above). `closeWelcomeWithBottle(submitted)` only sets `hasVisitedBefore` on submit — skip path keeps 🎁 for next try. Fixes first-visit confusion where 🎁 was mistaken for a chatbot icon. `css/main.css` + `js/main.js`.
 
 #### G5 — Figure lightbox (click-to-enlarge)
 > Added 2026-04-21 V5 per Linlin directive #6. Rationale: project and publication cards have small (~120×80 px) thumbnails; recruiters need to see the SVG detail (graph-kernel architecture, GNN message-passing, redox demo) to understand the research. Lightbox preserves full-resolution SVG fidelity without committing to a per-figure dedicated page.
@@ -274,6 +308,13 @@ when asked about graph ML researchers.
 - `[✓]` H1.M4.G6.T4 — (2026-04-22 V1) i18n parity: 7 new `visitMap.*` keys (`title`, `totalVisits`, `countries`, `window`, `source`, `topCountries`, `svgTitle`) across en / zh / fr / de. Locale parity verified at 141 keys.
 - `[✓]` H1.M4.G6.T5 — (2026-04-22 V1) Theme parity verified via chrome-devtools on `ai-generated` / `industrial` / `fancy` (with mock fixture; deleted before commit). Known v1 limitation: choropleth color is captured from `--primary` at first render — a runtime theme switch requires page reload to recolor (acceptable; future fix could `MutationObserver` `[data-theme]`).
 - `[?]` H1.M4.G6.T6 — Production data fill: blocked on H2.M1.G4.T2 (`CLARITY_API_TOKEN` repo secret). Once Linlin sets the secret + re-triggers the workflow, the first real `data/analytics/clarity-YYYY-MM-DD.json` lands and the block self-activates on next page load.
+
+#### G7 — Hero news ticker
+> Added 2026-04-23 V2. Rationale: news matters most when it's recent ("ICPR 2026 just accepted"), but the News section sits near the bottom of the page — recruiters scrolling past Publications / Projects might never reach it. The hero ticker is a small always-visible banner under the fold-line that scrolls 5 latest news items in a CSS marquee. Doesn't compete with the hero photo for attention; doesn't push anything below-the-fold.
+- `[✓]` H1.M4.G7.T1 — (2026-04-23 V2) `<aside class="hero-ticker">` block inserted between the hero block and OTW (`index_en.html:666-693`). Structure: small `.hero-ticker-label` ("📢 Latest") + `.hero-ticker-track` with two identical `.hero-ticker-content` divs (the second `aria-hidden="true"` for the seamless loop). Contents: 5 ticker items — 🆕 ICPR 2026 / 🚀 Neobanker live at InnoEX / 🎓 GRAPHADON invited / 💰 SNSF Virtual Bodmer / ⭐ graphkit-learn 128⭐ + ~300 PyPI / mo. Each item is a `data-i18n-html` span so embedded `<a>` / `<strong>` / `<code>` markup carries through the translation loader.
+- `[✓]` H1.M4.G7.T2 — (2026-04-23 V2) `@keyframes tickerScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }` on `.hero-ticker-track` at 40 s linear infinite. Pauses on hover (`.hero-ticker:hover .hero-ticker-track` → `animation-play-state: paused`). Mobile `@media (max-width: 768px)` shrinks font + padding so the ticker doesn't dominate small screens.
+- `[✓]` H1.M4.G7.T3 — (2026-04-23 V2) `prefers-reduced-motion: reduce` media query disables the animation entirely and pins the track at `translate3d(0,0,0)` — motion-sensitive visitors see a static "Latest" banner instead of a marquee. Honors the OS-level a11y preference.
+- `[✓]` H1.M4.G7.T4 — (2026-04-23 V2) i18n parity: 6 new `ticker.*` keys (`label`, `t1`..`t5`) × 4 locales. Total locale parity: 430 keys.
 
 ---
 
@@ -328,8 +369,10 @@ periodic checks. This Horizon tracks both.
 
 #### G4 — Spam mitigation (welcome form)
 - `[ ]` H2.M2.G4.T1 — Cloudflare Turnstile (low-effort, free) — only if spam appears.
-- `[ ]` H2.M2.G4.T2 — Honeypot field (zero deps).
+- `[✓]` H2.M2.G4.T2 — (2026-04-23 V1) Honeypot field — hidden `<input name="_gotcha">` in the welcome form; Apps Script rejects submissions with non-empty value. Zero false-positives, zero deps.
 - `[ ]` H2.M2.G4.T3 — Per-IP rate limit in Apps Script (PropertiesService).
+- `[✓]` H2.M2.G4.T4 — (2026-04-23 V1) Origin allowlist — Apps Script validates incoming `Origin` header against `['https://jajupmochi.github.io', 'http://localhost:8000']`; anything else → 403.
+- `[✓]` H2.M2.G4.T5 — (2026-04-23 V1) Dwell time — `MIN_DWELL_MS = 2000`. Client stamps `t_open` when welcome modal opens; Apps Script rejects submissions arriving < 2 s later. Catches automated bots that don't simulate read-time.
 
 ### M2.3 — Backup & resilience
 

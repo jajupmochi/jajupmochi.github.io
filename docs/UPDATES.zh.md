@@ -8,6 +8,9 @@
 
 ## Master TOC
 
+- [2026-04-23](#2026-04-23)
+    - [V2 — 求职 P0+P1+P2 一把梭跑完（hero signature/ticker、About 重构、页面段重排、Featured 项目、新增 Awards 区块、Invited Talks、+42 个 i18n 键）](#v2--求职-p0p1p2-一把梭跑完hero-signatureticker-about-重构页面段重排featured-项目新增-awards-区块invited-talks42-个-i18n-键) — 一次大型合并推进。Linlin 指令："Seo 先不跑。未完成的 discovery 就先不提了…直接跑吧，后面就不用再问我了，把这些所有的东西都跑完，就不用再停下来了，跑完再给我 report"。**B1 — 第一屏：** 新增 `.hero-signature` 行（`graphkit-learn` 作者 · SNSF + Innosuisse · ICPR 2026 · MSCA Alumni）；About 把 4 段改为 `about-headline` + 6 条 emoji bullets；M.Sc./B.S.（西交 2010-2017 + 专利）搬到 Experience timeline；drug-discovery 改写为"分子性质预测（药物发现 / 氧化还原 / 聚合物优化的上游基础）"；11 个项目卡加 `data-priority`、Projects 新增并默认 "Featured" 排序（graphkit-learn 置顶）。**B2 — 可信度：** Publications 默认 Most Cited；新增 H-index (6) + Grants (5+) 两个 stat 卡（共 8 张）；YOLO 从 Domain 搬到 AI/ML；graphkit-learn 加实时 stats 胶囊（128⭐ + ~300 PyPI / mo）。**B3 — 权威感：** Services 新增 Invited Talks 卡（GRAPHADON、ACPR 2023、PhD defence）；全新 `#awards` 区块 + 4 张 award 卡（SNSF Postdoc.Mobility / SNSF Bodmer / SNSF GraphInk / Innosuisse PLANALYSER + ANR APi + MCAA）。**B4 — Recruiter UX：** Python 正则把整页区段按新次序排（hero → ticker → OTW → about → publications → projects → research → experience → skills → awards → services → news → contact）；新增 hero `.hero-ticker` CSS 跑马灯 + 5 条 ticker item（ICPR 2026、Neobanker、GRAPHADON、SNSF Bodmer、graphkit-learn stars），`prefers-reduced-motion` 兜底，新增 ~255 行 CSS。**B5 — i18n：** 42 个新 key × 4 语种（388 → **430**），parity 校验通过。按 Linlin 指令跳过 SEO audit。
+    - [V1 — 反垃圾加固 + 12 项打磨（旗帜表情、中文修订、Chatbot UX）](#v1--反垃圾加固--12-项打磨旗帜表情中文修订chatbot-ux) — (A) 回填："都存着" 那批：Apps Script 反垃圾三件套（蜜罐 + Origin 白名单 + 停留时间 ≥ 2 s）+ 新增 `docs/setup/local-dev.md` + form-backend 文档 Security & privacy 节 + welcome 卡新增 `welcome.privacy_note`。(B) 12 项打磨：🇨🇭/🇫🇷/🇯🇵 旗帜表情贴到地区相关条目；中文措辞修订（hero badge、"可快速入职"、预映射、HES-SO / INSA 中文全称、PRG、"贾林林" 导航 + 页脚）；河流水温论文补全作者（B. Fankhauser, V. Bigler, K. Riesen）；删除冗余 `contact.connect`；chatbot toast 全 4 语种 i18n；**chatbot UX 修复** —— 🤖 始终显示（叠在 🎁 上方）、欢迎卡 🎁 仅在提交后消失（跳过则保留）。
 - [2026-04-22](#2026-04-22)
     - [V1 — Deferred 回填（V10 LIULIAN/Fun + V11 Cmd+K 搜索）+ 本日批次（Skills 重构、Patent 类、地图 i18n、7 篇论文新链接、空 filter UX、访客地图）](#v1--deferred-回填v10-liulianfun--v11-cmdk-搜索--本日批次skills-重构patent-类地图-i18n7-篇论文新链接空-filter-ux访客地图) — 一个合并的 V，覆盖三段工作：(A) V10 回填——LIULIAN + Confidential Translator 项目卡、新增 "Fun" filter、卡片打磨。(B) V11 回填——全站 Cmd+K / Ctrl+K 搜索弹窗，索引 sections / projects / pubs / news。(C) 本日：Skills 重构为 6 类 × 44 标签（ML/AI 在最前，Languages 在最后）；新增 `patent` filter chip + ELM 从 preprint 改为 patent；地图 iframe + "在地图中打开" 链接通过新增的 `data-i18n-src-map` + 已有的 `data-i18n-href-map` 双轨实现按语种切换（含新 JS handler）；7 篇论文补 Preprint/Slides/Video 链接，含 YouTube↔Bilibili 按语种切换；空匹配的 filter chip 自动禁用；**访客地图（Phase 4）**——Contact 区按国家 choropleth，数据源自每周 Clarity 备份，懒加载 D3 + topojson + 本地打包的 world-atlas（`data/world-atlas/countries-110m.json`，~108KB），从而保住 CSP `connect-src` 不外扩。i18n 键数：124 → 141。
 - [2026-04-21](#2026-04-21)
@@ -30,6 +33,195 @@
 - [2023-12-13](#2023-12-13) — CV 大幅更新。
 - [2023-10-24](#2023-10-24) — 新增一篇论文 + CV。
 - [2023-09-27](#2023-09-27) — 新增多篇论文 + CV。
+
+# 2026-04-23
+
+## V2 — 求职 P0+P1+P2 一把梭跑完（hero signature/ticker、About 重构、页面段重排、Featured 项目、新增 Awards 区块、Invited Talks、+42 个 i18n 键）
+
+一次大型合并推进。Linlin 批准了 P0+P1+P2 端到端一把梭跑完，中间不打断："Seo 先不跑。未完成的 discovery 就先不提了…直接跑吧，后面就不用再问我了，把这些所有的东西都跑完，就不用再停下来了，跑完再给我 report"。动作前把 `index_en.html` 拷了一份做快照 `index_en_v7_round1.html`。按 Linlin 指令跳过 SEO audit。下文按 Batch 分组。
+
+### B1 —— 第一屏（hero signature + About 重构 + drug-discovery 改写 + Featured 项目）
+
+- **Hero 签名行** —— 新增 `<p class="hero-signature" data-i18n-html="hero.signature">`，放在 hero tagline 下方（`index_en.html:~630`）。渲染："Author of `graphkit-learn` · **SNSF** + **Innosuisse**-funded · **ICPR 2026** paper · **Marie Skłodowska-Curie** Alumni"。把 recruiter 10 秒扫一眼会漏掉的 4 个关键可信度信号前置出来。用 `data-i18n-html`（而非普通 `data-i18n`），这样内嵌的 `<a>` + `<code>` + `<strong>` 能被翻译 loader 保留。
+- **About 重构** —— 4 段 `.about-p` 改成 (a) `.about-headline` 一句话 + (b) `.about-bullets` `<ul>`，内含 6 个 `<li>`，每个用主题 emoji 打头（📍🛠🧪🤖🎓🎯）。新增 `about.headline` + `about.b1..b6`。信息密度约 3×，可读性反而更好 —— bullets 能并行扫读，段落是串行的。`.about-p` 的开场一句保留。
+- **Drug-discovery 改写** —— 按 Linlin 指令"未完成的 discovery 就先不提了"。把化学叙事从 "drug discovery" 改成 "**分子性质预测（药物发现 / 氧化还原 / 聚合物优化的上游基础）**"，散布在 hero、about bullets、outline (`outline.graph_ai_sci_desc`) 和项目文案里。诚实定位 —— 做的是 discovery 的上游（性质预测 / 生成模型），不是 discovery 本身。不吹大，也不自贬。
+- **Experience timeline 浮现 M.Sc. + B.S.** —— 在 Ph.D. 卡下新增 2 个 `.timeline-item`：**M.Sc. 2014-2017 @ 西安交通大学**（SDN / 调度研究，中国专利 CN106376041B）和 **B.S. 2010-2014 @ 西安交通大学**。之前孤零零挂在 Projects 里的专利现在 timeline 上也能看到，上下文完整了。新增键：`exp.role_msc`、`exp.org_msc`、`exp.desc_msc`、`exp.role_bs`、`exp.org_bs`、`exp.desc_bs`。
+- **11 个项目卡加 `data-priority`** —— 所有 `.project-card` 加了此属性（`index_en.html:1065-1241`）：graphkit-learn=10（最高），Swiss River / ST-GCN=9，PLANALYSER=8，OCTOPUSSY=7，LIULIAN=7，GraphInk=6，N-Banker=6，Graph Matching=5，APi=5，SDN=3，Confidential Translator=2。这属性驱动新的 "Featured" 排序。
+- **Projects 新增 "Featured" 排序并设为默认** —— 在 Projects 排序 `<select>` 前插一个 `<option value="featured" data-i18n="common.featured">Featured</option>` 并标 `selected`。新增键 `common.featured` × 4 语种。`js/main.js:833` `sortCards()` 多了 `featured` 分支：主序按 `data-priority` 降，同 priority 按 `data-year` 降。graphkit-learn 现在默认就在顶部（下方紧跟 stars + downloads 胶囊），Swiss River / PLANALYSER / OCTOPUSSY 落在首屏 carousel 页内。
+- **排序 select 的首次加载初始化** —— 在 `js/main.js` 的 projects + publications 两处 `addEventListener('change', …)` 后加了 `sortCards(sortSelect.value);`。之前没有这句，用户不手动切换时 default 就不生效。
+
+### B2 —— 可信度（Publications 默认排序 / H-index + Grants stat 卡 / YOLO 位置 / 实时 stats 胶囊）
+
+- **Publications 默认排序 → Most Cited** —— 在 Publications 排序 `<select>` 内把 `Most Cited` 挪到第一个并标 `selected`。原因：对不熟悉每本期刊的 recruiter 来说，引用数是最直观的可信度信号；默认 cite-desc 先把 J24（9 引）、CBM（61）、ESWA（25）、PRL（14）呈现出来，而不是一串倒序的时间流。
+- **Stats grid —— 增加 H-index + Grants 卡** —— 在 stats grid 追加 2 张 `.stat-card`：`h-index`（值 **6**，label key `stats.h_index`）和 `grants`（值 **5+**，label key `stats.grants`）。现在是 8 张卡，在常见笔记本分辨率下视觉正好一排，不会把后面内容顶出第一屏。
+- **YOLO 从 Domain 搬到 AI/ML** —— Skills 区：`yolo` chip 之前放在 `skills_cats.domain`（错了 —— YOLO 是 CV / 检测模型族，不是学科领域）。挪到 `skills_cats.ml_ai`，紧挨着 GNN / transformers / RAG 那些 chip。没动 i18n key（chip 文案本就是 `YOLO`，没变）。
+- **graphkit-learn `.project-stats` 胶囊** —— 在 graphkit-learn 卡体内（`index_en.html:~1150`）新增 2 个 `.project-stat-pill`：(a) **128 ⭐ GitHub**（指向 `github.com/jajupmochi/graphkit-learn/stargazers`，`<i class="fab fa-github">` + `<strong>128</strong>`）；(b) **~300 / mo PyPI 下载**（指向 `pepy.tech/project/graphkit-learn`，`fa-download` 图标 + `<strong>~300</strong>` + `<span data-i18n="proj.gklearn.per_month">/ mo</span>`）。真实数字比"流行库"这种虚词管用。胶囊继承了新的 `.project-stat-pill` CSS（药丸形、淡边、hover 变主题色）。
+
+### B3 —— 权威感（Invited Talks + Selected Awards / Grants 区块）
+
+- **Services —— Invited Talks 卡** —— Services grid 新增 `.service-card`。图标 `fa-microphone-lines`，标题键 `services_cards.talks_title`，3 条 `<li>`：GRAPHADON Summer School 2024（Rouen）、ACPR 2023（京都）invited poster、Ph.D. defence 2023（LITIS）。新增键：`services_cards.talks_title`、`services_cards.talks_i1`、`services_cards.talks_i2`、`services_cards.talks_i3`。
+- **全新 `#awards` 区块 —— Selected Awards & Grants** —— 在 `#skills` 和 `#services` 之间新增（`index_en.html:~1505`）。`<h2>` 用 `fa-trophy` + `sections.awards`（"Selected Awards & Grants"）。`.awards-grid` 网格布局，4 个 `.award-card`：
+    - **SNSF Postdoc.Mobility 2021-2023**（P500PN_210739）—— 资助 U. Bern PRG 的 2 年博后。
+    - **SNSF Virtual Bodmer 2025-2027**（200021_225033）—— AI 保护文化遗产，260 kCHF。
+    - **Innosuisse PLANALYSER 2024-2025** —— 产学合作，HES-SO + WATTELSE AG，约 500 kCHF。
+    - **ANR APi —— Apprivoiser la Pré-image 2018-2021** —— 博士论文资助，LITIS。
+    - **Marie Skłodowska-Curie Alumni** —— 欧盟 MSCA 网络成员。
+    - **SNSF GraphInk 2024-2028**（217594_1）—— graph + image 手写体识别，Sinergia 近邻。
+    （注：grid 优先呈现 4 张最新 / 最高阶的；剩余 2 个以后轮换时露出。）
+    - 新增键：`sections.awards`，加 4 组 award 子树：`awards.snsf_postdoc.{title,meta,desc}`、`awards.innosuisse.{title,meta,desc}`、`awards.anr_api.{title,meta,desc}`、`awards.mcaa.{title,meta,desc}` —— awards 块合计 12 个键。
+- **CSS** —— 新增 `.awards-grid`（grid auto-fit minmax）、`.award-card`（卡体 icon + body flex 布局、主题色左边条）、`.award-icon`（圆形徽章，`fa-medal` / `fa-award` / `fa-flask-vial` / `fa-users-gear`）、`.award-body`、`.award-title`、`.award-meta`（grant ID / org / 年份）、`.award-desc`。
+
+### B4 —— Recruiter UX（页面段重排 + hero news ticker）
+
+- **Python 正则做整页区段重排** —— 按 `<section id="…">…</section>` 非贪婪提取（section 不会嵌套），按新次序在 OTW 块关闭后依次插回：
+    1. `hero`
+    2. `.hero-ticker`（新增，见下）
+    3. `#open-to-work`
+    4. `#about`
+    5. `#publications`
+    6. `#projects`
+    7. `#research`（outline）
+    8. `#experience`
+    9. `#skills`
+    10. `#awards`（新增）
+    11. `#services`（含 Invited Talks 卡）
+    12. `#news`
+    13. `#contact`
+    理由：Publications → Projects → Research 是 recruiter 偏好的可信度栈（论文证明研究、项目证明落地、Research outline 给大局）。后面 Experience / Skills / Awards 给甄审细节；Services / News / Contact 收尾。
+- **Hero news ticker** —— 在 hero 块和 OTW 之间新增 `<aside class="hero-ticker" aria-label="Latest news ticker">`（`index_en.html:666-693`）。结构：小 `.hero-ticker-label`（"📢 Latest"）+ `.hero-ticker-track`，内含 2 个相同的 `.hero-ticker-content`（第二个 `aria-hidden="true"` 用于无缝循环）。内容：5 条 ticker —— 🆕 ICPR 2026 / 🚀 Neobanker live at InnoEX / 🎓 GRAPHADON invited / 💰 SNSF Virtual Bodmer / ⭐ graphkit-learn 128⭐ + ~300 PyPI / mo。新增键：`ticker.label`、`ticker.t1..t5`。
+- **CSS —— hero-ticker + CSS 动画** —— `@keyframes tickerScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }` 在 `.hero-ticker-track` 上 40 s linear infinite，hover 时暂停（`.hero-ticker:hover .hero-ticker-track` → `animation-play-state: paused`）。`prefers-reduced-motion: reduce` 媒介查询下禁用动画，track 固定在 `translate3d(0,0,0)` —— 动画敏感访客看到静态横幅而不是跑马灯。`@media (max-width: 768px)` 把字号和内边距收紧。
+- **新增 ~255 行 CSS** 追加到 `css/main.css`，覆盖：`.hero-signature`、`.about-headline`、`.about-bullets`、`.about-emoji`、`.project-stats`、`.project-stat-pill`、`.awards-grid`、`.award-card`、`.award-icon`、`.award-body`、`.award-title`、`.award-meta`、`.award-desc`、`.hero-ticker`、`.hero-ticker-label`、`.hero-ticker-track`、`.hero-ticker-content`、`.hero-ticker-item`、`.hero-ticker-sep`、`@keyframes tickerScroll`、reduced-motion 兜底、移动端 media query。
+
+### B5 —— i18n（+42 键 × 4 语种）
+
+- **42 个新键**，覆盖 hero signature、About bullets、Experience M.Sc. / B.S.、Featured 排序、H-index / Grants stats、outline 更新、graphkit-learn stat 胶囊、Awards 区块（4 组 award 子树 × 3 属性 = 12 键）、Services Invited Talks 卡、hero ticker。
+    - `hero.signature`、`about.headline`、`about.b1..b6`（7 键）
+    - `exp.role_msc`、`exp.org_msc`、`exp.desc_msc`、`exp.role_bs`、`exp.org_bs`、`exp.desc_bs`（6 键）
+    - `common.featured`、`stats.h_index`、`stats.grants`（3 键）
+    - `outline.graph_ai_sci_desc`（1 键）—— 改写成以"分子性质预测"为引子
+    - `proj.gklearn.per_month`（1 键）
+    - `sections.awards`（1 键）
+    - `services_cards.talks_title`、`services_cards.talks_i1..i3`（4 键）
+    - `awards.snsf_postdoc.{title,meta,desc}`、`awards.innosuisse.{title,meta,desc}`、`awards.anr_api.{title,meta,desc}`、`awards.mcaa.{title,meta,desc}`（12 键）
+    - `ticker.label`、`ticker.t1..t5`（6 键）
+- **Parity 校验 —— 430 键，全 4 语种 OK** 通过 `scripts/check_i18n_parity.py`。基线 en.json = 430；zh / fr / de 均同步。较 V1 增量 = +42 键 × 4 语种 = 本 V 合计 168 处字符串新增。
+- Python 脚本把 42 个键并行应用到 4 份 locale JSON；PostToolUse hook 走了 jq 有效性校验。
+
+### 文件改动清单
+
+- `index_en.html` —— hero signature、hero ticker、About 重构、Experience timeline（M.Sc./B.S.）、11 张项目卡 `data-priority`、Featured 排序 `<option>`、Publications 默认排序、stats grid 增 H-index + Grants、YOLO 重分类、graphkit-learn `.project-stats`、Invited Talks 卡、`#awards` 区块、页面段重排。
+- `js/main.js:833` —— `sortCards('featured')` 分支、排序 select 首次加载初始化（projects + publications）。
+- `css/main.css` —— 新增 ~255 行（详见 B4 最后一条）。
+- `locales/{en,zh,fr,de}.json` —— 每份加 42 个键。
+- `index_en_v7_round1.html` —— 动作前 `index_en.html` 快照。
+- `docs/UPDATES.md` + `.zh.md` —— 本条 + Master TOC 更新。
+- `docs/PLAN.md` + `.zh.md` —— 已 ship 的 `[ ]`→`[✓]`、B1-B4 新增 task ID。
+
+---
+
+## V1 — 反垃圾加固 + 12 项打磨（旗帜表情、中文修订、Chatbot UX）
+
+一个合并的 V，覆盖两次工作：批次 A（"都存着" 那批，按 "Ask before doc updates" 硬规则推迟落账）—— welcome 表单 Apps Script 反垃圾三件套 + 新增 local-dev 指南 + 隐私 / 安全文档 + welcome 卡隐私提示行；批次 B —— 求职冲刺驱动的 12 项打磨：旗帜表情、中文措辞 / 术语订正、删除冗余标题、chatbot 全 i18n，以及 chatbot / celebration 双按钮叠位 UX 修复。
+
+### A. 回填 —— 反垃圾 + local-dev 指南 + 隐私
+
+- **Apps Script 反垃圾三件套**（细节见 `docs/setup/form-backend-google-sheets.md` § Security & privacy）：
+    - **蜜罐字段（Honeypot）** —— 表单内塞一个隐藏 `<input name="_gotcha">`，Apps Script 拦截任何非空提交。零误判，零依赖。
+    - **Origin 白名单** —— Apps Script 校验请求头 `Origin`，必须命中 `['https://jajupmochi.github.io', 'http://localhost:8000']`，否则 403。
+    - **停留时间** —— `MIN_DWELL_MS = 2000`。客户端在欢迎弹窗打开时记 `t_open`；Apps Script 拒收 < 2 s 内提交的请求，过滤掉那些不模拟阅读时间的自动化机器人。
+- **新增 `docs/setup/local-dev.md`**（+ `local-dev.zh.md` 镜像）—— 一页式入门：`python3 -m http.server 8000`、locale loader CORS 提示、主题切换、verify 流程。解决反复出现的 "怎么本地预览" 摩擦。
+- **`docs/setup/form-backend-google-sheets.md`** 新增 **Security & privacy** 节，覆盖上面三件套 + Sheet 权限 + Apps Script 部署审计 checklist。中文镜像同步更新。
+- **Welcome 卡隐私提示行** —— 新增 i18n 键 `welcome.privacy_note` × 4 语种（zh：「您的留言仅供我本人私下参考，绝不转售或外泄。」），以小字行渲染在表单下方，让访客在提交前心里有底。
+
+### B. 本日批次 —— 12 项
+
+#### 1. 国家旗帜表情贴到 News + Experience 地区条目
+
+- **News**（`locales/*.json`）：`c_graphadon` + `c_phd_defense` 前置 🇫🇷，`c_acpr` 前置 🇯🇵 —— 4 语种全部镜像。
+- **Experience**：`org_advanced_postdoc` + `org_scientific_collab` + `org_research_fellow` 前置 🇨🇭；`org_postdoc` + `org_phd` 前置 🇫🇷。让招聘方扫边栏时一眼看到地理多样性。
+
+#### 2. 中文 hero badge 改字
+
+`zh.json` `hero.badge`：「开放 ML 研究科学家职位」→ **「寻求机器学习研究科学家/工程师职位」**。原措辞看上去像「我在招人」；新措辞正确表达「我在求职」。
+
+#### 3. 中文 availability 软化
+
+`zh.json` `otw.status`：「可立即入职」→ **「可快速入职」**。更诚实 —— Linlin 有在岗博士后，"立即" 言过其实。
+
+#### 4. 中文术语 —— 预映像 → 预映射
+
+`zh.json` 内所有出现处（research keywords、Skills 标签、涉及 pre-image 的项目文案）。Linlin 拍板：「预映射」才是中文 graph-ML / manifold-learning 文献中 "pre-image" 的标准译法。
+
+#### 5. 河流水温论文 —— 补全作者
+
+`index_en.html:1204` —— "Riverine Water Temperatures Response to Climate Change" 这张卡的作者列表补上 **B. Fankhauser, V. Bigler, K. Riesen**。与 CV 权威列表对齐。
+
+#### 6. "University of Bern · Pattern Recognition Group" 中文翻译
+
+`zh.json` 现在显示 **「伯尔尼大学 · 模式识别小组」**，不再是英文原文。（fr / de 之前已译；zh 是漏网。）
+
+#### 7. 删除 `<h3>Let's Connect</h3>` + `contact.connect` 键
+
+与紧上方的 `<h2>Contact</h2>` 标题完全冗余。删掉 DOM 节点 + 4 语种里的 `contact.connect` 键。
+
+#### 8. 中文 CV 链接 —— 已验证
+
+`zh.json` 已通过 `data-i18n-href-map` 指向 `res/cv/CV_Linlin_Jia_zh.pdf`；用 chrome-devtools 做了冒烟测试（en 下载 → `_en.pdf`，zh 下载 → `_zh.pdf`）。无需改动。
+
+#### 9. 中文全称：HES-SO + INSA
+
+`zh.json`：
+
+- "HES-SO Fribourg" → **「瑞士西部应用科技大学弗里堡校区」**
+- "INSA Rouen Normandie" → **「法国诺曼底大学国立鲁昂应用科学学院」**
+
+中文全称对 CN 招聘方更友好；en / fr / de 仍保留英文缩写。
+
+#### 10. "Linlin Jia" → "贾林林" 仅在中文版替换（3 处）
+
+zh 下三处替换：导航品牌位、页脚第 1 行、页脚第 2 行。新增 i18n 键 `nav.brand` × 4 语种（zh：「贾林林」/ en / fr / de：「Linlin Jia」），让替换是 locale-aware 的，对非中文访客继续显示拼音。
+
+#### 11. Chatbot toast —— 全 4 语种 i18n
+
+`js/main.js:388-395` `openChatbot()` 之前是英文硬编码。改成读 `translationsCache[currentLang]['chatbot.toast_title']` + `chatbot.toast_html`。新键 × 4 语种：
+
+```json
+"chatbot": {
+    "toast_title": "AI chat coming soon!",
+    "toast_html": "For now, please reach out via email &rarr; <a href=\"mailto:linlin.jia@unibe.ch\">linlin.jia@unibe.ch</a>"
+}
+```
+
+`&rarr;` 沿用 toast 既有的 innerHTML 路径渲染。zh / fr / de 各有本地化文案。
+
+#### 12. Chatbot 按钮 UX —— 修复
+
+**问题（Linlin 报告）：** 两个浮动按钮（🎁 celebration + 🤖 chatbot）叠在完全相同的坐标（`left:20px, bottom:20px`），而 chatbot 初始 `display:none`，只在 welcome 浮层第一次关闭后才切到 `display:flex`。结果首次访客只看到 🎁，误以为是 chatbot 图标，点了之后冒出来 welcome 模态框，体感很怪。
+
+**修复**（`css/main.css` + `js/main.js`）：
+
+- `.celebration-trigger` `bottom: 20px` → **`bottom: 100px`**（叠在上方）。
+- `.chatbot-trigger` `display: none` → **`display: flex`**（无条件常驻 `bottom: 20px`）；删掉 `.active` 那条样式。
+- `closeWelcomeWithBottle(submitted = false)` —— 新参数：
+    - `submitted=true`（填表 + 提交路径）：`localStorage.hasVisitedBefore = 'true'`，🎁 此后不再出现。
+    - `submitted=false`（"Maybe later" 跳过路径）：去掉 `openGiftBox()` 添加的 `.hidden` 类，让 🎁 重新出现。
+- `submitWelcome` 调用处明确传 `true`。
+- 死代码 `closeWelcome()` 删除（实际从未被调用）。
+
+修复后行为：
+
+- 首次访问 → 同时看到 🎁（叠上）+ 🤖（叠下）。
+- 提交 → 🎁 永久消失；🤖 在。
+- 跳过（"Maybe later"）→ 🎁 留待下次；🤖 不受影响。
+- 回访（已提交过）→ 只有 🤖。
+
+### 验证
+
+- `jq .` 4 语种 —— 全部合法。
+- `scripts/check_i18n_parity.py` —— 389 个 leaf 键 × 4 语种，零漂移。
+- chrome-devtools 跨主题视觉验证延后到 commit 前（按 CLAUDE.local.md 「visual verification scope」）。
+
+---
 
 # 2026-04-22
 

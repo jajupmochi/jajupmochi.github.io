@@ -7,7 +7,7 @@
 ## Master TOC
 
 - [操作顺序](#操作顺序)
-- [`index_en.html` 中需要替换的占位符](#index_enhtml-中需要替换的占位符)
+- [需要替换的占位符](#需要替换的占位符)
 - [冒烟测试（推荐 — 每次部署后跑一次）](#冒烟测试推荐--每次部署后跑一次)
 - [仓库内置钩子与脚本](#仓库内置钩子与脚本)
 - [出问题时](#出问题时)
@@ -18,6 +18,7 @@
 - 所有手动 setup 项的路线图：[`../PLAN.md`](../PLAN.md) Horizon `H2.M1`。
 - 每次改动的审计日志：[`../UPDATES.md`](../UPDATES.md)。
 - 本目录的详细指南：
+    - [`local-dev.md`](local-dev.md) — 本地跑起来（CORS / 切语言 URL / welcome 调试）。
     - [`form-backend-google-sheets.md`](form-backend-google-sheets.md) — welcome form 后端。
     - [`analytics-clarity.md`](analytics-clarity.md) — 无 cookie Clarity。
     - [`analytics-backup.md`](analytics-backup.md) — 通过 GH Actions 每周备份 Clarity。
@@ -33,14 +34,14 @@
 | 4 | 加 `CLARITY_API_TOKEN` 仓库 secret + 开启 Actions 写权限 | ~5 分钟 | 每周备份 | [analytics-backup.md](analytics-backup.md) |
 | 5 | 浏览 CSP directive；后续接入新服务时把 CDN 源加入白名单 | — | 任何新第三方 | [security-headers.md](security-headers.md) |
 
-## `index_en.html` 中需要替换的占位符
+## 需要替换的占位符
 
-在文件中搜索以下字面量：
+在下表这两个文件里分别搜索以下字面量。对应功能运行前两个都必须替换成真实值。
 
-| 占位符 | 替换为 | 来源 |
-|--------|--------|------|
-| `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` | GAS Web App URL（形如 `https://script.google.com/macros/s/.../exec`） | 步骤 1 |
-| `PASTE_CLARITY_PROJECT_ID` | 10 字符的 Clarity project id | 步骤 2 |
+| 占位符 | 文件 | 替换为 | 来源 |
+|--------|------|--------|------|
+| `PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE` | `js/main.js`（约 282 行） | GAS Web App URL（形如 `https://script.google.com/macros/s/.../exec`） | 步骤 1 |
+| `PASTE_CLARITY_PROJECT_ID` | `index_en.html`（`<body>` 末尾） | 10 字符的 Clarity project id | 步骤 2 |
 
 可选（仅当启用每周备份 workflow 时）：
 

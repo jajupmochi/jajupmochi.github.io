@@ -25,15 +25,16 @@ PLAN.md cross-ref: this is relevant whenever you land a new CDN / external scrip
 
 ```
 default-src 'self';
-script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms;
+script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms https://webapi.amap.com https://*.amap.com;
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
 font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
-img-src 'self' data: https:;
-connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms;
-frame-src https://www.google.com;
+img-src 'self' data: blob: https:;
+connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms https://api.country.is https://restapi.amap.com https://*.amap.com;
+frame-src 'self' https://www.google.com;
+worker-src 'self' blob:;
 form-action 'self' https://script.google.com https://script.googleusercontent.com;
 base-uri 'self';
-object-src 'none';
+object-src 'self';
 upgrade-insecure-requests
 ```
 
@@ -42,15 +43,16 @@ Why each line:
 | Directive | Allowed origins | Why |
 |---|---|---|
 | `default-src 'self'` | same-origin | Conservative fallback for any future fetch type |
-| `script-src` | self + inline + jsdelivr + clarity | Inline `<script>` blocks exist throughout; canvas-confetti is on jsdelivr; Clarity tag is on clarity.ms |
+| `script-src` | self + inline + eval + jsdelivr + clarity + amap | Inline `<script>` blocks throughout; canvas-confetti on jsdelivr; Clarity tag on clarity.ms; Amap JS SDK loaded from `webapi.amap.com` for CN visitors. `'unsafe-eval'` is required by Amap's SDK |
 | `style-src` | self + inline + googleapis + cdnjs + jsdelivr | Inline `<style>` blocks throughout; Google Fonts; Font Awesome; academicons |
 | `font-src` | gstatic + cdnjs + jsdelivr + data: | Google Fonts binaries; Font Awesome webfonts |
-| `img-src` | self + data: + any https | Many external thumbnails + data-URI favicons |
-| `connect-src` | self + script.google.com + clarity | Welcome-form POST goes to Google Apps Script; Clarity beacons go to `*.clarity.ms` |
-| `frame-src` | google.com | Google Maps iframe |
+| `img-src` | self + data: + blob: + any https | External thumbnails, data-URI favicons, Amap tiles (served as blob: inside the map canvas) |
+| `connect-src` | self + script.google.com + clarity + country.is + amap | Welcome-form POST goes to Google Apps Script; Clarity beacons go to `*.clarity.ms`; `country.is` powers CN detection; Amap REST endpoints for map tiles / geocoding when active |
+| `frame-src` | self + google.com | Google Maps iframe (Amap embeds in-DOM, not via iframe, so no extra origin needed here) |
+| `worker-src` | self + blob: | Amap's SDK spins up web workers from `blob:` URLs for off-main-thread tile rendering |
 | `form-action` | self + script.google.com | Form posts — explicit allowlist |
 | `base-uri 'self'` | — | Prevents `<base>` tag injection attacks |
-| `object-src 'none'` | — | No `<object>/<embed>` needed |
+| `object-src 'self'` | — | No `<object>/<embed>` needed |
 | `upgrade-insecure-requests` | — | Auto-upgrades any stray http:// to https:// |
 
 ### `unsafe-inline` — why it stays

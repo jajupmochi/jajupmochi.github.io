@@ -23,15 +23,16 @@ PLAN.md 交叉引用：引入任何新 CDN / 外部脚本时都相关。见 `H1.
 
 ```
 default-src 'self';
-script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms;
+script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms https://webapi.amap.com https://*.amap.com;
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
 font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
-img-src 'self' data: https:;
-connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms;
-frame-src https://www.google.com;
+img-src 'self' data: blob: https:;
+connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms https://api.country.is https://restapi.amap.com https://*.amap.com;
+frame-src 'self' https://www.google.com;
+worker-src 'self' blob:;
 form-action 'self' https://script.google.com https://script.googleusercontent.com;
 base-uri 'self';
-object-src 'none';
+object-src 'self';
 upgrade-insecure-requests
 ```
 
@@ -40,15 +41,16 @@ upgrade-insecure-requests
 | Directive | 允许来源 | 为何 |
 |---|---|---|
 | `default-src 'self'` | 同源 | 未来任何 fetch 类型的保守兜底 |
-| `script-src` | self + inline + jsdelivr + clarity | 全站有内联 `<script>`；canvas-confetti 走 jsdelivr；Clarity tag 在 clarity.ms |
+| `script-src` | self + inline + eval + jsdelivr + clarity + amap | 全站有内联 `<script>`；canvas-confetti 走 jsdelivr；Clarity tag 在 clarity.ms；CN 访客时从 `webapi.amap.com` 加载高德 JS SDK；高德 SDK 要求 `'unsafe-eval'` |
 | `style-src` | self + inline + googleapis + cdnjs + jsdelivr | 全站有内联 `<style>`；Google Fonts；Font Awesome；academicons |
 | `font-src` | gstatic + cdnjs + jsdelivr + data: | Google Fonts 二进制；Font Awesome webfonts |
-| `img-src` | self + data: + 任意 https | 许多外部缩略图 + data-URI favicons |
-| `connect-src` | self + script.google.com + clarity | Welcome 表单 POST 到 Google Apps Script；Clarity beacon 到 `*.clarity.ms` |
-| `frame-src` | google.com | Google Maps iframe |
+| `img-src` | self + data: + blob: + 任意 https | 外部缩略图、data-URI favicon、高德地图瓦片（canvas 里以 blob: 形式渲染） |
+| `connect-src` | self + script.google.com + clarity + country.is + amap | Welcome 表单 POST 到 Google Apps Script；Clarity beacon 到 `*.clarity.ms`；`country.is` 用于 CN 检测；高德地图启用时访问 REST 端点取瓦片 / 地理编码 |
+| `frame-src` | self + google.com | Google Maps iframe（高德是直接内嵌到 DOM，不走 iframe，不需要额外放行） |
+| `worker-src` | self + blob: | 高德 SDK 会用 `blob:` URL 起 web worker 做离主线程的瓦片渲染 |
 | `form-action` | self + script.google.com | 表单提交 — 明确白名单 |
 | `base-uri 'self'` | — | 防止 `<base>` 标签注入攻击 |
-| `object-src 'none'` | — | 不用 `<object>/<embed>`（注：本仓库因嵌入 SVG 已放宽为 `'self'`） |
+| `object-src 'self'` | — | 不用 `<object>/<embed>`（本仓库因嵌入 SVG 放宽为 `'self'`） |
 | `upgrade-insecure-requests` | — | 自动把游离 http:// 升级成 https:// |
 
 ### `unsafe-inline` — 为何保留

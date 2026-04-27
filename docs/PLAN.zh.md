@@ -59,6 +59,10 @@
         - [G6 — 合作机构露出](#g6--合作机构露出) `[✓]`
         - [G7 — 博士论文接入（timeline + Publications）](#g7--博士论文接入timeline--publications) `[✓]`
         - [G8 — UX 打磨（V9 Linlin 标记）](#g8--ux-打磨v9-linlin-标记) `[✓]`
+        - [G9 — 第一屏信号密度（hero 签名、About bullets、drug-discovery 改写、Experience MSc/BS、Featured 项目）](#g9--第一屏信号密度) `[✓]`
+        - [G10 — 可信度展示面（Publications Most Cited、H-index / Grants stats、YOLO 重分类、graphkit-learn 实时 stats 胶囊）](#g10--可信度展示面) `[✓]`
+        - [G11 — 权威感区块（Invited Talks 服务卡 + Selected Awards / Grants 区块）](#g11--权威感区块) `[✓]`
+        - [G12 — Recruiter 优先页面流（整页区段重排）](#g12--recruiter-优先页面流) `[✓]`
     - [M1.2 — SEO + AI 搜索可见度](#m12--seo--ai-搜索可见度) `[~]`
         - [G1 — Schema.org 覆盖](#g1--schemaorg-覆盖) `[✓]`
         - [G2 — 多语言可爬取](#g2--多语言可爬取) `[✓]`
@@ -78,6 +82,7 @@
         - [G4 — 默认主题 → academic](#g4--默认主题--academic) `[ ]`
         - [G5 — Cmd+K 命令面板搜索](#g5--cmdk-命令面板搜索) `[✓]`
         - [G6 — Visit Map（访客国家地图）](#g6--visit-map访客国家地图) `[?]`
+        - [G7 — Hero 新闻 ticker（始终可见的滚动最新动态）](#g7--hero-新闻-ticker) `[✓]`
 - **[H2 — 站点运营与维护](#h2--站点运营与维护)** `[?]`
     - [M2.1 — 手动一次性配置](#m21--手动一次性配置) `[?]`
         - [G1 — Welcome 表单后端](#g1--welcome-表单后端) `[?]`
@@ -168,6 +173,34 @@ labs 等）公开展示的首要求职资产。任何内容 / SEO / 无障碍决
 - `[✓]` H1.M1.G8.T2 —（2026-04-21 V9）论文缩略图放大 + padding 减半（`index_en.html` 10 个 `<img>` dim + `css/main.css:~1841, ~1857`）。指令原文："图片放大，左/上 padding 减半，下 padding 等于上 padding"。卡片 padding `1.5rem` → `0.75rem 1.5rem 0.75rem 0.75rem`（上 + 左减半、下 = 上）。Grid `180px 1fr` → `220px 1fr`、gap `1.5rem` → `1.25rem`。`.pub-thumbnail` max-width 180→220 px、height 140→172 px（保持 5:4 比例）。10 张论文卡 `<img>` 用 `replace_all` 替唯一串 `" loading=\"lazy\" width=\"180\" height=\"140\">"`——项目卡图（400×180）不受影响。
 - `[✓]` H1.M1.G8.T3 —（2026-04-21 V9）Thesis 高亮卡 `margin-top: 2rem`（`css/main.css:~1767`）。不加间距的话，thesis 卡会直接顶着 carousel 最后一张论文，在视觉上把 Ph.D. 收官作品压成又一条列表项。加上空白让 thesis 读成收尾陈述，而非列表项。纯 CSS 改动，无 HTML / i18n 影响。
 
+#### G9 — 第一屏信号密度
+> 2026-04-23 V2 加入。理由：V9 的内容真实但视觉上太"密"——招聘方第一屏 10 秒看到的是泛化的 hero 自我介绍，下面接 4 段 About 段落墙。V2 求职冲刺把这块改成：(a) 一行 signature 把 4 个最强可信度信号挤进一句话；(b) About 改成 6 条可扫读的 emoji bullets；(c) 学历该到 Experience timeline 里就放到那（不再挂在 Projects 里）；(d) 新增 "Featured" 排序把 graphkit-learn 顶在 Projects 最前。drug-discovery 改写是另一桩 honesty pass —— 做的是 discovery 的上游，不是 discovery 本身。
+- `[✓]` H1.M1.G9.T1 —（2026-04-23 V2）hero tagline 下方新增 `.hero-signature` 段（`index_en.html:~630`）。`data-i18n-html="hero.signature"` 渲染 "Author of `graphkit-learn` · **SNSF** + **Innosuisse**-funded · **ICPR 2026** paper · **Marie Skłodowska-Curie** Alumni"。第一屏顶部一句话装 4 个信号。
+- `[✓]` H1.M1.G9.T2 —（2026-04-23 V2）About 重构 —— 4 段改为 `.about-headline` + `.about-bullets` `<ul>` × 6 `<li>`（📍🛠🧪🤖🎓🎯）。新增键 `about.headline` + `about.b1..b6`。同等纵向占位下信息密度约 3×。
+- `[✓]` H1.M1.G9.T3 —（2026-04-23 V2）drug-discovery 跨 hero / About / outline / 项目文案改写："drug discovery" → "**分子性质预测（药物发现 / 氧化还原 / 聚合物优化的上游基础）**"。诚实定位 —— 上游，不是 discovery 本身。按 Linlin 指令"未完成的 discovery 就先不提了"。
+- `[✓]` H1.M1.G9.T4 —（2026-04-23 V2）Experience timeline 新增 **M.Sc. 2014-2017 @ 西安交通大学** + **B.S. 2010-2014 @ 西安交通大学** `.timeline-item`（接在 Ph.D. 卡后）。M.Sc. 卡里点出中国专利 CN106376041B。新增 6 个 `exp.*_msc` / `*_bs` 键。专利除了在 Projects 露出，timeline 上也有了学术归宿。
+- `[✓]` H1.M1.G9.T5 —（2026-04-23 V2）11 张项目卡加 `data-priority`（graphkit-learn=10、Swiss River=9、PLANALYSER=8、OCTOPUSSY=7、LIULIAN=7、GraphInk=6、N-Banker=6、Graph Matching=5、APi=5、SDN=3、Confidential Translator=2）。驱动新的 "Featured" 排序。
+- `[✓]` H1.M1.G9.T6 —（2026-04-23 V2）Projects 排序 `<select>`：前置 `<option value="featured" data-i18n="common.featured">` 并标 `selected`。`js/main.js:833` `sortCards()` 多了 `featured` 分支（priority 降，year tie-break）。同时给 publications + projects 的 sort select 都加了首次加载初始化 `sortCards(sortSelect.value)`，没这句的话默认值不会自动触发。graphkit-learn 现在默认就在 Projects 顶部迎客。
+
+#### G10 — 可信度展示面
+> 2026-04-23 V2 加入。理由：引用数 / GitHub stars / PyPI 下载 / 资助是 Isomorphic Labs / DeepMind 周边招聘方最认的信号。这些信号在站上原本都有，只是分散——pub 默认是倒序时间、graphkit-learn 没露过 live stats、stat grid 里也没有 H-index 和 grants。B2 把这些拉到扫读路径上。
+- `[✓]` H1.M1.G10.T1 —（2026-04-23 V2）Publications 排序 `<select>`：`Most Cited` 移到第一项 + 标 `selected`。打开就看到 J24（9 引）、CBM（61）、ESWA（25）、PRL（14），不再是倒序的 preprint 流。sort select 的首次加载初始化与 G9.T6 共享。
+- `[✓]` H1.M1.G10.T2 —（2026-04-23 V2）stat grid 新增 2 张 `.stat-card`：`h-index`（值 **6**，`stats.h_index`）和 `grants`（值 **5+**，`stats.grants`）。grid 现在 8 张卡，常见笔记本分辨率正好填满一排，不会顶下面内容到折叠线下。
+- `[✓]` H1.M1.G10.T3 —（2026-04-23 V2）YOLO chip 重分类：`skills_cats.domain` → `skills_cats.ml_ai`。YOLO 是 CV 检测模型族，不是学科领域；挪到 GNN / transformers / RAG 旁边。
+- `[✓]` H1.M1.G10.T4 —（2026-04-23 V2）graphkit-learn 卡体内 `.project-stats` 实时胶囊：(a) GitHub **128 ⭐**（`github.com/jajupmochi/graphkit-learn/stargazers`）；(b) PyPI **~300 / mo**（`pepy.tech/project/graphkit-learn`）。新增键 `proj.gklearn.per_month` 用于 "/ mo" 后缀。胶囊样式 = 新增的 `.project-stat-pill` CSS（药丸形、淡边、hover 主题色）。把"流行库"虚词换成硬数字。
+
+#### G11 — 权威感区块
+> 2026-04-23 V2 加入。理由：talks 和 awards 是 Publications / Projects 容不下、却必须在站上露出的可信度信号。V1 完全没有它们。B3 引入两个新触面：Services 区块新增 Invited Talks 卡，Skills 和 Services 之间新增 Awards & Grants 区块。
+- `[✓]` H1.M1.G11.T1 —（2026-04-23 V2）Services 新增 **Invited Talks** 卡（`.service-card` + `fa-microphone-lines`）。3 个 `<li>`：GRAPHADON Summer School 2024（Rouen）· ACPR 2023（京都）invited poster · Ph.D. defence 2023（LITIS）。键：`services_cards.talks_title` + `talks_i1..i3`。
+- `[✓]` H1.M1.G11.T2 —（2026-04-23 V2）新增 `#awards` 区块 —— **Selected Awards & Grants** —— 在 `#skills` 和 `#services` 之间。`<h2>` 用 `fa-trophy` + `sections.awards`。`.awards-grid` 布局 4 张 `.award-card`，覆盖 SNSF Postdoc.Mobility + SNSF Bodmer + Innosuisse PLANALYSER + ANR APi + MCAA（4 张卡里露出 6 项 award）。新增键：`sections.awards` + 4 子树 × 3 属性 = 12 个 `awards.*` 键。
+- `[✓]` H1.M1.G11.T3 —（2026-04-23 V2）Awards 块 CSS —— `.awards-grid`、`.award-card`（主题色左边条）、`.award-icon`（圆形徽章）、`.award-body`、`.award-title`、`.award-meta`（grant ID / org / 年份）、`.award-desc`。4 主题视觉验证。
+
+#### G12 — Recruiter 优先页面流
+> 2026-04-23 V2 加入。理由：原本的页面段次序是按时间累积出来的（Research → Experience → Projects → Skills → Publications → Services → News → Contact）。B4 重排为招聘官实际想先看的：Publications → Projects → Research（outline）。先可信度证明、再落地证明、再大局背景。Experience / Skills / Awards 提供甄审细节，Services / News / Contact 收尾。
+- `[✓]` H1.M1.G12.T1 —（2026-04-23 V2）Python 正则做整页区段重排（非贪婪 `<section id="…">…</section>` 抽取 + 重新插入）。最终次序：`hero` → `.hero-ticker` → `#open-to-work` → `#about` → `#publications` → `#projects` → `#research` → `#experience` → `#skills` → `#awards` → `#services` → `#news` → `#contact`。
+- `[✓]` H1.M1.G12.T2 —（2026-04-23 V2）重排后 i18n parity 复核 —— 重排只挪节点不动键，没漂移。430 键 × 4 语种（V2 之前 388，本 V hero signature + About bullets + MSc/BS + Featured + stats + awards + talks + ticker 共 +42 键）。
+- `[✓]` H1.M1.G12.T3 —（2026-04-23 V2）批前 `index_en.html` 拷为 `index_en_v7_round1.html`，遵循仓库 round 文件约定（大改先落 `v{N}_round{N}` 工作副本）。
+
 ### M1.2 — SEO + AI 搜索可见度
 
 **终态：** 站点在 Google 正常被索引，`Linlin Jia` + `graph machine learning`
@@ -226,7 +259,8 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[ ]` H1.M3.G4.T2 — `canvas-confetti` 改为 dynamic import，只有庆祝触发（如 ICPR accepted 按钮）才加载。目前每次打开页面都加载。
 - `[ ]` H1.M3.G4.T3 — 加 `@media (prefers-reduced-motion: reduce)` CSS 规则。当前约 70 处 `@keyframes` / transition 忽略了这个 OS 级偏好。
 - `[ ]` H1.M3.G4.T4 — 地图栈去重：Leaflet（JS）与 Google Maps iframe 共存，留一个。Google Maps iframe 同时是 a11y 失败项（`frame-title` 缺失）。
-- `[ ]` H1.M3.G4.T5 — `openChatbot()` 把 native `alert()` 改成 toast 组件或直接 `mailto:`。native alert 会卡住 chrome-devtools 自动化，也是 UX 反模式。
+- `[✓]` H1.M3.G4.T5 —（2026-04-23 V1）`openChatbot()` 改用 `showToast()` + `chatbot.toast_title` / `chatbot.toast_html` × 4 语种完整 i18n。`js/main.js:388-395`。
+- `[✓]` H1.M3.G4.T6 —（2026-04-23 V1）解耦 chatbot 按钮与 welcome 浮层生命周期。`.chatbot-trigger` 改为 `display: flex` 无条件常驻 `bottom: 20px`；`.celebration-trigger` 移到 `bottom: 100px`（叠在上方）。`closeWelcomeWithBottle(submitted)` 仅在 submit 时写入 `hasVisitedBefore`，跳过路径保留 🎁。修复首次访问时 🎁 被误认为 chatbot 的混淆。`css/main.css` + `js/main.js`。
 
 #### G5 — Figure 放大镜（点击放大）
 > 2026-04-21 V5 根据 Linlin 指令 #6 加入。决策：项目与出版卡的缩略图很小（~120×80 px），招聘官需要看到 SVG 的细节（graph-kernel 架构、GNN message-passing、redox demo）才能 grasp 研究内容。Lightbox 保留全分辨率 SVG 清晰度，不必为每张图单独建页。
@@ -268,6 +302,13 @@ query 有排名；ChatGPT / Perplexity / Claude 被问到 graph ML 研究者时�
 - `[✓]` H1.M4.G6.T4 —（2026-04-22 V1）i18n 奇偶：新增 7 条 `visitMap.*` 键（`title`、`totalVisits`、`countries`、`window`、`source`、`topCountries`、`svgTitle`），覆盖 en / zh / fr / de。当前奇偶 141 键 / 语种。
 - `[✓]` H1.M4.G6.T5 —（2026-04-22 V1）chrome-devtools 跨主题验证 `ai-generated` / `industrial` / `fancy`（用 mock fixture，验证后已删）。已知 v1 限制：choropleth 颜色是首次渲染时从 `--primary` 取的，运行时切换主题需要刷新页面才会重染（可接受；未来可加 `MutationObserver` 监听 `[data-theme]` 修复）。
 - `[?]` H1.M4.G6.T6 — 真实数据填充：被 H2.M1.G4.T2（`CLARITY_API_TOKEN` repo secret）卡住。Linlin 设好 secret 并重新跑一次 workflow 后，第一份真实 `data/analytics/clarity-YYYY-MM-DD.json` 落地，块下次访问时自动激活。
+
+#### G7 — Hero 新闻 ticker
+> 2026-04-23 V2 加入。理由：news 在它最"新"的时候最有价值（"ICPR 2026 刚刚 accepted"），但 News 区块在页面靠下 —— 招聘官扫完 Publications / Projects 可能就走了。Hero ticker 是个折叠线下方始终可见的小横条，用 CSS marquee 把 5 条最新动态滚出来。不抢 hero 大图的注意力，也不会把任何东西挤到折叠线下。
+- `[✓]` H1.M4.G7.T1 —（2026-04-23 V2）hero 块和 OTW 之间插 `<aside class="hero-ticker">`（`index_en.html:666-693`）。结构：小 `.hero-ticker-label`（"📢 Latest"）+ `.hero-ticker-track`，内含 2 个相同 `.hero-ticker-content`（第二个 `aria-hidden="true"` 用于无缝循环）。内容：5 条 ticker —— 🆕 ICPR 2026 / 🚀 Neobanker live at InnoEX / 🎓 GRAPHADON invited / 💰 SNSF Virtual Bodmer / ⭐ graphkit-learn 128⭐ + ~300 PyPI / mo。每条都用 `data-i18n-html` 包成 span，里面嵌的 `<a>` / `<strong>` / `<code>` 能跟着翻译 loader 一起渲染。
+- `[✓]` H1.M4.G7.T2 —（2026-04-23 V2）`@keyframes tickerScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }` 跑在 `.hero-ticker-track` 上 40 s linear infinite。hover 暂停（`.hero-ticker:hover .hero-ticker-track` → `animation-play-state: paused`）。`@media (max-width: 768px)` 把字号和内边距收紧，避免 ticker 在小屏抢戏。
+- `[✓]` H1.M4.G7.T3 —（2026-04-23 V2）`prefers-reduced-motion: reduce` 媒介查询禁用动画，把 track 钉在 `translate3d(0,0,0)` —— 动画敏感访客看到静态"Latest"横幅而不是跑马灯。尊重 OS 级 a11y 偏好。
+- `[✓]` H1.M4.G7.T4 —（2026-04-23 V2）i18n 奇偶：6 个新 `ticker.*` 键（`label`、`t1`..`t5`）× 4 语种。总奇偶：430 键。
 
 ---
 
@@ -321,8 +362,10 @@ Actions）。每个都需要仓库外一次性配置，加上定期检查。这�
 
 #### G4 — 垃圾提交缓解（welcome form）
 - `[ ]` H2.M2.G4.T1 — Cloudflare Turnstile（低成本，免费）— 只在垃圾提交真出现时做。
-- `[ ]` H2.M2.G4.T2 — honeypot 字段（零依赖）。
+- `[✓]` H2.M2.G4.T2 —（2026-04-23 V1）honeypot 字段 —— welcome 表单内隐藏 `<input name="_gotcha">`；Apps Script 拦截任何非空提交。零误判，零依赖。
 - `[ ]` H2.M2.G4.T3 — Apps Script 里按 IP 限流（PropertiesService）。
+- `[✓]` H2.M2.G4.T4 —（2026-04-23 V1）Origin 白名单 —— Apps Script 校验请求头 `Origin`，必须命中 `['https://jajupmochi.github.io', 'http://localhost:8000']`，否则 403。
+- `[✓]` H2.M2.G4.T5 —（2026-04-23 V1）停留时间 —— `MIN_DWELL_MS = 2000`。客户端在 welcome 弹窗打开时记 `t_open`；Apps Script 拒收 < 2 s 内提交的请求，过滤掉不模拟阅读时间的自动化机器人。
 
 ### M2.3 — 备份与韧性
 

@@ -1,4 +1,17 @@
         // ========================================
+        // AMAP (高德地图) CREDENTIALS
+        // Only consumed when a China visitor is detected (see applyChinaMap).
+        // Register a Web/JS API app at https://console.amap.com/dev/key/app,
+        // then paste the Key + security jscode below. Domain whitelist MUST
+        // include 127.0.0.1 (Amap rejects the literal "localhost") plus the
+        // production domain — see docs/setup/local-dev.md for details.
+        // Placeholder values (starting with PASTE_) are treated as "not
+        // configured" at runtime and fall back to the existing link card.
+        // ========================================
+        const AMAP_KEY = '121b09d33c5728732431469ab110ba4d';
+        const AMAP_JSCODE = '4686de423b4ec5ab915a657cec212a78';
+
+        // ========================================
         // INTERNATIONALIZATION (i18n) SYSTEM
         // JSON-based translations with inline fallback
         // ========================================
@@ -26,7 +39,7 @@
                 'hero.badge': '开放 ML 研究科学家职位',
                 'hero.name': '贾林林 博士',
                 'hero.role': '<strong class="role-primary">机器学习研究科学家</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">伯尔尼大学高级博士后</span>',
-                'hero.title': '图机器学习 · 时空学习 · 图 AI 用于科学与工业 · LLM 系统与智能体',
+                'hero.title': '图机器学习 · 时空学习 · 科学与工业中的图智能 · LLM 系统与智能体',
                 'hero.contact': '联系我', 'hero.cv': '下载简历'
             },
             fr: {
@@ -91,6 +104,8 @@
         // Apply translations to DOM
         async function applyTranslations(lang) {
             currentLang = lang;
+            // Sync html[lang] so CSS :lang() / html[lang="zh"] selectors (e.g. CJK punctuation palt) take effect
+            try { document.documentElement.lang = lang; } catch (_) {}
             const t = await loadTranslations(lang);
             
             // Apply to elements with data-i18n attribute (text content)
@@ -148,6 +163,10 @@
                     // Malformed JSON in data-i18n-src-map — leave src unchanged.
                 }
             });
+
+            // Broadcast so any widget that depends on localized string widths
+            // (hero ticker marquee, carousels, etc.) can re-measure.
+            try { document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } })); } catch (_) {}
         }
         
         // Translation helper function (for JS code)
@@ -216,7 +235,9 @@
             
             // Show the postcard popup
             setTimeout(() => {
-                document.getElementById('welcomeOverlay').classList.add('active');
+                const overlay = document.getElementById('welcomeOverlay');
+                overlay.dataset.renderedAt = String(Date.now());
+                overlay.classList.add('active');
             }, 300);
             
             // Hide the trigger
@@ -224,14 +245,10 @@
         }
         
         function showWelcome() {
-            const hasVisited = localStorage.getItem('hasVisitedBefore');
-            if (hasVisited) {
-                // Returning visitor: hide celebration, show chatbot
+            updateChatbotIcon();
+            if (localStorage.getItem('hasVisitedBefore')) {
                 document.getElementById('celebrationTrigger').classList.add('hidden');
-                document.getElementById('chatbotTrigger').classList.add('active');
-                updateChatbotIcon();
             }
-            // New visitors see the celebration trigger
         }
         
         function updateChatbotIcon() {
@@ -246,18 +263,10 @@
             if (iconEl) iconEl.textContent = icons[theme] || '🤖';
         }
         
-        function closeWelcome() {
-            document.getElementById('welcomeOverlay').classList.remove('active');
-            localStorage.setItem('hasVisitedBefore', 'true');
-            // Show chatbot button
-            document.getElementById('chatbotTrigger').classList.add('active');
-            updateChatbotIcon();
-        }
-        
-        function closeWelcomeWithBottle() {
+        function closeWelcomeWithBottle(submitted = false) {
             const overlay = document.getElementById('welcomeOverlay');
             overlay.classList.add('closing');
-            
+
             // Small confetti for the bottle effect
             setTimeout(() => {
                 loadConfetti().then(fn => fn({
@@ -267,22 +276,32 @@
                     colors: ['#3b82f6', '#06b6d4', '#10b981']
                 }));
             }, 500);
-            
+
             setTimeout(() => {
                 overlay.classList.remove('active', 'closing');
-                localStorage.setItem('hasVisitedBefore', 'true');
-                // Show chatbot button
-                document.getElementById('chatbotTrigger').classList.add('active');
+                if (submitted) {
+                    // Filled-in: remember the visit; gift box stays hidden.
+                    localStorage.setItem('hasVisitedBefore', 'true');
+                } else {
+                    // Skipped: gift box remains reachable for another try.
+                    document.getElementById('celebrationTrigger').classList.remove('hidden');
+                }
                 updateChatbotIcon();
             }, 1000);
         }
         
         // Welcome-form backend endpoint (Google Apps Script Web App URL).
         // See setup/form-backend-google-sheets.md for how to create it.
-        const WELCOME_FORM_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+        const WELCOME_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyAib-TkLQCntXowHS4b9kOj2xYToCgD00PVRu4tR5JXSqC8uG-jGxFf5NDUYJWdX2MKg/exec';
 
         async function submitWelcome(e) {
             e.preventDefault();
+
+            // Anti-spam signals evaluated server-side in welcome-form-backend.gs.
+            // See docs/setup/form-backend-google-sheets.md → "Security & privacy".
+            const overlay = document.getElementById('welcomeOverlay');
+            const renderedAt = parseInt(overlay?.dataset.renderedAt || '0', 10);
+            const dwellMs = renderedAt > 0 ? (Date.now() - renderedAt) : 0;
 
             const payload = {
                 name: document.getElementById('visitorName').value.trim(),
@@ -292,6 +311,9 @@
                 locale: (typeof currentLang !== 'undefined' ? currentLang : document.documentElement.lang) || 'en',
                 userAgent: navigator.userAgent,
                 referrer: document.referrer || '',
+                origin: window.location.origin || '',
+                website: document.getElementById('visitorWebsite')?.value || '',
+                dwellMs,
             };
 
             // Fire-and-forget POST. text/plain avoids CORS preflight on GAS Web Apps.
@@ -327,8 +349,8 @@
                 </div>
             `;
 
-            // Close after delay with bottle effect
-            setTimeout(closeWelcomeWithBottle, 2000);
+            // Close after delay with bottle effect — `true` marks a real submission
+            setTimeout(() => closeWelcomeWithBottle(true), 2000);
         }
         
         // ========================================
@@ -375,10 +397,11 @@
         }
 
         function openChatbot() {
+            const t = translationsCache && translationsCache[currentLang] || {};
             showToast({
                 icon: '🤖',
-                title: 'AI chat coming soon',
-                html: 'For now, the human version replies fast &rarr; <a href="mailto:linlin.jia@unibe.ch">linlin.jia@unibe.ch</a>',
+                title: t['chatbot.toast_title'] || 'AI chat coming soon',
+                html: t['chatbot.toast_html'] || 'For now, please reach out via email &rarr; <a href="mailto:linlin.jia@unibe.ch">linlin.jia@unibe.ch</a>',
                 duration: 7000
             });
         }
@@ -664,8 +687,172 @@
         });
 
         // ========================================
+        // AMAP SDK LOADER + INLINE MAP
+        // Dynamically load the Amap JS API only when we actually need it (CN
+        // visitor detected AND a real key is configured). `_AMapSecurityConfig`
+        // MUST be set on window *before* the SDK script tag is appended — that's
+        // how v2.0 of the SDK picks up the jscode.
+        // ========================================
+        let amapSdkPromise = null;
+        function isAmapConfigured() {
+            return AMAP_KEY && !AMAP_KEY.startsWith('PASTE_')
+                && AMAP_JSCODE && !AMAP_JSCODE.startsWith('PASTE_');
+        }
+        function loadAmapSdk() {
+            if (amapSdkPromise) return amapSdkPromise;
+            if (!isAmapConfigured()) {
+                return Promise.reject(new Error('Amap key not configured'));
+            }
+            window._AMapSecurityConfig = { securityJsCode: AMAP_JSCODE };
+            amapSdkPromise = new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = 'https://webapi.amap.com/maps?v=2.0'
+                    + '&key=' + encodeURIComponent(AMAP_KEY)
+                    + '&plugin=AMap.ToolBar,AMap.Scale';
+                s.async = true;
+                s.onload = () => window.AMap
+                    ? resolve(window.AMap)
+                    : reject(new Error('AMap global missing after load'));
+                s.onerror = () => reject(new Error('Amap SDK script failed'));
+                document.head.appendChild(s);
+            });
+            return amapSdkPromise;
+        }
+        let amapInitialized = false;
+        function initAmapInline() {
+            const host = document.getElementById('amapContainer');
+            if (!host) return Promise.resolve(false);
+            if (amapInitialized) return Promise.resolve(true);
+            return loadAmapSdk().then(AMap => {
+                // PRG @ Neubrückstrasse 10, Bern — WGS-84. Amap uses
+                // GCJ-02 internally, but the GCJ-02 vs WGS-84 offset is only
+                // applied inside CN borders, so Swiss coords render correctly.
+                const lngLat = [7.4398, 46.9535];
+                // Amap SDK supports only `zh_cn` and `en` for labels.
+                const amapLang = (currentLang === 'zh') ? 'zh_cn' : 'en';
+                const map = new AMap.Map(host, {
+                    zoom: 15,
+                    center: lngLat,
+                    viewMode: '2D',
+                    lang: amapLang
+                });
+                const marker = new AMap.Marker({
+                    position: lngLat,
+                    title: '伯尔尼大学模式识别研究组（PRG）',
+                    anchor: 'bottom-center'
+                });
+                map.add(marker);
+                try { map.addControl(new AMap.ToolBar({ position: { top: '10px', right: '10px' } })); } catch (_) {}
+                try { map.addControl(new AMap.Scale()); } catch (_) {}
+                amapInitialized = true;
+                return true;
+            }).catch(err => {
+                console.warn('[amap] inline load failed, keeping fallback card:', err.message);
+                return false;
+            });
+        }
+
+        // ========================================
         // INIT ON LOAD
         // ========================================
+        // Swap to the Amap map (inline, if key configured) or the Amap/Baidu
+        // link-card fallback when the visitor is likely in mainland China.
+        // Primary signal is IP geolocation (country.is is CORS-friendly and
+        // free). Timezone acts as a zero-network fallback — less reliable (a
+        // user can be abroad with a CN-timezone laptop) but still better than
+        // assuming everyone has Google access. Result is cached in
+        // sessionStorage to avoid hitting the API on every page.
+        async function applyChinaMap() {
+            const mapGoogle = document.querySelector('.contact-map');
+            const mapAmap = document.querySelector('.contact-map-amap');
+            const mapCn = document.querySelector('.contact-map-cn');
+            if (!mapGoogle || !mapCn) return;
+
+            const CN_TIMEZONES = new Set([
+                'Asia/Shanghai', 'Asia/Chongqing', 'Asia/Harbin',
+                'Asia/Urumqi', 'Asia/Kashgar', 'Asia/Chungking'
+            ]);
+
+            function applyFlag(isChina) {
+                console.log('[map] visitor is', isChina ? 'CN' : 'non-CN', '— amapConfigured:', isAmapConfigured());
+                if (!isChina) {
+                    // Non-CN visitor: show Google, hide both CN variants.
+                    mapGoogle.removeAttribute('hidden');
+                    if (mapAmap) mapAmap.setAttribute('hidden', '');
+                    mapCn.setAttribute('hidden', '');
+                    return;
+                }
+                // CN visitor: hide Google. Prefer the inline Amap if a real
+                // key is configured; otherwise keep the link-card fallback.
+                mapGoogle.setAttribute('hidden', '');
+                if (mapAmap && isAmapConfigured()) {
+                    mapAmap.removeAttribute('hidden');
+                    mapCn.setAttribute('hidden', '');
+                    console.log('[map] loading inline Amap…');
+                    initAmapInline().then(ok => {
+                        if (!ok) {
+                            console.warn('[map] Amap SDK failed → link-card fallback');
+                            mapAmap.setAttribute('hidden', '');
+                            mapCn.removeAttribute('hidden');
+                        } else {
+                            console.log('[map] Amap inline ready');
+                        }
+                    });
+                } else {
+                    mapCn.removeAttribute('hidden');
+                    if (mapAmap) mapAmap.setAttribute('hidden', '');
+                }
+            }
+
+            // 0. Dev override: `?cn=1` forces CN mode (handy for visual verify
+            //    on a non-CN IP). `?cn=0` forces non-CN. Also bypasses cache.
+            try {
+                const p = new URLSearchParams(window.location.search).get('cn');
+                if (p === '1' || p === '0') {
+                    console.log('[map] ?cn=' + p + ' override active');
+                    applyFlag(p === '1');
+                    return;
+                }
+            } catch (_) { /* no URL API — continue */ }
+
+            // 1. Session-cached result wins.
+            try {
+                const cached = sessionStorage.getItem('visitorCountryIsCN');
+                if (cached !== null) {
+                    applyFlag(cached === 'true');
+                    return;
+                }
+            } catch (e) { /* storage blocked — continue */ }
+
+            // 2. Timezone heuristic up front so we render something sane fast,
+            //    then refine with the IP API (which may take a few hundred ms).
+            let tzGuess = false;
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                tzGuess = CN_TIMEZONES.has(tz);
+            } catch (e) { /* bail */ }
+            applyFlag(tzGuess);
+
+            // 3. IP-based confirmation. 2.5 s timeout; any failure falls back to
+            //    the timezone guess we already applied.
+            try {
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 2500);
+                const resp = await fetch('https://api.country.is', { signal: ctrl.signal });
+                clearTimeout(timer);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const isCN = data && data.country === 'CN';
+                    applyFlag(isCN);
+                    try { sessionStorage.setItem('visitorCountryIsCN', String(isCN)); } catch (e) {}
+                }
+            } catch (e) {
+                // Network / abort — keep the timezone-based guess and cache it
+                // for this session so we don't retry on every page.
+                try { sessionStorage.setItem('visitorCountryIsCN', String(tzGuess)); } catch (e2) {}
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved theme and initialize effects
             const savedTheme = localStorage.getItem('theme') || 'academic';
@@ -694,29 +881,87 @@
                 if (urlLang) localStorage.setItem('language', urlLang);
             }
             
-            // ICPR celebration confetti - only on hover and not seen before
-            const icprNews = document.getElementById('icprNews');
-            if (icprNews) {
-                icprNews.addEventListener('mouseenter', function() {
-                    if (!sessionStorage.getItem('icprConfettiShown')) {
-                        const rect = icprNews.getBoundingClientRect();
-                        const x = (rect.left + rect.width / 2) / window.innerWidth;
-                        const y = (rect.top + rect.height / 2) / window.innerHeight;
-                        loadConfetti().then(fn => fn({
-                            particleCount: 80,
-                            spread: 70,
-                            origin: { x: x, y: y }
-                        }));
-                        sessionStorage.setItem('icprConfettiShown', 'true');
-                    }
+            // Celebration confetti on hover — any element tagged [data-celebration="true"]
+            // (news rows + hero ticker items). Fires once per element per session.
+            document.querySelectorAll('[data-celebration="true"]').forEach((el, idx) => {
+                const cKey = el.id ? `confetti:${el.id}` : `confetti:${idx}:${(el.textContent || '').slice(0, 24)}`;
+                el.addEventListener('mouseenter', () => {
+                    if (sessionStorage.getItem(cKey)) return;
+                    const rect = el.getBoundingClientRect();
+                    if (!rect.width) return;
+                    const x = (rect.left + rect.width / 2) / window.innerWidth;
+                    const y = (rect.top + rect.height / 2) / window.innerHeight;
+                    loadConfetti().then(fn => fn({
+                        particleCount: 60,
+                        spread: 65,
+                        origin: { x, y }
+                    }));
+                    sessionStorage.setItem(cKey, 'true');
                 });
-            }
+            });
             
+            // Swap Google Maps → Amap/Baidu card if the visitor is in mainland China
+            // (Google Maps is routinely blocked there). Timezone is a cheap first
+            // check; a best-effort IP lookup refines it when available.
+            applyChinaMap();
+
             // Load dynamic citations from JSON
             loadCitations();
-            
+
+            // Scroll-spy: highlight the nav-link for the section the reader is on.
+            // Observes the main-page sections and toggles `.active` on the matching
+            // anchor link as each section crosses the upper viewport band.
+            initScrollSpy();
+
             showWelcome();
         });
+
+        function initScrollSpy() {
+            // Sections with their own nav item are keys of `links`. Sub-sections
+            // that logically belong to an existing nav item (experience / skills
+            // / awards roll up under Research) are aliased so the matching nav
+            // item stays highlighted as the reader scrolls through them.
+            const sectionIds = ['about', 'publications', 'projects', 'research',
+                                'experience', 'skills', 'awards', 'services'];
+            const aliasTo = { experience: 'research', skills: 'research', awards: 'research' };
+            const links = {};
+            sectionIds.forEach(id => {
+                const linkId = aliasTo[id] || id;
+                const link = document.querySelector(`.navbar-center a[href="#${linkId}"]`);
+                if (link) links[id] = link;
+            });
+            if (Object.keys(links).length === 0) return;
+            const homeLink = document.querySelector('.navbar-center a[data-page="main"]');
+            function onMainPage() {
+                const main = document.getElementById('mainPage');
+                return main && main.classList.contains('active');
+            }
+            function clearCenterActive() {
+                document.querySelectorAll('.navbar-center .nav-link').forEach(l => l.classList.remove('active'));
+            }
+            const observer = new IntersectionObserver((entries) => {
+                if (!onMainPage()) return;
+                const visible = entries.filter(e => e.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+                if (visible.length === 0) return;
+                const id = visible[0].target.id;
+                if (!links[id]) return;
+                if (window.scrollY < 120) return; // keep Home active near top
+                clearCenterActive();
+                links[id].classList.add('active');
+            }, { rootMargin: '-35% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+            sectionIds.forEach(id => {
+                const sec = document.getElementById(id);
+                if (sec) observer.observe(sec);
+            });
+            window.addEventListener('scroll', () => {
+                if (!onMainPage()) return;
+                if (window.scrollY < 120) {
+                    clearCenterActive();
+                    if (homeLink) homeLink.classList.add('active');
+                }
+            }, { passive: true });
+        }
         
         // Load citations from data/citations.json
         async function loadCitations() {
@@ -756,7 +1001,7 @@
         }
         
         // Projects and Publications Filter/Search/Sort
-        function initFilterableCarousel(containerId, trackId, prevId, nextId, dotsId, filterBtns, searchInput, sortSelect) {
+        function initFilterableCarousel(containerId, trackId, prevId, nextId, dotsId, filterBtns, searchInput, sortSelect, autoAdvanceMs) {
             const container = document.getElementById(containerId);
             const track = document.getElementById(trackId);
             if (!track) return;
@@ -765,7 +1010,10 @@
             const nextBtn = document.getElementById(nextId);
             const dotsContainer = document.getElementById(dotsId);
 
-            let currentPage = 0;
+            // Scroll by one card at a time (not one page). `currentIdx` is the
+            // left-most visible card index; the viewport still shows `perPage`
+            // cards so there are `visibleCards.length - perPage + 1` positions.
+            let currentIdx = 0;
             let visibleCards = [...allCards];
 
             function cardsPerPage() {
@@ -777,31 +1025,31 @@
 
             function updateCarousel() {
                 const perPage = cardsPerPage();
-                const totalPages = Math.max(1, Math.ceil(visibleCards.length / perPage));
-                currentPage = Math.min(currentPage, totalPages - 1);
+                const totalPositions = Math.max(1, visibleCards.length - perPage + 1);
+                currentIdx = Math.min(currentIdx, totalPositions - 1);
 
                 // Hide all, show visible
                 allCards.forEach(c => c.style.display = 'none');
                 visibleCards.forEach(c => c.style.display = '');
 
-                // Pixel-based offset that accounts for flex gap — prevents page-2+ right-edge clipping
+                // One-card step = (containerWidth + gap) / perPage
                 const gapPx = parseFloat(getComputedStyle(track).gap) || 0;
                 const containerWidth = container ? container.clientWidth : track.parentElement.clientWidth;
-                const pageOffsetPx = currentPage * (containerWidth + gapPx);
-                track.style.transform = `translateX(-${pageOffsetPx}px)`;
+                const stepPx = (containerWidth + gapPx) / perPage;
+                track.style.transform = `translateX(-${currentIdx * stepPx}px)`;
 
-                // Update dots
+                // One dot per scroll position
                 dotsContainer.innerHTML = '';
-                for (let i = 0; i < totalPages; i++) {
+                for (let i = 0; i < totalPositions; i++) {
                     const dot = document.createElement('div');
-                    dot.className = 'carousel-dot' + (i === currentPage ? ' active' : '');
-                    dot.addEventListener('click', () => { currentPage = i; updateCarousel(); });
+                    dot.className = 'carousel-dot' + (i === currentIdx ? ' active' : '');
+                    dot.addEventListener('click', () => { currentIdx = i; updateCarousel(); });
                     dotsContainer.appendChild(dot);
                 }
 
                 // Update buttons
-                prevBtn.disabled = currentPage === 0;
-                nextBtn.disabled = currentPage >= totalPages - 1;
+                prevBtn.disabled = currentIdx === 0;
+                nextBtn.disabled = currentIdx >= totalPositions - 1;
             }
 
             function filterCards(tag) {
@@ -811,7 +1059,7 @@
                 } else {
                     visibleCards = allCards.filter(c => c.dataset.tags && c.dataset.tags.split(',').map(s => s.trim()).includes(tag));
                 }
-                currentPage = 0;
+                currentIdx = 0;
                 updateCarousel();
             }
 
@@ -822,12 +1070,19 @@
                 } else {
                     visibleCards = allCards.filter(c => c.textContent.toLowerCase().includes(q));
                 }
-                currentPage = 0;
+                currentIdx = 0;
                 updateCarousel();
             }
 
             function sortCards(sortBy) {
-                if (sortBy === 'newest') {
+                if (sortBy === 'featured') {
+                    visibleCards.sort((a, b) => {
+                        const pa = parseInt(a.dataset.priority || 0, 10);
+                        const pb = parseInt(b.dataset.priority || 0, 10);
+                        if (pb !== pa) return pb - pa;
+                        return (b.dataset.year || 0) - (a.dataset.year || 0);
+                    });
+                } else if (sortBy === 'newest') {
                     visibleCards.sort((a, b) => (b.dataset.year || 0) - (a.dataset.year || 0));
                 } else if (sortBy === 'oldest') {
                     visibleCards.sort((a, b) => (a.dataset.year || 0) - (b.dataset.year || 0));
@@ -869,11 +1124,22 @@
 
             if (sortSelect) {
                 sortSelect.addEventListener('change', (e) => sortCards(e.target.value));
+                sortCards(sortSelect.value);
             }
 
-            // Navigation buttons
-            prevBtn.addEventListener('click', () => { currentPage = Math.max(0, currentPage - 1); updateCarousel(); });
-            nextBtn.addEventListener('click', () => { currentPage++; updateCarousel(); });
+            // Navigation buttons — manual click advances by one screen (perPage),
+            // while auto-advance (further below) ticks one card at a time.
+            prevBtn.addEventListener('click', () => {
+                const perPage = cardsPerPage();
+                currentIdx = Math.max(0, currentIdx - perPage);
+                updateCarousel();
+            });
+            nextBtn.addEventListener('click', () => {
+                const perPage = cardsPerPage();
+                const totalPositions = Math.max(1, visibleCards.length - perPage + 1);
+                currentIdx = Math.min(totalPositions - 1, currentIdx + perPage);
+                updateCarousel();
+            });
 
             // Keyboard navigation (← →) when the carousel area has focus
             if (container) {
@@ -903,18 +1169,40 @@
             window.addEventListener('resize', () => updateCarousel());
 
             updateCarousel();
+
+            // Optional auto-advance — wraps back to page 0 at the end.
+            // Pauses on hover/focus, when the document is hidden, or if the user
+            // prefers reduced motion.
+            if (autoAdvanceMs > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                let autoPaused = false;
+                if (container) {
+                    container.addEventListener('mouseenter', () => autoPaused = true);
+                    container.addEventListener('mouseleave', () => autoPaused = false);
+                    container.addEventListener('focusin', () => autoPaused = true);
+                    container.addEventListener('focusout', () => autoPaused = false);
+                }
+                setInterval(() => {
+                    if (autoPaused || document.hidden) return;
+                    const perPage = cardsPerPage();
+                    const totalPositions = Math.max(1, visibleCards.length - perPage + 1);
+                    if (totalPositions < 2) return;
+                    currentIdx = (currentIdx + 1) % totalPositions;
+                    updateCarousel();
+                }, autoAdvanceMs);
+            }
         }
         
         // Initialize carousels when DOM ready
         setTimeout(() => {
-            // Projects carousel
+            // Projects carousel — auto-advance every 7s (pauses on hover/focus)
             initFilterableCarousel(
                 'projectsCarousel', 'projectsTrack', 'projectsPrev', 'projectsNext', 'projectsDots',
                 document.querySelectorAll('#projects .filter-tag'),
                 document.querySelector('#projects .search-box input'),
-                document.querySelector('#projects .sort-select')
+                document.querySelector('#projects .sort-select'),
+                7000
             );
-            
+
             // Publications list (vertical, not carousel)
             initFilterableList(
                 'pubsList',
@@ -922,7 +1210,61 @@
                 document.querySelector('#publications .search-box input'),
                 document.querySelector('#publications .sort-select')
             );
+
+            // Hero ticker — vertical one-line rotation. Pauses on hover or when
+            // the document is hidden; respects prefers-reduced-motion (no rotation,
+            // first item stays visible).
+            initHeroTicker();
         }, 100);
+
+        function initHeroTicker() {
+            const list = document.querySelector('.hero-ticker-list');
+            if (!list) return;
+            const items = Array.from(list.querySelectorAll('.hero-ticker-item'));
+            if (items.length === 0) return;
+            function applyMarquee(item) {
+                if (!item) return;
+                const content = item.querySelector('.ticker-content');
+                if (!content) return;
+                // Reset first so we measure the natural (non-translated) width.
+                item.classList.remove('is-marquee');
+                content.style.removeProperty('--marquee-shift');
+                content.style.removeProperty('--marquee-duration');
+                const shift = content.scrollWidth - content.clientWidth;
+                if (shift > 6) {
+                    const duration = Math.max(8, Math.min(22, 4 + shift / 40));
+                    content.style.setProperty('--marquee-shift', shift + 'px');
+                    content.style.setProperty('--marquee-duration', duration.toFixed(1) + 's');
+                    item.classList.add('is-marquee');
+                }
+            }
+            items[0].classList.add('is-active');
+            requestAnimationFrame(() => applyMarquee(items[0]));
+            if (items.length < 2) return;
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduced) return;
+            let idx = 0;
+            let paused = false;
+            list.addEventListener('mouseenter', () => paused = true);
+            list.addEventListener('mouseleave', () => paused = false);
+            list.addEventListener('focusin', () => paused = true);
+            list.addEventListener('focusout', () => paused = false);
+            setInterval(() => {
+                if (paused || document.hidden) return;
+                const cur = items[idx];
+                idx = (idx + 1) % items.length;
+                const next = items[idx];
+                cur.classList.remove('is-active', 'is-marquee');
+                cur.classList.add('is-leaving');
+                next.classList.remove('is-leaving');
+                next.classList.add('is-active');
+                requestAnimationFrame(() => applyMarquee(next));
+                setTimeout(() => cur.classList.remove('is-leaving'), 600);
+            }, 5000);
+            // Re-measure after locale change (content widths shift).
+            window.addEventListener('resize', () => applyMarquee(items[idx]));
+            document.addEventListener('languageChanged', () => applyMarquee(items[idx]));
+        }
         
         // Filterable vertical list for publications
         function initFilterableList(listId, filterBtns, searchInput, sortSelect) {
@@ -956,7 +1298,18 @@
             }
             
             function sortCards(sortBy) {
-                if (sortBy === 'newest') {
+                if (sortBy === 'featured') {
+                    // Accepted-first, then priority desc, then year desc
+                    visibleCards.sort((a, b) => {
+                        const aAcc = a.dataset.status === 'accepted' ? 1 : 0;
+                        const bAcc = b.dataset.status === 'accepted' ? 1 : 0;
+                        if (bAcc !== aAcc) return bAcc - aAcc;
+                        const pa = parseInt(a.dataset.priority || 0, 10);
+                        const pb = parseInt(b.dataset.priority || 0, 10);
+                        if (pb !== pa) return pb - pa;
+                        return (b.dataset.year || 0) - (a.dataset.year || 0);
+                    });
+                } else if (sortBy === 'newest') {
                     visibleCards.sort((a, b) => (b.dataset.year || 0) - (a.dataset.year || 0));
                 } else if (sortBy === 'oldest') {
                     visibleCards.sort((a, b) => (a.dataset.year || 0) - (b.dataset.year || 0));
@@ -966,7 +1319,8 @@
                 visibleCards.forEach(c => list.appendChild(c));
                 updateList();
             }
-            
+
+
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
@@ -994,6 +1348,7 @@
 
             if (sortSelect) {
                 sortSelect.addEventListener('change', (e) => sortCards(e.target.value));
+                sortCards(sortSelect.value);
             }
 
             updateList();
