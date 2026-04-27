@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Color + Highlight Picker — text palettes for parchment</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,400;1,400&display=swap">
+
+<style>
+:root {
+    --rule: oklch(0.45 0.10 50 / 0.30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Indie Flower', 'Spectral', Georgia, serif;
+    color: oklch(0.20 0.04 30);
+    min-height: 100%;
+    background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
+                oklch(0.93 0.030 78);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+header {
+    text-align: center;
+    padding: 36px 24px 20px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 38px;
+    color: oklch(0.20 0.04 30);
+    line-height: 1.1;
+}
+header .sub {
+    margin: 8px auto 0;
+    max-width: 760px;
+    font-size: 16px;
+    color: oklch(0.40 0.05 30);
+}
+header .sub code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: monospace;
+}
+
+.lang-toggle {
+    text-align: center;
+    margin: 12px 0 0;
+    font-family: 'Indie Flower', cursive;
+}
+.lang-btn {
+    background: oklch(0.92 0.040 75 / 0.55);
+    border: 1px solid var(--rule);
+    color: oklch(0.20 0.04 30);
+    padding: 6px 18px;
+    margin: 0 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 999px;
+    transition: all 0.2s;
+}
+.lang-btn.active {
+    background: oklch(0.45 0.16 27);
+    color: oklch(0.96 0.04 60);
+    border-color: oklch(0.45 0.16 27);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 24px;
+    padding: 28px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+.combo {
+    background: oklch(0.96 0.020 78 / 0.55);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: blur(2px);
+}
+.combo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px oklch(0.20 0.06 30 / 0.18);
+}
+
+.combo-head {
+    padding: 14px 22px 10px;
+    border-bottom: 1px dashed var(--rule);
+}
+.combo-head .num {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 22px;
+    line-height: 1;
+}
+.combo-head h3 {
+    font-family: 'Reenie Beanie', cursive;
+    margin: 4px 0 0;
+    font-size: 26px;
+    line-height: 1.1;
+}
+.combo-head .verdict {
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 4px;
+    font-family: 'Spectral', serif;
+    color: oklch(0.40 0.05 30);
+}
+
+.swatches {
+    display: flex;
+    padding: 10px 22px;
+    gap: 4px;
+    border-bottom: 1px dashed var(--rule);
+}
+.sw {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid oklch(0.30 0.05 30 / 0.3);
+}
+
+.sample {
+    padding: 22px 28px 26px;
+}
+.sample p { margin: 0 0 12px; }
+.sample h2 {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 30px;
+    margin: 0 0 6px;
+    line-height: 1.1;
+}
+.sample .role {
+    font-style: italic;
+    font-size: 14px;
+    margin: 0 0 14px;
+}
+.sample a {
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s, border-bottom 0.2s;
+}
+.sample a:hover {
+    /* per-combo overrides below */
+}
+.sample mark {
+    background: var(--hl-bg);
+    color: var(--hl-text, inherit);
+    padding: 1px 4px;
+    border-radius: 2px;
+}
+.sample button {
+    margin-top: 6px;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+/* Hide the inactive language */
+body.lang-en .sample.zh { display: none; }
+body.lang-zh .sample.en { display: none; }
+
+/* ChineseFont stacks for ZH samples */
+.sample.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 36px; }
+.sample.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; }
+
+/* ===================== COMBO 1: Sepia Ink (warm monochrome) ===================== */
+.c1 .sample            { color: oklch(0.20 0.05 30); }
+.c1 .sample h2         { color: oklch(0.18 0.05 30); }
+.c1 .sample .role      { color: oklch(0.42 0.05 30); }
+.c1 .sample a          { color: oklch(0.30 0.08 30); border-bottom: 1px solid oklch(0.35 0.06 30 / 0.4); }
+.c1 .sample a:hover    { color: oklch(0.18 0.10 30); border-bottom-color: oklch(0.18 0.10 30); }
+.c1 { --hl-bg: oklch(0.85 0.06 70 / 0.5); --hl-text: oklch(0.20 0.06 30); }
+.c1 button             { background: oklch(0.30 0.08 30); color: oklch(0.95 0.05 75); }
+.c1 button:hover       { background: oklch(0.18 0.10 30); }
+.c1 .sw1 { background: oklch(0.20 0.05 30); }
+.c1 .sw2 { background: oklch(0.42 0.05 30); }
+.c1 .sw3 { background: oklch(0.30 0.08 30); }
+.c1 .sw4 { background: oklch(0.85 0.06 70); }
+.c1 .sw5 { background: oklch(0.55 0.04 35); }
+
+/* ===================== COMBO 2: Burgundy Scholar (academic red) ===================== */
+.c2 .sample            { color: oklch(0.22 0.04 30); }
+.c2 .sample h2         { color: oklch(0.30 0.10 27); }
+.c2 .sample .role      { color: oklch(0.42 0.05 30); }
+.c2 .sample a          { color: oklch(0.45 0.16 27); border-bottom: 1px solid oklch(0.45 0.16 27 / 0.4); }
+.c2 .sample a:hover    { color: oklch(0.32 0.16 27); border-bottom-color: oklch(0.32 0.16 27); }
+.c2 { --hl-bg: oklch(0.78 0.14 75 / 0.5); --hl-text: oklch(0.22 0.10 30); }
+.c2 button             { background: oklch(0.45 0.16 27); color: oklch(0.96 0.04 60); }
+.c2 button:hover       { background: oklch(0.32 0.16 27); }
+.c2 .sw1 { background: oklch(0.22 0.04 30); }
+.c2 .sw2 { background: oklch(0.30 0.10 27); }
+.c2 .sw3 { background: oklch(0.45 0.16 27); }
+.c2 .sw4 { background: oklch(0.78 0.14 75); }
+.c2 .sw5 { background: oklch(0.62 0.13 70); }
+
+/* ===================== COMBO 3: Forest Library (green + bronze) ===================== */
+.c3 .sample            { color: oklch(0.22 0.04 30); }
+.c3 .sample h2         { color: oklch(0.32 0.08 145); }
+.c3 .sample .role      { color: oklch(0.42 0.05 30); }
+.c3 .sample a          { color: oklch(0.40 0.12 145); border-bottom: 1px dotted oklch(0.40 0.12 145 / 0.55); }
+.c3 .sample a:hover    { color: oklch(0.50 0.14 50); border-bottom-color: oklch(0.50 0.14 50); }
+.c3 { --hl-bg: oklch(0.85 0.10 130 / 0.4); --hl-text: oklch(0.22 0.08 145); }
+.c3 button             { background: oklch(0.40 0.12 145); color: oklch(0.96 0.04 70); }
+.c3 button:hover       { background: oklch(0.50 0.14 50); }
+.c3 .sw1 { background: oklch(0.22 0.04 30); }
+.c3 .sw2 { background: oklch(0.32 0.08 145); }
+.c3 .sw3 { background: oklch(0.40 0.12 145); }
+.c3 .sw4 { background: oklch(0.85 0.10 130); }
+.c3 .sw5 { background: oklch(0.50 0.14 50); }
+
+/* ===================== COMBO 4: Royal Manuscript (navy + gold) ===================== */
+.c4 .sample            { color: oklch(0.20 0.04 30); }
+.c4 .sample h2         { color: oklch(0.25 0.10 250); }
+.c4 .sample .role      { color: oklch(0.42 0.05 30); }
+.c4 .sample a          { color: oklch(0.32 0.13 240); border-bottom: 1px solid oklch(0.32 0.13 240 / 0.5); }
+.c4 .sample a:hover    { color: oklch(0.55 0.14 75); border-bottom-color: oklch(0.55 0.14 75); }
+.c4 { --hl-bg: oklch(0.82 0.13 75 / 0.55); --hl-text: oklch(0.22 0.04 30); }
+.c4 button             { background: oklch(0.25 0.10 250); color: oklch(0.96 0.04 60); }
+.c4 button:hover       { background: oklch(0.55 0.14 75); color: oklch(0.18 0.06 30); }
+.c4 .sw1 { background: oklch(0.20 0.04 30); }
+.c4 .sw2 { background: oklch(0.25 0.10 250); }
+.c4 .sw3 { background: oklch(0.32 0.13 240); }
+.c4 .sw4 { background: oklch(0.82 0.13 75); }
+.c4 .sw5 { background: oklch(0.55 0.14 75); }
+
+/* ===================== COMBO 5: Charcoal Modernist (black + red) ===================== */
+.c5 .sample            { color: oklch(0.14 0.02 30); }
+.c5 .sample h2         { color: oklch(0.10 0.02 30); }
+.c5 .sample .role      { color: oklch(0.36 0.04 30); }
+.c5 .sample a          { color: oklch(0.45 0.18 27); border-bottom: 1px solid oklch(0.45 0.18 27); }
+.c5 .sample a:hover    { color: oklch(0.10 0.02 30); border-bottom-color: oklch(0.10 0.02 30); }
+.c5 { --hl-bg: oklch(0.82 0.20 75 / 0.45); --hl-text: oklch(0.10 0.02 30); }
+.c5 button             { background: oklch(0.10 0.02 30); color: oklch(0.96 0.04 60); }
+.c5 button:hover       { background: oklch(0.45 0.18 27); }
+.c5 .sw1 { background: oklch(0.10 0.02 30); }
+.c5 .sw2 { background: oklch(0.14 0.02 30); }
+.c5 .sw3 { background: oklch(0.45 0.18 27); }
+.c5 .sw4 { background: oklch(0.82 0.20 75); }
+.c5 .sw5 { background: oklch(0.36 0.04 30); }
+
+/* ===================== COMBO 6: Watercolor Wash (teal + ocher, painterly) ===================== */
+.c6 .sample            { color: oklch(0.24 0.06 30); }
+.c6 .sample h2         { color: oklch(0.32 0.10 200); }
+.c6 .sample .role      { color: oklch(0.42 0.06 30); }
+.c6 .sample a          {
+    color: oklch(0.40 0.13 200);
+    background: linear-gradient(180deg, transparent 75%, oklch(0.78 0.14 200 / 0.5) 75%);
+    padding: 0 2px;
+}
+.c6 .sample a:hover    {
+    background: linear-gradient(180deg, transparent 65%, oklch(0.78 0.14 200 / 0.7) 65%);
+    color: oklch(0.28 0.13 200);
+}
+.c6 { --hl-bg: oklch(0.82 0.16 75 / 0.55); --hl-text: oklch(0.22 0.08 30); }
+.c6 button             {
+    background: oklch(0.40 0.13 200); color: oklch(0.96 0.04 60);
+    border-radius: 14px;
+    font-family: 'Indie Flower', cursive;
+}
+.c6 button:hover       { background: oklch(0.55 0.14 75); }
+.c6 .sw1 { background: oklch(0.24 0.06 30); }
+.c6 .sw2 { background: oklch(0.32 0.10 200); }
+.c6 .sw3 { background: oklch(0.40 0.13 200); }
+.c6 .sw4 { background: oklch(0.82 0.16 75); }
+.c6 .sw5 { background: oklch(0.55 0.14 75); }
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 36px;
+    font-size: 15px;
+    color: oklch(0.40 0.05 30);
+    max-width: 760px;
+    margin: 0 auto;
+}
+.controls code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: monospace;
+}
+</style>
+</head>
+<body class="lang-en">
+
+<header>
+    <h1>Color &amp; Highlight Picker</h1>
+    <p class="sub">6 color palettes for the parchment edition. Each combo defines: <strong>body text</strong>, <strong>headings</strong>, <strong>links + hover</strong>, <strong>highlighted text</strong> (mark/keyword), and <strong>buttons</strong>. All tones designed to feel native to the warm parchment background.</p>
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+</header>
+
+<div class="grid">
+
+    <!-- ========== Combo 1: Sepia Ink ========== -->
+    <div class="combo c1">
+        <div class="combo-head">
+            <span class="num">№ 1</span>
+            <h3>Sepia Ink &nbsp;·&nbsp; 沉墨棕</h3>
+            <p class="verdict">Most native to parchment — every color stays in the warm-brown family. Quiet, subtle, monochrome.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+    <!-- ========== Combo 2: Burgundy Scholar ========== -->
+    <div class="combo c2">
+        <div class="combo-head">
+            <span class="num">№ 2</span>
+            <h3>Burgundy Scholar &nbsp;·&nbsp; 学者酒红 ★</h3>
+            <p class="verdict">Academic warm red for links + gold highlights. Serious, scholarly, the most "Oxford library" feel.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+    <!-- ========== Combo 3: Forest Library ========== -->
+    <div class="combo c3">
+        <div class="combo-head">
+            <span class="num">№ 3</span>
+            <h3>Forest Library &nbsp;·&nbsp; 林海铜雀</h3>
+            <p class="verdict">Forest-green links with bronze hover. Quietly distinctive, suggests nature + scholarship.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+    <!-- ========== Combo 4: Royal Manuscript ========== -->
+    <div class="combo c4">
+        <div class="combo-head">
+            <span class="num">№ 4</span>
+            <h3>Royal Manuscript &nbsp;·&nbsp; 御制经典</h3>
+            <p class="verdict">Deep navy headings + lapis-blue links + gold-leaf hover. Most "manuscript-like" hierarchy.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+    <!-- ========== Combo 5: Charcoal Modernist ========== -->
+    <div class="combo c5">
+        <div class="combo-head">
+            <span class="num">№ 5</span>
+            <h3>Charcoal Modernist &nbsp;·&nbsp; 炭黑现代</h3>
+            <p class="verdict">Highest-contrast: near-black text + bold red links. Reads as confident, modern, less ornamental.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+    <!-- ========== Combo 6: Watercolor Wash ========== -->
+    <div class="combo c6">
+        <div class="combo-head">
+            <span class="num">№ 6</span>
+            <h3>Watercolor Wash &nbsp;·&nbsp; 水彩洗笔</h3>
+            <p class="verdict">Teal links painted with a watercolor wash underline + ocher highlights. Most artistic, soft, painterly.</p>
+        </div>
+        <div class="swatches"><span class="sw sw1"></span><span class="sw sw2"></span><span class="sw sw3"></span><span class="sw sw4"></span><span class="sw sw5"></span></div>
+        <div class="sample en">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+            <p>Building <a href="#">Spatio-Temporal Transformers</a> for river forecasting. <mark>graphkit-learn</mark> reached <a href="#">130+ citations</a> on Google Scholar. Postdoc at University of Bern, currently funded by <a href="#">SNSF</a> and Innosuisse.</p>
+            <button>Get In Touch</button>
+        </div>
+        <div class="sample zh">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+            <p>正在构建 <a href="#">时空 Transformer</a> 用于河水温度预测。<mark>graphkit-learn</mark> 已在 <a href="#">Google Scholar</a> 获得 130+ 引用。现为伯尔尼大学博士后，受 <a href="#">SNSF</a> 与 Innosuisse 资助。</p>
+            <button>联系我</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="controls">
+    <p>Pick the number you want, e.g. "<code>用 № 2 Burgundy Scholar</code>". I'll wire all 5 colors (body / heading / link / hover / highlight) into <code>parchment-overrides.css</code>.</p>
+    <p style="font-size:13px;margin-top:12px">Mix &amp; match welcome too — e.g. "<code>№ 2 但用 № 6 的 watercolor 链接 hover</code>".</p>
+</div>
+
+<script>
+function setLang(lang) {
+    document.body.classList.remove('lang-en', 'lang-zh');
+    document.body.classList.add('lang-' + lang);
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.trim().toLowerCase().startsWith(lang === 'en' ? 'english' : '中'));
+    });
+}
+</script>
+</body>
+</html>

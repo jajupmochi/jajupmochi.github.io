@@ -191,6 +191,75 @@ div.project-card:hover, .pub-card:hover, .service-card:hover,
 }
 /* outline-item / word / pub-link / project-link hover — keep main.css color shifts (untouched) */
 
+/* ============================================================================
+ * §X. HANDWRITTEN FONT STACK (Linlin's picks — Round 1 + Round 2 ZH-G)
+ *   EN hero name : Reenie Beanie (№5 — Scholar note-taker)
+ *   EN body      : Indie Flower  (№6 — Storyteller, friendly reading)
+ *   ZH hero name : Zhi Mang Xing (№4 — Architect/draftsman)
+ *   ZH body      : Ma Shan Zheng (G — same as hero, full unification)
+ * ========================================================================= */
+
+/* English body — apply Indie Flower to body, but keep monospace + UI fonts intact */
+body, p, li, span, td, th, blockquote, .news-item, .news-content,
+.about-text, .stat-card, .pub-card, .project-card, .timeline-card,
+.skill-tag, .filter-tag, .nav-link, .dropdown-item,
+.hero-tagline, .hero-subtitle {
+    font-family: 'Indie Flower', 'Spectral', Georgia, serif !important;
+    font-weight: 400 !important;
+}
+/* Make body text slightly larger — handwritten fonts read smaller than serif at same px */
+body, p, li, .news-content, .about-text {
+    font-size: 1.08em !important;
+    line-height: 1.75 !important;
+}
+
+/* English hero name — Reenie Beanie (Scholar) */
+.hero-h1 .hero-h1-name,
+h1, h2, h3, h4, h5,
+.section-title, .stat-number, .pub-card h3, .project-card h3,
+.hero h1 {
+    font-family: 'Reenie Beanie', 'Indie Flower', cursive !important;
+    font-weight: 400 !important;
+    line-height: 1.15 !important;
+}
+.hero-h1 .hero-h1-name {
+    font-size: 1.3em !important;  /* Reenie Beanie reads slightly smaller; bump up */
+    letter-spacing: 0.01em !important;
+}
+/* Hero role + tagline keep Indie Flower for cohesion (override main.css) */
+.hero-h1 .hero-h1-role { font-family: 'Indie Flower', cursive !important; }
+
+/* Chinese — apply Ma Shan Zheng to body + Zhi Mang Xing to hero name */
+html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li, html[lang="zh"] span,
+html[lang="zh"] td, html[lang="zh"] th, html[lang="zh"] blockquote,
+html[lang="zh"] .news-item, html[lang="zh"] .news-content,
+html[lang="zh"] .about-text, html[lang="zh"] .skill-tag, html[lang="zh"] .filter-tag,
+html[lang="zh"] .nav-link, html[lang="zh"] .dropdown-item,
+html[lang="zh"] .hero-tagline, html[lang="zh"] .hero-subtitle,
+html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3, html[lang="zh"] h4,
+html[lang="zh"] .section-title {
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Spectral', cursive !important;
+    font-weight: 400 !important;
+}
+/* Chinese hero name override — Zhi Mang Xing (the only place that differs from body) */
+html[lang="zh"] .hero-h1 .hero-h1-name {
+    font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive !important;
+    font-size: 1.25em !important;
+    letter-spacing: 0.04em !important;
+}
+/* Chinese mode: bump body size to compensate for the brush font's smaller x-height */
+html[lang="zh"] body, html[lang="zh"] p, html[lang="zh"] li {
+    font-size: 1.12em !important;
+    line-height: 1.85 !important;
+}
+
+/* Keep monospace / icon-font / interactive controls in their default — don't overwrite these */
+code, kbd, pre, samp, tt,
+.fa, .fab, .fas, .far, .fal, .fad, [class*="bi-"],  /* FontAwesome / Bootstrap Icons */
+input, select, textarea, button.icon-btn {
+    font-family: revert !important;
+}
+
 /* ---------- 20. Tag / chip / nav hover restored (Linlin: tags weren't highlighting) ---------- */
 /* filter-tag default needs visible chip outline (was using --bg-subtle = transparent) */
 .filter-tag {
