@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>设计师空白卷轴 Mockup Picker — CC0 + Unsplash</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root {
+    --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-orig: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: oklch(0.96 0.012 90);
+    font-size: 17px;
+    line-height: 1.7;
+}
+header { text-align: center; padding: 32px 24px 18px; border-bottom: 1px dashed var(--rule); }
+header h1 { margin: 0 0 6px; font-family: 'Zhi Mang Xing', cursive; font-size: 38px; line-height: 1.05; }
+header .sub { margin: 8px auto 0; max-width: 800px; font-size: 16px; color: var(--ink-soft); line-height: 1.6; }
+header .sub strong { color: var(--maroon-orig); }
+header .sub code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+.section-label {
+    text-align: center;
+    margin: 32px auto 0;
+    max-width: 1700px;
+    padding: 0 24px;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 28px;
+    color: var(--maroon-orig);
+}
+.section-label .desc {
+    display: block;
+    font-family: 'Ma Shan Zheng', serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 20px;
+    padding: 18px 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+.swatch {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover { transform: translateY(-4px); box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.18); }
+.swatch.active { outline: 3px solid var(--maroon-bright); outline-offset: 2px; }
+
+.preview {
+    height: 280px;
+    background: white;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 50px;
+    position: relative;
+}
+.preview.cover { background-size: cover; }
+.preview .overlay {
+    background: linear-gradient(90deg, rgba(255,253,248,0.85) 0%, rgba(255,253,248,0.55) 100%);
+    padding: 12px 16px;
+    border-radius: 3px;
+    color: var(--ink-deep);
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.7),
+         1px  1px 1px rgba(20, 8, 0, 0.3);
+    width: fit-content;
+    margin: 0 auto;
+}
+.preview h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 24px; line-height: 1.05; letter-spacing: 0.04em; }
+.preview .role { font-size: 12px; margin: 0 0 4px; font-style: italic; font-family: 'Spectral', serif; color: var(--ink-soft); }
+.preview .badge {
+    display: inline-block; padding: 2px 8px;
+    background: var(--maroon-bright); color: white;
+    border-radius: 999px; font-size: 10px; font-weight: 600;
+    text-shadow: none; font-family: 'Indie Flower', cursive;
+}
+
+.meta { padding: 12px 16px; border-top: 1px solid oklch(0.88 0.014 75); }
+.meta .name { font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-deep); }
+.meta .desc { margin-top: 4px; font-size: 13px; color: var(--ink-soft); line-height: 1.45; font-family: 'Ma Shan Zheng', serif; }
+.meta .src { margin-top: 4px; font-size: 10px; color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; }
+
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed var(--rule);
+    border-radius: 6px;
+    background: oklch(0.96 0.012 90);
+    text-align: center;
+}
+#liveDemo h3 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; }
+#liveDemo .demoArea {
+    margin-top: 16px;
+    min-height: 420px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    transition: background 0.4s ease;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 60px 40px;
+    background-color: white;
+    background-size: contain;
+}
+#liveDemo .demoArea.cover { background-size: cover; }
+#liveDemo .demoText {
+    background: linear-gradient(90deg, rgba(255,253,248,0.78) 0%, rgba(255,253,248,0.4) 100%);
+    padding: 28px 34px;
+    border-radius: 3px;
+    color: var(--ink-deep);
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.6), 1px 1px 1px rgba(20, 8, 0, 0.4);
+}
+#liveDemo h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 40px; line-height: 1.05; letter-spacing: 0.04em; }
+#liveDemo .role { font-style: italic; font-size: 15px; margin: 0 0 12px; font-family: 'Spectral', serif; color: var(--ink-soft); }
+#liveDemo .body { font-family: 'Ma Shan Zheng', serif; font-size: 17px; line-height: 1.85; }
+#liveDemo .key { color: var(--maroon-orig); font-weight: 800; text-shadow: 0 0 2.5px rgba(120, 30, 30, 0.55), 0 1px 1px rgba(60, 10, 10, 0.5); }
+
+.controls { text-align: center; padding: 18px 24px 60px; font-size: 15px; color: var(--ink-soft); max-width: 760px; margin: 0 auto; font-family: 'Ma Shan Zheng', serif; }
+.controls code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>设计师空白卷轴 Mockup Picker</h1>
+    <p class="sub">两组真实素材 — 第一组是<strong>设计师做的矢量插图</strong>（OpenClipart CC0），第二组是<strong>Unsplash 摄影</strong>（Unsplash License）。<br>不是 SVG 拼的，是别人发布的素材。点击任一缩略图 → 下方 demo 区切换。</p>
+</header>
+
+<div class="section-label">Group A · Designer SVG（设计师矢量插图）<span class="desc">OpenClipart 公有领域 · 透明背景，可任意缩放</span></div>
+
+<div class="grid" id="gridA">
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-01-blank-scroll.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-01-blank-scroll.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D1 · Blank Scroll 手绘空白卷</div>
+            <div class="desc">手绘黑白线条卷轴，两端有 ornate 轴头。最经典 designer scroll mockup。</div>
+            <div class="src">CC0 · OpenClipart · 38KB SVG</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-02-red-chinese-scroll.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-02-red-chinese-scroll.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D2 · Red Chinese Scroll 红边卷</div>
+            <div class="desc">红色镶边的 hanging scroll，最 "Chinese style" + 现代色彩。</div>
+            <div class="src">CC0 · OpenClipart · 177KB SVG</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-03-scroll-outline.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-03-scroll-outline.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D3 · Scroll Outline 极简轮廓</div>
+            <div class="desc">最简轮廓线条卷轴。极简，干净。</div>
+            <div class="src">CC0 · OpenClipart · 6KB SVG</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-04-chinese-red-scroll.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-04-chinese-red-scroll.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D4 · Chinese Red Scroll 红卷竖式</div>
+            <div class="desc">竖式中国卷轴，红黄色搭配，festive style。</div>
+            <div class="src">CC0 · OpenClipart · 188KB SVG</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-05-opened-scroll.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-05-opened-scroll.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D5 · Opened Scroll 展开卷</div>
+            <div class="desc">展开的 stylized 卷轴，柔和曲线。</div>
+            <div class="src">CC0 · OpenClipart · 51KB SVG</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scroll-mockups/ds-06-flower-spray-scroll.svg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-06-flower-spray-scroll.svg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">D6 · Flower Spray Scroll 花卉卷</div>
+            <div class="desc">卷轴 + 花卉装饰。最装饰性。</div>
+            <div class="src">CC0 · OpenClipart · 71KB SVG</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="section-label">Group B · Unsplash Stock Photos（摄影）<span class="desc">Unsplash License · 真实拍摄的卷轴 / 纸张场景</span></div>
+
+<div class="grid" id="gridB">
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-01.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-01.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P1 · us-01.jpg</div>
+            <div class="desc">Unsplash 摄影 — 纵向。</div>
+            <div class="src">Unsplash License · 585K · 2000×2490</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-02.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-02.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P2 · us-02.jpg</div>
+            <div class="desc">Unsplash 摄影 — 横向。</div>
+            <div class="src">Unsplash License · 166K</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-03.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-03.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P3 · us-03.jpg</div>
+            <div class="desc">Unsplash 摄影 — 横向。</div>
+            <div class="src">Unsplash License · 155K</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-04.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-04.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P4 · us-04.jpg</div>
+            <div class="desc">Unsplash 摄影 — 中等比例。</div>
+            <div class="src">Unsplash License · 416K</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-05.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-05.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P5 · us-05.jpg</div>
+            <div class="desc">Unsplash 摄影 — 纵向。</div>
+            <div class="src">Unsplash License · 802K</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-06.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-06.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P6 · us-06.jpg</div>
+            <div class="desc">Unsplash 摄影 — 横向。</div>
+            <div class="src">Unsplash License · 452K</div>
+        </div>
+    </div>
+
+    <div class="swatch cover" data-src="res/parchment-options/cn-scroll-mockups/us-07.jpg" data-cover="1">
+        <div class="preview cover" style="background-image:url('res/parchment-options/cn-scroll-mockups/us-07.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">Open to ML RS · 2026</p>
+                <span class="badge">机器学习研究科学家</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">P7 · us-07.jpg</div>
+            <div class="desc">Unsplash 摄影 — 横向。</div>
+            <div class="src">Unsplash License · 406K</div>
+        </div>
+    </div>
+
+</div>
+
+<div id="liveDemo">
+    <h3>实时预览 · 真实文字效果</h3>
+    <p style="margin:0;color:var(--ink-soft);font-size:14px">点击上方任一卷轴 → 下方 demo 切换。SVG 设计图(D1-D6)显示原图（contain），照片(P1-P7)铺满（cover）。</p>
+    <div class="demoArea" id="demoArea" style="background-image:url('res/parchment-options/cn-scroll-mockups/ds-02-red-chinese-scroll.svg')">
+        <div class="demoText">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 图人工智能 · Open to ML RS · 2026</p>
+            <p class="body">构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<span class="key">ICPR 2026</span> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 130+ 引用。现为伯尔尼大学博士后。</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>挑一个编号告诉我（如 "<code>用 D2 红卷</code>" 或 "<code>用 P4 摄影</code>"），我接到 <code>parchment-overrides.css</code> 替换当前 wm-02。</p>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:10px">
+        Group A: <strong>OpenClipart CC0</strong>（设计师矢量，无版权 / 无 attribution）<br>
+        Group B: <strong>Unsplash License</strong>（真实摄影，无 attribution 必需）<br>
+        详见 <a href="res/parchment-options/cn-scroll-mockups/LICENSE.md" target="_blank" style="color:var(--maroon-orig)">LICENSE.md</a>
+    </p>
+</div>
+
+<script>
+const demoArea = document.getElementById('demoArea');
+document.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const src = sw.dataset.src;
+        const isCover = sw.dataset.cover === '1';
+        demoArea.style.backgroundImage = `url('${src}')`;
+        demoArea.classList.toggle('cover', isCover);
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+</body>
+</html>
