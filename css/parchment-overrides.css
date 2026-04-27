@@ -207,10 +207,22 @@ body, p, li, span, td, th, blockquote, .news-item, .news-content,
     font-family: 'Indie Flower', 'Spectral', Georgia, serif !important;
     font-weight: 400 !important;
 }
-/* Make body text slightly larger — handwritten fonts read smaller than serif at same px */
+/* Make body text slightly larger — handwritten fonts read smaller than serif at same px.
+   Desktop bumps further: handwritten EN/ZH need ~21–22px to match a 16-17px serif's
+   apparent size. Mobile stays modest to fit short lines. */
 body, p, li, .news-content, .about-text {
     font-size: 1.08em !important;
     line-height: 1.75 !important;
+}
+@media (min-width: 769px) {
+    body, p, li, .news-content, .about-text { font-size: 1.30em !important; }
+    .hero-tagline, .hero-subtitle { font-size: 1.18em !important; }
+    .hero-h1 { font-size: 4rem !important; }
+    .section-title { font-size: 2.6rem !important; }
+}
+@media (min-width: 1200px) {
+    body, p, li, .news-content, .about-text { font-size: 1.38em !important; }
+    .hero-h1 { font-size: 4.6rem !important; }
 }
 
 /* English hero name — Reenie Beanie (Scholar) */
