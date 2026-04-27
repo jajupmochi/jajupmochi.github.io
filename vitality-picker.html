@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vitality Picker — scientist-notebook variants on parchment</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+:root {
+    --rule: oklch(0.45 0.10 50 / 0.30);
+    --ink-deep: #2a1d11;
+    --ink-warm: #3a2818;
+    --ink-faded: #5a4631;
+    --ink-near-black: #14110a;   /* "high contrast" ink for option A */
+    --gold-deep: #8a6520;
+    --gold-mid: #c8973f;
+    --gold-light: #f3d77a;
+    /* Vivid accents */
+    --coral:   #d83a2c;          /* B1 */
+    --coral-deep: #a82213;
+    --tech-blue: #1f4ec0;        /* B2 */
+    --tech-blue-deep: #0f3494;
+    --leaf-green: #2e8b3a;       /* B3 */
+    --leaf-green-deep: #1f6526;
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Indie Flower', 'Spectral', Georgia, serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
+                oklch(0.93 0.030 78);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+header {
+    text-align: center;
+    padding: 36px 24px 18px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 44px;
+    color: var(--ink-deep);
+    line-height: 1.05;
+    text-shadow: 1px 1px 0 oklch(0.95 0.04 75 / 0.5);
+}
+header .sub {
+    margin: 10px auto 0;
+    max-width: 800px;
+    font-size: 17px;
+    color: var(--ink-warm);
+    line-height: 1.6;
+}
+header .sub code {
+    background: oklch(0.88 0.020 75 / 0.55);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.lang-toggle {
+    text-align: center;
+    margin: 14px 0 0;
+}
+.lang-btn {
+    background: oklch(0.92 0.040 75 / 0.55);
+    border: 1px solid var(--rule);
+    color: var(--ink-deep);
+    padding: 6px 18px;
+    margin: 0 4px;
+    cursor: pointer;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    border-radius: 999px;
+}
+.lang-btn.active {
+    background: oklch(0.45 0.16 27);
+    color: oklch(0.96 0.04 60);
+    border-color: oklch(0.45 0.16 27);
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 32px 24px 60px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.variant {
+    padding: 20px 8px 32px;
+    border-bottom: 2px dashed var(--rule);
+    position: relative;
+}
+.variant:last-child { border-bottom: none; }
+
+.var-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+.var-head .num {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 30px;
+    color: var(--gold-deep);
+    line-height: 1;
+}
+.var-head h3 {
+    margin: 0;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--ink-deep);
+}
+.var-head .verdict {
+    margin-left: auto;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-faded);
+    font-family: 'Spectral', serif;
+    text-align: right;
+    max-width: 360px;
+    line-height: 1.4;
+}
+.tech {
+    margin: 0 0 20px;
+    font-size: 12px;
+    color: var(--ink-faded);
+    font-family: 'JetBrains Mono', monospace;
+}
+.tech b { color: var(--ink-warm); font-weight: 600; }
+
+/* Demo content layout */
+.demo {
+    padding: 0 4px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 28px;
+    align-items: center;
+}
+@media (max-width: 700px) { .demo { grid-template-columns: 1fr; } }
+
+.demo h2 {
+    margin: 0 0 4px;
+    font-size: 42px;
+    line-height: 1.1;
+    font-family: 'Reenie Beanie', cursive;
+}
+.demo .role {
+    font-style: italic;
+    font-size: 16px;
+    margin: 0 0 14px;
+    color: var(--ink-faded);
+}
+.demo p {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+.demo a { text-decoration: none; cursor: pointer; transition: all 0.25s; }
+.demo .key { font-weight: 600; }
+.demo .cta {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 9px 22px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 17px;
+    transition: all 0.2s;
+}
+.metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.metric {
+    text-align: center;
+    padding: 12px;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+    transition: all 0.25s;
+}
+.metric .num {
+    display: block;
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.metric .lbl {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.demo.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 48px; letter-spacing: 0.04em; }
+.demo.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; font-size: 19px; }
+body.lang-en .demo.zh { display: none; }
+body.lang-zh .demo.en { display: none; }
+
+/* ============== V0: BASELINE (current state) ============== */
+.v0 .demo h2, .v0 .demo p, .v0 .demo .key { color: var(--ink-deep); }
+.v0 .demo a { color: var(--ink-deep); border-bottom: 1px solid var(--ink-warm); }
+.v0 .demo a:hover { color: #000; }
+.v0 .demo .cta { background: var(--ink-warm); color: oklch(0.95 0.05 75); }
+.v0 .metric .num { color: var(--ink-deep); font-weight: 700; }
+
+/* ============== V1: A — high-contrast text ============== */
+.v1 .demo h2, .v1 .demo p, .v1 .demo .key { color: var(--ink-near-black); font-weight: 600; }
+.v1 .demo h2 { font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
+.v1 .demo a { color: #000; border-bottom: 2px solid #000; }
+.v1 .demo a:hover { color: #2a1d11; }
+.v1 .demo .cta { background: var(--ink-near-black); color: oklch(0.96 0.04 70); }
+.v1 .metric .num { color: var(--ink-near-black); font-weight: 700; }
+
+/* ============== V2: A + B1 — high-contrast + coral red ============== */
+.v2 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
+.v2 .demo p { color: var(--ink-near-black); }
+.v2 .demo .key { color: var(--coral); font-weight: 700; }
+.v2 .demo a { color: var(--coral-deep); border-bottom: 2px solid var(--coral); }
+.v2 .demo a:hover { color: var(--coral); border-bottom-color: var(--coral-deep); }
+.v2 .demo .cta {
+    background: var(--coral); color: white;
+    box-shadow: 0 3px 8px rgba(216, 58, 44, 0.3);
+}
+.v2 .demo .cta:hover { background: var(--coral-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(216, 58, 44, 0.4); }
+.v2 .metric .num { color: var(--coral); font-weight: 700; }
+
+/* ============== V3: A + B2 — high-contrast + tech blue ============== */
+.v3 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
+.v3 .demo p { color: var(--ink-near-black); }
+.v3 .demo .key { color: var(--tech-blue); font-weight: 700; }
+.v3 .demo a { color: var(--tech-blue-deep); border-bottom: 2px solid var(--tech-blue); }
+.v3 .demo a:hover { color: var(--tech-blue); border-bottom-color: var(--tech-blue-deep); }
+.v3 .demo .cta {
+    background: var(--tech-blue); color: white;
+    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
+}
+.v3 .demo .cta:hover { background: var(--tech-blue-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(31, 78, 192, 0.4); }
+.v3 .metric .num { color: var(--tech-blue); font-weight: 700; }
+
+/* ============== V4: A + B3 — high-contrast + leaf green ============== */
+.v4 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
+.v4 .demo p { color: var(--ink-near-black); }
+.v4 .demo .key { color: var(--leaf-green); font-weight: 700; }
+.v4 .demo a { color: var(--leaf-green-deep); border-bottom: 2px solid var(--leaf-green); }
+.v4 .demo a:hover { color: var(--leaf-green); border-bottom-color: var(--leaf-green-deep); }
+.v4 .demo .cta {
+    background: var(--leaf-green); color: white;
+    box-shadow: 0 3px 8px rgba(46, 139, 58, 0.3);
+}
+.v4 .demo .cta:hover { background: var(--leaf-green-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(46, 139, 58, 0.4); }
+.v4 .metric .num { color: var(--leaf-green); font-weight: 700; }
+
+/* ============== V5: A + B2 + D — TECH NOTEBOOK (blueprint + sparkline + mono) ============== */
+.v5 {
+    /* faint blueprint grid behind content (parchment-toned blue) */
+    background-image:
+        linear-gradient(0deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px),
+        linear-gradient(90deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px);
+    background-size: 40px 40px;
+    background-position: 0 0;
+    border: 1px solid rgba(31,78,192,0.2);
+    border-radius: 4px;
+    padding: 28px 24px 32px;
+    margin: 0 -16px;
+}
+.v5 .demo h2 {
+    color: var(--ink-near-black);
+    font-weight: 700;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+}
+.v5 .demo p { color: var(--ink-near-black); }
+.v5 .demo .key {
+    color: var(--tech-blue-deep);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+    background: rgba(31,78,192,0.06);
+    padding: 0 5px;
+    border-radius: 2px;
+}
+.v5 .demo a {
+    color: var(--tech-blue-deep);
+    border-bottom: 2px solid var(--tech-blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+}
+.v5 .demo a:hover { color: var(--tech-blue); }
+.v5 .demo .cta {
+    background: var(--tech-blue); color: white;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
+}
+.v5 .demo .cta:hover { background: var(--tech-blue-deep); transform: translateY(-2px); }
+.v5 .metric {
+    border: none;
+    background: rgba(31,78,192,0.04);
+    border-left: 3px solid var(--tech-blue);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    text-align: left;
+}
+.v5 .metric .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    color: var(--tech-blue-deep);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.v5 .metric .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-faded);
+    font-size: 11px;
+}
+.v5 .sparkline { display: block; margin-top: 4px; opacity: 0.7; }
+
+/* ============== V6: A + B2 + C + D — FULL TREATMENT (notebook + motion + accents) ============== */
+.v6 {
+    background-image:
+        linear-gradient(0deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px),
+        linear-gradient(90deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px);
+    background-size: 40px 40px;
+    border: 1px solid rgba(31,78,192,0.25);
+    border-radius: 4px;
+    padding: 28px 24px 32px;
+    margin: 0 -16px;
+}
+.v6 .demo h2 {
+    color: var(--ink-near-black);
+    font-weight: 700;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+    animation: hero-breathe 6s ease-in-out infinite;
+    transform-origin: left center;
+}
+@keyframes hero-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.015); }
+}
+.v6 .demo p { color: var(--ink-near-black); }
+.v6 .demo .key {
+    color: var(--tech-blue-deep);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+    background: rgba(31,78,192,0.06);
+    padding: 0 5px;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+.v6 .demo .key:hover {
+    background: rgba(31,78,192,0.18);
+    color: var(--tech-blue);
+    cursor: help;
+}
+.v6 .demo a {
+    color: var(--tech-blue-deep);
+    border-bottom: 2px solid var(--tech-blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+    position: relative;
+}
+.v6 .demo a:hover {
+    color: var(--tech-blue);
+    text-shadow: 0 0 8px rgba(31,78,192,0.4);
+}
+.v6 .demo .cta {
+    background: var(--tech-blue); color: white;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
+    animation: cta-pulse 2.5s ease-in-out infinite;
+}
+@keyframes cta-pulse {
+    0%, 100% { box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3); }
+    50% { box-shadow: 0 3px 14px rgba(31, 78, 192, 0.55); }
+}
+.v6 .demo .cta:hover {
+    background: var(--tech-blue-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(31, 78, 192, 0.5);
+    animation: none;
+}
+.v6 .metric {
+    border: none;
+    background: rgba(31,78,192,0.04);
+    border-left: 3px solid var(--tech-blue);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    text-align: left;
+    transition: transform 0.25s, background 0.25s;
+}
+.v6 .metric:hover {
+    transform: translateX(4px);
+    background: rgba(31,78,192,0.10);
+}
+.v6 .metric .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    color: var(--tech-blue-deep);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.v6 .metric .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-faded);
+    font-size: 11px;
+}
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 60px;
+    font-size: 16px;
+    color: var(--ink-warm);
+    max-width: 760px;
+    margin: 0 auto;
+}
+.controls code {
+    background: oklch(0.88 0.020 75 / 0.55);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+}
+</style>
+</head>
+<body class="lang-en">
+
+<header>
+    <h1>Vitality Picker · 笔记本能量级别</h1>
+    <p class="sub">7 个版本，同样内容，从"最老旧基线"递进到"科学家的活力笔记本"。每一档加 1 个改动，看哪一档刚刚好。</p>
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+</header>
+
+<div class="stack">
+
+    <!-- ===== V0: Baseline ===== -->
+    <div class="variant v0">
+        <div class="var-head">
+            <span class="num">V 0</span>
+            <h3>Baseline &nbsp;·&nbsp; 当前状态</h3>
+            <p class="verdict">"Old letter" — sepia ink on parchment. Quiet, low energy. This is what you have now.</p>
+        </div>
+        <p class="tech">tech: <b>0.20-lightness sepia text</b> + sepia underline links + brown CTA · NO accent color · NO motion</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V1: A high-contrast ===== -->
+    <div class="variant v1">
+        <div class="var-head">
+            <span class="num">V 1</span>
+            <h3>+ A &nbsp;·&nbsp; 高对比文字</h3>
+            <p class="verdict">Same look + feel, but text near-black on parchment. Already much punchier.</p>
+        </div>
+        <p class="tech">tech: ink darkened from <b>0.20 → 0.07 lightness</b> (near-black) · weight 600 on body · headings get tiny embossed highlight</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V2: A + B1 coral red ===== -->
+    <div class="variant v2">
+        <div class="var-head">
+            <span class="num">V 2</span>
+            <h3>+ B1 &nbsp;·&nbsp; 鲜珊瑚红强调</h3>
+            <p class="verdict">High contrast + coral accent on key terms / links / CTA. Warm energy without breaking the parchment vibe.</p>
+        </div>
+        <p class="tech">tech: accent <b>#d83a2c</b> coral · key terms colored coral + bold · CTA flat coral with shadow + lift on hover</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V3: A + B2 tech blue ===== -->
+    <div class="variant v3">
+        <div class="var-head">
+            <span class="num">V 3</span>
+            <h3>+ B2 &nbsp;·&nbsp; 科技深蓝强调</h3>
+            <p class="verdict">Same as V2 but with engineering blue. Cooler, more "technical journal", contrasts beautifully with parchment.</p>
+        </div>
+        <p class="tech">tech: accent <b>#1f4ec0</b> tech blue · same structure as V2 · the most "researcher's notebook" without going full tech</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V4: A + B3 leaf green ===== -->
+    <div class="variant v4">
+        <div class="var-head">
+            <span class="num">V 4</span>
+            <h3>+ B3 &nbsp;·&nbsp; 鲜叶绿强调</h3>
+            <p class="verdict">Same V1+accent, but green. Living, organic, distinctive (uncommon for academic) — the "growth + nature" angle.</p>
+        </div>
+        <p class="tech">tech: accent <b>#2e8b3a</b> leaf green · same as V2/V3 with green substituted</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V5: A + B2 + D scientist notebook ===== -->
+    <div class="variant v5">
+        <div class="var-head">
+            <span class="num">V 5</span>
+            <h3>+ D &nbsp;·&nbsp; 科学家笔记本（蓝色 + blueprint）★</h3>
+            <p class="verdict">Section sits on a faint blueprint grid. Numbers + key terms get monospace. Metrics shown as engineering-style cards. The "notebook" you asked for.</p>
+        </div>
+        <p class="tech">tech: <b>40×40px blueprint grid bg</b> (parchment-toned blue 0.08 alpha) · key terms + numbers in <b>JetBrains Mono</b> · metrics as left-bordered tech cards</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Publications</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== V6: A + B2 + C + D full ===== -->
+    <div class="variant v6">
+        <div class="var-head">
+            <span class="num">V 6</span>
+            <h3>+ C 全套 &nbsp;·&nbsp; 笔记本 + 微动 ★★</h3>
+            <p class="verdict">V5 plus subtle motion: hero name breathes, CTA pulses softly, metrics slide on hover. Maximum vitality without crossing into "loud".</p>
+        </div>
+        <p class="tech">tech: V5 + <b>hero-breathe</b> (6s scale 1↔1.015) + <b>cta-pulse</b> (2.5s shadow loop) + metric hover translate-X · <code>prefers-reduced-motion</code> respected</p>
+        <div class="demo en">
+            <div>
+                <h2>Linlin Jia, Ph.D.</h2>
+                <p class="role">Machine Learning Research Scientist · Open to ML RS · 2026</p>
+                <p>Building <span class="key">Spatio-Temporal Transformers</span> for river forecasting (<a href="#">ICPR 2026</a>, accepted). My toolkit <span class="key">graphkit-learn</span> reached <a href="#">130+ citations</a>. Postdoc at University of Bern.</p>
+                <button class="cta">Get In Touch</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Publications</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+            </div>
+        </div>
+        <div class="demo zh">
+            <div>
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 开放招聘 · 2026</p>
+                <p>构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<a href="#">ICPR 2026</a> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 <a href="#">130+ 引用</a>。现为伯尔尼大学博士后。</p>
+                <button class="cta">联系我</button>
+            </div>
+            <div class="metrics">
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="controls">
+    <p>挑一个 V0–V6 的版本告诉我，例如 "<code>用 V5</code>"。也可以混搭，例如 "<code>用 V5 但 accent 换成 B3 绿色</code>"。</p>
+    <p style="font-size:13px;color:var(--ink-faded);margin-top:14px">
+        所有版本都用纯 CSS · 唯一新字体：<code>JetBrains Mono</code> (Google Fonts OFL，已加载) ·
+        Sparkline 是 inline SVG · 动画用 <code>@keyframes</code> + <code>prefers-reduced-motion</code> safe
+    </p>
+</div>
+
+<script>
+function setLang(lang) {
+    document.body.classList.remove('lang-en', 'lang-zh');
+    document.body.classList.add('lang-' + lang);
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.trim().toLowerCase().startsWith(lang === 'en' ? 'english' : '中'));
+    });
+}
+</script>
+</body>
+</html>
