@@ -1537,5 +1537,123 @@ CSS data-attribute 架构：
 
 ---
 
-> **下一个 mindstorm 文件**：当 Linlin 在 §13 + §18 + §19 给出答案后撰写 `mindstorm-03-asset-generation-plan.md`（如果走资产生成路线）或直接进入 D8 实施。
-> **本 mindstorm 之后立即输出**：`docs/vibe/hero-mockup-v1.html`（自包含 hero scene mockup, 不修改主站）
+## 20. 增订 III（2026-04-27 第四轮 — Mockup 实施反馈）
+
+经过 hero-v1 / hero-v2 / world-overview-v2 / 4 房间 mockup / grimoire-v3 多轮迭代后，Linlin 给出的关键纠偏：
+
+### D-T · 魔法书 = ONE 单一可平移的二维画卷（取代 D-N 的横向手卷）
+
+> 原文："**所有东西本来就是展开的，全部内容直接放在魔法书上。魔法书可以上下左右移动查看不同的部分。**"
+
+- ❌ **D-N 的"挂轴 vs 手卷"二选一被废止**。不是单方向滚动。
+- ✅ **整个魔法书 = ONE 大型二维羊皮纸表面**（参考实现 4000 × 2400px）
+- ✅ 用户可以用**鼠标拖拽 / 滚轮 / 方向键**自由地上下左右四个方向平移
+- ✅ 提供 **mini-map**（视口右下角 fixed）实时显示当前查看的区域位置 + 整个魔法书的轮廓
+- ✅ 不分页、不分屏、不分章 — 一张完整连续的纸
+
+技术实现：
+- 单一 `.book` div (`position: absolute; width: 4000px; height: 2400px`)
+- `transform: translate3d(tx, ty, 0)` 由 JS 驱动
+- Wheel / drag / keyboard 事件 → 更新 tx, ty
+- Mini-map 读 tx/ty + viewport size 显示当前视野矩形
+
+### D-U · 取消"房间"隐喻（supersedes 部分 §8）
+
+> 原文："**或许我说的房间有点误导，不是要全做成房间。**"
+
+- ❌ §8.1-8.13 的 "13 个房间" 框架部分作废 — **不是 13 个独立的 Room cards**
+- ✅ 内容是**直接画 / 写在魔法书表面**的散落元素：
+  - 学徒像就是画在书上的人物
+  - 论文是画在书上的小书剪影
+  - 项目是画在书上的玻璃罐
+  - 关于我的 bullets 是直接用墨水写在纸上的字
+  - 没有任何 `<div class="room-card">` 那种带边框的容器
+- ✅ 每个 section 的视觉是 "**section title (毛笔字 H2) + 一根金色细规 + 内容自然铺开**"，没有边框
+- ✅ "房间" 词只在叙述时偶尔用作隐喻，但不要在视觉上做成房间
+
+### D-V · 藤蔓 = 完全隐藏的咒语，只在被关注时浮现
+
+> 原文："**另外藤蔓不在平时显示，只有高亮时显示。**"
+
+- ❌ Living Graph 边**默认 `opacity: 0`** — 完全看不见
+- ✅ 每个有 `[data-engages="<key>"]` 的元素被 hover / focus / dwell 时，从该元素的位置生长出 1-3 条藤蔓指向相关元素
+- ✅ 藤蔓动画：`stroke-dashoffset` 从 100% → 0%（1.2s `cubic-bezier(0.16, 1, 0.3, 1)`）+ `opacity: 0 → 1`（0.4s）
+- ✅ 鼠标移开 → 藤蔓 0.4s fade out（叶子先掉，路径再消失）
+- ✅ 同时只允许 1 个元素的 outgoing edges 显示（避免视觉混乱）
+- ✅ 离屏目标：藤蔓在屏幕边缘截止，显示一个小缩略卡 + 方向箭头（D-future，v3 暂未实现）
+- ✅ 历史回溯边：从当前元素到上一步元素的虚线 edge（D-future）
+
+### D-W · 3.5D 视差（2D / 2.5D 游戏排版风）
+
+> 原文："**有点像那种3.5d的动态游戏或者2d游戏的排版的感觉。**"
+
+参考游戏：Hidden Folks（手绘 2D 探索）/ Stardew Valley（等距瓷砖）/ Don't Starve（手绘景深）/ Hollow Knight（2D 视差层）/ Zelda BotW 地图视图（连续景观）/ Ori（绘画风 2D + 微 3D）。
+
+- ✅ 多层视差：背景层（最远，平移慢）→ 中层（主内容，1.0x）→ 前景层（最近，平移快）
+- ✅ 鼠标移动也驱动微视差（不只是拖拽时）
+- ✅ 元素本身可有 box-shadow 投在书面上 — 营造"贴在纸上"的感觉
+- ✅ 部分元素带极轻微的 hover-tilt（CSS 3D rotate ±2°）
+
+### D-X · 资产策略：照片只用作背景纹理 + 角色，其他全部代码绘制
+
+> 原文："**用我提供给你的图在里面直接找来进行拿这些东西进行设计，其他的部分包括所谓的房间啊，报纸啊什么的...用一些非常仿真的那些二维，三维的工具给它合起来了**"
+
+- ✅ **仅 2 类资产用照片**：
+  1. 羊皮纸纹理（从用户 ChatGPT 参考图裁切 + ImageMagick 重组）— 但 v3 改为 CSS radial-gradient 生成（更可控）
+  2. 学徒人物画（从 ref-vertical-rooms.png 裁切 — `res/grimoire/apprentice-final.png`）
+- ✅ **所有其他元素手写 SVG**：玻璃罐、书脊、画框、Howler、猫头鹰、机器人、蜡烛、蜡封、报纸、卷轴、藤蔓、动物图标、星座等
+- ✅ SVG 工艺水平参考 D5.N 的 Howler 信封 + 蜡封明信片（feSpecularLighting、feTurbulence、多 stop gradient）
+- ❌ **不调用 AI image gen API**（Linlin 没设置 key）
+- ❌ **不做照片拼贴**
+
+### D-Y · 内容直接画 / 写在羊皮纸上（no card containers）
+
+强调 D-U 的实施细则：
+
+| ❌ 错误 | ✅ 正确 |
+|---|---|
+| `<div class="room-card">` + border + box-shadow + bg | 元素直接 absolute 定位在 `.book` 的某坐标 |
+| 卡片内嵌"题目+图+按钮" | 题目 = 毛笔字 H2 浮在那一区；图 = 一组散落的 SVG 道具；文字 = 直接墨水写在纸上 |
+| 卡片之间用 grid/flex 排列 | 各 section 元素由设计者**手放坐标**（像在画一张画） |
+| 同样的卡片样式重复 | 每个 section 视觉**风格不同**（中国画 / 油画 / 报纸 / 童书 — D-E 的 Zootopia 分区） |
+
+### D-Z · v3 vs 完整 spec 的 gap 清单（实施反馈，2026-04-27）
+
+核对 grimoire-mockup-v3 与本 mindstorm（含 §15-§20 所有增订），未实现的 gap：
+
+| # | Spec 来源 | 缺失项 | 优先级 |
+|---|---|---|---|
+| 1 | D-W §20 | **3.5D 视差**（多深度层） | 🔴 P0 |
+| 2 | §16 D-I | **Iron-Man 控制台展开面板**（搜索 + 结果，水晶展开） | 🔴 P0 |
+| 3 | D-R §19 | **小林机器人对话面板**（目的地列表） | 🔴 P0 |
+| 4 | D-E §5.3 / §9 | **风格分区**（中国画卷壁画区 / 报纸区 / 童书插画区 / 油画奖墙区） | 🟠 P1 |
+| 5 | D-Q §19 | **per-word `.pw` 单字 hover sparkle**（已有 class 但无效果） | 🟠 P1 |
+| 6 | D-K §19 | **麻瓜之书切换**（grimoire ↔ muggle 主题入口） | 🟠 P1 |
+| 7 | §17 旧版 | **页面入场动画**（卷轴 / 书展开 3 秒序列） | 🟠 P1 |
+| 8 | D-M §19 | **Atlas 展开为全页 graph view**（不只是 alert） | 🟠 P1 |
+| 9 | §4.B | **Edge dwell ≥5s 触发**（目前只有 hover） | 🟡 P2 |
+| 10 | §4.B | **离屏目标缩略卡**（藤蔓走到屏幕边显示 thumbnail） | 🟡 P2 |
+| 11 | §4.B | **历史回溯边**（current → previous 元素） | 🟡 P2 |
+| 12 | §11.2 | **触屏 / Pointer Events**（mobile drag, tap-and-hold edge） | 🟡 P2 |
+| 13 | §11.3 | **键盘 Tab section navigation**（不只是 arrow keys） | 🟡 P2 |
+| 14 | §15 D-H | **Sound bell** mute 控件 | 🟢 P3 |
+| 15 | §8.7 D-E | **画壁走廊** = 中国画卷动画（v3 只有简单 timeline ribbon） | 🟢 P3 |
+| 16 | §8.3 | **天花板星空** = 真正的星座 + 词云在星空背景上（v3 是浮动文字） | 🟢 P3 |
+| 17 | §15 D-H | **rule: 完全无 emoji icon**（v3 about-bullets 还有 emoji） | 🟢 P3 |
+
+### D-AA · 修复优先级（v4 路线）
+
+按 D-Z 的 P0/P1，下一版 v4 必须修：
+
+1. **3.5D 视差**（D-W）— 加 background / mid / foreground 三层，鼠标移动驱动微视差
+2. **控制台展开面板**（§16）— 水晶 click 后展开真实搜索 panel（参考 hero v1）
+3. **小林对话面板**（D-R）— 真实弹窗 + 7 个目的地选项
+4. **风格分区**（D-E）— 至少给 3 个 section 加独立视觉风格（如 news 区域加报纸纹理 / hallway 加水墨墙 / animals 加童书插画框）
+5. **per-word `.pw` 单字 hover sparkle**（D-Q）— 加描边动画 + 微 glow
+
+剩下 P1-P3 待 v5+ 处理。
+
+---
+
+> **下一个 mindstorm 文件**：v4 修复完成后视情况撰写 `mindstorm-03-implementation-plan.md` 进入主站落地。
+> **本 mindstorm 之后立即输出**：`docs/vibe/grimoire-mockup-v4.html`（v3 + D-AA 的 5 项 P0/P1 修补）
