@@ -41,6 +41,11 @@
 - [12. 分阶段实施路线（D7 → D∞）](#12-分阶段实施路线d7--d)
 - [13. 待 Linlin 决定的开放问题](#13-待-linlin-决定的开放问题)
 - [14. 参考资源](#14-参考资源)
+- [15. 增订（2026-04-27 第二轮 mindstorm 后）](#15-增订2026-04-27-第二轮-mindstorm-后)
+- [19. 增订 II（2026-04-27 第三轮 mindstorm）](#19-增订-ii2026-04-27-第三轮-mindstorm)
+- [20. 增订 III（2026-04-27 第四轮 — Mockup 实施反馈）](#20-增订-iii2026-04-27-第四轮--mockup-实施反馈)
+- [21. 增订 IV — Heads-down 收尾（2026-04-27 第五轮）](#21-增订-iv--heads-down-收尾2026-04-27-第五轮)
+- [22. 资产来源 — 完整开源素材库目录（2026-04-27）](#22-资产来源--完整开源素材库目录2026-04-27)
 
 ---
 
@@ -1720,6 +1725,78 @@ CSS data-attribute 架构：
 | §16 | Chatbot 真接 Claude API | 控制台底部"future"占位；需要 Anthropic API key + edge function |
 | §11 | 性能 audit + 移动端适配 fine-tuning | Lighthouse 跑一次 + mobile breakpoints |
 | §6 | grimoire ↔ muggle 切换在 grimoire 内的真实实现 | 当前 link 跳到 index_en.html；可改为 in-place CSS class swap |
+
+---
+
+## 22. 资产来源 — 完整开源素材库目录（2026-04-27）
+
+> **关键原则（hard rule，凌驾于早期 §15 / §17 任何"AI 生成图片"提法之上）**：
+>
+> **本项目所有视觉资产 — 包括插图、图标、纹理、底图、动画、人物、装饰元素 — 必须来自策展过的开源素材库或手工 SVG / CSS。严禁使用 AI 图像生成（Midjourney / DALL·E / Stable Diffusion / Flux / Imagen / etc.）的产物作为最终资产。**
+>
+> 原因：(1) AI 生成质感与本站审美（Maggie Appleton / 清明上河图 / Bruno Simon）的 hand-drawn / printmaking / illustrated 调性冲突；(2) AI 输出无法稳定迭代；(3) 版权与可复用性问题；(4) Linlin 在多次迭代后明确否决（参见对话史 D-X 与本轮请求）。
+>
+> **唯一例外**：参考图（reference / mood board）可由 AI 生成或截取自 ChatGPT 对话，但仅用于美术参考，不作为最终资产入库。
+>
+> **正确流程** → 从 `docs/vibe/asset-sources.md` 选库 → 下载到 `res/grimoire/` → 在 `LICENSE.md` 引用 → 用 SVGO 优化 → 在 mockup / index_grimoire 中引用。
+
+### 22.1 完整素材库目录在哪里？
+
+→ **[docs/vibe/asset-sources.md](./asset-sources.md)** — 资产之源（asset-of-truth），由 11 个分区构成：
+
+| 分区 | 内容 | 本项目首选 |
+|---|---|---|
+| §A | 插图（人物 / 场景） | unDraw, Storyset, Open Peeps, Open Doodles |
+| §B | SVG icons（通用） | Heroicons, Lucide, Phosphor, Tabler |
+| §C | **Fantasy / Magic icons（核心）** | **Game-Icons.net（4180+ 张 CC-BY 3.0，本项目主要图标源）** |
+| §D | 纹理（羊皮纸 / 旧纸 / 墙面） | CC0 Textures, Subtle Patterns, Hero Patterns |
+| §E | Game art / 像素风 | OpenGameArt, Kenney.nl, itch.io free |
+| §F | 中国风 / 古典 | Wikimedia Commons（千里江山图 / 清明上河图 高清公有领域）, The Met Open Access |
+| §G | Motion / Lottie / 3D | LottieFiles, Rive Community, Sketchfab CC0 |
+| §H | 摄影（背景 / mood） | Unsplash, Pexels, Pixabay |
+| §I | 工具 | Inkscape, SVGOMG, ImageMagick, rsvg-convert |
+| §J | 本项目已有的本地资产清单 | `res/grimoire/` 现存文件 |
+| §K | **机器可读 YAML 路由 `asset-routing.yaml`** | 设计 plugin / 未来 agent 直接读取此 YAML 来决定每个 UI 元素去哪个库取资产 |
+
+### 22.2 为什么 Game-Icons.net 是首选？
+
+- **4180+ 张图标**，全部 CC-BY 3.0（仅需署名 Lorc / Delapouite，可商用、可改色、可缩放）
+- 完整覆盖魔法书 / 炼金 / 学者 / 动物 / 工具 / 武器主题，是本站 §8 各场景所需图标的最大命中库
+- 单色 SVG，可用 CSS `currentColor` 直接接入主题 token
+- 已选定的具体图标（参见 asset-sources.md §C 列表）：`open-book`, `quill-ink`, `wax-seal`, `candle-flame`, `owl`, `magic-wand`, `crystal-ball`, `scroll-unfurled`, `bookshelf`, `alchemy-pot`, `cauldron`, `feather`, `inkwell`, `parchment`, `wizard-staff`, `crystal-shine`, `spell-book`, `quill-ink`, `wax-seal`, `paper-plane` 等约 20 个 → 直接替代当前 mockup 中的 emoji / 占位
+
+### 22.3 设计 plugin / agent 接入指引
+
+任何后续 design plugin（impeccable / craft / shape / 等等）或 agent 在收到"为本项目设计 X"任务时，**MUST**：
+
+1. **首先**读 `docs/vibe/asset-sources.md` 与本节
+2. **NEVER**调用 AI 图像生成 API（baoyu-imagine / DALL·E / Stable Diffusion / etc.）作为最终资产路径
+3. 按 §22.2 分区从对应库取素材；若库没有命中，**优先手写 SVG**（参考 v6 中已有的 SVG filter / pattern 写法）
+4. 下载到 `res/grimoire/<area>/<file>`，路径与 `index_grimoire.html` 现有约定一致
+5. 在 commit message 标注资产来源 + 许可证（如 `assets: add Game-Icons quill-ink (CC-BY 3.0 by Lorc)`)
+6. 在 `LICENSE.md`（待创建）追加该资产的署名
+
+### 22.4 v7+ 资产替换计划（第一波）
+
+按 ROI 从高到低，第一波要替换的现有占位：
+
+| 当前 mockup 元素 | 替换为 | 来源 |
+|---|---|---|
+| 各场景 emoji 占位（owl / book / wand / etc.） | Game-Icons SVG | Game-Icons.net |
+| 羊皮纸底纹（当前 CSS 生成） | 真实 4K 高分辨率羊皮纸 PNG/WEBP | CC0 Textures |
+| Visit Map 装饰背景（当前空白） | 千里江山图局部 crop | Wikimedia Commons 公有领域 |
+| 角色 apprentice（当前 ChatGPT crop） | **保留**（已是参考图工作流的最终产物，无需替换） | — |
+| Awards / News / Skills 装饰边框 | 手画 SVG 边框 + Lucide / Phosphor | Lucide / Phosphor |
+
+### 22.5 与早期内容的冲突说明
+
+本节 §22 **覆盖**早期 mindstorm-02 中以下提法：
+
+- §15 D-S "Hero mockup 工作流" 中提到的"AI 生成 hero 资产" → 改为：**只用 ChatGPT 参考图截取角色 + 真实 CC0 纹理 + Game-Icons 图标**，AI 不再产出最终资产
+- §17（如有）"用 AI 补全 13 个房间插图" → 改为：**用 §F Wikimedia 公有领域中国画 + §A 开源插画库 + 手画 SVG 组合**
+- §20 D-X "资产策略" 中"角色用 AI / 其他全部代码绘制" → 修订：**角色已通过 ChatGPT 参考图截取完成，无需再生成；其他全部走 asset-sources.md 路线**
+
+> **§22 优先级**：本节是 mindstorm-02 中关于资产策略的**最终决议**，与早期任何与之冲突的描述以本节为准。
 
 ---
 
