@@ -1356,4 +1356,186 @@ Linlin 在第二轮提出的三个关键约束 / 补充：
 
 ---
 
-> **下一个 mindstorm 文件**：当 Linlin 在 §13 + §18 给出答案后撰写 `mindstorm-03-asset-generation-plan.md`（如果走资产生成路线）或直接进入 D8 实施。
+## 19. 增订 II（2026-04-27 第三轮 mindstorm）
+
+### D-K · 主题模式架构修正（关键）
+
+之前我搞反了。修正版：
+
+| 主题 | 角色 | 模式 | 默认 |
+|---|---|---|---|
+| **魔法师之书 / Grimoire** | **新构建的主设计**（D7+） | 内置 **day** + **night** 子模式（用桌上蜡烛切换） | **Default** = 魔法师之书 + day |
+| **麻瓜之书 / Muggle Book** | **D6 已建的学术 fallback** | 单一模式（无 day/night） | 给保守用户 / Reader Mode |
+
+切换控件细分：
+
+- **桌上蜡烛**（在 Grimoire 内）：点 / 灭 = 切换 grimoire-day ↔ grimoire-night
+- **退到麻瓜模式**：通过机器人助手 小林 的对话选项 "切到平静版 / Switch to plain text" 或卷轴底部一个不显眼的 "退出魔法 / Drop the magic" 链接
+
+CSS data-attribute 架构：
+
+```html
+<body data-theme="grimoire" data-mode="day">  <!-- default -->
+<body data-theme="grimoire" data-mode="night">
+<body data-theme="muggle">  <!-- mode irrelevant -->
+```
+
+### D-L · 身份微调
+
+- 旧：**图表示学习人工智能魔法学徒**（Graph Representation Learning · AI Magic Apprentice）
+- 新：**图人工智能魔法学徒**（Graph AI Magic Apprentice）
+- 更紧凑、更有节奏、不丢核心信号
+
+### D-M · 全页 force-graph 彩蛋 → 改为 Atlas/星图（嵌入魔法书）
+
+不再是"Cmd+G 隐藏快捷键"，改为**世界中的物体**：
+
+- 在书架顶部或卷轴某处可见一本**封面写着"Atlas / 星图"** 的特殊大书
+- Click 该书 → 全屏打开**世界图**：所有 publications / projects / awards / collaborators 作为节点 + 关系作为边
+- 视觉风格：参考清明上河图 / 千里江山图 — 一张古地图风格的"研究领地图"
+- 图上每个 spot 可点击 → 跳转到对应模块
+- 这就是原方案 4.A 的力导向图的"温和文学化"版本
+- 关闭 Atlas → 卷起卷轴回到地图视图 / 之前的位置
+- 也是 §8.10 visit map 的延伸 — Atlas 既是关系图也是地理图（覆盖物理地点 + 学术连接）
+
+### D-N · 挂轴方向：横向还是纵向？
+
+我重新斟酌后的最终建议：**横向手卷 (handscroll, 手卷)**，向左→向右展开。
+
+理由：
+
+| 维度 | 纵向挂轴 (vertical hanging scroll) | **横向手卷 (handscroll)** |
+|---|---|---|
+| 中国画传统 | 厅堂悬挂（formal, distant） | **私人鉴赏**（intimate, exploratory）— 清明上河图 |
+| 与"开放式空间场景"契合（D-O）| 弱 — 是单一垂直流 | **强** — 天然支持横向多场景并列 |
+| 西方手稿 | codex（书） | scroll（古卷） — 更"魔法书" |
+| Web 习惯 | 友 | 不友 — 但**这恰好是它独特的原因** |
+| 实现成本 | 低 | 中（需 JS 处理 scroll 方向） |
+| 移动端 | 友 | 中（需 swipe，但其实手机用户对横向 swipe 很熟） |
+| 与"开放世界"叙事 | 中 | **强** — 横向卷轴自然承载多场景拼贴 |
+| Distinctive | 中 | **强** |
+| Awwwards 候选 | 中 | **强** |
+| 入场动画 | 简单"开卷" | 戏剧性"卷轴向右徐徐展开" |
+
+**最终推荐：横向手卷，鼠标滚轮 → JS 转换为横向 scroll；trackpad 双指支持原生横向；移动端用 swipe；提供 Cmd+方向键快捷键 + 机器人导航。**
+
+如果 Linlin 担心 web 习惯：备选 **纵向挂轴 + 横向 §8.7 一段**（之前的方案）。
+
+#### 双轴是什么意思（Linlin 问的）
+
+我之前提的"双轴"是指：**主滚动方向之外，再支持一个次要方向**。例如：
+- 主：横向手卷（左右滚）
+- 次：每个 spot 内部可纵向 scroll（卡片列表）
+
+**类似 Notion 一行 column 内每个 column 内可独立纵向滚动**，给嵌套内容留空间。
+
+最简单：**单轴横向 + 嵌套垂直**（每个场景内若需要长内容，独立纵向 scroll）。
+
+### D-O · 开放式空间场景（不是线性排列）
+
+> "13个空间场景是一个一个向下排下去的吗？是否可以是开放式空间场景，相互之间位置甚至内容可以交叉"
+
+**完全采纳。** 架构变更：
+
+- 不再是 13 个 section 一个一个 scroll 下去
+- 改为**一张大型 2D 卷轴地图（或叫"画卷世界"）**展开
+- 各场景作为**画在卷轴上的插画**散落在地图上
+- 场景与场景之间**有视觉上的连接**（小路 / 河流 / 走廊 / 缠绕的藤蔓 edges）
+- 场景**位置自由布置**（不是网格，不是垂直栈）
+- 阅读路径**多种**：scroll 浏览 + 点击地图上某场景跳过去 + 机器人导航 + Atlas 切换
+- 每个场景是动态的 2D 插画，有 3D 效果（pseudo-3D）
+- **整张地图是 2D 的**，但每个场景内部是 2D 伪 3D（不是真 3D 世界）
+- 类似 Maggie Appleton 的 illustrated map + Stardew Valley overhead 的混合
+
+#### 卷轴上的内容布局举例
+
+```
+[左卷轴端]
+   ↓
+   阁楼书房 (Hero) ─── Atlas 大书 ─── 卧室 (About)
+       │                                  │
+       │                          天花板星空 (Skills)
+       │                                  │
+       └─── 信件房 ─────动物间──── 书架 (Pubs)
+                            │
+                       实验台 (Projects) ── 获奖墙 (Awards)
+                            │
+                       画壁走廊 (Experience) ── 报纸架 (News)
+                            │
+                       演讲台 (Talks) ── 卷轴地图 (Visit Map)
+   ↓
+[右卷轴端 + 蜡封 + 签名]
+```
+
+具体布局可在 mockup 阶段调试。**核心：场景之间有 spatial relationship，不是 linear stack**。
+
+### D-P · 卷轴上可直接二维写字
+
+> "这是个卷轴魔法书世界，所以我也是直接可以在上面写字的（二维）"
+
+明确：**卷轴本身的"留白处"（场景与场景之间）可以直接写文字**。例如：
+- 场景之间空隙写一段过渡叙述（首字母 drop cap + 手写体 + 几行 Spectral italic）
+- 卷轴边缘有"批注"小字（like manuscript marginalia） — 用 Caveat 或 Henrietta
+- 文字与场景插画**共存**于同一卷轴表面，不分层
+
+技术上：HTML 文字 + SVG 插画在同一 `<section>` 里平铺，CSS Grid / absolute positioning 控制位置。
+
+### D-Q · pretext 参考
+
+两层意涵都收：
+
+1. **本仓库已存在的 `pretext-word` 技术**（`js/main.js:581 initPretextWords`）：把 hero tagline 的每个 word 包成 `<span>` 以便 hover 单独 sparkle。这个**单字逐词高亮**的技术非常契合 grimoire — 每个关键词都可以"被关注 = 长出 edge"。我们沿用这个 pattern：所有 hero / 标题 / 重要 paragraph 的关键词全部包 span，hover 即触发该词的 edge 生长。
+
+2. **PreTeXt 学术写作系统**（[pretextbook.org](https://pretextbook.org/)）：XML markup for STEM 文档，输出 HTML / PDF / EPUB / Jupyter Notebook，强调可访问性 + 交互式数学。**对我们的启示**：每篇 publication 的 detail panel 可以参考 PreTeXt 的 "interactive figure / live formula" 模式 — 不只是静态摘要 + PDF 链接，而是含可缩放图、可点击 reference、内嵌 LaTeX 公式渲染（KaTeX / MathJax）。**未来 D-future**：把每篇代表作做成 PreTeXt 风格的 mini-page。
+
+### D-R · 机器人助手 = **小林**（Xiǎolín）
+
+- 中英文一致：**小林 / Xiaolin**（与本人姓名"林"呼应 — apprentice's apprentice？或姐妹 / 助手的命名传统）
+- 绒布质感的小机械生物，铜质齿轮 + 月光银
+- Chinese fantasy 风格 + 维多利亚机械感融合 — 不是 Wall-E 复制
+- 性格设定：好奇 + 礼貌 + 偶尔自言自语（idle 时小气泡飘出 "...还在加载中" / 表情符号）
+
+### D-S · Hero mockup 工作流（你刚说"可以先生成 hero mockup"）
+
+输出位置：`docs/vibe/hero-mockup-v1.html`（自包含 single-file，不混入主站）
+
+包含：
+- 卷轴左端 + 卷轴右端（横向卷轴示意）
+- Hero 阁楼书房场景（桌面俯视）
+- 蜡烛主题切换（day / night）
+- 笔记本上写的 hero 内容
+- 浮起的 graph mini 图
+- 鹅毛笔（cursor follower）
+- 蜡封
+- 角落 Howler 信封
+- OKLCH 双模式配色全部接入
+- Spectral + Ma Shan Zheng 字体接入
+- 鼠标视差（轻量）
+- "进入卧室" 的 hint（指向下一个场景，但本 mockup 不实现）
+
+不包含（留给 D8 实际实施）：
+- Edge-on-engagement 真实 SVG 边
+- R3F 3D 元素
+- 机器人小林（mockup 阶段用 placeholder）
+- 真正的横向 scroll（mockup 静态展示 hero 一个屏幕）
+- 资产精修（用占位 SVG，不调 baoyu-image-gen）
+
+### 修订后的 §13 待答问题精简版
+
+之前 §13 列了 10 个问题。Linlin 已答 7 个 + 改了 vision。剩余待决（在 mockup 评审后再问）：
+
+1. ✅ 机器人名 = 小林
+2. ⏸️ Hero 主标题文案 — 等 mockup 看效果再选
+3. ✅ Hero 视角 = 桌面俯视（按你方案）
+4. ✅ 画作生成 = 我生成参考给 Linlin 选
+5. ✅ Rive 安装 = 是
+6. ✅ 音效 = 是
+7. ✅ 卷轴方向 = 横向手卷（D-N）
+8. ⏸️ 入场动画 = 看 mockup
+9. ⏸️ Mobile 是否专门做"翻页式" = D8 阶段决定
+10. ⏸️ 主默认模式 = grimoire-day（D-K 已决）
+
+---
+
+> **下一个 mindstorm 文件**：当 Linlin 在 §13 + §18 + §19 给出答案后撰写 `mindstorm-03-asset-generation-plan.md`（如果走资产生成路线）或直接进入 D8 实施。
+> **本 mindstorm 之后立即输出**：`docs/vibe/hero-mockup-v1.html`（自包含 hero scene mockup, 不修改主站）
