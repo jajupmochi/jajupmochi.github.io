@@ -163,58 +163,50 @@ body.dragging * { cursor: grabbing !important; }
     transform-origin: 0 0;
     transition: transform 0.05s linear;
     will-change: transform;
-    /* Parchment composition */
+    /* Parchment composition — real procedural CC0 texture (res/grimoire/textures/) */
     background:
-        radial-gradient(ellipse 800px 500px at 8% 12%, oklch(0.62 0.12 50 / 0.22), transparent 60%),
-        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.68 0.10 60 / 0.18), transparent 65%),
-        radial-gradient(ellipse 900px 600px at 30% 78%, oklch(0.58 0.14 45 / 0.20), transparent 60%),
-        radial-gradient(ellipse 500px 350px at 88% 70%, oklch(0.55 0.12 40 / 0.18), transparent 65%),
-        radial-gradient(ellipse 600px 400px at 52% 50%, oklch(0.65 0.10 70 / 0.12), transparent 70%),
-        radial-gradient(ellipse 400px 280px at 18% 60%, oklch(0.50 0.10 35 / 0.16), transparent 65%),
-        radial-gradient(ellipse 700px 480px at 65% 32%, oklch(0.60 0.10 55 / 0.16), transparent 60%),
-        linear-gradient(135deg,
-            oklch(0.85 0.050 75) 0%,
-            oklch(0.80 0.065 65) 50%,
-            oklch(0.75 0.080 55) 100%);
+        radial-gradient(ellipse 900px 600px at 30% 78%, oklch(0.58 0.14 45 / 0.10), transparent 60%),
+        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.68 0.10 60 / 0.08), transparent 65%),
+        url("res/grimoire/textures/parchment-2k-warm.jpg") 0 0 / 1024px 1024px repeat,
+        oklch(0.85 0.050 75);
     box-shadow:
         inset 0 0 80px oklch(0.30 0.10 30 / 0.35),
         inset 0 0 200px oklch(0.20 0.08 30 / 0.18);
 }
 [data-mode="night"] .book {
     background:
-        radial-gradient(ellipse 800px 500px at 8% 12%, oklch(0.30 0.06 30 / 0.45), transparent 60%),
-        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.28 0.05 35 / 0.40), transparent 65%),
-        radial-gradient(ellipse 900px 600px at 30% 78%, oklch(0.26 0.06 40 / 0.45), transparent 60%),
-        radial-gradient(ellipse 500px 350px at 88% 70%, oklch(0.24 0.05 35 / 0.40), transparent 65%),
-        linear-gradient(135deg, oklch(0.16 0.030 35), oklch(0.12 0.040 28));
+        linear-gradient(oklch(0.10 0.04 30 / 0.78), oklch(0.10 0.04 30 / 0.78)),
+        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.28 0.05 35 / 0.35), transparent 65%),
+        url("res/grimoire/textures/parchment-2k-warm.jpg") 0 0 / 1024px 1024px repeat,
+        oklch(0.12 0.040 28);
     box-shadow: inset 0 0 80px oklch(0.05 0.04 30 / 0.6);
 }
 
-/* SVG noise grain layer ON the book (not body) so it pans with content */
+/* SVG noise grain layer — much lighter now that the parchment JPG has its own grain */
 .book::before {
     content: ''; position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='12'/><feColorMatrix values='0 0 0 0 0.30   0 0 0 0 0.20   0 0 0 0 0.12   0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='12'/><feColorMatrix values='0 0 0 0 0.30   0 0 0 0 0.20   0 0 0 0 0.12   0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     background-size: 400px;
-    opacity: 0.55; mix-blend-mode: multiply; pointer-events: none;
+    opacity: 0.18; mix-blend-mode: multiply; pointer-events: none;
 }
-[data-mode="night"] .book::before { mix-blend-mode: screen; opacity: 0.20; }
+[data-mode="night"] .book::before { mix-blend-mode: screen; opacity: 0.10; }
 
-/* Burnt edges around the book */
+/* Burnt edges — much lighter so the real parchment shows through */
 .book::after {
     content: ''; position: absolute; inset: 0;
     box-shadow:
-        inset 80px 0 120px oklch(0.30 0.08 30 / 0.4),
-        inset -80px 0 120px oklch(0.30 0.08 30 / 0.4),
-        inset 0 80px 120px oklch(0.30 0.08 30 / 0.35),
-        inset 0 -80px 120px oklch(0.30 0.08 30 / 0.35);
+        inset 30px 0 70px oklch(0.30 0.08 30 / 0.22),
+        inset -30px 0 70px oklch(0.30 0.08 30 / 0.22),
+        inset 0 30px 70px oklch(0.30 0.08 30 / 0.20),
+        inset 0 -30px 70px oklch(0.30 0.08 30 / 0.20);
     pointer-events: none;
 }
 [data-mode="night"] .book::after {
     box-shadow:
-        inset 80px 0 120px oklch(0.05 0.04 30 / 0.65),
-        inset -80px 0 120px oklch(0.05 0.04 30 / 0.65),
-        inset 0 80px 120px oklch(0.05 0.04 30 / 0.6),
-        inset 0 -80px 120px oklch(0.05 0.04 30 / 0.6);
+        inset 50px 0 90px oklch(0.05 0.04 30 / 0.5),
+        inset -50px 0 90px oklch(0.05 0.04 30 / 0.5),
+        inset 0 50px 90px oklch(0.05 0.04 30 / 0.45),
+        inset 0 -50px 90px oklch(0.05 0.04 30 / 0.45);
 }
 
 /* Living vines layer — covers the entire book, edges hidden by default */
@@ -451,6 +443,124 @@ body.dragging * { cursor: grabbing !important; }
     95% { transform: scaleY(0.1); }
 }
 .owl-eyes { animation: owl-blink 4.5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+/* ============== GAME-ICONS UTILITY (CC-BY 3.0 Lorc/Delapouite) ==============
+   Mask-based: SVG silhouette + currentColor fill via background-color.
+   Set --gi-icon to the SVG path; control color via `color:` (mask uses bg). */
+.gi-mask {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask: var(--gi-icon) no-repeat center / contain;
+            mask: var(--gi-icon) no-repeat center / contain;
+}
+.gi-mask:hover { filter: drop-shadow(0 0 8px oklch(0.62 0.13 70 / 0.5)); }
+
+/* Owl perch v2: real Game-Icons owl on a wooden perch */
+.owl-perch .gi-owl-body {
+    --gi-icon: url("res/grimoire/icons/owl.svg");
+    width: 130px; height: 130px;
+    color: oklch(0.32 0.10 35);
+    filter: drop-shadow(0 4px 8px oklch(0.20 0.06 30 / 0.45));
+}
+[data-mode="night"] .owl-perch .gi-owl-body { color: oklch(0.55 0.10 50); }
+.owl-perch .perch-bar {
+    width: 70px; height: 12px;
+    background: linear-gradient(180deg, oklch(0.50 0.08 45), oklch(0.32 0.06 40));
+    border-radius: 2px;
+    margin: -6px auto 0;
+    box-shadow: 0 4px 6px oklch(0.20 0.06 30 / 0.4);
+}
+@keyframes owl-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+}
+.owl-perch .gi-owl-body { animation: owl-bob 5s ease-in-out infinite; }
+
+/* Lectern decoration: scroll-unfurled hovering above */
+.lectern-scroll {
+    --gi-icon: url("res/grimoire/icons/scroll-unfurled.svg");
+    position: absolute; left: 50%; top: -20px;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 70px; height: 70px;
+    color: oklch(0.55 0.12 50);
+    filter: drop-shadow(0 6px 10px oklch(0.20 0.06 30 / 0.4));
+    z-index: 3;
+}
+[data-mode="night"] .lectern-scroll { color: oklch(0.78 0.12 65); }
+
+/* Howler wax-seal stamp (replaces hand-drawn circle) */
+.howler-seal {
+    --gi-icon: url("res/grimoire/icons/wax-seal.svg");
+    position: absolute; right: -18px; bottom: -18px;
+    width: 56px; height: 56px;
+    color: oklch(0.42 0.18 27);
+    filter: drop-shadow(0 4px 6px oklch(0.30 0.14 25 / 0.5));
+    z-index: 4;
+    pointer-events: none;
+}
+@keyframes seal-pulse {
+    0%, 100% { transform: rotate(-12deg) scale(1); }
+    50%      { transform: rotate(-12deg) scale(1.06); }
+}
+.howler:hover .howler-seal { animation: seal-pulse 1.4s ease-in-out infinite; }
+
+/* Painted background for visit map (千里江山图) */
+.map-zone {
+    border-radius: 4px;
+    overflow: visible;
+}
+.map-zone::before {
+    content: ''; position: absolute;
+    left: -10px; top: 30px; right: -10px; bottom: -10px;
+    background: url("res/grimoire/chinese-art/qianli-section-c.jpg") center / cover;
+    border: 1px solid oklch(0.45 0.10 50 / 0.4);
+    box-shadow:
+        0 0 0 4px oklch(0.55 0.12 60 / 0.3),
+        0 14px 28px oklch(0.18 0.05 30 / 0.45),
+        inset 0 0 30px oklch(0.30 0.10 30 / 0.35);
+    opacity: 0.78;
+    transition: opacity 0.4s var(--ease-quart);
+    z-index: -1;
+    border-radius: 2px;
+}
+.map-zone:hover::before { opacity: 0.95; }
+[data-mode="night"] .map-zone::before { opacity: 0.45; filter: brightness(0.7) saturate(0.8); }
+
+/* Corner decorations (4 magical sigils anchored to book corners) */
+.corner-deco {
+    position: absolute; width: 90px; height: 90px;
+    color: oklch(0.50 0.12 40 / 0.55);
+    pointer-events: none;
+    z-index: 4;
+    transition: opacity 0.6s var(--ease-quart), color 0.4s var(--ease-quart);
+    filter: drop-shadow(0 2px 4px oklch(0.20 0.06 30 / 0.35));
+}
+.corner-deco:hover { color: oklch(0.62 0.18 50 / 0.85); }
+.corner-deco.tl { left: 60px;  top: 60px;   --gi-icon: url("res/grimoire/icons/quill-ink.svg"); transform: rotate(-12deg); }
+.corner-deco.tr { right: 60px; top: 60px;   --gi-icon: url("res/grimoire/icons/candle-flame.svg"); transform: rotate(8deg); }
+.corner-deco.bl { left: 60px;  bottom: 60px;--gi-icon: url("res/grimoire/icons/wax-seal.svg"); transform: rotate(-6deg); }
+.corner-deco.br { right: 60px; bottom: 60px;--gi-icon: url("res/grimoire/icons/book-aura.svg"); transform: rotate(10deg); }
+[data-mode="night"] .corner-deco { color: oklch(0.70 0.14 60 / 0.45); }
+[data-mode="night"] .corner-deco:hover { color: oklch(0.85 0.18 70 / 0.85); }
+@keyframes deco-flicker {
+    0%, 100% { opacity: 0.65; }
+    50%      { opacity: 0.95; }
+}
+.corner-deco.tr { animation: deco-flicker 3.6s ease-in-out infinite; } /* candle flickers */
+
+/* CC-BY 3.0 attribution (Game-Icons + 千里江山图) — fixed bottom-left, small */
+.attribution {
+    position: fixed; bottom: 8px; left: 12px; z-index: 90;
+    font-family: var(--font-display); font-size: 10px;
+    color: oklch(0.65 0.06 70 / 0.75);
+    letter-spacing: 0.02em;
+    pointer-events: auto;
+    text-shadow: 0 1px 2px oklch(0.05 0.04 30 / 0.55);
+    max-width: 380px;
+}
+.attribution a { color: oklch(0.78 0.10 70 / 0.85); text-decoration: none; }
+.attribution a:hover { color: oklch(0.85 0.16 75); text-decoration: underline; }
+[data-mode="night"] .attribution { color: oklch(0.55 0.06 70 / 0.7); }
 
 /* Newspaper at bottom-right */
 .news-zone { left: 2950px; top: 1450px; width: 480px; cursor: pointer; }
@@ -964,6 +1074,12 @@ body.dragging * { cursor: grabbing !important; }
     <span class="minimap-label">drag the book · 4000 × 2400</span>
 </div>
 
+<!-- Required attribution for Game-Icons (CC-BY 3.0) and 千里江山图 (PD) -->
+<div class="attribution">
+    Icons by <strong>Lorc</strong> &amp; <strong>Delapouite</strong> · <a href="https://game-icons.net/" target="_blank" rel="noopener">Game-Icons.net</a> · CC-BY 3.0
+    · 画卷《千里江山图》王希孟 1113 (PD via Wikimedia)
+</div>
+
 <!-- The pannable viewport + parallax layers + book -->
 <div class="viewport" id="viewport">
 
@@ -985,6 +1101,12 @@ body.dragging * { cursor: grabbing !important; }
     </div>
 
     <div class="book" id="book">
+
+        <!-- Corner decorations (Game-Icons CC-BY 3.0 — Lorc) -->
+        <div class="gi-mask corner-deco tl" aria-hidden="true"></div>
+        <div class="gi-mask corner-deco tr" aria-hidden="true"></div>
+        <div class="gi-mask corner-deco bl" aria-hidden="true"></div>
+        <div class="gi-mask corner-deco br" aria-hidden="true"></div>
 
         <!-- Style zones (D-E §20) — sit at z-index 2 under content -->
         <div class="zone zone-velvet" style="left:1080px;top:900px;width:740px;height:280px;"></div>
@@ -1190,27 +1312,12 @@ body.dragging * { cursor: grabbing !important; }
                 <text x="32" y="116" font-family="cursive" font-size="14" fill="oklch(0.96 0.04 27)" font-weight="600" font-style="italic" transform="rotate(-3 32 116)">URGENT</text>
             </svg>
             <div class="howler-label">⚠ a Howler · 送一封信</div>
+            <div class="gi-mask howler-seal" aria-hidden="true"></div>
         </div>
 
-        <div class="owl-perch" onclick="alert('🦉 Owl ready to deliver. Always awake.')">
-            <svg viewBox="0 0 140 180">
-                <rect x="50" y="160" width="40" height="14" fill="oklch(0.42 0.08 40)"/>
-                <ellipse cx="70" cy="100" rx="40" ry="50" fill="oklch(0.40 0.05 55)" stroke="oklch(0.18 0.04 30)" stroke-width="1.4"/>
-                <ellipse cx="70" cy="112" rx="24" ry="32" fill="oklch(0.78 0.06 75)"/>
-                <path d="M44 76 L36 54 L52 64 Z" fill="oklch(0.32 0.05 50)"/>
-                <path d="M96 76 L104 54 L88 64 Z" fill="oklch(0.32 0.05 50)"/>
-                <g class="owl-eyes">
-                    <circle cx="58" cy="88" r="10" fill="oklch(0.94 0.04 75)" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
-                    <circle cx="82" cy="88" r="10" fill="oklch(0.94 0.04 75)" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
-                    <circle cx="58" cy="88" r="5" fill="oklch(0.18 0.03 50)"/>
-                    <circle cx="82" cy="88" r="5" fill="oklch(0.18 0.03 50)"/>
-                    <circle cx="59" cy="86" r="1.4" fill="oklch(0.96 0.04 80)"/>
-                    <circle cx="83" cy="86" r="1.4" fill="oklch(0.96 0.04 80)"/>
-                </g>
-                <path d="M70 100 L66 110 L74 110 Z" fill="oklch(0.62 0.13 70)" stroke="oklch(0.30 0.10 55)" stroke-width="0.6"/>
-                <line x1="64" y1="148" x2="62" y2="160" stroke="oklch(0.30 0.07 50)" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="76" y1="148" x2="78" y2="160" stroke="oklch(0.30 0.07 50)" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+        <div class="owl-perch" data-engages="owl" tabindex="0" role="button" aria-label="Owl ready to deliver">
+            <div class="gi-mask gi-owl-body"></div>
+            <div class="perch-bar"></div>
         </div>
 
         <!-- ============== NEWS (newspaper) ============== -->
@@ -1283,14 +1390,17 @@ body.dragging * { cursor: grabbing !important; }
             <h2 class="h-title">演讲台</h2>
             <p class="h-title-en">Invited talks · 4 venues</p>
             <div class="h-deco"></div>
-            <svg viewBox="0 0 280 200">
-                <path d="M80 160 L200 160 L180 80 L100 80 Z" fill="oklch(0.42 0.08 40)" stroke="oklch(0.25 0.06 35)" stroke-width="1.2"/>
-                <rect x="116" y="74" width="48" height="14" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="0.8"/>
-                <line x1="140" y1="74" x2="140" y2="88" stroke="oklch(0.55 0.10 50)" stroke-width="0.5"/>
-                <line x1="138" y1="68" x2="138" y2="40" stroke="oklch(0.30 0.06 55)" stroke-width="1.4"/>
-                <ellipse cx="138" cy="38" rx="6" ry="6" fill="oklch(0.30 0.06 55)"/>
-                <rect x="0" y="160" width="280" height="40" fill="oklch(0.50 0.06 50)"/>
-            </svg>
+            <div style="position:relative;">
+                <div class="gi-mask lectern-scroll" aria-hidden="true"></div>
+                <svg viewBox="0 0 280 200">
+                    <path d="M80 160 L200 160 L180 80 L100 80 Z" fill="oklch(0.42 0.08 40)" stroke="oklch(0.25 0.06 35)" stroke-width="1.2"/>
+                    <rect x="116" y="74" width="48" height="14" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="0.8"/>
+                    <line x1="140" y1="74" x2="140" y2="88" stroke="oklch(0.55 0.10 50)" stroke-width="0.5"/>
+                    <line x1="138" y1="68" x2="138" y2="40" stroke="oklch(0.30 0.06 55)" stroke-width="1.4"/>
+                    <ellipse cx="138" cy="38" rx="6" ry="6" fill="oklch(0.30 0.06 55)"/>
+                    <rect x="0" y="160" width="280" height="40" fill="oklch(0.50 0.06 50)"/>
+                </svg>
+            </div>
         </div>
 
     </div>
