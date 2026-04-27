@@ -557,13 +557,15 @@ html {
     }
 }
 
-/* V6.2: high-contrast body text + embossed shadow on prose */
+/* V6.2: body text — slightly lighter + 92% opacity for "ink-on-paper" handwritten feel
+   (Linlin: 显得更像手写上去的). Headings/highlights stay deep (set later in §6.3+§VITALITY). */
 body, p, li, .news-content, .about-text, .hero-tagline, .hero-subtitle {
-    color: var(--ink-deep) !important;
+    color: oklch(0.18 0.04 30) !important;   /* 0.10 → 0.18 — softer "fresh ink" tone */
+    opacity: 0.92 !important;
     font-weight: 600 !important;
     text-shadow:
-        -0.5px -0.5px 0 rgba(255, 240, 200, 0.4),
-         0.5px  0.5px 1px rgba(20, 8, 0, 0.40) !important;
+        -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+         0.5px  0.5px 1px rgba(40, 20, 0, 0.30) !important;
 }
 
 /* V6.3: hero name + headings — emboss + bold */
