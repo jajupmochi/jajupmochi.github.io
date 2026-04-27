@@ -133,30 +133,49 @@ body { background: transparent !important; color: var(--text-primary); }
 .wp-overlay strong, .wp-overlay b { font-weight: 700 !important; }
 .wp-overlay em, .wp-overlay i { font-style: italic !important; }
 
-/* 7.4 Headings — Caveat handwriting (#5B4F3A warmer) */
+/* 7.4 Headings — Caveat 34px italic warm-brown (canonical from main.css:934) */
 .wp-overlay .wp-h2, .wp-overlay h1, .wp-overlay h2 {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 34px !important;
+    font-weight: 600 !important;
+    font-style: italic !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0 !important;
     color: rgb(91, 79, 58) !important;
-    font-weight: 400 !important;
+}
+html[lang="zh"] .wp-overlay .wp-h2 { font-size: 30px !important; font-style: normal !important; }
+
+/* 7.5 Sub-text + script labels — Caveat 17px lighter color (canonical from main.css:939) */
+.wp-overlay .wp-sub {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 17px !important;
+    color: rgb(122, 111, 90) !important;
     font-style: italic !important;
 }
-html[lang="zh"] .wp-overlay .wp-h2,
-html[lang="zh"] .wp-overlay h1,
-html[lang="zh"] .wp-overlay h2 { font-style: normal !important; }
-
-/* 7.5 Sub-text + script labels — Caveat smaller, lighter color (#7A6F5A) */
-.wp-overlay .wp-sub, .wp-overlay .wp-script, .wp-overlay .wp-script-label {
+.wp-overlay .wp-script, .wp-overlay .wp-script-label {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
     color: rgb(122, 111, 90) !important;
     font-style: italic !important;
 }
-html[lang="zh"] .wp-overlay .wp-sub,
+html[lang="zh"] .wp-overlay .wp-sub { font-size: 16px !important; font-style: normal !important; }
 html[lang="zh"] .wp-overlay .wp-script,
 html[lang="zh"] .wp-overlay .wp-script-label { font-style: normal !important; }
 
-/* 7.6 Submit button — Caveat, transparent bg, ink color, no UA gray */
+/* 7.5b wp-line and other Caveat lines */
+.wp-overlay .wp-line {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 22px !important;
+    line-height: 1.4 !important;
+    color: rgb(63, 58, 54) !important;
+}
+
+/* 7.6 Submit button — Caveat 28px transparent (canonical from main.css:1060) */
 .wp-overlay .wp-submit, .wp-overlay button {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    font-style: italic !important;
+    letter-spacing: 0.01em !important;
     color: rgb(91, 79, 58) !important;
     background: transparent !important;
     background-color: transparent !important;
@@ -165,6 +184,10 @@ html[lang="zh"] .wp-overlay .wp-script-label { font-style: normal !important; }
     text-shadow: none !important;
     animation: none !important;
     border: none !important;
+    border-bottom: 1px dashed rgba(120,113,108,0.22) !important;
+}
+html[lang="zh"] .wp-overlay .wp-submit, html[lang="zh"] .wp-overlay button {
+    font-size: 26px !important; font-style: normal !important;
 }
 
 /* 7.7 wp-card animation owned by main.css (don't override animation) */
@@ -286,28 +309,36 @@ img.profile-photo, .project-image img, .pub-thumbnail img {
     filter: sepia(0.06) brightness(1.0);
 }
 
-/* Profile photo — slight transparency + edge fade for natural blend
-   Linlin: 现在背景透明了 (60% white)，但头像不要太透; 边缘要虚化融入背景 */
+/* Profile photo — visibly more transparent + heavier edge feathering
+   Linlin: 还要更明显. opacity 0.92 → 0.82, mask falloff 更早开始 + 更急. */
 .profile-image, img.profile-image, .hero-image img {
     mix-blend-mode: normal !important;
-    opacity: 0.92 !important;                     /* 稍微透明，让背景透一点点 */
-    filter: contrast(1.03) saturate(1.05) !important;
-    /* 边缘虚化 mask: 中心 60% 完全显示，逐渐淡到边缘几乎看不见 */
+    opacity: 0.82 !important;                     /* 明显能看到背景透过来 */
+    filter: contrast(1.04) saturate(1.05) blur(0.3px) !important;  /* 微 blur 整体让边缘也柔 */
+    /* 重 mask: 边缘从 40% 就开始 fade，到 92% 完全透明 */
     -webkit-mask-image: radial-gradient(circle at 50% 50%,
-        black 50%,
-        rgba(0,0,0,0.92) 65%,
-        rgba(0,0,0,0.65) 80%,
-        rgba(0,0,0,0.25) 92%,
+        black 38%,
+        rgba(0,0,0,0.85) 55%,
+        rgba(0,0,0,0.55) 70%,
+        rgba(0,0,0,0.25) 84%,
+        rgba(0,0,0,0.08) 92%,
         transparent 100%) !important;
             mask-image: radial-gradient(circle at 50% 50%,
-        black 50%,
-        rgba(0,0,0,0.92) 65%,
-        rgba(0,0,0,0.65) 80%,
-        rgba(0,0,0,0.25) 92%,
+        black 38%,
+        rgba(0,0,0,0.85) 55%,
+        rgba(0,0,0,0.55) 70%,
+        rgba(0,0,0,0.25) 84%,
+        rgba(0,0,0,0.08) 92%,
         transparent 100%) !important;
-    box-shadow: none !important;                  /* 去掉光晕，避免硬边 */
+    box-shadow: none !important;
     border: none !important;
     border-radius: 50% !important;
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+/* On hover — slight 'wake up'/focus effect */
+.profile-image:hover, .hero-image img:hover {
+    opacity: 0.95 !important;
+    filter: contrast(1.06) saturate(1.10) blur(0px) !important;
 }
 .hero-image {
     background: transparent !important;
@@ -501,16 +532,29 @@ input, select, textarea, button.icon-btn {
     --ink-near-black: oklch(0.06 0.03 30);
 }
 
-/* V6.1: warm-sepia notebook grid OVER parchment + 60% white overlay (Linlin: O60 picked) */
+/* V6.1: bg = lightened parchment + faint grid. Linlin: 格子也淡一点.
+   iOS Safari fix: 'background-attachment: fixed' breaks on iOS — image gets
+   pinned to viewport but blurred/scaled. Use 'scroll' on touch devices. */
 html {
     background:
-        linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px),
-        linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px),
+        linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
+        linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
         linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.60)),
         url("../res/parchment-options/wm-02-pergament-aged.jpg") center / cover no-repeat fixed,
         oklch(0.93 0.03 78) !important;
     background-size: 40px 40px, 40px 40px, auto, cover, auto !important;
     background-attachment: fixed, fixed, fixed, fixed, fixed !important;
+}
+/* iOS Safari + iPad: fixed backgrounds cause blur. Use scroll attachment. */
+@supports (-webkit-touch-callout: none) {
+    html {
+        background-attachment: scroll, scroll, scroll, scroll, scroll !important;
+    }
+}
+@media (hover: none) and (pointer: coarse) {
+    html {
+        background-attachment: scroll, scroll, scroll, scroll, scroll !important;
+    }
 }
 
 /* V6.2: high-contrast body text + embossed shadow on prose */
