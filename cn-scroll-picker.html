@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>中国卷轴 / 山水画背景 Picker — 8 个公有领域候选</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root {
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+    --ink-muted: oklch(0.55 0.05 35);
+    --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-orig: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: oklch(0.93 0.030 78);
+    font-size: 18px;
+    line-height: 1.7;
+}
+header {
+    text-align: center;
+    padding: 32px 24px 18px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive;
+    font-size: 38px;
+    color: var(--ink-deep);
+    line-height: 1.05;
+}
+header .sub {
+    margin: 8px auto 0;
+    max-width: 800px;
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+header .sub code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+}
+header .sub strong { color: var(--maroon-orig); }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+.swatch {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.25);
+}
+.swatch.active { outline: 3px solid var(--maroon-bright); outline-offset: 2px; }
+.preview {
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+}
+.preview .overlay {
+    color: oklch(0.10 0.04 30);
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.6),
+         1px  1px 1px rgba(20, 8, 0, 0.6),
+         0 0 12px rgba(255, 245, 220, 0.5);
+    background: linear-gradient(90deg, rgba(245,235,200,0.55) 0%, rgba(245,235,200,0.30) 100%);
+    padding: 14px 18px;
+    border-radius: 3px;
+    backdrop-filter: blur(0.5px);
+}
+.preview h2 {
+    margin: 0 0 4px;
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 32px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+}
+.preview .role {
+    font-size: 14px;
+    margin: 0 0 8px;
+    font-style: italic;
+    font-family: 'Spectral', 'Ma Shan Zheng', serif;
+}
+.preview .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: oklch(0.55 0.20 27 / 0.55);
+    color: oklch(0.96 0.04 60);
+    border: 1px solid oklch(0.45 0.16 27);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+    font-family: 'Indie Flower', cursive;
+}
+.meta {
+    padding: 14px 18px;
+    border-top: 1px solid oklch(0.88 0.014 75);
+}
+.meta .name {
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-deep);
+}
+.meta .desc {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    font-family: 'Ma Shan Zheng', serif;
+}
+.meta .src {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+.meta .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    background: oklch(0.55 0.20 27 / 0.18);
+    color: var(--maroon-orig);
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+    font-family: 'Indie Flower', cursive;
+}
+
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed var(--rule);
+    border-radius: 6px;
+    text-align: center;
+    background: oklch(0.93 0.030 78);
+}
+#liveDemo h3 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; }
+#liveDemo .demoArea {
+    margin-top: 16px;
+    padding: 80px 40px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    transition: background-image 0.4s ease;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#liveDemo .demoArea .demoText {
+    background: linear-gradient(90deg, rgba(245,235,200,0.5) 0%, rgba(245,235,200,0.25) 100%);
+    padding: 24px 30px;
+    border-radius: 3px;
+    backdrop-filter: blur(1px);
+    color: oklch(0.10 0.04 30);
+    max-width: 700px;
+    margin: 0 auto;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
+}
+#liveDemo h2 {
+    margin: 0 0 4px;
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+}
+#liveDemo .role { font-style: italic; font-size: 16px; margin: 0 0 12px; font-family: 'Spectral', serif; }
+#liveDemo .body { font-family: 'Ma Shan Zheng', serif; font-size: 17px; line-height: 1.85; }
+#liveDemo .key {
+    color: var(--maroon-orig); font-weight: 800;
+    text-shadow:
+         0   0   2.5px rgba(120, 30, 30, 0.55),
+         0   1px 1px   rgba(60, 10, 10, 0.5);
+}
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 60px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0 auto;
+    font-family: 'Ma Shan Zheng', serif;
+}
+.controls code {
+    background: oklch(0.88 0.020 75 / 0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>中国卷轴 · 山水画背景 Picker</h1>
+    <p class="sub">8 个公有领域候选 — 5 张纯绘画 + 3 张<strong>带织锦镶边</strong>（MET 装裱卷轴）。点击任一缩略图，下方实时 demo 区切换为该背景，看真实文字 + 卷轴的视觉契合度。</p>
+</header>
+
+<div class="grid" id="grid">
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-01-fuchun.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-01-fuchun.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-01-fuchun.jpg</div>
+            <div class="desc">黄公望《富春山居图》(1350) — 纯墨水山水，淡雅稀疏，留白多。最适合做 hero 背景。</div>
+            <div class="src">PD · Wikimedia · 586K · 2400×~750</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-02-early-spring.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-02-early-spring.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-02-early-spring.jpg</div>
+            <div class="desc">郭熙《早春图》(1072) — 北宋大幅立轴，山势磅礴，对比强。文字落在山间空白处效果好。</div>
+            <div class="src">PD · Wikimedia · 1.3M · 北宋立轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-03-travelers-fankuan.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-03-travelers-fankuan.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-03-travelers-fankuan.jpg</div>
+            <div class="desc">范宽《溪山行旅图》(c.1000) — 最著名的宋代山水。Google Art Project 高清。极戏剧性，山压顶。</div>
+            <div class="src">PD · Wikimedia (Google Art) · 1.9M · 北宋立轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-04-malin-pines.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-04-malin-pines.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-04-malin-pines.jpg</div>
+            <div class="desc">马麟《静听松风图》(13c) — 南宋小品，留白多，氛围静谧。最适合长文字 overlay。</div>
+            <div class="src">PD · Wikimedia · 503K · 南宋立轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-05-wuzhen-met-mounted.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-05-wuzhen-met-mounted.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-05-wuzhen-met-mounted.jpg <span class="tag">★ 镶边</span></div>
+            <div class="desc">清·王原祁《仿吴镇山水图》MET 装裱 — <strong>带完整丝绸织锦镶边</strong>。立轴顶部有 brocade 边带，最有"卷轴"实物感。</div>
+            <div class="src">PD · Met Museum (via Wikimedia) · 276K · 装裱立轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-06-met-mounted-a.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-06-met-mounted-a.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-06-met-mounted-a.jpg <span class="tag">★ 镶边</span></div>
+            <div class="desc">MET DP276505 — 另一张 MET 装裱卷轴。带织锦边，画面更柔和。</div>
+            <div class="src">PD · Met Museum · 159K · 装裱卷轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-07-met-mounted-b.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-07-met-mounted-b.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-07-met-mounted-b.jpg <span class="tag">★ 镶边</span></div>
+            <div class="desc">MET DP276291 — 第三张 MET 装裱样本。最完整的 brocade border 展示。</div>
+            <div class="src">PD · Met Museum · 215K · 装裱卷轴</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-scrolls/cn-08-qingming-section.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-scrolls/cn-08-qingming-section.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-08-qingming-section.jpg</div>
+            <div class="desc">张择端《清明上河图》Qing Court Version 局部 — 故事化场景，市井生活。视觉密集，可能不太适合做整页 bg。</div>
+            <div class="src">PD · Wikimedia · 1.3M · 长卷局部</div>
+        </div>
+    </div>
+
+</div>
+
+<div id="liveDemo">
+    <h3>实时预览 · 真实文字 on 卷轴</h3>
+    <p style="margin:0;color:var(--ink-soft);font-size:14px">点击上方任一缩略图，看 hero 名字 + 一段研究简介在该卷轴背景上的真实效果（含 V6 凸印 + V4 墨水浸染 highlight）。</p>
+    <div class="demoArea" id="demoArea" style="background-image:url('res/parchment-options/cn-scrolls/cn-04-malin-pines.jpg')">
+        <div class="demoText">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 图人工智能 · Open to ML RS · 2026</p>
+            <p class="body">构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<span class="key">ICPR 2026</span> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 130+ 引用。现为伯尔尼大学博士后。</p>
+            <p style="font-size:13px;color:var(--ink-muted);margin-top:14px;font-family:'Indie Flower',cursive">↑ Sample card. Verify legibility, contrast, scroll fit.</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>挑一个 <code>cn-XX</code> 文件名告诉我（例如 "<code>用 cn-04 静听松风</code>"），我把它接到 <code>parchment-overrides.css</code> 替换当前的 wm-02 羊皮纸。<br>★ 标签 = 带织锦镶边的装裱卷轴。</p>
+    <p style="font-size:12px;color:var(--ink-muted);margin-top:14px">
+        全部公有领域 · Wikimedia Commons & MET Museum · 个人 + 商用 OK · 详见 <a href="res/parchment-options/cn-scrolls/LICENSE.md" target="_blank" style="color:var(--maroon-orig)">LICENSE.md</a>
+    </p>
+</div>
+
+<script>
+const grid = document.getElementById('grid');
+const demoArea = document.getElementById('demoArea');
+grid.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const src = sw.dataset.src;
+        demoArea.style.backgroundImage = `url('${src}')`;
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+</body>
+</html>
