@@ -97,64 +97,87 @@ body { background: transparent !important; color: var(--text-primary); }
     .navbar-brand { font-size: 1.3rem !important; }
 }
 
-/* ---------- 7. Welcome popup — FULLY restore main.css design (one-by-one) ----------
-   Linlin: 明信片要和 index_en.html 完全一样. Approach: explicitly set every
-   property back to main.css values for every key element inside wp-overlay,
-   so the parchment-edition cascade doesn't leak in. */
+/* ---------- 7. Welcome popup — FULL alignment with index_en.html canonical ----------
+   Verified pixel-by-pixel against index_en.html via getComputedStyle.
+   Restored exactly: cream gradient bg, Caveat headings, specific colors, no UA button defaults. */
 
-/* 7.1 Overlay shell */
+/* 7.1 Overlay shell — dark backdrop + blur */
 .wp-overlay {
     background: rgba(15, 23, 42, 0.55) !important;
     backdrop-filter: blur(4px) !important;
     -webkit-backdrop-filter: blur(4px) !important;
 }
 
-/* 7.2 All descendants — neutralize my font + color + shadow overrides */
-.wp-overlay, .wp-overlay *,
-.wp-card, .wp-card * {
+/* 7.2 wp-card — cream gradient bg + Spectral body + warm-brown ink (#3D3528) */
+.wp-card {
+    background-image: linear-gradient(rgb(253, 251, 245) 0%, rgb(245, 239, 222) 100%) !important;
+    background-color: rgb(253, 251, 245) !important;
+    color: rgb(61, 53, 40) !important;
     font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
-    color: var(--wp-ink, #3f3a36) !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
     text-shadow: none !important;
     letter-spacing: normal !important;
-    background-image: none !important;
 }
 
-/* 7.3 Specific weight + style restorations from main.css */
-.wp-overlay strong, .wp-overlay b, .wp-overlay .wp-strong { font-weight: 700 !important; }
+/* 7.3 ALL descendants — Spectral body, warm ink, no shadow, no my-bumps */
+.wp-overlay *, .wp-card * {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    color: rgb(61, 53, 40) !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+    font-size: revert !important;
+    line-height: revert !important;
+    font-weight: revert !important;
+}
+.wp-overlay strong, .wp-overlay b { font-weight: 700 !important; }
 .wp-overlay em, .wp-overlay i { font-style: italic !important; }
 
-/* 7.4 Title (Caveat handwriting) — main.css uses --wp-script-font / --wp-title-font */
+/* 7.4 Headings — Caveat handwriting (#5B4F3A warmer) */
 .wp-overlay .wp-h2, .wp-overlay h1, .wp-overlay h2 {
-    font-family: var(--wp-title-font, 'Spectral', 'Iowan Old Style', serif) !important;
-    font-weight: 600 !important;
-    color: var(--wp-ink, #3f3a36) !important;
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    color: rgb(91, 79, 58) !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
 }
-.wp-overlay .wp-script, .wp-overlay .wp-script-label {
-    font-family: var(--wp-script-font, 'Caveat', cursive) !important;
+html[lang="zh"] .wp-overlay .wp-h2,
+html[lang="zh"] .wp-overlay h1,
+html[lang="zh"] .wp-overlay h2 { font-style: normal !important; }
+
+/* 7.5 Sub-text + script labels — Caveat smaller, lighter color (#7A6F5A) */
+.wp-overlay .wp-sub, .wp-overlay .wp-script, .wp-overlay .wp-script-label {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    color: rgb(122, 111, 90) !important;
+    font-style: italic !important;
 }
-html[lang="zh"] .wp-overlay .wp-h2 { font-style: normal !important; }
+html[lang="zh"] .wp-overlay .wp-sub,
 html[lang="zh"] .wp-overlay .wp-script,
 html[lang="zh"] .wp-overlay .wp-script-label { font-style: normal !important; }
 
-/* 7.5 Submit button — main.css styles win */
+/* 7.6 Submit button — Caveat, transparent bg, ink color, no UA gray */
 .wp-overlay .wp-submit, .wp-overlay button {
-    font-family: var(--wp-title-font, 'Spectral', serif) !important;
-    color: revert !important;
-    background: revert !important;
-    box-shadow: revert !important;
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    color: rgb(91, 79, 58) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
     text-shadow: none !important;
     animation: none !important;
+    border: none !important;
 }
 
-/* 7.6 wp-card open-state animation owned by main.css; restore explicit visibility */
+/* 7.7 wp-card animation owned by main.css (don't override animation) */
 .wp-overlay.active .wp-card {
     opacity: 1 !important;
     visibility: visible !important;
 }
 
-/* 7.7 Inputs / textarea inherit wp-body-font */
+/* 7.8 Inputs / textarea — Spectral body */
 .wp-overlay textarea, .wp-overlay input, .wp-overlay select {
-    font-family: var(--wp-body-font, 'Spectral', serif) !important;
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    color: rgb(61, 53, 40) !important;
+    background: transparent !important;
 }
 
 /* ---------- 8. Image lightbox — preserve dark overlay (only for image zoom) ---------- */
@@ -263,16 +286,26 @@ img.profile-photo, .project-image img, .pub-thumbnail img {
     filter: sepia(0.06) brightness(1.0);
 }
 
-/* Profile photo — "WINDOW into the scroll-world" effect
-   Linlin: 不要 sepia 死人感, 要活人. 把照片当成羊皮纸世界里开的一扇窗 — 中心
-   完全保留原色 + 周围渐变 fade 到羊皮纸. NO 黄色/sepia 滤镜. */
+/* Profile photo — slight transparency + edge fade for natural blend
+   Linlin: 现在背景透明了 (60% white)，但头像不要太透; 边缘要虚化融入背景 */
 .profile-image, img.profile-image, .hero-image img {
-    mix-blend-mode: normal !important;          /* 完全不混合，保持原色 */
-    filter: contrast(1.04) saturate(1.02) !important;  /* 微微提色，远离 sepia */
-    /* 软渐变 mask: 中心 70% 完全显示，到边缘渐渐淡入羊皮纸（像窗口的 vignette） */
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 99%) !important;
-            mask-image: radial-gradient(circle at 50% 50%, black 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 99%) !important;
-    box-shadow: 0 0 30px rgba(255, 245, 220, 0.4) !important;  /* 极淡暖光晕，模拟从羊皮纸里"透出来" */
+    mix-blend-mode: normal !important;
+    opacity: 0.92 !important;                     /* 稍微透明，让背景透一点点 */
+    filter: contrast(1.03) saturate(1.05) !important;
+    /* 边缘虚化 mask: 中心 60% 完全显示，逐渐淡到边缘几乎看不见 */
+    -webkit-mask-image: radial-gradient(circle at 50% 50%,
+        black 50%,
+        rgba(0,0,0,0.92) 65%,
+        rgba(0,0,0,0.65) 80%,
+        rgba(0,0,0,0.25) 92%,
+        transparent 100%) !important;
+            mask-image: radial-gradient(circle at 50% 50%,
+        black 50%,
+        rgba(0,0,0,0.92) 65%,
+        rgba(0,0,0,0.65) 80%,
+        rgba(0,0,0,0.25) 92%,
+        transparent 100%) !important;
+    box-shadow: none !important;                  /* 去掉光晕，避免硬边 */
     border: none !important;
     border-radius: 50% !important;
 }
@@ -468,15 +501,16 @@ input, select, textarea, button.icon-btn {
     --ink-near-black: oklch(0.06 0.03 30);
 }
 
-/* V6.1: warm-sepia notebook grid OVER the parchment (subtle, 40px squares) */
+/* V6.1: warm-sepia notebook grid OVER parchment + 60% white overlay (Linlin: O60 picked) */
 html {
     background:
         linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px),
         linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px),
+        linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.60)),
         url("../res/parchment-options/wm-02-pergament-aged.jpg") center / cover no-repeat fixed,
-        oklch(0.85 0.05 75) !important;
-    background-size: 40px 40px, 40px 40px, cover, auto !important;
-    background-attachment: fixed, fixed, fixed, fixed !important;
+        oklch(0.93 0.03 78) !important;
+    background-size: 40px 40px, 40px 40px, auto, cover, auto !important;
+    background-attachment: fixed, fixed, fixed, fixed, fixed !important;
 }
 
 /* V6.2: high-contrast body text + embossed shadow on prose */
