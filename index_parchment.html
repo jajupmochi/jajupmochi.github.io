@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Linlin Jia, Ph.D. — parchment edition (preview)</title>
+    <meta name="description" content="Parchment-themed preview of the academic site — borderless, single global background. Not the canonical version.">
+    <meta name="author" content="Linlin Jia">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Security headers (meta-equiv; GH Pages doesn't let us set real HTTP headers).
+         See setup/security-headers.md for the rationale behind each directive. -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms https://webapi.amap.com https://*.amap.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        img-src 'self' data: blob: https:;
+        connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.clarity.ms https://api.country.is https://restapi.amap.com https://*.amap.com;
+        frame-src 'self' https://www.google.com;
+        worker-src 'self' blob:;
+        form-action 'self' https://script.google.com https://script.googleusercontent.com;
+        base-uri 'self';
+        object-src 'self';
+        upgrade-insecure-requests
+    ">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jajupmochi.github.io/index_en.html">
+
+    <!-- Multilingual alternates: JS-rendered per locale, keyed off `?lang=` URL param.
+         Each ?lang= URL is a distinct crawlable entry point; main.js reads the param
+         on load and renders that locale's content. Canonical still points to the
+         base URL to avoid fragmenting link equity. -->
+    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html?lang=en">
+    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en.html?lang=zh">
+    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en.html?lang=fr">
+    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en.html?lang=de">
+    <link rel="alternate" hreflang="x-default" href="https://jajupmochi.github.io/index_en.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linlin Jia, Ph.D. | ML Research Scientist">
+    <meta property="og:description" content="Machine Learning Research Scientist: Graph ML, GNNs, Spatio-Temporal Forecasting, LLM Agents, AI for Science & Drug Discovery. Open to roles.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://jajupmochi.github.io/index_en.html">
+    <meta property="og:image" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta property="og:image:secure_url" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Linlin Jia, Ph.D., Machine Learning Research Scientist at the University of Bern: Graph ML, GNNs, LLM Agents">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="profile:first_name" content="Linlin">
+    <meta property="profile:last_name" content="Jia">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@jajupmochi">
+    <meta name="twitter:creator" content="@jajupmochi">
+    <meta name="twitter:title" content="Linlin Jia, Ph.D. | ML Research Scientist">
+    <meta name="twitter:description" content="Machine Learning Research Scientist: Graph ML, GNNs, Spatio-Temporal Forecasting, LLM Agents. Open to roles.">
+    <meta name="twitter:image" content="https://jajupmochi.github.io/images/og-card.jpg">
+    <meta name="twitter:image:alt" content="Linlin Jia, Ph.D., Machine Learning Research Scientist at the University of Bern">
+
+    <!-- Site name + mobile browser chrome color (deepens favicon cohesion on iOS / Android Chrome address bar). -->
+    <meta property="og:site_name" content="Linlin Jia | ML Research Scientist">
+    <meta name="theme-color" content="#1e3a8a">
+
+    <!-- JSON-LD Person schema for Google Knowledge Graph and AI assistants (ChatGPT, Perplexity, Claude) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Linlin Jia",
+      "givenName": "Linlin",
+      "familyName": "Jia",
+      "honorificSuffix": "Ph.D.",
+      "jobTitle": "Machine Learning Research Scientist",
+      "description": "Postdoctoral researcher specializing in Graph Neural Networks, Large Language Models, and AI for Drug Discovery. Currently open to ML Research Scientist, ML Engineer, Applied Scientist, and AI Scientist roles: Switzerland / EU / UK on-site or hybrid; remote worldwide; relocation possible to North America, Asia, Australia.",
+      "email": "mailto:linlin.jia@unibe.ch",
+      "url": "https://jajupmochi.github.io/index_en.html",
+      "image": "https://jajupmochi.github.io/images/photo.jpg",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "University of Bern",
+        "department": "Pattern Recognition Group",
+        "url": "https://www.unibe.ch/"
+      },
+      "knowsAbout": [
+        "Machine Learning",
+        "Graph Neural Networks",
+        "Graph Representation Learning",
+        "Graph Kernels",
+        "Graph Edit Distance",
+        "Weisfeiler-Lehman Kernel",
+        "Deep Learning",
+        "Spatio-Temporal Deep Learning",
+        "Spatio-Temporal Forecasting",
+        "Large Language Models",
+        "LLM Agents",
+        "Retrieval-Augmented Generation",
+        "AI for Drug Discovery",
+        "Computational Chemistry",
+        "Cheminformatics",
+        "Pattern Recognition",
+        "Scientific Computing",
+        "PyTorch",
+        "JAX"
+      ],
+      "knowsLanguage": ["en", "zh", "fr"],
+      "seeks": [
+        {"@type": "Demand", "name": "Machine Learning Research Scientist"},
+        {"@type": "Demand", "name": "Machine Learning Engineer"},
+        {"@type": "Demand", "name": "Applied Scientist"},
+        {"@type": "Demand", "name": "AI Scientist"},
+        {"@type": "Demand", "name": "Research Scientist"}
+      ],
+      "sameAs": [
+        "https://github.com/jajupmochi",
+        "https://scholar.google.com/citations?user=cnlixw0AAAAJ",
+        "https://www.linkedin.com/in/linlin-jia-b456a6a7/",
+        "https://x.com/jajupmochi",
+        "https://dblp.org/pid/152/2558.html",
+        "https://www.researchgate.net/profile/Linlin_Jia",
+        "https://orcid.org/0000-0002-3834-1498"
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "ORCID",
+        "value": "0000-0002-3834-1498"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 130,
+        "name": "Total citations (Google Scholar)"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: publications as ScholarlyArticle + open-source code as SoftwareSourceCode.
+         Mirrors res/cv/CV_Linlin_Jia_en.pdf. Helps Google Scholar, Semantic Scholar, and LLM assistants
+         (Perplexity, ChatGPT, Claude) correctly cite the work. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Benchmarking Transformers on Spatio-Temporal River Water Temperature Modeling",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"}
+          ],
+          "datePublished": "2026",
+          "isPartOf": {"@type": "PublicationEvent", "name": "International Conference on Pattern Recognition (ICPR) 2026"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "spatio-temporal forecasting, graph neural networks, transformers, hydrology, river temperature"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Predicting Redox Potentials by Graph-Based Machine Learning Methods",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Éric Brémond"},
+            {"@type": "Person", "name": "Larissa Zaida"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Vincent Tognetti"},
+            {"@type": "Person", "name": "Laurent Joubert"}
+          ],
+          "datePublished": "2024",
+          "isPartOf": {"@type": "Periodical", "name": "Journal of Computational Chemistry", "issn": "1096-987X"},
+          "publisher": {"@type": "Organization", "name": "Wiley"},
+          "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.1002/jcc.27380"},
+          "sameAs": "https://doi.org/10.1002/jcc.27380",
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph neural networks, redox potential, computational chemistry, cheminformatics",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 9}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Bridging Distinct Spaces in Graph-based Machine Learning",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Xiao Ning"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"},
+            {"@type": "Person", "name": "Kaspar Riesen"}
+          ],
+          "datePublished": "2023",
+          "isPartOf": {"@type": "PublicationEvent", "name": "Asian Conference on Pattern Recognition (ACPR) 2023", "location": "Kitakyushu, Japan"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph machine learning, embedding, metric learning, GNN",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 1}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Epi-DNNs: Epidemiological Priors Informed Deep Neural Networks for Modeling COVID-19 Dynamics",
+          "author": [
+            {"@type": "Person", "name": "Xiao Ning"},
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Yongyue Wei"},
+            {"@type": "Person", "name": "Xi-An Li"},
+            {"@type": "Person", "name": "Feng Chen"}
+          ],
+          "datePublished": "2023",
+          "isPartOf": {"@type": "Periodical", "name": "Computers in Biology and Medicine", "issn": "0010-4825"},
+          "publisher": {"@type": "Organization", "name": "Elsevier"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "deep neural networks, epidemiology, COVID-19, physics-informed neural networks",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 61}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "A Study on the Stability of Graph Edit Distance Heuristics",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Vincent Tognetti"},
+            {"@type": "Person", "name": "Laurent Joubert"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2022",
+          "isPartOf": {"@type": "Periodical", "name": "Electronics", "issn": "2079-9292"},
+          "publisher": {"@type": "Organization", "name": "MDPI"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph edit distance, heuristics, stability analysis, structural pattern recognition",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 2}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2022",
+          "isPartOf": {"@type": "Periodical", "name": "Expert Systems with Applications", "issn": "0957-4174"},
+          "publisher": {"@type": "Organization", "name": "Elsevier"},
+          "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.1016/j.eswa.2021.116095"},
+          "sameAs": "https://doi.org/10.1016/j.eswa.2021.116095",
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph kernels, linear patterns, graph machine learning, pattern recognition",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 25}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "graphkit-learn: A Python Library for Graph Kernels Based on Linear Patterns",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2021",
+          "isPartOf": {"@type": "Periodical", "name": "Pattern Recognition Letters", "issn": "0167-8655"},
+          "publisher": {"@type": "Organization", "name": "Elsevier"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph kernels, Python library, open-source software, graph machine learning",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 14}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "A Graph Pre-image Method Based on Graph Edit Distances",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2021",
+          "isPartOf": {"@type": "PublicationEvent", "name": "IAPR Joint International Workshops on Statistical Techniques in Pattern Recognition (SPR) and Structural and Syntactic Pattern Recognition (SSPR) 2020: Springer LNCS"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "graph pre-image, graph edit distance, graph generation",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 9}
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "headline": "A Metric Learning Approach to Graph Edit Costs for Regression",
+          "author": [
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+            {"@type": "Person", "name": "Benoit Gaüzère"},
+            {"@type": "Person", "name": "Florian Yger"},
+            {"@type": "Person", "name": "Paul Honeine"}
+          ],
+          "datePublished": "2021",
+          "isPartOf": {"@type": "PublicationEvent", "name": "IAPR Joint International Workshops SPR/SSPR 2020: Springer LNCS"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "metric learning, graph edit distance, regression, structural pattern recognition",
+          "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/CiteAction", "userInteractionCount": 7}
+        },
+        {
+          "@type": "CreativeWork",
+          "additionalType": "Patent",
+          "headline": "A Kind of Name Data Network Mobility Switching Method Predicted Using Extreme Learning Machine",
+          "author": [
+            {"@type": "Person", "name": "Qu Hua"},
+            {"@type": "Person", "name": "Zhao Jihong"},
+            {"@type": "Person", "name": "Wu Jinkang"},
+            {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"}
+          ],
+          "datePublished": "2016",
+          "identifier": {"@type": "PropertyValue", "propertyID": "Patent", "value": "CN106376041B"},
+          "url": "https://jajupmochi.github.io/index_en.html#publications",
+          "keywords": "extreme learning machine, named data networking, mobility prediction, patent"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "graphkit-learn",
+          "description": "Python library for graph kernels, graph edit distance, and graph pre-image: companion library to the Pattern Recognition Letters / ESWA / Electronics / SSPR papers on graph ML.",
+          "codeRepository": "https://github.com/jajupmochi/graphkit-learn",
+          "programmingLanguage": "Python",
+          "license": "https://opensource.org/licenses/MIT",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "graph kernels, graph edit distance, graph machine learning"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "RedoxPrediction",
+          "description": "Graph-based machine learning pipeline for predicting molecular redox potentials: companion code for the J. Comp. Chem. 2024 paper.",
+          "codeRepository": "https://github.com/jajupmochi/RedoxPrediction",
+          "programmingLanguage": "Python",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "graph neural networks, redox prediction, computational chemistry"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "LIULIAN",
+          "description": "Liquid Intelligence and Unified Logic for Interactive Adaptive Networks: spatio-temporal data, graph-ML, and LLM agent platform spanning hydrology, smart engineering, computational chemistry, digital humanities, finance, and healthcare.",
+          "codeRepository": "https://github.com/jajupmochi/liulian-python",
+          "programmingLanguage": "Python",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "graph machine learning, spatio-temporal, time series, LLM agents, AI for science"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "Local Confidential Translator",
+          "description": "Privacy-first offline document translation system using local LLMs (Ollama / Qwen). Vue 3 + FastAPI, supports PDF/DOCX/XLSX/CSV/Markdown/Image OCR with token-by-token streaming, glossary, and Docker deployment.",
+          "codeRepository": "https://github.com/jajupmochi/confidential-translator",
+          "programmingLanguage": "Python",
+          "license": "https://opensource.org/licenses/MIT",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "local LLM, document translation, privacy, Ollama, FastAPI, Vue"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "python-backend-creator",
+          "description": "Agent skill that guides users through creating industrial-grade Python backend repositories. Stage-based workflow with explicit user confirmation, atomic file-by-file generation, built-in design-review critic, and multi-agent support (Claude Code, GitHub Copilot, Cursor).",
+          "codeRepository": "https://github.com/jajupmochi/python-backend-creator-skill",
+          "author": {"@type": "Person", "name": "Linlin Jia", "sameAs": "https://orcid.org/0000-0002-3834-1498"},
+          "keywords": "agent skill, code generation, Python, backend, scaffolding, vibe coding"
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage: surfaces common questions about Linlin's research / availability.
+         LLM assistants (ChatGPT, Perplexity, Claude) and Google SGE cite FAQPage content directly. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does Linlin Jia research?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Linlin Jia, Ph.D., works on graph machine learning (graph kernels, graph edit distance, graph neural networks, transformers), spatio-temporal deep learning, and LLM-based agent systems. Application domains include AI for drug discovery, computational chemistry, hydrology (Swiss river water temperature forecasting), smart engineering, digital humanities, and FinTech."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is Linlin Jia based and is she open to new roles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Linlin is a Postdoctoral Researcher at the Pattern Recognition Group, University of Bern, Switzerland. She is actively seeking ML Research Scientist, ML Engineer, Applied Scientist, and AI Scientist roles: on-site or hybrid in Switzerland / EU / UK, remote worldwide, and open to relocation to North America, Asia, or Australia."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is graph machine learning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Graph machine learning (graph ML) is the set of techniques that learn from data represented as graphs: nodes (entities) and edges (relations). It spans graph kernels, graph edit distances, graph neural networks (GNNs), and graph transformers. It is the natural modeling choice for molecules, social networks, knowledge graphs, program ASTs, and many scientific systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which open-source libraries has Linlin Jia created?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Linlin authored graphkit-learn (a Python library for graph kernels, graph edit distance, and graph pre-image methods: companion to several Pattern Recognition Letters / Expert Systems with Applications / Electronics / SSPR papers) and RedoxPrediction (companion code for the J. Comp. Chem. 2024 redox-potential paper). She also leads the LIULIAN platform (graph-ML + spatio-temporal + LLM agent framework) and develops agent-skill projects such as python-backend-creator and Local Confidential Translator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I contact Linlin Jia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Email: linlin.jia@unibe.ch. You can also reach her via GitHub (@jajupmochi), LinkedIn, ORCID 0000-0002-3834-1498, or the contact form at https://jajupmochi.github.io/index_en.html#contact."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList: gives search engines and AI assistants a map of the page structure. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home",         "item": "https://jajupmochi.github.io/index_en.html"},
+        {"@type": "ListItem", "position": 2, "name": "About",        "item": "https://jajupmochi.github.io/index_en.html#about"},
+        {"@type": "ListItem", "position": 3, "name": "Research",     "item": "https://jajupmochi.github.io/index_en.html#research"},
+        {"@type": "ListItem", "position": 4, "name": "Projects",     "item": "https://jajupmochi.github.io/index_en.html#projects"},
+        {"@type": "ListItem", "position": 5, "name": "Publications", "item": "https://jajupmochi.github.io/index_en.html#publications"},
+        {"@type": "ListItem", "position": 6, "name": "Contact",      "item": "https://jajupmochi.github.io/index_en.html#contact"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: WebSite schema: strengthens Google Knowledge Graph entity resolution across queries. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Linlin Jia, Ph.D. | ML Research Scientist",
+      "alternateName": "Linlin Jia Homepage",
+      "url": "https://jajupmochi.github.io/index_en.html",
+      "description": "Personal academic homepage of Linlin Jia, Machine Learning Research Scientist specializing in Graph ML, LLM Agents, and AI for Science.",
+      "inLanguage": ["en", "zh", "fr", "de"],
+      "author": {
+        "@type": "Person",
+        "name": "Linlin Jia",
+        "sameAs": "https://orcid.org/0000-0002-3834-1498"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Linlin Jia"
+      }
+    }
+    </script>
+
+    <!-- Preconnect: warm up TLS handshakes for render-blocking CDNs (fonts, icons). Saves ~100-300ms LCP. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <!-- Preload critical Font Awesome webfonts so icons paint with first text. -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Fonts -->
+    <!-- Webfonts (D6.3): Inter + Playfair Display + Orbitron + Noto Sans SC removed
+         (impeccable reflex-reject list / category-cliché). Replaced by Spectral as
+         the single Latin family (display + body, varied weights + italic) and
+         LXGW WenKai as the Chinese body voice (loaded via jsdelivr below). -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dancing+Script:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    
+    <!-- Favicon -->
+    <!-- Favicon - Dynamic based on theme -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E" id="favicon">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%231e3a8a' width='180' height='180' rx='40'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif' font-size='130' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
+    
+    <!-- Confetti loaded lazily on first use via loadConfetti() helper (v7 round2) -->
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/parchment-overrides.css">
+</head>
+<body data-theme="academic">
+    <!-- Wonderland Effects Container (visible only in fancy theme) -->
+    <div class="wonderland-effects" id="wonderlandEffects">
+        <!-- Growing vines on left side -->
+        <div class="vine-container">
+            <div class="vine" id="vine1" style="left: 5px; height: 0;"></div>
+            <div class="vine" id="vine2" style="left: 25px; height: 0;"></div>
+            <div class="vine" id="vine3" style="left: 45px; height: 0;"></div>
+        </div>
+        
+        <!-- Growing vines on right side -->
+        <div class="vine-container right">
+            <div class="vine" id="vine4" style="right: 5px; height: 0;"></div>
+            <div class="vine" id="vine5" style="right: 25px; height: 0;"></div>
+        </div>
+        
+        <!-- Mushrooms at bottom -->
+        <div class="mushroom" id="mushroom1" style="left: 10%;">🍄</div>
+        <div class="mushroom" id="mushroom2" style="left: 30%; animation-delay: 0.5s;">🍄</div>
+        <div class="mushroom" id="mushroom3" style="right: 20%; animation-delay: 1s;">🍄</div>
+        
+        <!-- Forest creatures -->
+        <div class="creature bird" id="bird1" style="top: 15%;">🐦</div>
+        <div class="creature bird" id="bird2" style="top: 25%; animation-delay: 3s;">🕊️</div>
+        <div class="creature butterfly" id="butterfly1" style="top: 40%; left: 20%;">🦋</div>
+        <div class="creature butterfly" id="butterfly2" style="top: 60%; right: 30%; animation-delay: 2s;">🦋</div>
+        <div class="creature rabbit" id="rabbit1" style="bottom: 50px; left: 80%;">🐰</div>
+        <div class="creature dragon" id="dragon1" style="top: 30%;">🐉</div>
+    </div>
+    
+    <!-- Howler trigger (Harry Potter screaming letter) — bottom-left, shaking red envelope.
+         Designed in Claude Design (handoff bundle 2Mve6nAdi82KG0RjWST3QQ). Click → opens postcard. -->
+    <button class="howl-wrap idle" id="celebrationTrigger" onclick="openGiftBox()" aria-label="Open welcome postcard (a Howler)" type="button">
+        <span class="howl-steam s1"></span>
+        <span class="howl-steam s2"></span>
+        <span class="howl-steam s3"></span>
+        <span class="howl-steam s4"></span>
+        <span class="howl-ember e1"></span>
+        <span class="howl-ember e2"></span>
+        <span class="howl-ember e3"></span>
+        <div class="howl-body">
+            <svg class="howl-svg" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <filter id="howl-grain" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+                        <feColorMatrix values="0 0 0 0 0.3   0 0 0 0 0.05   0 0 0 0 0.05   0 0 0 0.35 0"/>
+                        <feComposite in2="SourceGraphic" operator="in"/>
+                        <feComposite in="SourceGraphic" in2="offsetblur" operator="over"/>
+                    </filter>
+                    <linearGradient id="howl-red" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#ef4444"/>
+                        <stop offset="30%" stop-color="#dc2626"/>
+                        <stop offset="75%" stop-color="#991b1b"/>
+                        <stop offset="100%" stop-color="#7f1d1d"/>
+                    </linearGradient>
+                    <linearGradient id="howl-flap" x1="0" y1="0" x2="0.5" y2="1">
+                        <stop offset="0%" stop-color="#dc2626"/>
+                        <stop offset="60%" stop-color="#991b1b"/>
+                        <stop offset="100%" stop-color="#7f1d1d"/>
+                    </linearGradient>
+                    <radialGradient id="howl-scorch" cx="0.5" cy="0.5">
+                        <stop offset="0%" stop-color="transparent"/>
+                        <stop offset="60%" stop-color="transparent"/>
+                        <stop offset="85%" stop-color="#3f2010" stop-opacity="0.5"/>
+                        <stop offset="100%" stop-color="#1a0808" stop-opacity="0.9"/>
+                    </radialGradient>
+                    <radialGradient id="howl-wax" cx="0.35" cy="0.3">
+                        <stop offset="0%" stop-color="#fecaca"/>
+                        <stop offset="25%" stop-color="#ef4444"/>
+                        <stop offset="70%" stop-color="#991b1b"/>
+                        <stop offset="100%" stop-color="#3f0a0a"/>
+                    </radialGradient>
+                    <filter id="wax-bevel" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+                        <feSpecularLighting surfaceScale="3" specularConstant="1.2" specularExponent="20" lighting-color="#fff" result="spec">
+                            <feDistantLight azimuth="225" elevation="55"/>
+                        </feSpecularLighting>
+                        <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOn"/>
+                        <feComposite in="SourceGraphic" in2="specOn" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                    </filter>
+                </defs>
+                <g>
+                    <rect x="10" y="28" width="120" height="70" rx="1" fill="url(#howl-red)"/>
+                    <rect x="10" y="28" width="120" height="70" rx="1" fill="url(#howl-red)" filter="url(#howl-grain)" opacity="0.4"/>
+                    <path d="M10 28 L70 62 L130 28" fill="none" stroke="#450a0a" stroke-width="0.8" opacity="0.35"/>
+                    <path d="M10 98 L56 64" stroke="#450a0a" stroke-width="0.5" opacity="0.3"/>
+                    <path d="M130 98 L84 64" stroke="#450a0a" stroke-width="0.5" opacity="0.3"/>
+                    <g stroke="#450a0a" stroke-width="0.3" fill="none" opacity="0.35">
+                        <path d="M20 38 Q35 42 48 36"/>
+                        <path d="M92 40 Q105 45 118 38"/>
+                        <path d="M28 78 Q50 82 72 76 T120 78"/>
+                        <path d="M18 88 Q40 90 60 86"/>
+                    </g>
+                    <rect x="10" y="28" width="120" height="70" rx="1" fill="url(#howl-scorch)" opacity="0.7" style="mix-blend-mode: multiply"/>
+                    <path d="M10 28 Q4 32 8 40 Q2 38 10 46 Z" fill="#1a0808" opacity="0.85"/>
+                    <path d="M130 28 Q136 33 132 42 Q140 40 130 48 Z" fill="#1a0808" opacity="0.85"/>
+                    <path d="M10 98 Q4 95 8 88 Q2 92 10 82 Z" fill="#1a0808" opacity="0.8"/>
+                    <path d="M130 98 Q136 95 132 88 Q140 92 130 80 Z" fill="#1a0808" opacity="0.8"/>
+                </g>
+                <g>
+                    <path d="M10 28 L70 62 L130 28 Z" fill="url(#howl-flap)"/>
+                    <path d="M10 28 L70 62 L130 28 Z" fill="url(#howl-flap)" filter="url(#howl-grain)" opacity="0.35"/>
+                    <path d="M10 28 L70 62 L130 28" stroke="#450a0a" stroke-width="0.6" fill="none" opacity="0.5"/>
+                    <path d="M10 28 L70 62 L130 28 Z" fill="url(#howl-scorch)" opacity="0.6" style="mix-blend-mode: multiply"/>
+                </g>
+                <g transform="translate(70 50)">
+                    <ellipse cx="0" cy="14" rx="16" ry="3" fill="#1a0404" opacity="0.5"/>
+                    <path d="M-3 -14 Q6 -14 13 -9 Q18 -5 17 2 Q19 10 12 14 Q5 17 -3 16 Q-11 16 -16 10 Q-19 3 -17 -4 Q-14 -11 -8 -13 Q-5 -14 -3 -14 Z"
+                          fill="url(#howl-wax)" filter="url(#wax-bevel)"/>
+                    <path d="M-12 10 Q-13 14 -11 17 Q-9 14 -10 10" fill="#991b1b"/>
+                    <path d="M14 7 Q16 11 13 14 Q12 11 13 7" fill="#7f1d1d"/>
+                    <text x="0" y="4" text-anchor="middle" font-family="'Spectral', 'Iowan Old Style', serif" font-size="14" font-weight="700"
+                          fill="#3f0a0a" font-style="italic" style="filter: drop-shadow(0 1px 0 rgba(255,180,180,0.4))">L</text>
+                    <ellipse cx="-6" cy="-7" rx="5" ry="2.5" fill="#fecaca" opacity="0.55"/>
+                    <ellipse cx="-7" cy="-8" rx="2" ry="1" fill="#fff" opacity="0.7"/>
+                </g>
+                <g font-family="'Caveat', cursive" fill="#fef2f2" opacity="0.95">
+                    <text x="22" y="82" font-size="9" transform="rotate(-3 22 82)" font-style="italic" font-weight="600">URGENT</text>
+                </g>
+            </svg>
+        </div>
+        <span class="howl-tip" id="howlTip" data-i18n="welcome.howl_tip">⚠ a Howler!</span>
+    </button>
+
+    <!-- Chatbot Button — temporarily hidden (D5.J). Re-enable when chatbot UX ships. -->
+    <button class="chatbot-trigger" id="chatbotTrigger" onclick="openChatbot()" aria-label="Open chat assistant">
+        <div class="chatbot-avatar" id="chatbotAvatar">
+            <span id="chatbotIcon">🤖</span>
+        </div>
+    </button>
+
+    <!-- Welcome Postcard — fill-in-the-blank style with stamp, postmark, address.
+         Designed in Claude Design (handoff 2Mve6nAdi82KG0RjWST3QQ). -->
+    <div class="wp-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-label="Welcome postcard">
+        <div class="wp-card" id="welcomePostcard" onclick="event.stopPropagation()">
+            <button class="wp-close" type="button" onclick="closeWelcomeWithBottle()" aria-label="Close">✕</button>
+
+            <!-- LEFT: writing side -->
+            <div class="wp-left">
+                <div>
+                    <p class="wp-sub" data-i18n="welcome.sub">a little note to Linlin —</p>
+                    <h2 class="wp-h2" data-i18n="welcome.title">welcome, say hi?</h2>
+                </div>
+                <div class="wp-line">
+                    <span class="wp-label" data-i18n="welcome.to_label">To.</span>
+                    <span class="wp-script" data-i18n="welcome.to_name">Linlin</span>
+                </div>
+                <div class="wp-line">
+                    <span class="wp-script" data-i18n="welcome.i_am">Hi! I am</span>
+                    <input class="wp-blank" id="visitorName" type="text" placeholder="your name" data-i18n-placeholder="welcome.name_ph" autocomplete="name">
+                </div>
+                <div class="wp-line">
+                    <span class="wp-script" data-i18n="welcome.a_role">a</span>
+                    <input class="wp-blank" id="visitorProfession" type="text" placeholder="grad student / recruiter / fellow nerd…" data-i18n-placeholder="welcome.role_ph">
+                </div>
+                <div class="wp-message">
+                    <textarea id="visitorMessage" rows="3" placeholder="drop a short message — a question, a hello, a pointer…" data-i18n-placeholder="welcome.message_ph"></textarea>
+                </div>
+                <div class="wp-signature">
+                    <span class="wp-script-label" data-i18n="welcome.yours">— yours,</span>
+                    <input class="wp-blank wp-sig" id="visitorSignature" type="text" placeholder="signature" data-i18n-placeholder="welcome.sig_ph">
+                </div>
+                <div class="wp-line wp-contact-row">
+                    <span class="wp-script" data-i18n="welcome.reach_me">reach me at</span>
+                    <input class="wp-blank" id="visitorContact" type="text" placeholder="email · or @handle · phone…" data-i18n-placeholder="welcome.email_ph" autocomplete="email">
+                </div>
+                <!-- Honeypot — hidden, must stay empty for backend to accept submission -->
+                <input type="text" id="visitorWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
+            </div>
+
+            <div class="wp-divider"></div>
+
+            <!-- RIGHT: address side -->
+            <div class="wp-right">
+                <div class="wp-stamp" id="welcomeStamp">
+                    <!-- Stamp SVG injected by JS based on theme -->
+                </div>
+                <div class="wp-postmark" id="welcomePostmark" data-i18n="welcome.postmark">Bern · 2026</div>
+
+                <div class="wp-addr">
+                    <span class="wp-to-label" data-i18n="welcome.addr_label">Addressed to</span>
+                    <div class="wp-to">
+                        <em data-i18n="welcome.addr_name">Linlin Jia</em>
+                        <small>
+                            <span data-i18n="welcome.addr_line">Pattern Recognition Group · University of Bern</span><br>
+                            <span data-i18n="welcome.addr_line2">Switzerland</span>
+                        </small>
+                    </div>
+                </div>
+
+                <form class="wp-form" onsubmit="submitWelcome(event); return false;">
+                    <button class="wp-submit" type="submit">
+                        <span data-i18n="welcome.send">send postcard</span>
+                        <span class="wp-arrow">→</span>
+                    </button>
+                    <button class="wp-skip" type="button" onclick="closeWelcomeWithBottle()" data-i18n="welcome.skip">maybe later · just let me look around</button>
+                    <small class="wp-privacy" data-i18n="welcome.privacy_note">Your note is kept privately for my personal reference. Never shared.</small>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sealing-letter stage (visible when phase = sealing): wax-stamp drops, presses, ring spreads. -->
+        <div class="seal-stage" id="sealStage" aria-hidden="true">
+            <div class="seal-letter" id="sealLetter">
+                <svg viewBox="0 0 360 240" width="360" height="240" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="crest-paper" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#fdfaf0"/>
+                            <stop offset="100%" stop-color="#f1e8c8"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="0" y="0" width="360" height="240" rx="3" fill="url(#crest-paper)" stroke="#b08a3a" stroke-width="1"/>
+                    <path d="M0 0 L180 130 L360 0 Z" fill="#f5ecc8" stroke="#b08a3a" stroke-width="1"/>
+                    <path d="M0 0 L180 130 L360 0" fill="none" stroke="#a08038" stroke-width="0.6" opacity="0.5"/>
+                    <g stroke="#8b6914" stroke-width="0.5" fill="none" opacity="0.7">
+                        <path d="M14 14 L34 14 M14 14 L14 34"/>
+                        <path d="M346 14 L326 14 M346 14 L346 34"/>
+                        <path d="M14 226 L34 226 M14 226 L14 206"/>
+                        <path d="M346 226 L326 226 M346 226 L346 206"/>
+                    </g>
+                    <g font-size="9" fill="#5a4a2a" text-anchor="middle" opacity="0.7">
+                        <text x="180" y="178" letter-spacing="1" data-i18n="welcome.addr_name">Linlin Jia</text>
+                        <text x="180" y="194" font-size="7" data-i18n="welcome.addr_line">Pattern Recognition Group · University of Bern</text>
+                        <text x="180" y="206" font-size="7" data-i18n="welcome.addr_line2">Switzerland</text>
+                    </g>
+                </svg>
+                <svg class="wax-seal" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="wax-base" cx="0.4" cy="0.3" r="0.8">
+                            <stop offset="0%" stop-color="#ef4444"/>
+                            <stop offset="40%" stop-color="#b91c1c"/>
+                            <stop offset="75%" stop-color="#7f1d1d"/>
+                            <stop offset="100%" stop-color="#450a0a"/>
+                        </radialGradient>
+                        <filter id="wax-grain-2" x="-10%" y="-10%" width="120%" height="120%">
+                            <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="3"/>
+                            <feColorMatrix values="0 0 0 0 0.15   0 0 0 0 0.02   0 0 0 0 0.02   0 0 0 0.25 0"/>
+                            <feComposite in2="SourceGraphic" operator="in"/>
+                        </filter>
+                        <filter id="wax-lighting" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+                            <feSpecularLighting in="blur" surfaceScale="4" specularConstant="1.4" specularExponent="25" lighting-color="#ffffff" result="spec">
+                                <feDistantLight azimuth="225" elevation="50"/>
+                            </feSpecularLighting>
+                            <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOn"/>
+                            <feComposite in="SourceGraphic" in2="specOn" operator="arithmetic" k1="0" k2="1" k3="0.9" k4="0"/>
+                        </filter>
+                    </defs>
+                    <ellipse cx="60" cy="66" rx="48" ry="12" fill="#1a0404" opacity="0.35" filter="url(#wax-grain-2)"/>
+                    <ellipse cx="60" cy="64" rx="44" ry="9" fill="#000" opacity="0.2"/>
+                    <g filter="url(#wax-lighting)">
+                        <path d="M60 10 Q78 8 88 18 Q100 22 104 34 Q112 44 108 58 Q110 72 98 80 Q94 94 78 96 Q64 104 48 100 Q30 102 20 92 Q8 82 10 68 Q4 54 12 42 Q14 26 28 18 Q42 10 60 10 Z" fill="url(#wax-base)"/>
+                    </g>
+                    <path d="M60 10 Q78 8 88 18 Q100 22 104 34 Q112 44 108 58 Q110 72 98 80 Q94 94 78 96 Q64 104 48 100 Q30 102 20 92 Q8 82 10 68 Q4 54 12 42 Q14 26 28 18 Q42 10 60 10 Z" fill="url(#wax-base)" filter="url(#wax-grain-2)" opacity="0.5"/>
+                    <g fill="none" stroke="#7f1d1d" stroke-width="0.4" opacity="0.35">
+                        <path d="M20 50 Q40 46 60 50 Q80 54 98 48"/>
+                        <path d="M18 68 Q38 72 58 68 Q78 64 100 70"/>
+                        <path d="M30 82 Q50 86 70 82 Q88 78 100 82"/>
+                    </g>
+                    <path d="M104 64 Q110 72 106 82 Q102 88 104 94 Q108 92 108 84 Q110 76 108 68" fill="#7f1d1d" opacity="0.85" filter="url(#wax-lighting)"/>
+                    <path d="M18 86 Q14 94 20 102 Q24 96 24 90" fill="#7f1d1d" opacity="0.8" filter="url(#wax-lighting)"/>
+                    <g transform="translate(60 56)">
+                        <ellipse cx="0" cy="0" rx="26" ry="28" fill="#4c0a0a" opacity="0.25"/>
+                        <text x="1" y="10" text-anchor="middle" font-family="'Spectral', 'Iowan Old Style', serif" font-size="42" font-weight="700" font-style="italic" fill="#3f0606" opacity="0.8">L</text>
+                        <text x="-0.5" y="9" text-anchor="middle" font-family="'Spectral', 'Iowan Old Style', serif" font-size="42" font-weight="700" font-style="italic" fill="#fca5a5" opacity="0.55">L</text>
+                        <text x="0" y="9.5" text-anchor="middle" font-family="'Spectral', 'Iowan Old Style', serif" font-size="42" font-weight="700" font-style="italic" fill="#991b1b">L</text>
+                        <g fill="#7f1d1d" opacity="0.7">
+                            <circle cx="-20" cy="-20" r="0.8"/><circle cx="20" cy="-20" r="0.8"/>
+                            <circle cx="-20" cy="20" r="0.8"/><circle cx="20" cy="20" r="0.8"/>
+                            <circle cx="0" cy="-24" r="0.6"/><circle cx="0" cy="24" r="0.6"/>
+                            <circle cx="-24" cy="0" r="0.6"/><circle cx="24" cy="0" r="0.6"/>
+                        </g>
+                    </g>
+                    <ellipse cx="36" cy="28" rx="14" ry="6" fill="#fecaca" opacity="0.4" transform="rotate(-25 36 28)"/>
+                    <ellipse cx="34" cy="26" rx="6" ry="2.5" fill="#fff" opacity="0.7" transform="rotate(-25 34 26)"/>
+                    <ellipse cx="86" cy="78" rx="6" ry="2" fill="#fca5a5" opacity="0.45" transform="rotate(20 86 78)"/>
+                </svg>
+                <span class="stamp-ring"></span>
+                <div class="stamp-text">— sealed · <span data-i18n="welcome.addr_name">Linlin Jia</span> —</div>
+                <svg class="stamp-handle" viewBox="0 0 90 240" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="handle-wood" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#92400e"/>
+                            <stop offset="50%" stop-color="#b45309"/>
+                            <stop offset="100%" stop-color="#78350f"/>
+                        </linearGradient>
+                        <linearGradient id="handle-brass" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#a16207"/>
+                            <stop offset="50%" stop-color="#fcd34d"/>
+                            <stop offset="100%" stop-color="#a16207"/>
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="45" cy="30" rx="22" ry="24" fill="url(#handle-wood)" stroke="#451a03" stroke-width="0.8"/>
+                    <ellipse cx="38" cy="22" rx="6" ry="4" fill="#d97706" opacity="0.5"/>
+                    <rect x="38" y="50" width="14" height="110" fill="url(#handle-wood)" stroke="#451a03" stroke-width="0.6"/>
+                    <rect x="32" y="160" width="26" height="14" fill="url(#handle-brass)" stroke="#78350f" stroke-width="0.6"/>
+                    <line x1="32" y1="165" x2="58" y2="165" stroke="#78350f" stroke-width="0.3"/>
+                    <line x1="32" y1="170" x2="58" y2="170" stroke="#78350f" stroke-width="0.3"/>
+                    <path d="M28 174 L62 174 L66 200 L24 200 Z" fill="#1f2937" stroke="#0f172a" stroke-width="0.5"/>
+                    <ellipse cx="45" cy="200" rx="21" ry="5" fill="#1f2937" stroke="#0f172a" stroke-width="0.5"/>
+                    <ellipse cx="45" cy="200" rx="19" ry="3" fill="#dc2626" opacity="0.4"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Owl flyaway stage (visible when phase = owl): owl flies in, snatches letter, exits top-right. -->
+        <div class="owl-stage" id="owlStage" aria-hidden="true">
+            <span class="owl-feather f1"></span>
+            <span class="owl-feather f2"></span>
+            <span class="owl-feather f3"></span>
+            <svg class="owl-bird" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="owl-body-g" cx="0.5" cy="0.4">
+                        <stop offset="0%" stop-color="#a87c4f"/>
+                        <stop offset="100%" stop-color="#5d3d1f"/>
+                    </radialGradient>
+                </defs>
+                <g transform="translate(60,72) rotate(-8)">
+                    <rect x="0" y="0" width="34" height="22" rx="1" fill="#fdfcfa" stroke="#b08a3a" stroke-width="0.6"/>
+                    <path d="M0 0 L17 12 L34 0" fill="none" stroke="#b08a3a" stroke-width="0.4"/>
+                    <circle cx="26" cy="6" r="3" fill="#dc2626"/>
+                </g>
+                <g stroke="#3d2410" stroke-width="1.5" stroke-linecap="round" fill="none">
+                    <path d="M62 70 L60 78"/><path d="M68 70 L68 80"/>
+                    <path d="M88 70 L92 78"/><path d="M82 70 L82 80"/>
+                </g>
+                <ellipse cx="70" cy="55" rx="28" ry="32" fill="url(#owl-body-g)"/>
+                <ellipse cx="70" cy="62" rx="18" ry="22" fill="#e8c896" opacity="0.9"/>
+                <g stroke="#a87c4f" stroke-width="0.5" fill="none" opacity="0.6">
+                    <path d="M58 50 Q70 56 82 50"/>
+                    <path d="M58 58 Q70 64 82 58"/>
+                    <path d="M60 66 Q70 72 80 66"/>
+                </g>
+                <circle cx="70" cy="32" r="22" fill="url(#owl-body-g)"/>
+                <path d="M55 18 L52 8 L60 16 Z" fill="#5d3d1f"/>
+                <path d="M85 18 L88 8 L80 16 Z" fill="#5d3d1f"/>
+                <circle cx="61" cy="32" r="9" fill="#fdf6e3"/>
+                <circle cx="79" cy="32" r="9" fill="#fdf6e3"/>
+                <circle cx="61" cy="32" r="4" fill="#1a1a1a"/>
+                <circle cx="79" cy="32" r="4" fill="#1a1a1a"/>
+                <circle cx="62" cy="30" r="1.2" fill="#fff"/>
+                <circle cx="80" cy="30" r="1.2" fill="#fff"/>
+                <path d="M70 38 L66 44 L74 44 Z" fill="#f59e0b" stroke="#92400e" stroke-width="0.4"/>
+                <g class="owl-wing">
+                    <path d="M70 50 Q40 30 22 50 Q32 65 70 60 Z" fill="#5d3d1f" stroke="#3d2410" stroke-width="0.5"/>
+                    <path d="M40 48 Q35 55 32 60" stroke="#3d2410" stroke-width="0.4" fill="none"/>
+                    <path d="M48 46 Q45 54 42 62" stroke="#3d2410" stroke-width="0.4" fill="none"/>
+                </g>
+                <path d="M85 80 Q100 90 110 75 Q98 78 88 75 Z" fill="#5d3d1f"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Navigation Bar with Embedded Controls -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-inner">
+            <a href="#" class="navbar-brand" data-i18n="nav.brand">Linlin Jia</a>
+
+            <!-- Cross-link to the magic Grimoire version (D9.1) -->
+            <a href="index_grimoire.html" class="nav-grimoire-link"
+               style="font-family: 'Caveat', cursive; font-size: 16px; color: var(--primary); text-decoration: none; padding: 4px 14px; border: 1px dashed var(--primary); border-radius: 1px; margin-left: 14px; transition: all 0.2s; font-style: italic;"
+               title="A whimsical 2D-game-style magical version of this site"
+               onmouseover="this.style.background='var(--primary)';this.style.color='var(--bg-white)'"
+               onmouseout="this.style.background='transparent';this.style.color='var(--primary)'">
+                ✨ 魔法师之书 · Try the Grimoire
+            </a>
+
+            <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu"
+                    aria-controls="navbarCenter" aria-expanded="false"
+                    onclick="toggleMobileNav()">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Center Navigation Links -->
+            <div class="navbar-center" id="navbarCenter">
+                <a href="#" onclick="showPage('main'); closeMobileNav(); return false;" class="nav-link active" data-page="main" data-i18n="nav.home">Home</a>
+                <a href="#about" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.about">About</a>
+                <a href="#publications" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.publications">Publications</a>
+                <a href="#projects" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.projects">Projects</a>
+                <a href="#research" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.research">Research</a>
+                <a href="#services" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.services">Services</a>
+                <a href="#" onclick="showComingSoon('personal'); closeMobileNav(); return false;" class="nav-link" data-page="personal" data-i18n="nav.personal">Personal</a>
+                <a href="#" onclick="showComingSoon('blog'); closeMobileNav(); return false;" class="nav-link" data-page="blog" data-i18n="nav.blog">Blog</a>
+            </div>
+            
+            <!-- Right Side: Search, Theme & Language Switchers (Embedded) -->
+            <div class="navbar-right">
+                <button class="nav-search-btn" id="navSearchBtn" type="button"
+                        data-i18n-aria="search.aria" aria-label="Search the site">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <span class="nav-search-hint" aria-hidden="true">⌘K</span>
+                </button>
+                <!-- Theme switcher temporarily hidden (D6.2) — only Academic theme is wired
+                     while the new magic-graph theme is being designed (see docs/vibe/mindstorm-01).
+                     Kept in DOM (display:none) so it can be re-enabled in D7 with one CSS toggle. -->
+                <div class="dropdown" id="themeDropdown" style="display:none;">
+                    <button class="dropdown-toggle" onclick="toggleDropdown('themeDropdown')">
+                        <i class="fas fa-palette"></i>
+                        <span id="currentTheme">Academic</span>
+                        <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item active" onclick="setTheme('academic')">📚 <span data-i18n="themes.academic_full">Academic</span></button>
+                    </div>
+                </div>
+                
+                <div class="dropdown" id="langDropdown">
+                    <button class="dropdown-toggle" onclick="toggleDropdown('langDropdown')">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">EN</span>
+                        <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item active" onclick="setLanguage('en')">🇬🇧 English</button>
+                        <button class="dropdown-item" onclick="setLanguage('zh')">🇨🇳 中文</button>
+                        <button class="dropdown-item" onclick="setLanguage('fr')">🇫🇷 Français</button>
+                        <button class="dropdown-item" onclick="setLanguage('de')">🇩🇪 Deutsch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         MAIN PAGE CONTENT
+         ======================================== -->
+    <div class="page-content active" id="mainPage" role="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <a href="#open-to-work" class="hero-badge">
+                        <span class="status-dot"></span>
+                        <span data-i18n="hero.badge">Open to ML Research Scientist & Engineer Opportunities</span>
+                        <i class="fas fa-arrow-down-long hero-badge-arrow" aria-hidden="true"></i>
+                    </a>
+                    <h1 class="hero-h1">
+                        <span class="hero-h1-name" data-i18n="hero.name">Linlin Jia, Ph.D.</span>
+                        <span class="hero-h1-role" data-i18n-html="hero.role"><strong class="role-primary">Machine Learning Research Scientist</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Postdoc @ University of Bern</span></span>
+                    </h1>
+                    <p class="hero-subtitle" data-i18n="hero.title">Graph Machine Learning · Spatio-Temporal Learning · Graph AI for Science &amp; Industry · LLM Systems &amp; Agents</p>
+                    <p class="hero-signature" data-i18n-html="hero.signature">
+                        <a href="https://www.snf.ch/en" target="_blank" rel="noopener noreferrer"><strong>SNSF</strong></a>
+                        + <a href="https://www.innosuisse.admin.ch/en" target="_blank" rel="noopener noreferrer"><strong>Innosuisse</strong></a>
+                        + <a href="https://anr.fr/en/" target="_blank" rel="noopener noreferrer"><strong>ANR</strong></a>-funded
+                        · Author of <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer"><code>graphkit-learn</code></a> + <code>LIULIAN</code>
+                        · 9 papers · 8+ projects/grants
+                    </p>
+                    <div class="hero-links">
+                        <a href="https://github.com/jajupmochi" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
+                        <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener" title="Google Scholar" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+                        <a href="https://www.linkedin.com/in/linlin-jia-b456a6a7/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn profile"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="https://x.com/jajupmochi" target="_blank" rel="noopener" title="Twitter / X" aria-label="Twitter / X profile"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="https://dblp.org/pid/152/2558.html" target="_blank" rel="noopener" title="DBLP" aria-label="DBLP author page"><i class="ai ai-dblp" aria-hidden="true"></i></a>
+                        <a href="https://www.researchgate.net/profile/Linlin_Jia" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate profile"><i class="ai ai-researchgate" aria-hidden="true"></i></a>
+                        <a href="https://orcid.org/0000-0002-3834-1498" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID profile"><i class="ai ai-orcid" aria-hidden="true"></i></a>
+                        <a href="mailto:linlin.jia@unibe.ch" title="Email" aria-label="Email Linlin"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="mailto:linlin.jia@unibe.ch" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> <span data-i18n="hero.contact">Get in Touch</span>
+                        </a>
+                        <a href="res/cv/CV_Linlin_Jia_en.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n-href-map='{"zh":"res/cv/CV_Linlin_Jia_zh.pdf","en":"res/cv/CV_Linlin_Jia_en.pdf","fr":"res/cv/CV_Linlin_Jia_en.pdf","de":"res/cv/CV_Linlin_Jia_en.pdf"}'>
+                            <i class="fas fa-download"></i> <span data-i18n="hero.cv">Download CV</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <picture>
+                        <source srcset="images/photo.avif" type="image/avif">
+                        <source srcset="images/photo.webp" type="image/webp">
+                        <img src="images/photo.jpg" alt="Linlin Jia, Ph.D., Machine Learning Research Scientist" class="profile-image" width="960" height="960" loading="eager" decoding="async" fetchpriority="high">
+                    </picture>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Ticker (vertical one-line rotation) -->
+        <aside class="hero-ticker" aria-label="Latest news ticker">
+            <div class="container hero-ticker-bar">
+                <div class="hero-ticker-label" aria-hidden="true">
+                    <i class="fas fa-bullhorn" aria-hidden="true"></i>
+                </div>
+                <div class="hero-ticker-viewport" aria-live="polite">
+                    <ul class="hero-ticker-list">
+                        <li class="hero-ticker-item news-celebration" data-celebration="true">
+                            <span class="ticker-date" data-i18n="news.d_2026_04">Apr 2026</span>
+                            <span class="ticker-content" data-i18n-html="news.c_neobanker">🇨🇳 🇭🇰 <a href="https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe" target="_blank" rel="noopener noreferrer"><strong>Neobanker is live at #InnoEX!</strong></a> One of the first agentic digital financial information platforms.</span>
+                        </li>
+                        <li class="hero-ticker-item news-celebration" data-celebration="true">
+                            <span class="ticker-date" data-i18n="news.d_2026_04">Apr 2026</span>
+                            <span class="ticker-content" data-i18n-html="news.c_icpr"><strong>Paper accepted at ICPR 2026!</strong> <i>Spatio-temporal transformers for Swiss river temperature prediction</i>.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2026_01">Jan 2026</span>
+                            <span class="ticker-content" data-i18n-html="news.c_nbanker">🇨🇳 🇭🇰 Started the cooperation with <strong>N-Banker</strong>, leading AI strategy and LLM agent development.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2025">2025</span>
+                            <span class="ticker-content" data-i18n-html="news.c_bodmer"><strong>SNSF Virtual Bodmer</strong> project accepted - AI for 3D papyrus reconstruction.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2024_06">Jun 2024</span>
+                            <span class="ticker-content" data-i18n-html="news.c_graphadon">Invited speaker at <a href="https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/" target="_blank" rel="noopener noreferrer"><strong>GRAPHADON Summer School</strong></a>, Rouen, France.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2024">2024</span>
+                            <span class="ticker-content" data-i18n-html="news.c_jcc">Paper published in <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer"><strong>J. Computational Chemistry</strong></a> - <i>Graph-based redox potential prediction</i>.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2023_11">Nov 2023</span>
+                            <span class="ticker-content" data-i18n-html="news.c_acpr">Oral presentation at <a href="https://ericlab.org/program/" target="_blank" rel="noopener noreferrer"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.</span>
+                        </li>
+                        <li class="hero-ticker-item">
+                            <span class="ticker-date" data-i18n="news.d_2022">2022</span>
+                            <span class="ticker-content" data-i18n-html="news.c_eswa">Paper published in <a href="https://doi.org/10.1016/j.eswa.2021.116095" target="_blank" rel="noopener noreferrer"><strong>Expert Systems with Applications</strong></a> - <i>Kernel pattern comparisons</i>.</span>
+                        </li>
+                        <li class="hero-ticker-item news-celebration" data-celebration="true">
+                            <span class="ticker-date" data-i18n="news.d_2021">2021</span>
+                            <span class="ticker-content" data-i18n-html="news.c_phd_defense">Ph.D. thesis defended at <strong>INSA Rouen</strong>, France.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Open to Work card -->
+        <section class="open-to-work-section" id="open-to-work" aria-labelledby="otw-heading">
+            <div class="container">
+                <div class="otw-card">
+                    <div class="otw-header">
+                        <div class="otw-icon" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
+                        <div class="otw-headline">
+                            <h2 id="otw-heading" class="otw-title" data-i18n="otw.title">Open to Work</h2>
+                            <p class="otw-status">
+                                <span class="otw-dot" aria-hidden="true"></span>
+                                <span data-i18n="otw.status">Actively applying: available in short time</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="otw-grid">
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.roles">Roles</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag otw-tag-primary" data-i18n="otw.tag.role_ml_research_scientist">ML Research Scientist</span>
+                                <span class="otw-tag" data-i18n="otw.tag.role_ml_engineer">ML Engineer</span>
+                                <span class="otw-tag" data-i18n="otw.tag.role_applied_scientist">Applied Scientist</span>
+                                <span class="otw-tag" data-i18n="otw.tag.role_ai_scientist">AI Scientist</span>
+                                <span class="otw-tag" data-i18n="otw.tag.role_research_scientist">Research Scientist</span>
+                            </div>
+                        </div>
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.locations">Locations</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag otw-tag-primary" data-i18n-html="otw.tag.loc_eu"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> CH · EU <small>(on-site / hybrid)</small></span>
+                                <span class="otw-tag otw-tag-loc" data-i18n-html="otw.tag.loc_intl"><i class="fas fa-plane" aria-hidden="true"></i> China · NA <small>(open to relocation)</small></span>
+                            </div>
+                        </div>
+                        <div class="otw-block">
+                            <div class="otw-label" data-i18n="otw.employment">Employment</div>
+                            <div class="otw-tags">
+                                <span class="otw-tag otw-tag-primary" data-i18n-html="otw.tag.emp_full_time">Full-time <small>(preferred)</small></span>
+                                <span class="otw-tag" data-i18n="otw.tag.emp_consulting">Consulting</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="otw-cta">
+                        <a href="mailto:linlin.jia@unibe.ch?subject=Role%20opportunity%20for%20Linlin" class="btn btn-primary btn-sm">
+                            <i class="fas fa-envelope" aria-hidden="true"></i> <span data-i18n="otw.contact">Contact me for a role</span>
+                        </a>
+                        <a href="res/cv/CV_Linlin_Jia_en.pdf" class="btn btn-secondary btn-sm" target="_blank" rel="noopener" data-i18n-href-map='{"zh":"res/cv/CV_Linlin_Jia_zh.pdf","en":"res/cv/CV_Linlin_Jia_en.pdf","fr":"res/cv/CV_Linlin_Jia_en.pdf","de":"res/cv/CV_Linlin_Jia_en.pdf"}'>
+                            <i class="fas fa-file-pdf" aria-hidden="true"></i> <span data-i18n="otw.cv">Download CV</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About with Stats -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-user" aria-hidden="true"></i> <span data-i18n="sections.about">About Me</span></h2>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+                    <div>
+                        <p class="about-headline" data-i18n-html="about.headline">
+                            Building <strong>graph representation learning</strong> across domains: <strong>open-source tools</strong>, <strong>models</strong>, and <strong>AI systems</strong> for research &amp; industry.
+                        </p>
+                        <ul class="about-bullets">
+                            <li data-i18n-html="about.b1"><span class="about-emoji" aria-hidden="true">📍</span> <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">🇨🇭 Pattern Recognition Group (PRG), University of Bern</a>: <strong>Postdoc</strong>.</li>
+                            <li data-i18n-html="about.b2"><span class="about-emoji" aria-hidden="true">🧠</span> Academic focus: <strong>graph representation learning</strong>: graph kernels, graph edit distances, GNNs, transformers, pre-image &amp; generation.</li>
+                            <li data-i18n-html="about.b3"><span class="about-emoji" aria-hidden="true">🧪</span> Application focus: <strong>redox potential prediction</strong> (foundation for drug discovery &amp; polymer optimization), <strong>spatio-temporal hydrology</strong> (Swiss river water temperature), and <strong>engineering diagram analysis</strong> (<a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener">PLANALYSER</a>).</li>
+                            <li data-i18n-html="about.b4"><span class="about-emoji" aria-hidden="true">🤝</span> Industry collaborations: <strong>AI strategy &amp; LLM agents</strong> with <strong>N-Banker</strong> FinTech startup; <strong>HVAC-concept audit</strong> with <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener">WATTELSE</a> (PLANALYSER).</li>
+                            <li data-i18n-html="about.b5"><span class="about-emoji" aria-hidden="true">🛠</span> Open-source libraries: <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener"><code>graphkit-learn</code></a>, <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener"><code>liulian</code></a>, <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener"><code>redoxprediction</code></a>, etc.</li>
+                            <li data-i18n-html="about.b6"><span class="about-emoji" aria-hidden="true">🎓</span> Ph.D. (2021), <a href="https://www.litislab.fr/" target="_blank" rel="noopener">🇫🇷 LITIS Lab</a>, INSA Rouen: thesis <em>Apprivoiser la Pré-image</em>: graph kernels, graph edit distances &amp; ML for structured data (advisors: <a href="http://honeine.fr/wp/" target="_blank" rel="noopener">Prof. Paul Honeine</a> &amp; <a href="https://bgauzere.github.io/" target="_blank" rel="noopener">Prof. Benoit Gaüzère</a>).</li>
+                            <li data-i18n-html="about.b7"><span class="about-emoji" aria-hidden="true">🎓</span> M.Sc. Software Engineering (2017) &amp; B.Sc. Information Engineering (2014), <strong>🇨🇳 Xi'an Jiaotong University</strong>, China.</li>
+                            <li data-i18n-html="about.b8"><span class="about-emoji" aria-hidden="true">👥</span> Supervised <strong>20+ students</strong> and co-led / participated in <strong>multiple SNSF, Innosuisse, ANR, and UniBE-funded projects</strong>.</li>
+                            <li data-i18n-html="about.b9"><span class="about-emoji" aria-hidden="true">🎯</span> Open to <strong>ML Research Scientist / Research Engineer</strong> roles: academia &amp; industry, on-site / hybrid / remote.</li>
+                        </ul>
+                    </div>
+                    <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="stat-card"><div class="stat-number">9</div><div class="stat-label" data-i18n="stats.publications">Publications</div></div>
+                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.projects">Projects</div></div>
+                        <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label" data-i18n="stats.grants">Grants</div></div>
+                        <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label" data-i18n="stats.collaborations">Collaborators</div></div>
+                        <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label" data-i18n="stats.students">Students Mentored</div></div>
+                        <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.years">Industry Experience</div></div>
+                        <div class="stat-card"><div class="stat-number">130</div><div class="stat-label" data-i18n="stats.citations">Citations</div></div>
+                        <div class="stat-card"><div class="stat-number">6</div><div class="stat-label" data-i18n="stats.h_index">H-index</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Publications -->
+        <section class="section" id="publications">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-file-alt" aria-hidden="true"></i> <span data-i18n="sections.publications">Selected Publications</span></h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <span data-i18n-html="pub.summary_pre"><strong>130+ citations</strong> · </span>
+                    <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener noreferrer"><i class="ai ai-google-scholar"></i> <span data-i18n="pub.gscholar_link">Google Scholar</span></a>
+                </p>
+
+                <!-- Controls -->
+                <div class="section-controls">
+                    <div class="filter-tags">
+                        <button class="filter-tag active" data-filter="all" data-i18n="common.all">All</button>
+                        <button class="filter-tag" data-filter="journal" data-i18n="filters.journal">Journal</button>
+                        <button class="filter-tag" data-filter="conference" data-i18n="filters.conference">Conference</button>
+                        <button class="filter-tag" data-filter="preprint" data-i18n="filters.preprint">Preprint</button>
+                        <button class="filter-tag" data-filter="patent" data-i18n="filters.patent">Patent</button>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search publications..." data-i18n-placeholder="common.search_publications" id="pubSearch">
+                    </div>
+                    <select class="sort-select" id="pubSort" aria-label="Sort publications">
+                        <option value="featured" selected data-i18n="common.featured">Featured</option>
+                        <option value="citations" data-i18n="common.most_cited">Most Cited</option>
+                        <option value="newest" data-i18n="common.newest">Newest First</option>
+                        <option value="oldest" data-i18n="common.oldest">Oldest First</option>
+                    </select>
+                </div>
+                
+                <!-- Vertical List - Aligned with CV (res/cv/CV_Linlin_Jia_en.pdf) -->
+                <div class="pubs-list" id="pubsList">
+                    <!-- ICPR 2026: accepted, no preprint URL yet -->
+                    <div class="pub-card" data-tags="conference" data-year="2026" data-citations="0" data-priority="100" data-status="accepted">
+                        <div class="pub-thumbnail">
+                            <object type="image/svg+xml" data="res/figures/2026_icpr_swissriver_diagram.svg" aria-label="Spatio-temporal transformer architecture for Swiss river water temperature forecasting">
+                                <img src="res/figures/2026_icpr_swissriver_diagram.png" alt="Spatio-temporal transformer architecture for Swiss river water temperature forecasting" loading="lazy" width="220" height="172">
+                            </object>
+                            <div class="pub-thumbnail-overlay">ICPR</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.conf_2026_accepted">Conference • 2026 · Accepted</span>
+                            <div class="pub-title">Benchmarking Transformers on Spatio-Temporal River Water Temperature Modeling</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, B. Fankhauser, V. Bigler, K. Riesen</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">International Conference on Pattern Recognition (ICPR) 2026: accepted</div>
+                            <div class="pub-links">
+                                <a href="#news" class="pub-link"><i class="fas fa-clock"></i> <span data-i18n="pub.in_press">In press</span></a>
+                            </div>
+                            <div class="pub-links">
+                                <a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [J24] -->
+                    <div class="pub-card" data-tags="journal" data-year="2024" data-citations="9" data-priority="99" data-doi="10.1002/jcc.27380">
+                        <div class="pub-thumbnail">
+                            <object type="image/svg+xml" data="res/figures/2023_jcc_redox_framework.svg" aria-label="Graph-based redox potential prediction pipeline">
+                                <img src="res/figures/2023_jcc_redox_framework.png" alt="Graph-based redox potential prediction pipeline (Journal of Computational Chemistry 2024)" loading="lazy" width="220" height="172">
+                            </object>
+                            <div class="pub-thumbnail-overlay">J. Comp. Chem.</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2024">Journal • 2024</span>
+                            <div class="pub-title">Predicting Redox Potentials by Graph-Based Machine Learning Methods</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, É. Brémond, L. Zaida, B. Gaüzère, V. Tognetti, L. Joubert</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Journal of Computational Chemistry, 2024</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://www.researchgate.net/publication/381676453_Predicting_redox_potentials_by_graph-based_machine_learning_methods" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [C23] -->
+                    <div class="pub-card" data-tags="conference" data-year="2023" data-citations="5" data-priority="95">
+                        <div class="pub-thumbnail">
+                            <object type="image/svg+xml" data="res/figures/2023_acpr_gecl_framework.drawio.svg" aria-label="Graph embedding-and-classification learning framework bridging distinct graph spaces (ACPR 2023)">
+                                <img src="res/figures/2023_acpr_gecl_framework.png" alt="Graph embedding-and-classification learning framework bridging distinct graph spaces (ACPR 2023)" loading="lazy" width="220" height="172">
+                            </object>
+                            <div class="pub-thumbnail-overlay">ACPR</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.conf_2023">Conference • 2023</span>
+                            <div class="pub-title">Bridging Distinct Spaces in Graph-based Machine Learning</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, X. Ning, B. Gaüzère, P. Honeine, K. Riesen</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Asian Conference on Pattern Recognition (ACPR) 2023, Kitakyushu, Japan</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">5</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1007/978-3-031-47637-2_1" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="res/papers/acpr2023.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.pdf">PDF</span></a>
+                                <a href="https://github.com/jajupmochi/ged-cost-learn-framework" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [J23] -->
+                    <div class="pub-card" data-tags="journal" data-year="2023" data-citations="61" data-priority="96">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2023_cbm_epidnn_abstract_page.png" alt="Epi-DNNs: epidemiological-prior-informed deep neural network for COVID-19 dynamics (Computers in Biology and Medicine 2023)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">CompBioMed</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2023">Journal • 2023</span>
+                            <div class="pub-title">Epi-DNNs: Epidemiological Priors Informed Deep Neural Networks for Modeling COVID-19 Dynamics</div>
+                            <div class="pub-authors">X. Ning, <strong>L. Jia</strong>, Y. Wei, X.-A. Li, F. Chen</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Computers in Biology and Medicine, 2023</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">61</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1016/j.compbiomed.2023.106693" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [J22b] -->
+                    <div class="pub-card" data-tags="journal" data-year="2022" data-citations="2" data-priority="94">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2022_electronics_ged_stability_results.png" alt="Stability analysis of graph edit distance heuristics: experimental results (Electronics 2022)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">Electronics</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2022">Journal • 2022</span>
+                            <div class="pub-title">A Study on the Stability of Graph Edit Distance Heuristics</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, V. Tognetti, L. Joubert, B. Gaüzère, P. Honeine</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Electronics, 2022</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">2</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.3390/electronics11203312" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://www.researchgate.net/publication/364383236_A_Study_on_the_Stability_of_Graph_Edit_Distance_Heuristics" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [J22a] -->
+                    <div class="pub-card" data-tags="journal" data-year="2022" data-citations="25" data-priority="97" data-doi="10.1016/j.eswa.2021.116095">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2022_eswa_graph_kernels_graph_representations.png" alt="Graph representations used by graph kernels based on linear patterns (Expert Systems with Applications 2022)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">ESWA</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2022">Journal • 2022</span>
+                            <div class="pub-title">Graph Kernels Based on Linear Patterns: Theoretical and Experimental Comparisons</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Expert Systems with Applications, 2022</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">25</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1016/j.eswa.2021.116095" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-02053946/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [J21] -->
+                    <div class="pub-card" data-tags="journal" data-year="2021" data-citations="14" data-priority="98">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn accuracy benchmark across graph datasets (Pattern Recognition Letters 2021)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">PRL</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.journal_2021">Journal • 2021</span>
+                            <div class="pub-title">graphkit-learn: A Python Library for Graph Kernels Based on Linear Patterns</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Pattern Recognition Letters, 2021</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">14</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1016/j.patrec.2021.01.003" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="https://hal-normandie-univ.archives-ouvertes.fr/hal-03111016/document" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fab fa-github"></i> <span data-i18n="pub_link.code">Code</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [W21b] -->
+                    <div class="pub-card" data-tags="conference" data-year="2021" data-citations="9" data-priority="93">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2021_sspr_preimage_intro.svg" alt="Graph pre-image method based on graph edit distances: conceptual overview (SSPR 2021)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">SSPR</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.workshop_2021">Workshop • 2021</span>
+                            <div class="pub-title">A Graph Pre-image Method Based on Graph Edit Distances</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, P. Honeine</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">IAPR Joint International Workshops SPR &amp; SSPR 2020: Springer LNCS, 2021</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">9</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1007/978-3-030-73973-7_21" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphpreimage.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="res/slides/Report_S_SSPR_2020_Preimage_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> <span data-i18n="pub_link.slides">Slides</span></a>
+                                <a href="https://youtu.be/GnzBXM3L3pQ" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1A54y1s7zJ/","en":"https://youtu.be/GnzBXM3L3pQ","fr":"https://youtu.be/GnzBXM3L3pQ","de":"https://youtu.be/GnzBXM3L3pQ"}'><i class="fas fa-film"></i> <span data-i18n="pub_link.video">Video</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [W21a] -->
+                    <div class="pub-card" data-tags="conference" data-year="2021" data-citations="7" data-priority="92">
+                        <div class="pub-thumbnail">
+                            <img src="res/figures/2021_sspr_ged_learning_framework.png" alt="Metric learning framework for graph edit costs applied to regression (SSPR 2021)" loading="lazy" width="220" height="172">
+                            <div class="pub-thumbnail-overlay">SSPR</div>
+                        </div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.workshop_2021">Workshop • 2021</span>
+                            <div class="pub-title">A Metric Learning Approach to Graph Edit Costs for Regression</div>
+                            <div class="pub-authors"><strong>L. Jia</strong>, B. Gaüzère, F. Yger, P. Honeine</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">IAPR Joint International Workshops SPR &amp; SSPR 2020: Springer LNCS, 2021</div>
+                            <span class="pub-citation"><i class="fas fa-quote-right"></i> <span class="citation-count">7</span> <span data-i18n="pub.citations_label">citations</span></span>
+                            <div class="pub-links">
+                                <a href="https://doi.org/10.1007/978-3-030-73973-7_23" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.doi">DOI</span></a>
+                                <a href="http://honeine.fr/paul/publi/21.s+sspr.graphregression.pdf" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-file-pdf"></i> <span data-i18n="pub_link.preprint">Preprint</span></a>
+                                <a href="res/slides/Report_S_SSPR_2020_GED_cost_learning_v4.pdf" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-desktop"></i> <span data-i18n="pub_link.slides">Slides</span></a>
+                                <a href="https://youtu.be/-NGWQYLFa6k" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV1ho4y1o7Bk/","en":"https://youtu.be/-NGWQYLFa6k","fr":"https://youtu.be/-NGWQYLFa6k","de":"https://youtu.be/-NGWQYLFa6k"}'><i class="fas fa-film"></i> <span data-i18n="pub_link.video">Video</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [P16] -->
+                    <div class="pub-card" data-tags="patent" data-year="2016" data-citations="0" data-priority="91">
+                        <div class="pub-thumbnail has-zoom"><img src="res/figures/2016_patent_elm_google_patent_page.png" alt="Google Patents page for China patent CN106376041B on ELM-based SDN mobility prediction" loading="lazy" width="220" height="172"><div class="pub-thumbnail-overlay">Patent</div></div>
+                        <div class="pub-content">
+                            <span class="pub-venue-badge" data-i18n="pub_v.patent_2016">Patent • 2016</span>
+                            <div class="pub-title">A Kind of Name Data Network Mobility Switching Method Predicted Using ELM</div>
+                            <div class="pub-authors">Qu Hua, Zhao Jihong, Wu Jinkang, <strong>Jia Linlin</strong>, et al.</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">China Patent CN106376041B</div>
+                            <div class="pub-links">
+                                <a href="https://patents.google.com/patent/CN106376041B/en" target="_blank" rel="noopener noreferrer" class="pub-link" data-i18n-href-map='{"zh":"https://patents.google.com/patent/CN106376041B","en":"https://patents.google.com/patent/CN106376041B/en","fr":"https://patents.google.com/patent/CN106376041B/en","de":"https://patents.google.com/patent/CN106376041B/en"}'><i class="fas fa-external-link-alt"></i> <span data-i18n="pub_link.patent">Patent</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ph.D. Thesis featured block (bottom-of-section summary) -->
+                <div class="thesis-highlight">
+                    <div class="thesis-highlight-icon" aria-hidden="true">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="thesis-highlight-body">
+                        <span class="thesis-highlight-badge" data-i18n="thesis.badge">Ph.D. Dissertation · 2021</span>
+                        <h3 class="thesis-highlight-title" data-i18n="thesis.title">Bridging graph and kernel spaces: a pre-image perspective</h3>
+                        <p class="thesis-highlight-meta">
+                            <strong>L. Jia</strong> · <span data-i18n="thesis.institution">LITIS Lab, INSA Rouen Normandie, France</span>
+                        </p>
+                        <p class="thesis-highlight-desc" data-i18n="thesis.subtitle">Graph kernels, graph edit distances, and pre-image algorithms and applications. Supervised by Prof. Paul Honeine and Prof. Benoit Gaüzère.</p>
+                        <div class="thesis-highlight-links">
+                            <a href="res/thesis/2021_thesis_linlin_jia.pdf" target="_blank" rel="noopener" class="pub-link">
+                                <i class="fas fa-file-pdf" aria-hidden="true"></i> <span data-i18n="thesis.download">Thesis PDF</span>
+                            </a>
+                            <a href="res/thesis/2021_thesis_slides_linlin_jia.pdf" target="_blank" rel="noopener" class="pub-link">
+                                <i class="fas fa-desktop" aria-hidden="true"></i> <span data-i18n="thesis.slides">Defense slides</span>
+                            </a>
+                            <a href="https://youtu.be/XmayGidh_Nk" target="_blank" rel="noopener" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV15q4y1W7ki/","en":"https://youtu.be/XmayGidh_Nk","fr":"https://youtu.be/XmayGidh_Nk","de":"https://youtu.be/XmayGidh_Nk"}'>
+                                <i class="fas fa-film" aria-hidden="true"></i> <span data-i18n="thesis.video">Defense video</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Projects -->
+        <section class="section section-alt" id="projects">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-code-branch" aria-hidden="true"></i> <span data-i18n="sections.projects">Projects</span></h2>
+                
+                <!-- Controls: Filter, Search, Sort -->
+                <div class="section-controls">
+                    <div class="filter-tags">
+                        <button class="filter-tag active" data-filter="all" data-i18n="common.all">All</button>
+                        <button class="filter-tag" data-filter="academia" data-i18n="filters.academia">Academia</button>
+                        <button class="filter-tag" data-filter="industry" data-i18n="filters.industry">Industry</button>
+                        <button class="filter-tag" data-filter="software" data-i18n="filters.software">Software</button>
+                        <button class="filter-tag" data-filter="graph" data-i18n="filters.graph">Graph</button>
+                        <button class="filter-tag" data-filter="llm" data-i18n="filters.llm">LLM</button>
+                        <button class="filter-tag" data-filter="agents" data-i18n="filters.agents">Agents</button>
+                        <button class="filter-tag" data-filter="vision" data-i18n="filters.vision">Vision</button>
+                        <button class="filter-tag" data-filter="spatio-temporal" data-i18n="filters.spatio_temporal">Spatio-temporal</button>
+                        <button class="filter-tag" data-filter="chemoinformatics" data-i18n="filters.chemoinformatics">Chemoinformatics</button>
+                        <button class="filter-tag" data-filter="fun" data-i18n="filters.fun">Fun</button>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search projects..." data-i18n-placeholder="common.search_projects" id="projectSearch">
+                    </div>
+                    <select class="sort-select" id="projectSort" aria-label="Sort projects">
+                        <option value="featured" selected data-i18n="common.featured">Featured</option>
+                        <option value="newest" data-i18n="common.newest">Newest First</option>
+                        <option value="oldest" data-i18n="common.oldest">Oldest First</option>
+                    </select>
+                </div>
+                
+                <!-- Carousel Container -->
+                <div class="carousel-container" id="projectsCarousel">
+                    <div class="carousel-track" id="projectsTrack">
+                        <!-- LIULIAN Platform (ongoing 2026-) -->
+                        <div class="project-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-year="2026" data-priority="98" data-primary-href="https://github.com/jajupmochi/liulian-python" tabindex="0" role="link" aria-label="Project: LIULIAN spatio-temporal platform">
+                            <div class="project-image project-image--contain">
+                                <img src="res/figures/2026_liulian_architecture.png" alt="LIULIAN platform architecture overview" loading="lazy" width="400" height="180">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge project-badge--dual" data-i18n="proj_badge.dual">Academia + Industry</span><span class="project-date" data-i18n="proj.liulian.date">2026 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.liulian.title">LIULIAN: Liquid Intelligence and Unified Logic for Interactive Adaptive Networks</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.liulian.desc"><li><strong>Spatio-temporal data platform</strong>: collection, processing, analysis, and visualization for scientific and engineering domains.</li><li><strong>Multimodal scientific graph benchmarks</strong>.</li><li><strong>LLM-driven data interfaces and BI agent systems</strong>.</li><li>Consolidates <strong>PhD/postdoc research in graph ML</strong> (kernels, GED, GNNs, pre-image).</li><li>Preparing <strong>Innosuisse Innovation Project</strong> funding application.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.platform">Platform</span><span class="project-tag" data-i18n="proj_tag.spatio_temporal">Spatio-Temporal</span><span class="project-tag" data-i18n="proj_tag.graph_ml">Graph ML</span><span class="project-tag" data-i18n="proj_tag.llms">LLMs</span><span class="project-tag" data-i18n="proj_tag.agents">Agents</span></div>
+                                <div class="project-links">
+                                    <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer" class="project-link" title="Code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ST-GNN Swiss River (ongoing 2025-) -->
+                        <div class="project-card" data-tags="academia,graph,spatio-temporal" data-year="2025" data-priority="100" data-primary-href="https://data.snf.ch/grants/grant/206352" tabindex="0" role="link" aria-label="Project: Spatio-temporal graph convolutional networks for river temperature forecasting">
+                            <div class="project-image">
+                                <object type="image/svg+xml" data="res/figures/2026_icpr_swissriver_diagram.svg" aria-label="Spatio-temporal transformer architecture for Swiss river water temperature forecasting">
+                                    <img src="res/figures/2026_icpr_swissriver_diagram.png" alt="Spatio-temporal transformer architecture for Swiss river water temperature forecasting (ICPR 2026)" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.river.date">2025 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.river.title">Spatio-Temporal Graph Convolutional Networks for River Temperature Forecasting</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.river.desc"><li><strong>SNSF-funded</strong> project on graph-based Swiss river water temperature forecasting.</li><li>Developed <strong>spatio-temporal transformer and LLM architectures</strong> with entity embeddings + graph structures.</li><li>Paper accepted at <strong>ICPR 2026</strong>.</li><li class="project-partners">🤝 <strong>Partners:</strong> Pattern Recognition Group (UniBE) × Berne UAS (BFH).</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.gnns">GNNs</span><span class="project-tag" data-i18n="proj_tag.spatio_temporal">Spatio-Temporal</span><span class="project-tag" data-i18n="proj_tag.transformers">Transformers</span><span class="project-tag" data-i18n="proj_tag.timellms">TimeLLMs</span><span class="project-tag" data-i18n="proj_tag.stllms">ST-LLMs</span></div>
+                                <div class="project-links">
+                                    <a href="https://data.snf.ch/grants/grant/206352" target="_blank" rel="noopener noreferrer" class="project-link" title="SNSF grant page"><i class="fas fa-file-signature"></i> <span data-i18n="proj_link.funding">Funding</span></a>
+                                    <a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener noreferrer" class="project-link" title="Code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                    <a href="#publications" class="project-link" title="Related paper: ICPR 2026"><i class="fas fa-file-lines"></i> <span data-i18n="proj_link.paper">Paper</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- N-Banker (ongoing 2024-) -->
+                        <div class="project-card" data-tags="industry,llm,agents" data-year="2024" data-priority="97" aria-label="Project: N-Banker, 1st Global Neobank Research Center">
+                            <div class="project-image">
+                                <img src="res/figures/2026_neobanker_agent_demo.png" alt="N-Banker agentic neobank information platform demo screenshot" loading="lazy" width="400" height="180">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.industry">Industry</span><span class="project-date" data-i18n="proj.nbanker.date">2024 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.nbanker.title">N-Banker: 1st Global Neobank Research Center</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.nbanker.desc"><li><strong>Leading AI strategy and LLM agent development</strong> for the Neobank Research Center platform.</li><li>Automated <strong>complex information retrieval, analysis, and strategic consultation</strong> for business partners.</li><li>Built on <strong>machine learning + LLM stack</strong> (RAG, agents, FinTech pipelines).</li><li class="project-partners">🤝 <strong>Partners:</strong> Digital Financial Services Research Center × Hong Kong Polytechnic University.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.llms">LLMs</span><span class="project-tag" data-i18n="proj_tag.rag">RAG</span><span class="project-tag" data-i18n="proj_tag.agents">Agents</span><span class="project-tag" data-i18n="proj_tag.fintech">FinTech</span></div>
+                                <div class="project-links">
+                                    <a href="javascript:void(0);" onclick="showComingSoon('platform'); return false;" class="project-link" title="Platform: coming soon"><i class="fas fa-globe"></i> <span data-i18n="proj_link.platform">Platform</span></a>
+                                    <a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener noreferrer" class="project-link" title="PolyU KTEO partner page"><i class="fas fa-handshake"></i> <span data-i18n="proj_link.partner">Partner</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GraphInk / Handwriting Recognition (ongoing 2024-) -->
+                        <div class="project-card" data-tags="academia,graph,vision" data-year="2024" data-priority="50" data-primary-href="https://data.snf.ch/grants/grant/217594" tabindex="0" role="link" aria-label="Project: Combining image and graph-based neural networks for handwriting recognition">
+                            <div class="project-image">
+                                <object type="image/svg+xml" data="res/figures/2025_graphink_framework.svg" aria-label="GraphInk: combining image and graph-based neural networks for handwriting recognition">
+                                    <img src="res/figures/2025_graphink_framework.png" alt="GraphInk framework combining image and graph-based neural networks for handwriting recognition" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.graphink.date">2024 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.graphink.title">Combining Image and Graph-based Neural Networks for Handwriting Recognition</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.graphink.desc"><li><strong>SNSF-funded</strong> project on handwritten historical document analysis.</li><li>Combines <strong>image-based sematic with graph-based topology for deep learning</strong>.</li><li><strong>Paper under revision</strong>.</li><li class="project-partners">🤝 <strong>Partners:</strong> iCoSys Institute (HEIA, HES-SO Fribourg) × TU Dortmund.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.cv">CV</span><span class="project-tag" data-i18n="proj_tag.gnns">GNNs</span><span class="project-tag" data-i18n="proj_tag.document_analysis">Document Analysis</span></div>
+                                <div class="project-links">
+                                    <a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener noreferrer" class="project-link" title="SNSF grant page"><i class="fas fa-file-signature"></i> <span data-i18n="proj_link.funding">Funding</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- graphkit-learn library (ongoing 2020-) -->
+                        <div class="project-card" data-tags="software,academia,graph" data-year="2020" data-priority="99" data-primary-href="https://github.com/jajupmochi/graphkit-learn" tabindex="0" role="link" aria-label="Project: graphkit-learn, Python library for graph kernels">
+                            <div class="project-image">
+                                <object type="image/svg+xml" data="res/figures/2021_prl_gklearn_accuracy.svg" aria-label="graphkit-learn accuracy benchmark on graph kernels">
+                                    <img src="res/figures/2021_prl_gklearn_accuracy.png" alt="graphkit-learn accuracy benchmark chart (Pattern Recognition Letters 2021)" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.software">Software</span><span class="project-date" data-i18n="proj.gklearn.date">2020 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.gklearn.title">graphkit-learn</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.gklearn.desc"><li><strong>Python library</strong> for graph kernels, graph edit distances, and the graph pre-image problem.</li><li>Used <strong>worldwide</strong> for graph classification and regression.</li><li><strong>Open-source output</strong> of the APi (ANR) grant.</li></ul>
+                                <div class="project-stats" aria-label="Live project metrics">
+                                    <a href="https://github.com/jajupmochi/graphkit-learn/stargazers" target="_blank" rel="noopener noreferrer" class="project-stat-pill" title="GitHub stars"><i class="fab fa-github" aria-hidden="true"></i> <strong>128</strong> ⭐</a>
+                                    <a href="https://pypi.org/project/graphkit-learn/" target="_blank" rel="noopener noreferrer" class="project-stat-pill" title="PyPI package"><i class="fas fa-cube" aria-hidden="true"></i> PyPI</a>
+                                </div>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.python">Python</span><span class="project-tag" data-i18n="proj_tag.graph_kernels">Graph Kernels</span><span class="project-tag" data-i18n="proj_tag.open_source">Open Source</span></div>
+                                <div class="project-links">
+                                    <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="project-link" title="Code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                    <a href="#publications" class="project-link" title="Related paper: Pattern Recognition Letters 2021"><i class="fas fa-file-lines"></i> <span data-i18n="proj_link.paper">Paper</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PLANALYSER (completed 2024-2025): dual academia+industry -->
+                        <div class="project-card" data-tags="academia,industry,vision,graph" data-year="2024" data-priority="96" data-primary-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" tabindex="0" role="link" aria-label="Project: PLANALYSER, Automated HVAC-Concept Audit and Optimisation using AI">
+                            <div class="project-image">
+                                <img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER Innosuisse grant company page on WATTELSE AG" loading="lazy" width="400" height="180">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge project-badge--dual" data-i18n="proj_badge.dual">Academia + Industry</span><span class="project-date" data-i18n="proj.planalyser.date">2024 - 2025</span></div>
+                                <h3 class="project-title" data-i18n="proj.planalyser.title">PLANALYSER: Automated HVAC-Concept Audit and Optimisation using AI</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.planalyser.desc"><li><strong>Innosuisse-funded</strong> AI-driven HVAC-concept audit and optimization on engineering drawings.</li><li>Contributions: <strong>data preprocessing, model development</strong> (symbol / edge / topology extraction), pipeline design.</li><li class="project-partners">🤝 <strong>Partners:</strong> iCoSys Institute (HEIA, HES-SO Fribourg) × WATTELSE AG.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.cv">CV</span><span class="project-tag" data-i18n="proj_tag.gnns">GNNs</span><span class="project-tag" data-i18n="proj_tag.smart_engineering">Smart Engineering</span></div>
+                                <div class="project-links">
+                                    <a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener noreferrer" class="project-link" title="ARAMIS / INNOSUISSE grant page"><i class="fas fa-file-signature"></i> <span data-i18n="proj_link.funding">Funding</span></a>
+                                    <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener noreferrer" class="project-link" title="WATTELSE AG startup page"><i class="fas fa-handshake"></i> <span data-i18n="proj_link.partner">Partner</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Graph Matching (completed 2023-2024) -->
+                        <div class="project-card" data-tags="academia,graph" data-year="2023" data-priority="50" data-primary-href="https://data.snf.ch/grants/grant/188496" tabindex="0" role="link" aria-label="Project: Novel State-of-the-Art Graph Matching Algorithms">
+                            <div class="project-image">
+                                <object type="image/svg+xml" data="res/figures/2023_acpr_gecl_framework.drawio.svg" aria-label="Graph embedding-and-classification learning framework bridging distinct graph spaces">
+                                    <img src="res/figures/2023_acpr_gecl_framework.png" alt="Graph embedding-and-classification learning framework bridging distinct graph spaces (ACPR 2023)" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.gmatch.date">2023 - 2024</span></div>
+                                <h3 class="project-title" data-i18n="proj.gmatch.title">Novel State-of-the-Art Graph Matching Algorithms</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.gmatch.desc"><li><strong>SNSF-funded</strong> research on novel graph matching algorithms.</li><li>Bridges <strong>graph kernels, graph edit distance, and GNN embedding spaces</strong>.</li><li>Published at <strong>ACPR 2023</strong>: <i>Bridging Distinct Spaces in Graph-based Machine Learning</i>.</li><li class="project-host"><strong>Host:</strong> Pattern Recognition Group, University of Bern.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.graph_matching">Graph Matching</span><span class="project-tag" data-i18n="proj_tag.ged">GED</span><span class="project-tag" data-i18n="proj_tag.graph_kernels">Graph Kernels</span></div>
+                                <div class="project-links">
+                                    <a href="https://data.snf.ch/grants/grant/188496" target="_blank" rel="noopener noreferrer" class="project-link" title="SNSF grant page"><i class="fas fa-file-signature"></i> <span data-i18n="proj_link.funding">Funding</span></a>
+                                    <a href="https://github.com/jajupmochi/ged-cost-learn-framework" target="_blank" rel="noopener noreferrer" class="project-link" title="Code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                    <a href="#publications" class="project-link" title="Related paper: ACPR 2023"><i class="fas fa-file-lines"></i> <span data-i18n="proj_link.paper">Paper</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- OCTOPUSSY (merged with RedoxPrediction, completed 2021-2024) -->
+                        <div class="project-card" data-tags="academia,graph,chemoinformatics,software" data-year="2021" data-priority="50" data-primary-href="https://github.com/jajupmochi/RedoxPrediction" tabindex="0" role="link" aria-label="Project: OCTOPUSSY, Optimization of Polymers Using Sustainable SYnthesis">
+                            <div class="project-image">
+                                <object type="image/svg+xml" data="res/figures/2023_jcc_redox_framework.svg" aria-label="Graph-based redox potential prediction pipeline">
+                                    <img src="res/figures/2023_jcc_redox_framework.png" alt="Graph-based redox potential prediction pipeline for molecular machine learning (J. Comp. Chem. 2024)" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.octopussy.date">2021 - 2024</span></div>
+                                <h3 class="project-title" data-i18n="proj.octopussy.title">OCTOPUSSY: Optimization of Polymers Using Sustainable SYnthesis</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.octopussy.desc"><li><strong>Graph-based machine learning</strong> and <strong>chemical descriptor design</strong> for polymer optimization and redox-potential prediction.</li><li>Published in <strong>Journal of Computational Chemistry (2024)</strong>.</li><li><strong>RedoxPrediction</strong> package open-sources the implementation.</li><li class="project-partners">🤝 <strong>Partners:</strong> COBRA × LITIS (Univ. Rouen) × CSCT (Univ. Bath).</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.chemoinformatics">Chemoinformatics</span><span class="project-tag" data-i18n="proj_tag.gnns">GNNs</span><span class="project-tag" data-i18n="proj_tag.materials">Materials</span></div>
+                                <div class="project-links">
+                                    <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener noreferrer" class="project-link" title="RedoxPrediction code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                    <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer" class="project-link" title="Related paper: J. Comp. Chem. 2024"><i class="fas fa-file-lines"></i> <span data-i18n="proj_link.paper">Paper</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- APi: Apprivoiser la Pré-image (completed 2018-2021) -->
+                        <div class="project-card" data-tags="academia,graph,chemoinformatics" data-year="2018" data-priority="50" data-primary-href="https://projets.litislab.fr/api/" tabindex="0" role="link" aria-label="Project: APi, Apprivoiser la Pre-image">
+                            <div class="project-image project-image--cover-top">
+                                <object type="image/svg+xml" data="res/figures/2021_sspr_preimage_intro.svg" aria-label="Graph pre-image problem: reconstructing graphs from embeddings">
+                                    <img src="res/figures/2021_sspr_preimage_intro.svg" alt="Graph pre-image problem: APi ANR grant" loading="lazy" width="400" height="180">
+                                </object>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.api.date">2018 - 2021</span></div>
+                                <h3 class="project-title" data-i18n="proj.api.title">APi: Apprivoiser la Pré-image</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.api.desc"><li><strong>ANR-funded thesis research</strong> on the pre-image problem in ML for structured data.</li><li>Focus: <strong>pattern recognition in discrete structured spaces</strong>.</li><li>Produced <strong>3 journal articles, 2 workshop papers, and the graphkit-learn library</strong>.</li><li class="project-host"><strong>Host:</strong> LITIS lab (Université Rouen Normandie).</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.preimage">Pre-image</span><span class="project-tag" data-i18n="proj_tag.graph_kernels">Graph Kernels</span><span class="project-tag" data-i18n="proj_tag.ged">GED</span></div>
+                                <div class="project-links">
+                                    <a href="https://anr.fr/en/funded-projects-and-impact/funded-projects/project/funded/project/b2d9d3668f92a3b9fbbf7866072501ef-42fc4c7786/?tx_anrprojects_funded%5Bcontroller%5D=Funded&amp;cHash=9e18367cdd653e41d2cee1ac6fcd8e0e" target="_blank" rel="noopener noreferrer" class="project-link" title="ANR grant page"><i class="fas fa-file-signature"></i> <span data-i18n="proj_link.funding">Funding</span></a>
+                                    <a href="https://projets.litislab.fr/api/" target="_blank" rel="noopener noreferrer" class="project-link" title="LITIS project homepage"><i class="fas fa-globe"></i> <span data-i18n="proj_link.project_page">Project page</span></a>
+                                    <a href="#publications" class="project-link" title="Related papers: J21, J22a, J22b, W21a, W21b"><i class="fas fa-file-lines"></i> <span data-i18n="proj_link.papers">Papers</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Software Defined Network (completed 2014-2017) -->
+                        <div class="project-card" data-tags="academia,industry" data-year="2014" data-priority="50" data-primary-href="https://patents.google.com/patent/CN106376041B/en" tabindex="0" role="link" aria-label="Project: Service-oriented Programmable Control and Scheduling for Software Defined Network">
+                            <div class="project-image">
+                                <img src="res/figures/2016_patent_elm_google_patent_page.png" alt="Google Patents page for China patent CN106376041B on SDN mobility prediction using ELM" loading="lazy" width="400" height="180">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge" data-i18n="proj_badge.academia">Academia</span><span class="project-date" data-i18n="proj.sdn.date">2014 - 2017</span></div>
+                                <h3 class="project-title" data-i18n="proj.sdn.title">Service-oriented Programmable Control and Scheduling for Software Defined Network</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.sdn.desc"><li><strong>M.Sc. research</strong> on service-oriented programmable control for SDN.</li><li>Applied <strong>extreme learning machine (ELM)</strong> to predict network mobility in Named Data Networks.</li><li>Resulted in <strong>one China patent (CN106376041B)</strong>.</li><li class="project-host"><strong>Host:</strong> Xi'an Jiaotong University.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.elm">ELM</span><span class="project-tag" data-i18n="proj_tag.sdn">SDN</span><span class="project-tag" data-i18n="proj_tag.patent">Patent</span></div>
+                                <div class="project-links">
+                                    <a href="https://patents.google.com/patent/CN106376041B/en" target="_blank" rel="noopener noreferrer" class="project-link" title="Google Patents page"><i class="fas fa-certificate"></i> <span data-i18n="proj_link.patent">Patent</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Confidential Translator (Fun, 2026-) -->
+                        <div class="project-card" data-tags="fun,llm,software" data-year="2026" data-priority="50" data-primary-href="https://github.com/jajupmochi/confidential-translator" tabindex="0" role="link" aria-label="Project: Local Confidential Translator">
+                            <div class="project-image">
+                                <img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator presentation demo" loading="lazy" width="400" height="180">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-meta"><span class="project-badge project-badge--fun" data-i18n="proj_badge.fun">Fun</span><span class="project-date" data-i18n="proj.translator.date">2026 - Present</span></div>
+                                <h3 class="project-title" data-i18n="proj.translator.title">Local Confidential Translator</h3>
+                                <ul class="project-desc-list" data-i18n-html="proj.translator.desc"><li><strong>Fully offline, privacy-first document translation</strong> powered by local LLMs.</li><li><strong>MIT-licensed open source</strong>, deployable via a single Docker command.</li><li>Built end-to-end via <strong>AI-assisted (vibe) coding</strong>; MVP1 in testing.</li></ul>
+                                <div class="project-tags"><span class="project-tag" data-i18n="proj_tag.local_llm">Local LLM</span><span class="project-tag" data-i18n="proj_tag.privacy">Privacy</span><span class="project-tag" data-i18n="proj_tag.docker">Docker</span><span class="project-tag" data-i18n="proj_tag.fun">Fun</span></div>
+                                <div class="project-links">
+                                    <a href="https://github.com/jajupmochi/confidential-translator" target="_blank" rel="noopener noreferrer" class="project-link" title="Code repository"><i class="fab fa-github"></i> <span data-i18n="proj_link.code">Code</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="carousel-nav">
+                    <button class="carousel-btn" id="projectsPrev" aria-label="Previous project"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                    <div class="carousel-dots" id="projectsDots"></div>
+                    <button class="carousel-btn" id="projectsNext" aria-label="Next project"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </section>
+        <!-- Research Outline -->
+        <section class="section section-alt" id="research">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-microscope" aria-hidden="true"></i> <span data-i18n="sections.research">Research Outline</span></h2>
+                <div class="research-outline">
+                    <div class="outline-item">
+                        <div class="outline-icon"><i class="fas fa-project-diagram"></i></div>
+                        <h3 class="outline-title" data-i18n="outline.graph_ml_title">Graph Machine Learning</h3>
+                        <p class="outline-desc" data-i18n="outline.graph_ml_desc">Bridging graph kernels, edit distances, GNNs, transformers. Pre-image and generation problems.</p>
+                    </div>
+                    <div class="outline-item">
+                        <div class="outline-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="outline-title" data-i18n="outline.spatio_temporal_title">Spatio-Temporal Learning</h3>
+                        <p class="outline-desc" data-i18n="outline.spatio_temporal_desc">Time series with entity embeddings, spatial graphs for environmental forecasting.</p>
+                    </div>
+                    <div class="outline-item">
+                        <div class="outline-icon"><i class="fas fa-flask"></i></div>
+                        <h3 class="outline-title" data-i18n="outline.graph_ai_sci_title">Graph AI for science and industry</h3>
+                        <p class="outline-desc" data-i18n="outline.graph_ai_sci_desc">Molecular property prediction (foundations for drug discovery), computational chemistry, smart engineering, hydrology, digital humanities, finance, healthcare.</p>
+                    </div>
+
+                    <div class="outline-item">
+                        <div class="outline-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="outline-title" data-i18n="outline.llm_agents_title">LLM Systems & Agents</h3>
+                        <p class="outline-desc" data-i18n="outline.llm_agents_desc">RAG pipelines, fine-tuning (LoRA), agent orchestration for production AI.</p>
+                    </div>
+                </div>
+                
+                <!-- Word Cloud -->
+                <div class="wordcloud-container">
+                    <div class="wordcloud">
+                        <span class="word word-xl" data-i18n="wordcloud.w_gnn">Graph Neural Networks</span>
+                        <span class="word word-lg" data-i18n="wordcloud.w_dl">Deep Learning</span>
+                        <span class="word word-xl" data-i18n="wordcloud.w_llms">LLMs</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_pytorch">PyTorch</span>
+                        <span class="word word-lg" data-i18n="wordcloud.w_compchem">Computational Chemistry</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_transformers">Transformers</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_graph_kernels">Graph Kernels</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_time_series">Time Series</span>
+                        <span class="word word-lg" data-i18n="wordcloud.w_chemoinformatics">Chemoinformatics</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_edit_distance">Edit Distance</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_pre_image">Pre-image</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_forecasting">Forecasting</span>
+                        <span class="word word-xl" data-i18n="wordcloud.w_spatio_temporal">Spatio-temporal</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_sklearn">scikit-learn</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_fine_tuning">Fine-tuning</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_molecules">Molecules</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_entity_embeddings">Entity Embeddings</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_computer_vision">Computer Vision</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_document_analysis">Document Analysis</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_agents">Agents</span>
+                        <span class="word word-lg" data-i18n="wordcloud.w_networks">Networks</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_hydrology">Hydrology</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_smart_engineering">Smart Engineering</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_digital_humanities">Digital Humanities</span>
+                        <span class="word word-xl" data-i18n="wordcloud.w_graphs">Graphs</span>
+                        <span class="word word-xl" data-i18n="wordcloud.w_drug_discovery">Drug Discovery</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_foundation_models">Foundation Models</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_diffusion">Diffusion Models</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_polymers">Polymers</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_redox">Redox Potentials</span>
+                        <span class="word word-lg" data-i18n="wordcloud.w_deployment">Deployment</span>
+                        <span class="word word-md" data-i18n="wordcloud.w_mlops">MLOps</span>
+                        <span class="word word-sm" data-i18n="wordcloud.w_inference">Inference</span>
+                        <span class="word word-xs" data-i18n="wordcloud.w_docker">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Experience -->
+        <section class="section" id="experience">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-briefcase" aria-hidden="true"></i> <span data-i18n="sections.experience">Professional Experience</span></h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2025 - 2026</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_advanced_postdoc">Postdoctoral Researcher</h3>
+                            <div class="timeline-org" data-i18n="exp.org_advanced_postdoc">Pattern Recognition Group (PRG), University of Bern, Switzerland</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_advanced_postdoc">
+                                SNSF-funded research on spatio-temporal graph convolutional networks and LLMs for Swiss river temperature forecasting.
+                                Developing transformer architectures with entity embeddings and graph structures. Paper accepted by ICPR 2026.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2024 - 2025</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_scientific_collab">Scientific Collaborator</h3>
+                            <div class="timeline-org" data-i18n="exp.org_scientific_collab">iCoSys Institute, HES-SO Fribourg, Switzerland</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_scientific_collab">
+                                Applied topology-aware graph and vision deep learning for symbol detection, connection prediction, and graph construction in engineering diagrams and handwritten document analysis.
+                                Contributed to SNSF-funded Virtual Bodmer project (accepted) for 3D digital reconstruction of ancient papyrus.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2023 - 2024</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_research_fellow">Research Fellow</h3>
+                            <div class="timeline-org" data-i18n="exp.org_research_fellow">Pattern Recognition Group (PRG), University of Bern, Switzerland</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_research_fellow">
+                                SNSF-funded research on novel graph matching algorithms. Published at ACPR 2023 on bridging distinct spaces
+                                in graph-based machine learning.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2021 - 2022</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_postdoc">Postdoctoral Researcher</h3>
+                            <div class="timeline-org" data-i18n="exp.org_postdoc">COBRA Lab, INSA Rouen Normandie, France</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_postdoc">
+                                Applied graph ML to polymer optimization (OCTOPUSSY project) and redox potential prediction.
+                                Published in Journal of Computational Chemistry (2024).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2017 - 2021</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_phd">Ph.D. in Computer Science</h3>
+                            <div class="timeline-org" data-i18n="exp.org_phd">LITIS Lab, INSA Rouen Normandie, France</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_phd">
+                                Thesis: "Bridging graph and kernel spaces: a pre-image perspective": Graph kernels,
+                                graph edit distances, and pre-image problems.
+<!--                                CSC-funded (EUR 54,600).-->
+                            </p>
+                            <div class="timeline-links">
+                                <a href="res/thesis/2021_thesis_linlin_jia.pdf" target="_blank" rel="noopener" class="pub-link">
+                                    <i class="fas fa-file-pdf" aria-hidden="true"></i> <span data-i18n="thesis.download">Thesis PDF</span>
+                                </a>
+                                <a href="res/thesis/2021_thesis_slides_linlin_jia.pdf" target="_blank" rel="noopener" class="pub-link">
+                                    <i class="fas fa-desktop" aria-hidden="true"></i> <span data-i18n="thesis.slides">Defense slides</span>
+                                </a>
+                                <a href="https://youtu.be/XmayGidh_Nk" target="_blank" rel="noopener" class="pub-link" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV15q4y1W7ki/","en":"https://youtu.be/XmayGidh_Nk","fr":"https://youtu.be/XmayGidh_Nk","de":"https://youtu.be/XmayGidh_Nk"}'>
+                                    <i class="fas fa-film" aria-hidden="true"></i> <span data-i18n="thesis.video">Defense video</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2014 - 2017</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_msc">M.Sc. in Software Engineering</h3>
+                            <div class="timeline-org" data-i18n="exp.org_msc">Xi'an Jiaotong University, China</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_msc">
+                                Service-oriented programmable control for Software-Defined Networks; applied <strong>extreme learning machine (ELM)</strong> to network mobility prediction. Resulted in <strong>1 China patent (CN106376041B)</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2010 - 2014</span>
+                        <div class="timeline-card">
+                            <h3 class="timeline-title" data-i18n="exp.role_bs">B.S. in Information Engineering</h3>
+                            <div class="timeline-org" data-i18n="exp.org_bs">Xi'an Jiaotong University, China</div>
+                            <p class="timeline-desc" data-i18n-html="exp.desc_bs">
+                                Foundations in signal processing, networks, and software engineering.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills - Categorized -->
+        <section class="section" id="skills">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-tools" aria-hidden="true"></i> <span data-i18n="sections.skills">Skills & Technologies</span></h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-brain"></i> <span data-i18n="skills_cats.ml_ai">ML/AI</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag highlight" data-i18n="skill_tag.gnns">GNNs</span>
+                            <span class="skill-tag highlight" data-i18n="skill_tag.llms">LLMs</span>
+                            <span class="skill-tag highlight" data-i18n="skill_tag.transformers">Transformers</span>
+                            <span class="skill-tag" data-i18n="skill_tag.graph_kernels">Graph Kernels</span>
+                            <span class="skill-tag" data-i18n="skill_tag.graph_edit_distances">Graph Edit Distances</span>
+                            <span class="skill-tag" data-i18n="skill_tag.pre_image">Pre-image</span>
+                            <span class="skill-tag" data-i18n="skill_tag.agents">Agents</span>
+                            <span class="skill-tag" data-i18n="skill_tag.vision_transformer">Vision Transformer</span>
+                            <span class="skill-tag" data-i18n="skill_tag.computer_vision">Computer Vision</span>
+                            <span class="skill-tag" data-i18n="skill_tag.deep_learning">Deep Learning</span>
+                            <span class="skill-tag" data-i18n="skill_tag.machine_learning">Machine Learning</span>
+                            <span class="skill-tag" data-i18n="skill_tag.time_series">Time series</span>
+                            <span class="skill-tag">scikit-learn</span>
+                            <span class="skill-tag">YOLO</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-code"></i> <span data-i18n="skills_cats.programming">Programming</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag highlight">Python</span>
+                            <span class="skill-tag highlight">PyTorch</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Cython</span>
+                            <span class="skill-tag">MATLAB</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">React.js</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-server"></i> <span data-i18n="skills_cats.tools">Tools & Infra</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">FastAPI</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag" data-i18n="skill_tag.cloud">Cloud</span>
+                            <span class="skill-tag" data-i18n="skill_tag.linux">Linux</span>
+                            <span class="skill-tag" data-i18n="skill_tag.ci_cd">CI/CD</span>
+                            <span class="skill-tag" data-i18n="skill_tag.hpc">HPC</span>
+                            <span class="skill-tag">LaTeX</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-flask"></i> <span data-i18n="skills_cats.domain">Domain</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">RDKit</span>
+                            <span class="skill-tag">DeepChem</span>
+                            <span class="skill-tag">Gaussian</span>
+                            <span class="skill-tag" data-i18n="skill_tag.chemoinformatics">Chemoinformatics</span>
+                            <span class="skill-tag" data-i18n="skill_tag.hydrology">Hydrology</span>
+                            <span class="skill-tag" data-i18n="skill_tag.spatio_temporal">Spatio-Temporal Analysis</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-robot"></i> <span data-i18n="skills_cats.ai_tools">AI Tools</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GitHub Copilot</span>
+                            <span class="skill-tag">Claude</span>
+                            <span class="skill-tag">Dify</span>
+                            <span class="skill-tag">vLLM</span>
+                            <span class="skill-tag">ollama</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title"><i class="fas fa-language"></i> <span data-i18n="skills_cats.languages">Languages</span></div>
+                        <div class="skill-tags">
+                            <span class="skill-tag highlight" data-i18n="skill_tag.chinese_native">Chinese (Native)</span>
+                            <span class="skill-tag highlight" data-i18n="skill_tag.english_fluent">English (Fluent)</span>
+                            <span class="skill-tag" data-i18n="skill_tag.french_b2">French (B2)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Selected Awards & Grants -->
+        <section class="section" id="awards">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-trophy" aria-hidden="true"></i> <span data-i18n="sections.awards">Selected Awards &amp; Grants</span></h2>
+                <div class="awards-grid">
+                    <div class="award-card">
+                        <img class="award-icon award-icon--brand award-icon--snsf" src="res/logos/square/snf.png" alt="Swiss National Science Foundation (SNSF/SNF)" loading="lazy" width="56" height="56">
+                        <div class="award-body">
+                            <h3 class="award-title" data-i18n="awards.snsf_postdoc">SNSF Grants × 3</h3>
+                            <p class="award-meta" data-i18n="awards.snsf_postdoc_meta">Swiss National Science Foundation · 2020 – 2026</p>
+                            <p class="award-desc" data-i18n-html="awards.snsf_postdoc_desc">Graph matching (<a href="https://data.snf.ch/grants/grant/188496" target="_blank" rel="noopener">188496</a>), handwriting recognition (<a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener">217594</a>), and spatio-temporal river forecasting (<a href="https://data.snf.ch/grants/grant/206352" target="_blank" rel="noopener">206352</a>).</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <img class="award-icon award-icon--brand award-icon--unibern" src="res/logos/square/unibe.png" alt="University of Bern" loading="lazy" width="56" height="56">
+                        <div class="award-body">
+                            <h3 class="award-title" data-i18n="awards.unibe_ecsc">UniBE ECSC Open Round 2023/2</h3>
+                            <p class="award-meta" data-i18n="awards.unibe_ecsc_meta">Faculty of Science, University of Bern · 2024 – 2026</p>
+                            <p class="award-desc" data-i18n-html="awards.unibe_ecsc_desc">Early Career Scientist Cooperation. <strong>Applicant &amp; Principal Investigator</strong>. Predicting molecular energies with multiscale graph ML built on Interacting Quantum Atoms (IQA) and GNNs.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <img class="award-icon award-icon--brand award-icon--innosuisse award-icon--theme-light" src="res/logos/square/innosuisse.png" alt="Innosuisse: Swiss Innovation Agency" loading="lazy" width="56" height="56">
+                        <img class="award-icon award-icon--brand award-icon--innosuisse award-icon--theme-dark" src="res/logos/square/innosuisse-dark.png" alt="Innosuisse: Swiss Innovation Agency" loading="lazy" width="56" height="56">
+                        <div class="award-body">
+                            <h3 class="award-title" data-i18n="awards.innosuisse">Innosuisse Grant</h3>
+                            <p class="award-meta" data-i18n="awards.innosuisse_meta">Swiss Innovation Agency · 2024 – 2025</p>
+                            <p class="award-desc" data-i18n-html="awards.innosuisse_desc"><a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener">PLANALYSER</a>: AI-driven HVAC-concept audit (with <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener">WATTELSE AG</a>).</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <img class="award-icon award-icon--brand award-icon--anr award-icon--theme-light" src="res/logos/square/anr.png" alt="Agence Nationale de la Recherche (ANR)" loading="lazy" width="56" height="56">
+                        <img class="award-icon award-icon--brand award-icon--anr award-icon--theme-dark" src="res/logos/square/anr-dark.png" alt="Agence Nationale de la Recherche (ANR)" loading="lazy" width="56" height="56">
+                        <div class="award-body">
+                            <h3 class="award-title" data-i18n-html="awards.anr_api"><a href="https://anr.fr/en/funded-projects-and-impact/funded-projects/project/funded/project/b2d9d3668f92a3b9fbbf7866072501ef-42fc4c7786/?tx_anrprojects_funded%5Bcontroller%5D=Funded&amp;cHash=9e18367cdd653e41d2cee1ac6fcd8e0e" target="_blank" rel="noopener noreferrer">ANR Grant (PhD project APi)</a></h3>
+                            <p class="award-meta" data-i18n="awards.anr_api_meta">Agence Nationale de la Recherche · 2018 – 2021</p>
+                            <p class="award-desc" data-i18n-html="awards.anr_api_desc">PhD thesis funding (LITIS, INSA Rouen), project <em>Apprivoiser la Pré-image</em>: graph kernels &amp; ML for structured data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services -->
+        <section class="section section-alt" id="services">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-hands-helping" aria-hidden="true"></i> <span data-i18n="sections.services">Academic Services</span></h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3><i class="fas fa-users"></i> <span data-i18n="services_cards.supervision_title">Supervision</span></h3>
+                        <ul class="service-list">
+                            <li data-i18n="services_cards.supervision_i1">20+ students mentored</li>
+                            <li data-i18n="services_cards.supervision_i2">Topics: Computer vision, Graph-based learning, Smart engineering, Deep learning, LLMs, Agent systems</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-id-badge"></i> <span data-i18n="services_cards.association_title">Associations</span></h3>
+                        <ul class="service-list">
+                            <li data-i18n="services_cards.association_i1">Member of the Swiss Association for Pattern Recognition (SAPR) (2024-)</li>
+                            <li data-i18n="services_cards.association_i2">Member of the Marie Curie Alumni Association China Chapter (2024)</li>
+                            <li data-i18n="services_cards.association_i3">Associated member of the LITIS lab (2022)</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-edit"></i> <span data-i18n="services_cards.reviewing_title">Reviewing</span></h3>
+                        <ul class="service-list">
+                            <li data-i18n="services_cards.reviewing_i1">International Conference on Pattern Recognition 2024</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-microphone-lines"></i> <span data-i18n="services_cards.talks_title">Invited Talks</span></h3>
+                        <ul class="service-list">
+                            <li data-i18n-html="services_cards.talks_i1">🇫🇷 Invited speaker, <a href="https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/" target="_blank" rel="noopener noreferrer"><strong>GRAPHADON Summer School</strong></a>, Rouen, France &mdash; <em>Bridging Graph Spaces: Novel Algorithms and Their Applications</em> (Jun 2024).</li>
+                            <li data-i18n-html="services_cards.talks_i2">🇯🇵 Oral presentation, <a href="https://ericlab.org/program/" target="_blank" rel="noopener noreferrer"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan (Nov 2023).</li>
+                            <li data-i18n-html="services_cards.talks_i3">🇫🇷 Video presentations at <strong>S+SSPR Workshops 2020</strong> &mdash; <em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href="https://youtu.be/GnzBXM3L3pQ" target="_blank" rel="noopener">YT</a> · <a href="https://www.bilibili.com/video/BV1A54y1s7zJ/" target="_blank" rel="noopener">Bilibili</a>] &amp; <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href="https://youtu.be/-NGWQYLFa6k" target="_blank" rel="noopener">YT</a> · <a href="https://www.bilibili.com/video/BV1ho4y1o7Bk/" target="_blank" rel="noopener">Bilibili</a>] (Jan 2021).</li>
+                            <li data-i18n-html="services_cards.talks_i4">🇩🇪🇫🇷 Invited talk, <strong>2020 Online CSC-Seminar in DE. and FR.</strong> &mdash; <em>A Graph Pre-image Method Based on Graph Edit Distances</em> (awarded; Sep 2020) [<a href="res/slides/Report_CSC_Seminar_2020.pdf" target="_blank" rel="noopener">Slides</a> · <a href="res/awards/2020_online_CSC-Seminar_in_DE_and_Fr_Excellent_Scholar_Award.pdf" target="_blank" rel="noopener">Certificate</a>].</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- News -->
+        <section class="news-section" id="news">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-newspaper" aria-hidden="true"></i> <span data-i18n="sections.news">News & Updates</span></h2>
+                <div id="newsContainer">
+                    <div class="news-table">
+                        <div class="news-row news-celebration" data-celebration="true">
+                            <div class="news-date" data-i18n="news.d_2026_04">Apr 2026</div>
+                            <div class="news-content" data-i18n-html="news.c_neobanker"><a href="https://www.linkedin.com/posts/neobanker_bitweek-polyu-innoex-activity-7450210542226513920-ByMe" target="_blank" rel="noopener noreferrer"><strong>Neobanker is live at #InnoEX!</strong></a> One of the first agentic digital financial information platforms.</div>
+                        </div>
+                        <!-- ICPR 2026 Accepted - Celebration on hover! -->
+                        <div class="news-row news-celebration" id="icprNews" data-celebration="true">
+                            <div class="news-date" data-i18n="news.d_2026_04">Apr 2026</div>
+                            <div class="news-content" data-i18n-html="news.c_icpr"><strong>Paper accepted at ICPR 2026!</strong> <i>Spatio-temporal transformers for Swiss river temperature prediction</i>.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2026_01">Jan 2026</div>
+                            <div class="news-content" data-i18n-html="news.c_nbanker">Started the cooperation with <strong>N-Banker</strong>, leading AI strategy and LLM agent development.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2025">2025</div>
+                            <div class="news-content" data-i18n-html="news.c_bodmer"><strong>SNSF Virtual Bodmer</strong> project accepted - AI for 3D papyrus reconstruction.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2024_06">Jun 2024</div>
+                            <div class="news-content" data-i18n-html="news.c_graphadon">Invited speaker at <a href="https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/" target="_blank" rel="noopener noreferrer"><strong>GRAPHADON Summer School</strong></a>, Rouen, France.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2024">2024</div>
+                            <div class="news-content" data-i18n-html="news.c_jcc">Paper published in <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer"><strong>J. Computational Chemistry</strong></a> - <i>Graph-based redox potential prediction</i>.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2023_11">Nov 2023</div>
+                            <div class="news-content" data-i18n-html="news.c_acpr">Oral presentation at <a href="https://ericlab.org/program/" target="_blank" rel="noopener noreferrer"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.</div>
+                        </div>
+                        <div class="news-row">
+                            <div class="news-date" data-i18n="news.d_2022">2022</div>
+                            <div class="news-content" data-i18n-html="news.c_eswa">Paper published in <a href="https://doi.org/10.1016/j.eswa.2021.116095" target="_blank" rel="noopener noreferrer"><strong>Expert Systems with Applications</strong></a> - <i>Kernel pattern comparisons</i>.</div>
+                        </div>
+                        <div class="news-row news-celebration" data-celebration="true">
+                            <div class="news-date" data-i18n="news.d_2021">2021</div>
+                            <div class="news-content"><span data-i18n-html="news.c_phd_defense">Ph.D. thesis defended at <strong>INSA Rouen</strong>, France.</span> <a href="https://youtu.be/XmayGidh_Nk" target="_blank" rel="noopener noreferrer" data-i18n-href-map='{"zh":"https://www.bilibili.com/video/BV15q4y1W7ki/","en":"https://youtu.be/XmayGidh_Nk","fr":"https://youtu.be/XmayGidh_Nk","de":"https://youtu.be/XmayGidh_Nk"}'><i class="fas fa-film" aria-hidden="true"></i> <span data-i18n="thesis.video">Defense video</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact -->
+        <section class="section section-alt" id="contact">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-envelope" aria-hidden="true"></i> <span data-i18n="sections.contact">Contact</span></h2>
+                <div class="contact-section">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-details">
+                                <h4 data-i18n="contact.email">Email</h4>
+                                <p><a href="mailto:linlin.jia@unibe.ch">linlin.jia@unibe.ch</a></p>
+                                <p><a href="mailto:jajupmochi@gmail.com">jajupmochi@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-details">
+                                <h4 data-i18n="contact.address">Location</h4>
+                                <p data-i18n-html="contact.institution"><strong>🇨🇭 University of Bern</strong> · <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">Pattern Recognition Group</a></p>
+                                <p data-i18n-html="contact.street"><span class="map-flag" aria-hidden="true">🇨🇭</span> Schützenmattstrasse 14, 3012 Bern, Switzerland</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div class="contact-details">
+                                <h4 data-i18n="contact.phone">Phone</h4>
+                                <p data-i18n-html="contact.phone_ch">🇨🇭 +41 78 224 1419 (Switzerland)</p>
+                                <p data-i18n-html="contact.phone_cn">🇨🇳 +86 &lt;please-add&gt; (China)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Google Maps embed (marker set via q=). Cross-origin iframes
+                         can't emit pan/zoom events, so any overlay label would lie
+                         when the user drags the map. Institution name now sits in the
+                         Location contact card above instead. -->
+                    <div class="contact-map">
+                        <iframe
+                            title="Map showing PRG at University of Bern"
+                            src="https://www.google.com/maps?q=Sch%C3%BCtzenmattstrasse+14,+3012+Bern,+Switzerland&z=16&hl=en&output=embed"
+                            data-i18n-src-map='{"en":"https://www.google.com/maps?q=Neubr%C3%BCckstrasse+10,+3012+Bern,+Switzerland&z=16&hl=en&output=embed","zh":"https://www.google.com/maps?q=Neubr%C3%BCckstrasse+10,+3012+Bern,+Switzerland&z=16&hl=zh-CN&output=embed","fr":"https://www.google.com/maps?q=Neubr%C3%BCckstrasse+10,+3012+Bern,+Switzerland&z=16&hl=fr&output=embed","de":"https://www.google.com/maps?q=Neubr%C3%BCckstrasse+10,+3012+Bern,+Switzerland&z=16&hl=de&output=embed"}'
+                            style="border:0; width:100%; height:100%; min-height:300px;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <a class="map-open-link"
+                           href="https://www.google.com/maps/search/?api=1&amp;query=Neubr%C3%BCckstrasse+10%2C+3012+Bern%2C+Switzerland&amp;hl=en"
+                           data-i18n-href-map='{"en":"https://www.google.com/maps/search/?api=1&query=Neubr%C3%BCckstrasse+10%2C+3012+Bern%2C+Switzerland&hl=en","zh":"https://www.google.com/maps/search/?api=1&query=Neubr%C3%BCckstrasse+10%2C+3012+Bern%2C+Switzerland&hl=zh-CN","fr":"https://www.google.com/maps/search/?api=1&query=Neubr%C3%BCckstrasse+10%2C+3012+Bern%2C+Switzerland&hl=fr","de":"https://www.google.com/maps/search/?api=1&query=Neubr%C3%BCckstrasse+10%2C+3012+Bern%2C+Switzerland&hl=de"}'
+                           target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <span data-i18n="contact.openMaps">Open in Maps</span>
+                        </a>
+                    </div>
+                    <!-- Primary China map: inline Amap via JS API. Revealed when
+                         applyChinaMap() detects a CN visitor AND an Amap key is
+                         configured in js/main.js (AMAP_KEY / AMAP_JSCODE). On
+                         SDK load failure (missing key, domain whitelist miss,
+                         etc.) we degrade in place to the link-card fallback
+                         below. Domain whitelist note: Amap rejects "localhost"
+                        : use 127.0.0.1 locally. See docs/setup/local-dev.md. -->
+                    <div class="contact-map contact-map-amap" hidden>
+                        <div id="amapContainer" class="amap-inline-host" aria-label="伯尔尼大学模式识别研究组 (PRG) 地图"></div>
+                        <a class="map-open-link"
+                           href="https://uri.amap.com/marker?position=7.4398,46.9535&name=%E4%BC%AF%E5%B0%94%E5%B0%BC%E5%A4%A7%E5%AD%A6%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%A0%94%E7%A9%B6%E7%BB%84&coordinate=wgs84&src=mypage&callnative=0"
+                           target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <span>在高德地图打开</span>
+                        </a>
+                    </div>
+                    <!-- China link-card fallback: shown when inline Amap is
+                         unavailable (key not configured yet, or SDK failed to
+                         load). Keeps the map usable regardless of credential
+                         state. See applyChinaMap() in js/main.js. -->
+                    <div class="contact-map-cn" hidden>
+                        <div class="amap-fallback">
+                            <div class="amap-fallback-top">
+                                <div class="amap-fallback-icon" aria-hidden="true"><i class="fas fa-map-marked-alt"></i></div>
+                                <div class="amap-fallback-text">
+                                    <div class="amap-fallback-title">伯尔尼大学模式识别研究组（PRG）</div>
+                                    <div class="amap-fallback-addr">Neubrückstrasse 10, 3012 伯尔尼，瑞士</div>
+                                    <div class="amap-fallback-coord">46.9535°N · 7.4398°E</div>
+                                </div>
+                            </div>
+                            <div class="amap-fallback-actions">
+                                <a class="amap-fallback-btn amap-fallback-btn-gaode" target="_blank" rel="noopener noreferrer"
+                                   href="https://uri.amap.com/marker?position=7.4398,46.9535&name=%E4%BC%AF%E5%B0%94%E5%B0%BC%E5%A4%A7%E5%AD%A6%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%A0%94%E7%A9%B6%E7%BB%84&coordinate=wgs84&src=mypage&callnative=0">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i> 在高德地图打开
+                                </a>
+                                <a class="amap-fallback-btn amap-fallback-btn-baidu" target="_blank" rel="noopener noreferrer"
+                                   href="https://map.baidu.com/search/Neubr%C3%BCckstrasse%2010%2C%203012%20Bern%2C%20Switzerland">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i> 在百度地图打开
+                                </a>
+                            </div>
+                            <p class="amap-fallback-note">检测到您可能从国内访问。Google 地图在国内通常无法加载，可在上方高德 / 百度中查看。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit map: choropleth of visitor countries from Clarity weekly snapshot.
+                     Hidden by default; revealed once initVisitMap() finds a snapshot file. -->
+                <div class="visit-map-block" id="visitMapBlock" hidden>
+                    <div class="visit-map-header">
+                        <h3 data-i18n="visitMap.title">Visitors</h3>
+                        <p class="visit-map-subtitle">
+                            <span class="visit-map-stat"><strong id="visitTotalCount">—</strong> <span data-i18n="visitMap.totalVisits">total visits</span></span>
+                            <span class="visit-map-sep" aria-hidden="true">·</span>
+                            <span class="visit-map-stat"><strong id="visitCountriesCount">—</strong> <span data-i18n="visitMap.countries">countries</span></span>
+                            <span class="visit-map-sep" aria-hidden="true">·</span>
+                            <span class="visit-map-window" data-i18n="visitMap.window">past 3 days</span>
+                            <span class="visit-map-sep" aria-hidden="true">·</span>
+                            <span class="visit-map-source" data-i18n="visitMap.source">via Microsoft Clarity</span>
+                        </p>
+                    </div>
+                    <div class="visit-map-body">
+                        <div class="visit-map-svg-wrap">
+                            <svg id="visitMapSvg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="visitMapTitle">
+                                <title id="visitMapTitle" data-i18n="visitMap.svgTitle">World map of visitor countries</title>
+                            </svg>
+                        </div>
+                        <div class="visit-map-top">
+                            <h4 data-i18n="visitMap.topCountries">Top Countries</h4>
+                            <ol id="visitTopList"></ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- ========================================
+         PERSONAL PAGE CONTENT
+         ======================================== -->
+    <div class="page-content" id="personalPage">
+        <section class="personal-hero">
+            <h2><span aria-hidden="true">👋</span> <span data-i18n="sections.beyond">Beyond Research</span></h2>
+            <p data-i18n="beyond.subtitle">Hobbies, volunteer work, and life outside the lab</p>
+        </section>
+        
+        <section class="personal-section">
+            <div class="container">
+                <div class="personal-grid">
+                    <!-- Hobbies -->
+                    <div class="personal-card">
+                        <div class="personal-card-header">
+                            <h3><i class="fas fa-heart"></i> <span data-i18n="beyond.hobbies_title">Hobbies</span></h3>
+                        </div>
+                        <div class="personal-card-content">
+                            <div class="hobby-item">
+                                <div class="hobby-icon">📚</div>
+                                <div class="hobby-info">
+                                    <h4>Reading</h4>
+                                    <p>Science fiction, philosophy, history</p>
+                                </div>
+                            </div>
+                            <div class="hobby-item">
+                                <div class="hobby-icon">🎸</div>
+                                <div class="hobby-info">
+                                    <h4>Music</h4>
+                                    <p>Guitar, piano, classical & jazz</p>
+                                </div>
+                            </div>
+                            <div class="hobby-item">
+                                <div class="hobby-icon">🏔️</div>
+                                <div class="hobby-info">
+                                    <h4>Hiking</h4>
+                                    <p>Swiss Alps, nature photography</p>
+                                </div>
+                            </div>
+                            <div class="hobby-item">
+                                <div class="hobby-icon">🎮</div>
+                                <div class="hobby-info">
+                                    <h4>Gaming</h4>
+                                    <p>Strategy games, puzzle games</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Photos -->
+                    <div class="personal-card">
+                        <div class="personal-card-header">
+                            <h3><i class="fas fa-camera"></i> <span data-i18n="beyond.gallery_title">Photo Gallery</span></h3>
+                        </div>
+                        <div class="personal-card-content">
+                            <div class="photo-gallery">
+                                <div class="photo-item"><i class="fas fa-mountain"></i></div>
+                                <div class="photo-item"><i class="fas fa-tree"></i></div>
+                                <div class="photo-item"><i class="fas fa-sun"></i></div>
+                                <div class="photo-item"><i class="fas fa-water"></i></div>
+                                <div class="photo-item"><i class="fas fa-city"></i></div>
+                                <div class="photo-item"><i class="fas fa-leaf"></i></div>
+                            </div>
+                            <p style="text-align: center; margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                                📸 Add your photos here!
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Volunteer Work -->
+                    <div class="personal-card">
+                        <div class="personal-card-header">
+                            <h3><i class="fas fa-hands-helping"></i> <span data-i18n="beyond.volunteer_title">Volunteer Work</span></h3>
+                        </div>
+                        <div class="personal-card-content">
+                            <div class="volunteer-item">
+                                <h4>Tech Mentor</h4>
+                                <p>Helping students learn programming and ML basics.</p>
+                            </div>
+                            <div class="volunteer-item">
+                                <h4>Open Source Contributor</h4>
+                                <p>Contributing to scientific Python libraries.</p>
+                            </div>
+                            <div class="volunteer-item">
+                                <h4>Community Workshops</h4>
+                                <p>Free workshops on AI literacy for the public.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="personal-card">
+                        <div class="personal-card-header">
+                            <h3><i class="fas fa-share-alt"></i> <span data-i18n="beyond.social_title">Social Platforms</span></h3>
+                        </div>
+                        <div class="personal-card-content">
+                            <div class="social-links-personal">
+                                <a href="https://www.xiaohongshu.com/" target="_blank" rel="noopener noreferrer" class="social-link-personal">
+                                    <i class="fas fa-book"></i> Xiaohongshu
+                                </a>
+                                <a href="https://www.bilibili.com/" target="_blank" rel="noopener noreferrer" class="social-link-personal">
+                                    <i class="fas fa-play-circle"></i> Bilibili
+                                </a>
+                                <a href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer" class="social-link-personal">
+                                    <i class="fas fa-pen"></i> Zhihu
+                                </a>
+                                <a href="https://github.com/jajupmochi" target="_blank" rel="noopener noreferrer" class="social-link-personal">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================
+         BLOG PAGE CONTENT
+         ======================================== -->
+    <div class="page-content" id="blogPage">
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label" data-i18n="blog.label">Thoughts & Writing</span>
+                    <h2 class="section-title" data-i18n="sections.blog">Blog</h2>
+                </div>
+                
+                <div class="blog-preview">
+                    <div class="blog-card">
+                        <div class="blog-image"><i class="fas fa-brain"></i></div>
+                        <div class="blog-content">
+                            <div class="blog-date">Coming soon</div>
+                            <div class="blog-title">Understanding Graph Neural Networks</div>
+                            <div class="blog-excerpt">A beginner-friendly introduction to GNNs.</div>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-image"><i class="fas fa-robot"></i></div>
+                        <div class="blog-content">
+                            <div class="blog-date">Coming soon</div>
+                            <div class="blog-title">Building LLM Agent Systems</div>
+                            <div class="blog-excerpt">Practical insights from production LLM apps.</div>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-image"><i class="fas fa-flask"></i></div>
+                        <div class="blog-content">
+                            <div class="blog-date">Coming soon</div>
+                            <div class="blog-title">AI for Scientific Discovery</div>
+                            <div class="blog-excerpt">How ML transforms scientific research.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="blog-platforms">
+                    <a href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-pen"></i> Zhihu</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3 data-i18n="footer.tagline">Linlin Jia, Ph.D.</h3>
+                    <p data-i18n="footer.contact_line">linlin.jia@unibe.ch | Bern, Switzerland</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/in/linlin-jia-b456a6a7/" target="_blank" rel="noopener" aria-label="LinkedIn profile"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="mailto:linlin.jia@unibe.ch" aria-label="Email Linlin"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom" data-i18n="footer.copyright">© 2026 Linlin Jia. Open to ML Research Scientist & Engineer opportunities.</div>
+            <div class="footer-legal"><small data-i18n-html="footer.privacy">This site uses <a href="https://clarity.microsoft.com/" target="_blank" rel="noopener">Microsoft Clarity</a> (cookie-less mode) for anonymous heatmaps and session replay. No personal data is stored; inputs are masked by default. Welcome-form submissions (name / profession / message) are kept privately in my Google Drive &mdash; never shared or sold; email me to delete yours any time. See <a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank" rel="noopener">Microsoft&rsquo;s privacy statement</a>.</small></div>
+        </div>
+    </footer>
+
+    <!-- Site-wide search modal (populated by js/main.js) -->
+    <div id="siteSearchModal" class="site-search-modal" hidden role="dialog" aria-modal="true" aria-labelledby="siteSearchInput">
+        <div id="siteSearchBackdrop" class="site-search-backdrop"></div>
+        <div class="site-search-panel">
+            <div class="site-search-input-wrap">
+                <i class="fas fa-search site-search-input-icon" aria-hidden="true"></i>
+                <input id="siteSearchInput" class="site-search-input" type="search" autocomplete="off" spellcheck="false"
+                       data-i18n-placeholder="search.placeholder" placeholder="Search the site…" aria-label="Search">
+                <button id="siteSearchClose" class="site-search-close" type="button" aria-label="Close">&times;</button>
+            </div>
+            <div id="siteSearchResults" class="site-search-results" role="listbox" aria-label="Search results"></div>
+            <div class="site-search-hint">
+                <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span data-i18n="search.kbd_navigate">navigate</span></span>
+                <span><kbd>Enter</kbd> <span data-i18n="search.kbd_open">open</span></span>
+                <span><kbd>Esc</kbd> <span data-i18n="search.kbd_close">close</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image lightbox modal (populated by js/main.js) -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lightbox-caption">
+        <button class="lightbox-close" type="button" aria-label="Close enlarged image">&times;</button>
+        <figure class="lightbox-figure">
+            <img class="lightbox-img" src="" alt="">
+            <figcaption id="lightbox-caption" class="lightbox-caption"></figcaption>
+        </figure>
+    </div>
+
+    <!-- Coming-soon toast for Personal / Blog (placeholder pages) -->
+    <div id="comingSoonToast" class="coming-soon-toast" role="status" aria-live="polite" aria-hidden="true">
+        <div class="coming-soon-icon" aria-hidden="true">
+            <i class="fas fa-screwdriver-wrench"></i>
+        </div>
+        <div class="coming-soon-body">
+            <span class="coming-soon-title" data-i18n="comingSoon.title">Coming soon</span>
+            <span class="coming-soon-sub" data-i18n="comingSoon.sub">This page is still being built: check back shortly.</span>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    
+    <!--
+        Analytics: Microsoft Clarity (free, heatmaps + session recordings).
+        Replace PASTE_CLARITY_PROJECT_ID below with your project id from
+        https://clarity.microsoft.com/ (project settings → tracking code).
+        See setup/analytics-clarity.md for the cookie-consent-free configuration.
+    -->
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wfp3nak9zq");
+    </script>
+</body>
+</html>

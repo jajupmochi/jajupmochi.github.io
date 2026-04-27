@@ -1,0 +1,165 @@
+/* ============================================================================
+ * parchment-overrides.css
+ * Loaded AFTER main.css (so equal-specificity rules here win).
+ * Goal: strip every card border, every card background, every section bg-shift,
+ *       and replace the page background with a single global parchment surface.
+ * Used by: index_parchment.html (a parallel variant of index_en.html).
+ * ========================================================================= */
+
+/* ---------- 1. Variable overrides (cascades to most main.css usage) ---------- */
+:root,
+[data-theme="academic"] {
+    --bg-white: transparent;
+    --bg-light: transparent;
+    --bg-subtle: transparent;
+    --gradient-hero: transparent;
+    --border-light: transparent;
+    --shadow-md: none;
+    --shadow-lg: none;
+    /* Warm-tinted text for parchment legibility (was cool slate) */
+    --text-primary: oklch(0.20 0.04 30);
+    --text-secondary: oklch(0.34 0.05 30);
+    --text-muted: oklch(0.45 0.06 35);
+}
+
+/* ---------- 2. Global parchment background ----------
+   Light warm parchment tone (oklch L=0.93) + subtle inline SVG noise + faint
+   warm stains. No raster JPG (the 2K texture was too dark for bright sections). */
+html, body {
+    background:
+        radial-gradient(ellipse 1200px 800px at 18% 22%, oklch(0.78 0.08 55 / 0.12), transparent 65%),
+        radial-gradient(ellipse 1000px 700px at 82% 78%, oklch(0.74 0.09 45 / 0.10), transparent 70%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.30  0 0 0 0 0.18  0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") 0 0 / 320px repeat,
+        oklch(0.93 0.030 78) !important;
+    color: var(--text-primary);
+}
+html { background-attachment: fixed, fixed, fixed, fixed !important; }
+body { background: transparent !important; }
+
+/* ---------- 3. Strip all card / panel backgrounds + borders + shadows ---------- */
+.stat-card, .timeline-card, .project-card, .pub-card, .service-card,
+.blog-card, .visitor-card, .personal-card, .skill-category,
+.contact-item, .news-row, .news-table, .news-section,
+.research-outline, .research-outline.section,
+.section, .section-alt,
+.about-text, .hero, .hero-content,
+.contact-section, .contact-info, .contact-map,
+.timeline-event, .timeline-content,
+.welcome-form-container, .award-badge,
+.experience-card, .award-card, .talk-card {
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ---------- 4. Hero — also strip the SVG-pattern overlay ---------- */
+.hero::before, .hero::after { display: none !important; }
+
+/* ---------- 5. Skill tags — let them keep a faint outline so they read as chips ---------- */
+.skill-tag {
+    background: oklch(0.85 0.050 75 / 0.45) !important;
+    border: 1px solid oklch(0.45 0.10 50 / 0.25) !important;
+    box-shadow: none !important;
+    color: var(--text-primary) !important;
+}
+.skill-tag.highlight {
+    background: oklch(0.62 0.13 70 / 0.25) !important;
+    border-color: oklch(0.45 0.12 50 / 0.45) !important;
+}
+
+/* ---------- 6. Navbar — keep semi-translucent so it stays legible when scrolled ---------- */
+.navbar {
+    background: oklch(0.85 0.050 75 / 0.78) !important;
+    backdrop-filter: blur(10px) saturate(1.05);
+    -webkit-backdrop-filter: blur(10px) saturate(1.05);
+    border-bottom: 1px solid oklch(0.45 0.10 50 / 0.18) !important;
+    box-shadow: 0 1px 12px oklch(0.20 0.06 30 / 0.10) !important;
+}
+.navbar.scrolled { box-shadow: 0 2px 16px oklch(0.20 0.06 30 / 0.18) !important; }
+
+/* ---------- 7. Welcome popup card — keep its own surface (it's an overlay) ---------- */
+.wp-card {
+    background: oklch(0.92 0.06 75 / 0.96) !important;
+    border: 1px solid oklch(0.45 0.10 50 / 0.4) !important;
+    box-shadow: 0 30px 60px oklch(0.20 0.06 30 / 0.5) !important;
+}
+
+/* ---------- 8. Image lightbox + modal dialogs — preserve dark overlay ---------- */
+.lightbox-backdrop, .modal-backdrop, .search-modal-backdrop {
+    background: oklch(0.10 0.04 30 / 0.78) !important;
+}
+
+/* ---------- 9. News + ticker — keep content visible without panel chrome ---------- */
+.news-ticker, .news-celebration { background: transparent !important; }
+.news-row { border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.22) !important; }
+.news-row:last-child { border-bottom: none !important; }
+
+/* ---------- 10. Section dividers — replace bg shift with subtle ink rule ---------- */
+.section + .section, .section-alt + .section, .section + .section-alt {
+    border-top: 1px dashed oklch(0.45 0.10 50 / 0.20);
+}
+
+/* ---------- 11. Footer — keep readable but no card chrome ---------- */
+footer, .site-footer {
+    background: transparent !important;
+    border-top: 1px dashed oklch(0.45 0.10 50 / 0.30) !important;
+    box-shadow: none !important;
+    color: var(--text-secondary) !important;
+}
+
+/* ---------- 12. Buttons — keep primary buttons readable, others ghost ---------- */
+.btn, button.hero-buttons-secondary, .ghost-btn {
+    box-shadow: none !important;
+}
+.hero-buttons .btn-primary, .btn-primary {
+    background: oklch(0.45 0.16 27) !important;
+    color: oklch(0.96 0.04 60) !important;
+    border: none !important;
+}
+.btn-secondary, .hero-buttons .btn-secondary {
+    background: transparent !important;
+    border: 1px solid oklch(0.45 0.16 27 / 0.5) !important;
+    color: oklch(0.45 0.16 27) !important;
+}
+
+/* ---------- 13. Hero badge (Open to Work pulse) — keep visible ---------- */
+.hero-badge {
+    background: oklch(0.62 0.13 70 / 0.2) !important;
+    border: 1px solid oklch(0.45 0.12 50 / 0.4) !important;
+    color: var(--text-primary) !important;
+}
+.hero-badge:hover, .hero-badge:focus-visible {
+    background: oklch(0.62 0.13 70 / 0.35) !important;
+}
+
+/* ---------- 14. Carousel controls (publications + projects) — minimal ---------- */
+.carousel-controls .carousel-btn,
+.section-controls button {
+    background: transparent !important;
+    border: 1px solid oklch(0.45 0.10 50 / 0.4) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* ---------- 15. Search modal — keep readable surface (not transparent) ---------- */
+.search-modal, .search-modal-content {
+    background: oklch(0.92 0.06 75 / 0.96) !important;
+    border: 1px solid oklch(0.45 0.10 50 / 0.4) !important;
+    box-shadow: 0 30px 60px oklch(0.20 0.06 30 / 0.45) !important;
+}
+
+/* ---------- 16. Chatbot trigger — kept hidden by D5.J, but neutralize if shown ---------- */
+.chatbot-trigger {
+    background: oklch(0.45 0.16 27) !important;
+    border: 1px solid oklch(0.42 0.16 27) !important;
+}
+
+/* ---------- 17. Reduce inline image / project-image white backgrounds ---------- */
+.project-image, .pub-thumbnail {
+    background: transparent !important;
+}
+
+/* ---------- 18. Images themselves — slight warm cast so they don't pop too white ---------- */
+img.profile-photo, .project-image img, .pub-thumbnail img {
+    filter: sepia(0.06) brightness(1.0);
+}
