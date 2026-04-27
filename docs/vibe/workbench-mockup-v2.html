@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-theme="grimoire" data-mode="day">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Workbench mockup v2 — 实验台 / Projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<link rel="stylesheet" href="_grimoire-shared.css">
+<style>
+.stage { position: relative; z-index: 4; max-width: 1280px; margin: 0 auto; padding: 30px 60px 60px; }
+.workbench {
+    background: radial-gradient(ellipse at 30% 28%, oklch(0.92 0.040 75 / 0.95), oklch(0.86 0.050 70 / 0.85));
+    border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: var(--shadow-deep); padding: 28px 32px;
+    position: relative;
+}
+.workbench::before { content:''; position:absolute; inset:14px; border:1px dashed var(--rule); pointer-events:none; }
+[data-mode="night"] .workbench { background: linear-gradient(180deg, oklch(0.22 0.04 35 / 0.92), oklch(0.16 0.04 35 / 0.85)); border-color: oklch(0.62 0.13 78 / 0.45); }
+.wb-title { font-family: var(--font-zh-hand); font-size: 32px; color: var(--ink); text-align: center; }
+.wb-sub { font-family: var(--font-display); font-size: 14px; font-style: italic; color: var(--ink-muted); text-align: center; margin-top: 4px; }
+
+/* Wood table surface containing all the jars */
+.bench {
+    margin-top: 24px;
+    background: linear-gradient(180deg, oklch(0.42 0.08 40), oklch(0.32 0.06 35));
+    border-radius: 2px; box-shadow: inset 0 0 30px oklch(0.18 0.05 30 / 0.4);
+    padding: 30px 24px; position: relative;
+    min-height: 380px;
+}
+.bench::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
+    background: oklch(0.22 0.04 30); border-radius: 0 0 2px 2px;
+}
+
+/* Project jars laid out on bench */
+.jars {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+.jar {
+    cursor: pointer;
+    background: oklch(0.85 0.04 70 / 0.06);
+    border: 1px solid oklch(0.55 0.06 60 / 0.25);
+    border-radius: 2px;
+    padding: 14px 12px 12px;
+    transition: transform 0.3s var(--ease-quart), box-shadow 0.3s var(--ease-quart), background 0.3s var(--ease-quart);
+    text-align: center;
+}
+.jar:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 12px 24px oklch(0.18 0.05 30 / 0.4), 0 0 16px oklch(0.62 0.13 70 / 0.35);
+    background: oklch(0.92 0.06 80 / 0.16);
+}
+[data-mode="night"] .jar:hover { box-shadow: 0 12px 24px oklch(0.04 0.04 260 / 0.55), 0 0 18px var(--vine-glow); }
+.jar svg { width: 100%; height: 80px; overflow: visible; }
+.jar-name { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px; color: var(--ink); margin-top: 6px; }
+.jar-desc { font-family: var(--font-display); font-size: 10.5px; color: var(--ink-muted); margin-top: 2px; line-height: 1.4; }
+.jar.featured { background: oklch(0.55 0.18 27 / 0.12); border-color: oklch(0.42 0.16 27 / 0.5); }
+[data-mode="night"] .jar.featured { background: oklch(0.78 0.18 50 / 0.14); border-color: oklch(0.78 0.18 50 / 0.5); }
+
+/* Tool rack on left */
+.toolrack {
+    margin-top: 24px; padding: 14px 20px;
+    border-top: 1px dashed var(--rule);
+    display: flex; gap: 16px; align-items: center; justify-content: center;
+    font-family: var(--font-script); font-size: 14px; color: var(--ink-muted);
+    font-style: italic;
+}
+.toolrack svg { width: 28px; height: 28px; }
+</style>
+</head>
+<body>
+<div class="preview-bar">workbench-mockup-v2 · grimoire <span id="modeBadge">day</span> · click jars · candle/console/小林 active</div>
+
+<header class="banner">
+    <div class="banner-cap"></div>
+    <h1 class="banner-title">实验台 <span class="sub">/ The Alchemist's Workbench — Projects</span></h1>
+    <a class="banner-back" href="world-overview-mockup-v2.html">← back to world</a>
+</header>
+
+<button class="candle" type="button" onclick="toggleMode()" aria-label="Toggle theme">
+<svg viewBox="0 0 60 100"><circle class="glow" cx="30" cy="22" r="42"/><path class="flame" d="M30 8 C24 14 24 22 28 28 C28 32 32 32 32 28 C36 22 36 14 30 8 Z"/><line class="wick" x1="30" y1="28" x2="30" y2="36"/><ellipse class="drip" cx="30" cy="36" rx="14" ry="3"/><rect class="body" x="18" y="36" width="24" height="56" rx="2"/><ellipse cx="30" cy="92" rx="22" ry="4" fill="oklch(0.55 0.10 60)"/></svg>
+</button>
+<button class="console" type="button" onclick="document.getElementById('searchOverlay').classList.add('open')" aria-label="Search">
+<svg viewBox="0 0 56 56"><defs><radialGradient id="cgrad"><stop offset="0%" stop-color="oklch(0.95 0.10 220)"/><stop offset="100%" stop-color="oklch(0.40 0.14 240)"/></radialGradient></defs><polygon class="crystal" points="28,4 50,28 28,52 6,28" fill="url(#cgrad)"/></svg>
+</button>
+<button class="robot" type="button" onclick="alert('小林：『主人在调制 11 种实验』')" aria-label="Talk to 小林">
+<svg viewBox="0 0 72 88"><ellipse class="body" cx="36" cy="50" rx="26" ry="32"/><ellipse class="belly" cx="36" cy="58" rx="16" ry="20"/><circle cx="28" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle cx="44" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle class="eye" cx="28" cy="38" r="3"/><circle class="eye" cx="44" cy="38" r="3"/><path d="M36 44 L33 50 L39 50 Z" fill="oklch(0.62 0.13 70)"/><g transform="translate(36 60)" class="gear"><circle r="6" fill="oklch(0.72 0.13 80)"/></g></svg>
+</button>
+
+<main class="stage">
+    <article class="workbench">
+        <p style="font-family:var(--font-script);font-size:18px;color:var(--ink-muted);font-style:italic;text-align:center;">a cluttered alchemy table · 试验中的炼金工坊</p>
+        <h1 class="wb-title">实验台 · 项目工坊</h1>
+        <p class="wb-sub">Projects · ~11 jars in progress — hover any jar to peek inside</p>
+
+        <div class="bench">
+            <div class="jars">
+                <div class="jar featured" onclick="alert('graphkit-learn — open-source graph kernel + GED toolkit, 128⭐, ~300 PyPI downloads/month')">
+                    <svg viewBox="0 0 100 80">
+                        <ellipse cx="50" cy="72" rx="22" ry="4" fill="oklch(0.18 0.04 30)" opacity="0.4"/>
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.78 0.10 230 / 0.45)" stroke="oklch(0.62 0.10 220)" stroke-width="1.4"/>
+                        <!-- graph nodes inside -->
+                        <circle cx="42" cy="45" r="4" fill="oklch(0.42 0.16 27)"/>
+                        <circle cx="58" cy="40" r="4" fill="oklch(0.32 0.10 145)"/>
+                        <circle cx="50" cy="58" r="4" fill="oklch(0.40 0.14 240)"/>
+                        <circle cx="62" cy="56" r="3" fill="oklch(0.62 0.13 70)"/>
+                        <line x1="42" y1="45" x2="58" y2="40" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                        <line x1="42" y1="45" x2="50" y2="58" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                        <line x1="58" y1="40" x2="62" y2="56" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                        <line x1="50" y1="58" x2="62" y2="56" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                    </svg>
+                    <div class="jar-name">graphkit-learn</div>
+                    <div class="jar-desc">128⭐ · graph kernels · my main potion</div>
+                </div>
+                <div class="jar featured" onclick="alert('Swiss River Network Benchmark — spatio-temporal river-temperature forecasting, accepted at ICPR 2026')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.62 0.10 230 / 0.55)" stroke="oklch(0.45 0.10 220)" stroke-width="1.4"/>
+                        <path d="M34 60 Q42 56 48 60 Q56 64 62 60 Q66 56 66 60" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6"/>
+                        <path d="M34 50 Q42 46 48 50 Q56 54 62 50 Q66 46 66 50" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6" opacity="0.7"/>
+                        <circle cx="44" cy="32" r="2" fill="oklch(0.92 0.04 80)" opacity="0.85"/>
+                        <circle cx="54" cy="38" r="1.5" fill="oklch(0.92 0.04 80)" opacity="0.7"/>
+                    </svg>
+                    <div class="jar-name">Swiss River</div>
+                    <div class="jar-desc">river-temp forecasting · ICPR 2026</div>
+                </div>
+                <div class="jar" onclick="alert('PLANALYSER — Innosuisse-funded HVAC concept audit with WATTELSE AG')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.65 0.18 50 / 0.5)" stroke="oklch(0.45 0.16 50)" stroke-width="1.4"/>
+                        <line x1="40" y1="54" x2="60" y2="54" stroke="oklch(0.30 0.10 25)" stroke-width="1.2"/>
+                        <line x1="50" y1="54" x2="50" y2="40" stroke="oklch(0.30 0.10 25)" stroke-width="1.2"/>
+                        <circle cx="50" cy="40" r="3" fill="oklch(0.85 0.18 70)"/>
+                        <rect x="38" y="56" width="4" height="6" fill="oklch(0.30 0.10 25)"/>
+                        <rect x="58" y="56" width="4" height="6" fill="oklch(0.30 0.10 25)"/>
+                    </svg>
+                    <div class="jar-name">PLANALYSER</div>
+                    <div class="jar-desc">HVAC AI · Innosuisse · WATTELSE</div>
+                </div>
+                <div class="jar" onclick="alert('LIULIAN — autonomous kitchen AI agent')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.62 0.13 70 / 0.45)" stroke="oklch(0.45 0.12 65)" stroke-width="1.4"/>
+                        <ellipse cx="50" cy="46" rx="14" ry="3" fill="oklch(0.42 0.08 40)"/>
+                        <ellipse cx="50" cy="46" rx="10" ry="2" fill="oklch(0.92 0.06 80)" opacity="0.8"/>
+                        <line x1="44" y1="32" x2="46" y2="42" stroke="oklch(0.42 0.08 40)" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                    <div class="jar-name">LIULIAN</div>
+                    <div class="jar-desc">kitchen AI agent · Python lib</div>
+                </div>
+                <div class="jar" onclick="alert('Confidential Translator — privacy-preserving cipher tool')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.30 0.10 295 / 0.5)" stroke="oklch(0.40 0.14 290)" stroke-width="1.4"/>
+                        <line x1="44" y1="36" x2="58" y2="60" stroke="oklch(0.85 0.13 78)" stroke-width="1.2"/>
+                        <text x="50" y="50" text-anchor="middle" font-family="serif" font-size="14" fill="oklch(0.92 0.04 80)">⌘</text>
+                    </svg>
+                    <div class="jar-name">Translator</div>
+                    <div class="jar-desc">confidential AI · cipher</div>
+                </div>
+                <div class="jar" onclick="alert('GraphInk — handwriting recognition with graph-based methods. SNSF grant.')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.18 0.04 250 / 0.5)" stroke="oklch(0.32 0.10 250)" stroke-width="1.4"/>
+                        <text x="50" y="48" text-anchor="middle" font-family="cursive" font-size="20" font-style="italic" fill="oklch(0.92 0.04 80)">林</text>
+                    </svg>
+                    <div class="jar-name">GraphInk</div>
+                    <div class="jar-desc">handwriting · SNSF</div>
+                </div>
+                <div class="jar" onclick="alert('IQA Open Round — Interacting Quantum Atoms with multi-scale GNN. UniBE Open Round.')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.55 0.10 165 / 0.45)" stroke="oklch(0.45 0.10 160)" stroke-width="1.4"/>
+                        <circle cx="42" cy="46" r="4" fill="oklch(0.42 0.16 27)"/>
+                        <circle cx="58" cy="42" r="4" fill="oklch(0.32 0.10 145)"/>
+                        <circle cx="48" cy="58" r="3" fill="oklch(0.40 0.14 240)"/>
+                        <line x1="42" y1="46" x2="58" y2="42" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                        <line x1="42" y1="46" x2="48" y2="58" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                        <line x1="58" y1="42" x2="48" y2="58" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                    </svg>
+                    <div class="jar-name">IQA</div>
+                    <div class="jar-desc">molecular GNN · UniBE</div>
+                </div>
+                <div class="jar" onclick="alert('APi (PhD project) — graph kernels + ML for structured data. ANR funded.')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.45 0.16 27 / 0.45)" stroke="oklch(0.42 0.16 27)" stroke-width="1.4"/>
+                        <text x="50" y="48" text-anchor="middle" font-family="serif" font-size="14" font-style="italic" fill="oklch(0.96 0.04 60)">π</text>
+                    </svg>
+                    <div class="jar-name">APi</div>
+                    <div class="jar-desc">graph kernels · ANR</div>
+                </div>
+                <div class="jar" onclick="alert('OCTOPUSSY / RedoxPrediction — molecular property prediction')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.62 0.13 145 / 0.45)" stroke="oklch(0.45 0.10 145)" stroke-width="1.4"/>
+                        <circle cx="46" cy="40" r="3" fill="oklch(0.30 0.06 35)"/>
+                        <circle cx="54" cy="48" r="3" fill="oklch(0.42 0.16 27)"/>
+                        <circle cx="46" cy="56" r="3" fill="oklch(0.30 0.06 35)"/>
+                        <circle cx="38" cy="48" r="3" fill="oklch(0.42 0.16 27)"/>
+                        <line x1="46" y1="40" x2="54" y2="48" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                        <line x1="54" y1="48" x2="46" y2="56" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                        <line x1="46" y1="56" x2="38" y2="48" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                        <line x1="38" y1="48" x2="46" y2="40" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/>
+                    </svg>
+                    <div class="jar-name">OCTOPUSSY</div>
+                    <div class="jar-desc">molecular property prediction</div>
+                </div>
+                <div class="jar" onclick="alert('SDN — software-defined networking patent (2014, XJTU MSc)')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.40 0.14 240 / 0.4)" stroke="oklch(0.30 0.12 240)" stroke-width="1.4"/>
+                        <g stroke="oklch(0.92 0.04 80)" stroke-width="1.2" fill="none">
+                            <circle cx="40" cy="40" r="2"/><circle cx="50" cy="36" r="2"/><circle cx="60" cy="40" r="2"/>
+                            <circle cx="44" cy="56" r="2"/><circle cx="56" cy="56" r="2"/>
+                            <line x1="40" y1="40" x2="50" y2="36"/><line x1="50" y1="36" x2="60" y2="40"/>
+                            <line x1="40" y1="40" x2="44" y2="56"/><line x1="60" y1="40" x2="56" y2="56"/>
+                            <line x1="44" y1="56" x2="56" y2="56"/>
+                        </g>
+                    </svg>
+                    <div class="jar-name">SDN</div>
+                    <div class="jar-desc">network · CN patent · 2014</div>
+                </div>
+                <div class="jar" onclick="alert('Graph Matching — combinatorial graph matching, SNSF Postdoc.Mobility')">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M30 70 Q28 30 36 18 L64 18 Q72 30 70 70 Z" fill="oklch(0.32 0.10 145 / 0.45)" stroke="oklch(0.32 0.08 130)" stroke-width="1.4"/>
+                        <circle cx="42" cy="42" r="3" fill="oklch(0.42 0.16 27)"/>
+                        <circle cx="42" cy="56" r="3" fill="oklch(0.42 0.16 27)"/>
+                        <circle cx="58" cy="42" r="3" fill="oklch(0.40 0.14 240)"/>
+                        <circle cx="58" cy="56" r="3" fill="oklch(0.40 0.14 240)"/>
+                        <line x1="42" y1="42" x2="58" y2="42" stroke="oklch(0.32 0.08 130)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                        <line x1="42" y1="56" x2="58" y2="56" stroke="oklch(0.32 0.08 130)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                    </svg>
+                    <div class="jar-name">Graph Matching</div>
+                    <div class="jar-desc">graph alignment · SNSF</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolrack">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="oklch(0.55 0.06 60)" stroke-width="2"/><line x1="18" y1="18" x2="22" y2="22" stroke="oklch(0.55 0.06 60)" stroke-width="2"/></svg>
+            <span>tools on the rack: Python · PyTorch · NetworkX · scikit-learn · jax</span>
+        </div>
+    </article>
+</main>
+
+<footer class="footer-band">魔法师之书 · 实验台 — projects · 11 experiments in progress</footer>
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)this.classList.remove('open')"><div class="search-panel"><input class="search-input" type="text" placeholder="召唤一个项目…"></div></div>
+<script>
+function toggleMode(){const r=document.documentElement;r.setAttribute('data-mode',r.getAttribute('data-mode')==='day'?'night':'day');document.getElementById('modeBadge').textContent=r.getAttribute('data-mode');}
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchOverlay').classList.add('open');}if(e.key==='c'||e.key==='C')if(!document.querySelector('.search-overlay.open'))toggleMode();if(e.key==='Escape')document.getElementById('searchOverlay').classList.remove('open');});
+</script>
+</body>
+</html>

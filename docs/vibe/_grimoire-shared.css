@@ -1,0 +1,255 @@
+/* ============================================================
+   Grimoire shared styles — used by all room mockups (v2).
+   Contains: theme tokens, fonts, parchment background,
+   banner, candle/robot/console widgets, search overlay.
+   Each room mockup imports this and adds room-specific styles.
+   ============================================================ */
+
+:root {
+    --font-display: 'Spectral', 'Iowan Old Style', serif;
+    --font-body:    'Spectral', 'Iowan Old Style', serif;
+    --font-script:  'Caveat', cursive;
+    --font-mono:    'JetBrains Mono', monospace;
+    --font-zh-hand: 'Ma Shan Zheng', serif;
+    --font-zh-body: 'LXGW WenKai', 'Source Han Serif SC', serif;
+    --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-theme="grimoire"][data-mode="day"] {
+    --paper-base:   oklch(0.86 0.040 70);
+    --paper-warm:   oklch(0.80 0.060 60);
+    --paper-deep:   oklch(0.50 0.080 45);
+    --ink:          oklch(0.18 0.030 40);
+    --ink-soft:     oklch(0.32 0.050 35);
+    --ink-muted:    oklch(0.50 0.060 35);
+    --primary:      oklch(0.42 0.16 27);
+    --primary-soft: oklch(0.55 0.18 27);
+    --gold:         oklch(0.62 0.13 70);
+    --gold-deep:    oklch(0.45 0.12 65);
+    --candle-flame: oklch(0.85 0.18 70);
+    --vine:         oklch(0.32 0.08 130);
+    --vine-glow:    oklch(0.45 0.12 130);
+    --vine-stroke:  oklch(0.30 0.10 135 / 0.65);
+    --shadow-soft:  0 4px 16px oklch(0.18 0.05 30 / 0.18);
+    --shadow-deep:  0 18px 48px oklch(0.18 0.05 30 / 0.28);
+    --rule:         oklch(0.55 0.10 50 / 0.32);
+}
+[data-theme="grimoire"][data-mode="night"] {
+    --paper-base:   oklch(0.18 0.030 35);
+    --paper-warm:   oklch(0.24 0.050 30);
+    --paper-deep:   oklch(0.10 0.030 30);
+    --ink:          oklch(0.92 0.020 80);
+    --ink-soft:     oklch(0.78 0.030 78);
+    --ink-muted:    oklch(0.62 0.030 75);
+    --primary:      oklch(0.78 0.18 50);
+    --primary-soft: oklch(0.85 0.15 55);
+    --gold:         oklch(0.85 0.15 78);
+    --gold-deep:    oklch(0.62 0.13 78);
+    --candle-flame: oklch(0.92 0.20 75);
+    --vine:         oklch(0.85 0.18 195);
+    --vine-glow:    oklch(0.82 0.20 195);
+    --vine-stroke:  oklch(0.85 0.18 195 / 0.85);
+    --shadow-soft:  0 4px 16px oklch(0.04 0.04 260 / 0.55);
+    --shadow-deep:  0 18px 48px oklch(0.04 0.04 260 / 0.65);
+    --rule:         oklch(0.62 0.13 78 / 0.32);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
+body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    transition: background 1.2s var(--ease-quart), color 1.2s var(--ease-quart);
+    background:
+        radial-gradient(ellipse 600px 400px at 18% 22%, oklch(0.62 0.10 50 / 0.18), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 78% 18%, oklch(0.68 0.08 60 / 0.14), transparent 65%),
+        radial-gradient(ellipse 700px 500px at 30% 78%, oklch(0.58 0.12 45 / 0.16), transparent 60%),
+        radial-gradient(ellipse 400px 300px at 88% 70%, oklch(0.55 0.10 40 / 0.15), transparent 65%),
+        linear-gradient(180deg, oklch(0.84 0.050 75) 0%, oklch(0.79 0.065 65) 50%, oklch(0.74 0.080 55) 100%);
+}
+[data-mode="night"] body {
+    background:
+        radial-gradient(ellipse 600px 400px at 18% 22%, oklch(0.30 0.06 30 / 0.4), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 78% 18%, oklch(0.28 0.05 35 / 0.35), transparent 65%),
+        radial-gradient(ellipse 700px 500px at 30% 78%, oklch(0.26 0.06 40 / 0.4), transparent 60%),
+        linear-gradient(180deg, oklch(0.16 0.030 35), oklch(0.12 0.040 28));
+}
+
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background:
+        radial-gradient(ellipse at center, transparent 0%, transparent 55%, oklch(0.32 0.08 30 / 0.18) 85%, oklch(0.18 0.06 25 / 0.42) 100%),
+        radial-gradient(ellipse at 50% 30%, oklch(0.92 0.06 78 / 0.22) 0%, transparent 60%);
+    mix-blend-mode: multiply;
+}
+[data-mode="night"] body::before {
+    background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, oklch(0.05 0.04 30 / 0.55) 90%, oklch(0.02 0.04 25 / 0.85) 100%);
+    mix-blend-mode: normal;
+}
+
+body::after {
+    content: ''; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='12'/><feColorMatrix values='0 0 0 0 0.30   0 0 0 0 0.20   0 0 0 0 0.12   0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 400px;
+    opacity: 0.5; mix-blend-mode: multiply;
+}
+[data-mode="night"] body::after { mix-blend-mode: screen; opacity: 0.18; }
+
+/* Banner top */
+.banner {
+    position: relative; z-index: 5;
+    width: 100%; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+}
+.banner::before, .banner::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 20%, var(--gold-deep) 80%, transparent);
+}
+.banner::before { bottom: 8px; }
+.banner::after  { bottom: 12px; opacity: 0.55; }
+.banner-cap {
+    width: 56px; height: 50px; flex-shrink: 0;
+    background: url("../../res/grimoire/cap-tl.png") no-repeat center;
+    background-size: contain;
+}
+.banner-cap.right { background-image: url("../../res/grimoire/cap-tr.png"); }
+.banner-title {
+    font-family: var(--font-zh-hand);
+    font-size: 22px; color: var(--primary);
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.55);
+}
+.banner-title .sub {
+    font-family: var(--font-display); font-size: 11px; font-style: italic;
+    color: var(--ink-muted); letter-spacing: 0.1em;
+    margin-left: 12px; text-transform: uppercase;
+}
+.banner-back {
+    font-family: var(--font-script); font-size: 16px;
+    color: var(--ink-muted); text-decoration: none; padding: 4px 12px;
+    border: 1px dashed var(--rule); border-radius: 1px;
+    transition: color 0.3s var(--ease-quart), border-color 0.3s var(--ease-quart);
+}
+.banner-back:hover { color: var(--primary); border-color: var(--primary); }
+
+/* Footer band */
+.footer-band {
+    position: relative; z-index: 5;
+    width: 100%; padding: 18px 24px;
+    text-align: center;
+    font-family: var(--font-display); font-size: 12px; font-style: italic;
+    color: var(--ink-muted); letter-spacing: 0.05em;
+}
+.footer-band::before {
+    content: ''; position: absolute; top: 0; left: 16%; right: 16%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 30%, var(--gold-deep) 70%, transparent);
+    opacity: 0.55;
+}
+
+/* Candle (theme toggle) */
+.candle {
+    position: fixed; top: 70px; right: 28px;
+    width: 56px; height: 96px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 50;
+}
+.candle svg { width: 100%; height: 100%; overflow: visible; }
+.candle .body { fill: oklch(0.94 0.04 70); stroke: oklch(0.55 0.06 60); stroke-width: 0.8; }
+.candle .drip { fill: oklch(0.85 0.05 65); }
+.candle .wick { stroke: oklch(0.20 0.03 50); stroke-width: 1.4; fill: none; }
+.candle .flame {
+    fill: var(--candle-flame); transform-origin: center bottom;
+    opacity: 0; transition: opacity 0.6s var(--ease-quart);
+}
+[data-mode="night"] .candle .flame {
+    opacity: 1; animation: gflicker 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px var(--candle-flame));
+}
+@keyframes gflicker {
+    0%,100% { transform: scale(1, 1); }
+    25%     { transform: scale(1.06, 0.96); }
+    50%     { transform: scale(0.95, 1.05); }
+    75%     { transform: scale(1.04, 0.98); }
+}
+.candle .glow { fill: var(--candle-flame); opacity: 0; transition: opacity 0.6s var(--ease-quart); }
+[data-mode="night"] .candle .glow { opacity: 0.22; }
+
+/* Console crystal */
+.console {
+    position: fixed; bottom: 60px; left: 28px;
+    width: 56px; height: 56px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 50;
+}
+.console svg { width: 100%; height: 100%; overflow: visible; }
+.console .crystal {
+    fill: oklch(0.78 0.10 230 / 0.65); stroke: var(--gold-deep);
+    stroke-width: 1; animation: gpulse 3.4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px oklch(0.18 0.05 30 / 0.35));
+}
+[data-mode="night"] .console .crystal {
+    fill: oklch(0.85 0.18 195 / 0.45); stroke: var(--vine);
+    filter: drop-shadow(0 0 8px var(--vine-glow));
+}
+@keyframes gpulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; transform: scale(1.06); } }
+
+/* Robot 小林 */
+.robot {
+    position: fixed; bottom: 60px; right: 28px;
+    width: 64px; height: 80px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 50;
+}
+.robot svg {
+    width: 100%; height: 100%; overflow: visible;
+    filter: drop-shadow(0 6px 14px oklch(0.18 0.05 30 / 0.30));
+}
+[data-mode="night"] .robot svg {
+    filter: drop-shadow(0 6px 14px oklch(0.04 0.04 260 / 0.55))
+            drop-shadow(0 0 6px oklch(0.85 0.18 195 / 0.4));
+}
+.robot .body { fill: oklch(0.55 0.05 60); stroke: oklch(0.30 0.05 55); stroke-width: 0.8; }
+.robot .belly { fill: oklch(0.78 0.06 75); }
+.robot .gear { fill: oklch(0.72 0.13 80); transform-origin: center; animation: rotate-slow 12s linear infinite; }
+@keyframes rotate-slow { to { transform: rotate(360deg); } }
+.robot .eye { fill: oklch(0.18 0.03 50); }
+[data-mode="night"] .robot .eye { fill: oklch(0.85 0.18 195); filter: drop-shadow(0 0 4px var(--vine-glow)); }
+
+/* Search overlay */
+.search-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: oklch(0.10 0.04 30 / 0.62); backdrop-filter: blur(4px);
+    display: none; align-items: flex-start; justify-content: center; padding-top: 12vh;
+}
+.search-overlay.open { display: flex; }
+.search-panel {
+    width: min(640px, 90vw);
+    background: linear-gradient(180deg, oklch(0.94 0.04 80 / 0.96), oklch(0.86 0.05 70 / 0.96));
+    border: 1px solid var(--gold-deep); border-radius: 2px;
+    padding: 22px 26px; box-shadow: var(--shadow-deep);
+    font-family: var(--font-display); color: var(--ink);
+}
+[data-mode="night"] .search-panel {
+    background: linear-gradient(180deg, oklch(0.16 0.04 260 / 0.95), oklch(0.10 0.03 260 / 0.95));
+    border-color: var(--vine);
+    box-shadow: var(--shadow-deep), 0 0 24px oklch(0.85 0.18 195 / 0.30);
+}
+.search-input {
+    width: 100%; font-family: var(--font-display); font-size: 18px; padding: 8px 0;
+    background: transparent; border: none; border-bottom: 1px dashed var(--ink-muted);
+    color: var(--ink); outline: none; font-style: italic;
+}
+
+/* Preview bar */
+.preview-bar {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted);
+    background: oklch(0.92 0.04 80 / 0.65); padding: 5px 10px; border-radius: 1px;
+    z-index: 100; border: 1px solid var(--gold-deep); backdrop-filter: blur(6px);
+}
+[data-mode="night"] .preview-bar {
+    background: oklch(0.20 0.04 35 / 0.7); border-color: var(--vine);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .candle .flame, .robot .gear, .console .crystal { animation: none; }
+    body { transition: none; }
+}

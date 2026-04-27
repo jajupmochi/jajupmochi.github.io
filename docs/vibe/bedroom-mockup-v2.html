@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en" data-theme="grimoire" data-mode="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bedroom mockup v2 — 卧室 / About Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<link rel="stylesheet" href="_grimoire-shared.css">
+<style>
+.stage {
+    position: relative; z-index: 4;
+    max-width: 1280px; margin: 0 auto;
+    padding: 30px 60px 60px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px; align-items: stretch;
+}
+/* Bedroom isometric scene (left) */
+.scene {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 30% 28%, oklch(0.92 0.040 75 / 0.95), oklch(0.86 0.050 70 / 0.85));
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: var(--shadow-deep);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+[data-mode="night"] .scene {
+    background: linear-gradient(180deg, oklch(0.22 0.04 35 / 0.92), oklch(0.16 0.04 35 / 0.85));
+    border-color: oklch(0.62 0.13 78 / 0.45);
+}
+.scene::before {
+    content: ''; position: absolute; inset: 14px;
+    border: 1px dashed var(--rule); pointer-events: none;
+}
+.scene svg { width: 100%; height: 100%; }
+/* Notebook side (right) — about-me content */
+.notebook {
+    background:
+        repeating-linear-gradient(180deg, transparent 0, transparent 30px, oklch(0.45 0.10 50 / 0.06) 30px, oklch(0.45 0.10 50 / 0.06) 31px),
+        radial-gradient(ellipse at 30% 28%, oklch(0.92 0.040 75) 0%, oklch(0.86 0.050 70) 70%);
+    border: 1px solid var(--rule);
+    padding: 28px 32px; border-radius: 2px;
+    box-shadow: var(--shadow-deep);
+    transform: rotate(-0.5deg);
+    position: relative;
+}
+[data-mode="night"] .notebook {
+    background: linear-gradient(180deg, oklch(0.22 0.04 35 / 0.85), oklch(0.16 0.04 35 / 0.95));
+    border-color: oklch(0.62 0.13 78 / 0.45);
+}
+.notebook::before { content:''; position:absolute; inset:14px; border:1px dashed var(--rule); pointer-events:none; }
+.overline { font-family: var(--font-script); font-size: 18px; color: var(--ink-muted); font-style: italic; }
+.title-zh { font-family: var(--font-zh-hand); font-size: 38px; color: var(--ink); margin: 6px 0 4px; line-height: 1; }
+.title-en { font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--primary); }
+.about-bullets { margin: 18px 0; font-family: var(--font-display); font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
+.about-bullets li { list-style: none; padding-left: 22px; position: relative; margin-bottom: 6px; }
+.about-bullets li::before { content: '•'; position: absolute; left: 0; color: var(--primary); font-size: 18px; line-height: 1; top: 2px; }
+.about-bullets em { color: var(--primary); font-style: italic; font-weight: 600; }
+.about-sig { margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--rule); font-family: var(--font-script); font-size: 17px; color: var(--ink-muted); font-style: italic; text-align: right; }
+/* SVG bedroom interactive hotspots */
+.hot { cursor: pointer; transition: filter 0.3s var(--ease-quart); }
+.hot:hover { filter: brightness(1.15) drop-shadow(0 0 8px oklch(0.62 0.13 70 / 0.5)); }
+[data-mode="night"] .hot:hover { filter: brightness(1.3) drop-shadow(0 0 10px var(--vine-glow)); }
+</style>
+</head>
+<body>
+<div class="preview-bar">bedroom-mockup-v2 · grimoire <span id="modeBadge">day</span> · click furniture · candle/console/小林 active</div>
+
+<header class="banner">
+    <div class="banner-cap"></div>
+    <h1 class="banner-title">卧室 <span class="sub">/ The Bedroom — About Me</span></h1>
+    <a class="banner-back" href="world-overview-mockup-v2.html">← back to world</a>
+</header>
+
+<button class="candle" type="button" onclick="toggleMode()" aria-label="Toggle theme">
+<svg viewBox="0 0 60 100"><circle class="glow" cx="30" cy="22" r="42"/><path class="flame" d="M30 8 C24 14 24 22 28 28 C28 32 32 32 32 28 C36 22 36 14 30 8 Z"/><line class="wick" x1="30" y1="28" x2="30" y2="36"/><ellipse class="drip" cx="30" cy="36" rx="14" ry="3"/><rect class="body" x="18" y="36" width="24" height="56" rx="2"/><ellipse cx="30" cy="92" rx="22" ry="4" fill="oklch(0.55 0.10 60)"/></svg>
+</button>
+<button class="console" type="button" onclick="document.getElementById('searchOverlay').classList.add('open');setTimeout(()=>document.querySelector('.search-input').focus(),100)" aria-label="Search">
+<svg viewBox="0 0 56 56"><defs><radialGradient id="cgrad" cx="0.4" cy="0.3"><stop offset="0%" stop-color="oklch(0.95 0.10 220)"/><stop offset="60%" stop-color="oklch(0.70 0.14 230)"/><stop offset="100%" stop-color="oklch(0.40 0.14 240)"/></radialGradient></defs><polygon class="crystal" points="28,4 50,28 28,52 6,28" fill="url(#cgrad)"/><circle cx="28" cy="28" r="4" fill="oklch(0.96 0.06 80)" opacity="0.85"/></svg>
+</button>
+<button class="robot" type="button" onclick="alert('小林：『要去哪里？』')" aria-label="Talk to 小林">
+<svg viewBox="0 0 72 88"><ellipse class="body" cx="36" cy="50" rx="26" ry="32"/><ellipse class="belly" cx="36" cy="58" rx="16" ry="20"/><path d="M16 28 L14 14 L24 22 Z" fill="oklch(0.40 0.07 55)"/><path d="M56 28 L58 14 L48 22 Z" fill="oklch(0.40 0.07 55)"/><circle cx="28" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle cx="44" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle class="eye" cx="28" cy="38" r="3"/><circle class="eye" cx="44" cy="38" r="3"/><path d="M36 44 L33 50 L39 50 Z" fill="oklch(0.62 0.13 70)"/><g transform="translate(36 60)" class="gear"><circle r="6" fill="oklch(0.72 0.13 80)"/></g></svg>
+</button>
+
+<main class="stage">
+
+    <!-- LEFT: bedroom scene SVG -->
+    <div class="scene">
+        <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="wallpaper" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <rect width="40" height="40" fill="oklch(0.78 0.040 78)"/>
+                    <circle cx="20" cy="20" r="2" fill="oklch(0.55 0.06 60)" opacity="0.18"/>
+                </pattern>
+                <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="oklch(0.42 0.08 40)"/>
+                    <stop offset="100%" stop-color="oklch(0.30 0.06 35)"/>
+                </linearGradient>
+            </defs>
+            <!-- Wall -->
+            <rect x="0" y="0" width="600" height="280" fill="url(#wallpaper)"/>
+            <!-- Floor (perspective) -->
+            <polygon points="0,280 600,280 600,450 0,450" fill="oklch(0.50 0.06 50)"/>
+            <line x1="0" y1="280" x2="600" y2="280" stroke="oklch(0.30 0.06 35)" stroke-width="1.4"/>
+
+            <!-- Window with skyline of Bern -->
+            <g class="hot" onclick="alert('🪟 Window: looking out at Bern Old Town + Alps. In production this is animated weather/time.')">
+                <rect x="40" y="40" width="120" height="100" fill="oklch(0.78 0.06 230)" stroke="oklch(0.32 0.06 35)" stroke-width="3"/>
+                <line x1="100" y1="40" x2="100" y2="140" stroke="oklch(0.32 0.06 35)" stroke-width="2"/>
+                <line x1="40" y1="90" x2="160" y2="90" stroke="oklch(0.32 0.06 35)" stroke-width="2"/>
+                <!-- Mountains -->
+                <polygon points="40,140 70,100 90,115 110,90 130,110 160,140" fill="oklch(0.40 0.04 240 / 0.7)"/>
+                <polygon points="40,140 60,115 80,125 100,105 120,120 140,108 160,140" fill="oklch(0.32 0.04 240 / 0.55)"/>
+            </g>
+
+            <!-- Photo wall (career milestones) -->
+            <g class="hot" onclick="alert('📸 Photo wall: 6-9 career milestones (Bern / INSA / XJTU / conferences). Hover each = label + year.')">
+                <rect x="200" y="40" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(-3 230 65)"/>
+                <rect x="270" y="50" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(2 300 75)"/>
+                <rect x="340" y="40" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(-1 370 65)"/>
+                <rect x="200" y="110" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(2 230 135)"/>
+                <rect x="270" y="120" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(-2 300 145)"/>
+                <rect x="340" y="110" width="60" height="50" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5" transform="rotate(1 370 135)"/>
+                <!-- Sketched faces/scenes inside frames -->
+                <circle cx="230" cy="62" r="8" fill="oklch(0.62 0.06 60)"/>
+                <circle cx="300" cy="73" r="8" fill="oklch(0.55 0.10 50)"/>
+                <circle cx="370" cy="62" r="8" fill="oklch(0.42 0.08 40)"/>
+                <text x="230" y="160" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)" font-style="italic">Bern</text>
+                <text x="300" y="170" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)" font-style="italic">INSA</text>
+                <text x="370" y="160" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)" font-style="italic">XJTU</text>
+            </g>
+
+            <!-- TV on the right wall -->
+            <g class="hot" onclick="alert('📺 TV: invited talks playlist (GRAPHADON, ACPR, S+SSPR…). Click → modal with player.')">
+                <rect x="430" y="60" width="130" height="84" fill="oklch(0.16 0.04 30)" stroke="oklch(0.30 0.06 55)" stroke-width="3"/>
+                <rect x="436" y="66" width="118" height="72" fill="oklch(0.20 0.04 240)"/>
+                <text x="495" y="106" text-anchor="middle" font-family="serif" font-size="14" fill="oklch(0.78 0.10 230)">▶</text>
+                <text x="495" y="155" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.50 0.06 35)">Invited talks</text>
+            </g>
+
+            <!-- World map on wall (under photo wall) -->
+            <g class="hot" onclick="alert('🗺 World map: every place she has worked / collaborated. Pins glow on hover.')">
+                <rect x="40" y="180" width="160" height="80" fill="oklch(0.92 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="1.5"/>
+                <!-- Continents -->
+                <path d="M50 200 Q70 195 90 200 Q110 210 130 205 Q150 198 170 205 Q165 220 150 230 Q125 225 100 232 Q70 230 55 225 Q48 215 50 200 Z" fill="oklch(0.62 0.06 60 / 0.5)" stroke="oklch(0.45 0.10 50)" stroke-width="0.6"/>
+                <!-- Pins -->
+                <circle cx="100" cy="218" r="3" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="130" cy="225" r="3" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="80" cy="222" r="3" fill="oklch(0.42 0.16 27)"/>
+                <text x="120" y="250" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.50 0.06 35)">Bern · Rouen · Xi'an · …</text>
+            </g>
+
+            <!-- Bed with sleeping cat -->
+            <g class="hot" onclick="alert('🐱 The cat stretches awake. (Easter egg.)')">
+                <rect x="220" y="290" width="220" height="100" fill="oklch(0.62 0.06 60)" stroke="oklch(0.30 0.06 55)" stroke-width="2"/>
+                <rect x="220" y="290" width="220" height="36" fill="oklch(0.86 0.04 80)"/>
+                <rect x="226" y="294" width="60" height="20" fill="oklch(0.94 0.04 80)"/>
+                <!-- Cat sleeping -->
+                <ellipse cx="380" cy="320" rx="32" ry="14" fill="oklch(0.40 0.04 55)"/>
+                <circle cx="402" cy="316" r="10" fill="oklch(0.40 0.04 55)"/>
+                <path d="M396 308 L394 302 L400 305 Z" fill="oklch(0.40 0.04 55)"/>
+                <path d="M408 308 L410 302 L404 305 Z" fill="oklch(0.40 0.04 55)"/>
+                <line x1="412" y1="316" x2="416" y2="320" stroke="oklch(0.40 0.04 55)" stroke-width="2"/>
+            </g>
+
+            <!-- Desk with computer (right) -->
+            <g class="hot" onclick="alert('💻 Computer icons: CV / Email / GitHub / Twitter / Bilibili. Each click = corresponding action.')">
+                <rect x="460" y="320" width="120" height="64" fill="url(#wood)"/>
+                <rect x="476" y="290" width="88" height="50" fill="oklch(0.92 0.04 75)" stroke="oklch(0.30 0.06 35)" stroke-width="2"/>
+                <rect x="480" y="294" width="80" height="42" fill="oklch(0.78 0.06 230 / 0.55)"/>
+                <!-- Icons (small grid) -->
+                <g font-family="serif" font-size="9" fill="oklch(0.30 0.06 35)" text-anchor="middle">
+                    <circle cx="494" cy="304" r="5" fill="oklch(0.42 0.16 27)"/><text x="494" y="307" fill="white">📄</text>
+                    <circle cx="514" cy="304" r="5" fill="oklch(0.40 0.14 240)"/><text x="514" y="307" fill="white">@</text>
+                    <circle cx="534" cy="304" r="5" fill="oklch(0.20 0.04 240)"/><text x="534" y="307" fill="white">G</text>
+                    <circle cx="554" cy="304" r="5" fill="oklch(0.78 0.10 230)"/><text x="554" y="307" fill="white">Tw</text>
+                    <circle cx="494" cy="324" r="5" fill="oklch(0.55 0.18 27)"/><text x="494" y="327" fill="white">Bi</text>
+                </g>
+                <!-- Stand -->
+                <rect x="510" y="334" width="20" height="6" fill="oklch(0.30 0.06 35)"/>
+            </g>
+
+            <!-- Animal-room door (left) -->
+            <g class="hot" onclick="window.location.href='world-overview-mockup-v2.html'">
+                <rect x="60" y="290" width="60" height="120" fill="url(#wood)" stroke="oklch(0.18 0.04 30)" stroke-width="2"/>
+                <circle cx="105" cy="350" r="3" fill="oklch(0.62 0.13 70)"/>
+                <text x="90" y="380" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.94 0.04 75)">伙伴间 →</text>
+            </g>
+
+            <!-- Skylight to constellation (small, top-center) -->
+            <g class="hot" onclick="alert('🌌 Look up → celestial ceiling with research keyword constellations.')">
+                <ellipse cx="500" cy="20" rx="40" ry="16" fill="oklch(0.18 0.04 260)" stroke="oklch(0.55 0.10 50)" stroke-width="2"/>
+                <circle cx="490" cy="18" r="1" fill="oklch(0.92 0.04 80)"/>
+                <circle cx="500" cy="22" r="1.4" fill="oklch(0.92 0.04 80)"/>
+                <circle cx="510" cy="16" r="1" fill="oklch(0.92 0.04 80)"/>
+                <circle cx="520" cy="22" r="1" fill="oklch(0.92 0.04 80)"/>
+                <text x="500" y="42" text-anchor="middle" font-family="serif" font-size="8" font-style="italic" fill="oklch(0.55 0.06 35)">↑ skylight</text>
+            </g>
+        </svg>
+    </div>
+
+    <!-- RIGHT: about-me notebook -->
+    <article class="notebook">
+        <p class="overline">a note pinned above the bed · 床头便签</p>
+        <h1 class="title-zh">关于林林</h1>
+        <p class="title-en">about Linlin</p>
+        <ul class="about-bullets">
+            <li><em>📍</em> Living in <em>Bern</em>, Switzerland — researching at Pattern Recognition Group, University of Bern.</li>
+            <li><em>🛠</em> Author of <em>graphkit-learn</em> (graph kernel toolkit, 128⭐ on GitHub).</li>
+            <li><em>🧪</em> SNSF + Innosuisse + ANR funded; <em>ICPR 2026</em> paper accepted.</li>
+            <li><em>🤖</em> Working at the intersection of <em>Graph ML</em>, <em>GNNs</em>, <em>LLM agents</em>, and chemistry.</li>
+            <li><em>🎓</em> Ph.D. INSA Rouen + Université Paris-Saclay; M.Sc. + B.S. Xi'an Jiaotong U. CN patent CN106376041B.</li>
+            <li><em>🎯</em> Job-hunting: ML Research Scientist (full-time, CH/EU/CN).</li>
+        </ul>
+        <p class="about-sig">— from the bedroom of an apprentice<br>still looking up at the ceiling stars</p>
+    </article>
+</main>
+
+<footer class="footer-band">魔法师之书 · 卧室 — about me · click any object for detail · 小林 will guide you back</footer>
+
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="search-panel">
+        <input class="search-input" type="text" placeholder="召唤一个房间…">
+    </div>
+</div>
+
+<script>
+function toggleMode() {
+    const r = document.documentElement;
+    r.setAttribute('data-mode', r.getAttribute('data-mode')==='day'?'night':'day');
+    document.getElementById('modeBadge').textContent = r.getAttribute('data-mode');
+}
+document.addEventListener('keydown', e => {
+    if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchOverlay').classList.add('open');}
+    if(e.key==='c'||e.key==='C')if(!document.querySelector('.search-overlay.open'))toggleMode();
+    if(e.key==='Escape')document.getElementById('searchOverlay').classList.remove('open');
+});
+</script>
+</body>
+</html>

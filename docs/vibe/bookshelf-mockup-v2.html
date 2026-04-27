@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-theme="grimoire" data-mode="day">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bookshelf mockup v2 — 书架 / Publications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<link rel="stylesheet" href="_grimoire-shared.css">
+<style>
+.stage { position: relative; z-index: 4; max-width: 1280px; margin: 0 auto; padding: 30px 60px 60px; }
+.shelf-card {
+    background: radial-gradient(ellipse at 30% 28%, oklch(0.92 0.040 75 / 0.95), oklch(0.86 0.050 70 / 0.85));
+    border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: var(--shadow-deep); padding: 28px;
+    position: relative; transform: rotate(-0.3deg);
+}
+.shelf-card::before { content:''; position:absolute; inset:14px; border:1px dashed var(--rule); pointer-events:none; }
+[data-mode="night"] .shelf-card { background: linear-gradient(180deg, oklch(0.22 0.04 35 / 0.92), oklch(0.16 0.04 35 / 0.85)); border-color: oklch(0.62 0.13 78 / 0.45); }
+.shelf-title { font-family: var(--font-zh-hand); font-size: 32px; color: var(--ink); }
+.shelf-sub { font-family: var(--font-display); font-size: 14px; font-style: italic; color: var(--ink-muted); margin-top: 4px; }
+.shelves { display: grid; grid-template-rows: repeat(3, 100px); gap: 8px; margin-top: 24px; }
+.shelf-row {
+    background: linear-gradient(180deg, oklch(0.30 0.06 35), oklch(0.22 0.04 30));
+    border: 1px solid oklch(0.18 0.04 30); border-radius: 1px;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: 0 14px 4px; gap: 5px;
+    box-shadow: inset 0 -3px 0 oklch(0.42 0.08 40), inset 0 0 30px oklch(0.05 0.02 30 / 0.5);
+}
+.book {
+    height: 88px; min-width: 18px; border-radius: 1px 1px 0 0;
+    cursor: pointer; transition: transform 0.3s var(--ease-quart), filter 0.3s var(--ease-quart);
+    position: relative; box-shadow: 0 0 4px oklch(0.05 0.02 30 / 0.4);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 4px;
+    font-family: var(--font-display); font-style: italic; font-size: 9px;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    color: oklch(0.92 0.04 80); letter-spacing: 0.05em;
+}
+.book:hover { transform: translateY(-12px) scale(1.04); filter: drop-shadow(0 0 12px oklch(0.62 0.13 70 / 0.6)); z-index: 4; }
+[data-mode="night"] .book:hover { filter: drop-shadow(0 0 12px var(--vine-glow)); }
+.book.thesis { width: 36px; height: 96px; background: linear-gradient(180deg, oklch(0.18 0.10 25), oklch(0.10 0.08 20)); border: 2px solid var(--gold); }
+.book.thesis::after { content: '林'; position: absolute; top: 12px; left: 50%; transform: translateX(-50%) rotate(180deg); writing-mode: horizontal-tb; font-family: var(--font-zh-hand); font-size: 18px; color: var(--gold); }
+/* Stats panel — small bronze plaques on the wall above shelves */
+.stats { display: flex; gap: 18px; margin: 12px 0 24px; justify-content: center; flex-wrap: wrap; }
+.stat {
+    background: linear-gradient(135deg, oklch(0.62 0.13 70), oklch(0.45 0.12 65));
+    border: 1px solid oklch(0.32 0.10 65); padding: 8px 14px; border-radius: 2px;
+    font-family: var(--font-display); color: oklch(0.18 0.04 30);
+    text-align: center; box-shadow: var(--shadow-soft);
+}
+.stat .num { font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; }
+.stat .lab { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+.ladder {
+    position: absolute; right: 16px; top: 80px; bottom: 60px; width: 30px;
+    background: linear-gradient(180deg, oklch(0.42 0.08 40) 0%, oklch(0.32 0.06 35) 100%);
+    opacity: 0.7;
+    clip-path: polygon(0 0, 30% 0, 30% 100%, 0% 100%, 0% 90%, 30% 90%, 30% 90%, 70% 90%, 100% 100%, 70% 100%, 70% 0, 100% 0, 100% 10%, 70% 10%, 30% 10%);
+}
+.fact { font-family: var(--font-script); font-size: 14px; color: var(--ink-muted); font-style: italic; text-align: center; margin: 14px 0; }
+</style>
+</head>
+<body>
+<div class="preview-bar">bookshelf-mockup-v2 · grimoire <span id="modeBadge">day</span> · click books · candle/console/小林 active</div>
+
+<header class="banner">
+    <div class="banner-cap"></div>
+    <h1 class="banner-title">书架 <span class="sub">/ The Bookshelf — Publications</span></h1>
+    <a class="banner-back" href="world-overview-mockup-v2.html">← back to world</a>
+</header>
+
+<button class="candle" type="button" onclick="toggleMode()" aria-label="Toggle theme">
+<svg viewBox="0 0 60 100"><circle class="glow" cx="30" cy="22" r="42"/><path class="flame" d="M30 8 C24 14 24 22 28 28 C28 32 32 32 32 28 C36 22 36 14 30 8 Z"/><line class="wick" x1="30" y1="28" x2="30" y2="36"/><ellipse class="drip" cx="30" cy="36" rx="14" ry="3"/><rect class="body" x="18" y="36" width="24" height="56" rx="2"/><ellipse cx="30" cy="92" rx="22" ry="4" fill="oklch(0.55 0.10 60)"/></svg>
+</button>
+<button class="console" type="button" onclick="document.getElementById('searchOverlay').classList.add('open')" aria-label="Search">
+<svg viewBox="0 0 56 56"><defs><radialGradient id="cgrad"><stop offset="0%" stop-color="oklch(0.95 0.10 220)"/><stop offset="100%" stop-color="oklch(0.40 0.14 240)"/></radialGradient></defs><polygon class="crystal" points="28,4 50,28 28,52 6,28" fill="url(#cgrad)"/></svg>
+</button>
+<button class="robot" type="button" onclick="alert('小林：『主人收藏了 9 篇论文 + 1 本博士论文』')" aria-label="Talk to 小林">
+<svg viewBox="0 0 72 88"><ellipse class="body" cx="36" cy="50" rx="26" ry="32"/><ellipse class="belly" cx="36" cy="58" rx="16" ry="20"/><circle cx="28" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle cx="44" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle class="eye" cx="28" cy="38" r="3"/><circle class="eye" cx="44" cy="38" r="3"/><path d="M36 44 L33 50 L39 50 Z" fill="oklch(0.62 0.13 70)"/><g transform="translate(36 60)" class="gear"><circle r="6" fill="oklch(0.72 0.13 80)"/></g></svg>
+</button>
+
+<main class="stage">
+    <article class="shelf-card">
+        <header style="text-align:center;">
+            <p style="font-family:var(--font-script);font-size:18px;color:var(--ink-muted);font-style:italic;">an overflowing wood shelf · 满架的书</p>
+            <h1 class="shelf-title">论文书架</h1>
+            <p class="shelf-sub">Publications · most cited / featured / by year — hover any spine</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat"><div class="num">9</div><div class="lab">papers</div></div>
+            <div class="stat"><div class="num">~280</div><div class="lab">citations</div></div>
+            <div class="stat"><div class="num">6</div><div class="lab">h-index</div></div>
+            <div class="stat"><div class="num">5+</div><div class="lab">grants</div></div>
+            <div class="stat"><div class="num">1</div><div class="lab">thesis</div></div>
+        </div>
+
+        <p class="fact">"The book is a small temple, light enough to carry."</p>
+
+        <div class="shelves">
+            <div class="shelf-row">
+                <div class="book" style="background:oklch(0.42 0.16 27);width:22px" onclick="alert('Paper: A Metric Learning Approach to GED · ICPR 2020')">A. Metric · 2020</div>
+                <div class="book" style="background:oklch(0.32 0.10 145);width:18px" onclick="alert('Paper: Graph Edit Cost Functions for ELM · PRL 2021')">PRL · 2021</div>
+                <div class="book" style="background:oklch(0.38 0.12 250);width:22px" onclick="alert('Paper: graphkit-learn · CBM 2021')">graphkit · CBM 2021</div>
+                <div class="book" style="background:oklch(0.62 0.13 70);width:18px" onclick="alert('Paper: ESWA 2022')">ESWA · 2022</div>
+                <div class="book" style="background:oklch(0.30 0.10 295);width:22px" onclick="alert('Paper: J24 · Most Cited')">J24</div>
+                <div class="book" style="background:oklch(0.45 0.16 27);width:24px" onclick="alert('Paper: Workshop · 2021')">Workshop</div>
+                <div class="book thesis" onclick="alert('Ph.D. Thesis: Bridging Graph and Kernel Spaces — A Pre-image Perspective. INSA Rouen + Université Paris-Saclay, 2021.')"></div>
+                <div class="book" style="background:oklch(0.40 0.14 240);width:22px" onclick="alert('Paper: Swiss River Network · accepted ICPR 2026')">ICPR · 2026</div>
+                <div class="book" style="background:oklch(0.32 0.10 145);width:18px" onclick="alert('Paper: AAAI 2025 (under review)')">AAAI 2025</div>
+                <div class="book" style="background:oklch(0.42 0.16 27);width:24px" onclick="alert('Paper: graphkit-learn extension WWW 2023')">WWW 2023</div>
+            </div>
+            <div class="shelf-row">
+                <div class="book" style="background:oklch(0.32 0.10 145);width:24px" onclick="alert('Paper: GED Workshop')">GED · 2022</div>
+                <div class="book" style="background:oklch(0.42 0.16 27);width:18px" onclick="alert('Paper: SAS')">SAS</div>
+                <div class="book" style="background:oklch(0.38 0.12 250);width:22px" onclick="alert('Paper: SSPR 2020')">SSPR · 2020</div>
+                <div class="book" style="background:oklch(0.62 0.13 70);width:18px" onclick="alert('Paper: APR')">APR</div>
+                <div class="book" style="background:oklch(0.30 0.10 295);width:22px" onclick="alert('Patent: CN106376041B (2014)')">Patent · 2014</div>
+                <div class="book" style="background:oklch(0.50 0.06 50);width:18px" onclick="alert('preprint: arXiv 2305.x')">arXiv 2305</div>
+            </div>
+            <div class="shelf-row">
+                <div class="book" style="background:oklch(0.42 0.16 27);width:22px" onclick="alert('Notes on the apprentice')">Notes</div>
+                <div class="book" style="background:oklch(0.32 0.10 145);width:18px" onclick="alert('Sketches')">Sketches</div>
+                <div class="book" style="background:oklch(0.62 0.13 70);width:24px" onclick="alert('Drafts in progress')">Drafts</div>
+                <span style="color:var(--ink-muted);font-style:italic;font-family:var(--font-script);writing-mode:vertical-rl;font-size:13px;padding:8px 4px;">— more shelves below —</span>
+            </div>
+        </div>
+
+        <p class="fact" style="margin-top:18px;">Click any spine to peek inside · 一本书一个故事</p>
+    </article>
+</main>
+
+<footer class="footer-band">魔法师之书 · 书架 — publications · 9 papers + 1 thesis tome</footer>
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)this.classList.remove('open')"><div class="search-panel"><input class="search-input" type="text" placeholder="召唤一篇论文…"></div></div>
+
+<script>
+function toggleMode(){const r=document.documentElement;r.setAttribute('data-mode',r.getAttribute('data-mode')==='day'?'night':'day');document.getElementById('modeBadge').textContent=r.getAttribute('data-mode');}
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchOverlay').classList.add('open');}if(e.key==='c'||e.key==='C')if(!document.querySelector('.search-overlay.open'))toggleMode();if(e.key==='Escape')document.getElementById('searchOverlay').classList.remove('open');});
+</script>
+</body>
+</html>
