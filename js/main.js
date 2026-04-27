@@ -222,91 +222,121 @@
             });
         });
         
-        // ========================================
-        // NEW WELCOME SYSTEM - CELEBRATION STYLE
-        // ========================================
+        // ============================================================
+        // Welcome system — Howler envelope + Postcard (Claude Design 2Mve6nAdi82KG0RjWST3QQ).
+        //
+        // Phases (mirror React design):
+        //   Howler:    idle → opening → gone   (or returns to idle on skip)
+        //   Postcard:  closed → active → exiting    (skip path)
+        //                                  ↘ sending → sealing → owl → closed   (submit path)
+        //
+        // Backwards-compatible exports: `openGiftBox`, `submitWelcome`,
+        // `closeWelcomeWithBottle` keep their names so existing onclick=""
+        // attributes elsewhere in the page stay valid.
+        // ============================================================
+        // Tiny stamp SVG per theme — rendered into #welcomeStamp on open and
+        // when theme changes. Mirrors the design's <Stamp theme=... /> art.
+        const WP_STAMPS = {
+            ai: '<svg viewBox="0 0 40 48" width="40" height="48" aria-hidden="true"><defs><linearGradient id="sg-ai" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient></defs><rect x="2" y="2" width="36" height="44" rx="1" fill="url(#sg-ai)"/><g fill="none" stroke="#fff" stroke-width="1.2"><circle cx="12" cy="16" r="2.5"/><circle cx="28" cy="14" r="2.5"/><circle cx="20" cy="30" r="2.5"/><circle cx="30" cy="34" r="2.5"/><line x1="12" y1="16" x2="20" y2="30"/><line x1="28" y1="14" x2="20" y2="30"/><line x1="20" y1="30" x2="30" y2="34"/><line x1="28" y1="14" x2="12" y2="16"/></g></svg>',
+            academic: '<svg viewBox="0 0 40 48" width="40" height="48" aria-hidden="true"><rect x="2" y="2" width="36" height="44" rx="0" fill="#1e3a8a"/><rect x="4" y="4" width="32" height="40" rx="0" fill="none" stroke="#fdfbf5" stroke-width="0.5" stroke-dasharray="1 1"/><g fill="#fdfbf5"><path d="M8 22 L20 16 L32 22 L20 28 Z"/><path d="M12 26 V32 Q20 36 28 32 V26" fill="none" stroke="#fdfbf5" stroke-width="1.2"/><circle cx="30" cy="22" r="1.2"/></g></svg>',
+            industrial: '<svg viewBox="0 0 40 48" width="40" height="48" aria-hidden="true"><rect x="2" y="2" width="36" height="44" rx="0" fill="#f97316"/><g fill="none" stroke="#18181b" stroke-width="1.5"><circle cx="20" cy="24" r="10"/><path d="M20 12 V16 M20 32 V36 M8 24 H12 M28 24 H32 M11.5 15.5 L14 18 M26 30 L28.5 32.5 M11.5 32.5 L14 30 M26 18 L28.5 15.5"/><circle cx="20" cy="24" r="3" fill="#18181b"/></g></svg>',
+            fancy: '<svg viewBox="0 0 40 48" width="40" height="48" aria-hidden="true"><defs><linearGradient id="sg-fancy" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs><rect x="2" y="2" width="36" height="44" rx="3" fill="url(#sg-fancy)"/><g fill="#fff"><path d="M20 16 c -3 -6 -10 0 -6 4 c 2 2 6 6 6 10 c 0 -4 4 -8 6 -10 c 4 -4 -3 -10 -6 -4 Z"/><circle cx="12" cy="36" r="1"/><circle cx="28" cy="36" r="1.2"/><circle cx="16" cy="40" r="0.8"/></g></svg>',
+        };
+
+        function paintWelcomeStamp() {
+            const stampEl = document.getElementById('welcomeStamp');
+            if (!stampEl) return;
+            const theme = document.body.getAttribute('data-theme') || 'ai';
+            stampEl.innerHTML = WP_STAMPS[theme] || WP_STAMPS.ai;
+        }
+
         function openGiftBox() {
-            // Big confetti burst (lazy-loads canvas-confetti on first use)
-            loadConfetti().then(fn => fn({
-                particleCount: 150,
-                spread: 100,
-                origin: { x: 0.1, y: 0.8 }
-            }));
-            
-            // Show the postcard popup
+            const trigger = document.getElementById('celebrationTrigger');
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!trigger || !overlay) return;
+
+            // Already open? bail.
+            if (overlay.classList.contains('active')) return;
+
+            // Envelope burst → 550ms later show the postcard rising into view.
+            trigger.classList.remove('idle');
+            trigger.classList.add('opening');
+
             setTimeout(() => {
-                const overlay = document.getElementById('welcomeOverlay');
+                paintWelcomeStamp();
                 overlay.dataset.renderedAt = String(Date.now());
                 overlay.classList.add('active');
-            }, 300);
-            
-            // Hide the trigger
-            document.getElementById('celebrationTrigger').classList.add('hidden');
+                // Keep the envelope hidden underneath while postcard is open.
+                trigger.classList.add('hidden');
+            }, 550);
         }
-        
+
         function showWelcome() {
-            updateChatbotIcon();
-            if (localStorage.getItem('hasVisitedBefore')) {
-                document.getElementById('celebrationTrigger').classList.add('hidden');
+            // Returning visitors: hide the Howler entirely.
+            const trigger = document.getElementById('celebrationTrigger');
+            if (localStorage.getItem('hasVisitedBefore') && trigger) {
+                trigger.classList.add('hidden');
             }
         }
-        
-        function updateChatbotIcon() {
-            const theme = document.body.getAttribute('data-theme') || 'ai';
-            const icons = {
-                'ai': '👩‍💻',      // AI girl
-                'academic': '👨‍🔬', // Researcher
-                'industrial': '🤖', // Robot
-                'fancy': '😺'       // Cheshire cat
-            };
-            const iconEl = document.getElementById('chatbotIcon');
-            if (iconEl) iconEl.textContent = icons[theme] || '🤖';
-        }
-        
+
         function closeWelcomeWithBottle(submitted = false) {
             const overlay = document.getElementById('welcomeOverlay');
-            overlay.classList.add('closing');
+            const trigger = document.getElementById('celebrationTrigger');
+            if (!overlay) return;
 
-            // Small confetti for the bottle effect
-            setTimeout(() => {
-                loadConfetti().then(fn => fn({
-                    particleCount: 30,
-                    spread: 40,
-                    origin: { x: 0.7, y: 0.6 },
-                    colors: ['#3b82f6', '#06b6d4', '#10b981']
-                }));
-            }, 500);
+            // If we're already animating the post-submit sequence, don't restart.
+            if (overlay.classList.contains('sending') || overlay.classList.contains('sealing') || overlay.classList.contains('owl')) {
+                return;
+            }
+
+            // Skip path: slide the postcard back, return Howler to idle for retry.
+            overlay.classList.remove('active');
+            overlay.classList.add('exiting');
 
             setTimeout(() => {
-                overlay.classList.remove('active', 'closing');
-                if (submitted) {
-                    // Filled-in: remember the visit; gift box stays hidden.
+                overlay.classList.remove('exiting');
+                if (submitted && trigger) {
+                    // Submitted: remember the visit, keep Howler gone.
                     localStorage.setItem('hasVisitedBefore', 'true');
-                } else {
-                    // Skipped: gift box remains reachable for another try.
-                    document.getElementById('celebrationTrigger').classList.remove('hidden');
+                    trigger.classList.add('gone');
+                    trigger.classList.remove('hidden', 'opening', 'closing', 'idle');
+                } else if (trigger) {
+                    // Skipped: Howler returns to its idle shake for another try.
+                    trigger.classList.remove('hidden', 'opening', 'gone');
+                    trigger.classList.add('closing');
+                    requestAnimationFrame(() => {
+                        // Strip closing → idle so it shakes again.
+                        setTimeout(() => {
+                            trigger.classList.remove('closing');
+                            trigger.classList.add('idle');
+                        }, 700);
+                    });
                 }
-                updateChatbotIcon();
-            }, 1000);
+            }, 850);
         }
-        
+
         // Welcome-form backend endpoint (Google Apps Script Web App URL).
         // See setup/form-backend-google-sheets.md for how to create it.
         const WELCOME_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyAib-TkLQCntXowHS4b9kOj2xYToCgD00PVRu4tR5JXSqC8uG-jGxFf5NDUYJWdX2MKg/exec';
 
-        async function submitWelcome(e) {
-            e.preventDefault();
+        function submitWelcome(e) {
+            if (e && e.preventDefault) e.preventDefault();
+
+            const overlay = document.getElementById('welcomeOverlay');
+            const trigger = document.getElementById('celebrationTrigger');
+            if (!overlay) return false;
 
             // Anti-spam signals evaluated server-side in welcome-form-backend.gs.
             // See docs/setup/form-backend-google-sheets.md → "Security & privacy".
-            const overlay = document.getElementById('welcomeOverlay');
-            const renderedAt = parseInt(overlay?.dataset.renderedAt || '0', 10);
+            const renderedAt = parseInt(overlay.dataset.renderedAt || '0', 10);
             const dwellMs = renderedAt > 0 ? (Date.now() - renderedAt) : 0;
 
             const payload = {
-                name: document.getElementById('visitorName').value.trim(),
-                profession: document.getElementById('visitorProfession').value,
-                message: document.getElementById('visitorMessage').value.trim(),
+                name: document.getElementById('visitorName')?.value.trim() || '',
+                profession: document.getElementById('visitorProfession')?.value.trim() || '',
+                message: document.getElementById('visitorMessage')?.value.trim() || '',
+                signature: document.getElementById('visitorSignature')?.value.trim() || '',
+                contact: document.getElementById('visitorContact')?.value.trim() || '',
                 theme: document.body.getAttribute('data-theme') || 'ai',
                 locale: (typeof currentLang !== 'undefined' ? currentLang : document.documentElement.lang) || 'en',
                 userAgent: navigator.userAgent,
@@ -328,30 +358,44 @@
                 console.info('[welcome-form] endpoint not configured — submission discarded', payload);
             }
 
-            // Big celebration confetti
-            loadConfetti().then(fn => fn({
-                particleCount: 200,
-                spread: 120,
-                origin: { y: 0.5 }
-            }));
+            // Animation timeline (mirrors EnvelopeTrigger/WelcomePostcard React):
+            //   0ms     postcard folds (1.0s `wp-fold`)
+            //   1000ms  letter rises + wax stamp drops + presses + ring + text
+            //   2400ms  owl flies in, snatches letter (2.3s `wp-owl-fly`)
+            //   4700ms  cleanup, mark visited, Howler stays "gone"
+            overlay.classList.remove('active');
+            overlay.classList.add('sending');
 
-            // Thank you message — inherits theme colors from .welcome-postcard vars.
-            const [thanksTitle, thanksSubtitle] = await Promise.all([
-                t('welcome.thanks_title'),
-                t('welcome.thanks_subtitle')
-            ]);
-            const postcard = document.querySelector('.welcome-postcard');
-            postcard.innerHTML = `
-                <div style="text-align:center;padding:1.5rem 1rem;">
-                    <div style="font-size:2.5rem;margin-bottom:0.75rem;">✉️</div>
-                    <h2 style="color:var(--pc-text);margin:0 0 0.35rem;font-family:var(--font-display,inherit);font-weight:600;">${thanksTitle}</h2>
-                    <p style="color:var(--pc-text-muted);margin:0;font-size:0.9rem;">${thanksSubtitle}</p>
-                </div>
-            `;
+            setTimeout(() => {
+                overlay.classList.remove('sending');
+                overlay.classList.add('sealing');
+            }, 1000);
 
-            // Close after delay with bottle effect — `true` marks a real submission
-            setTimeout(() => closeWelcomeWithBottle(true), 2000);
+            setTimeout(() => {
+                overlay.classList.remove('sealing');
+                overlay.classList.add('owl');
+            }, 2400);
+
+            setTimeout(() => {
+                overlay.classList.remove('owl');
+                localStorage.setItem('hasVisitedBefore', 'true');
+                if (trigger) {
+                    trigger.classList.add('gone');
+                    trigger.classList.remove('hidden', 'opening', 'closing', 'idle');
+                }
+            }, 4700);
+
+            return false;
         }
+
+        // Esc closes the postcard while it's open (skip path only — Esc during
+        // sending/sealing/owl is ignored so the animation finishes cleanly).
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!overlay || !overlay.classList.contains('active')) return;
+            closeWelcomeWithBottle(false);
+        });
         
         // ========================================
         // V7 ROUND2: Confetti lazy-load + Toast helper
