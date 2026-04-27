@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>真实空白卷轴 / 宣纸 / 丝绸 Picker — 7 个公有领域候选</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root {
+    --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-orig: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: oklch(0.96 0.012 90);
+    font-size: 17px;
+    line-height: 1.7;
+}
+header { text-align: center; padding: 32px 24px 18px; border-bottom: 1px dashed var(--rule); }
+header h1 { margin: 0 0 6px; font-family: 'Zhi Mang Xing', cursive; font-size: 38px; line-height: 1.05; }
+header .sub { margin: 8px auto 0; max-width: 800px; font-size: 16px; color: var(--ink-soft); line-height: 1.6; }
+header .sub strong { color: var(--maroon-orig); }
+header .sub code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+.swatch {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover { transform: translateY(-4px); box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.18); }
+.swatch.active { outline: 3px solid var(--maroon-bright); outline-offset: 2px; }
+
+.preview {
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 60px;
+    position: relative;
+}
+.preview .overlay {
+    background: linear-gradient(90deg, rgba(255,253,248,0.85) 0%, rgba(255,253,248,0.55) 100%);
+    padding: 14px 18px;
+    border-radius: 3px;
+    color: var(--ink-deep);
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.7),
+         1px  1px 1px rgba(20, 8, 0, 0.4);
+}
+.preview h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; line-height: 1.05; letter-spacing: 0.04em; }
+.preview .role { font-size: 13px; margin: 0 0 6px; font-style: italic; font-family: 'Spectral', serif; color: var(--ink-soft); }
+.preview .badge {
+    display: inline-block; padding: 3px 10px;
+    background: var(--maroon-bright); color: white;
+    border-radius: 999px; font-size: 11px; font-weight: 600;
+    width: fit-content; text-shadow: none; font-family: 'Indie Flower', cursive;
+}
+
+.meta { padding: 14px 18px; border-top: 1px solid oklch(0.88 0.014 75); }
+.meta .name { font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-deep); }
+.meta .desc { margin-top: 4px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; font-family: 'Ma Shan Zheng', serif; }
+.meta .src { margin-top: 6px; font-size: 11px; color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; }
+.meta .tag {
+    display: inline-block; padding: 1px 6px;
+    background: oklch(0.55 0.20 27 / 0.18);
+    color: var(--maroon-orig);
+    border-radius: 2px; font-size: 11px; font-weight: 700;
+    margin-left: 6px; font-family: 'Indie Flower', cursive;
+}
+
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed var(--rule);
+    border-radius: 6px;
+    background: oklch(0.96 0.012 90);
+    text-align: center;
+}
+#liveDemo h3 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; }
+#liveDemo .demoArea {
+    margin-top: 16px;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    transition: background-image 0.4s ease;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 60px 40px;
+}
+#liveDemo .demoText {
+    background: linear-gradient(90deg, rgba(255,253,248,0.7) 0%, rgba(255,253,248,0.3) 100%);
+    padding: 30px 36px;
+    border-radius: 3px;
+    color: var(--ink-deep);
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.6), 1px 1px 1px rgba(20, 8, 0, 0.4);
+}
+#liveDemo h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 44px; line-height: 1.05; letter-spacing: 0.04em; }
+#liveDemo .role { font-style: italic; font-size: 16px; margin: 0 0 12px; font-family: 'Spectral', serif; color: var(--ink-soft); }
+#liveDemo .body { font-family: 'Ma Shan Zheng', serif; font-size: 18px; line-height: 1.85; }
+#liveDemo .key { color: var(--maroon-orig); font-weight: 800; text-shadow: 0 0 2.5px rgba(120, 30, 30, 0.55), 0 1px 1px rgba(60, 10, 10, 0.5); }
+
+.controls { text-align: center; padding: 18px 24px 60px; font-size: 15px; color: var(--ink-soft); max-width: 760px; margin: 0 auto; font-family: 'Ma Shan Zheng', serif; }
+.controls code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>真实空白卷轴 / 宣纸 / 丝绸 Picker</h1>
+    <p class="sub">7 个真实图片 — <strong>Wikimedia Commons 公有领域</strong>，包括宣纸纤维 / 织锦 / 丝绸 / 完整装裱卷轴。<strong>不是 SVG 拼的</strong>。点击任一缩略图，下方 demo 区切换为该背景看真实文字效果。</p>
+</header>
+
+<div class="grid" id="grid">
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-01-xuan-paper.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-01-xuan-paper.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-01-xuan-paper.jpg</div>
+            <div class="desc">真实宣纸近景 — 米白色，可见纤维质感。最 "rice paper" feel，干净适合做 bg。</div>
+            <div class="src">PD · Wikimedia · 210K · 2400×1600</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-02-xuan-making.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-02-xuan-making.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-02-xuan-making.jpg</div>
+            <div class="desc">宣纸生产场景，一叠纸 — 暖白色，纸边可见层理。亮，现代感。</div>
+            <div class="src">PD · Wikimedia · 424K · 2400×1600</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-03-gold-fabric.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-03-gold-fabric.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-03-gold-fabric.jpg <span class="tag">★ 织锦</span></div>
+            <div class="desc">真实金色中国织锦布料 — 装裱用的 brocade。可作底色 OR 仅用作镶边带。</div>
+            <div class="src">PD · Wikimedia · 593K · 2000×1333</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-04-silk-blue.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-04-silk-blue.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-04-silk-blue.jpg</div>
+            <div class="desc">真实浅蓝丝绸 — 不常见但有现代感（蓝色丝绸是装裱常见的另一选择）。</div>
+            <div class="src">PD · Wikimedia · 269K · 1400×930</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-05-bm-mounted-scroll.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-05-bm-mounted-scroll.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-05-bm-mounted-scroll.jpg <span class="tag">★ 整卷</span></div>
+            <div class="desc">大英博物馆藏 — 完整装裱立轴。<strong>带丝绸镶边 + 上下棒状轴头</strong>。最像"完整卷轴"。</div>
+            <div class="src">PD · British Museum · 190K · 1600×1196</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-06-zhang-datong-scroll.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-06-zhang-datong-scroll.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-06-zhang-datong-scroll.jpg <span class="tag">★ 横卷</span></div>
+            <div class="desc">"赠张大同卷" 横向手卷 — 长比例 (2000×793)。最适合做长 banner / hero 区域 bg。</div>
+            <div class="src">PD · Wikimedia · 276K · 2000×793</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/cn-blank-real/cn-real-08-brooklyn-mount.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-08-brooklyn-mount.jpg')">
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">cn-real-08-brooklyn-mount.jpg <span class="tag">★ 整卷</span></div>
+            <div class="desc">Brooklyn 美术馆藏 "竹兰荆棘" — 完整装裱立轴，画面留白多，<strong>装裱细节清晰可见</strong>。</div>
+            <div class="src">PD · Brooklyn Museum · 150K · 721×636</div>
+        </div>
+    </div>
+
+</div>
+
+<div id="liveDemo">
+    <h3>实时预览 · 真实文字效果</h3>
+    <p style="margin:0;color:var(--ink-soft);font-size:14px">点击上方任一卷轴 → 下方 demo 区切换。注意带 ★ 整卷的会显示完整轴 + 镶边；不带 ★ 的只是底色/纹理。</p>
+    <div class="demoArea" id="demoArea" style="background-image:url('res/parchment-options/cn-blank-real/cn-real-01-xuan-paper.jpg')">
+        <div class="demoText">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 图人工智能 · Open to ML RS · 2026</p>
+            <p class="body">构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<span class="key">ICPR 2026</span> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 130+ 引用。现为伯尔尼大学博士后。</p>
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:14px;font-family:'Indie Flower',cursive">↑ Sample card — verify legibility, decoration density, scroll fit.</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>挑一个 <code>cn-real-XX</code> 文件名告诉我（例如 "<code>用 cn-real-05 大英博物馆装裱卷</code>"）。我把它接到 <code>parchment-overrides.css</code> 替换当前 wm-02。</p>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:14px">
+        全部公有领域 · Wikimedia Commons / British Museum / Brooklyn Museum · 个人 + 商用 OK · 详见 <a href="res/parchment-options/cn-blank-real/LICENSE.md" target="_blank" style="color:var(--maroon-orig)">LICENSE.md</a>
+    </p>
+</div>
+
+<script>
+const grid = document.getElementById('grid');
+const demoArea = document.getElementById('demoArea');
+grid.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const src = sw.dataset.src;
+        demoArea.style.backgroundImage = `url('${src}')`;
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+</body>
+</html>
