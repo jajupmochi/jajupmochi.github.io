@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="en" data-theme="grimoire" data-mode="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero mockup v2 — 魔法师之书 / Grimoire</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+
+<style>
+:root {
+    --font-display: 'Spectral', 'Iowan Old Style', serif;
+    --font-body:    'Spectral', 'Iowan Old Style', serif;
+    --font-script:  'Caveat', 'Reenie Beanie', cursive;
+    --font-mono:    'JetBrains Mono', monospace;
+    --font-zh-hand: 'Ma Shan Zheng', serif;
+    --font-zh-body: 'LXGW WenKai', 'Source Han Serif SC', serif;
+    --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="grimoire"][data-mode="day"] {
+    --paper-base:   oklch(0.86 0.040 70);
+    --paper-warm:   oklch(0.80 0.060 60);
+    --paper-deep:   oklch(0.72 0.080 50);
+    --paper-edge:   oklch(0.50 0.080 45);
+    --ink:          oklch(0.18 0.030 40);
+    --ink-soft:     oklch(0.32 0.050 35);
+    --ink-muted:    oklch(0.50 0.060 35);
+    --primary:      oklch(0.42 0.16 27);    /* deep oxblood */
+    --primary-soft: oklch(0.55 0.18 27);
+    --gold:         oklch(0.62 0.13 70);
+    --gold-deep:    oklch(0.45 0.12 65);
+    --candle-flame: oklch(0.85 0.18 70);
+    --vine:         oklch(0.32 0.08 130);
+    --vine-glow:    oklch(0.45 0.12 130);
+    --bg-fill:      oklch(0.78 0.06 65);
+    --shadow-soft:  0 4px 16px oklch(0.18 0.05 30 / 0.18);
+    --shadow-deep:  0 18px 48px oklch(0.18 0.05 30 / 0.28);
+    --window-sky:   linear-gradient(180deg, oklch(0.82 0.06 230) 0%, oklch(0.92 0.04 80) 100%);
+}
+[data-theme="grimoire"][data-mode="night"] {
+    --paper-base:   oklch(0.18 0.030 35);
+    --paper-warm:   oklch(0.24 0.050 30);
+    --paper-deep:   oklch(0.28 0.060 35);
+    --paper-edge:   oklch(0.10 0.030 30);
+    --ink:          oklch(0.92 0.020 80);
+    --ink-soft:     oklch(0.78 0.030 78);
+    --ink-muted:    oklch(0.62 0.030 75);
+    --primary:      oklch(0.78 0.18 50);    /* spell-fire amber */
+    --primary-soft: oklch(0.85 0.15 55);
+    --gold:         oklch(0.85 0.15 78);
+    --gold-deep:    oklch(0.62 0.13 78);
+    --candle-flame: oklch(0.92 0.20 75);
+    --vine:         oklch(0.85 0.18 195);   /* electric cyan */
+    --vine-glow:    oklch(0.82 0.20 195);
+    --bg-fill:      oklch(0.10 0.030 30);
+    --shadow-soft:  0 4px 16px oklch(0.04 0.04 260 / 0.55);
+    --shadow-deep:  0 18px 48px oklch(0.04 0.04 260 / 0.65);
+    --window-sky:   linear-gradient(180deg, oklch(0.08 0.04 260) 0%, oklch(0.20 0.06 260) 100%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+    width: 100%; min-height: 100vh; overflow-x: hidden;
+}
+body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    transition: background 1.2s var(--ease-quart), color 1.2s var(--ease-quart);
+    overflow-y: auto;
+    /* Pure CSS-composed parchment: warm gradient + multi-stain blotches.
+       Textile / fiber grain is the body::after SVG noise layer. */
+    background:
+        /* Warm random "stains" at fixed positions for character */
+        radial-gradient(ellipse 600px 400px at 18% 22%, oklch(0.62 0.10 50 / 0.18), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 78% 18%, oklch(0.68 0.08 60 / 0.14), transparent 65%),
+        radial-gradient(ellipse 700px 500px at 30% 78%, oklch(0.58 0.12 45 / 0.16), transparent 60%),
+        radial-gradient(ellipse 400px 300px at 88% 70%, oklch(0.55 0.10 40 / 0.15), transparent 65%),
+        radial-gradient(ellipse 200px 150px at 50% 50%, oklch(0.65 0.08 70 / 0.10), transparent 70%),
+        /* Base warm parchment with subtle vertical variation */
+        linear-gradient(180deg,
+            oklch(0.84 0.050 75) 0%,
+            oklch(0.81 0.060 68) 35%,
+            oklch(0.78 0.070 60) 70%,
+            oklch(0.73 0.080 55) 100%);
+}
+[data-mode="night"] body {
+    background:
+        radial-gradient(ellipse 600px 400px at 18% 22%, oklch(0.30 0.06 30 / 0.4), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 78% 18%, oklch(0.28 0.05 35 / 0.35), transparent 65%),
+        radial-gradient(ellipse 700px 500px at 30% 78%, oklch(0.26 0.06 40 / 0.4), transparent 60%),
+        linear-gradient(180deg,
+            oklch(0.16 0.030 35) 0%,
+            oklch(0.14 0.035 30) 50%,
+            oklch(0.12 0.040 28) 100%);
+}
+
+/* Aged-edge vignette + soft inner glow */
+body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+        radial-gradient(ellipse at center,
+            transparent 0%,
+            transparent 55%,
+            oklch(0.32 0.08 30 / 0.18) 85%,
+            oklch(0.18 0.06 25 / 0.42) 100%),
+        radial-gradient(ellipse at 50% 30%,
+            oklch(0.92 0.06 78 / 0.22) 0%,
+            transparent 60%);
+    mix-blend-mode: multiply;
+}
+[data-mode="night"] body::before {
+    background:
+        radial-gradient(ellipse at center,
+            transparent 0%,
+            transparent 50%,
+            oklch(0.05 0.04 30 / 0.55) 90%,
+            oklch(0.02 0.04 25 / 0.85) 100%);
+    mix-blend-mode: normal;
+}
+
+/* SVG-generated paper grain layer over everything */
+body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='9'/><feColorMatrix values='0 0 0 0 0.30   0 0 0 0 0.20   0 0 0 0 0.12   0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 400px;
+    opacity: 0.55; mix-blend-mode: multiply;
+}
+[data-mode="night"] body::after { mix-blend-mode: screen; opacity: 0.18; }
+
+/* ========== Top decorative band ========== */
+.banner {
+    position: relative; z-index: 5;
+    width: 100%; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+}
+.banner::before, .banner::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 20%, var(--gold-deep) 80%, transparent);
+}
+.banner::before { bottom: 8px; }
+.banner::after  { bottom: 12px; opacity: 0.55; }
+
+.banner-cap {
+    width: 56px; height: 50px; flex-shrink: 0;
+    background: url("../../res/grimoire/cap-tl.png") no-repeat center;
+    background-size: contain;
+}
+.banner-cap.right {
+    background-image: url("../../res/grimoire/cap-tr.png");
+    transform: scaleX(1);
+}
+.banner-title {
+    font-family: var(--font-zh-hand);
+    font-size: 26px; color: var(--primary);
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.55);
+}
+.banner-title .sub {
+    font-family: var(--font-display);
+    font-size: 12px; font-style: italic;
+    color: var(--ink-muted); letter-spacing: 0.1em;
+    margin-left: 12px;
+    text-transform: uppercase;
+}
+
+/* ========== Hero stage ========== */
+.stage {
+    position: relative; z-index: 4;
+    max-width: 1400px; margin: 0 auto;
+    padding: 40px 60px 100px;
+    display: grid;
+    grid-template-columns: minmax(340px, 0.95fr) minmax(560px, 1.6fr);
+    gap: 56px; align-items: center;
+    min-height: calc(100vh - 64px - 96px);
+}
+
+/* Decorative SVG vines + corner ornaments around the stage */
+.stage::before, .stage::after {
+    content: ''; position: absolute; pointer-events: none;
+    width: 200px; height: 200px;
+    background-repeat: no-repeat; background-size: contain;
+    opacity: 0.55;
+    transition: opacity 1.2s var(--ease-quart), filter 1.2s var(--ease-quart);
+}
+.stage::before {
+    top: 0; left: 20px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='%234b3320' stroke-width='1.4' stroke-linecap='round'><path d='M10 10 Q60 30 80 80 Q90 100 110 110' /><path d='M30 8 Q35 25 50 30' /><path d='M60 18 Q72 40 70 60' /><circle cx='110' cy='110' r='4' fill='%23a8632a' stroke='none'/><circle cx='70' cy='60' r='3' fill='%237a5530'/><circle cx='50' cy='30' r='2.5' fill='%23a8632a' stroke='none'/></g><g fill='%23556633' opacity='0.55'><path d='M40 40 Q50 35 55 45 Q50 50 40 40 Z'/><path d='M65 70 Q75 65 80 75 Q72 80 65 70 Z'/><path d='M90 95 Q100 90 105 100 Q98 105 90 95 Z'/></g></svg>");
+}
+.stage::after {
+    top: 0; right: 20px; transform: scaleX(-1);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='%234b3320' stroke-width='1.4' stroke-linecap='round'><path d='M10 10 Q60 30 80 80 Q90 100 110 110' /><path d='M30 8 Q35 25 50 30' /><path d='M60 18 Q72 40 70 60' /><circle cx='110' cy='110' r='4' fill='%23a8632a' stroke='none'/><circle cx='70' cy='60' r='3' fill='%237a5530'/><circle cx='50' cy='30' r='2.5' fill='%23a8632a' stroke='none'/></g><g fill='%23556633' opacity='0.55'><path d='M40 40 Q50 35 55 45 Q50 50 40 40 Z'/><path d='M65 70 Q75 65 80 75 Q72 80 65 70 Z'/><path d='M90 95 Q100 90 105 100 Q98 105 90 95 Z'/></g></svg>");
+}
+[data-mode="night"] .stage::before, [data-mode="night"] .stage::after {
+    filter: hue-rotate(180deg) brightness(1.4);
+    opacity: 0.7;
+}
+
+/* ========== Apprentice character (LEFT) ========== */
+.apprentice-block {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px;
+}
+.apprentice-img {
+    width: 100%; max-width: 380px;
+    aspect-ratio: 32 / 29;
+    background: url("../../res/grimoire/apprentice-final.png") no-repeat center;
+    background-size: contain;
+    filter:
+        drop-shadow(0 12px 20px oklch(0.18 0.05 30 / 0.18))
+        contrast(1.04) saturate(0.95);
+    transform: rotate(-1deg);
+    transition: filter 1.2s var(--ease-quart);
+}
+[data-mode="night"] .apprentice-img {
+    filter:
+        drop-shadow(0 12px 20px oklch(0.04 0.04 260 / 0.55))
+        contrast(1.10) brightness(1.08) hue-rotate(-8deg);
+}
+.apprentice-caption {
+    font-family: var(--font-script);
+    font-size: 19px; color: var(--ink-muted);
+    font-style: italic;
+    margin-top: 4px; letter-spacing: 0.02em;
+}
+
+/* The Howler envelope — perched on the apprentice's open book */
+.howler-perch {
+    position: absolute;
+    bottom: 50px; right: 24px;
+    width: 78px; height: 60px;
+    background: none; border: none; cursor: pointer; padding: 0;
+    transform-origin: center;
+    animation: howler-shake 0.36s ease-in-out infinite;
+    transition: transform 0.4s var(--ease-quart);
+    z-index: 2;
+}
+.howler-perch:hover {
+    animation-duration: 0.16s;
+    transform: scale(1.08);
+}
+@keyframes howler-shake {
+    0%,100% { transform: translate(0,0) rotate(-3deg); }
+    25%     { transform: translate(-2px,1px) rotate(2deg); }
+    50%     { transform: translate(2px,-1px) rotate(-4deg); }
+    75%     { transform: translate(-1px,2px) rotate(3deg); }
+}
+.howler-perch::after {
+    content: '⚠ a Howler';
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-script); font-size: 14px;
+    color: var(--primary); white-space: nowrap; margin-top: 4px;
+    text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.4);
+    pointer-events: none;
+}
+
+/* ========== Notebook (RIGHT) — open book with hero content ========== */
+.notebook {
+    position: relative;
+    background:
+        /* Faux ruled lines (very subtle horizontal lines) */
+        repeating-linear-gradient(180deg,
+            transparent 0,
+            transparent 30px,
+            oklch(0.45 0.10 50 / 0.06) 30px,
+            oklch(0.45 0.10 50 / 0.06) 31px),
+        /* Inner page warmer than outer paper */
+        radial-gradient(ellipse at 30% 28%, oklch(0.92 0.040 75) 0%, oklch(0.86 0.050 70) 70%),
+        linear-gradient(180deg,
+            oklch(0.92 0.030 78) 0%,
+            oklch(0.86 0.045 70) 100%);
+    padding: 36px 48px 32px;
+    border: 1px solid oklch(0.55 0.10 50 / 0.35);
+    border-radius: 2px;
+    box-shadow:
+        var(--shadow-deep),
+        inset 0 0 60px oklch(0.55 0.10 50 / 0.10);
+    transform: rotate(0.5deg);
+    transition: background 1.2s var(--ease-quart), border-color 1.2s var(--ease-quart);
+}
+[data-mode="night"] .notebook {
+    background:
+        linear-gradient(180deg,
+            oklch(0.20 0.04 35 / 0.85),
+            oklch(0.14 0.04 35 / 0.95));
+    border-color: oklch(0.62 0.13 78 / 0.5);
+    box-shadow:
+        var(--shadow-deep),
+        inset 0 0 60px oklch(0.85 0.18 195 / 0.06);
+}
+
+/* Decorative inner border */
+.notebook::before {
+    content: ''; position: absolute; inset: 14px;
+    border: 1px dashed oklch(0.45 0.10 50 / 0.30);
+    pointer-events: none;
+}
+[data-mode="night"] .notebook::before {
+    border-color: oklch(0.62 0.13 78 / 0.32);
+}
+
+.overline {
+    font-family: var(--font-script);
+    font-size: 18px; color: var(--ink-muted);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+}
+.overline em { color: var(--primary); font-style: normal; font-weight: 600; font-family: var(--font-zh-hand); }
+
+.title-zh {
+    font-family: var(--font-zh-hand);
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    color: var(--ink);
+    line-height: 1; letter-spacing: 0.01em;
+    text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.45);
+}
+.title-en {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 500;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    color: var(--primary);
+    line-height: 1.05; letter-spacing: -0.012em;
+    margin-top: 2px;
+}
+
+.role {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 12px;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.32);
+    padding-bottom: 10px;
+}
+.role .pw { cursor: pointer; transition: color 0.3s var(--ease-quart); position: relative; }
+.role .pw:hover { color: var(--primary); }
+
+.tagline {
+    font-family: var(--font-display);
+    font-size: 15px; line-height: 1.6;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    max-width: 50ch;
+}
+.tagline .pw { cursor: pointer; transition: color 0.3s var(--ease-quart); }
+.tagline .pw:hover {
+    color: var(--primary);
+    text-shadow: 0 0 6px oklch(0.45 0.16 27 / 0.25);
+}
+
+.signature {
+    font-family: var(--font-display);
+    font-size: 13.5px; line-height: 1.55;
+    color: var(--ink-muted);
+    margin-top: 14px; padding-top: 10px;
+    border-top: 1px dashed oklch(0.45 0.10 50 / 0.32);
+}
+.signature em { color: var(--primary); font-style: italic; font-weight: 600; }
+.signature strong { color: var(--ink-soft); font-weight: 600; }
+
+.actions {
+    display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+}
+.btn {
+    font-family: var(--font-display);
+    font-size: 13px; padding: 9px 18px;
+    border: 1px solid currentColor; border-radius: 1px;
+    background: transparent;
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.2s var(--ease-quart);
+    text-decoration: none; display: inline-flex; align-items: baseline; gap: 6px;
+    font-weight: 500; letter-spacing: 0.02em;
+}
+.btn-primary {
+    background: var(--primary); color: oklch(0.94 0.04 80);
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px oklch(0.42 0.16 27 / 0.35);
+}
+.btn-primary:hover { background: var(--primary-soft); transform: translateY(-1px); box-shadow: 0 6px 14px oklch(0.42 0.16 27 / 0.45); }
+.btn-secondary:hover { background: oklch(0.42 0.16 27 / 0.08); }
+[data-mode="night"] .btn-primary { color: oklch(0.18 0.03 35); }
+
+/* Floating graph mini — placed inside notebook (right corner) */
+.graph-mini {
+    position: absolute;
+    bottom: 26px; right: 32px;
+    width: 130px; height: 110px;
+    pointer-events: none;
+    opacity: 0.85;
+}
+.graph-mini svg { width: 100%; height: 100%; overflow: visible; }
+.graph-mini .gn circle {
+    fill: oklch(0.92 0.06 78);
+    stroke: var(--primary);
+    stroke-width: 1.4;
+}
+[data-mode="night"] .graph-mini .gn circle {
+    fill: oklch(0.22 0.04 35);
+    stroke: var(--primary);
+    filter: drop-shadow(0 0 4px var(--primary));
+}
+.graph-mini .gn text {
+    font-family: var(--font-display);
+    font-size: 8px; fill: var(--ink-soft);
+    font-style: italic;
+}
+.graph-mini .ge {
+    stroke: var(--vine); stroke-width: 1.2; fill: none; opacity: 0.6;
+}
+[data-mode="night"] .graph-mini .ge {
+    filter: drop-shadow(0 0 3px var(--vine-glow));
+    opacity: 0.95;
+}
+
+/* ========== Candle (theme toggle, top-right of notebook area) ========== */
+.candle {
+    position: absolute;
+    top: -18px; right: -42px;
+    width: 56px; height: 96px;
+    background: none; border: none; cursor: pointer; padding: 0;
+    z-index: 6;
+}
+.candle svg { width: 100%; height: 100%; overflow: visible; }
+.candle .body {
+    fill: oklch(0.94 0.04 70);
+    stroke: oklch(0.55 0.06 60); stroke-width: 0.8;
+}
+.candle .drip { fill: oklch(0.85 0.05 65); }
+.candle .wick { stroke: oklch(0.20 0.03 50); stroke-width: 1.4; fill: none; }
+.candle .flame {
+    fill: var(--candle-flame);
+    transform-origin: center bottom;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-quart);
+}
+[data-mode="night"] .candle .flame {
+    opacity: 1;
+    animation: flicker 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px var(--candle-flame));
+}
+@keyframes flicker {
+    0%,100% { transform: scale(1, 1); }
+    25%     { transform: scale(1.06, 0.96); }
+    50%     { transform: scale(0.95, 1.05); }
+    75%     { transform: scale(1.04, 0.98); }
+}
+.candle .glow {
+    fill: var(--candle-flame); opacity: 0;
+    transition: opacity 0.6s var(--ease-quart);
+}
+[data-mode="night"] .candle .glow { opacity: 0.22; }
+.candle:focus { outline: none; }
+.candle::after {
+    content: 'Light'; font-family: var(--font-script); font-size: 13px;
+    color: var(--ink-muted); position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); white-space: nowrap; margin-top: 4px;
+    pointer-events: none;
+}
+[data-mode="night"] .candle::after { content: 'Snuff'; }
+
+/* ========== Console crystal (bottom-right of notebook) ========== */
+.console {
+    position: absolute;
+    bottom: -28px; left: 36px;
+    width: 56px; height: 56px;
+    background: none; border: none; cursor: pointer; padding: 0;
+    z-index: 6;
+}
+.console svg { width: 100%; height: 100%; overflow: visible; }
+.console .crystal {
+    fill: oklch(0.78 0.10 230 / 0.65);
+    stroke: var(--gold-deep);
+    stroke-width: 1;
+    filter: drop-shadow(0 4px 8px oklch(0.18 0.05 30 / 0.35));
+    animation: pulse 3.4s ease-in-out infinite;
+}
+[data-mode="night"] .console .crystal {
+    fill: oklch(0.85 0.18 195 / 0.45);
+    stroke: var(--vine);
+    filter: drop-shadow(0 0 8px var(--vine-glow)) drop-shadow(0 4px 8px oklch(0.04 0.04 260 / 0.6));
+}
+@keyframes pulse {
+    0%,100% { opacity: 0.85; }
+    50%     { opacity: 1; transform: scale(1.06); }
+}
+.console::after {
+    content: 'Cmd + K'; font-family: var(--font-mono); font-size: 9px;
+    color: var(--ink-muted); position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); white-space: nowrap; margin-top: 4px;
+    pointer-events: none; letter-spacing: 0.05em;
+}
+
+/* ========== 小林 Robot (bottom-right corner of viewport) ========== */
+.robot {
+    position: fixed;
+    bottom: 32px; right: 36px; z-index: 60;
+    width: 72px; height: 88px;
+    background: none; border: none; cursor: pointer; padding: 0;
+}
+.robot svg { width: 100%; height: 100%; overflow: visible;
+    filter: drop-shadow(0 6px 14px oklch(0.18 0.05 30 / 0.30));
+    transition: filter 1.2s var(--ease-quart);
+}
+[data-mode="night"] .robot svg {
+    filter: drop-shadow(0 6px 14px oklch(0.04 0.04 260 / 0.55))
+            drop-shadow(0 0 6px oklch(0.85 0.18 195 / 0.4));
+}
+.robot .body { fill: oklch(0.55 0.05 60); stroke: oklch(0.30 0.05 55); stroke-width: 0.8; }
+.robot .belly { fill: oklch(0.78 0.06 75); }
+.robot .gear { fill: oklch(0.72 0.13 80); stroke: oklch(0.40 0.10 65); stroke-width: 0.6;
+    transform-origin: center; animation: rotate-slow 12s linear infinite; }
+@keyframes rotate-slow { to { transform: rotate(360deg); } }
+.robot .eye { fill: oklch(0.18 0.03 50); }
+[data-mode="night"] .robot .eye { fill: oklch(0.85 0.18 195); filter: drop-shadow(0 0 4px var(--vine-glow)); }
+.robot .ear-tuft { fill: oklch(0.40 0.07 55); }
+.robot .beak { fill: oklch(0.62 0.13 70); stroke: oklch(0.30 0.10 55); stroke-width: 0.5; }
+.robot::after {
+    content: 'Hi, I am 小林'; font-family: var(--font-script); font-size: 14px;
+    color: var(--ink); position: absolute; top: -6px; right: 100%;
+    margin-right: 8px; padding: 4px 10px;
+    background: oklch(0.92 0.06 80 / 0.92); border: 1px solid var(--gold-deep);
+    border-radius: 12px; white-space: nowrap;
+    opacity: 0; transition: opacity 0.3s var(--ease-quart);
+    pointer-events: none;
+}
+.robot:hover::after { opacity: 1; }
+[data-mode="night"] .robot::after {
+    background: oklch(0.20 0.04 35 / 0.95); color: var(--ink); border-color: var(--gold);
+}
+
+/* ========== Wax seal (bottom of stage) ========== */
+.seal {
+    position: absolute;
+    bottom: 16px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 70px;
+    z-index: 5;
+    pointer-events: none;
+}
+.seal svg { width: 100%; height: 100%; overflow: visible;
+    filter: drop-shadow(0 6px 8px oklch(0.18 0.05 30 / 0.4));
+}
+
+/* ========== Bottom band ========== */
+.footer-band {
+    position: relative; z-index: 5;
+    width: 100%; padding: 28px 24px 18px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 12px; font-style: italic;
+    color: var(--ink-muted); letter-spacing: 0.05em;
+}
+.footer-band::before {
+    content: ''; position: absolute; top: 0; left: 16%; right: 16%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 30%, var(--gold-deep) 70%, transparent);
+    opacity: 0.55;
+}
+
+/* ========== Search overlay (Iron-Man console) ========== */
+.search-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: oklch(0.10 0.04 30 / 0.62);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: flex-start; justify-content: center;
+    padding-top: 12vh;
+}
+.search-overlay.open { display: flex; }
+.search-panel {
+    width: min(640px, 90vw);
+    background:
+        linear-gradient(180deg, oklch(0.94 0.04 80 / 0.96), oklch(0.86 0.05 70 / 0.96));
+    border: 1px solid var(--gold-deep);
+    border-radius: 2px;
+    padding: 22px 26px;
+    box-shadow:
+        var(--shadow-deep),
+        0 0 0 6px oklch(0.55 0.10 50 / 0.18);
+    font-family: var(--font-display);
+    color: var(--ink);
+    transform: scale(0.96);
+    animation: panel-in 0.4s var(--ease-quart) forwards;
+}
+[data-mode="night"] .search-panel {
+    background: linear-gradient(180deg, oklch(0.16 0.04 260 / 0.95), oklch(0.10 0.03 260 / 0.95));
+    border-color: var(--vine);
+    box-shadow:
+        var(--shadow-deep),
+        0 0 0 6px oklch(0.85 0.18 195 / 0.10),
+        0 0 24px oklch(0.85 0.18 195 / 0.30);
+}
+@keyframes panel-in {
+    to { transform: scale(1); }
+}
+.search-input {
+    width: 100%; font-family: var(--font-display);
+    font-size: 18px; padding: 8px 0; background: transparent;
+    border: none; border-bottom: 1px dashed var(--ink-muted);
+    color: var(--ink); outline: none;
+    font-style: italic;
+}
+.search-hint {
+    margin-top: 10px; font-size: 12px;
+    color: var(--ink-muted); letter-spacing: 0.04em;
+    display: flex; gap: 16px;
+}
+.search-hint kbd {
+    font-family: var(--font-mono); font-size: 10px;
+    padding: 1px 6px; border: 1px solid var(--ink-muted);
+    border-radius: 2px; background: transparent;
+}
+.search-results {
+    margin-top: 14px; display: flex; flex-direction: column; gap: 6px;
+}
+.search-result {
+    padding: 8px 10px; border-radius: 2px;
+    border: 1px solid transparent; cursor: pointer;
+    transition: background 0.2s var(--ease-quart), border-color 0.2s var(--ease-quart);
+}
+.search-result:hover, .search-result.is-active {
+    background: oklch(0.55 0.10 50 / 0.10);
+    border-color: oklch(0.55 0.10 50 / 0.32);
+}
+[data-mode="night"] .search-result:hover, [data-mode="night"] .search-result.is-active {
+    background: oklch(0.85 0.18 195 / 0.12);
+    border-color: oklch(0.85 0.18 195 / 0.36);
+}
+.search-result .room {
+    font-style: italic; color: var(--primary); font-weight: 600; font-size: 14px;
+}
+.search-result .desc {
+    font-size: 12px; color: var(--ink-muted); margin-top: 2px;
+}
+
+/* ========== Robot dialogue overlay ========== */
+.dialogue-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: oklch(0.10 0.04 30 / 0.55);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 24px;
+}
+.dialogue-overlay.open { display: flex; }
+.dialogue-panel {
+    width: min(420px, 90vw);
+    background: oklch(0.94 0.04 80);
+    border: 1px solid var(--gold-deep);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-deep);
+    font-family: var(--font-display); color: var(--ink);
+    position: relative;
+}
+[data-mode="night"] .dialogue-panel {
+    background: oklch(0.20 0.04 35);
+    color: var(--ink);
+    border-color: var(--vine);
+    box-shadow: var(--shadow-deep), 0 0 24px oklch(0.85 0.18 195 / 0.30);
+}
+.dialogue-panel::before {
+    content: ''; position: absolute; bottom: -10px; right: 30px;
+    width: 18px; height: 18px;
+    background: inherit; border-left: 1px solid var(--gold-deep); border-bottom: 1px solid var(--gold-deep);
+    transform: rotate(-45deg);
+}
+[data-mode="night"] .dialogue-panel::before { border-color: var(--vine); }
+.dialogue-greeting {
+    font-family: var(--font-script); font-size: 18px;
+    color: var(--ink); margin-bottom: 12px;
+    font-style: italic;
+}
+.dialogue-question {
+    font-size: 13px; color: var(--ink-muted); margin-bottom: 12px;
+    font-style: italic;
+}
+.dialogue-options {
+    display: flex; flex-direction: column; gap: 4px;
+}
+.dialogue-options button {
+    text-align: left; padding: 8px 12px; font-family: var(--font-display);
+    font-size: 13px; color: var(--ink-soft);
+    background: transparent; border: 1px dashed transparent;
+    border-radius: 2px; cursor: pointer;
+    transition: all 0.2s var(--ease-quart);
+}
+.dialogue-options button:hover {
+    background: oklch(0.55 0.10 50 / 0.08);
+    border-color: oklch(0.55 0.10 50 / 0.32);
+    color: var(--primary);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .candle .flame, .robot .gear, .console .crystal, .howler-perch { animation: none; }
+    body { transition: none; }
+}
+
+/* Mockup metadata strip (preview only) */
+.preview-bar {
+    position: fixed; top: 14px; right: 24px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--ink-muted);
+    background: oklch(0.92 0.04 80 / 0.65);
+    padding: 5px 10px; border-radius: 1px; z-index: 100;
+    border: 1px solid var(--gold-deep);
+    backdrop-filter: blur(6px);
+}
+[data-mode="night"] .preview-bar {
+    background: oklch(0.20 0.04 35 / 0.7);
+    border-color: var(--vine);
+}
+</style>
+</head>
+
+<body>
+
+<div class="preview-bar">v2 · grimoire <span id="modeBadge">day</span> · all controls active · click candle / Howler / 小林 / crystal · press C / K</div>
+
+<!-- Top decorative band: brass scroll caps + Chinese title -->
+<header class="banner">
+    <div class="banner-cap"></div>
+    <h1 class="banner-title">魔法师之书 <span class="sub">/ The Grimoire</span></h1>
+    <div class="banner-cap right"></div>
+</header>
+
+<!-- Hero stage: apprentice (left) + open notebook (right) -->
+<main class="stage">
+
+    <!-- LEFT: apprentice character -->
+    <aside class="apprentice-block">
+        <div class="apprentice-img" aria-label="Apprentice with owl, glowing book and wand"></div>
+        <p class="apprentice-caption">「夜深读书，未知是我画书，还是书画我。」</p>
+
+        <!-- Howler envelope perched in the apprentice composition -->
+        <button class="howler-perch" type="button" onclick="openHowler()" aria-label="Open the Howler postcard">
+            <svg viewBox="0 0 90 70" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hred" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="oklch(0.55 0.18 27)"/>
+                        <stop offset="60%" stop-color="oklch(0.42 0.16 27)"/>
+                        <stop offset="100%" stop-color="oklch(0.30 0.14 25)"/>
+                    </linearGradient>
+                    <filter id="hgrain" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+                        <feColorMatrix values="0 0 0 0 0.30   0 0 0 0 0.05   0 0 0 0 0.05   0 0 0 0.30 0"/>
+                        <feComposite in2="SourceGraphic" operator="in"/>
+                    </filter>
+                </defs>
+                <!-- Body -->
+                <rect x="6" y="20" width="78" height="46" rx="1" fill="url(#hred)"/>
+                <rect x="6" y="20" width="78" height="46" rx="1" fill="url(#hred)" filter="url(#hgrain)" opacity="0.55"/>
+                <!-- Flap -->
+                <path d="M6 20 L45 44 L84 20 Z" fill="oklch(0.42 0.16 27)" opacity="0.95"/>
+                <!-- Crease -->
+                <path d="M6 20 L45 44 L84 20" fill="none" stroke="oklch(0.20 0.10 25)" stroke-width="0.4" opacity="0.6"/>
+                <!-- Wax seal — Howler-style with bevel -->
+                <circle cx="45" cy="38" r="9" fill="url(#hred)" stroke="oklch(0.18 0.10 25)" stroke-width="0.4"/>
+                <circle cx="42" cy="35" r="3" fill="oklch(0.78 0.12 27)" opacity="0.6"/>
+                <text x="45" y="42" text-anchor="middle"
+                      font-family="Spectral, serif" font-size="11" font-weight="700" font-style="italic"
+                      fill="oklch(0.95 0.04 60)">L</text>
+                <!-- Burnt corners -->
+                <path d="M6 20 Q2 24 4 30 Q0 28 4 36 Z" fill="oklch(0.10 0.05 25)" opacity="0.78"/>
+                <path d="M84 20 Q88 24 86 30 Q90 28 86 36 Z" fill="oklch(0.10 0.05 25)" opacity="0.78"/>
+                <!-- URGENT in Caveat -->
+                <text x="14" y="60" font-family="Caveat, cursive" font-size="9"
+                      fill="oklch(0.96 0.04 27)" font-style="italic" font-weight="600"
+                      transform="rotate(-3 14 60)">URGENT</text>
+            </svg>
+        </button>
+    </aside>
+
+    <!-- RIGHT: notebook with hero content -->
+    <article class="notebook">
+
+        <!-- Candle: theme toggle (top-right of notebook) -->
+        <button class="candle" type="button" onclick="toggleMode()" aria-label="Light or snuff the candle (toggle day/night)">
+            <svg viewBox="0 0 60 100">
+                <circle class="glow" cx="30" cy="22" r="42"/>
+                <path class="flame" d="M30 8 C24 14 24 22 28 28 C28 32 32 32 32 28 C36 22 36 14 30 8 Z"/>
+                <path class="flame" d="M30 14 C27 18 27 24 30 28 C33 24 33 18 30 14 Z" opacity="0.6"/>
+                <line class="wick" x1="30" y1="28" x2="30" y2="36"/>
+                <ellipse class="drip" cx="30" cy="36" rx="14" ry="3"/>
+                <path class="drip" d="M16 36 Q12 42 18 44 L20 38 Z"/>
+                <path class="drip" d="M44 36 Q48 42 42 46 L40 38 Z"/>
+                <rect class="body" x="18" y="36" width="24" height="56" rx="2"/>
+                <ellipse cx="30" cy="92" rx="22" ry="4" fill="oklch(0.55 0.10 60)" stroke="oklch(0.40 0.10 60)" stroke-width="0.6"/>
+                <ellipse cx="30" cy="93" rx="20" ry="3" fill="oklch(0.42 0.08 55)"/>
+            </svg>
+        </button>
+
+        <!-- Console crystal: Cmd+K trigger (bottom-left of notebook) -->
+        <button class="console" type="button" onclick="openSearch()" aria-label="Open Iron-Man console (Cmd+K)">
+            <svg viewBox="0 0 56 56">
+                <defs>
+                    <radialGradient id="cgrad" cx="0.4" cy="0.3">
+                        <stop offset="0%" stop-color="oklch(0.95 0.10 220)"/>
+                        <stop offset="60%" stop-color="oklch(0.70 0.14 230)"/>
+                        <stop offset="100%" stop-color="oklch(0.40 0.14 240)"/>
+                    </radialGradient>
+                </defs>
+                <polygon class="crystal" points="28,4 50,28 28,52 6,28" fill="url(#cgrad)"/>
+                <polygon points="28,4 28,52" fill="none" stroke="oklch(0.92 0.04 80)" stroke-width="0.4" opacity="0.5"/>
+                <polygon points="6,28 50,28" fill="none" stroke="oklch(0.92 0.04 80)" stroke-width="0.4" opacity="0.5"/>
+                <circle cx="28" cy="28" r="4" fill="oklch(0.96 0.06 80)" opacity="0.85"/>
+            </svg>
+        </button>
+
+        <p class="overline"><em>一封学徒的信</em> · a note from the apprentice</p>
+
+        <h2>
+            <span class="title-zh">贾林林</span>
+            <span class="title-en">Linlin Jia · Ph.D.</span>
+        </h2>
+
+        <p class="role">
+            <span class="pw">图人工智能</span><span class="pw">魔法学徒</span>
+            · <span class="pw">Graph</span> <span class="pw">AI</span> <span class="pw">Magic</span> <span class="pw">Apprentice</span>
+        </p>
+
+        <p class="tagline">
+            Bridging <span class="pw">graph</span> and <span class="pw">kernel</span> spaces, brewing
+            <span class="pw">models</span> for molecules and language.
+            Researching at the University of <span class="pw">Bern</span>.
+        </p>
+
+        <p class="signature">
+            Author of <em>graphkit-learn</em> · <strong>SNSF</strong> + <strong>Innosuisse</strong>-funded · <strong>ICPR 2026</strong> paper · <strong>MSCA</strong> Alumni
+        </p>
+
+        <div class="actions">
+            <a class="btn btn-primary" href="javascript:openHowler()">送一封信 · Send a note →</a>
+            <a class="btn btn-secondary" href="#cv">取走手稿 · Take the manuscript</a>
+        </div>
+
+        <!-- Floating graph mini diagram in bottom-right of notebook -->
+        <div class="graph-mini" aria-hidden="true">
+            <svg viewBox="0 0 130 110">
+                <path class="ge" d="M28 60 Q60 30 105 35"/>
+                <path class="ge" d="M28 60 Q55 75 90 88"/>
+                <path class="ge" d="M105 35 Q108 60 90 88"/>
+                <path class="ge" d="M28 60 Q70 50 105 35"/>
+                <g class="gn">
+                    <circle cx="28" cy="60" r="11"/>
+                    <text x="28" y="63" text-anchor="middle">林</text>
+                </g>
+                <g class="gn">
+                    <circle cx="105" cy="35" r="9"/>
+                    <text x="105" y="38" text-anchor="middle">gkl</text>
+                </g>
+                <g class="gn">
+                    <circle cx="90" cy="88" r="8"/>
+                    <text x="90" y="91" text-anchor="middle">SNSF</text>
+                </g>
+                <g class="gn">
+                    <circle cx="118" cy="78" r="7"/>
+                    <text x="118" y="81" text-anchor="middle">ICPR</text>
+                </g>
+            </svg>
+        </div>
+    </article>
+</main>
+
+<!-- Wax seal at bottom -->
+<div class="seal" aria-hidden="true">
+    <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <radialGradient id="wax-grad" cx="0.4" cy="0.3" r="0.8">
+                <stop offset="0%" stop-color="oklch(0.78 0.18 27)"/>
+                <stop offset="40%" stop-color="oklch(0.55 0.18 27)"/>
+                <stop offset="80%" stop-color="oklch(0.32 0.14 25)"/>
+                <stop offset="100%" stop-color="oklch(0.18 0.10 25)"/>
+            </radialGradient>
+            <filter id="wax-light" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+                <feSpecularLighting surfaceScale="3" specularConstant="1.4" specularExponent="22" lighting-color="#ffffff" result="spec">
+                    <feDistantLight azimuth="225" elevation="55"/>
+                </feSpecularLighting>
+                <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOn"/>
+                <feComposite in="SourceGraphic" in2="specOn" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+            </filter>
+            <filter id="wax-grain" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="3"/>
+                <feColorMatrix values="0 0 0 0 0.18   0 0 0 0 0.04   0 0 0 0 0.04   0 0 0 0.30 0"/>
+                <feComposite in2="SourceGraphic" operator="in"/>
+            </filter>
+        </defs>
+        <ellipse cx="35" cy="40" rx="30" ry="6" fill="oklch(0.10 0.04 30)" opacity="0.40"/>
+        <path d="M35 6 Q56 8 62 22 Q66 34 60 46 Q52 58 35 60 Q18 58 10 46 Q4 34 8 22 Q14 8 35 6 Z"
+              fill="url(#wax-grad)" filter="url(#wax-light)"/>
+        <path d="M35 6 Q56 8 62 22 Q66 34 60 46 Q52 58 35 60 Q18 58 10 46 Q4 34 8 22 Q14 8 35 6 Z"
+              fill="url(#wax-grad)" filter="url(#wax-grain)" opacity="0.4"/>
+        <text x="35" y="42" text-anchor="middle"
+              font-family="Spectral, serif" font-size="28" font-weight="700" font-style="italic"
+              fill="oklch(0.96 0.06 60)">L</text>
+        <ellipse cx="22" cy="18" rx="8" ry="3" fill="oklch(0.94 0.06 70)" opacity="0.55" transform="rotate(-25 22 18)"/>
+    </svg>
+</div>
+
+<!-- 小林 robot, fixed bottom-right of viewport -->
+<button class="robot" type="button" onclick="openDialogue()" aria-label="Talk to 小林 the apprentice's familiar">
+    <svg viewBox="0 0 72 88" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body (round-bottom oval, like an owl) -->
+        <ellipse class="body" cx="36" cy="50" rx="26" ry="32"/>
+        <!-- Belly (lighter front) -->
+        <ellipse class="belly" cx="36" cy="58" rx="16" ry="20"/>
+        <!-- Ear tufts -->
+        <path class="ear-tuft" d="M16 28 L14 14 L24 22 Z"/>
+        <path class="ear-tuft" d="M56 28 L58 14 L48 22 Z"/>
+        <!-- Eyes -->
+        <circle cx="28" cy="38" r="6.5" fill="oklch(0.94 0.04 70)" stroke="oklch(0.40 0.07 55)" stroke-width="0.6"/>
+        <circle cx="44" cy="38" r="6.5" fill="oklch(0.94 0.04 70)" stroke="oklch(0.40 0.07 55)" stroke-width="0.6"/>
+        <circle class="eye" cx="28" cy="38" r="3"/>
+        <circle class="eye" cx="44" cy="38" r="3"/>
+        <circle cx="29" cy="36.5" r="0.9" fill="oklch(0.96 0.06 80)"/>
+        <circle cx="45" cy="36.5" r="0.9" fill="oklch(0.96 0.06 80)"/>
+        <!-- Beak -->
+        <path class="beak" d="M36 44 L33 50 L39 50 Z"/>
+        <!-- Chest gear (clockwork heart) -->
+        <g transform="translate(36 60)">
+            <g class="gear">
+                <circle r="6" />
+                <g fill="oklch(0.30 0.05 55)">
+                    <rect x="-1" y="-8" width="2" height="3"/>
+                    <rect x="-1" y="5" width="2" height="3"/>
+                    <rect x="-8" y="-1" width="3" height="2"/>
+                    <rect x="5" y="-1" width="3" height="2"/>
+                </g>
+                <circle r="2" fill="oklch(0.40 0.07 55)"/>
+            </g>
+        </g>
+        <!-- Wings tucked -->
+        <path d="M14 50 Q12 60 22 70 Q26 64 24 56 Z" fill="oklch(0.40 0.05 55)" opacity="0.7"/>
+        <path d="M58 50 Q60 60 50 70 Q46 64 48 56 Z" fill="oklch(0.40 0.05 55)" opacity="0.7"/>
+        <!-- Feet -->
+        <line x1="28" y1="80" x2="26" y2="86" stroke="oklch(0.30 0.07 50)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="80" x2="32" y2="86" stroke="oklch(0.30 0.07 50)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="44" y1="80" x2="46" y2="86" stroke="oklch(0.30 0.07 50)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="80" x2="40" y2="86" stroke="oklch(0.30 0.07 50)" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+</button>
+
+<!-- Footer band -->
+<footer class="footer-band">
+    <span>魔法师之书 · Grimoire — chapter I · the apprentice's study</span>
+</footer>
+
+<!-- Search overlay (Iron-Man console expanded) -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-panel">
+        <input class="search-input" id="searchInput" type="text" placeholder="召唤一个房间或一篇论文…" autofocus>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+            <span><kbd>Enter</kbd> visit</span>
+            <span><kbd>Esc</kbd> close</span>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-result is-active" data-room="bedroom">
+                <div class="room">卧室 · the bedroom</div>
+                <div class="desc">photo wall, talks TV, world map, computer · About me</div>
+            </div>
+            <div class="search-result" data-room="bookshelf">
+                <div class="room">书架 · the bookshelf</div>
+                <div class="desc">9 papers + thesis tome — most cited / featured</div>
+            </div>
+            <div class="search-result" data-room="workbench">
+                <div class="room">实验台 · the alchemist's workbench</div>
+                <div class="desc">11 projects in glass jars — graphkit-learn, PLANALYSER…</div>
+            </div>
+            <div class="search-result" data-room="awards">
+                <div class="room">获奖墙 · the award wall</div>
+                <div class="desc">SNSF × 3, UniBE Open Round, Innosuisse, ANR</div>
+            </div>
+            <div class="search-result" data-room="hallway">
+                <div class="room">画壁走廊 · the painted hallway</div>
+                <div class="desc">career timeline as Chinese ink scrolls — Bern · INSA · XJTU</div>
+            </div>
+            <div class="search-result" data-room="letter">
+                <div class="room">信件房 · the letter room</div>
+                <div class="desc">Howler + owl + contact methods — Send a message</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Robot dialogue overlay -->
+<div class="dialogue-overlay" id="dialogueOverlay">
+    <div class="dialogue-panel">
+        <p class="dialogue-greeting">「主人在看书呢，要去哪个房间？」</p>
+        <p class="dialogue-question">My mistress is reading. Where shall I take you?</p>
+        <div class="dialogue-options">
+            <button data-room="bedroom">→ 卧室 (about Linlin)</button>
+            <button data-room="bookshelf">→ 书架 (publications)</button>
+            <button data-room="workbench">→ 实验台 (projects)</button>
+            <button data-room="awards">→ 获奖墙 (grants)</button>
+            <button data-room="hallway">→ 画壁走廊 (career)</button>
+            <button data-room="letter">→ 信件房 (contact)</button>
+            <button data-room="atlas">→ 星图大书 (whole atlas)</button>
+            <button data-room="close">… 让小林休息一下 (dismiss)</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleMode() {
+    const root = document.documentElement;
+    const cur = root.getAttribute('data-mode') || 'day';
+    const next = cur === 'day' ? 'night' : 'day';
+    root.setAttribute('data-mode', next);
+    document.getElementById('modeBadge').textContent = next;
+}
+
+function openHowler() {
+    alert('🦉 Howler postcard would open here.\n\nIn production this is the D5.N postcard with full SVG sealing animation + owl flyaway. The current mockup links to that flow.');
+}
+
+function openSearch() {
+    document.getElementById('searchOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+}
+function closeSearch() {
+    document.getElementById('searchOverlay').classList.remove('open');
+}
+function openDialogue() {
+    document.getElementById('dialogueOverlay').classList.add('open');
+}
+function closeDialogue() {
+    document.getElementById('dialogueOverlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+    if (e.key === 'c' || e.key === 'C') { if (!document.querySelector('.search-overlay.open')) toggleMode(); }
+    if (e.key === 'Escape') { closeSearch(); closeDialogue(); }
+});
+
+document.getElementById('searchOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('searchOverlay')) closeSearch();
+});
+document.getElementById('dialogueOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('dialogueOverlay')) closeDialogue();
+});
+
+// Dialogue option handler
+document.querySelectorAll('.dialogue-options button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const room = btn.dataset.room;
+        if (room === 'close') { closeDialogue(); return; }
+        alert('🪶 小林 leads you toward 「' + room + '」.\n\nIn production this triggers a smooth scroll/camera fly to the room with a particle trail. (Mockup: scene not yet built.)');
+        closeDialogue();
+    });
+});
+// Search result click
+document.querySelectorAll('.search-result').forEach(r => {
+    r.addEventListener('click', () => {
+        const room = r.dataset.room;
+        alert('✨ Console summons 「' + room + '」.\n\n(Mockup: scene not yet built.)');
+        closeSearch();
+    });
+});
+
+// Search keyboard nav
+let activeIdx = 0;
+const updateActive = () => {
+    const results = [...document.querySelectorAll('.search-result')];
+    results.forEach((r, i) => r.classList.toggle('is-active', i === activeIdx));
+};
+document.getElementById('searchInput').addEventListener('keydown', (e) => {
+    const results = [...document.querySelectorAll('.search-result')];
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = (activeIdx + 1) % results.length; updateActive(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); activeIdx = (activeIdx - 1 + results.length) % results.length; updateActive(); }
+    if (e.key === 'Enter')     { results[activeIdx].click(); }
+});
+
+console.log('%c v2 mockup · 魔法师之书 ', 'background: oklch(0.42 0.16 27); color: oklch(0.95 0.04 60); padding: 4px 12px; font-style: italic; font-family: serif;');
+console.log('Try: candle, Howler, 小林, crystal · keys C/K/Esc');
+</script>
+
+</body>
+</html>
