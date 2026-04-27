@@ -2,31 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Vitality Picker — scientist-notebook variants on parchment</title>
+<title>Vitality Picker — text-emphasis techniques on parchment (no cold accents)</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower:wght@400&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600&display=swap">
 
 <style>
 :root {
     --rule: oklch(0.45 0.10 50 / 0.30);
-    --ink-deep: #2a1d11;
-    --ink-warm: #3a2818;
-    --ink-faded: #5a4631;
-    --ink-near-black: #14110a;   /* "high contrast" ink for option A */
-    --gold-deep: #8a6520;
-    --gold-mid: #c8973f;
-    --gold-light: #f3d77a;
-    /* Vivid accents */
-    --coral:   #d83a2c;          /* B1 */
-    --coral-deep: #a82213;
-    --tech-blue: #1f4ec0;        /* B2 */
-    --tech-blue-deep: #0f3494;
-    --leaf-green: #2e8b3a;       /* B3 */
-    --leaf-green-deep: #1f6526;
+    /* All ink stays in the warm sepia family — fuses with parchment */
+    --ink-baseline: oklch(0.20 0.04 30);   /* current state body */
+    --ink-deep:     oklch(0.10 0.04 30);   /* "high contrast" body */
+    --ink-near-black: oklch(0.06 0.03 30); /* deepest */
+    --ink-faded:    #5a4631;
+    /* Maroon family — original red `oklch(0.45 0.16 27)` plus brightened variants */
+    --maroon-orig:  oklch(0.45 0.16 27);   /* the existing red */
+    --maroon-bright: oklch(0.55 0.20 27);  /* slightly lifted */
+    --maroon-deep:  oklch(0.34 0.16 27);
+    --maroon-glow:  oklch(0.65 0.20 27);
 }
 * { box-sizing: border-box; }
 html, body {
@@ -34,8 +30,8 @@ html, body {
     font-family: 'Indie Flower', 'Spectral', Georgia, serif;
     color: var(--ink-deep);
     min-height: 100%;
-    background: url("res/parchment-options/wm-01-parchment-classic.jpg") center / cover no-repeat fixed,
-                oklch(0.93 0.030 78);
+    background: url("res/parchment-options/wm-02-pergament-aged.jpg") center / cover no-repeat fixed,
+                oklch(0.85 0.05 75);
     font-size: 18px;
     line-height: 1.7;
 }
@@ -57,7 +53,7 @@ header .sub {
     margin: 10px auto 0;
     max-width: 800px;
     font-size: 17px;
-    color: var(--ink-warm);
+    color: var(--ink-deep);
     line-height: 1.6;
 }
 header .sub code {
@@ -67,6 +63,7 @@ header .sub code {
     font-size: 14px;
     font-family: 'JetBrains Mono', monospace;
 }
+header .sub strong { color: var(--maroon-orig); }
 .lang-toggle {
     text-align: center;
     margin: 14px 0 0;
@@ -83,9 +80,9 @@ header .sub code {
     border-radius: 999px;
 }
 .lang-btn.active {
-    background: oklch(0.45 0.16 27);
+    background: var(--maroon-bright);
     color: oklch(0.96 0.04 60);
-    border-color: oklch(0.45 0.16 27);
+    border-color: var(--maroon-bright);
 }
 
 .stack {
@@ -114,7 +111,7 @@ header .sub code {
 .var-head .num {
     font-family: 'Reenie Beanie', cursive;
     font-size: 30px;
-    color: var(--gold-deep);
+    color: var(--maroon-bright);
     line-height: 1;
 }
 .var-head h3 {
@@ -131,7 +128,7 @@ header .sub code {
     color: var(--ink-faded);
     font-family: 'Spectral', serif;
     text-align: right;
-    max-width: 360px;
+    max-width: 340px;
     line-height: 1.4;
 }
 .tech {
@@ -140,9 +137,9 @@ header .sub code {
     color: var(--ink-faded);
     font-family: 'JetBrains Mono', monospace;
 }
-.tech b { color: var(--ink-warm); font-weight: 600; }
+.tech b { color: var(--ink-deep); font-weight: 600; }
 
-/* Demo content layout */
+/* Demo content layout — REGULAR font sizes, not bumped up */
 .demo {
     padding: 0 4px;
     display: grid;
@@ -154,7 +151,7 @@ header .sub code {
 
 .demo h2 {
     margin: 0 0 4px;
-    font-size: 42px;
+    font-size: 36px;          /* was 42 — back to sane */
     line-height: 1.1;
     font-family: 'Reenie Beanie', cursive;
 }
@@ -166,7 +163,7 @@ header .sub code {
 }
 .demo p {
     margin: 0 0 12px;
-    font-size: 18px;
+    font-size: 18px;          /* was 18, kept */
 }
 .demo a { text-decoration: none; cursor: pointer; transition: all 0.25s; }
 .demo .key { font-weight: 600; }
@@ -195,7 +192,7 @@ header .sub code {
 }
 .metric .num {
     display: block;
-    font-size: 38px;
+    font-size: 36px;
     line-height: 1;
     margin-bottom: 4px;
 }
@@ -206,225 +203,231 @@ header .sub code {
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
-.demo.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 48px; letter-spacing: 0.04em; }
-.demo.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; font-size: 19px; }
+.demo.zh h2 { font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive; font-size: 42px; letter-spacing: 0.04em; }
+.demo.zh    { font-family: 'Ma Shan Zheng', 'LXGW WenKai', serif; font-size: 18px; }
 body.lang-en .demo.zh { display: none; }
 body.lang-zh .demo.en { display: none; }
 
 /* ============== V0: BASELINE (current state) ============== */
-.v0 .demo h2, .v0 .demo p, .v0 .demo .key { color: var(--ink-deep); }
-.v0 .demo a { color: var(--ink-deep); border-bottom: 1px solid var(--ink-warm); }
-.v0 .demo a:hover { color: #000; }
-.v0 .demo .cta { background: var(--ink-warm); color: oklch(0.95 0.05 75); }
-.v0 .metric .num { color: var(--ink-deep); font-weight: 700; }
+.v0 .demo h2, .v0 .demo p { color: var(--ink-baseline); }
+.v0 .demo .key { color: var(--ink-baseline); font-weight: 600; }
+.v0 .demo a { color: var(--maroon-orig); border-bottom: 1px solid var(--maroon-orig); }
+.v0 .demo a:hover { color: var(--maroon-deep); }
+.v0 .demo .cta { background: var(--maroon-orig); color: oklch(0.96 0.04 60); }
+.v0 .metric .num { color: var(--ink-baseline); font-weight: 700; }
 
-/* ============== V1: A — high-contrast text ============== */
-.v1 .demo h2, .v1 .demo p, .v1 .demo .key { color: var(--ink-near-black); font-weight: 600; }
-.v1 .demo h2 { font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
-.v1 .demo a { color: #000; border-bottom: 2px solid #000; }
-.v1 .demo a:hover { color: #2a1d11; }
-.v1 .demo .cta { background: var(--ink-near-black); color: oklch(0.96 0.04 70); }
-.v1 .metric .num { color: var(--ink-near-black); font-weight: 700; }
+/* ============== V1: + BOLD (font-weight only — minimal change) ============== */
+.v1 .demo h2 { color: var(--ink-deep); font-weight: 700; }
+.v1 .demo p  { color: var(--ink-deep); font-weight: 600; }
+.v1 .demo .key { color: var(--ink-deep); font-weight: 800; }
+.v1 .demo a { color: var(--maroon-orig); border-bottom: 2px solid var(--maroon-orig); font-weight: 600; }
+.v1 .demo a:hover { color: var(--maroon-deep); }
+.v1 .demo .cta { background: var(--maroon-orig); color: oklch(0.96 0.04 60); font-weight: 700; }
+.v1 .metric .num { color: var(--ink-deep); font-weight: 700; }
 
-/* ============== V2: A + B1 — high-contrast + coral red ============== */
-.v2 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
-.v2 .demo p { color: var(--ink-near-black); }
-.v2 .demo .key { color: var(--coral); font-weight: 700; }
-.v2 .demo a { color: var(--coral-deep); border-bottom: 2px solid var(--coral); }
-.v2 .demo a:hover { color: var(--coral); border-bottom-color: var(--coral-deep); }
+/* ============== V2: + DROP SHADOW (soft halo for weight) ============== */
+.v2 .demo h2 {
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow: 0 1px 2px rgba(60, 30, 5, 0.35);
+}
+.v2 .demo p  { color: var(--ink-deep); font-weight: 600; }
+.v2 .demo .key {
+    color: var(--ink-deep); font-weight: 800;
+    text-shadow: 0 1px 2px rgba(60, 30, 5, 0.45);
+}
+.v2 .demo a {
+    color: var(--maroon-orig); font-weight: 600;
+    border-bottom: 2px solid var(--maroon-orig);
+    text-shadow: 0 1px 1px rgba(110, 30, 30, 0.3);
+}
+.v2 .demo a:hover { color: var(--maroon-deep); }
 .v2 .demo .cta {
-    background: var(--coral); color: white;
-    box-shadow: 0 3px 8px rgba(216, 58, 44, 0.3);
+    background: var(--maroon-orig); color: oklch(0.96 0.04 60); font-weight: 700;
+    box-shadow: 0 3px 8px rgba(110, 30, 30, 0.35);
 }
-.v2 .demo .cta:hover { background: var(--coral-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(216, 58, 44, 0.4); }
-.v2 .metric .num { color: var(--coral); font-weight: 700; }
+.v2 .demo .cta:hover { background: var(--maroon-deep); }
+.v2 .metric .num {
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow: 0 1px 2px rgba(60, 30, 5, 0.35);
+}
 
-/* ============== V3: A + B2 — high-contrast + tech blue ============== */
-.v3 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
-.v3 .demo p { color: var(--ink-near-black); }
-.v3 .demo .key { color: var(--tech-blue); font-weight: 700; }
-.v3 .demo a { color: var(--tech-blue-deep); border-bottom: 2px solid var(--tech-blue); }
-.v3 .demo a:hover { color: var(--tech-blue); border-bottom-color: var(--tech-blue-deep); }
+/* ============== V3: + EMBOSSED (white inset highlight + deep dark below) ============== */
+.v3 .demo h2 {
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
+}
+.v3 .demo p  { color: var(--ink-deep); font-weight: 600; }
+.v3 .demo .key {
+    color: var(--ink-deep); font-weight: 800;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.6);
+}
+.v3 .demo a {
+    color: var(--maroon-orig); font-weight: 700;
+    border-bottom: 2px solid var(--maroon-orig);
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 220, 200, 0.5),
+         0.5px  1px 1px rgba(80, 10, 10, 0.55);
+}
+.v3 .demo a:hover { color: var(--maroon-deep); }
 .v3 .demo .cta {
-    background: var(--tech-blue); color: white;
-    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
+    background: var(--maroon-orig); color: oklch(0.96 0.04 60); font-weight: 700;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 3px 8px rgba(110, 30, 30, 0.35);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
 }
-.v3 .demo .cta:hover { background: var(--tech-blue-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(31, 78, 192, 0.4); }
-.v3 .metric .num { color: var(--tech-blue); font-weight: 700; }
+.v3 .demo .cta:hover { background: var(--maroon-deep); }
+.v3 .metric .num {
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
+}
 
-/* ============== V4: A + B3 — high-contrast + leaf green ============== */
-.v4 .demo h2 { color: var(--ink-near-black); font-weight: 700; text-shadow: 1px 1px 0 rgba(255,255,255,0.4); }
-.v4 .demo p { color: var(--ink-near-black); }
-.v4 .demo .key { color: var(--leaf-green); font-weight: 700; }
-.v4 .demo a { color: var(--leaf-green-deep); border-bottom: 2px solid var(--leaf-green); }
-.v4 .demo a:hover { color: var(--leaf-green); border-bottom-color: var(--leaf-green-deep); }
+/* ============== V4: + INK BLEED (blur dark halo — wet ink soaking) ============== */
+.v4 .demo h2 {
+    color: var(--ink-near-black); font-weight: 700;
+    text-shadow: 0 0 2px rgba(20, 10, 0, 0.55), 0 1px 1px rgba(0,0,0,0.4);
+}
+.v4 .demo p  {
+    color: var(--ink-deep); font-weight: 600;
+    text-shadow: 0 0 1px rgba(30, 18, 5, 0.4);
+}
+.v4 .demo .key {
+    color: var(--ink-near-black); font-weight: 800;
+    text-shadow: 0 0 2.5px rgba(20, 10, 0, 0.7), 0 1px 1px rgba(0,0,0,0.4);
+}
+.v4 .demo a {
+    color: var(--maroon-orig); font-weight: 700;
+    border-bottom: 2px solid var(--maroon-orig);
+    text-shadow: 0 0 2px rgba(110, 30, 30, 0.6);
+}
+.v4 .demo a:hover { color: var(--maroon-deep); }
 .v4 .demo .cta {
-    background: var(--leaf-green); color: white;
-    box-shadow: 0 3px 8px rgba(46, 139, 58, 0.3);
+    background: var(--maroon-orig); color: oklch(0.96 0.04 60); font-weight: 700;
+    box-shadow: 0 4px 12px rgba(110, 30, 30, 0.45);
 }
-.v4 .demo .cta:hover { background: var(--leaf-green-deep); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(46, 139, 58, 0.4); }
-.v4 .metric .num { color: var(--leaf-green); font-weight: 700; }
+.v4 .metric .num {
+    color: var(--ink-near-black); font-weight: 700;
+    text-shadow: 0 0 2px rgba(20, 10, 0, 0.55), 0 1px 1px rgba(0,0,0,0.4);
+}
 
-/* ============== V5: A + B2 + D — TECH NOTEBOOK (blueprint + sparkline + mono) ============== */
-.v5 {
-    /* faint blueprint grid behind content (parchment-toned blue) */
-    background-image:
-        linear-gradient(0deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px),
-        linear-gradient(90deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px);
-    background-size: 40px 40px;
-    background-position: 0 0;
-    border: 1px solid rgba(31,78,192,0.2);
-    border-radius: 4px;
-    padding: 28px 24px 32px;
-    margin: 0 -16px;
-}
+/* ============== V5: + BRIGHT MAROON (lifted accent + emboss combo — readable + alive) ============== */
 .v5 .demo h2 {
-    color: var(--ink-near-black);
-    font-weight: 700;
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
 }
-.v5 .demo p { color: var(--ink-near-black); }
+.v5 .demo p { color: var(--ink-deep); font-weight: 600; }
 .v5 .demo .key {
-    color: var(--tech-blue-deep);
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92em;
-    background: rgba(31,78,192,0.06);
-    padding: 0 5px;
-    border-radius: 2px;
+    color: var(--maroon-bright); font-weight: 800;
+    text-shadow:
+        -1px -1px 0 rgba(255, 220, 200, 0.4),
+         1px  1px 1px rgba(80, 10, 10, 0.6);
 }
 .v5 .demo a {
-    color: var(--tech-blue-deep);
-    border-bottom: 2px solid var(--tech-blue);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92em;
+    color: var(--maroon-bright); font-weight: 700;
+    border-bottom: 2px solid var(--maroon-bright);
+    text-shadow: 0 1px 1px rgba(80, 10, 10, 0.45);
 }
-.v5 .demo a:hover { color: var(--tech-blue); }
+.v5 .demo a:hover {
+    color: var(--maroon-glow); border-bottom-color: var(--maroon-glow);
+    text-shadow: 0 0 4px rgba(180, 60, 60, 0.45);
+}
 .v5 .demo .cta {
-    background: var(--tech-blue); color: white;
-    font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
-    text-transform: uppercase;
-    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
+    background: var(--maroon-bright); color: oklch(0.96 0.04 60); font-weight: 700;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 4px 10px rgba(140, 40, 40, 0.4);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
 }
-.v5 .demo .cta:hover { background: var(--tech-blue-deep); transform: translateY(-2px); }
-.v5 .metric {
-    border: none;
-    background: rgba(31,78,192,0.04);
-    border-left: 3px solid var(--tech-blue);
-    padding: 10px 14px;
-    border-radius: 0 4px 4px 0;
-    text-align: left;
+.v5 .demo .cta:hover {
+    background: var(--maroon-glow); transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 16px rgba(180, 60, 60, 0.5);
 }
 .v5 .metric .num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 32px;
-    color: var(--tech-blue-deep);
-    font-weight: 600;
-    margin-bottom: 2px;
+    color: var(--maroon-bright); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 220, 200, 0.4),
+         1px  1px 1px rgba(80, 10, 10, 0.55);
 }
-.v5 .metric .lbl {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--ink-faded);
-    font-size: 11px;
-}
-.v5 .sparkline { display: block; margin-top: 4px; opacity: 0.7; }
 
-/* ============== V6: A + B2 + C + D — FULL TREATMENT (notebook + motion + accents) ============== */
+/* ============== V6: V5 + sepia notebook anchors (mono numbers + sepia sparklines + grid)
+   — keeps the whole palette warm. No cold blue. ============== */
 .v6 {
     background-image:
-        linear-gradient(0deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px),
-        linear-gradient(90deg, transparent 0, transparent 39px, rgba(31,78,192,0.08) 39px, rgba(31,78,192,0.08) 40px);
+        linear-gradient(0deg, transparent 0, transparent 39px, rgba(110, 60, 20, 0.12) 39px, rgba(110, 60, 20, 0.12) 40px),
+        linear-gradient(90deg, transparent 0, transparent 39px, rgba(110, 60, 20, 0.12) 39px, rgba(110, 60, 20, 0.12) 40px);
     background-size: 40px 40px;
-    border: 1px solid rgba(31,78,192,0.25);
+    border: 1px solid rgba(110, 60, 20, 0.25);
     border-radius: 4px;
     padding: 28px 24px 32px;
     margin: 0 -16px;
 }
 .v6 .demo h2 {
-    color: var(--ink-near-black);
-    font-weight: 700;
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
-    animation: hero-breathe 6s ease-in-out infinite;
-    transform-origin: left center;
+    color: var(--ink-deep); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
 }
-@keyframes hero-breathe {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.015); }
-}
-.v6 .demo p { color: var(--ink-near-black); }
+.v6 .demo p { color: var(--ink-deep); font-weight: 600; }
 .v6 .demo .key {
-    color: var(--tech-blue-deep);
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92em;
-    background: rgba(31,78,192,0.06);
-    padding: 0 5px;
-    border-radius: 2px;
-    transition: all 0.2s;
-}
-.v6 .demo .key:hover {
-    background: rgba(31,78,192,0.18);
-    color: var(--tech-blue);
-    cursor: help;
+    color: var(--maroon-bright); font-weight: 800;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.92em;
+    text-shadow:
+        -1px -1px 0 rgba(255, 220, 200, 0.4),
+         1px  1px 1px rgba(80, 10, 10, 0.55);
 }
 .v6 .demo a {
-    color: var(--tech-blue-deep);
-    border-bottom: 2px solid var(--tech-blue);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92em;
-    position: relative;
+    color: var(--maroon-bright); font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.92em;
+    border-bottom: 2px solid var(--maroon-bright);
+    text-shadow: 0 1px 1px rgba(80, 10, 10, 0.45);
 }
 .v6 .demo a:hover {
-    color: var(--tech-blue);
-    text-shadow: 0 0 8px rgba(31,78,192,0.4);
+    color: var(--maroon-glow); text-shadow: 0 0 4px rgba(180, 60, 60, 0.5);
 }
 .v6 .demo .cta {
-    background: var(--tech-blue); color: white;
-    font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
-    text-transform: uppercase;
-    box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3);
-    animation: cta-pulse 2.5s ease-in-out infinite;
+    background: var(--maroon-bright); color: oklch(0.96 0.04 60); font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 10px rgba(140, 40, 40, 0.4);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+    animation: cta-pulse 2.6s ease-in-out infinite;
 }
 @keyframes cta-pulse {
-    0%, 100% { box-shadow: 0 3px 8px rgba(31, 78, 192, 0.3); }
-    50% { box-shadow: 0 3px 14px rgba(31, 78, 192, 0.55); }
+    0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 10px rgba(140, 40, 40, 0.4); }
+    50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 18px rgba(180, 60, 60, 0.6); }
 }
-.v6 .demo .cta:hover {
-    background: var(--tech-blue-deep); transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(31, 78, 192, 0.5);
-    animation: none;
-}
+.v6 .demo .cta:hover { background: var(--maroon-glow); transform: translateY(-2px); animation: none; }
 .v6 .metric {
     border: none;
-    background: rgba(31,78,192,0.04);
-    border-left: 3px solid var(--tech-blue);
+    background: rgba(140, 40, 40, 0.06);
+    border-left: 3px solid var(--maroon-bright);
     padding: 10px 14px;
     border-radius: 0 4px 4px 0;
     text-align: left;
-    transition: transform 0.25s, background 0.25s;
-}
-.v6 .metric:hover {
-    transform: translateX(4px);
-    background: rgba(31,78,192,0.10);
 }
 .v6 .metric .num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 32px;
-    color: var(--tech-blue-deep);
-    font-weight: 600;
-    margin-bottom: 2px;
+    font-size: 32px; color: var(--maroon-bright); font-weight: 700;
+    text-shadow:
+        -1px -1px 0 rgba(255, 220, 200, 0.4),
+         1px  1px 1px rgba(80, 10, 10, 0.55);
 }
-.v6 .metric .lbl {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--ink-faded);
-    font-size: 11px;
-}
+.v6 .metric .lbl { font-family: 'JetBrains Mono', monospace; color: var(--ink-faded); font-size: 11px; }
+.v6 .sparkline { display: block; margin-top: 4px; opacity: 0.85; }
 
 .controls {
     text-align: center;
     padding: 18px 24px 60px;
     font-size: 16px;
-    color: var(--ink-warm);
+    color: var(--ink-deep);
     max-width: 760px;
     margin: 0 auto;
 }
@@ -440,8 +443,8 @@ body.lang-zh .demo.en { display: none; }
 <body class="lang-en">
 
 <header>
-    <h1>Vitality Picker · 笔记本能量级别</h1>
-    <p class="sub">7 个版本，同样内容，从"最老旧基线"递进到"科学家的活力笔记本"。每一档加 1 个改动，看哪一档刚刚好。</p>
+    <h1>Vitality Picker · 字工艺</h1>
+    <p class="sub">7 档对比 — 同样内容，每档加 1 种 <strong>文字突出工艺</strong>。<br>关键约束：所有强调色都在 <strong>暖红 maroon</strong> 家族（不引入冷色 / 不破坏羊皮纸融合）；字号不变，靠工艺增强对比。</p>
     <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">English</button>
         <button class="lang-btn" onclick="setLang('zh')">中文</button>
@@ -455,9 +458,9 @@ body.lang-zh .demo.en { display: none; }
         <div class="var-head">
             <span class="num">V 0</span>
             <h3>Baseline &nbsp;·&nbsp; 当前状态</h3>
-            <p class="verdict">"Old letter" — sepia ink on parchment. Quiet, low energy. This is what you have now.</p>
+            <p class="verdict">Original sepia ink + original maroon. Quiet, low contrast on parchment.</p>
         </div>
-        <p class="tech">tech: <b>0.20-lightness sepia text</b> + sepia underline links + brown CTA · NO accent color · NO motion</p>
+        <p class="tech">tech: <b>ink lightness 0.20</b> · maroon <b>oklch(0.45 0.16 27)</b> · NO weight bolding · NO shadow · NO emboss</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -486,14 +489,14 @@ body.lang-zh .demo.en { display: none; }
         </div>
     </div>
 
-    <!-- ===== V1: A high-contrast ===== -->
+    <!-- ===== V1: + BOLD ===== -->
     <div class="variant v1">
         <div class="var-head">
             <span class="num">V 1</span>
-            <h3>+ A &nbsp;·&nbsp; 高对比文字</h3>
-            <p class="verdict">Same look + feel, but text near-black on parchment. Already much punchier.</p>
+            <h3>+ Bold &nbsp;·&nbsp; 纯加粗</h3>
+            <p class="verdict">Same colors, just thicker strokes. Body weight 600 → 700, key terms 800. Cleanest "more presence".</p>
         </div>
-        <p class="tech">tech: ink darkened from <b>0.20 → 0.07 lightness</b> (near-black) · weight 600 on body · headings get tiny embossed highlight</p>
+        <p class="tech">tech: ink <b>0.20 → 0.10</b> + <b>font-weight 700/800</b> · NO shadow · maroon underline thickened to 2px</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -522,14 +525,14 @@ body.lang-zh .demo.en { display: none; }
         </div>
     </div>
 
-    <!-- ===== V2: A + B1 coral red ===== -->
+    <!-- ===== V2: + DROP SHADOW ===== -->
     <div class="variant v2">
         <div class="var-head">
             <span class="num">V 2</span>
-            <h3>+ B1 &nbsp;·&nbsp; 鲜珊瑚红强调</h3>
-            <p class="verdict">High contrast + coral accent on key terms / links / CTA. Warm energy without breaking the parchment vibe.</p>
+            <h3>+ Drop Shadow &nbsp;·&nbsp; 软阴影</h3>
+            <p class="verdict">V1 + warm shadow under each glyph. Letters feel weightier, slightly lifted off the page. Subtle, classy.</p>
         </div>
-        <p class="tech">tech: accent <b>#d83a2c</b> coral · key terms colored coral + bold · CTA flat coral with shadow + lift on hover</p>
+        <p class="tech">tech: V1 + <b>text-shadow 0 1px 2px sepia</b> for body, <b>0 1px 2px maroon</b> for accents · CTA gets soft maroon glow</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -558,14 +561,14 @@ body.lang-zh .demo.en { display: none; }
         </div>
     </div>
 
-    <!-- ===== V3: A + B2 tech blue ===== -->
+    <!-- ===== V3: + EMBOSSED ===== -->
     <div class="variant v3">
         <div class="var-head">
             <span class="num">V 3</span>
-            <h3>+ B2 &nbsp;·&nbsp; 科技深蓝强调</h3>
-            <p class="verdict">Same as V2 but with engineering blue. Cooler, more "technical journal", contrasts beautifully with parchment.</p>
+            <h3>+ Embossed &nbsp;·&nbsp; 凸印</h3>
+            <p class="verdict">V1 + light highlight on top-left + dark depth on bottom-right = letters look pressed/raised onto the parchment. Most "hand-pressed" feel.</p>
         </div>
-        <p class="tech">tech: accent <b>#1f4ec0</b> tech blue · same structure as V2 · the most "researcher's notebook" without going full tech</p>
+        <p class="tech">tech: <b>text-shadow stack</b>: <code>-1px -1px 0 hi</code> + <code>1px 1px 1px depth</code> · CTA inset 1px white highlight on top edge</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -594,14 +597,14 @@ body.lang-zh .demo.en { display: none; }
         </div>
     </div>
 
-    <!-- ===== V4: A + B3 leaf green ===== -->
+    <!-- ===== V4: + INK BLEED ===== -->
     <div class="variant v4">
         <div class="var-head">
             <span class="num">V 4</span>
-            <h3>+ B3 &nbsp;·&nbsp; 鲜叶绿强调</h3>
-            <p class="verdict">Same V1+accent, but green. Living, organic, distinctive (uncommon for academic) — the "growth + nature" angle.</p>
+            <h3>+ Ink Bleed &nbsp;·&nbsp; 墨水浸染</h3>
+            <p class="verdict">V1 + small radial dark blur around every glyph — simulates wet ink soaking into the parchment fibers. Most "freshly written".</p>
         </div>
-        <p class="tech">tech: accent <b>#2e8b3a</b> leaf green · same as V2/V3 with green substituted</p>
+        <p class="tech">tech: <b>text-shadow 0 0 2px sepia</b> + <code>0 1px 1px depth</code> · the radial blur gives ink-soak effect, no offset</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -630,14 +633,14 @@ body.lang-zh .demo.en { display: none; }
         </div>
     </div>
 
-    <!-- ===== V5: A + B2 + D scientist notebook ===== -->
+    <!-- ===== V5: V3 + BRIGHT MAROON ===== -->
     <div class="variant v5">
         <div class="var-head">
             <span class="num">V 5</span>
-            <h3>+ D &nbsp;·&nbsp; 科学家笔记本（蓝色 + blueprint）★</h3>
-            <p class="verdict">Section sits on a faint blueprint grid. Numbers + key terms get monospace. Metrics shown as engineering-style cards. The "notebook" you asked for.</p>
+            <h3>+ Bright Maroon &nbsp;·&nbsp; 提亮暗红 ★</h3>
+            <p class="verdict">V3 emboss + maroon brightened from <code>L 0.45</code> → <code>L 0.55</code>. Same warm family, more alive. Key terms now in lifted maroon.</p>
         </div>
-        <p class="tech">tech: <b>40×40px blueprint grid bg</b> (parchment-toned blue 0.08 alpha) · key terms + numbers in <b>JetBrains Mono</b> · metrics as left-bordered tech cards</p>
+        <p class="tech">tech: V3 emboss · accent <b>oklch(0.55 0.20 27)</b> (was 0.45 0.16) · CTA inset highlight + drop shadow · hover: glow to 0.65</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -646,9 +649,9 @@ body.lang-zh .demo.en { display: none; }
                 <button class="cta">Get In Touch</button>
             </div>
             <div class="metrics">
-                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">6</span><span class="lbl">Publications</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Pubs</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span></div>
             </div>
         </div>
         <div class="demo zh">
@@ -659,21 +662,21 @@ body.lang-zh .demo.en { display: none; }
                 <button class="cta">联系我</button>
             </div>
             <div class="metrics">
-                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">6</span><span class="lbl">论文</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span></div>
             </div>
         </div>
     </div>
 
-    <!-- ===== V6: A + B2 + C + D full ===== -->
+    <!-- ===== V6: V5 + SEPIA NOTEBOOK (warm grid + mono numbers + sepia sparklines) ===== -->
     <div class="variant v6">
         <div class="var-head">
             <span class="num">V 6</span>
-            <h3>+ C 全套 &nbsp;·&nbsp; 笔记本 + 微动 ★★</h3>
-            <p class="verdict">V5 plus subtle motion: hero name breathes, CTA pulses softly, metrics slide on hover. Maximum vitality without crossing into "loud".</p>
+            <h3>+ Sepia Notebook &nbsp;·&nbsp; 暖色科学笔记本 ★★</h3>
+            <p class="verdict">V5 + warm-toned blueprint grid (sepia, NOT cold blue) + JetBrains Mono on numbers/key terms + sparkline-style metrics. The "scientist's notebook" but staying in the warm parchment family.</p>
         </div>
-        <p class="tech">tech: V5 + <b>hero-breathe</b> (6s scale 1↔1.015) + <b>cta-pulse</b> (2.5s shadow loop) + metric hover translate-X · <code>prefers-reduced-motion</code> respected</p>
+        <p class="tech">tech: V5 + <b>40×40px sepia-toned grid bg</b> (rgba 110,60,20,0.12) + numbers in <b>JetBrains Mono</b> + sparkline drawn in maroon · CTA gets pulse animation</p>
         <div class="demo en">
             <div>
                 <h2>Linlin Jia, Ph.D.</h2>
@@ -682,9 +685,9 @@ body.lang-zh .demo.en { display: none; }
                 <button class="cta">Get In Touch</button>
             </div>
             <div class="metrics">
-                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">6</span><span class="lbl">Publications</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">130+</span><span class="lbl">Citations</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">Publications</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">Talks</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
             </div>
         </div>
         <div class="demo zh">
@@ -695,9 +698,9 @@ body.lang-zh .demo.en { display: none; }
                 <button class="cta">联系我</button>
             </div>
             <div class="metrics">
-                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">6</span><span class="lbl">论文</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
-                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="#1f4ec0" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">130+</span><span class="lbl">引用</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 20,16 40,14 60,8 80,5 100,2" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">6</span><span class="lbl">论文</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,18 25,15 50,12 75,8 100,4" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
+                <div class="metric"><span class="num">12+</span><span class="lbl">报告</span><svg class="sparkline" width="100" height="20" viewBox="0 0 100 20"><polyline points="0,16 33,12 66,9 100,5" fill="none" stroke="oklch(0.55 0.20 27)" stroke-width="1.5"/></svg></div>
             </div>
         </div>
     </div>
@@ -705,10 +708,9 @@ body.lang-zh .demo.en { display: none; }
 </div>
 
 <div class="controls">
-    <p>挑一个 V0–V6 的版本告诉我，例如 "<code>用 V5</code>"。也可以混搭，例如 "<code>用 V5 但 accent 换成 B3 绿色</code>"。</p>
+    <p>挑一档告诉我，例如 "<code>用 V5</code>" 或 "<code>V3 emboss + V5 的 maroon</code>"。Maroon 全程在暖红家族，无冷色。</p>
     <p style="font-size:13px;color:var(--ink-faded);margin-top:14px">
-        所有版本都用纯 CSS · 唯一新字体：<code>JetBrains Mono</code> (Google Fonts OFL，已加载) ·
-        Sparkline 是 inline SVG · 动画用 <code>@keyframes</code> + <code>prefers-reduced-motion</code> safe
+        所有效果纯 CSS · <code>font-weight</code> + <code>text-shadow</code> 各种叠加 · maroon 提亮 lightness 0.45→0.55 (chroma 0.16→0.20) · NO 字号增大，对比靠工艺
     </p>
 </div>
 
