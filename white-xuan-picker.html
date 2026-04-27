@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>白纸 / 宣纸 / 透明度对比 — 3 合 1 Picker</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root {
+    --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-orig: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: oklch(0.96 0.012 90);
+    font-size: 17px;
+    line-height: 1.7;
+}
+header { text-align: center; padding: 32px 24px 18px; border-bottom: 1px dashed var(--rule); }
+header h1 { margin: 0 0 6px; font-family: 'Zhi Mang Xing', cursive; font-size: 36px; line-height: 1.05; }
+header .sub { margin: 8px auto 0; max-width: 800px; font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+header .sub strong { color: var(--maroon-orig); }
+header .sub code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+
+.section-label {
+    text-align: center;
+    margin: 36px auto 0;
+    max-width: 1700px;
+    padding: 0 24px;
+}
+.section-label h2 {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 32px;
+    color: var(--maroon-orig);
+    margin: 0 0 4px;
+}
+.section-label p {
+    font-family: 'Ma Shan Zheng', serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 20px;
+    padding: 18px 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+.swatch {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover { transform: translateY(-4px); box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.18); }
+.swatch.active { outline: 3px solid var(--maroon-bright); outline-offset: 2px; }
+
+.preview {
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 50px;
+    position: relative;
+}
+.preview .grid-overlay {
+    /* Optional notebook-style grid overlay (used in white-paper section to test "现代笔记本" feel) */
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.08) 39px, rgba(110, 60, 20, 0.08) 40px, transparent 40px),
+        linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.08) 39px, rgba(110, 60, 20, 0.08) 40px, transparent 40px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+.preview .overlay {
+    position: relative;
+    color: var(--ink-deep);
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.6), 1px 1px 1px rgba(20, 8, 0, 0.35);
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 12px;
+}
+.preview h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 26px; line-height: 1.05; letter-spacing: 0.04em; }
+.preview .role { font-size: 12px; margin: 0 0 4px; font-style: italic; font-family: 'Spectral', serif; color: var(--ink-soft); }
+.preview .badge {
+    display: inline-block; padding: 2px 8px;
+    background: var(--maroon-bright); color: white;
+    border-radius: 999px; font-size: 11px; font-weight: 600;
+    text-shadow: none; font-family: 'Indie Flower', cursive;
+}
+
+.meta { padding: 12px 16px; border-top: 1px solid oklch(0.88 0.014 75); }
+.meta .name { font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-deep); }
+.meta .desc { margin-top: 4px; font-size: 13px; color: var(--ink-soft); line-height: 1.45; font-family: 'Ma Shan Zheng', serif; }
+.meta .src { margin-top: 4px; font-size: 10px; color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; }
+
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed var(--rule);
+    border-radius: 6px;
+    background: oklch(0.96 0.012 90);
+    text-align: center;
+}
+#liveDemo h3 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; }
+#liveDemo .demoArea {
+    margin-top: 16px;
+    min-height: 420px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    transition: background 0.4s ease;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 50px 40px;
+    position: relative;
+}
+#liveDemo .demoArea.with-grid::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px),
+        linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.10) 39px, rgba(110, 60, 20, 0.10) 40px, transparent 40px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+#liveDemo .demoText {
+    color: var(--ink-deep);
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.5), 1px 1px 1px rgba(20, 8, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+#liveDemo h2 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 42px; line-height: 1.05; letter-spacing: 0.04em; }
+#liveDemo .role { font-style: italic; font-size: 16px; margin: 0 0 14px; font-family: 'Spectral', serif; color: var(--ink-soft); }
+#liveDemo .body { font-family: 'Ma Shan Zheng', serif; font-size: 17px; line-height: 1.85; }
+#liveDemo .key { color: var(--maroon-orig); font-weight: 800; text-shadow: 0 0 2.5px rgba(120, 30, 30, 0.55), 0 1px 1px rgba(60, 10, 10, 0.5); }
+
+.demo-toggle {
+    margin-top: 12px; text-align: center;
+}
+.demo-toggle button {
+    background: oklch(0.92 0.040 75 / 0.55);
+    border: 1px solid var(--rule);
+    color: var(--ink-deep);
+    padding: 6px 16px; margin: 0 4px;
+    cursor: pointer; font-family: 'Indie Flower', cursive;
+    font-size: 14px; border-radius: 999px;
+}
+.demo-toggle button.on { background: var(--maroon-bright); color: white; border-color: var(--maroon-bright); }
+
+/* Opacity comparison section */
+.opacity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+    padding: 18px 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+.opacity-card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: oklch(0.96 0.012 90);  /* light base — parchment will be overlaid with var opacity */
+}
+.opacity-card .preview {
+    height: 280px;
+    /* parchment image overlaid — opacity controlled per card via CSS var */
+    background-image: linear-gradient(rgba(255,255,255,var(--white-mix, 0)), rgba(255,255,255,var(--white-mix, 0))),
+                      url("res/parchment-options/wm-02-pergament-aged.jpg");
+    background-size: cover; background-position: center;
+}
+.opacity-card .lbl { padding: 12px 16px; border-top: 1px solid oklch(0.88 0.014 75); }
+.opacity-card .lbl .name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; }
+.opacity-card .lbl .desc { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+.o-0 { --white-mix: 0; }
+.o-15 { --white-mix: 0.15; }
+.o-30 { --white-mix: 0.30; }
+.o-45 { --white-mix: 0.45; }
+.o-60 { --white-mix: 0.60; }
+.o-75 { --white-mix: 0.75; }
+
+.controls { text-align: center; padding: 18px 24px 60px; font-size: 15px; color: var(--ink-soft); max-width: 760px; margin: 0 auto; font-family: 'Ma Shan Zheng', serif; }
+.controls code { background: oklch(0.92 0.020 75); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>白纸 / 宣纸 / 透明度对比 — 3 合 1 Picker</h1>
+    <p class="sub">3 个独立任务一起 — <strong>WP</strong> = 白纸/笔记本（加格子做"现代笔记本"），<strong>XP</strong> = 宣纸（白底 + 切边/纹路），<strong>O</strong> = 当前 wm-02 羊皮纸 + 不同透明度（叠白）。</p>
+</header>
+
+<!-- ========== Section 1 · WHITE PAPER (with grid for "modern notebook" feel) ========== -->
+<div class="section-label"><h2>WP · 白纸 / 笔记本（叠浅格子）</h2><p>纸张 + 浅棕格子，看是不是"现代笔记本"感觉</p></div>
+
+<div class="grid" id="gridWP">
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-01-lined-notebook.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-01-lined-notebook.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP1 · 横线笔记本纸</div>
+            <div class="desc">真实横线笔记本纸 + 我们的格子叠加</div>
+            <div class="src">CC-BY 2.0 · 321K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-02-wrinkled-lined.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-02-wrinkled-lined.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP2 · 皱褶横线纸</div>
+            <div class="desc">有皱褶感的笔记本纸，更有质感</div>
+            <div class="src">CC-BY 2.0 · 843K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-03-open-notebook.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-03-open-notebook.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP3 · 翻开的笔记本</div>
+            <div class="desc">真翻开笔记本照片 — 中间装订线可见</div>
+            <div class="src">CC-BY 2.0 · 354K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-04-unsplash-paper.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-04-unsplash-paper.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP4 · Unsplash 白纸</div>
+            <div class="desc">最干净 — 真实白纸纹理摄影</div>
+            <div class="src">Unsplash License · 198K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-05-deckle-edge-paper.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-05-deckle-edge-paper.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP5 · Deckle-edge 麻纸</div>
+            <div class="desc">边缘有 deckle (毛边) — 一种艺术手工纸感</div>
+            <div class="src">PD · 494K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/white-paper/wp-05b-unsplash-notebook.jpg" data-grid="1">
+        <div class="preview" style="background-image:url('res/parchment-options/white-paper/wp-05b-unsplash-notebook.jpg')">
+            <div class="grid-overlay"></div>
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">WP6 · Unsplash 笔记本</div>
+            <div class="desc">另一张 Unsplash 笔记本照</div>
+            <div class="src">Unsplash License · 159K</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 2 · XUAN PAPER (white + edge texture) ========== -->
+<div class="section-label"><h2>XP · 宣纸 / 和纸 / 韩纸（白底 + 纹路 + 切边）</h2><p>真实手工纸近景 — 纤维 / 纹路 / 切边可见</p></div>
+
+<div class="grid" id="gridXP">
+    <div class="swatch" data-src="res/parchment-options/xuan-paper/xp-01-washi-pinhole.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/xuan-paper/xp-01-washi-pinhole.jpg')">
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">XP1 · 日本和纸（pinhole）</div>
+            <div class="desc">和纸有 pinhole 小孔纹理 — 独特纹路</div>
+            <div class="src">PD · 295K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/xuan-paper/xp-02-washi-shiroishi.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/xuan-paper/xp-02-washi-shiroishi.jpg')">
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">XP2 · 白石和纸 ★</div>
+            <div class="desc">白石和纸信纸 — 干净白底，纤维纹路细</div>
+            <div class="src">PD · 726K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/xuan-paper/xp-03-washi-sugihara.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/xuan-paper/xp-03-washi-sugihara.jpg')">
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">XP3 · 杉原和纸</div>
+            <div class="desc">杉原和纸 — 浅米白带纤维</div>
+            <div class="src">PD · 425K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/xuan-paper/xp-04-hanji-01.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/xuan-paper/xp-04-hanji-01.jpg')">
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">XP4 · 韩纸 hanji 01 ★</div>
+            <div class="desc">韩纸 — 桑皮手工，强纤维质感</div>
+            <div class="src">PD · 217K</div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/xuan-paper/xp-05-hanji-02.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/xuan-paper/xp-05-hanji-02.jpg')">
+            <div class="overlay"><h2>林林佳，博士</h2><p class="role">Open to ML RS · 2026</p><span class="badge">机器学习研究科学家</span></div>
+        </div>
+        <div class="meta">
+            <div class="name">XP5 · 韩纸 hanji 02</div>
+            <div class="desc">韩纸第二张 — 略不同</div>
+            <div class="src">PD · 101K</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 3 · OPACITY COMPARISON (current wm-02 with white overlay) ========== -->
+<div class="section-label"><h2>O · wm-02 + 透明度对比（叠白色让羊皮纸变淡）</h2><p>把当前 wm-02 + 上面叠不同透明度的白色，看变淡后是不是更舒服</p></div>
+
+<div class="opacity-grid">
+    <div class="opacity-card o-0">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O0 · 0% 白（当前）</div><div class="desc">现状 — wm-02 原色</div></div>
+    </div>
+    <div class="opacity-card o-15">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O15 · 15% 白</div><div class="desc">轻微变淡</div></div>
+    </div>
+    <div class="opacity-card o-30">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O30 · 30% 白</div><div class="desc">中度变淡</div></div>
+    </div>
+    <div class="opacity-card o-45">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O45 · 45% 白</div><div class="desc">较淡，纹理仍可见</div></div>
+    </div>
+    <div class="opacity-card o-60">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O60 · 60% 白</div><div class="desc">很淡，几乎像白纸</div></div>
+    </div>
+    <div class="opacity-card o-75">
+        <div class="preview"></div>
+        <div class="lbl"><div class="name">O75 · 75% 白</div><div class="desc">极淡，几乎全白</div></div>
+    </div>
+</div>
+
+<!-- ========== Live demo ========== -->
+<div id="liveDemo">
+    <h3>实时预览 · 真实文字</h3>
+    <div class="demo-toggle">
+        <button id="toggleGrid" onclick="toggleGrid()">叠加格子 (默认开)</button>
+    </div>
+    <div class="demoArea with-grid" id="demoArea" style="background-image:url('res/parchment-options/white-paper/wp-04-unsplash-paper.jpg')">
+        <div class="demoText">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 图人工智能 · Open to ML RS · 2026</p>
+            <p class="body">构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<span class="key">ICPR 2026</span> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 130+ 引用。现为伯尔尼大学博士后。</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>挑你想要的：<br>
+    白纸：<code>WP1–WP6</code>（自带格子叠加测试）<br>
+    宣纸：<code>XP1–XP5</code>（含纤维/切边纹理）<br>
+    透明度：<code>O0–O75</code>（基于当前 wm-02 + 白色 overlay 不同透明度）<br>
+    可选示例 "<code>用 WP4 + 格子</code>" 或 "<code>用 XP2</code>" 或 "<code>用 O30 (wm-02 + 30% 白)</code>"。</p>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:10px">
+        License：白纸 CC-BY 2.0/Unsplash · 宣纸 PD/CC-BY-SA · 透明度 = CSS layer (CC0) — 详见 <a href="res/parchment-options/white-paper/LICENSE.md" target="_blank" style="color:var(--maroon-orig)">白纸 LICENSE</a> · <a href="res/parchment-options/xuan-paper/LICENSE.md" target="_blank" style="color:var(--maroon-orig)">宣纸 LICENSE</a>
+    </p>
+</div>
+
+<script>
+const demoArea = document.getElementById('demoArea');
+let gridOn = true;
+function toggleGrid() {
+    gridOn = !gridOn;
+    demoArea.classList.toggle('with-grid', gridOn);
+    document.getElementById('toggleGrid').classList.toggle('on', gridOn);
+}
+document.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const src = sw.dataset.src;
+        const wantGrid = sw.dataset.grid === '1';
+        demoArea.style.backgroundImage = `url('${src}')`;
+        gridOn = wantGrid;
+        demoArea.classList.toggle('with-grid', gridOn);
+        document.getElementById('toggleGrid').classList.toggle('on', gridOn);
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+// init
+document.getElementById('toggleGrid').classList.add('on');
+</script>
+</body>
+</html>
