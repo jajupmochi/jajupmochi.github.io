@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>空白卷轴 Picker — modern white-cream Chinese scroll backgrounds</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root {
+    --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-orig: oklch(0.45 0.16 27);
+    --rule: oklch(0.45 0.10 50 / 0.30);
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Ma Shan Zheng', 'LXGW WenKai', 'Indie Flower', serif;
+    color: var(--ink-deep);
+    min-height: 100%;
+    background: oklch(0.96 0.012 90);  /* very light cream — modern, not aged */
+    font-size: 17px;
+    line-height: 1.7;
+}
+header {
+    text-align: center;
+    padding: 32px 24px 18px;
+    border-bottom: 1px dashed var(--rule);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive;
+    font-size: 38px;
+    color: var(--ink-deep);
+    line-height: 1.05;
+}
+header .sub {
+    margin: 8px auto 0;
+    max-width: 800px;
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+header .sub code {
+    background: oklch(0.92 0.020 75);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+}
+header .sub strong { color: var(--maroon-orig); }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+.swatch {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.18);
+}
+.swatch.active { outline: 3px solid var(--maroon-bright); outline-offset: 2px; }
+
+.preview {
+    height: 320px;
+    position: relative;
+    overflow: hidden;
+}
+.preview .scroll-bg {
+    position: absolute; inset: 0;
+}
+.preview .overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 30px 60px;
+    color: var(--ink-deep);
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.6),
+         1px  1px 1px rgba(20, 8, 0, 0.3);
+}
+.preview h2 {
+    margin: 0 0 4px;
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+}
+.preview .role {
+    font-size: 13px;
+    margin: 0 0 6px;
+    font-style: italic;
+    font-family: 'Spectral', 'Ma Shan Zheng', serif;
+    color: var(--ink-soft);
+}
+.preview .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: var(--maroon-bright);
+    color: white;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    width: fit-content;
+    text-shadow: none;
+    font-family: 'Indie Flower', cursive;
+}
+
+.meta {
+    padding: 14px 18px;
+    border-top: 1px solid oklch(0.88 0.014 75);
+}
+.meta .name {
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-deep);
+}
+.meta .desc {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    font-family: 'Ma Shan Zheng', serif;
+}
+.meta .src {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==================== SCROLL STYLES (pure SVG / CSS, no images) ==================== */
+/* All use light cream/white base; decorations vary in style + density */
+
+/* S1: Minimal — pure white + a single faint cinnabar hairline border */
+.s1 .scroll-bg {
+    background: linear-gradient(180deg, #fefdfb 0%, #fdfaf3 100%);
+    border-top: 2px solid oklch(0.55 0.20 27 / 0.5);
+    border-bottom: 2px solid oklch(0.55 0.20 27 / 0.5);
+}
+
+/* S2: Cloud-corner — cream + 4 corner cloud (云纹) ornaments */
+.s2 .scroll-bg {
+    background: linear-gradient(180deg, #fdfbf4 0%, #f9f4e6 100%);
+    background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23a82213' stroke-width='1.5' opacity='0.55'><path d='M10 10 Q22 10 22 22 M10 10 Q14 14 18 14 M10 10 Q10 22 22 22'/><circle cx='14' cy='14' r='2' fill='%23a82213' opacity='0.4'/></g></svg>"),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23a82213' stroke-width='1.5' opacity='0.55' transform='translate(80 0) scale(-1 1)'><path d='M10 10 Q22 10 22 22 M10 10 Q14 14 18 14 M10 10 Q10 22 22 22'/><circle cx='14' cy='14' r='2' fill='%23a82213' opacity='0.4'/></g></svg>"),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23a82213' stroke-width='1.5' opacity='0.55' transform='translate(0 80) scale(1 -1)'><path d='M10 10 Q22 10 22 22 M10 10 Q14 14 18 14 M10 10 Q10 22 22 22'/><circle cx='14' cy='14' r='2' fill='%23a82213' opacity='0.4'/></g></svg>"),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23a82213' stroke-width='1.5' opacity='0.55' transform='translate(80 80) scale(-1 -1)'><path d='M10 10 Q22 10 22 22 M10 10 Q14 14 18 14 M10 10 Q10 22 22 22'/><circle cx='14' cy='14' r='2' fill='%23a82213' opacity='0.4'/></g></svg>");
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat;
+    background-size: 80px 80px;
+}
+
+/* S3: Brocade-band — cream + top + bottom narrow brocade band (most "scroll mounted") */
+.s3 .scroll-bg {
+    background:
+        linear-gradient(180deg, #fefdfb 0%, #fdfaf3 100%);
+    border-top: 22px solid;
+    border-bottom: 22px solid;
+    border-image: linear-gradient(90deg, oklch(0.55 0.20 27) 0%, oklch(0.50 0.18 50) 50%, oklch(0.55 0.20 27) 100%) 1;
+    /* Pattern overlay on borders via background-image */
+    position: relative;
+}
+.s3 .scroll-bg::before {
+    content: '';
+    position: absolute; left: 0; right: 0; top: -22px; height: 22px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='22' viewBox='0 0 40 22'><g fill='%23ffd700' opacity='0.45'><circle cx='10' cy='11' r='2'/><circle cx='30' cy='11' r='2'/><path d='M0 11 L40 11' stroke='%23ffd700' stroke-width='0.5' fill='none'/></g></svg>");
+    background-size: 40px 22px;
+    background-repeat: repeat-x;
+}
+.s3 .scroll-bg::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: -22px; height: 22px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='22' viewBox='0 0 40 22'><g fill='%23ffd700' opacity='0.45'><circle cx='10' cy='11' r='2'/><circle cx='30' cy='11' r='2'/><path d='M0 11 L40 11' stroke='%23ffd700' stroke-width='0.5' fill='none'/></g></svg>");
+    background-size: 40px 22px;
+    background-repeat: repeat-x;
+}
+
+/* S4: Seal-corner — cream + bottom-right red seal stamp + thin cinnabar hairline */
+.s4 .scroll-bg {
+    background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><g><rect x='10' y='10' width='80' height='80' fill='%23a82213' opacity='0.85'/><text x='50' y='56' text-anchor='middle' font-family='serif' font-size='30' fill='%23fff' font-weight='700'>林</text></g></svg>") right 30px bottom 30px / 70px 70px no-repeat,
+        linear-gradient(180deg, #fefdfb 0%, #fdfaf3 100%);
+    border-top: 1px solid oklch(0.45 0.16 27 / 0.4);
+    border-bottom: 1px solid oklch(0.45 0.16 27 / 0.4);
+}
+
+/* S5: Wan-pattern (卍字纹) — cool white + faint border with traditional wan pattern */
+.s5 .scroll-bg {
+    background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><g stroke='%23a82213' stroke-width='1.2' fill='none' opacity='0.35'><path d='M5 5 L15 5 L15 10 L20 10 L20 5 L25 5'/><path d='M5 5 L5 15 L10 15 L10 20 L5 20 L5 25'/><path d='M25 5 L25 15 L20 15 L20 20 L25 20 L25 25'/><path d='M5 25 L15 25 L15 20 L20 20 L20 25 L25 25'/></g></svg>") top left repeat-x,
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><g stroke='%23a82213' stroke-width='1.2' fill='none' opacity='0.35'><path d='M5 5 L15 5 L15 10 L20 10 L20 5 L25 5'/><path d='M5 5 L5 15 L10 15 L10 20 L5 20 L5 25'/><path d='M25 5 L25 15 L20 15 L20 20 L25 20 L25 25'/><path d='M5 25 L15 25 L15 20 L20 20 L20 25 L25 25'/></g></svg>") bottom left repeat-x,
+        linear-gradient(180deg, #fcfcfc 0%, #f8faf5 100%);
+    background-size: 30px 30px, 30px 30px, auto;
+    padding: 30px 0;
+}
+
+/* S6: Bamboo-side — cream + left/right vertical bamboo stripes */
+.s6 .scroll-bg {
+    background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='80' viewBox='0 0 14 80'><g fill='%23355d22' opacity='0.4'><rect x='5' y='5' width='4' height='14' rx='1'/><rect x='5' y='24' width='4' height='14' rx='1'/><rect x='5' y='43' width='4' height='14' rx='1'/><rect x='5' y='62' width='4' height='14' rx='1'/></g><line x1='7' y1='0' x2='7' y2='80' stroke='%23355d22' stroke-width='0.5' opacity='0.3'/></svg>") left top repeat-y,
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='80' viewBox='0 0 14 80'><g fill='%23355d22' opacity='0.4'><rect x='5' y='5' width='4' height='14' rx='1'/><rect x='5' y='24' width='4' height='14' rx='1'/><rect x='5' y='43' width='4' height='14' rx='1'/><rect x='5' y='62' width='4' height='14' rx='1'/></g><line x1='7' y1='0' x2='7' y2='80' stroke='%23355d22' stroke-width='0.5' opacity='0.3'/></svg>") right top repeat-y,
+        linear-gradient(180deg, #fdfdf9 0%, #f8f6ed 100%);
+    background-size: 14px 80px, 14px 80px, auto;
+    padding: 0 18px;
+}
+
+/* ==================== Live demo area ==================== */
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed var(--rule);
+    border-radius: 6px;
+    text-align: center;
+    background: oklch(0.96 0.012 90);
+}
+#liveDemo h3 { margin: 0 0 4px; font-family: 'Zhi Mang Xing', cursive; font-size: 28px; }
+#liveDemo .demoArea {
+    margin-top: 16px;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+}
+#liveDemo .demoText {
+    color: var(--ink-deep);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px 40px;
+    text-align: left;
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.6),
+         1px  1px 1px rgba(20, 8, 0, 0.4);
+}
+#liveDemo h2 {
+    margin: 0 0 4px;
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+}
+#liveDemo .role { font-style: italic; font-size: 16px; margin: 0 0 12px; font-family: 'Spectral', serif; color: var(--ink-soft); }
+#liveDemo .body { font-family: 'Ma Shan Zheng', serif; font-size: 18px; line-height: 1.85; }
+#liveDemo .key {
+    color: var(--maroon-orig); font-weight: 800;
+    text-shadow:
+         0   0   2.5px rgba(120, 30, 30, 0.55),
+         0   1px 1px   rgba(60, 10, 10, 0.5);
+}
+
+.controls {
+    text-align: center;
+    padding: 18px 24px 60px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0 auto;
+    font-family: 'Ma Shan Zheng', serif;
+}
+.controls code {
+    background: oklch(0.92 0.020 75);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>空白卷轴 Picker · 现代白底 · 中国风装饰</h1>
+    <p class="sub">6 个候选 — 不是真山水画，而是 <strong>白/米白底色</strong> 的空白卷轴，配 <strong>现代亮色 + 中国风装饰</strong>（云纹 / 织锦带 / 印章 / 卍字纹 / 竹节）。<br>全部用 SVG/CSS 生成 — 100% CC0 自创开源，无版权问题，颜色随时可调。</p>
+</header>
+
+<div class="grid" id="grid">
+
+    <div class="swatch s1" data-style="s1">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S1 · Minimal 极简</div>
+            <div class="desc">纯白底 + 上下两条<strong style="color:var(--maroon-orig)">朱砂细线</strong>。最干净，最现代。</div>
+            <div class="src">CC0 · pure CSS · 0KB image</div>
+        </div>
+    </div>
+
+    <div class="swatch s2" data-style="s2">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S2 · Cloud Corners 云纹四角</div>
+            <div class="desc">米白底 + 4 角 <strong style="color:var(--maroon-orig)">云纹</strong>装饰。中国风但极简。</div>
+            <div class="src">CC0 · inline SVG · &lt;1KB</div>
+        </div>
+    </div>
+
+    <div class="swatch s3" data-style="s3">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S3 · Brocade Band 织锦上下带 ★</div>
+            <div class="desc">米白底 + 上下两条 <strong style="color:var(--maroon-orig)">织锦色带</strong>（朱砂+金）。最像传统装裱卷轴。</div>
+            <div class="src">CC0 · inline SVG band</div>
+        </div>
+    </div>
+
+    <div class="swatch s4" data-style="s4">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S4 · Seal Corner 印章右下</div>
+            <div class="desc">米白 + 右下 <strong style="color:var(--maroon-orig)">朱砂"林"印</strong>。极简 + 个人化签名感。</div>
+            <div class="src">CC0 · inline SVG seal</div>
+        </div>
+    </div>
+
+    <div class="swatch s5" data-style="s5">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S5 · Wan Pattern 卍字纹边框</div>
+            <div class="desc">冷白底 + 上下两条<strong style="color:var(--maroon-orig)">卍字纹</strong>装饰带。古典几何感强。</div>
+            <div class="src">CC0 · inline SVG pattern</div>
+        </div>
+    </div>
+
+    <div class="swatch s6" data-style="s6">
+        <div class="preview">
+            <div class="scroll-bg"></div>
+            <div class="overlay">
+                <h2>林林佳，博士</h2>
+                <p class="role">机器学习研究科学家 · 2026</p>
+                <span class="badge">Open to ML RS</span>
+            </div>
+        </div>
+        <div class="meta">
+            <div class="name">S6 · Bamboo Sides 竹节侧边</div>
+            <div class="desc">米白 + 左右两条<strong style="color:#355d22">竹节</strong>装饰。绿色装饰，更有"生命力"，contrast 强。</div>
+            <div class="src">CC0 · inline SVG bamboo</div>
+        </div>
+    </div>
+
+</div>
+
+<div id="liveDemo">
+    <h3>实时预览 · 真实文字效果</h3>
+    <p style="margin:0;color:var(--ink-soft);font-size:14px">点击上方任一卷轴样式 → 下方 demo 区切换为该背景，看 hero + 一段研究简介的真实显示效果（含 V6 凸印 + V4 墨水浸染 highlight）。</p>
+    <div class="demoArea s2" id="demoArea">
+        <div class="scroll-bg" style="position:absolute;inset:0;"></div>
+        <div class="demoText" style="position:relative;">
+            <h2>林林佳，博士</h2>
+            <p class="role">机器学习研究科学家 · 图人工智能 · Open to ML RS · 2026</p>
+            <p class="body">构建 <span class="key">时空 Transformer</span> 用于河水温度预测（<span class="key">ICPR 2026</span> 已录用）。开源工具包 <span class="key">graphkit-learn</span> 已获 130+ 引用。现为伯尔尼大学博士后。</p>
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:14px;font-family:'Indie Flower',cursive">↑ Sample card — verify legibility, check decoration density.</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>挑一个 <code>S1–S6</code> 告诉我（例如 "<code>用 S3 织锦带</code>"）。我把它接到 <code>parchment-overrides.css</code> 替换当前 wm-02。颜色（朱砂红/竹节绿/金）也可调（如 "<code>S3 但织锦换成纯朱砂红，去掉金色</code>"）。</p>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:14px">
+        全部 <strong>纯 CSS / inline SVG</strong>，无外部图片，无字体依赖（除 Google Fonts）。颜色 / 装饰密度 / 边框宽度全部可参数化。
+    </p>
+</div>
+
+<script>
+const grid = document.getElementById('grid');
+const demoArea = document.getElementById('demoArea');
+grid.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const style = sw.dataset.style;
+        // Remove all s* classes, add the new one
+        demoArea.className = 'demoArea ' + style;
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+</body>
+</html>
