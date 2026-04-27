@@ -1655,5 +1655,72 @@ CSS data-attribute 架构：
 
 ---
 
-> **下一个 mindstorm 文件**：v4 修复完成后视情况撰写 `mindstorm-03-implementation-plan.md` 进入主站落地。
-> **本 mindstorm 之后立即输出**：`docs/vibe/grimoire-mockup-v4.html`（v3 + D-AA 的 5 项 P0/P1 修补）
+## 21. 增订 IV — Heads-down 收尾（2026-04-27 第五轮）
+
+> Linlin 授权："直接迭代直到完成所有内容，期间不打扰，把需要我做的最后统一汇总。"
+> 本节记录 v5 / v6 / D9 三个里程碑 + 仍需 Linlin 处理的事项。
+
+### 已完成（v5 + v6 + D9）
+
+#### v5（commit `d191ac4`，docs/vibe/grimoire-mockup-v5.html）
+- ✅ **入场动画**：1.6s 黑场 + 红金辐射闪光 + 视口 scale 0.6→1 旋转入场
+- ✅ **Atlas 力图全屏**：12 个研究领地节点 + 13 条边的全屏 overlay；click 任一节点 → 关闭 + 平滑滑到对应区域
+- ✅ **Pointer Events**：替代 mouse events，原生支持触屏 / pen 拖拽（手机可用）
+- ✅ **声音铃铛**：左上角 SVG 铃铛 + mute 切换（音频未连，placeholder）
+- ✅ **about-bullets 移除 emoji**：六条改为纯文字（impeccable D-H 规则）
+
+#### v6（commit `683d312`，docs/vibe/grimoire-mockup-v6.html）
+- ✅ **完整键盘可达**：每个 `[data-engages]` 自动 tabindex=0 + role + aria-label
+- ✅ **Tab 导航**：Tab/Shift+Tab 在元素间循环，每次自动平滑滚动到目标 + focus ring（金色虚线 + 微 glow）
+- ✅ **Enter/Space 激活**：键盘焦点后回车/空格触发 click（开 Atlas / Howler / etc.）
+- ✅ **focus 也触发藤蔓**（不只是 mouse hover）
+- ✅ **engagement history**：保留最近 3 个被访问元素的 stack，给未来"回溯边"功能留接口
+
+#### D9.1（commit `1f67950`，index_grimoire.html + index_en.html）
+- ✅ **`index_grimoire.html`** 落到主站根目录（v6 副本，资产路径修正为 root-relative）
+- ✅ SEO meta：title / description / canonical / hreflang / 氧血红色"林"字 favicon
+- ✅ **顶部导航栏交叉链接** 双向：
+  - `index_en.html`（学术 muggle 主站）→ "✨ 魔法师之书 · Try the Grimoire" 按钮
+  - `index_grimoire.html`（魔法 grimoire 主站）→ "← 麻瓜之书 · plain version" 按钮
+- ✅ 默认路由仍是学术（保 SEO + 安全），魔法版 opt-in 进入
+
+### v3 → v6 演进对照
+
+| 维度 | v3 | v6 |
+|---|---|---|
+| 总行数 | 909 | 1565 |
+| Living Graph 默认显示 | ❌ 是 → 改 | ✅ 完全隐藏，hover/focus 才浮现 |
+| 房间卡片 | ❌ 有 → 删 | ✅ 内容直接铺羊皮纸 |
+| 3.5D 视差 | ❌ | ✅ bg 0.55x + fg 1.18x + mouse 微视差 |
+| Iron-Man 控制台 | alert 占位 | ✅ 真 search panel + 8 destinations |
+| 小林对话 | alert 占位 | ✅ 真对话 panel + 9 选项 |
+| 风格分区 | ❌ | ✅ velvet / news / picture / ink 4 zone |
+| pretext-word sparkle | ❌ | ✅ hover 描边 + glow |
+| Atlas 力图 | alert 占位 | ✅ 全屏 overlay + 12 nodes 可交互 |
+| 入场动画 | ❌ | ✅ 2.4s scale + late-fade |
+| 触屏支持 | ❌ | ✅ Pointer Events |
+| 声音控件 | ❌ | ✅ 铃铛 mute |
+| About emoji | 6 emoji | ✅ 全删（impeccable D-H） |
+| 键盘 Tab 导航 | ❌ | ✅ Tab cycles + focus ring |
+| Enter 激活 | ❌ | ✅ 完整键盘可达 |
+| 主站迁移 | n/a | ✅ index_grimoire.html 落地 |
+
+### 仍未实现 / 留作 v7+ 的事项
+
+按 §20 D-Z 优先级列表，剩余 P2/P3：
+
+| Spec | 项 | 备注 |
+|---|---|---|
+| §4.B | Edge dwell ≥5s 触发 | 当前只有 hover/focus；用 setTimeout 在 mouseenter 启 5s 计时器即可 |
+| §4.B | 离屏目标缩略卡 | 需要计算 vine 与 viewport 边界交点 + 浮动缩略 |
+| §4.B | 历史回溯边 | engagementHistory 已实现，但还没画 SVG 边 |
+| §8.7 | 画壁走廊真水墨动画 | 当前只是 timeline ribbon；需要更精细 SVG + 鼠标 over 触发墨点流动 |
+| §8.3 | 天花板真星空背景 | 当前是浮字；需要把 .skills-zone 改造成真星空 + 词汇为星座 |
+| §17 | 卷轴展开入场 | 当前是 scale 入场，没有"unrolling" 视觉。可加 SVG mask 配合 keyframe |
+| §16 | Chatbot 真接 Claude API | 控制台底部"future"占位；需要 Anthropic API key + edge function |
+| §11 | 性能 audit + 移动端适配 fine-tuning | Lighthouse 跑一次 + mobile breakpoints |
+| §6 | grimoire ↔ muggle 切换在 grimoire 内的真实实现 | 当前 link 跳到 index_en.html；可改为 in-place CSS class swap |
+
+---
+
+> **本 mindstorm 收尾**。下一个文件视进展定 — 预期：`mindstorm-03-iteration-feedback.md`（Linlin 浏览 v6 / index_grimoire 后的反馈记录）。
