@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en" data-theme="grimoire" data-mode="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grimoire mockup v3 — 魔法师之书 / unified 2D book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+
+<style>
+:root {
+    --font-display: 'Spectral', 'Iowan Old Style', serif;
+    --font-script:  'Caveat', cursive;
+    --font-mono:    'JetBrains Mono', monospace;
+    --font-zh-hand: 'Ma Shan Zheng', serif;
+    --font-zh-body: 'LXGW WenKai', 'Source Han Serif SC', serif;
+    --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+}
+[data-theme="grimoire"][data-mode="day"] {
+    --ink:           oklch(0.18 0.030 40);
+    --ink-soft:      oklch(0.32 0.050 35);
+    --ink-muted:     oklch(0.50 0.060 35);
+    --primary:       oklch(0.42 0.16 27);
+    --primary-soft:  oklch(0.55 0.18 27);
+    --gold:          oklch(0.62 0.13 70);
+    --gold-deep:     oklch(0.45 0.12 65);
+    --candle-flame:  oklch(0.85 0.18 70);
+    --vine:          oklch(0.32 0.10 130);
+    --vine-glow:     oklch(0.45 0.14 130);
+    --paper-edge:    oklch(0.50 0.080 45);
+}
+[data-theme="grimoire"][data-mode="night"] {
+    --ink:           oklch(0.92 0.020 80);
+    --ink-soft:      oklch(0.78 0.030 78);
+    --ink-muted:     oklch(0.62 0.030 75);
+    --primary:       oklch(0.78 0.18 50);
+    --primary-soft:  oklch(0.85 0.15 55);
+    --gold:          oklch(0.85 0.15 78);
+    --gold-deep:     oklch(0.62 0.13 78);
+    --candle-flame:  oklch(0.92 0.20 75);
+    --vine:          oklch(0.85 0.18 195);
+    --vine-glow:     oklch(0.82 0.20 195);
+    --paper-edge:    oklch(0.10 0.030 30);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+    width: 100%; height: 100vh;
+    overflow: hidden;
+    font-family: var(--font-display);
+    color: var(--ink);
+    cursor: grab;
+    transition: background 1.2s var(--ease-quart);
+}
+html { background: oklch(0.20 0.06 30); }
+[data-mode="night"] html { background: oklch(0.06 0.04 30); }
+body.dragging { cursor: grabbing; }
+body.dragging * { cursor: grabbing !important; }
+
+/* The viewport contains the entire panning book */
+.viewport {
+    position: fixed; inset: 0; z-index: 1;
+    overflow: hidden;
+    perspective: 1200px;
+}
+
+/* The book = ONE giant parchment surface that pans */
+.book {
+    position: absolute; left: 0; top: 0;
+    width: 4000px; height: 2400px;
+    transform-origin: 0 0;
+    transition: transform 0.05s linear;
+    will-change: transform;
+    /* Parchment composition */
+    background:
+        radial-gradient(ellipse 800px 500px at 8% 12%, oklch(0.62 0.12 50 / 0.22), transparent 60%),
+        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.68 0.10 60 / 0.18), transparent 65%),
+        radial-gradient(ellipse 900px 600px at 30% 78%, oklch(0.58 0.14 45 / 0.20), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 88% 70%, oklch(0.55 0.12 40 / 0.18), transparent 65%),
+        radial-gradient(ellipse 600px 400px at 52% 50%, oklch(0.65 0.10 70 / 0.12), transparent 70%),
+        radial-gradient(ellipse 400px 280px at 18% 60%, oklch(0.50 0.10 35 / 0.16), transparent 65%),
+        radial-gradient(ellipse 700px 480px at 65% 32%, oklch(0.60 0.10 55 / 0.16), transparent 60%),
+        linear-gradient(135deg,
+            oklch(0.85 0.050 75) 0%,
+            oklch(0.80 0.065 65) 50%,
+            oklch(0.75 0.080 55) 100%);
+    box-shadow:
+        inset 0 0 80px oklch(0.30 0.10 30 / 0.35),
+        inset 0 0 200px oklch(0.20 0.08 30 / 0.18);
+}
+[data-mode="night"] .book {
+    background:
+        radial-gradient(ellipse 800px 500px at 8% 12%, oklch(0.30 0.06 30 / 0.45), transparent 60%),
+        radial-gradient(ellipse 700px 450px at 80% 18%, oklch(0.28 0.05 35 / 0.40), transparent 65%),
+        radial-gradient(ellipse 900px 600px at 30% 78%, oklch(0.26 0.06 40 / 0.45), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 88% 70%, oklch(0.24 0.05 35 / 0.40), transparent 65%),
+        linear-gradient(135deg, oklch(0.16 0.030 35), oklch(0.12 0.040 28));
+    box-shadow: inset 0 0 80px oklch(0.05 0.04 30 / 0.6);
+}
+
+/* SVG noise grain layer ON the book (not body) so it pans with content */
+.book::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='12'/><feColorMatrix values='0 0 0 0 0.30   0 0 0 0 0.20   0 0 0 0 0.12   0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 400px;
+    opacity: 0.55; mix-blend-mode: multiply; pointer-events: none;
+}
+[data-mode="night"] .book::before { mix-blend-mode: screen; opacity: 0.20; }
+
+/* Burnt edges around the book */
+.book::after {
+    content: ''; position: absolute; inset: 0;
+    box-shadow:
+        inset 80px 0 120px oklch(0.30 0.08 30 / 0.4),
+        inset -80px 0 120px oklch(0.30 0.08 30 / 0.4),
+        inset 0 80px 120px oklch(0.30 0.08 30 / 0.35),
+        inset 0 -80px 120px oklch(0.30 0.08 30 / 0.35);
+    pointer-events: none;
+}
+[data-mode="night"] .book::after {
+    box-shadow:
+        inset 80px 0 120px oklch(0.05 0.04 30 / 0.65),
+        inset -80px 0 120px oklch(0.05 0.04 30 / 0.65),
+        inset 0 80px 120px oklch(0.05 0.04 30 / 0.6),
+        inset 0 -80px 120px oklch(0.05 0.04 30 / 0.6);
+}
+
+/* Living vines layer — covers the entire book, edges hidden by default */
+.vines {
+    position: absolute; inset: 0; z-index: 5;
+    pointer-events: none;
+}
+.vines path {
+    fill: none; stroke: var(--vine);
+    stroke-width: 1.6; stroke-linecap: round;
+    opacity: 0;
+    stroke-dasharray: 1500; stroke-dashoffset: 1500;
+    transition: opacity 0.4s var(--ease-quart);
+}
+[data-mode="night"] .vines path { filter: drop-shadow(0 0 4px var(--vine-glow)); }
+.vines .leaf { fill: oklch(0.45 0.10 130 / 0.7); stroke: none; opacity: 0; transition: opacity 0.4s var(--ease-quart); }
+[data-mode="night"] .vines .leaf { fill: oklch(0.85 0.18 195 / 0.6); }
+
+/* When a node is "engaged", show its outgoing edges */
+[data-engaged="apprentice"] .vine-from-apprentice,
+[data-engaged="papers"] .vine-from-papers,
+[data-engaged="projects"] .vine-from-projects,
+[data-engaged="awards"] .vine-from-awards,
+[data-engaged="atlas"] .vine-from-atlas,
+[data-engaged="howler"] .vine-from-howler {
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transition: opacity 0.4s var(--ease-quart), stroke-dashoffset 1.2s var(--ease-quart);
+}
+[data-engaged="apprentice"] .leaf-of-apprentice,
+[data-engaged="papers"] .leaf-of-papers,
+[data-engaged="projects"] .leaf-of-projects,
+[data-engaged="awards"] .leaf-of-awards,
+[data-engaged="atlas"] .leaf-of-atlas,
+[data-engaged="howler"] .leaf-of-howler { opacity: 1; transition-delay: 0.6s; }
+
+/* ============== Content elements on the book ============== */
+
+/* Apprentice character — anchored top-left of the book */
+.apprentice {
+    position: absolute; left: 240px; top: 200px;
+    width: 320px; height: 290px;
+    background: url("../../res/grimoire/apprentice-final.png") no-repeat center;
+    background-size: contain;
+    filter: drop-shadow(0 12px 22px oklch(0.18 0.05 30 / 0.30)) contrast(1.04);
+    transform: rotate(-2deg);
+    z-index: 10;
+    cursor: pointer;
+    transition: filter 1.2s var(--ease-quart);
+}
+[data-mode="night"] .apprentice {
+    filter: drop-shadow(0 12px 22px oklch(0.04 0.04 260 / 0.6)) brightness(1.1) hue-rotate(-8deg);
+}
+.apprentice:hover { filter: drop-shadow(0 14px 26px oklch(0.42 0.16 27 / 0.5)) contrast(1.08); }
+
+/* Hero name + identity, written DIRECTLY on the parchment beside apprentice */
+.hero-text { position: absolute; left: 600px; top: 240px; max-width: 520px; z-index: 8; cursor: pointer; }
+.hero-overline { font-family: var(--font-script); font-size: 22px; color: var(--ink-muted); font-style: italic; }
+.hero-name-zh { font-family: var(--font-zh-hand); font-size: 76px; line-height: 1; color: var(--ink); margin: 8px 0 4px; text-shadow: 0 2px 0 oklch(0.92 0.06 80 / 0.5); }
+.hero-name-en { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 38px; color: var(--primary); line-height: 1.05; }
+.hero-role { font-family: var(--font-display); font-size: 20px; font-style: italic; color: var(--ink-soft); margin-top: 14px; }
+.hero-role .pw { cursor: pointer; transition: color 0.3s var(--ease-quart); }
+.hero-role .pw:hover { color: var(--primary); }
+.hero-tagline { font-family: var(--font-display); font-size: 16px; line-height: 1.6; color: var(--ink-soft); margin-top: 10px; max-width: 46ch; }
+.hero-signature { font-family: var(--font-display); font-size: 14px; color: var(--ink-muted); margin-top: 14px; padding-top: 10px; border-top: 1px dashed oklch(0.45 0.10 50 / 0.32); max-width: 50ch; }
+.hero-signature em { color: var(--primary); font-style: italic; font-weight: 600; }
+.hero-signature strong { color: var(--ink-soft); font-weight: 600; }
+
+/* Section heading — no card, just text + small ornament */
+.h-zone { position: absolute; z-index: 8; cursor: pointer; }
+.h-zone .h-title {
+    font-family: var(--font-zh-hand); font-size: 38px; color: var(--ink);
+    margin-bottom: 4px; text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.5);
+}
+.h-zone .h-title-en {
+    font-family: var(--font-display); font-style: italic; font-size: 16px;
+    color: var(--ink-muted); letter-spacing: 0.05em;
+}
+.h-zone .h-deco {
+    width: 60px; height: 1px; background: var(--gold-deep);
+    margin: 8px 0 16px;
+    box-shadow: 0 0 6px oklch(0.62 0.13 70 / 0.4);
+}
+
+/* Papers — books / scrolls scattered, no border */
+.papers-zone { left: 1100px; top: 220px; width: 700px; }
+.paper-stack { position: relative; height: 260px; margin-top: 16px; }
+.paper {
+    position: absolute;
+    width: 110px; height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-quart), filter 0.3s var(--ease-quart);
+    filter: drop-shadow(0 6px 10px oklch(0.18 0.05 30 / 0.25));
+}
+.paper:hover { transform: translateY(-8px) rotate(0deg) !important; filter: drop-shadow(0 12px 18px oklch(0.42 0.16 27 / 0.45)) brightness(1.04); z-index: 4; }
+.paper svg { width: 100%; height: 100%; }
+.paper-label { font-family: var(--font-script); font-size: 14px; color: var(--ink-muted); font-style: italic; text-align: center; margin-top: 4px; }
+.paper-stack .p1 { left: 0; top: 0; transform: rotate(-4deg); }
+.paper-stack .p2 { left: 100px; top: 30px; transform: rotate(2deg); }
+.paper-stack .p3 { left: 200px; top: 0; transform: rotate(-2deg); }
+.paper-stack .p4 { left: 300px; top: 40px; transform: rotate(3deg); }
+.paper-stack .p5 { left: 400px; top: 10px; transform: rotate(-3deg); }
+.paper-stack .p6 { left: 500px; top: 50px; transform: rotate(1deg); }
+.paper-stack .p7 { left: 0; top: 160px; transform: rotate(-5deg); }
+.paper-stack .p8 { left: 130px; top: 180px; transform: rotate(2deg); }
+.paper-stack .thesis { left: 280px; top: 150px; transform: rotate(-1deg); width: 130px; height: 180px; }
+
+/* Projects — glass jars laid out, no card */
+.projects-zone { left: 2050px; top: 220px; width: 700px; }
+.jars-row { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+.jar {
+    width: 95px; cursor: pointer; text-align: center;
+    transition: transform 0.3s var(--ease-quart), filter 0.3s var(--ease-quart);
+    filter: drop-shadow(0 6px 10px oklch(0.18 0.05 30 / 0.25));
+}
+.jar:hover { transform: translateY(-8px); filter: drop-shadow(0 12px 18px oklch(0.62 0.13 70 / 0.5)) brightness(1.05); }
+.jar svg { width: 100%; height: 90px; }
+.jar-name { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; color: var(--ink); margin-top: 4px; }
+.jar-desc { font-family: var(--font-display); font-size: 10px; color: var(--ink-muted); margin-top: 1px; line-height: 1.3; }
+
+/* Awards — framed certificates hanging on the parchment */
+.awards-zone { left: 1100px; top: 920px; width: 700px; }
+.frames { display: flex; gap: 30px; margin-top: 18px; }
+.frame-award {
+    width: 130px; height: 110px; cursor: pointer;
+    transition: transform 0.3s var(--ease-quart), filter 0.3s var(--ease-quart);
+    filter: drop-shadow(0 8px 12px oklch(0.18 0.05 30 / 0.30));
+}
+.frame-award:hover { transform: scale(1.08) rotate(-1deg); filter: drop-shadow(0 14px 18px oklch(0.62 0.13 70 / 0.5)) brightness(1.05); z-index: 4; }
+.frame-award svg { width: 100%; height: 100%; }
+.frame-award .label { font-family: var(--font-display); font-style: italic; font-size: 11px; color: var(--ink-muted); text-align: center; margin-top: 3px; }
+
+/* About — bullets written on parchment, no border */
+.about-zone { left: 240px; top: 920px; width: 720px; }
+.about-bullets { font-family: var(--font-display); font-size: 15px; line-height: 1.8; color: var(--ink-soft); margin-top: 12px; }
+.about-bullets li { list-style: none; padding-left: 26px; position: relative; margin-bottom: 4px; }
+.about-bullets li::before { content: ''; position: absolute; left: 4px; top: 11px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 0 2px oklch(0.92 0.06 80 / 0.3); }
+.about-bullets em { color: var(--primary); font-style: italic; font-weight: 600; }
+
+/* Career timeline — ribbon along bottom */
+.career-zone { left: 1900px; top: 920px; width: 1100px; }
+.timeline-ribbon { position: relative; height: 100px; margin-top: 20px; }
+.timeline-ribbon::before {
+    content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 8%, var(--gold-deep) 92%, transparent);
+    transform: translateY(-50%);
+}
+.tl-event { position: absolute; top: 50%; transform: translate(-50%, -50%); cursor: pointer; text-align: center; transition: filter 0.3s var(--ease-quart); }
+.tl-event:hover { filter: brightness(1.15) drop-shadow(0 0 8px oklch(0.62 0.13 70 / 0.5)); }
+.tl-event .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--primary); border: 3px solid oklch(0.92 0.06 80); box-shadow: 0 2px 8px oklch(0.42 0.16 27 / 0.4); margin: 0 auto; }
+.tl-event .yr { font-family: var(--font-display); font-style: italic; font-size: 13px; color: var(--ink-soft); margin-top: 8px; }
+.tl-event .place { font-family: var(--font-zh-hand); font-size: 14px; color: var(--ink); margin-top: 2px; }
+
+/* Skills constellation — words floating */
+.skills-zone { left: 2050px; top: 600px; width: 600px; height: 280px; position: absolute; z-index: 7; cursor: pointer; }
+.skill-star { position: absolute; font-family: var(--font-display); font-style: italic; color: var(--ink-soft); transition: color 0.3s var(--ease-quart), text-shadow 0.3s var(--ease-quart); cursor: pointer; }
+.skill-star:hover { color: var(--primary); text-shadow: 0 0 8px oklch(0.62 0.13 70 / 0.5); }
+.s1 { left: 60px; top: 80px; font-size: 22px; }
+.s2 { left: 180px; top: 50px; font-size: 18px; }
+.s3 { left: 280px; top: 110px; font-size: 24px; }
+.s4 { left: 380px; top: 40px; font-size: 20px; }
+.s5 { left: 100px; top: 170px; font-size: 16px; }
+.s6 { left: 220px; top: 180px; font-size: 18px; }
+.s7 { left: 360px; top: 150px; font-size: 22px; }
+.s8 { left: 460px; top: 120px; font-size: 16px; }
+.s9 { left: 480px; top: 220px; font-size: 14px; }
+.s10 { left: 80px; top: 260px; font-size: 16px; }
+
+/* Atlas big book — center-ish */
+.atlas {
+    position: absolute; left: 1850px; top: 1180px; width: 320px; height: 220px;
+    cursor: pointer; transition: transform 0.3s var(--ease-quart);
+    filter: drop-shadow(0 14px 22px oklch(0.18 0.05 30 / 0.4));
+}
+.atlas:hover { transform: scale(1.06) rotate(-1deg); }
+.atlas svg { width: 100%; height: 100%; }
+.atlas-label { font-family: var(--font-zh-hand); font-size: 24px; color: var(--primary); text-align: center; margin-top: 4px; text-shadow: 0 1px 0 oklch(0.92 0.06 80 / 0.5); }
+.atlas-sub { font-family: var(--font-display); font-style: italic; font-size: 13px; color: var(--ink-muted); text-align: center; }
+
+/* Howler envelope — bottom-left corner of book */
+.howler {
+    position: absolute; left: 360px; top: 1700px;
+    width: 180px; height: 130px; cursor: pointer;
+    animation: howl-shake 0.32s ease-in-out infinite;
+    transform-origin: center;
+    filter: drop-shadow(0 12px 18px oklch(0.42 0.16 27 / 0.4));
+}
+@keyframes howl-shake {
+    0%,100% { transform: translate(0,0) rotate(-3deg); }
+    25%     { transform: translate(-2px,1px) rotate(2deg); }
+    50%     { transform: translate(2px,-1px) rotate(-4deg); }
+    75%     { transform: translate(-1px,2px) rotate(3deg); }
+}
+.howler svg { width: 100%; height: 100%; }
+.howler-label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-family: var(--font-script); font-size: 18px; color: var(--primary); white-space: nowrap; margin-top: 8px; }
+
+/* Owl perched on top of letters — near Howler */
+.owl-perch {
+    position: absolute; left: 600px; top: 1660px;
+    width: 140px; height: 180px; cursor: pointer;
+}
+.owl-perch svg { width: 100%; height: 100%; }
+.owl-perch:hover svg { filter: drop-shadow(0 6px 12px oklch(0.62 0.13 70 / 0.5)); }
+@keyframes owl-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+.owl-eyes { animation: owl-blink 4.5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+/* Newspaper at bottom-right */
+.news-zone { left: 2950px; top: 1450px; width: 480px; cursor: pointer; }
+.newspaper {
+    background: oklch(0.94 0.04 75); border: 1px solid oklch(0.45 0.10 50);
+    padding: 14px 16px; transform: rotate(-2deg);
+    box-shadow: 0 14px 22px oklch(0.18 0.05 30 / 0.35);
+    font-family: var(--font-display);
+    transition: transform 0.3s var(--ease-quart);
+}
+.newspaper:hover { transform: rotate(-1deg) translateY(-4px); }
+.newspaper-title { font-family: var(--font-zh-hand); font-size: 26px; color: var(--ink); text-align: center; border-bottom: 2px solid var(--ink); padding-bottom: 4px; margin-bottom: 8px; }
+.news-item { font-size: 11px; color: var(--ink-soft); margin-bottom: 4px; line-height: 1.4; }
+.news-item strong { color: var(--primary); font-style: italic; }
+
+/* Visit map — rolled scroll, top right */
+.map-zone { left: 3050px; top: 220px; width: 550px; cursor: pointer; }
+.rolled-map { width: 100%; height: 320px; transition: filter 0.3s var(--ease-quart); }
+.map-zone:hover .rolled-map { filter: drop-shadow(0 0 14px oklch(0.62 0.13 70 / 0.4)); }
+
+/* Animal companions / external links — corner */
+.animals-zone { left: 2950px; top: 920px; }
+.animal { display: inline-block; margin: 0 14px; cursor: pointer; transition: transform 0.3s var(--ease-quart); }
+.animal:hover { transform: translateY(-6px); }
+.animal svg { width: 64px; height: 64px; display: block; }
+.animal-label { font-family: var(--font-script); font-size: 13px; color: var(--ink-muted); text-align: center; }
+
+/* Lectern — bottom-right area */
+.lectern-zone { left: 2400px; top: 1700px; width: 280px; cursor: pointer; }
+.lectern-zone svg { width: 100%; height: 200px; }
+
+/* ============== Fixed UI on top of viewport ============== */
+.banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 56px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    background: linear-gradient(180deg, oklch(0.18 0.06 25 / 0.4), transparent);
+    pointer-events: none;
+}
+.banner > * { pointer-events: auto; }
+.banner-cap {
+    width: 56px; height: 50px; flex-shrink: 0;
+    background: url("../../res/grimoire/cap-tl.png") no-repeat center;
+    background-size: contain;
+}
+.banner-cap.right { background-image: url("../../res/grimoire/cap-tr.png"); }
+.banner-title {
+    font-family: var(--font-zh-hand); font-size: 22px; color: var(--gold);
+    letter-spacing: 0.06em; text-shadow: 0 1px 4px oklch(0.05 0.04 30 / 0.6);
+}
+.banner-title .sub {
+    font-family: var(--font-display); font-size: 11px; font-style: italic;
+    color: oklch(0.85 0.10 70); letter-spacing: 0.1em;
+    margin-left: 12px; text-transform: uppercase;
+}
+
+/* Mini-map (fixed bottom-right) — shows what region of the book you're viewing */
+.minimap {
+    position: fixed; bottom: 24px; right: 24px; z-index: 80;
+    width: 200px; height: 120px;
+    background: oklch(0.20 0.06 30 / 0.85);
+    border: 1px solid var(--gold-deep);
+    border-radius: 2px;
+    pointer-events: none;
+    box-shadow: 0 8px 16px oklch(0.05 0.04 30 / 0.5);
+    overflow: hidden;
+}
+.minimap::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse at 30% 30%, oklch(0.62 0.10 50 / 0.4), transparent 70%),
+        oklch(0.78 0.08 65 / 0.55);
+}
+.minimap-viewport {
+    position: absolute; border: 1.5px solid var(--gold);
+    background: oklch(0.85 0.18 70 / 0.18);
+    transition: all 0.05s linear;
+}
+.minimap-label {
+    position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 9px; color: var(--ink-muted);
+    white-space: nowrap; letter-spacing: 0.05em;
+}
+
+/* Fixed widgets: candle / robot / console */
+.candle {
+    position: fixed; top: 70px; right: 28px;
+    width: 56px; height: 96px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 80;
+}
+.candle svg { width: 100%; height: 100%; overflow: visible; }
+.candle .body { fill: oklch(0.94 0.04 70); stroke: oklch(0.55 0.06 60); stroke-width: 0.8; }
+.candle .drip { fill: oklch(0.85 0.05 65); }
+.candle .wick { stroke: oklch(0.20 0.03 50); stroke-width: 1.4; fill: none; }
+.candle .flame { fill: var(--candle-flame); transform-origin: center bottom; opacity: 0; transition: opacity 0.6s var(--ease-quart); }
+[data-mode="night"] .candle .flame {
+    opacity: 1; animation: gflicker 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px var(--candle-flame));
+}
+@keyframes gflicker {
+    0%,100% { transform: scale(1, 1); }
+    25%     { transform: scale(1.06, 0.96); }
+    50%     { transform: scale(0.95, 1.05); }
+    75%     { transform: scale(1.04, 0.98); }
+}
+.candle .glow { fill: var(--candle-flame); opacity: 0; transition: opacity 0.6s var(--ease-quart); }
+[data-mode="night"] .candle .glow { opacity: 0.22; }
+
+.console {
+    position: fixed; bottom: 60px; left: 28px;
+    width: 56px; height: 56px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 80;
+}
+.console svg { width: 100%; height: 100%; }
+.console .crystal {
+    fill: oklch(0.78 0.10 230 / 0.65); stroke: var(--gold-deep);
+    stroke-width: 1; animation: gpulse 3.4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px oklch(0.18 0.05 30 / 0.45));
+}
+[data-mode="night"] .console .crystal {
+    fill: oklch(0.85 0.18 195 / 0.45); stroke: var(--vine);
+    filter: drop-shadow(0 0 8px var(--vine-glow));
+}
+@keyframes gpulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; transform: scale(1.06); } }
+
+.robot {
+    position: fixed; bottom: 60px; left: 100px;
+    width: 64px; height: 80px; background: none; border: none;
+    cursor: pointer; padding: 0; z-index: 80;
+}
+.robot svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 6px 14px oklch(0.18 0.05 30 / 0.40));
+}
+[data-mode="night"] .robot svg {
+    filter: drop-shadow(0 6px 14px oklch(0.04 0.04 260 / 0.55))
+            drop-shadow(0 0 6px oklch(0.85 0.18 195 / 0.4));
+}
+.robot .body { fill: oklch(0.55 0.05 60); stroke: oklch(0.30 0.05 55); stroke-width: 0.8; }
+.robot .belly { fill: oklch(0.78 0.06 75); }
+.robot .gear { fill: oklch(0.72 0.13 80); transform-origin: center; animation: rotate-slow 12s linear infinite; }
+@keyframes rotate-slow { to { transform: rotate(360deg); } }
+.robot .eye { fill: oklch(0.18 0.03 50); }
+[data-mode="night"] .robot .eye { fill: oklch(0.85 0.18 195); filter: drop-shadow(0 0 4px var(--vine-glow)); }
+
+/* Preview info bar */
+.preview-bar {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 11px; color: oklch(0.92 0.06 80);
+    background: oklch(0.20 0.06 30 / 0.7); padding: 5px 12px; border-radius: 1px;
+    z-index: 200; border: 1px solid var(--gold-deep);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .candle .flame, .robot .gear, .console .crystal, .howler, .book { animation: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-bar">grimoire-mockup-v3 · drag / wheel / arrows to pan · hover anything → vines grow · <span id="modeBadge">day</span></div>
+
+<header class="banner">
+    <div class="banner-cap"></div>
+    <h1 class="banner-title">魔法师之书 <span class="sub">/ The Grimoire — open the page, wander wherever</span></h1>
+    <div class="banner-cap right"></div>
+</header>
+
+<button class="candle" type="button" onclick="toggleMode()" aria-label="Toggle theme">
+<svg viewBox="0 0 60 100"><circle class="glow" cx="30" cy="22" r="42"/><path class="flame" d="M30 8 C24 14 24 22 28 28 C28 32 32 32 32 28 C36 22 36 14 30 8 Z"/><line class="wick" x1="30" y1="28" x2="30" y2="36"/><ellipse class="drip" cx="30" cy="36" rx="14" ry="3"/><rect class="body" x="18" y="36" width="24" height="56" rx="2"/><ellipse cx="30" cy="92" rx="22" ry="4" fill="oklch(0.55 0.10 60)"/></svg>
+</button>
+<button class="console" type="button" onclick="alert('Iron-Man console (search) — full overlay in production')" aria-label="Open console">
+<svg viewBox="0 0 56 56"><defs><radialGradient id="cg"><stop offset="0%" stop-color="oklch(0.95 0.10 220)"/><stop offset="100%" stop-color="oklch(0.40 0.14 240)"/></radialGradient></defs><polygon class="crystal" points="28,4 50,28 28,52 6,28" fill="url(#cg)"/></svg>
+</button>
+<button class="robot" type="button" onclick="alert('小林：『主人，要看哪里？』 — Robot dialogue would open with destination list.')" aria-label="Talk to 小林">
+<svg viewBox="0 0 72 88"><ellipse class="body" cx="36" cy="50" rx="26" ry="32"/><ellipse class="belly" cx="36" cy="58" rx="16" ry="20"/><circle cx="28" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle cx="44" cy="38" r="6.5" fill="oklch(0.94 0.04 70)"/><circle class="eye" cx="28" cy="38" r="3"/><circle class="eye" cx="44" cy="38" r="3"/><path d="M36 44 L33 50 L39 50 Z" fill="oklch(0.62 0.13 70)"/><g transform="translate(36 60)" class="gear"><circle r="6" fill="oklch(0.72 0.13 80)"/></g></svg>
+</button>
+
+<!-- Mini-map for orientation -->
+<div class="minimap" id="minimap">
+    <div class="minimap-viewport" id="minimapViewport"></div>
+    <span class="minimap-label">drag the book · 4000 × 2400</span>
+</div>
+
+<!-- The pannable viewport + book -->
+<div class="viewport" id="viewport">
+    <div class="book" id="book">
+
+        <!-- Living vines layer: hidden by default, shows on engagement -->
+        <svg class="vines" viewBox="0 0 4000 2400" preserveAspectRatio="none">
+            <!-- From apprentice → papers, projects, awards, atlas, howler -->
+            <path class="vine-from-apprentice" d="M520 360 Q900 320 1200 360"/>
+            <circle class="leaf leaf-of-apprentice" cx="900" cy="335" r="6"/>
+            <path class="vine-from-apprentice" d="M520 380 Q1300 480 2150 380"/>
+            <circle class="leaf leaf-of-apprentice" cx="1400" cy="450" r="6"/>
+            <path class="vine-from-apprentice" d="M450 520 Q800 780 1180 1000"/>
+            <circle class="leaf leaf-of-apprentice" cx="800" cy="780" r="5"/>
+            <path class="vine-from-apprentice" d="M520 480 Q1300 1000 1980 1300"/>
+            <circle class="leaf leaf-of-apprentice" cx="1300" cy="1000" r="5"/>
+            <path class="vine-from-apprentice" d="M380 540 Q380 1200 440 1700"/>
+            <circle class="leaf leaf-of-apprentice" cx="380" cy="1200" r="5"/>
+            <!-- From papers -->
+            <path class="vine-from-papers" d="M1300 320 Q1700 320 2100 360"/>
+            <circle class="leaf leaf-of-papers" cx="1700" cy="320" r="5"/>
+            <path class="vine-from-papers" d="M1300 360 Q1500 700 1980 1300"/>
+            <circle class="leaf leaf-of-papers" cx="1500" cy="700" r="5"/>
+            <!-- From projects -->
+            <path class="vine-from-projects" d="M2200 360 Q2300 700 1980 1300"/>
+            <circle class="leaf leaf-of-projects" cx="2200" cy="700" r="5"/>
+            <path class="vine-from-projects" d="M2200 400 Q2400 600 2150 700"/>
+            <!-- From awards -->
+            <path class="vine-from-awards" d="M1300 980 Q1700 990 2100 980"/>
+            <circle class="leaf leaf-of-awards" cx="1700" cy="985" r="5"/>
+            <!-- From Atlas → many -->
+            <path class="vine-from-atlas" d="M2010 1290 Q1400 700 1300 360"/>
+            <path class="vine-from-atlas" d="M2010 1290 Q2400 1000 2200 360"/>
+            <path class="vine-from-atlas" d="M2010 1290 Q1700 1000 1300 980"/>
+            <path class="vine-from-atlas" d="M2010 1290 Q3000 1300 3100 360"/>
+            <path class="vine-from-atlas" d="M2010 1290 Q2700 1500 3000 1500"/>
+            <circle class="leaf leaf-of-atlas" cx="2400" cy="900" r="6"/>
+            <circle class="leaf leaf-of-atlas" cx="2700" cy="1500" r="6"/>
+            <circle class="leaf leaf-of-atlas" cx="3000" cy="1300" r="6"/>
+            <!-- From howler -->
+            <path class="vine-from-howler" d="M450 1750 Q500 1750 700 1700"/>
+            <circle class="leaf leaf-of-howler" cx="600" cy="1730" r="5"/>
+            <path class="vine-from-howler" d="M460 1750 Q1500 1900 3050 1500"/>
+            <circle class="leaf leaf-of-howler" cx="1800" cy="1880" r="5"/>
+        </svg>
+
+        <!-- ============== APPRENTICE + HERO TEXT ============== -->
+        <div class="apprentice" data-engages="apprentice"></div>
+
+        <div class="hero-text" data-engages="apprentice">
+            <p class="hero-overline">a note from the apprentice · 一封学徒的小信</p>
+            <h1 class="hero-name-zh">贾林林</h1>
+            <p class="hero-name-en">Linlin Jia · Ph.D.</p>
+            <p class="hero-role">
+                <span class="pw">图人工智能</span><span class="pw">魔法学徒</span>
+                · <span class="pw">Graph</span> <span class="pw">AI</span> <span class="pw">Magic</span> <span class="pw">Apprentice</span>
+            </p>
+            <p class="hero-tagline">
+                Bridging <em style="color:var(--primary);">graph</em> and <em style="color:var(--primary);">kernel</em> spaces, brewing models for molecules and language.<br>
+                Researching at the University of <em style="color:var(--primary);">Bern</em>.
+            </p>
+            <p class="hero-signature">
+                Author of <em>graphkit-learn</em> · <strong>SNSF</strong> + <strong>Innosuisse</strong>-funded · <strong>ICPR 2026</strong> paper · <strong>MSCA</strong> Alumni
+            </p>
+        </div>
+
+        <!-- ============== PAPERS ============== -->
+        <div class="h-zone papers-zone" data-engages="papers">
+            <h2 class="h-title">论文长卷</h2>
+            <p class="h-title-en">Publications · 9 papers + 1 thesis tome — hover to read</p>
+            <div class="h-deco"></div>
+            <div class="paper-stack">
+                <div class="paper p1" onclick="alert('A Metric Learning Approach to GED · ICPR 2020')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><line x1="14" y1="24" x2="96" y2="24" stroke="oklch(0.30 0.06 35)" stroke-width="1"/><line x1="14" y1="36" x2="96" y2="36" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><line x1="14" y1="46" x2="96" y2="46" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><line x1="14" y1="56" x2="96" y2="56" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><line x1="14" y1="66" x2="80" y2="66" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><circle cx="55" cy="100" r="14" fill="none" stroke="oklch(0.42 0.16 27)" stroke-width="1.4"/><circle cx="35" cy="116" r="6" fill="oklch(0.42 0.16 27)"/><circle cx="75" cy="116" r="6" fill="oklch(0.42 0.16 27)"/><line x1="55" y1="100" x2="35" y2="116" stroke="oklch(0.42 0.16 27)" stroke-width="1"/><line x1="55" y1="100" x2="75" y2="116" stroke="oklch(0.42 0.16 27)" stroke-width="1"/></svg><div class="paper-label">GED · 2020</div></div>
+                <div class="paper p2" onclick="alert('graphkit-learn · CBM 2021 (61 citations)')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><text x="55" y="34" text-anchor="middle" font-family="serif" font-style="italic" font-size="9" font-weight="700" fill="oklch(0.42 0.16 27)">CBM 2021</text><line x1="14" y1="44" x2="96" y2="44" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><line x1="14" y1="54" x2="96" y2="54" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><circle cx="40" cy="90" r="6" fill="oklch(0.32 0.10 145)"/><circle cx="70" cy="80" r="6" fill="oklch(0.40 0.14 240)"/><circle cx="55" cy="110" r="6" fill="oklch(0.42 0.16 27)"/><line x1="40" y1="90" x2="70" y2="80" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/><line x1="40" y1="90" x2="55" y2="110" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/><line x1="70" y1="80" x2="55" y2="110" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/><text x="55" y="138" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)">61 cites</text></svg><div class="paper-label">CBM · 2021</div></div>
+                <div class="paper p3" onclick="alert('Workshop · 2021')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><text x="55" y="32" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.42 0.16 27)">Workshop · 2021</text><line x1="14" y1="44" x2="96" y2="44" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><text x="55" y="86" text-anchor="middle" font-family="cursive" font-size="32" font-style="italic" fill="oklch(0.30 0.10 145)">∇ϕ</text><text x="55" y="120" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)">SSPR 2020</text></svg><div class="paper-label">Workshop · 2021</div></div>
+                <div class="paper p4" onclick="alert('PRL · 2021')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><text x="55" y="32" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.42 0.16 27)">PRL · 2021</text><line x1="14" y1="44" x2="96" y2="44" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><line x1="20" y1="60" x2="90" y2="60" stroke="oklch(0.30 0.06 35)" stroke-width="0.3"/><line x1="20" y1="68" x2="90" y2="68" stroke="oklch(0.30 0.06 35)" stroke-width="0.3"/><line x1="20" y1="76" x2="90" y2="76" stroke="oklch(0.30 0.06 35)" stroke-width="0.3"/><line x1="20" y1="84" x2="80" y2="84" stroke="oklch(0.30 0.06 35)" stroke-width="0.3"/><line x1="20" y1="92" x2="90" y2="92" stroke="oklch(0.30 0.06 35)" stroke-width="0.3"/><text x="55" y="120" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)">14 cites</text></svg><div class="paper-label">PRL · 2021</div></div>
+                <div class="paper p5" onclick="alert('ESWA · 2022')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><text x="55" y="32" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.42 0.16 27)">ESWA · 2022</text><line x1="14" y1="44" x2="96" y2="44" stroke="oklch(0.30 0.06 35)" stroke-width="0.4"/><circle cx="55" cy="84" r="20" fill="none" stroke="oklch(0.62 0.13 70)" stroke-width="1.4"/><circle cx="55" cy="84" r="3" fill="oklch(0.42 0.16 27)"/><text x="55" y="120" text-anchor="middle" font-family="serif" font-size="7" fill="oklch(0.50 0.06 35)">25 cites</text></svg><div class="paper-label">ESWA · 2022</div></div>
+                <div class="paper p6" onclick="alert('J24 · Most cited (130)')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.62 0.13 70 / 0.3)" stroke="oklch(0.45 0.12 65)" stroke-width="2"/><text x="55" y="34" text-anchor="middle" font-family="serif" font-size="10" font-style="italic" font-weight="700" fill="oklch(0.30 0.06 35)">★ J24 ★</text><text x="55" y="84" text-anchor="middle" font-family="serif" font-size="40" font-style="italic" font-weight="700" fill="oklch(0.42 0.16 27)">9</text><text x="55" y="124" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.30 0.06 35)">cites</text></svg><div class="paper-label">★ Most Cited</div></div>
+                <div class="paper p7" onclick="alert('AAAI 2025 · under review')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.94 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/><text x="55" y="34" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.42 0.16 27)">AAAI 2025</text><text x="55" y="86" text-anchor="middle" font-family="cursive" font-size="14" font-style="italic" fill="oklch(0.50 0.06 35)">submitted</text></svg><div class="paper-label">AAAI · 2025</div></div>
+                <div class="paper p8" onclick="alert('ICPR 2026 — accepted! Swiss River Network Benchmark')"><svg viewBox="0 0 110 150"><rect width="110" height="150" fill="oklch(0.62 0.10 230 / 0.25)" stroke="oklch(0.45 0.10 220)" stroke-width="2"/><text x="55" y="34" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" font-weight="700" fill="oklch(0.42 0.16 27)">ICPR 2026 ✓</text><path d="M14 80 Q40 70 60 80 Q80 90 96 80" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6"/><path d="M14 96 Q40 86 60 96 Q80 106 96 96" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6"/><circle cx="50" cy="120" r="2" fill="oklch(0.92 0.04 80)"/></svg><div class="paper-label">ICPR · 2026 ✓</div></div>
+                <div class="paper thesis" onclick="alert('Ph.D. Thesis: Bridging Graph and Kernel Spaces — A Pre-image Perspective. INSA Rouen + U. Paris-Saclay, 2021.')"><svg viewBox="0 0 130 180"><rect width="130" height="180" fill="oklch(0.18 0.10 25)" stroke="oklch(0.62 0.13 70)" stroke-width="3"/><rect x="10" y="10" width="110" height="160" fill="none" stroke="oklch(0.62 0.13 70)" stroke-width="0.6"/><text x="65" y="50" text-anchor="middle" font-family="serif" font-style="italic" font-size="8" fill="oklch(0.85 0.13 78)">PhD Thesis</text><text x="65" y="100" text-anchor="middle" font-family="serif" font-size="48" font-style="italic" font-weight="700" fill="oklch(0.85 0.13 78)">林</text><text x="65" y="150" text-anchor="middle" font-family="serif" font-size="7" font-style="italic" fill="oklch(0.62 0.13 70)">2021</text></svg><div class="paper-label">★ Thesis tome</div></div>
+            </div>
+        </div>
+
+        <!-- ============== PROJECTS (jars) ============== -->
+        <div class="h-zone projects-zone" data-engages="projects">
+            <h2 class="h-title">实验台</h2>
+            <p class="h-title-en">Projects · 11 jars in progress — hover to read</p>
+            <div class="h-deco"></div>
+            <div class="jars-row">
+                <div class="jar" onclick="alert('graphkit-learn · 128⭐ · graph kernel toolkit')"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="22" ry="3" fill="oklch(0.18 0.04 30)" opacity="0.4"/><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.78 0.10 230 / 0.5)" stroke="oklch(0.62 0.10 220)" stroke-width="1.4"/><circle cx="42" cy="55" r="4" fill="oklch(0.42 0.16 27)"/><circle cx="58" cy="50" r="4" fill="oklch(0.32 0.10 145)"/><circle cx="50" cy="68" r="4" fill="oklch(0.40 0.14 240)"/><line x1="42" y1="55" x2="58" y2="50" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/><line x1="42" y1="55" x2="50" y2="68" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/><line x1="58" y1="50" x2="50" y2="68" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/></svg><div class="jar-name">graphkit-learn</div><div class="jar-desc">128⭐ · graph kernels</div></div>
+                <div class="jar" onclick="alert('Swiss River Network Benchmark · ICPR 2026')"><svg viewBox="0 0 100 100"><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.62 0.10 230 / 0.55)" stroke="oklch(0.45 0.10 220)" stroke-width="1.4"/><path d="M34 70 Q42 66 48 70 Q56 74 62 70" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6"/><path d="M34 60 Q42 56 48 60 Q56 64 62 60" fill="none" stroke="oklch(0.40 0.14 240)" stroke-width="1.6" opacity="0.7"/><circle cx="44" cy="42" r="2" fill="oklch(0.92 0.04 80)"/></svg><div class="jar-name">Swiss River</div><div class="jar-desc">river-temp ·  ICPR 2026</div></div>
+                <div class="jar" onclick="alert('PLANALYSER · Innosuisse')"><svg viewBox="0 0 100 100"><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.65 0.18 50 / 0.5)" stroke="oklch(0.45 0.16 50)" stroke-width="1.4"/><line x1="40" y1="64" x2="60" y2="64" stroke="oklch(0.30 0.10 25)" stroke-width="1.2"/><line x1="50" y1="64" x2="50" y2="50" stroke="oklch(0.30 0.10 25)" stroke-width="1.2"/><circle cx="50" cy="50" r="3" fill="oklch(0.85 0.18 70)"/></svg><div class="jar-name">PLANALYSER</div><div class="jar-desc">HVAC · Innosuisse</div></div>
+                <div class="jar" onclick="alert('LIULIAN · kitchen AI agent')"><svg viewBox="0 0 100 100"><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.62 0.13 70 / 0.45)" stroke="oklch(0.45 0.12 65)" stroke-width="1.4"/><ellipse cx="50" cy="56" rx="14" ry="3" fill="oklch(0.42 0.08 40)"/><ellipse cx="50" cy="56" rx="10" ry="2" fill="oklch(0.92 0.06 80)" opacity="0.8"/><line x1="44" y1="42" x2="46" y2="52" stroke="oklch(0.42 0.08 40)" stroke-width="1.4" stroke-linecap="round"/></svg><div class="jar-name">LIULIAN</div><div class="jar-desc">kitchen AI · Python</div></div>
+                <div class="jar" onclick="alert('IQA · molecular GNN · UniBE Open Round')"><svg viewBox="0 0 100 100"><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.55 0.10 165 / 0.45)" stroke="oklch(0.45 0.10 160)" stroke-width="1.4"/><circle cx="42" cy="56" r="4" fill="oklch(0.42 0.16 27)"/><circle cx="58" cy="52" r="4" fill="oklch(0.32 0.10 145)"/><circle cx="48" cy="68" r="3" fill="oklch(0.40 0.14 240)"/><line x1="42" y1="56" x2="58" y2="52" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/><line x1="42" y1="56" x2="48" y2="68" stroke="oklch(0.30 0.06 35)" stroke-width="0.6"/></svg><div class="jar-name">IQA</div><div class="jar-desc">molecular GNN · UniBE</div></div>
+                <div class="jar" onclick="alert('GraphInk · handwriting · SNSF')"><svg viewBox="0 0 100 100"><path d="M30 90 Q28 30 36 18 L64 18 Q72 30 70 90 Z" fill="oklch(0.18 0.04 250 / 0.5)" stroke="oklch(0.32 0.10 250)" stroke-width="1.4"/><text x="50" y="58" text-anchor="middle" font-family="cursive" font-size="20" font-style="italic" fill="oklch(0.92 0.04 80)">林</text></svg><div class="jar-name">GraphInk</div><div class="jar-desc">handwriting · SNSF</div></div>
+            </div>
+        </div>
+
+        <!-- ============== AWARDS ============== -->
+        <div class="h-zone awards-zone" data-engages="awards">
+            <h2 class="h-title">奖与基金</h2>
+            <p class="h-title-en">Awards & Grants — 4 frames on the wall</p>
+            <div class="h-deco"></div>
+            <div class="frames">
+                <div class="frame-award" onclick="alert('SNSF Grants × 3 — Postdoc.Mobility / GraphInk / Swiss River')"><svg viewBox="0 0 130 110"><rect x="6" y="6" width="118" height="98" fill="oklch(0.94 0.04 75)" stroke="oklch(0.62 0.13 70)" stroke-width="3"/><rect x="14" y="14" width="102" height="82" fill="none" stroke="oklch(0.45 0.10 50)" stroke-width="0.6"/><text x="65" y="58" text-anchor="middle" font-family="serif" font-style="italic" font-size="18" font-weight="700" fill="oklch(0.42 0.16 27)">SNSF</text><text x="65" y="75" text-anchor="middle" font-family="serif" font-size="9" fill="oklch(0.50 0.06 35)">× 3 grants</text></svg><div class="label">SNSF · 2020–26</div></div>
+                <div class="frame-award" onclick="alert('UniBE ECSC Open Round 2023/2 · IQA project · Applicant + PI')"><svg viewBox="0 0 130 110"><rect x="6" y="6" width="118" height="98" fill="oklch(0.94 0.04 75)" stroke="oklch(0.62 0.13 70)" stroke-width="3"/><rect x="14" y="14" width="102" height="82" fill="none" stroke="oklch(0.45 0.10 50)" stroke-width="0.6"/><text x="65" y="50" text-anchor="middle" font-family="serif" font-style="italic" font-weight="700" font-size="14" fill="oklch(0.42 0.16 27)">u<tspan dy="-3" font-size="10">b</tspan></text><text x="65" y="75" text-anchor="middle" font-family="serif" font-size="8" fill="oklch(0.50 0.06 35)">UniBE Open Round</text></svg><div class="label">UniBE · 2024–26</div></div>
+                <div class="frame-award" onclick="alert('Innosuisse — PLANALYSER project · with WATTELSE AG')"><svg viewBox="0 0 130 110"><rect x="6" y="6" width="118" height="98" fill="oklch(0.94 0.04 75)" stroke="oklch(0.62 0.13 70)" stroke-width="3"/><rect x="14" y="14" width="102" height="82" fill="none" stroke="oklch(0.45 0.10 50)" stroke-width="0.6"/><path d="M55 30 L75 30 L80 50 L50 50 Z" fill="oklch(0.55 0.18 27)" stroke="oklch(0.30 0.14 25)" stroke-width="0.6"/><path d="M58 38 L62 38 M65 38 L68 38 M71 38 L74 38" stroke="oklch(0.94 0.04 75)" stroke-width="0.8"/><text x="65" y="75" text-anchor="middle" font-family="serif" font-size="8" fill="oklch(0.50 0.06 35)">Innosuisse</text></svg><div class="label">Innosuisse · 2024–25</div></div>
+                <div class="frame-award" onclick="alert('ANR · APi PhD project · Apprivoiser la Pré-image')"><svg viewBox="0 0 130 110"><rect x="6" y="6" width="118" height="98" fill="oklch(0.94 0.04 75)" stroke="oklch(0.62 0.13 70)" stroke-width="3"/><rect x="14" y="14" width="102" height="82" fill="none" stroke="oklch(0.45 0.10 50)" stroke-width="0.6"/><text x="65" y="56" text-anchor="middle" font-family="serif" font-style="italic" font-weight="700" font-size="20" fill="oklch(0.42 0.16 27)">anr</text><text x="65" y="75" text-anchor="middle" font-family="serif" font-size="8" fill="oklch(0.50 0.06 35)">APi PhD project</text></svg><div class="label">ANR · 2018–21</div></div>
+            </div>
+        </div>
+
+        <!-- ============== ABOUT (bullets directly on parchment) ============== -->
+        <div class="h-zone about-zone">
+            <h2 class="h-title">关于林林</h2>
+            <p class="h-title-en">about · written by hand on the page</p>
+            <div class="h-deco"></div>
+            <ul class="about-bullets">
+                <li>📍 Living in <em>Bern</em>, Switzerland — Pattern Recognition Group, University of Bern</li>
+                <li>🛠 Author of <em>graphkit-learn</em> (graph kernel + GED toolkit, 128⭐)</li>
+                <li>🧪 SNSF + Innosuisse + ANR funded; <em>ICPR 2026</em> paper accepted</li>
+                <li>🤖 Working at intersection of <em>Graph ML</em>, GNNs, LLM agents, chemistry</li>
+                <li>🎓 Ph.D. INSA Rouen + Paris-Saclay; M.Sc. + B.S. Xi'an Jiaotong; CN patent CN106376041B</li>
+                <li>🎯 Job-hunting: <em>ML Research Scientist</em> · full-time · CH/EU/CN</li>
+            </ul>
+        </div>
+
+        <!-- ============== CAREER TIMELINE (ribbon) ============== -->
+        <div class="h-zone career-zone">
+            <h2 class="h-title">职业卷轴</h2>
+            <p class="h-title-en">Career timeline · 4 chapters</p>
+            <div class="h-deco"></div>
+            <div class="timeline-ribbon">
+                <div class="tl-event" style="left:8%;" onclick="alert('B.S. Xi'an Jiaotong U. · 2010–14')"><div class="dot"></div><div class="yr">2010</div><div class="place">B.S.<br>XJTU</div></div>
+                <div class="tl-event" style="left:30%;" onclick="alert('M.Sc. XJTU · 2014–17 · CN patent')"><div class="dot"></div><div class="yr">2014</div><div class="place">M.Sc.<br>XJTU</div></div>
+                <div class="tl-event" style="left:55%;" onclick="alert('Ph.D. INSA Rouen + Paris-Saclay · 2017–21')"><div class="dot"></div><div class="yr">2017</div><div class="place">Ph.D.<br>INSA Rouen</div></div>
+                <div class="tl-event" style="left:82%;" onclick="alert('Postdoc · University of Bern · 2020–present')"><div class="dot"></div><div class="yr">2020 →</div><div class="place">Postdoc<br>UniBE</div></div>
+            </div>
+        </div>
+
+        <!-- ============== SKILLS (constellation) ============== -->
+        <div class="skills-zone" onclick="alert('Skills constellation: hover any keyword for related papers/projects.')">
+            <span class="skill-star s1">graph</span>
+            <span class="skill-star s2">kernel</span>
+            <span class="skill-star s3">GNN</span>
+            <span class="skill-star s4">molecules</span>
+            <span class="skill-star s5">Python</span>
+            <span class="skill-star s6">PyTorch</span>
+            <span class="skill-star s7">LLM</span>
+            <span class="skill-star s8">agents</span>
+            <span class="skill-star s9">JAX</span>
+            <span class="skill-star s10">chemistry</span>
+        </div>
+
+        <!-- ============== ATLAS big book (graph view portal) ============== -->
+        <div class="h-zone atlas" data-engages="atlas" onclick="alert('Atlas: full force-graph view of all rooms + relations. (Easter egg.)')">
+            <svg viewBox="0 0 320 220">
+                <ellipse cx="160" cy="200" rx="140" ry="14" fill="oklch(0.18 0.05 30)" opacity="0.4"/>
+                <path d="M20 40 L300 40 L300 200 L20 200 Z" fill="oklch(0.18 0.10 25)" stroke="oklch(0.62 0.13 70)" stroke-width="2.5"/>
+                <rect x="30" y="50" width="125" height="140" fill="oklch(0.92 0.04 75)"/>
+                <rect x="165" y="50" width="125" height="140" fill="oklch(0.92 0.04 75)"/>
+                <line x1="160" y1="40" x2="160" y2="200" stroke="oklch(0.45 0.10 50)" stroke-width="1"/>
+                <!-- Map nodes inside book -->
+                <circle cx="60" cy="80" r="6" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="100" cy="100" r="6" fill="oklch(0.32 0.10 145)"/>
+                <circle cx="80" cy="140" r="6" fill="oklch(0.40 0.14 240)"/>
+                <circle cx="125" cy="160" r="5" fill="oklch(0.62 0.13 70)"/>
+                <circle cx="200" cy="80" r="6" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="240" cy="100" r="6" fill="oklch(0.30 0.10 295)"/>
+                <circle cx="220" cy="140" r="6" fill="oklch(0.32 0.10 145)"/>
+                <circle cx="265" cy="160" r="5" fill="oklch(0.40 0.14 240)"/>
+                <g stroke="oklch(0.32 0.08 130)" stroke-width="1" fill="none">
+                    <line x1="60" y1="80" x2="100" y2="100"/><line x1="100" y1="100" x2="80" y2="140"/>
+                    <line x1="80" y1="140" x2="125" y2="160"/><line x1="100" y1="100" x2="125" y2="160"/>
+                    <line x1="200" y1="80" x2="240" y2="100"/><line x1="240" y1="100" x2="220" y2="140"/>
+                    <line x1="220" y1="140" x2="265" y2="160"/><line x1="200" y1="80" x2="220" y2="140"/>
+                </g>
+                <text x="160" y="32" text-anchor="middle" font-family="serif" font-style="italic" font-size="12" fill="oklch(0.62 0.13 70)">Atlas</text>
+            </svg>
+            <div class="atlas-label">星图大书</div>
+            <div class="atlas-sub">click for the whole graph view</div>
+        </div>
+
+        <!-- ============== HOWLER + OWL ============== -->
+        <div class="howler" data-engages="howler" onclick="alert('🦉 Howler postcard would unfold in production — D5.N flow.')">
+            <svg viewBox="0 0 180 130" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hr3" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="oklch(0.55 0.18 27)"/>
+                        <stop offset="100%" stop-color="oklch(0.32 0.14 25)"/>
+                    </linearGradient>
+                </defs>
+                <rect x="10" y="36" width="160" height="86" fill="url(#hr3)" rx="2"/>
+                <path d="M10 36 L90 86 L170 36 Z" fill="oklch(0.42 0.16 27)" opacity="0.95"/>
+                <circle cx="90" cy="78" r="20" fill="oklch(0.55 0.18 27)" stroke="oklch(0.30 0.14 25)" stroke-width="0.6"/>
+                <circle cx="84" cy="70" r="7" fill="oklch(0.78 0.12 27)" opacity="0.5"/>
+                <text x="90" y="88" text-anchor="middle" font-family="serif" font-size="22" font-weight="700" font-style="italic" fill="oklch(0.96 0.04 60)">L</text>
+                <path d="M10 36 Q4 42 8 52 Q0 48 10 60 Z" fill="oklch(0.10 0.05 25)" opacity="0.78"/>
+                <path d="M170 36 Q176 42 172 52 Q180 48 170 60 Z" fill="oklch(0.10 0.05 25)" opacity="0.78"/>
+                <text x="32" y="116" font-family="cursive" font-size="14" fill="oklch(0.96 0.04 27)" font-weight="600" font-style="italic" transform="rotate(-3 32 116)">URGENT</text>
+            </svg>
+            <div class="howler-label">⚠ a Howler · 送一封信</div>
+        </div>
+
+        <div class="owl-perch" onclick="alert('🦉 Owl ready to deliver. Always awake.')">
+            <svg viewBox="0 0 140 180">
+                <rect x="50" y="160" width="40" height="14" fill="oklch(0.42 0.08 40)"/>
+                <ellipse cx="70" cy="100" rx="40" ry="50" fill="oklch(0.40 0.05 55)" stroke="oklch(0.18 0.04 30)" stroke-width="1.4"/>
+                <ellipse cx="70" cy="112" rx="24" ry="32" fill="oklch(0.78 0.06 75)"/>
+                <path d="M44 76 L36 54 L52 64 Z" fill="oklch(0.32 0.05 50)"/>
+                <path d="M96 76 L104 54 L88 64 Z" fill="oklch(0.32 0.05 50)"/>
+                <g class="owl-eyes">
+                    <circle cx="58" cy="88" r="10" fill="oklch(0.94 0.04 75)" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                    <circle cx="82" cy="88" r="10" fill="oklch(0.94 0.04 75)" stroke="oklch(0.30 0.06 35)" stroke-width="0.8"/>
+                    <circle cx="58" cy="88" r="5" fill="oklch(0.18 0.03 50)"/>
+                    <circle cx="82" cy="88" r="5" fill="oklch(0.18 0.03 50)"/>
+                    <circle cx="59" cy="86" r="1.4" fill="oklch(0.96 0.04 80)"/>
+                    <circle cx="83" cy="86" r="1.4" fill="oklch(0.96 0.04 80)"/>
+                </g>
+                <path d="M70 100 L66 110 L74 110 Z" fill="oklch(0.62 0.13 70)" stroke="oklch(0.30 0.10 55)" stroke-width="0.6"/>
+                <line x1="64" y1="148" x2="62" y2="160" stroke="oklch(0.30 0.07 50)" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="76" y1="148" x2="78" y2="160" stroke="oklch(0.30 0.07 50)" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- ============== NEWS (newspaper) ============== -->
+        <div class="h-zone news-zone">
+            <h2 class="h-title">魔法日报</h2>
+            <p class="h-title-en">Latest news</p>
+            <div class="h-deco"></div>
+            <div class="newspaper">
+                <div class="newspaper-title">魔法日报 · The Daily Apprentice</div>
+                <div class="news-item"><strong>Jan 2026</strong> · Started cooperation with N-Banker on AI strategy + LLM agents</div>
+                <div class="news-item"><strong>2025</strong> · ICPR 2026 paper accepted (Swiss River Network)</div>
+                <div class="news-item"><strong>2024</strong> · UniBE ECSC Open Round 2023/2 grant (IQA project)</div>
+                <div class="news-item"><strong>2024</strong> · Invited talk at GRAPHADON Summer School, Rouen</div>
+                <div class="news-item"><strong>2023</strong> · S+SSPR co-organized; CSC Workshop talk</div>
+            </div>
+        </div>
+
+        <!-- ============== VISIT MAP (rolled scroll) ============== -->
+        <div class="h-zone map-zone">
+            <h2 class="h-title">访客之地</h2>
+            <p class="h-title-en">Visit map · readers around the world</p>
+            <div class="h-deco"></div>
+            <svg class="rolled-map" viewBox="0 0 550 320">
+                <ellipse cx="20" cy="160" rx="14" ry="140" fill="oklch(0.62 0.06 60)" stroke="oklch(0.30 0.06 55)" stroke-width="2"/>
+                <ellipse cx="530" cy="160" rx="14" ry="140" fill="oklch(0.62 0.06 60)" stroke="oklch(0.30 0.06 55)" stroke-width="2"/>
+                <rect x="32" y="40" width="486" height="240" fill="oklch(0.92 0.04 75)" stroke="oklch(0.45 0.10 50)" stroke-width="1"/>
+                <path d="M60 100 Q120 88 180 96 Q240 110 300 100 Q360 88 420 100 Q450 130 440 170 Q380 165 320 175 Q260 180 180 175 Q100 170 70 160 Q56 130 60 100 Z" fill="oklch(0.62 0.06 60 / 0.45)" stroke="oklch(0.45 0.10 50)" stroke-width="0.8"/>
+                <path d="M460 130 Q500 130 510 160 Q500 190 470 195 Q450 180 460 130 Z" fill="oklch(0.62 0.06 60 / 0.45)" stroke="oklch(0.45 0.10 50)" stroke-width="0.8"/>
+                <circle cx="220" cy="140" r="5" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="280" cy="155" r="6" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="180" cy="160" r="4" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="380" cy="135" r="5" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="320" cy="170" r="3" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="475" cy="160" r="3" fill="oklch(0.42 0.16 27)"/>
+                <circle cx="465" cy="240" r="5" fill="none" stroke="oklch(0.62 0.13 70)" stroke-width="1"/>
+                <line x1="465" y1="232" x2="465" y2="248" stroke="oklch(0.42 0.16 27)" stroke-width="0.8"/>
+                <line x1="457" y1="240" x2="473" y2="240" stroke="oklch(0.42 0.16 27)" stroke-width="0.8"/>
+                <text x="465" y="270" text-anchor="middle" font-family="serif" font-size="9" font-style="italic" fill="oklch(0.50 0.06 35)">N</text>
+                <text x="275" y="80" text-anchor="middle" font-family="serif" font-style="italic" font-size="14" fill="oklch(0.30 0.06 35)">— readers around the world —</text>
+            </svg>
+        </div>
+
+        <!-- ============== ANIMALS (external links) ============== -->
+        <div class="h-zone animals-zone">
+            <h2 class="h-title">伙伴动物</h2>
+            <p class="h-title-en">External links · click an animal</p>
+            <div class="h-deco"></div>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                <a class="animal" href="https://github.com/jajupmochi" target="_blank">
+                    <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="oklch(0.20 0.04 240)"/><circle cx="26" cy="28" r="2" fill="oklch(0.94 0.04 70)"/><circle cx="38" cy="28" r="2" fill="oklch(0.94 0.04 70)"/><path d="M22 38 Q18 44 14 50 M42 38 Q46 44 50 50 M22 28 L18 22 L24 24 Z M42 28 L46 22 L40 24 Z" stroke="oklch(0.20 0.04 240)" stroke-width="2.4" fill="oklch(0.20 0.04 240)" stroke-linecap="round"/></svg>
+                    <div class="animal-label">GitHub</div>
+                </a>
+                <a class="animal" href="https://x.com/jajupmochi" target="_blank">
+                    <svg viewBox="0 0 64 64"><ellipse cx="32" cy="34" rx="14" ry="10" fill="oklch(0.65 0.18 230)"/><path d="M44 30 L52 22 L48 32 Z" fill="oklch(0.65 0.18 230)"/><circle cx="28" cy="32" r="1.4" fill="oklch(0.18 0.03 50)"/><path d="M40 38 L50 42" stroke="oklch(0.50 0.18 230)" stroke-width="1.4"/></svg>
+                    <div class="animal-label">Twitter / X</div>
+                </a>
+                <a class="animal" href="#" onclick="alert('Google Scholar');return false;">
+                    <svg viewBox="0 0 64 64"><ellipse cx="32" cy="34" rx="12" ry="9" fill="oklch(0.85 0.18 80)"/><line x1="20" y1="34" x2="44" y2="34" stroke="oklch(0.18 0.03 50)" stroke-width="1.4"/><line x1="22" y1="34" x2="22" y2="28" stroke="oklch(0.18 0.03 50)" stroke-width="1.4"/><line x1="32" y1="34" x2="32" y2="28" stroke="oklch(0.18 0.03 50)" stroke-width="1.4"/><line x1="42" y1="34" x2="42" y2="28" stroke="oklch(0.18 0.03 50)" stroke-width="1.4"/><path d="M20 40 L26 46 M44 40 L38 46" stroke="oklch(0.55 0.10 50)" stroke-width="1.6"/></svg>
+                    <div class="animal-label">Scholar</div>
+                </a>
+                <a class="animal" href="mailto:linlin.jia@unibe.ch">
+                    <svg viewBox="0 0 64 64"><ellipse cx="32" cy="36" rx="20" ry="12" fill="oklch(0.40 0.05 55)"/><ellipse cx="32" cy="40" rx="14" ry="9" fill="oklch(0.78 0.06 75)"/><circle cx="26" cy="32" r="2" fill="oklch(0.94 0.04 70)"/><circle cx="38" cy="32" r="2" fill="oklch(0.94 0.04 70)"/><circle cx="26" cy="32" r="0.8" fill="oklch(0.18 0.03 50)"/><circle cx="38" cy="32" r="0.8" fill="oklch(0.18 0.03 50)"/><path d="M32 36 L29 41 L35 41 Z" fill="oklch(0.62 0.13 70)"/></svg>
+                    <div class="animal-label">Email · 鸿雁</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ============== LECTERN (talks) — small standalone -->
+        <div class="lectern-zone" onclick="alert('Invited talks: GRAPHADON, ACPR 2023, S+SSPR 2020, CSC 2020')">
+            <h2 class="h-title">演讲台</h2>
+            <p class="h-title-en">Invited talks · 4 venues</p>
+            <div class="h-deco"></div>
+            <svg viewBox="0 0 280 200">
+                <path d="M80 160 L200 160 L180 80 L100 80 Z" fill="oklch(0.42 0.08 40)" stroke="oklch(0.25 0.06 35)" stroke-width="1.2"/>
+                <rect x="116" y="74" width="48" height="14" fill="oklch(0.94 0.04 75)" stroke="oklch(0.55 0.10 50)" stroke-width="0.8"/>
+                <line x1="140" y1="74" x2="140" y2="88" stroke="oklch(0.55 0.10 50)" stroke-width="0.5"/>
+                <line x1="138" y1="68" x2="138" y2="40" stroke="oklch(0.30 0.06 55)" stroke-width="1.4"/>
+                <ellipse cx="138" cy="38" rx="6" ry="6" fill="oklch(0.30 0.06 55)"/>
+                <rect x="0" y="160" width="280" height="40" fill="oklch(0.50 0.06 50)"/>
+            </svg>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const book = document.getElementById('book');
+const viewport = document.getElementById('viewport');
+const minimap = document.getElementById('minimap');
+const minimapVp = document.getElementById('minimapViewport');
+let tx = -120, ty = -120, scale = 1;
+const BOOK_W = 4000, BOOK_H = 2400;
+
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+function applyTransform() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    tx = clamp(tx, -(BOOK_W * scale - vw + 100), 100);
+    ty = clamp(ty, -(BOOK_H * scale - vh + 100), 100);
+    book.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
+    // Mini-map viewport indicator
+    const mmW = 200, mmH = 120;
+    const ratioW = mmW / (BOOK_W * scale);
+    const ratioH = mmH / (BOOK_H * scale);
+    minimapVp.style.width = (vw * ratioW) + 'px';
+    minimapVp.style.height = (vh * ratioH) + 'px';
+    minimapVp.style.left = (-tx * ratioW) + 'px';
+    minimapVp.style.top = (-ty * ratioH) + 'px';
+}
+applyTransform();
+
+// Wheel: pan (not zoom)
+window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        tx -= e.deltaX || e.deltaY;
+    } else {
+        ty -= e.deltaY;
+        tx -= e.deltaX;
+    }
+    applyTransform();
+}, { passive: false });
+
+// Drag to pan
+let dragging = false, dragStartX = 0, dragStartY = 0, txStart = 0, tyStart = 0;
+viewport.addEventListener('mousedown', (e) => {
+    if (e.target.closest('a, button, .candle, .robot, .console, [data-engages]')) return;
+    dragging = true; dragStartX = e.clientX; dragStartY = e.clientY;
+    txStart = tx; tyStart = ty;
+    document.body.classList.add('dragging');
+});
+window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    tx = txStart + (e.clientX - dragStartX);
+    ty = tyStart + (e.clientY - dragStartY);
+    applyTransform();
+});
+window.addEventListener('mouseup', () => { dragging = false; document.body.classList.remove('dragging'); });
+
+// Arrow keys
+document.addEventListener('keydown', (e) => {
+    const step = 200;
+    if (e.key === 'ArrowRight') { tx -= step; applyTransform(); }
+    if (e.key === 'ArrowLeft')  { tx += step; applyTransform(); }
+    if (e.key === 'ArrowDown')  { ty -= step; applyTransform(); }
+    if (e.key === 'ArrowUp')    { ty += step; applyTransform(); }
+    if (e.key === 'c' || e.key === 'C') toggleMode();
+});
+
+// Engagement tracking — hover an element with [data-engages] sets that key on body
+document.querySelectorAll('[data-engages]').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.setAttribute('data-engaged', el.dataset.engages));
+    el.addEventListener('mouseleave', () => {
+        const cur = document.body.getAttribute('data-engaged');
+        if (cur === el.dataset.engages) document.body.removeAttribute('data-engaged');
+    });
+});
+
+function toggleMode() {
+    const r = document.documentElement;
+    r.setAttribute('data-mode', r.getAttribute('data-mode') === 'day' ? 'night' : 'day');
+    document.getElementById('modeBadge').textContent = r.getAttribute('data-mode');
+}
+
+console.log('%c grimoire-mockup-v3 ', 'background: oklch(0.42 0.16 27); color: oklch(0.95 0.04 60); padding: 4px 12px; font-style: italic; font-family: serif;');
+console.log('Drag to pan · Wheel to scroll · Arrows · Hover anything → vines grow · C: theme');
+</script>
+</body>
+</html>
