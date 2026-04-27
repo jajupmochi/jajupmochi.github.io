@@ -9,111 +9,72 @@
            - Word cloud for research
            ======================================== */
         
-        /* Theme Variables - AI Generated (Default) */
-        :root, [data-theme="ai"] {
-            --primary: #4f46e5;          /* indigo-600 — WCAG AA on white (5.92:1) */
-            --primary-light: #818cf8;
-            --primary-dark: #4338ca;      /* indigo-700 — for hover / emphasis */
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --text-primary: #111827;
-            --text-secondary: #4b5563;
-            --text-muted: #6b7280;       /* gray-500 — WCAG AA on white (4.83:1) */
-            --bg-white: #ffffff;
-            --bg-light: #f9fafb;
-            --bg-subtle: #f3f4f6;
-            --border-light: #e5e7eb;
-            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4f46e5 100%);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        /* ====================================================================
+           Theme tokens — academic fallback (D6.4).
+           Color strategy: RESTRAINED — tinted parchment neutrals + one warm
+           oxblood accent (≤10% of surface).
+           Color space: OKLCH for perceptual uniformity. No #000 / #fff —
+           every neutral is tinted toward the warm parchment hue (~80°).
+           Per impeccable: chroma kept low at lightness extremes to avoid garish.
+           ==================================================================== */
+        :root {
+            /* Brand accent — oxblood / iron-oxide red. The single committed
+               color in the Restrained strategy; ≤10% of surface area. */
+            --primary:        oklch(0.45 0.16 27);
+            --primary-light:  oklch(0.58 0.16 27);
+            --primary-dark:   oklch(0.34 0.16 27);
+            /* Secondary — desaturated moss for tags / pills only. */
+            --secondary:      oklch(0.46 0.08 145);
+            /* Accent — burnished amber for highlights. */
+            --accent:         oklch(0.62 0.12 65);
+            /* Ink — slate w/ slight cool tint, never pure black. */
+            --text-primary:   oklch(0.22 0.025 250);
+            --text-secondary: oklch(0.40 0.025 250);
+            --text-muted:     oklch(0.56 0.020 250);
+            /* Paper — warm parchment, never pure white. Tinted ~80° (yellow). */
+            --bg-white:       oklch(0.98 0.010 80);
+            --bg-light:       oklch(0.96 0.012 80);
+            --bg-subtle:      oklch(0.94 0.014 80);
+            /* Borders — warm gray that sits between paper and ink. */
+            --border-light:   oklch(0.88 0.014 75);
+            /* Hero gradient — gentle parchment wash, no purple. */
+            --gradient-hero:  linear-gradient(180deg, oklch(0.98 0.010 80) 0%, oklch(0.93 0.014 78) 100%);
+            --shadow-md: 0 4px 6px -1px oklch(0.20 0.025 250 / 0.10);
+            --shadow-lg: 0 10px 15px -3px oklch(0.20 0.025 250 / 0.12);
             --radius-md: 8px;
             --radius-lg: 12px;
             --radius-full: 9999px;
-            --font-main: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-            --font-display: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            /* Typography stack (D6.3) — Spectral (Google Fonts) as the single Latin
+               family; LXGW WenKai handled per-locale below. Spectral has italic
+               weights, varied weights, and a contemporary serif character that
+               avoids the Inter+Playfair AI-slop default. */
+            --font-main: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, 'URW Palladio L', P052, serif;
+            --font-display: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, 'URW Palladio L', P052, serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+            --font-script: 'Caveat', 'Reenie Beanie', cursive;
         }
 
-        /* Theme: Academic */
+        /* Theme: Academic — explicit override block kept for D7 (when the
+           magic-graph theme will be added as [data-theme="grimoire"]).
+           Values intentionally identical to :root so academic == base. */
         [data-theme="academic"] {
-            --primary: #1e40af;
-            --primary-light: #3b82f6;
-            --primary-dark: #1e3a8a;
-            --secondary: #047857;
-            --accent: #b45309;
-            --text-primary: #1f2937;
-            --text-secondary: #374151;
-            --text-muted: #6b7280;
-            --bg-white: #ffffff;
-            --bg-light: #fafafa;
-            --bg-subtle: #f5f5f5;
-            --border-light: #e5e5e5;
-            --gradient-hero: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-            --font-main: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
-            --font-display: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
-        }
-
-        /* Theme: Industrial */
-        [data-theme="industrial"] {
-            --primary: #f97316;
-            --primary-light: #fb923c;
-            --primary-dark: #ea580c;
-            --secondary: #22c55e;
-            --accent: #eab308;
-            --text-primary: #f4f4f5;
-            --text-secondary: #d4d4d8;
-            --text-muted: #a1a1aa;
-            --bg-white: #18181b;
-            --bg-light: #27272a;
-            --bg-subtle: #3f3f46;
-            --border-light: #52525b;
-            --gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --font-main: 'Orbitron', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-            --font-display: 'Orbitron', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-        }
-        
-        /* Theme: Fancy / Wonderland */
-        [data-theme="fancy"] {
-            --primary: #be185d;            /* pink-800 — WCAG AA on --bg-white (fancy pink) */
-            --primary-light: #f472b6;
-            --primary-dark: #9d174d;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --text-primary: #4c1d95;
-            --text-secondary: #6b21a8;
-            --text-muted: #a78bfa;
-            --bg-white: #fdf4ff;
-            --bg-light: #fce7f3;
-            --bg-subtle: #f5d0fe;
-            --border-light: #e879f9;
-            --gradient-hero: linear-gradient(135deg, #fce7f3 0%, #ddd6fe 50%, #a5f3fc 100%);
-            --font-main: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
-            --font-display: 'Playfair Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Serif SC', serif;
-        }
-        
-        /* Wonderland Magical Effects */
-        [data-theme="fancy"] .wonderland-effects {
-            display: block;
-            pointer-events: none;
-        }
-        
-        .wonderland-effects { display: none; }
-        
-        /* Pretext-inspired text interactions */
-        [data-theme="fancy"] .pretext-word {
-            display: inline-block;
-            transition: transform 0.3s ease, color 0.3s ease;
-            cursor: default;
-        }
-        
-        [data-theme="fancy"] .pretext-word:hover {
-            transform: scale(1.15) rotate(-3deg);
-            color: var(--primary);
-        }
-        
-        [data-theme="fancy"] .hero-tagline .pretext-word:hover {
-            animation: word-sparkle 0.5s ease;
-        }
-        
+            --primary:        oklch(0.45 0.16 27);
+            --primary-light:  oklch(0.58 0.16 27);
+            --primary-dark:   oklch(0.34 0.16 27);
+            --secondary:      oklch(0.46 0.08 145);
+            --accent:         oklch(0.62 0.12 65);
+            --text-primary:   oklch(0.22 0.025 250);
+            --text-secondary: oklch(0.40 0.025 250);
+            --text-muted:     oklch(0.56 0.020 250);
+            --bg-white:       oklch(0.98 0.010 80);
+            --bg-light:       oklch(0.96 0.012 80);
+            --bg-subtle:      oklch(0.94 0.014 80);
+            --border-light:   oklch(0.88 0.014 75);
+            --gradient-hero:  linear-gradient(180deg, oklch(0.98 0.010 80) 0%, oklch(0.93 0.014 78) 100%);
+            --font-main: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+            --font-display: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+        }        
+        .wonderland-effects { display: none; }        
         @keyframes word-sparkle {
             0% { text-shadow: 0 0 5px #ec4899; }
             50% { text-shadow: 0 0 20px #ec4899, 0 0 40px #8b5cf6; }
@@ -261,13 +222,7 @@
             0% { transform: translateX(-100px) translateY(50vh) scale(0.5); }
             50% { transform: translateX(50vw) translateY(20vh) scale(1); }
             100% { transform: translateX(110vw) translateY(60vh) scale(0.5); }
-        }
-        
-        /* Text glow effect for Wonderland */
-        [data-theme="fancy"] h1, [data-theme="fancy"] h2, [data-theme="fancy"] h3 {
-            text-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
-        }
-        
+        }        
         /* Mushroom decorations */
         .mushroom {
             position: absolute;
@@ -334,12 +289,7 @@
             z-index: 1000;
             padding: 0;
             transition: all 0.25s;
-        }
-        
-        [data-theme="industrial"] .navbar {
-            background: rgba(24,24,27,0.95);
-        }
-        
+        }        
         .navbar.scrolled { box-shadow: var(--shadow-md); }
         
         .navbar-inner {
@@ -436,9 +386,6 @@
                 border-radius: 0;
                 font-size: 0.95rem;
             }
-            [data-theme="industrial"] .navbar-center {
-                background: rgba(24,24,27,0.98);
-            }
         }
 
         .navbar-right {
@@ -518,8 +465,7 @@
             overflow: hidden;
         }
         
-        [data-theme="academic"] .hero,
-        [data-theme="fancy"] .hero {
+        [data-theme="academic"] .hero {
             color: var(--text-primary);
         }
         
@@ -589,12 +535,10 @@
             100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
-        [data-theme="academic"] .hero-badge,
-        [data-theme="fancy"] .hero-badge {
+        [data-theme="academic"] .hero-badge {
             background: rgba(0,0,0,0.08);
         }
-        [data-theme="academic"] .hero-badge:hover,
-        [data-theme="fancy"] .hero-badge:hover {
+        [data-theme="academic"] .hero-badge:hover {
             background: rgba(0,0,0,0.14);
         }
         
@@ -681,8 +625,7 @@
             color: var(--primary);
         }
         
-        [data-theme="academic"] .btn-primary,
-        [data-theme="fancy"] .btn-primary {
+        [data-theme="academic"] .btn-primary {
             background: var(--primary);
             color: white;
         }
@@ -698,8 +641,7 @@
             border: 2px solid rgba(255,255,255,0.5);
         }
         
-        [data-theme="academic"] .btn-secondary,
-        [data-theme="fancy"] .btn-secondary {
+        [data-theme="academic"] .btn-secondary {
             background: transparent;
             border-color: var(--primary);
             color: var(--primary);
@@ -879,14 +821,7 @@
         .chatbot-trigger:hover {
             transform: scale(1.1);
             box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
-        }
-        
-        /* Theme-specific chatbot avatars */
-        [data-theme="ai"] .chatbot-trigger { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
-        [data-theme="academic"] .chatbot-trigger { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        [data-theme="industrial"] .chatbot-trigger { background: linear-gradient(135deg, #f97316, #ef4444); }
-        [data-theme="fancy"] .chatbot-trigger { background: linear-gradient(135deg, #ec4899, #a855f7); }
-        
+        }        [data-theme="academic"] .chatbot-trigger { background: linear-gradient(135deg, #1e40af, #3b82f6); }        
         .chatbot-avatar {
             width: 100%;
             height: 100%;
@@ -915,9 +850,9 @@
             --wp-accent-soft: rgba(167,139,250,0.10);
             --wp-border: rgba(120,113,108,0.18);
             --wp-radius: 6px;
-            --wp-script-font: 'Caveat', cursive;
-            --wp-title-font: 'Playfair Display', serif;
-            --wp-body-font: 'Inter', sans-serif;
+            --wp-script-font: 'Caveat', 'Reenie Beanie', cursive;
+            --wp-title-font: 'Spectral', 'Iowan Old Style', serif;
+            --wp-body-font: 'Spectral', 'Iowan Old Style', serif;
             --wp-placeholder: #bdb09a;
 
             position: fixed; inset: 0; z-index: 2000;
@@ -1161,8 +1096,8 @@
            down and use a serif fallback for body. */
         html[lang="zh"] .wp-overlay {
             --wp-script-font: 'Ma Shan Zheng', 'Long Cang', 'Caveat', 'STKaiti', cursive;
-            --wp-title-font: 'Ma Shan Zheng', 'Playfair Display', 'Noto Serif SC', serif;
-            --wp-body-font: 'Noto Serif SC', 'Songti SC', serif;
+            --wp-title-font: 'Ma Shan Zheng', 'LXGW WenKai', 'Source Han Serif SC', serif;
+            --wp-body-font: 'LXGW WenKai', 'Source Han Serif SC', 'Songti SC', serif;
         }
         html[lang="zh"] .wp-h2 { font-size: 30px; font-style: normal; }
         html[lang="zh"] .wp-sub { font-size: 16px; font-style: normal; }
@@ -1187,32 +1122,6 @@
             --wp-border: #e0d5b5;
             --wp-radius: 4px;
         }
-        [data-theme="industrial"] .wp-overlay {
-            --wp-paper: #1f1f23;
-            --wp-paper-alt: linear-gradient(135deg, #1f1f23 0%, #2a2a2e 100%);
-            --wp-rule: rgba(252,211,77,0.20);
-            --wp-ink: #e7e5e4; --wp-ink-muted: #78716c; --wp-ink-soft: #a8a29e;
-            --wp-script: #fde68a;
-            --wp-accent: #fcd34d;
-            --wp-accent-soft: rgba(252,211,77,0.10);
-            --wp-border: rgba(252,211,77,0.25);
-            --wp-radius: 4px;
-            --wp-placeholder: #52525b;
-        }
-        [data-theme="industrial"] .wp-close { background: rgba(255,255,255,0.1); }
-        [data-theme="industrial"] .wp-stamp { background: #0f0f10; }
-        [data-theme="fancy"] .wp-overlay {
-            --wp-paper: #fef6fb;
-            --wp-paper-alt: linear-gradient(135deg, #fef6fb 0%, #fce7f3 60%, #f3e8ff 100%);
-            --wp-rule: rgba(244,114,182,0.30);
-            --wp-ink: #5b3a6e; --wp-ink-muted: #c084d8; --wp-ink-soft: #8b5fab;
-            --wp-script: #7c3aed;
-            --wp-accent: #f9a8d4;
-            --wp-accent-soft: rgba(249,168,212,0.12);
-            --wp-border: #f9c2dd;
-            --wp-radius: 12px;
-        }
-
         /* Compact on small viewports — collapse to single-column. */
         @media (max-width: 640px) {
             .wp-card {
@@ -1302,12 +1211,10 @@
         .stamp-text {
             position: absolute; left: 50%; top: 196px;
             transform: translateX(-50%); opacity: 0;
-            font-family: var(--wp-body-font, 'Inter', sans-serif);
+            font-family: var(--wp-body-font, 'Spectral', serif);
             font-size: 11px; color: #7c2d12;
             letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
-        }
-        [data-theme="industrial"] .stamp-text { color: #a8a29e; }
-        .wp-overlay.sealing .stamp-text {
+        }        .wp-overlay.sealing .stamp-text {
             animation: wp-text-fade 0.4s ease 1.7s forwards;
         }
         @keyframes wp-text-fade {
@@ -2776,13 +2683,6 @@
             color: #1f2937;
         }
         .map-open-link i { font-size: 0.72rem; }
-        [data-theme="industrial"] .map-open-link {
-            background: rgba(17,24,39,0.92); color: #f9fafb; border-color: rgba(255,255,255,0.1);
-        }
-        [data-theme="industrial"] .map-open-link:hover { color: #f9fafb; }
-        [data-theme="fancy"] .map-open-link { background: #fff5fa; color: #9d174d; border-color: #f9a8d4; }
-        [data-theme="fancy"] .map-open-link:hover { color: #9d174d; }
-
         /* Visit map (visitor-country choropleth from Clarity weekly snapshot).
            The block stays display:none until JS sets [hidden]=false after data loads. */
         .visit-map-block {
@@ -2871,25 +2771,7 @@
             font-weight: 700;
             font-variant-numeric: tabular-nums;
             margin-left: 0.5rem;
-        }
-        /* Theme overrides */
-        [data-theme="industrial"] .visit-map-svg-wrap {
-            background: rgba(17,24,39,0.55);
-            border-color: rgba(255,255,255,0.08);
-        }
-        [data-theme="industrial"] #visitMapSvg .country-base {
-            fill: rgba(255,255,255,0.06);
-            stroke: rgba(255,255,255,0.14);
-        }
-        [data-theme="fancy"] .visit-map-svg-wrap {
-            background: #fff5fa;
-            border-color: #f9a8d4;
-        }
-        [data-theme="fancy"] #visitMapSvg .country-base {
-            fill: rgba(244,114,182,0.10);
-            stroke: rgba(244,114,182,0.30);
-        }
-        @media (max-width: 768px) {
+        }        @media (max-width: 768px) {
             .visit-map-body { grid-template-columns: 1fr; gap: 1.25rem; }
             .visit-map-top { order: 2; }
         }
@@ -2966,12 +2848,7 @@
             background: linear-gradient(135deg, #fce7f3 0%, #ddd6fe 50%, #a5f3fc 100%);
             padding: 6rem 0 4rem;
             text-align: center;
-        }
-        
-        [data-theme="industrial"] .personal-hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        }
-        
+        }        
         .personal-hero h1 {
             font-size: 3rem;
             margin: 0 0 1rem;
@@ -3302,7 +3179,7 @@
         }
         /* Handwritten hero name — less formal, more personable */
         .hero-h1 .hero-h1-name {
-            font-family: 'Dancing Script', 'Caveat', 'Playfair Display', cursive;
+            font-family: 'Dancing Script', 'Caveat', 'Spectral', cursive;
             font-weight: 700;
             font-size: 1.08em;
             letter-spacing: 0.005em;
@@ -3347,10 +3224,7 @@
             color: var(--primary-light);
             opacity: 0.95;
             margin: 0.7rem 0 1.1rem;
-        }
-        [data-theme="industrial"] .hero-subtitle { color: var(--primary-light); }
-        [data-theme="fancy"] .hero-subtitle { color: var(--primary); }
-        [data-theme="academic"] .hero-subtitle { color: var(--primary); opacity: 0.92; }
+        }        [data-theme="academic"] .hero-subtitle { color: var(--primary); opacity: 0.92; }
         [data-theme="academic"] .hero-h1-role .role-primary { color: #111827; }
         [data-theme="academic"] .hero-h1-role .role-secondary { color: rgba(17,24,39,0.65); }
         [data-theme="academic"] .hero-h1 .hero-h1-sep { color: rgba(17,24,39,0.4); }
@@ -3433,24 +3307,6 @@
         .otw-tag-loc i { color: var(--primary, #6366f1); }
         .otw-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; padding-top: 0.25rem; }
         .btn-sm { padding: 0.55rem 1rem; font-size: 0.88rem; }
-
-        [data-theme="industrial"] .otw-card {
-            background: rgba(10,15,25,0.7);
-            border-color: rgba(255,255,255,0.12);
-            border-left-color: #00ff88;
-        }
-        [data-theme="industrial"] .otw-icon {
-            background: linear-gradient(135deg, #00ff88, #00cc70); color: #0a0f19;
-        }
-        [data-theme="industrial"] .otw-tag { background: rgba(255,255,255,0.06); }
-        [data-theme="industrial"] .otw-dot { background: #00ff88; }
-        [data-theme="industrial"] .otw-tag-primary {
-            background: linear-gradient(135deg, #00ff88, #00cc70); color: #0a0f19;
-        }
-        [data-theme="fancy"] .otw-card { border-left-color: #ec4899; }
-        [data-theme="fancy"] .otw-icon { background: linear-gradient(135deg, #ec4899, #a855f7); }
-        [data-theme="fancy"] .otw-tag-primary { background: linear-gradient(135deg, #ec4899, #a855f7); }
-
         /* ========================================
            V7 ROUND2: TOAST NOTIFICATION
            ======================================== */
@@ -3488,13 +3344,6 @@
             flex-shrink: 0;
         }
         .toast-close:hover { color: var(--text-primary); }
-        [data-theme="industrial"] .toast {
-            background: rgba(10,15,25,0.95);
-            border-color: rgba(255,255,255,0.12);
-            border-left-color: #00ff88;
-        }
-        [data-theme="fancy"] .toast { border-left-color: #ec4899; }
-
         /* About section paragraphs (extracted from inline styles for i18n support) */
         .about-p {
             color: var(--text-secondary);
@@ -3683,28 +3532,7 @@
             font-size: 0.85rem;
             line-height: 1.4;
             color: var(--text-secondary, #475569);
-        }
-        /* Industrial theme — dark panel with neon-green accent */
-        [data-theme="industrial"] .coming-soon-toast {
-            background: color-mix(in srgb, #0a0f19 80%, transparent);
-            border-color: rgba(255,255,255,0.1);
-            color: #e8f4ff;
-        }
-        [data-theme="industrial"] .coming-soon-icon {
-            background: rgba(0,255,136,0.14);
-            color: #00ff88;
-        }
-        [data-theme="industrial"] .coming-soon-title { color: #e8f4ff; }
-        [data-theme="industrial"] .coming-soon-sub { color: rgba(232,244,255,0.72); }
-        /* Fancy theme — soft pink wash with magenta accent */
-        [data-theme="fancy"] .coming-soon-toast {
-            background: color-mix(in srgb, #fff0f7 82%, transparent);
-        }
-        [data-theme="fancy"] .coming-soon-icon {
-            background: rgba(236,72,153,0.16);
-            color: #ec4899;
-        }
-        @media (prefers-reduced-motion: reduce) {
+        }        @media (prefers-reduced-motion: reduce) {
             .coming-soon-toast { transition: opacity 0.1s ease; }
         }
 
@@ -3739,9 +3567,6 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
             opacity: 0.75;
         }
-        body[data-theme="industrial"] .nav-search-hint { background: rgba(255,255,255,0.08); }
-        body[data-theme="fancy"] .nav-search-hint { background: rgba(236,72,153,0.12); }
-
         .site-search-modal {
             position: fixed;
             inset: 0;
@@ -3777,19 +3602,6 @@
             flex-direction: column;
             overflow: hidden;
         }
-        body[data-theme="industrial"] .site-search-panel {
-            border-radius: 4px;
-            font-family: 'Orbitron', sans-serif;
-            background: #0f1422;
-            color: #d8e2ff;
-            border-color: #223055;
-        }
-        body[data-theme="fancy"] .site-search-panel {
-            border-radius: 20px;
-            background: #fff7fb;
-            border-color: #ffc3de;
-        }
-
         .site-search-input-wrap {
             display: flex;
             align-items: center;
@@ -3797,9 +3609,6 @@
             padding: 0.9rem 1.1rem;
             border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
         }
-        body[data-theme="industrial"] .site-search-input-wrap { border-color: #223055; }
-        body[data-theme="fancy"] .site-search-input-wrap { border-color: #ffd6e6; }
-
         .site-search-input-icon {
             color: var(--text-muted, #888);
             font-size: 0.95rem;
@@ -3814,8 +3623,6 @@
             font-family: inherit;
         }
         .site-search-input::placeholder { color: var(--text-muted, #999); }
-        body[data-theme="industrial"] .site-search-input { font-family: 'Courier New', monospace; }
-
         .site-search-close {
             background: transparent;
             border: 0;
@@ -3856,22 +3663,10 @@
             font-family: inherit;
             transition: background 0.1s;
         }
-        body[data-theme="industrial"] .site-search-result { border-color: rgba(34,48,85,0.4); }
-        body[data-theme="fancy"] .site-search-result { border-color: #ffd6e6; }
-
         .site-search-result:hover,
         .site-search-result.is-active {
             background: rgba(91, 108, 255, 0.08);
         }
-        body[data-theme="industrial"] .site-search-result:hover,
-        body[data-theme="industrial"] .site-search-result.is-active {
-            background: rgba(0, 238, 255, 0.1);
-        }
-        body[data-theme="fancy"] .site-search-result:hover,
-        body[data-theme="fancy"] .site-search-result.is-active {
-            background: rgba(236, 72, 153, 0.08);
-        }
-
         .site-search-result-section {
             grid-area: sec;
             align-self: center;
@@ -3885,17 +3680,6 @@
             font-weight: 600;
             white-space: nowrap;
         }
-        body[data-theme="industrial"] .site-search-result-section {
-            background: #0ef;
-            color: #001;
-            border-radius: 2px;
-            font-family: 'Orbitron', sans-serif;
-        }
-        body[data-theme="fancy"] .site-search-result-section {
-            background: linear-gradient(135deg, #ff6bb5, #ff8c42);
-            color: #fff;
-        }
-
         .site-search-result-title {
             grid-area: title;
             font-weight: 600;
@@ -3911,19 +3695,12 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        body[data-theme="industrial"] .site-search-result-snippet { color: #8e9ec3; }
-
         .site-search-result mark {
             background: rgba(255, 212, 62, 0.4);
             color: inherit;
             border-radius: 2px;
             padding: 0 1px;
         }
-        body[data-theme="industrial"] .site-search-result mark {
-            background: rgba(0, 238, 255, 0.3);
-            color: #0ef;
-        }
-
         .site-search-hint {
             display: flex;
             gap: 1.2rem;
@@ -3933,9 +3710,6 @@
             font-size: 0.72rem;
             color: var(--text-muted, #888);
         }
-        body[data-theme="industrial"] .site-search-hint { border-color: #223055; }
-        body[data-theme="fancy"] .site-search-hint { border-color: #ffd6e6; }
-
         .site-search-hint kbd {
             display: inline-block;
             padding: 0.05rem 0.35rem;
@@ -3946,8 +3720,6 @@
             margin-right: 0.2rem;
             color: inherit;
         }
-        body[data-theme="industrial"] .site-search-hint kbd { background: rgba(255,255,255,0.08); }
-
         /* Flash highlight when scrolled to search target */
         @keyframes site-search-flash {
             0%   { box-shadow: 0 0 0 0   rgba(255, 212, 62, 0.65); }
@@ -3968,7 +3740,6 @@
             .site-search-modal { padding-top: 4vh; }
             .site-search-panel { max-height: 82vh; }
         }
-
 
 /* ============================================================
    B1-B4 additions (2026-04-23 V2): hero signature, about bullets,
@@ -4053,38 +3824,19 @@
    Doubled class selectors keep specificity above `.award-icon` (grid display)
    defined later in the file. */
 .award-icon.award-icon--theme-dark { display: none; }
-[data-theme="industrial"] .award-icon.award-icon--theme-light { display: none; }
-[data-theme="industrial"] .award-icon.award-icon--theme-dark { display: block; }
-
-/* SNF + UniBe square crops keep their native light background — wrap in a subtle
-   white chip on industrial (dark) theme so the cropped motif stays legible. */
-/* !important needed because `.award-icon--brand` sets background:transparent!important. */
-[data-theme="industrial"] .award-icon--snsf,
-[data-theme="industrial"] .award-icon--unibern {
-    background: #fff !important;
-    padding: 4px;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
-
-/* ========== Chinese (zh) font stack — Noto Sans/Serif SC as primary webfont ========== */
+/* ========== Chinese (zh) font stack (D6.3) — LXGW WenKai 霞鹜文楷 ==========
+   霞鹜文楷 is a contemporary Chinese hand-set typeface with strong POV (vs. the
+   Noto Sans SC reflex). Loaded via jsdelivr CDN (see <head>). Spectral is kept
+   as Latin fallback for mixed-script runs; PingFang SC / Microsoft YaHei stay
+   as system fallbacks for browsers that fail to load the webfont. */
 html[lang="zh"] {
-    --font-main: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-main: 'LXGW WenKai', 'Spectral', 'Source Han Serif SC', 'Songti SC', 'PingFang SC', 'Microsoft YaHei', serif;
+    --font-display: 'LXGW WenKai', 'Spectral', 'Source Han Serif SC', 'Songti SC', 'PingFang SC', 'Microsoft YaHei', serif;
 }
 html[lang="zh"][data-theme="academic"] {
-    --font-main: 'Inter', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
-    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-main: 'LXGW WenKai', 'Spectral', 'Source Han Serif SC', 'Songti SC', 'PingFang SC', 'Microsoft YaHei', serif;
+    --font-display: 'LXGW WenKai', 'Spectral', 'Source Han Serif SC', 'Songti SC', 'PingFang SC', 'Microsoft YaHei', serif;
 }
-html[lang="zh"][data-theme="industrial"] {
-    --font-main: 'Orbitron', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-    --font-display: 'Orbitron', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-}
-html[lang="zh"][data-theme="fancy"] {
-    --font-main: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
-    --font-display: 'Playfair Display', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
-}
-
 /* CJK text rendering: drop aggressive palt/halt (which squished punctuation together),
    keep text-spacing-trim for leading-edge punctuation, add tiny letter-spacing to breathe. */
 html[lang="zh"] body,
@@ -4232,11 +3984,7 @@ html[lang="zh"] h3 {
     font-size: 1.25rem;
     filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.55)) drop-shadow(0 0 2px rgba(251, 191, 36, 0.8));
     animation: tickerBullhornPulse 2.4s ease-in-out infinite;
-}
-[data-theme="industrial"] .hero-ticker-label { color: #fde047; filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.7)); }
-[data-theme="academic"]  .hero-ticker-label { color: #d97706; filter: drop-shadow(0 0 6px rgba(217, 119, 6, 0.45)); }
-[data-theme="fancy"]     .hero-ticker-label { color: #f472b6; filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.65)); }
-.hero-ticker-label i { font-size: 1.25rem; }
+}[data-theme="academic"]  .hero-ticker-label { color: #d97706; filter: drop-shadow(0 0 6px rgba(217, 119, 6, 0.45)); }.hero-ticker-label i { font-size: 1.25rem; }
 @keyframes tickerBullhornPulse {
     0%, 100% { transform: rotate(-8deg) scale(1); }
     50%      { transform: rotate(8deg) scale(1.08); }

@@ -246,7 +246,7 @@
         function paintWelcomeStamp() {
             const stampEl = document.getElementById('welcomeStamp');
             if (!stampEl) return;
-            const theme = document.body.getAttribute('data-theme') || 'ai';
+            const theme = document.body.getAttribute('data-theme') || 'academic';
             stampEl.innerHTML = WP_STAMPS[theme] || WP_STAMPS.ai;
         }
 
@@ -337,7 +337,7 @@
                 message: document.getElementById('visitorMessage')?.value.trim() || '',
                 signature: document.getElementById('visitorSignature')?.value.trim() || '',
                 contact: document.getElementById('visitorContact')?.value.trim() || '',
-                theme: document.body.getAttribute('data-theme') || 'ai',
+                theme: document.body.getAttribute('data-theme') || 'academic',
                 locale: (typeof currentLang !== 'undefined' ? currentLang : document.documentElement.lang) || 'en',
                 userAgent: navigator.userAgent,
                 referrer: document.referrer || '',
@@ -453,21 +453,21 @@
         // ========================================
         // THEME & LANGUAGE SWITCHERS
         // ========================================
-        const THEME_NAME_FALLBACK = { 'ai': 'AI', 'academic': 'Academic', 'industrial': 'Industrial', 'fancy': 'Wonderland' };
+        // Theme system temporarily collapsed to single 'academic' fallback while
+        // the new magic-graph theme is being designed (see docs/vibe/mindstorm-01).
+        // Old ai/industrial/fancy entries kept dormant for parity until D7.
+        const THEME_NAME_FALLBACK = { 'academic': 'Academic' };
         function getThemeName(theme) {
             const t = translationsCache[currentLang] || {};
-            return t['themes.' + theme] || THEME_NAME_FALLBACK[theme] || theme;
+            return t['themes.' + theme] || THEME_NAME_FALLBACK[theme] || 'Academic';
         }
 
-        // Tab identity ("林" monogram) — background + ink colors track the active theme.
+        // Tab identity ("林" monogram) — single academic palette for now.
         const FAVICON_THEMES = {
-            ai:         { bg: '#1e3a8a', fg: '#ffffff' },
-            academic:   { bg: '#1e40af', fg: '#ffffff' },
-            industrial: { bg: '#0f172a', fg: '#f97316' },
-            fancy:      { bg: '#be185d', fg: '#ffffff' }
+            academic:   { bg: '#1e40af', fg: '#ffffff' }
         };
         function updateFavicon(theme) {
-            const c = FAVICON_THEMES[theme] || FAVICON_THEMES.ai;
+            const c = FAVICON_THEMES[theme] || FAVICON_THEMES.academic;
             const svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>"
                 + "<rect fill='" + c.bg + "' width='32' height='32' rx='7'/>"
                 + "<text x='50%' y='74%' text-anchor='middle' fill='" + c.fg + "' "
@@ -478,24 +478,18 @@
         }
 
         function setTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            document.getElementById('currentTheme').textContent = getThemeName(theme);
+            // Only academic is wired right now; force-fallback any other input.
+            const safe = (theme === 'academic') ? 'academic' : 'academic';
+            document.body.setAttribute('data-theme', safe);
+            const ctEl = document.getElementById('currentTheme');
+            if (ctEl) ctEl.textContent = getThemeName(safe);
             document.querySelectorAll('#themeDropdown .dropdown-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
-            closeAllDropdowns();
-            localStorage.setItem('theme', theme);
-            
-            updateFavicon(theme);
-
-            // Update chatbot icon based on theme
+            const tgt = (typeof event !== 'undefined' && event && event.target) ? event.target : null;
+            if (tgt && tgt.classList) tgt.classList.add('active');
+            closeAllDropdowns && closeAllDropdowns();
+            localStorage.setItem('theme', safe);
+            updateFavicon(safe);
             updateChatbotIcon();
-            
-            // Initialize Wonderland effects if fancy theme
-            if (theme === 'fancy') {
-                initWonderlandEffects();
-            } else {
-                stopWonderlandEffects();
-            }
         }
         
         // Wonderland Effects Manager
@@ -898,14 +892,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Load saved theme and initialize effects
-            const savedTheme = localStorage.getItem('theme') || 'academic';
+            // Single 'academic' theme until the new magic-graph theme ships (D7).
+            // Any legacy localStorage value (ai / industrial / fancy) is normalized.
+            const savedTheme = 'academic';
             document.body.setAttribute('data-theme', savedTheme);
-            document.getElementById('currentTheme').textContent = getThemeName(savedTheme);
+            const ctEl = document.getElementById('currentTheme');
+            if (ctEl) ctEl.textContent = getThemeName(savedTheme);
             updateFavicon(savedTheme);
-            if (savedTheme === 'fancy') {
-                initWonderlandEffects();
-            }
+            localStorage.setItem('theme', savedTheme);
             
             // Load saved language and apply. Priority: URL ?lang= param > localStorage > system detect.
             // The ?lang= param gives each locale a distinct crawlable entry point — matches the
