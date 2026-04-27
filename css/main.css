@@ -4163,3 +4163,9 @@ html[lang="zh"] h3 {
     .hero-ticker-item { font-size: 0.78rem; }
     .hero-ticker-content { animation-duration: 40s; gap: 1rem; }
 }
+
+/* ============== TEMP: hide grimoire cross-link (per Linlin 2026-04-27) ==============
+   The "✨ 魔法师之书 · Try the Grimoire" navbar link points to index_grimoire.html.
+   Hidden across all pages (index_en, index_parchment) until further notice.
+   Restore: delete this single rule. */
+.nav-grimoire-link { display: none !important; }

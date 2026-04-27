@@ -14,8 +14,8 @@
     --bg-subtle: transparent;
     --gradient-hero: transparent;
     --border-light: transparent;
-    --shadow-md: none;
-    --shadow-lg: none;
+    /* NOTE: --shadow-md / --shadow-lg INTENTIONALLY NOT overridden so that
+       hover reveals shadow naturally (cards are flat by default, lift on hover) */
     /* Warm-tinted text for parchment legibility (was cool slate) */
     --text-primary: oklch(0.20 0.04 30);
     --text-secondary: oklch(0.34 0.05 30);
@@ -163,3 +163,33 @@ footer, .site-footer {
 img.profile-photo, .project-image img, .pub-thumbnail img {
     filter: sepia(0.06) brightness(1.0);
 }
+
+/* ---------- 19. Hover micro-feedback — flat by default, but lift + tint on hover
+   (Linlin: don't kill the highlight) ---------- */
+.stat-card, .timeline-card, .project-card, .pub-card, .service-card,
+.blog-card, .visitor-card, .personal-card, .skill-category,
+.contact-item, .news-row, .award-card, .talk-card, .thesis-highlight {
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+.stat-card:hover, .timeline-card:hover, .project-card:hover, a.project-card:hover,
+div.project-card:hover, .pub-card:hover, .service-card:hover,
+.blog-card:hover, .visitor-card:hover, .personal-card:hover,
+.thesis-highlight:hover, .skill-category:hover {
+    background: oklch(0.96 0.020 78 / 0.55) !important;
+    box-shadow: 0 8px 22px oklch(0.20 0.06 30 / 0.18) !important;
+    /* transform: translateY(-4px) is already set by main.css for these cards */
+}
+.contact-item:hover, .news-row:hover {
+    background: oklch(0.96 0.020 78 / 0.4) !important;
+}
+.award-card:hover, .talk-card:hover {
+    background: oklch(0.96 0.020 78 / 0.55) !important;
+    box-shadow: 0 6px 16px oklch(0.20 0.06 30 / 0.15) !important;
+}
+/* Skill tag hover restored — slightly warmer + darker outline */
+.skill-tag:hover {
+    background: oklch(0.62 0.13 70 / 0.30) !important;
+    border-color: oklch(0.45 0.12 50 / 0.55) !important;
+    transform: translateY(-1px);
+}
+/* outline-item / word / pub-link / project-link hover — keep main.css color shifts (untouched) */

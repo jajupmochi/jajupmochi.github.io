@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parchment Picker — choose a background for index_parchment.html</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+    --ink: oklch(0.20 0.04 30);
+    --ink-soft: oklch(0.40 0.05 30);
+    --gold: oklch(0.62 0.13 70);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif;
+    color: var(--ink);
+    background: oklch(0.93 0.030 78);
+    min-height: 100%;
+}
+header {
+    text-align: center;
+    padding: 28px 24px 12px;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.3);
+}
+header h1 {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 600;
+}
+header p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin: 0 auto;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+.swatch {
+    border: 1px solid oklch(0.45 0.10 50 / 0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: white;
+}
+.swatch:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px oklch(0.20 0.06 30 / 0.25);
+}
+.swatch.active {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+.preview {
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    color: oklch(0.18 0.04 30);
+    text-shadow: 0 1px 2px oklch(0.92 0.04 75 / 0.6);
+}
+.preview h2 {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 700;
+    font-family: 'Caveat', cursive, serif;
+}
+.preview .role {
+    font-size: 15px;
+    color: oklch(0.30 0.05 30);
+}
+.preview .badge {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 12px;
+    background: oklch(0.62 0.13 70 / 0.3);
+    border: 1px solid oklch(0.45 0.12 50 / 0.5);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+}
+.meta {
+    padding: 14px 18px;
+    border-top: 1px solid oklch(0.88 0.014 75);
+}
+.meta .name {
+    font-weight: 600;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--ink);
+}
+.meta .desc {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+}
+.meta .src {
+    margin-top: 6px;
+    font-size: 11px;
+    color: oklch(0.55 0.03 30);
+}
+.meta .src a {
+    color: var(--gold);
+    text-decoration: none;
+}
+.meta .src a:hover { text-decoration: underline; }
+.controls {
+    text-align: center;
+    padding: 16px 24px 36px;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+.controls code {
+    background: oklch(0.88 0.020 75);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.try-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 16px;
+    background: oklch(0.45 0.16 27);
+    color: oklch(0.96 0.04 60);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+}
+.try-btn:hover { background: oklch(0.40 0.16 27); }
+
+#liveDemo {
+    margin: 24px;
+    padding: 24px;
+    border: 2px dashed oklch(0.45 0.10 50 / 0.4);
+    border-radius: 6px;
+    text-align: center;
+}
+#liveDemo .demoArea {
+    margin-top: 16px;
+    padding: 60px 30px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    transition: background-image 0.4s ease;
+}
+#liveDemo h3 { margin: 0 0 4px; font-size: 22px; font-style: italic; }
+#liveDemo .demoText { color: oklch(0.20 0.04 30); }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Parchment Picker · Choose a Background</h1>
+    <p>6 open-source / public-domain candidates. Click any swatch to preview it on the live demo area below. Each preview shows real text against the texture so you can judge legibility.</p>
+</header>
+
+<div class="grid" id="grid">
+    <div class="swatch" data-src="res/parchment-options/wm-01-parchment-classic.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/wm-01-parchment-classic.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">wm-01-parchment-classic.jpg</div>
+            <div class="desc">Classic warm aged parchment with subtle creases. Mid-tone, very even. <strong>706K · 2400×1805</strong></div>
+            <div class="src">Source: <a href="https://commons.wikimedia.org/wiki/File:Parchment.00.jpg" target="_blank">Wikimedia Commons (PD)</a></div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/wm-02-pergament-aged.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/wm-02-pergament-aged.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">wm-02-pergament-aged.jpg</div>
+            <div class="desc">Heavily aged pergament — visible fibers, brownish patches. Strongest "old" feel. <strong>767K · 2400×1855</strong></div>
+            <div class="src">Source: <a href="https://commons.wikimedia.org/wiki/File:Pergament.0.jpg" target="_blank">Wikimedia Commons (PD)</a></div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/wm-03-pergament-edges.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/wm-03-pergament-edges.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">wm-03-pergament-edges.jpg</div>
+            <div class="desc">Pergament with darker brown edges/burns. More dramatic, vignette-like. <strong>163K · 1024×1024</strong></div>
+            <div class="src">Source: <a href="https://commons.wikimedia.org/wiki/File:Pergament.1.jpg" target="_blank">Wikimedia Commons (PD)</a></div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/wm-04-pergament-cracked.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/wm-04-pergament-cracked.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">wm-04-pergament-cracked.jpg</div>
+            <div class="desc">Pergament with cracking / hairline texture. Thin file size, good for tiling. <strong>73K · 1024×1024</strong></div>
+            <div class="src">Source: <a href="https://commons.wikimedia.org/wiki/File:Pergament.2.jpg" target="_blank">Wikimedia Commons (PD)</a></div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/wm-05-vintage-paper.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/wm-05-vintage-paper.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">wm-05-vintage-paper.jpg</div>
+            <div class="desc">Vintage paper — cleaner, lighter cream tone, less "ancient" feel. Closer to a journal page. <strong>706K · 1885×2400</strong></div>
+            <div class="src">Source: <a href="https://commons.wikimedia.org/wiki/File:Vintage_Paper_Texture_(9789792113).jpg" target="_blank">Wikimedia Commons (PD)</a></div>
+        </div>
+    </div>
+
+    <div class="swatch" data-src="res/parchment-options/06-procedural-light-warm.jpg">
+        <div class="preview" style="background-image:url('res/parchment-options/06-procedural-light-warm.jpg')">
+            <h2>Linlin Jia, Ph.D.</h2>
+            <span class="role">Machine Learning Research Scientist · 图人工智能</span>
+            <span class="badge">Open to ML RS · CH·EU · 2026</span>
+        </div>
+        <div class="meta">
+            <div class="name">06-procedural-light-warm.jpg</div>
+            <div class="desc">Procedurally generated (ImageMagick) — lightest tone, softest noise, most uniform. Designed to be the safest "blank parchment" option. <strong>523K · 2400×1800</strong></div>
+            <div class="src">Source: <a href="res/parchment-options/LICENSE.md" target="_blank">Generated by us (CC0)</a></div>
+        </div>
+    </div>
+</div>
+
+<div id="liveDemo">
+    <h3>Live preview</h3>
+    <p style="margin:0;color:var(--ink-soft);font-size:13px">Click any swatch above to test it here. This area shows real card-like content sitting <em>directly on</em> the parchment with no border / no background — same treatment as <code>index_parchment.html</code>.</p>
+    <div class="demoArea" id="demoArea" style="background-image:url('res/parchment-options/wm-01-parchment-classic.jpg')">
+        <div class="demoText">
+            <h2 style="margin:0 0 4px;font-size:34px;font-style:italic;font-family:'Caveat',cursive">Linlin Jia, Ph.D.</h2>
+            <p style="margin:0 0 10px;font-size:16px;color:oklch(0.30 0.05 30)">Machine Learning Research Scientist · 图人工智能 · Postdoc @ University of Bern</p>
+            <p style="margin:0;font-size:14px;line-height:1.6">
+                Recent: <strong>Spatio-Temporal Transformers</strong> for Swiss river forecasting (ICPR 2026, accepted) · <strong>graphkit-learn</strong> 130+ citations · 3× SNSF, Innosuisse, ANR PIs.
+            </p>
+            <p style="margin:8px 0 0;font-size:13px;color:oklch(0.40 0.05 30)">↑ Sample card content. Verify legibility, contrast, and texture density.</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <p>Pick your favorite, then tell me the filename (e.g. <code>wm-05-vintage-paper.jpg</code>) and I'll wire it into <code>css/parchment-overrides.css</code> as the global background.</p>
+</div>
+
+<script>
+const grid = document.getElementById('grid');
+const demoArea = document.getElementById('demoArea');
+grid.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+        const src = sw.dataset.src;
+        demoArea.style.backgroundImage = `url('${src}')`;
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        demoArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+</body>
+</html>
