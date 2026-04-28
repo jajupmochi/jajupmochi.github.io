@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero — Notebook Concept Demo (P4-1)</title>
+
+<!-- Reuse parchment background + drop-cap + ink-bleed style from main parchment edition -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Reenie+Beanie&family=Indie+Flower&family=Spectral:ital,wght@0,400;0,700;1,400&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --ink-deep: oklch(0.10 0.04 30);
+    --ink-mid:  oklch(0.30 0.08 30);
+    --maroon-bright: oklch(0.55 0.20 27);
+    --gold-bright:   oklch(0.78 0.18 80);
+    --gold-deep:     oklch(0.55 0.18 65);
+    --parchment-base: oklch(0.93 0.03 78);
+}
+
+* { box-sizing: border-box; }
+
+html {
+    background:
+        linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
+        linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
+        linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+        url("res/parchment-options/wm-02-pergament-aged.jpg") center / cover no-repeat fixed,
+        var(--parchment-base);
+    background-size: 40px 40px, 40px 40px, auto, cover, auto;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    min-height: 100vh;
+}
+body {
+    margin: 0;
+    font-family: 'Indie Flower', 'Spectral', Georgia, serif;
+    color: oklch(0.18 0.04 30);
+    font-weight: 600;
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+         0.5px  0.5px 1px rgba(40, 20, 0, 0.30);
+    line-height: 1.65;
+    font-size: 17.5px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+}
+
+/* ============================================================================
+ * The notebook = a 2-page spread. Wide aspect ratio, central spine shadow,
+ * left-page = identity, right-page = research direction (sketched).
+ * ========================================================================= */
+.notebook {
+    width: min(1400px, 100%);
+    aspect-ratio: 16 / 9.5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    /* Outer shadow — book sitting on desk */
+    box-shadow:
+        0 18px 60px rgba(60, 30, 5, 0.30),
+        0 4px 12px rgba(60, 30, 5, 0.15);
+    border-radius: 6px 6px 8px 8px / 8px 8px 4px 4px;
+    /* Subtle vignette on edges */
+    background:
+        radial-gradient(ellipse 95% 95% at 50% 50%, transparent 60%, rgba(80, 50, 10, 0.08) 100%);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Central spine — dark groove down the middle */
+.notebook::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 28px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg,
+        rgba(80, 50, 10, 0.00) 0%,
+        rgba(80, 50, 10, 0.18) 28%,
+        rgba(60, 30, 5, 0.45) 50%,
+        rgba(80, 50, 10, 0.18) 72%,
+        rgba(80, 50, 10, 0.00) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+/* Page curl shadow on each side */
+.notebook::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, transparent 0%, transparent 47%, rgba(120, 80, 20, 0.12) 50%, transparent 53%, transparent 100%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.page {
+    padding: 4.5em 4.5em 3.5em 4.5em;
+    position: relative;
+    overflow: hidden;
+}
+.page-left  { padding-right: 5em; }
+.page-right { padding-left: 5em; }
+
+/* ============================================================================
+ * LEFT PAGE: identity — handwritten name + photo + role + signature
+ * ========================================================================= */
+.identity-name {
+    font-family: 'Caveat', 'Reenie Beanie', cursive;
+    font-weight: 700;
+    font-size: 4.2em;
+    line-height: 1;
+    color: var(--maroon-bright);
+    letter-spacing: 0.005em;
+    margin: 0 0 0.15em 0;
+    text-shadow:
+        0 -1px 0   rgba(255, 225, 150, 0.85),
+        0  1px 0   rgba( 50,  15,   3, 0.85),
+        2px 3px 3px rgba( 80,  25,  10, 0.55);
+    transform: rotate(-1.4deg);
+    transform-origin: left center;
+}
+.identity-credential {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5em;
+    color: var(--ink-mid);
+    margin: 0 0 1.4em 0;
+    transform: rotate(-0.8deg);
+    transform-origin: left center;
+}
+
+.identity-photo-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0.6em 0 1.4em 0;
+    transform: rotate(-2.2deg);
+    transform-origin: center center;
+}
+.identity-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    /* Soft mask — fade into parchment */
+    mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%);
+    -webkit-mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%);
+    filter: contrast(1.04) saturate(1.05);
+    opacity: 0.88;
+}
+/* Hand-drawn arrow + label pointing at photo */
+.photo-label {
+    position: absolute;
+    right: -150px;
+    top: 70px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3em;
+    color: var(--maroon-bright);
+    transform: rotate(8deg);
+    width: 140px;
+}
+.photo-label::before {
+    content: "";
+    position: absolute;
+    left: -100px;
+    top: 14px;
+    width: 90px;
+    height: 16px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 16'><path d='M5,8 Q40,4 80,9' stroke='%23a02020' stroke-width='1.5' fill='none' stroke-linecap='round'/><polyline points='2,7 8,8 5,12' stroke='%23a02020' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center;
+}
+
+.identity-role {
+    font-size: 1.1em;
+    margin: 0 0 0.4em 0;
+    color: var(--ink-deep);
+}
+.identity-keywords {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15em;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin: 0 0 1.6em 0;
+}
+.identity-keywords span { color: var(--maroon-bright); font-weight: 700; }
+
+.identity-signature {
+    position: absolute;
+    bottom: 2.2em;
+    left: 4.5em;
+    font-family: 'Caveat', cursive;
+    font-style: italic;
+    color: var(--maroon-bright);
+    font-size: 1.4em;
+    transform: rotate(-3deg);
+    border-bottom: 1px dashed rgba(140, 30, 30, 0.4);
+    padding-bottom: 0.2em;
+}
+.identity-date {
+    position: absolute;
+    bottom: 2.2em;
+    right: 4.5em;
+    font-family: 'Caveat', cursive;
+    color: var(--ink-mid);
+    font-size: 1.05em;
+}
+
+/* ============================================================================
+ * RIGHT PAGE: research direction — sketch-style heading + a small bubble
+ * map + 3 key questions handwritten.
+ * ========================================================================= */
+.research-heading {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 2.5em;
+    color: var(--maroon-bright);
+    margin: 0 0 0.6em 0;
+    transform: rotate(-0.6deg);
+    text-shadow:
+        0 -1px 0   rgba(255, 225, 150, 0.85),
+        0  1px 0   rgba( 50,  15,   3, 0.85),
+        2px 3px 3px rgba( 80,  25,  10, 0.55);
+}
+.research-heading::before {
+    content: "★";
+    color: var(--gold-bright);
+    margin-right: 0.3em;
+    -webkit-text-stroke: 0.5px var(--maroon-bright);
+}
+
+/* Bubble map — central concept + 4 satellites with hand-drawn lines */
+.bubble-map {
+    width: 100%;
+    height: 280px;
+    position: relative;
+    margin: 1em 0 1.4em 0;
+}
+
+.bubble {
+    position: absolute;
+    color: var(--maroon-bright);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    text-align: center;
+    background: transparent;
+    border-radius: 50% / 70%;
+    box-shadow:
+        inset 0 0 0 1.5px rgba(140, 30, 30, 0.55),
+        2px 3px 5px rgba(80, 20, 5, 0.15);
+    padding: 0.45em 1em;
+    line-height: 1.1;
+}
+.bubble.center {
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-1deg);
+    font-size: 1.5em;
+    box-shadow:
+        inset 0 0 0 2px rgba(140, 30, 30, 0.75),
+        3px 4px 6px rgba(80, 20, 5, 0.20);
+}
+.bubble.b1 { top: 6%; left: 8%; transform: rotate(-3deg); font-size: 1.1em; }
+.bubble.b2 { top: 12%; right: 4%; transform: rotate(2deg); font-size: 1.1em; }
+.bubble.b3 { bottom: 8%; left: 6%; transform: rotate(1.5deg); font-size: 1.05em; }
+.bubble.b4 { bottom: 4%; right: 8%; transform: rotate(-2deg); font-size: 1.05em; }
+
+/* Connecting hand-drawn lines via SVG */
+.bubble-map > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Three key questions handwritten below */
+.questions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Caveat', cursive;
+    font-size: 1.25em;
+    line-height: 1.55;
+    color: var(--ink-deep);
+}
+.questions li {
+    margin-bottom: 0.5em;
+    padding-left: 1.5em;
+    position: relative;
+}
+.questions li::before {
+    content: "?";
+    position: absolute;
+    left: 0;
+    top: -0.1em;
+    font-size: 1.3em;
+    color: var(--maroon-bright);
+    font-weight: 700;
+}
+
+/* Hand-drawn arrow at top-right of right page (pointing back to left page) */
+.cross-arrow {
+    position: absolute;
+    top: 1em;
+    left: -2.5em;
+    width: 60px;
+    transform: rotate(-15deg);
+    pointer-events: none;
+}
+
+/* ============================================================================
+ * Header (back to main) + footer note
+ * ========================================================================= */
+.demo-header {
+    position: fixed;
+    top: 1em;
+    left: 1.5em;
+    z-index: 100;
+    font-family: 'Caveat', cursive;
+}
+.demo-header a {
+    color: var(--maroon-bright);
+    text-decoration: underline wavy rgba(140, 30, 30, 0.45);
+    text-underline-offset: 4px;
+    font-weight: 700;
+    font-size: 1.2em;
+}
+.demo-footer {
+    position: fixed;
+    bottom: 1em;
+    right: 1.5em;
+    font-family: 'Caveat', cursive;
+    color: var(--ink-mid);
+    font-size: 1em;
+    z-index: 100;
+}
+
+@media (max-width: 900px) {
+    .notebook { aspect-ratio: auto; grid-template-columns: 1fr; }
+    .notebook::before { display: none; }
+    .page-left, .page-right { padding: 3em 2em; }
+    .photo-label { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="demo-header">
+    <a href="index_parchment.html">← back to parchment edition</a>
+</div>
+
+<div class="notebook">
+
+    <!-- LEFT PAGE: identity ============================================== -->
+    <div class="page page-left">
+        <h1 class="identity-name">Linlin Jia</h1>
+        <p class="identity-credential">— Ph.D. in Machine Learning</p>
+
+        <div class="identity-photo-wrap">
+            <img class="identity-photo" src="img/profile.jpeg" alt="Linlin Jia" onerror="this.style.opacity=0.3">
+            <div class="photo-label">that's me<br>(circa 2025)</div>
+        </div>
+
+        <p class="identity-role">
+            Research Scientist · Postdoc<br>
+            <em>University of Bern, Switzerland</em>
+        </p>
+
+        <p class="identity-keywords">
+            interests: <span>graph ML</span>, <span>spatio-temporal</span><br>
+            <span>graph AI for science</span>, <span>LLM agents</span>
+        </p>
+
+        <div class="identity-signature">L. Jia</div>
+        <div class="identity-date">opened — Apr 2026</div>
+    </div>
+
+    <!-- RIGHT PAGE: research direction ==================================== -->
+    <div class="page page-right">
+        <svg class="cross-arrow" viewBox="0 0 60 30">
+            <path d="M55,15 Q30,10 8,18" stroke="#a02020" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <polyline points="3,16 9,18 7,22" stroke="#a02020" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <h2 class="research-heading">today's research</h2>
+
+        <div class="bubble-map">
+            <svg viewBox="0 0 600 280" preserveAspectRatio="none">
+                <!-- Hand-drawn connecting lines, center → 4 satellites -->
+                <path d="M300,140 Q230,120 100,55"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M300,140 Q400,100 510,60"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M300,140 Q220,200 90,250"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M300,140 Q400,210 520,260" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+            </svg>
+            <div class="bubble center">graph<br>ML</div>
+            <div class="bubble b1">spatio-<br>temporal</div>
+            <div class="bubble b2">drug<br>discovery</div>
+            <div class="bubble b3">LLM<br>agents</div>
+            <div class="bubble b4">computational<br>chemistry</div>
+        </div>
+
+        <ul class="questions">
+            <li>can graphs learn faster than transformers?</li>
+            <li>what does a kernel-GNN bridge teach us?</li>
+            <li>can LLM agents do real science?</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="demo-footer">
+    P4-1 demo · notebook hero concept
+</div>
+
+</body>
+</html>

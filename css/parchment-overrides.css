@@ -532,14 +532,16 @@ input, select, textarea, button.icon-btn {
     --ink-near-black: oklch(0.06 0.03 30);
 }
 
-/* V6.1: bg = lightened parchment + faint grid. Linlin: 格子也淡一点.
+/* V6.1 → O75: bg = lightened parchment + faint grid. Linlin: 格子也淡一点.
+   White overlay set to 75% (picker option O75 — max opacity in white-xuan-picker,
+   "几乎像白纸" — wm-02 parchment shows through faintly).
    iOS Safari fix: 'background-attachment: fixed' breaks on iOS — image gets
    pinned to viewport but blurred/scaled. Use 'scroll' on touch devices. */
 html {
     background:
         linear-gradient(0deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
         linear-gradient(90deg, transparent 39px, rgba(110, 60, 20, 0.05) 39px, rgba(110, 60, 20, 0.05) 40px, transparent 40px),
-        linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.60)),
+        linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
         url("../res/parchment-options/wm-02-pergament-aged.jpg") center / cover no-repeat fixed,
         oklch(0.93 0.03 78) !important;
     background-size: 40px 40px, 40px 40px, auto, cover, auto !important;
@@ -663,6 +665,90 @@ a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-second
 }
 
 /* ============================================================================
+ * §DROP-CAP. Illuminated initials on section h2 titles ("About Me",
+ *   "Selected Publications", etc.) — engraved cinnabar-red letter with hot-
+ *   stamped gold edge (朱砂红镌刻 + 烫金), carved into parchment.
+ *   - Caveat / Reenie Beanie cursive script (EN); Ma Shan Zheng (ZH)
+ *   - Solid maroon-bright fill (manuscript red), NOT a gold gradient
+ *   - Gold edge via -webkit-text-stroke (烫金边)
+ *   - Layered text-shadow: inner gold halo + top highlight + bottom inset +
+ *     drop shadow → carved + raised + gilded reading
+ *   - FA icon BEFORE the cap is hidden so the cap leads each title
+ * ========================================================================= */
+
+/* Hide the FontAwesome icon that precedes the section h2 text — the
+ * illuminated initial is the new visual lead. */
+.section-title > i.fas,
+.section-title > i[class*="fa-"],
+.beyond-research h2 > i[class*="fa-"] {
+    display: none !important;
+}
+
+.section-title > span[data-i18n]::first-letter,
+.beyond-research h2 > span[data-i18n]::first-letter {
+    font-family: 'Caveat', 'Reenie Beanie', 'Indie Flower', cursive !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 2.7em !important;
+    line-height: 1 !important;
+    /* Bottom-aligned — baselines match, large letter rises above the rest */
+    vertical-align: baseline !important;
+    /* Tighter gap so the cap reads as part of the word, not standalone */
+    margin-right: 0.08em !important;
+    /* Cinnabar-red base (manuscript ink) — NOT a gold gradient */
+    color: var(--maroon-bright) !important;
+    /* Layered shadows behind the letter (rendered first-on-top):
+     *   1–2   — carved depth (top highlight + bottom inset)
+     *   3–10  — 8-direction INNER 1px gold rim (tight against red body)
+     *   11–18 — 8-direction OUTER 2px gold rim (thicker 烫金 band, deeper tone)
+     *   19–20 — gold halo bleed (illumination glow)
+     *   21–22 — drop shadows (letter raised above parchment) */
+    text-shadow:
+        /* Carved depth */
+        0 -1px 0   rgba(255, 225, 150, 0.85),
+        0  1px 0   rgba( 50,  15,   3, 0.85),
+        /* Inner gold rim — 8×1px (tight, bright) */
+        -1px -1px 0 oklch(0.82 0.17 82),
+         0   -1px 0 oklch(0.82 0.17 82),
+         1px -1px 0 oklch(0.82 0.17 82),
+        -1px  0   0 oklch(0.82 0.17 82),
+         1px  0   0 oklch(0.82 0.17 82),
+        -1px  1px 0 oklch(0.78 0.18 76),
+         0    1px 0 oklch(0.78 0.18 76),
+         1px  1px 0 oklch(0.78 0.18 76),
+        /* Outer gold rim — 8×2px (thicker hot-stamp band, slightly deeper tone) */
+        -2px -2px 0 oklch(0.72 0.19 78),
+         0   -2px 0 oklch(0.72 0.19 78),
+         2px -2px 0 oklch(0.72 0.19 78),
+        -2px  0   0 oklch(0.72 0.19 78),
+         2px  0   0 oklch(0.72 0.19 78),
+        -2px  2px 0 oklch(0.66 0.20 72),
+         0    2px 0 oklch(0.66 0.20 72),
+         2px  2px 0 oklch(0.66 0.20 72),
+        /* Gold halo bleed */
+        0 0 5px   oklch(0.75 0.20 78),
+        0 0 14px  oklch(0.68 0.20 72 / 0.60),
+        /* Drop shadow / engraved depth */
+        2px 3px 3px rgba( 80,  25,  10, 0.60),
+        3px 6px 8px rgba( 50,  15,   5, 0.40)
+    !important;
+    letter-spacing: 0 !important;
+    /* No background gradient / clip — base color is solid red */
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: var(--maroon-bright) !important;
+}
+
+/* ZH locale: brush calligraphy for the first Chinese character, same red+gold treatment */
+html[lang="zh"] .section-title > span[data-i18n]::first-letter,
+html[lang="zh"] .beyond-research h2 > span[data-i18n]::first-letter {
+    font-family: 'Ma Shan Zheng', 'Zhi Mang Xing', cursive !important;
+    font-size: 2.2em !important;
+    margin-right: 0.06em !important;
+}
+
+/* ============================================================================
  * §ICON. Protect ALL icon fonts (FontAwesome 6 + Bootstrap Icons + emoji
  *   fallbacks) from font-family / weight / shadow / color overrides. This must
  *   be LAST so it wins any later cascade. AGGRESSIVE: catches every nested
@@ -748,4 +834,544 @@ html[lang="zh"] h3, html[lang="zh"] h4, html[lang="zh"] h5 {
 .timeline-card *, .pub-card *, .project-card *,
 .award-card *, .talk-card *, .stat-card * {
     font-family: inherit;  /* let parent take over */
+}
+
+/* ============================================================================
+ * §V7-POLISH. Comprehensive polish per audit (2026-04-28).
+ *   Shrinks body, tightens stat-labels, hands off pub/project font, restructures
+ *   hero subtitle, drops pill UI everywhere, strips card chrome, gives images
+ *   torn-paper edges, sepias the map, adds paper-tape clips on section titles,
+ *   adds hover wobble, rebuilds news ticker as ink-bleed scatter.
+ * ========================================================================= */
+
+/* ----- Ph1.A — body / list / stat font sizes ----- */
+body {
+    font-size: 17.5px !important;       /* was 19.84px (1.24em on a 16-base) */
+    line-height: 1.65 !important;
+}
+.about-bullets > li {
+    font-size: 1.10em !important;       /* was implicit 1.25em → 24.6px; now ~19.3px */
+    line-height: 1.75 !important;
+    margin-bottom: 0.45em !important;
+}
+.stat-label, .stat-card .stat-label,
+.stats .label, .stat .label {
+    font-size: 15.5px !important;       /* was 13.6px — readable under big numbers */
+    color: oklch(0.42 0.05 30) !important;
+    opacity: 0.95 !important;
+}
+
+/* ----- Ph1.B — pub/project cards inherit body font (kill Indie Flower fallback) ----- */
+.pub-card, .pub-card *,
+.project-card, .project-card *,
+.award-card, .award-card *,
+.talk-card,  .talk-card * {
+    font-family: inherit !important;
+}
+
+/* ----- Ph1.C — hero subtitle breathing ----- */
+.hero-subtitle, .hero-tagline, .hero-h1-role {
+    line-height: 1.7 !important;
+    margin-top: 0.25em !important;
+    margin-bottom: 0.15em !important;
+}
+.hero-keywords, .hero-h1 .hero-h1-keywords, .hero-research-line {
+    line-height: 1.85 !important;
+    letter-spacing: 0.01em !important;
+    margin-top: 0.5em !important;
+}
+
+/* ----- Ph2.A — strip card chrome (OTW, pubs, projects, awards, talks) ----- */
+.otw-card, .otw-content, .otw-wrap,
+.pub-card, .project-card, .award-card, .talk-card {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+/* Inner backgrounds that may also leak white */
+.otw-card *, .pub-card > .pub-body, .pub-card .pub-meta,
+.project-card > *, .award-card > *, .talk-card > * {
+    background-color: transparent !important;
+}
+/* Add gentle hand-drawn separator below each card to keep visual order */
+.pub-card, .project-card, .award-card, .talk-card {
+    padding-bottom: 1.2em !important;
+    margin-bottom: 1.6em !important;
+    position: relative !important;
+}
+.pub-card::after, .project-card::after,
+.award-card::after, .talk-card::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 8% !important;
+    right: 12% !important;
+    bottom: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(140, 30, 30, 0.18) 8%,
+        rgba(140, 30, 30, 0.32) 50%,
+        rgba(140, 30, 30, 0.10) 92%,
+        transparent 100%) !important;
+    /* Slight wave to feel hand-drawn */
+    transform: rotate(-0.3deg) !important;
+}
+
+/* Asymmetric heights — let some cards breathe taller than others (kills the
+ * "identical card grid" cliché). Apply to every Nth card.  */
+.pub-card:nth-child(3n+1), .project-card:nth-child(3n+1),
+.award-card:nth-child(3n+1) {
+    padding-top: 0.4em !important;
+}
+.pub-card:nth-child(3n+2), .project-card:nth-child(3n+2),
+.award-card:nth-child(3n+2) {
+    padding-top: 1.2em !important;
+}
+
+/* OTW card — total transparency, no chrome */
+.otw-card, .otw-card-wrap, .otw-wrap {
+    padding: 1.2em 1em !important;
+}
+/* OTW pills inside the card → red-ink underline keywords */
+.otw-pill, .otw-tag, .otw-chip,
+.otw-card .pill, .otw-card .tag, .otw-card .chip {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: var(--maroon-bright) !important;
+    padding: 0 0.15em !important;
+    box-shadow: none !important;
+    text-decoration: underline wavy rgba(140, 30, 30, 0.45) !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 1.5px !important;
+    font-weight: 700 !important;
+}
+
+/* ----- Ph2.B — paper-tape clip above each h2 section title ----- */
+.section-title {
+    position: relative !important;
+    margin-top: 2em !important;
+}
+.section-title::before {
+    content: "" !important;
+    position: absolute !important;
+    left: -8px !important;
+    top: -22px !important;
+    width: 78px !important;
+    height: 22px !important;
+    background:
+        linear-gradient(120deg,
+            rgba(220, 200, 100, 0.55) 0%,
+            rgba(230, 210, 130, 0.40) 50%,
+            rgba(210, 190, 90, 0.55) 100%) !important;
+    border-left: 1px dashed rgba(120, 90, 30, 0.20) !important;
+    border-right: 1px dashed rgba(120, 90, 30, 0.20) !important;
+    transform: rotate(-2.5deg) !important;
+    box-shadow: 0 1px 2px rgba(80, 50, 10, 0.20) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+/* Ensure the title itself stays above the tape */
+.section-title > i, .section-title > span { position: relative !important; z-index: 1 !important; }
+
+/* ----- Ph3.A — torn-paper image edges + slight rotation ----- */
+.pub-thumbnail, .pub-card img,
+.project-card img, .project-thumbnail,
+.award-card img, .award-logo {
+    clip-path: polygon(
+        2% 4%, 14% 1%, 32% 4%, 56% 0%, 78% 3%,
+        96% 1%, 100% 12%, 98% 32%, 100% 58%, 97% 82%,
+        100% 96%, 84% 99%, 62% 97%, 38% 100%, 18% 96%,
+        4% 99%, 0% 82%, 3% 60%, 0% 38%, 2% 14%
+    ) !important;
+    /* Slight rotation per nth so they look hand-glued, not aligned */
+    box-shadow: 2px 4px 6px rgba(60, 30, 5, 0.18) !important;
+}
+.pub-card:nth-child(odd) img, .project-card:nth-child(odd) img,
+.award-card:nth-child(odd) img {
+    transform: rotate(-1.2deg) !important;
+}
+.pub-card:nth-child(even) img, .project-card:nth-child(even) img,
+.award-card:nth-child(even) img {
+    transform: rotate(1.4deg) !important;
+}
+
+/* ----- Ph1.D — News date pills → inline red-ink dates ----- */
+.news-date, .news-row .date,
+.news-item .date, time[class*="date"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    color: var(--maroon-bright) !important;
+    font-weight: 700 !important;
+    text-decoration: underline rgba(140, 30, 30, 0.40) !important;
+    text-underline-offset: 3px !important;
+}
+
+/* ----- Ph3 — Skills: kill all skill-tag pills, become red-ink underlined words ----- */
+.skill, .skill-tag, .skills-tag, .tag,
+.skill-pill, .tech-pill, .word-cloud-tag,
+.wordcloud-tag, .filter-pill, .pub-filter-pill {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--maroon-bright) !important;
+    padding: 0 0.15em !important;
+    margin: 0 0.3em 0.3em 0 !important;
+    text-decoration: underline rgba(140, 30, 30, 0.35) !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 1px !important;
+    font-weight: 700 !important;
+}
+/* Skill category — handwritten section heading style */
+.skill-category, .skill-category-title {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+}
+
+/* ----- Ph3 — Filter / search controls → handwritten inline ----- */
+.pub-filters, .project-filters, .filters,
+.pub-filter, .project-filter, .filter-chip {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.pub-filters .filter-chip, .project-filters .filter-chip,
+.pub-filter-tab, .project-filter-tab,
+button.filter, button[class*="filter"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: var(--maroon-bright) !important;
+    padding: 0 0.4em !important;
+    text-decoration: underline rgba(140, 30, 30, 0.30) !important;
+    text-underline-offset: 4px !important;
+    box-shadow: none !important;
+}
+button.filter.active, button[class*="filter"].active,
+.filter-chip.active, .pub-filter-tab.active {
+    color: oklch(0.40 0.22 27) !important;
+    text-decoration-style: double !important;
+    text-decoration-color: rgba(140, 30, 30, 0.75) !important;
+    text-decoration-thickness: 2px !important;
+}
+/* Search input — transparent + red ink underline */
+input[type="search"], input.search, .search-input,
+.pub-search input, .project-search input {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1.5px solid rgba(140, 30, 30, 0.4) !important;
+    box-shadow: none !important;
+    color: var(--maroon-bright) !important;
+    padding: 0.2em 0.4em !important;
+    font-family: inherit !important;
+}
+input[type="search"]:focus, .search-input:focus {
+    border-bottom-color: rgba(140, 30, 30, 0.85) !important;
+    outline: none !important;
+}
+
+/* ----- Ph4 — Research Outline: break the 4-equal-card grid ----- */
+.research-pillars, .research-outline-grid,
+.research-outline > .grid, .research > .grid {
+    grid-template-columns: 1.3fr 1fr 1fr 0.85fr !important;  /* uneven widths */
+    align-items: start !important;
+    gap: 2.5em 1.8em !important;
+}
+.research-pillar, .research-outline-card, .research-card {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+/* Stagger vertical alignment so they don't sit on the same baseline */
+.research-pillar:nth-child(2), .research-outline-card:nth-child(2),
+.research-card:nth-child(2) { margin-top: 1.4em !important; }
+.research-pillar:nth-child(3), .research-outline-card:nth-child(3),
+.research-card:nth-child(3) { margin-top: 0.6em !important; }
+.research-pillar:nth-child(4), .research-outline-card:nth-child(4),
+.research-card:nth-child(4) { margin-top: 2.2em !important; }
+/* Pillar icons — bigger, red ink */
+.research-pillar i, .research-outline-card i, .research-card i {
+    font-size: 1.6em !important;
+    color: var(--maroon-bright) !important;
+}
+
+/* ----- Ph5.A — Map sepia + parchment overlay ----- */
+iframe[src*="maps"], iframe[src*="amap"], iframe[src*="google.com/maps"] {
+    filter: sepia(0.55) contrast(0.92) saturate(0.7) brightness(0.96) !important;
+    border: none !important;
+    box-shadow: 1px 2px 6px rgba(60, 30, 5, 0.25) !important;
+    border-radius: 4px !important;
+}
+/* Wrap the map in a parchment-tinted overlay */
+.map-wrap, .contact-map, .map-container {
+    position: relative !important;
+}
+.map-wrap::after, .contact-map::after, .map-container::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background: linear-gradient(
+        rgba(180, 130, 60, 0.10),
+        rgba(220, 170, 90, 0.08)
+    ) !important;
+    mix-blend-mode: multiply !important;
+    border-radius: 4px !important;
+}
+
+/* ----- Ph5.B — Hover wobble (notebook page comes alive) ----- */
+.pub-card, .project-card, .award-card, .talk-card,
+.research-pillar, .research-outline-card, .research-card,
+.timeline-card, .news-row, .news-item {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+.pub-card:hover, .project-card:hover, .award-card:hover, .talk-card:hover,
+.timeline-card:hover, .news-row:hover, .news-item:hover {
+    transform: rotate(-0.35deg) translateY(-1px) !important;
+}
+
+/* ----- Ph5.C — Profile photo softer fade (if mask exists) ----- */
+.hero-photo, .hero-image, .hero-avatar, .profile-photo {
+    mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%) !important;
+    -webkit-mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%) !important;
+}
+
+/* ----- Ph5.D — Body paper-stain overlay (subtle texture) ----- */
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background:
+        radial-gradient(ellipse 320px 220px at 18% 22%, rgba(160, 100, 30, 0.06), transparent 70%),
+        radial-gradient(ellipse 260px 180px at 82% 58%, rgba(140,  80, 20, 0.05), transparent 70%),
+        radial-gradient(ellipse 200px 240px at 35% 88%, rgba(180, 120, 40, 0.05), transparent 70%),
+        radial-gradient(ellipse 180px 140px at 70% 12%, rgba(120,  70, 20, 0.04), transparent 70%) !important;
+    z-index: 0 !important;
+}
+body { position: relative !important; z-index: 1 !important; }
+
+/* ----- Ph5.E — Section divider as hand-drawn line between sections ----- */
+section + section, .section + .section {
+    position: relative !important;
+}
+section + section::before {
+    content: "" !important;
+    position: absolute !important;
+    top: -20px !important;
+    left: 22% !important;
+    right: 18% !important;
+    height: 1px !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(140, 30, 30, 0.10) 12%,
+        rgba(140, 30, 30, 0.30) 50%,
+        rgba(140, 30, 30, 0.08) 88%,
+        transparent 100%) !important;
+    transform: rotate(-0.4deg) !important;
+    pointer-events: none !important;
+}
+
+/* ============================================================================
+ * §INK-BLEED-TICKER. News ticker = Tom Riddle's diary effect — current text
+ *   dissolves into ink dots, scatters slightly, then a NEW headline coalesces
+ *   from scattered dots into solid text. Driven by:
+ *     - CSS @keyframes ink-disperse + ink-coalesce
+ *     - JS rotation in §INK-BLEED-TICKER block (added below)
+ *   The container marks itself .ink-bleed-ticker; the JS will read content
+ *   from data-ticker-items.
+ * ========================================================================= */
+.news-ticker, .hero-ticker, [class*="ticker"] {
+    overflow: hidden !important;
+    position: relative !important;
+}
+.ink-bleed-ticker {
+    position: relative !important;
+    min-height: 1.8em !important;
+    padding: 0.2em 0 !important;
+}
+.ink-bleed-ticker .ibt-text {
+    display: inline-block !important;
+    position: relative !important;
+    color: var(--maroon-bright) !important;
+    font-weight: 700 !important;
+    transform-origin: center center !important;
+    /* Multi-step text-shadow simulates ink sitting wet on paper */
+    text-shadow:
+        0 0 0.5px rgba(140, 30, 30, 0.6),
+        0 0 1.5px rgba(140, 30, 30, 0.35),
+        1px 1px 1.5px rgba(80, 20, 5, 0.30) !important;
+    will-change: filter, opacity, transform !important;
+}
+.ink-bleed-ticker .ibt-text.ibt-disperse {
+    animation: ibt-disperse 1.0s cubic-bezier(0.4, 0.0, 1.0, 0.5) forwards !important;
+}
+.ink-bleed-ticker .ibt-text.ibt-coalesce {
+    animation: ibt-coalesce 1.1s cubic-bezier(0.0, 0.5, 0.2, 1.0) forwards !important;
+}
+@keyframes ibt-disperse {
+    0% {
+        filter: blur(0px);
+        opacity: 1;
+        letter-spacing: 0;
+        transform: scale(1);
+    }
+    35% {
+        filter: blur(1.5px);
+        opacity: 0.85;
+        letter-spacing: 0.05em;
+        transform: scale(1.04);
+    }
+    65% {
+        filter: blur(6px);
+        opacity: 0.45;
+        letter-spacing: 0.4em;
+        transform: scale(1.08) translateY(-1px);
+    }
+    100% {
+        filter: blur(14px);
+        opacity: 0;
+        letter-spacing: 1.2em;
+        transform: scale(1.15) translateY(-3px);
+    }
+}
+@keyframes ibt-coalesce {
+    0% {
+        filter: blur(14px);
+        opacity: 0;
+        letter-spacing: 1.2em;
+        transform: scale(1.15) translateY(3px);
+    }
+    35% {
+        filter: blur(6px);
+        opacity: 0.45;
+        letter-spacing: 0.4em;
+        transform: scale(1.08) translateY(1px);
+    }
+    65% {
+        filter: blur(1.5px);
+        opacity: 0.85;
+        letter-spacing: 0.05em;
+        transform: scale(1.02);
+    }
+    100% {
+        filter: blur(0px);
+        opacity: 1;
+        letter-spacing: 0;
+        transform: scale(1);
+    }
+}
+
+/* Hijack the existing hero-ticker rotation: replace opacity+translateY with
+ * ink disperse / coalesce. Existing JS toggles .is-active / .is-leaving on
+ * .hero-ticker-item; we re-style those classes here. */
+.hero-ticker-list .hero-ticker-item {
+    transition: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+    filter: blur(14px);
+    letter-spacing: 1.2em;
+    color: var(--maroon-bright) !important;
+}
+.hero-ticker-list .hero-ticker-item.is-active {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: ibt-coalesce 1.1s cubic-bezier(0, 0.5, 0.2, 1) forwards !important;
+    pointer-events: auto !important;
+}
+.hero-ticker-list .hero-ticker-item.is-leaving {
+    opacity: 0 !important;
+    animation: ibt-disperse 1.0s cubic-bezier(0.4, 0, 1, 0.5) forwards !important;
+}
+/* Wet-ink shadow on the visible item */
+.hero-ticker-list .hero-ticker-item.is-active .ticker-content {
+    text-shadow:
+        0 0 0.5px rgba(140, 30, 30, 0.6),
+        0 0 1.8px rgba(140, 30, 30, 0.35),
+        1px 1px 1.5px rgba(80, 20, 5, 0.30) !important;
+}
+
+/* ============================================================================
+ * §WORDCLOUD-BUBBLE. Word cloud → hand-drawn thought-bubble cluster.
+ *   Each .word becomes an inline-block "bubble": red ink word with a thin
+ *   wavy ellipse outline (drawn via box-shadow + border-radius), slight
+ *   rotation, varying sizes drive emphasis. No pill backgrounds.
+ * ========================================================================= */
+.wordcloud-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 1em 0 !important;
+}
+.wordcloud {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.7em 1.1em !important;
+    padding: 1.2em 1em !important;
+}
+.wordcloud .word {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 50% / 70% !important;     /* ellipse-shape via border-radius */
+    box-shadow:
+        inset 0 0 0 1.2px rgba(140, 30, 30, 0.42),  /* hand-drawn ink ring */
+        2px 3px 4px rgba(80, 20, 5, 0.10) !important;
+    color: var(--maroon-bright) !important;
+    padding: 0.35em 0.95em !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+/* Vary size — bigger words = more central in the cluster */
+.wordcloud .word-xl { font-size: 1.7em !important; padding: 0.45em 1.2em !important; }
+.wordcloud .word-lg { font-size: 1.4em !important; padding: 0.40em 1.05em !important; }
+.wordcloud .word-md { font-size: 1.1em !important; }
+.wordcloud .word-sm { font-size: 0.92em !important; opacity: 0.85 !important; }
+/* Rotate by nth-child to look hand-drawn / pinned */
+.wordcloud .word:nth-child(7n+1) { transform: rotate(-2.2deg) !important; }
+.wordcloud .word:nth-child(7n+2) { transform: rotate(1.6deg) !important; }
+.wordcloud .word:nth-child(7n+3) { transform: rotate(-0.8deg) !important; }
+.wordcloud .word:nth-child(7n+4) { transform: rotate(2.4deg) !important; }
+.wordcloud .word:nth-child(7n+5) { transform: rotate(-1.4deg) !important; }
+.wordcloud .word:nth-child(7n+6) { transform: rotate(0.6deg) !important; }
+.wordcloud .word:nth-child(7n+7) { transform: rotate(-2.6deg) !important; }
+.wordcloud .word:hover {
+    transform: rotate(0deg) scale(1.08) !important;
+    box-shadow:
+        inset 0 0 0 1.5px rgba(140, 30, 30, 0.65),
+        3px 4px 6px rgba(80, 20, 5, 0.18) !important;
 }
