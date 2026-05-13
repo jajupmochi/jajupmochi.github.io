@@ -1315,6 +1315,9 @@
             list.addEventListener('mouseleave', () => paused = false);
             list.addEventListener('focusin', () => paused = true);
             list.addEventListener('focusout', () => paused = false);
+            // Rotate every 3.5s. Cleanup `is-leaving` AFTER the 1.0s disperse animation
+            // finishes (was 600ms — truncated disperse mid-flight, creating a perceived
+            // "empty" gap between disperse vanishing and coalesce becoming readable).
             setInterval(() => {
                 if (paused || document.hidden) return;
                 const cur = items[idx];
@@ -1325,8 +1328,8 @@
                 next.classList.remove('is-leaving');
                 next.classList.add('is-active');
                 requestAnimationFrame(() => applyMarquee(next));
-                setTimeout(() => cur.classList.remove('is-leaving'), 600);
-            }, 5000);
+                setTimeout(() => cur.classList.remove('is-leaving'), 1000);
+            }, 3500);
             // Re-measure after locale change (content widths shift).
             window.addEventListener('resize', () => applyMarquee(items[idx]));
             document.addEventListener('languageChanged', () => applyMarquee(items[idx]));
