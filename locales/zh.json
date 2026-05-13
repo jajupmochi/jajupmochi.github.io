@@ -21,7 +21,7 @@
   },
   "otw": {
     "title": "寻找工作机会中",
-    "status": "正在积极申请，可快速入职",
+    "status": "可快速入职",
     "roles": "职位方向",
     "locations": "工作地点",
     "employment": "合作形式",
@@ -273,20 +273,41 @@
     "label": "所思所写"
   },
   "about": {
-    "p1": "我是瑞士<strong>伯尔尼大学博士后研究员</strong>，在<a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">模式识别组</a>从事 SNSF 资助的研究。研究方向涵盖<strong>图表示学习</strong>、<strong>时空深度学习</strong>以及<strong>基于大语言模型的 AI 系统</strong>。",
-    "p2": "我于 2021 年在法国诺曼底大学国立鲁昂应用科学学院 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS 实验室</a>获得计算机科学博士学位，师从 <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> 教授与 <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a> 教授，聚焦于图机器学习与化学信息学中的模式识别。此后，我先后参与了多个项目：计算化学方向的图机器学习（聚合物优化、氧化还原预测）、文档分析（古代莎草纸、工程图纸）以及环境科学（河水温度预测）。我已指导 20 余位学生，并参与多项科研基金。此前，我于 2017 年获得<strong>软件工程硕士学位</strong>，于 2014 年获得<strong>信息工程学士学位</strong>，均毕业于<strong>西安交通大学</strong>。",
-    "p3": "学术之外，我在金融科技创业公司 N-Banker 担任<strong>关键 AI 顾问</strong>，主导 AI 战略与大模型智能体研发。我也构建并参与过多个开源库、机器学习工具箱与 LLM 智能体系统。",
-    "p4": "我正在积极寻求学术界与工业界的<strong>机器学习研究科学家 / 工程师</strong>职位，聚焦于图机器学习、时空学习、科学计算与 AI 驱动的科学发现及工业应用。",
-    "headline": "从事<strong>图表示学习</strong>研究及跨领域应用，构建<strong>开源工具</strong>、<strong>模型</strong>以及面向研究与产业的 <strong>AI 系统</strong>。",
-    "b1": "<span class=\"about-emoji\" aria-hidden=\"true\">📍</span> <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">🇨🇭 伯尔尼大学模式识别研究组（PRG）</a>，<strong>博士后</strong>。",
-    "b2": "<span class=\"about-emoji\" aria-hidden=\"true\">🧠</span> 学术方向：<strong>图表示学习</strong>，涵盖图核、图编辑距离、图神经网络、Transformer，以及图预映射与生成。",
-    "b3": "<span class=\"about-emoji\" aria-hidden=\"true\">🧪</span> 应用方向：<strong>氧化还原电位预测</strong>（药物发现与聚合物优化的前置基座工作）、<strong>时空水文学</strong>（瑞士河流水温预测）以及<strong>工程图分析</strong>（<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>）。",
-    "b4": "<span class=\"about-emoji\" aria-hidden=\"true\">🤝</span> 产业合作：与 <strong>N-Banker</strong> 金融科技初创合作，主导 <strong>AI 策略与 LLM Agent</strong>；与 <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> 合作 <strong>暖通空调方案审核</strong>（PLANALYSER）。",
-    "b5": "<span class=\"about-emoji\" aria-hidden=\"true\">🛠</span> 开源库：<a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a>、<a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a>、<a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>RedoxPrediction</code></a> 等。",
-    "b6": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> 博士（2021），<a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">🇫🇷 LITIS 实验室</a>，法国鲁昂 INSA。博士论文 <em>桥接图结构与核空间：预映射视角</em>：聚焦图核、图编辑距离与结构化数据的机器学习（导师：<a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine 教授</a> 与 <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère 教授</a>）。",
-    "b7": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> 软件工程硕士（2017）与信息工程学士（2014），<strong>🇨🇳 西安交通大学</strong>。",
-    "b8": "<span class=\"about-emoji\" aria-hidden=\"true\">👥</span> 指导 <strong>20+ 学生</strong>，参与 / 申请 <strong>多项 SNSF、Innosuisse、ANR 与伯尔尼大学基金项目</strong>。",
-    "b9": "<span class=\"about-emoji\" aria-hidden=\"true\">🎯</span> 求职方向：<strong>机器学习研究科学家 / 研究工程师</strong>（学界与产业；现场 / 混合 / 远程均可）。"
+    "headline": "从事<strong>图表示学习</strong>研究及跨领域应用，构建<strong>算法</strong>、<strong>模型</strong>、<strong>开源工具</strong>以及面向研究与产业的 <strong>AI 基础设施</strong>。",
+    "row": {
+      "now": {
+        "label": "现在",
+        "value": "<strong>博士后</strong> · <a class=\"link-plain\" href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">伯尔尼大学 PRG</a>，<a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">伯尔尼大学</a> · <strong>图表示学习</strong>"
+      },
+      "domains": {
+        "label": "应用",
+        "value": "瑞士河流水文 · 工程图分析（<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>）· 数字人文 · 计算化学（氧化还原）"
+      },
+      "industry": {
+        "label": "产业",
+        "value": "<strong>N-Banker</strong>（AI 策略 / LLM Agent）· <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a>（暖通审核）"
+      },
+      "oss": {
+        "label": "开源库",
+        "value": "<a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a> · <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a> · <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>redoxprediction</code></a> · <a href=\"https://github.com/jajupmochi/swiss-river-network-benchmark\" target=\"_blank\" rel=\"noopener\"><code>swiss-river-network-benchmark</code></a>"
+      },
+      "mentor": {
+        "label": "指导",
+        "value": "已指导 <strong>20+ 学生</strong>"
+      },
+      "funded": {
+        "label": "基金",
+        "value": "<a href=\"https://www.snf.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>SNSF</strong></a> · <a href=\"https://www.innosuisse.admin.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>Innosuisse</strong></a> · <a href=\"https://anr.fr/en/\" target=\"_blank\" rel=\"noopener\"><strong>ANR</strong></a> · <a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">伯尔尼大学</a>项目"
+      },
+      "past": {
+        "label": "学历",
+        "value": "2021 法国鲁昂 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, <a href=\"https://www.insa-rouen.fr/en\" target=\"_blank\" rel=\"noopener\">INSA</a> 博士 · <a href=\"https://en.xjtu.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>西安交大</strong></a>本硕"
+      },
+      "looking": {
+        "label": "求职",
+        "value": "<strong>ML 研究科学家 / 工程师</strong>（学术 & 产业）"
+      }
+    }
   },
   "comingSoon": {
     "title": "敬请期待",

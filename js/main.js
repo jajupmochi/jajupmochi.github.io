@@ -591,12 +591,29 @@
         const langNames = { 'en': 'EN', 'zh': '中文', 'fr': 'FR', 'de': 'DE' };
         
         function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+
+            // Cross-site redirect:
+            //   * EN canonical site = parchment (`index_en.html`, has `data-site="parchment"`)
+            //   * zh/fr/de live on the clear backup (`index_en_clear.html`).
+            // Switch sites instead of trying to re-translate parchment in zh/fr/de
+            // (parchment HTML has English-only content baked in; non-EN translations
+            // are kept on the clear site for now).
+            const site = document.documentElement.getAttribute('data-site') || 'clear';
+            if (site === 'parchment' && lang !== 'en') {
+                location.href = 'index_en_clear.html';
+                return;
+            }
+            if (site === 'clear' && lang === 'en') {
+                location.href = 'index_en.html';
+                return;
+            }
+
             document.getElementById('currentLang').textContent = langNames[lang];
             document.querySelectorAll('#langDropdown .dropdown-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
+            if (typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
             closeAllDropdowns();
-            localStorage.setItem('language', lang);
-            
+
             // Apply translations instead of redirecting
             applyTranslations(lang).then(() => {
                 // Refresh currentTheme display since theme name is locale-dependent
@@ -914,6 +931,17 @@
             })();
             const savedLang = urlLang || localStorage.getItem('language') || detectSystemLanguage();
             if (savedLang) {
+                // Initial-load cross-site redirect: send user to the right site for their lang
+                // BEFORE applying translations (avoids briefly rendering the wrong page).
+                const __site = document.documentElement.getAttribute('data-site') || 'clear';
+                if (__site === 'parchment' && savedLang !== 'en') {
+                    location.replace('index_en_clear.html');
+                    return;
+                }
+                if (__site === 'clear' && savedLang === 'en') {
+                    location.replace('index_en.html');
+                    return;
+                }
                 document.getElementById('currentLang').textContent = langNames[savedLang];
                 applyTranslations(savedLang);
                 if (urlLang) localStorage.setItem('language', urlLang);

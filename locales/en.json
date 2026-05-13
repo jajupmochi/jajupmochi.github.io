@@ -21,7 +21,7 @@
   },
   "otw": {
     "title": "Open to Work",
-    "status": "Actively applying: fast onboarding",
+    "status": "fast onboarding",
     "roles": "Roles",
     "locations": "Locations",
     "employment": "Employment",
@@ -273,20 +273,41 @@
     "label": "Thoughts & Writing"
   },
   "about": {
-    "p1": "I am a <strong>Postdoctoral Researcher</strong> at the University of Bern, Switzerland, working at the <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. My expertise spans <strong>graph representation learning</strong>, <strong>spatio-temporal deep learning</strong>, and <strong>LLM-based AI systems</strong>.",
-    "p2": "I received my Ph.D. in Computer Science in 2021 from the <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, INSA Rouen, Normandy University, France, under the supervision of Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> and Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, focusing on graph machine learning and pattern recognition in chemoinformatics. Since then, I've contributed to projects in graph ML for computational chemistry (polymer optimization, redox prediction), document analysis (historical papyri, engineering drawings), and environmental science (river-temperature forecasting). I've supervised 20+ students and contributed to multiple scientific grants. Prior to that, I earned my <strong>M.Sc. in Software Engineering</strong> (2017) and <strong>B.S. in Information Engineering</strong> (2014), both from <strong>Xi'an Jiaotong University</strong>, China.",
-    "p3": "Beyond academia, I serve as the <strong>key AI advisor</strong> at N-Banker, a FinTech startup, where I lead AI strategy and LLM-agent development. I have also built and contributed to multiple open-source libraries, ML toolkits, and LLM-agent systems.",
-    "p4": "I am actively seeking <strong>ML Research Scientist / Engineer</strong> opportunities in both academia and industry, with a focus on graph-based learning, spatio-temporal learning, scientific computing, and AI-driven discovery and industrial applications.",
-    "headline": "Building <strong>graph representation learning</strong> across domains: <strong>open-source tools</strong>, <strong>models</strong>, and <strong>AI systems</strong> for research &amp; industry.",
-    "b1": "<span class=\"about-emoji\" aria-hidden=\"true\">📍</span> <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">🇨🇭 Pattern Recognition Group (PRG), University of Bern</a>: <strong>Postdoc</strong>.",
-    "b2": "<span class=\"about-emoji\" aria-hidden=\"true\">🧠</span> Academic focus: <strong>graph representation learning</strong>: graph kernels, graph edit distances, GNNs, transformers, pre-image &amp; generation.",
-    "b3": "<span class=\"about-emoji\" aria-hidden=\"true\">🧪</span> Application focus: <strong>redox potential prediction</strong> (foundation for drug discovery &amp; polymer optimization), <strong>spatio-temporal hydrology</strong> (Swiss river water temperature), and <strong>engineering diagram analysis</strong> (<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>).",
-    "b4": "<span class=\"about-emoji\" aria-hidden=\"true\">🤝</span> Industry collaborations: <strong>AI strategy &amp; LLM agents</strong> with <strong>N-Banker</strong> FinTech startup; <strong>HVAC-concept audit</strong> with <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> (PLANALYSER).",
-    "b5": "<span class=\"about-emoji\" aria-hidden=\"true\">🛠</span> Open-source libraries: <a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a>, <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a>, <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>RedoxPrediction</code></a>, etc.",
-    "b6": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> Ph.D. (2021), <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">🇫🇷 LITIS Lab</a>, INSA Rouen: thesis <em>Bridging graph and kernel spaces: a pre-image perspective</em>: graph kernels, graph edit distances &amp; ML for structured data (advisors: <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Prof. Paul Honeine</a> &amp; <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Prof. Benoit Gaüzère</a>).",
-    "b7": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> M.Sc. Software Engineering (2017) &amp; B.Sc. Information Engineering (2014), <strong>🇨🇳 Xi'an Jiaotong University</strong>, China.",
-    "b8": "<span class=\"about-emoji\" aria-hidden=\"true\">👥</span> Supervised <strong>20+ students</strong> and participated in / applied for <strong>multiple SNSF, Innosuisse, ANR, and UniBE-funded projects</strong>.",
-    "b9": "<span class=\"about-emoji\" aria-hidden=\"true\">🎯</span> Open to <strong>ML Research Scientist / Research Engineer</strong> roles: academia &amp; industry, on-site / hybrid / remote."
+    "headline": "Building <strong>graph representation learning</strong> across domains: <strong>algorithms</strong>, <strong>models</strong>, <strong>open-source tools</strong>, and <strong>AI infrastructure</strong> for research &amp; industry.",
+    "row": {
+      "now": {
+        "label": "Now",
+        "value": "<strong>Postdoc</strong> · <a class=\"link-plain\" href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">PRG</a>, <a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">University of Bern</a> · <strong>graph representation learning</strong>"
+      },
+      "domains": {
+        "label": "Domains",
+        "value": "Swiss hydrology · engineering diagrams (<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>) · digital humanities · computational chemistry (redox)"
+      },
+      "industry": {
+        "label": "Industry",
+        "value": "<strong>N-Banker</strong> (AI strategy / LLM agents) · <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> (HVAC audit)"
+      },
+      "oss": {
+        "label": "Libraries",
+        "value": "<a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a> · <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a> · <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>redoxprediction</code></a> · <a href=\"https://github.com/jajupmochi/swiss-river-network-benchmark\" target=\"_blank\" rel=\"noopener\"><code>swiss-river-network-benchmark</code></a>"
+      },
+      "mentor": {
+        "label": "Mentor",
+        "value": "<strong>20+ students</strong> supervised"
+      },
+      "funded": {
+        "label": "Funded",
+        "value": "<a href=\"https://www.snf.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>SNSF</strong></a> · <a href=\"https://www.innosuisse.admin.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>Innosuisse</strong></a> · <a href=\"https://anr.fr/en/\" target=\"_blank\" rel=\"noopener\"><strong>ANR</strong></a> · <a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">UniBE</a>-funded projects"
+      },
+      "past": {
+        "label": "Past",
+        "value": "PhD '21 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, <a href=\"https://www.insa-rouen.fr/en\" target=\"_blank\" rel=\"noopener\">INSA Rouen</a> · MSc/BSc <a href=\"https://en.xjtu.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>XJTU</strong></a>"
+      },
+      "looking": {
+        "label": "Looking",
+        "value": "<strong>ML Research Scientist / Engineer</strong> roles · academia &amp; industry"
+      }
+    }
   },
   "contact": {
     "address": "Location",

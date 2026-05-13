@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-site="parchment">
 <head>
     <meta charset="utf-8">
     <title>Linlin Jia, Ph.D. | ML Research Scientist | Graph ML · LLM</title>
     <meta name="description" content="Linlin Jia, Ph.D. | Graph ML, LLM Agents, Spatio-Temporal Forecasting, AI for Science. Postdoc at U. Bern. Open to ML Research Scientist roles.">
     <meta name="author" content="Linlin Jia">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
 
     <!-- Security headers (meta-equiv; GH Pages doesn't let us set real HTTP headers).
          See setup/security-headers.md for the rationale behind each directive. -->
@@ -34,10 +34,11 @@
          Each ?lang= URL is a distinct crawlable entry point; main.js reads the param
          on load and renders that locale's content. Canonical still points to the
          base URL to avoid fragmenting link equity. -->
-    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html?lang=en">
-    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en.html?lang=zh">
-    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en.html?lang=fr">
-    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en.html?lang=de">
+    <!-- EN canonical = parchment (this page). zh/fr/de live on the clear backup site (`index_en_clear.html`). -->
+    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en_clear.html?lang=zh">
+    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en_clear.html?lang=fr">
+    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en_clear.html?lang=de">
     <link rel="alternate" hreflang="x-default" href="https://jajupmochi.github.io/index_en.html">
 
     <!-- Open Graph -->
@@ -476,6 +477,11 @@
     <!-- Confetti loaded lazily on first use via loadConfetti() helper (v7 round2) -->
 
     <link rel="stylesheet" href="css/main.css">
+    <!-- Parchment-edition handwritten font stack (Google Fonts SIL OFL) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Patrick+Hand&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="css/parchment-overrides.css">
 </head>
 <body data-theme="academic">
     <!-- Wonderland Effects Container (visible only in fancy theme) -->
@@ -904,53 +910,81 @@
          MAIN PAGE CONTENT
          ======================================== -->
     <div class="page-content active" id="mainPage" role="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container hero-content">
-                <div class="hero-text">
-                    <a href="#open-to-work" class="hero-badge">
-                        <span class="status-dot"></span>
-                        <span data-i18n="hero.badge">Open to ML Research Scientist & Engineer Opportunities</span>
-                        <i class="fas fa-arrow-down-long hero-badge-arrow" aria-hidden="true"></i>
-                    </a>
-                    <h1 class="hero-h1">
-                        <span class="hero-h1-name" data-i18n="hero.name">Linlin Jia, Ph.D.</span>
-                        <span class="hero-h1-role" data-i18n-html="hero.role"><strong class="role-primary">Machine Learning Research Scientist</strong><wbr><span class="hero-h1-sep" aria-hidden="true">|</span><wbr><span class="role-secondary">Postdoc @ University of Bern</span></span>
-                    </h1>
-                    <p class="hero-subtitle" data-i18n="hero.title">Graph Machine Learning · Spatio-Temporal Learning · Graph AI for Science &amp; Industry · LLM Systems &amp; Agents</p>
-                    <p class="hero-signature" data-i18n-html="hero.signature">
-                        <a href="https://www.snf.ch/en" target="_blank" rel="noopener noreferrer"><strong>SNSF</strong></a>
-                        + <a href="https://www.innosuisse.admin.ch/en" target="_blank" rel="noopener noreferrer"><strong>Innosuisse</strong></a>
-                        + <a href="https://anr.fr/en/" target="_blank" rel="noopener noreferrer"><strong>ANR</strong></a>-funded
-                        · Author of <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer"><code>graphkit-learn</code></a> + <code>LIULIAN</code>
-                        · 9 papers · 8+ projects/grants
+        <!-- Hero Section — notebook layout (V8) -->
+        <section class="hero hero-notebook-section">
+            <div class="hero-notebook">
+
+                <!-- LEFT PAGE — IDENTITY -->
+                <div class="hn-page hn-page-left">
+                    <div class="hn-date">opened — Apr 2026</div>
+                    <a href="#about" class="hn-jump-about" aria-label="Jump to About Me section"><h1 class="hn-name">Linlin Jia</h1></a>
+                    <p class="hn-credential">— Ph.D. in Machine Learning</p>
+
+                    <div class="hn-photo-row">
+                        <a href="#about" class="hn-photo-wrap hn-jump-about" aria-label="Jump to About Me section">
+                            <picture>
+                                <source srcset="images/photo.avif" type="image/avif">
+                                <source srcset="images/photo.webp" type="image/webp">
+                                <img class="hn-photo" src="images/photo.jpg" alt="Linlin Jia, Ph.D., Machine Learning Research Scientist" width="180" height="180" loading="eager" decoding="async" fetchpriority="high">
+                            </picture>
+                        </a>
+                        <div class="hn-photo-side">
+                            <span class="hn-photo-label">that's me</span>
+                            <p class="hn-role">
+                                <span class="hn-role-line hn-role-1">Research Scientist · Postdoc</span>
+                                <span class="hn-role-line hn-role-2">University of Bern, Switzerland</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="hn-work-label">work done</div>
+                    <ul class="hn-checklist">
+                        <li>
+                            <span class="hn-fact hn-fact-1">
+                                <a href="https://www.snf.ch/en" target="_blank" rel="noopener noreferrer"><strong>SNSF</strong></a>
+                                + <a href="https://www.innosuisse.admin.ch/en" target="_blank" rel="noopener noreferrer"><strong>Innosuisse</strong></a>
+                                + <a href="https://anr.fr/en/" target="_blank" rel="noopener noreferrer"><strong>ANR</strong></a> funded
+                            </span>
+                            <span class="hn-fact hn-fact-2">8+ projects / grants delivered</span>
+                        </li>
+                        <li>
+                            <span class="hn-fact hn-fact-3">
+                                Authored
+                                <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer"><span class="hn-lib">graphkit-learn</span></a>
+                                + <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer"><span class="hn-lib">LIULIAN</span></a>
+                            </span>
+                            <span class="hn-fact hn-fact-4">9 papers published</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- RIGHT PAGE — RESEARCH -->
+                <div class="hn-page hn-page-right">
+                    <h2 class="hn-research-heading">today's research</h2>
+
+                    <div class="hn-bubble-map">
+                        <svg viewBox="0 0 600 280" preserveAspectRatio="none">
+                            <path d="M231,110 Q210,100 130,64"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                            <path d="M370,113 Q400,100 469,76"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                            <path d="M233,173 Q210,200 129,224" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                            <path d="M370,173 Q400,200 471,224" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                        </svg>
+                        <div class="hn-bubble hn-bubble-center">Graph Machine<br>Learning</div>
+                        <div class="hn-bubble hn-bubble-1">Graph Representation<br>Learning</div>
+                        <div class="hn-bubble hn-bubble-2">Spatio-Temporal<br>Learning</div>
+                        <div class="hn-bubble hn-bubble-3">Graph AI for<br>Science &amp; Industry</div>
+                        <div class="hn-bubble hn-bubble-4">LLM Systems<br>&amp; Agents</div>
+                    </div>
+
+                    <p class="hn-key-question">
+                        can <strong>graphs + LLM agents</strong> do real science <em>or industry work</em>?
                     </p>
-                    <div class="hero-links">
-                        <a href="https://github.com/jajupmochi" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
-                        <a href="https://scholar.google.com/citations?user=cnlixw0AAAAJ" target="_blank" rel="noopener" title="Google Scholar" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
-                        <a href="https://www.linkedin.com/in/linlin-jia-b456a6a7/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn profile"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="https://x.com/jajupmochi" target="_blank" rel="noopener" title="Twitter / X" aria-label="Twitter / X profile"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                        <a href="https://dblp.org/pid/152/2558.html" target="_blank" rel="noopener" title="DBLP" aria-label="DBLP author page"><i class="ai ai-dblp" aria-hidden="true"></i></a>
-                        <a href="https://www.researchgate.net/profile/Linlin_Jia" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate profile"><i class="ai ai-researchgate" aria-hidden="true"></i></a>
-                        <a href="https://orcid.org/0000-0002-3834-1498" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID profile"><i class="ai ai-orcid" aria-hidden="true"></i></a>
-                        <a href="mailto:linlin.jia@unibe.ch" title="Email" aria-label="Email Linlin"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="hero-buttons">
-                        <a href="mailto:linlin.jia@unibe.ch" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> <span data-i18n="hero.contact">Get in Touch</span>
-                        </a>
-                        <a href="res/cv/CV_Linlin_Jia_en.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n-href-map='{"zh":"res/cv/CV_Linlin_Jia_zh.pdf","en":"res/cv/CV_Linlin_Jia_en.pdf","fr":"res/cv/CV_Linlin_Jia_en.pdf","de":"res/cv/CV_Linlin_Jia_en.pdf"}'>
-                            <i class="fas fa-download"></i> <span data-i18n="hero.cv">Download CV</span>
-                        </a>
-                    </div>
+
+                    <a href="#open-to-work" class="hn-opportunities" aria-label="Open to opportunities — jump to Open to Work section">
+                        open to opportunities
+                    </a>
                 </div>
-                <div class="hero-image">
-                    <picture>
-                        <source srcset="images/photo.avif" type="image/avif">
-                        <source srcset="images/photo.webp" type="image/webp">
-                        <img src="images/photo.jpg" alt="Linlin Jia, Ph.D., Machine Learning Research Scientist" class="profile-image" width="960" height="960" loading="eager" decoding="async" fetchpriority="high">
-                    </picture>
-                </div>
+
             </div>
         </section>
 
@@ -1005,15 +1039,24 @@
 
         <!-- Open to Work card -->
         <section class="open-to-work-section" id="open-to-work" aria-labelledby="otw-heading">
+            <!-- SVG filter for sticky-note torn-paper edge effect (used by .otw-tag-primary) -->
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+                <defs>
+                    <filter id="sticky-tear" x="-3%" y="-3%" width="106%" height="106%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.04 0.7" numOctaves="3" seed="5" result="noise"/>
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+                    </filter>
+                </defs>
+            </svg>
             <div class="container">
                 <div class="otw-card">
                     <div class="otw-header">
                         <div class="otw-icon" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
                         <div class="otw-headline">
-                            <h2 id="otw-heading" class="otw-title" data-i18n="otw.title">Open to Work</h2>
+                            <h2 id="otw-heading" class="otw-title"><span data-i18n="otw.title">Open to Work</span></h2>
                             <p class="otw-status">
                                 <span class="otw-dot" aria-hidden="true"></span>
-                                <span data-i18n="otw.status">Actively applying: available in short time</span>
+                                <span data-i18n="otw.status">fast onboarding</span>
                             </p>
                         </div>
                     </div>
@@ -1056,26 +1099,71 @@
         </section>
         <!-- About with Stats -->
         <section class="section" id="about">
+            <!-- Hand-drawn line icons used by the .about-notebook rows. Stroke-only paths,
+                 inheriting `currentColor` from each row's icon cell color. -->
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+                <defs>
+                    <symbol id="ai-pin" viewBox="0 0 24 24"><path d="M12 2 C 7.5 2 5 5 5 8.5 C 5 13 9 17 12 21 C 15 17 19 13 19 8.5 C 19 5 16.5 2 12 2 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+                    <symbol id="ai-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 V9 L4 18 C3 20 4.5 21 6 21 H18 C19.5 21 21 20 20 18 L15 9 V3"/><path d="M8 3 H16"/><path d="M6.5 15 H17.5"/></symbol>
+                    <symbol id="ai-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 L7 11 C8 10.5 9 10.5 9.5 11 L11 12.5 L12.5 11 C13 10.5 14 10.5 15 11 L19 13"/><path d="M5 14 L8 16 C9 16.5 10 16.5 11 16 L12 15 L13 16 C14 16.5 15 16.5 16 16 L19 14"/><path d="M9.5 11 L11 9.5"/><path d="M14.5 11 L13 9.5"/></symbol>
+                    <symbol id="ai-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4 a 5 5 0 0 0 -5.5 6.5 L 3 18.5 L 5.5 21 L 13.5 13 a 5 5 0 0 0 6.5 -5.5 L 17 10 L 14 7 Z"/></symbol>
+                    <symbol id="ai-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20 C 3 16 6 14 9 14 S 15 16 15 20"/><circle cx="17" cy="9" r="2.5"/><path d="M14 20 C 14 17.5 16 15.5 18 15.5 S 22 17 22 20"/></symbol>
+                    <symbol id="ai-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="8" ry="9"/><path d="M9.5 8 H14 C 15.5 8 16 9 16 10 S 15.5 12 14 12 H10 C 8.5 12 8 13 8 14 S 8.5 16 10 16 H 14.5"/><path d="M12 5.5 V18.5"/></symbol>
+                    <symbol id="ai-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 L 12 4 L 22 9 L 12 14 Z"/><path d="M6 11 V 16 C 6 17.5 9 19 12 19 S 18 17.5 18 16 V 11"/><path d="M22 9 V 14"/></symbol>
+                    <symbol id="ai-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
+                </defs>
+            </svg>
             <div class="container">
                 <h2 class="section-title"><i class="fas fa-user" aria-hidden="true"></i> <span data-i18n="sections.about">About Me</span></h2>
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
-                    <div>
+                <div class="about-grid">
+                    <div class="about-bullets-col">
                         <p class="about-headline" data-i18n-html="about.headline">
                             Building <strong>graph representation learning</strong> across domains: <strong>open-source tools</strong>, <strong>models</strong>, and <strong>AI systems</strong> for research &amp; industry.
                         </p>
-                        <ul class="about-bullets">
-                            <li data-i18n-html="about.b1"><span class="about-emoji" aria-hidden="true">📍</span> <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">🇨🇭 Pattern Recognition Group (PRG), University of Bern</a>: <strong>Postdoc</strong>.</li>
-                            <li data-i18n-html="about.b2"><span class="about-emoji" aria-hidden="true">🧠</span> Academic focus: <strong>graph representation learning</strong>: graph kernels, graph edit distances, GNNs, transformers, pre-image &amp; generation.</li>
-                            <li data-i18n-html="about.b3"><span class="about-emoji" aria-hidden="true">🧪</span> Application focus: <strong>redox potential prediction</strong> (foundation for drug discovery &amp; polymer optimization), <strong>spatio-temporal hydrology</strong> (Swiss river water temperature), and <strong>engineering diagram analysis</strong> (<a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener">PLANALYSER</a>).</li>
-                            <li data-i18n-html="about.b4"><span class="about-emoji" aria-hidden="true">🤝</span> Industry collaborations: <strong>AI strategy &amp; LLM agents</strong> with <strong>N-Banker</strong> FinTech startup; <strong>HVAC-concept audit</strong> with <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener">WATTELSE</a> (PLANALYSER).</li>
-                            <li data-i18n-html="about.b5"><span class="about-emoji" aria-hidden="true">🛠</span> Open-source libraries: <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener"><code>graphkit-learn</code></a>, <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener"><code>liulian</code></a>, <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener"><code>redoxprediction</code></a>, etc.</li>
-                            <li data-i18n-html="about.b6"><span class="about-emoji" aria-hidden="true">🎓</span> Ph.D. (2021), <a href="https://www.litislab.fr/" target="_blank" rel="noopener">🇫🇷 LITIS Lab</a>, INSA Rouen: thesis <em>Apprivoiser la Pré-image</em>: graph kernels, graph edit distances &amp; ML for structured data (advisors: <a href="http://honeine.fr/wp/" target="_blank" rel="noopener">Prof. Paul Honeine</a> &amp; <a href="https://bgauzere.github.io/" target="_blank" rel="noopener">Prof. Benoit Gaüzère</a>).</li>
-                            <li data-i18n-html="about.b7"><span class="about-emoji" aria-hidden="true">🎓</span> M.Sc. Software Engineering (2017) &amp; B.Sc. Information Engineering (2014), <strong>🇨🇳 Xi'an Jiaotong University</strong>, China.</li>
-                            <li data-i18n-html="about.b8"><span class="about-emoji" aria-hidden="true">👥</span> Supervised <strong>20+ students</strong> and co-led / participated in <strong>multiple SNSF, Innosuisse, ANR, and UniBE-funded projects</strong>.</li>
-                            <li data-i18n-html="about.b9"><span class="about-emoji" aria-hidden="true">🎯</span> Open to <strong>ML Research Scientist / Research Engineer</strong> roles: academia &amp; industry, on-site / hybrid / remote.</li>
-                        </ul>
+                        <div class="about-notebook">
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-pin"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.now.label">Now</span>
+                                <span class="about-row-value" data-i18n-html="about.row.now.value"><strong>Postdoc</strong> · <a href="https://prg.inf.unibe.ch/" target="_blank" rel="noopener">PRG</a>, University of Bern · <strong>graph representation learning</strong></span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-flask"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.domains.label">Domains</span>
+                                <span class="about-row-value" data-i18n-html="about.row.domains.value">drug discovery (redox), Swiss hydrology, engineering diagrams (<a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener">PLANALYSER</a>)</span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-handshake"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.industry.label">Industry</span>
+                                <span class="about-row-value" data-i18n-html="about.row.industry.value"><strong>N-Banker</strong> (AI strategy / LLM agents) · <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener">WATTELSE</a> (HVAC audit)</span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-wrench"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.oss.label">OSS</span>
+                                <span class="about-row-value" data-i18n-html="about.row.oss.value"><a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener"><code>graphkit-learn</code></a> · <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener"><code>liulian</code></a> · <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener"><code>redoxprediction</code></a></span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-people"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.mentor.label">Mentor</span>
+                                <span class="about-row-value" data-i18n-html="about.row.mentor.value"><strong>20+ students</strong> supervised</span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-coin"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.funded.label">Funded</span>
+                                <span class="about-row-value" data-i18n-html="about.row.funded.value"><strong>SNSF</strong> · <strong>Innosuisse</strong> · <strong>ANR</strong> · UniBE-funded projects</span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-cap"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.past.label">Past</span>
+                                <span class="about-row-value" data-i18n-html="about.row.past.value">PhD '21 <a href="https://www.litislab.fr/" target="_blank" rel="noopener">LITIS Lab</a>, INSA Rouen · MSc/BSc <strong>XJTU</strong></span>
+                            </div>
+                            <div class="about-row">
+                                <svg class="about-icon" aria-hidden="true"><use href="#ai-target"/></svg>
+                                <span class="about-row-label" data-i18n="about.row.looking.label">Looking</span>
+                                <span class="about-row-value" data-i18n-html="about.row.looking.value"><strong>ML Research Scientist / Engineer</strong> roles · academia &amp; industry</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number">9</div><div class="stat-label" data-i18n="stats.publications">Publications</div></div>
                         <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.projects">Projects</div></div>
                         <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label" data-i18n="stats.grants">Grants</div></div>
@@ -2322,6 +2410,55 @@
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "wfp3nak9zq");
+    </script>
+
+    <!-- SVG turbulence filter for the realistic flame effect on
+         "open to opportunities" hover. feTurbulence + feDisplacementMap
+         distorts the underlying CSS-gradient flame organically; the
+         animated seed makes the distortion shimmer like real fire. -->
+    <svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
+        <defs>
+            <filter id="hn-fire-turbulence" x="-30%" y="-30%" width="160%" height="160%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02 0.5" numOctaves="2" seed="1" stitchTiles="stitch" result="noise">
+                    <animate attributeName="seed" from="1" to="80" dur="1.6s" repeatCount="indefinite"/>
+                    <animate attributeName="baseFrequency" values="0.02 0.5; 0.025 0.6; 0.02 0.5" dur="2.2s" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="6"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Howl-button cursor-proximity shake (parchment edition) ------------- -->
+    <script>
+    (function () {
+        const howl = document.getElementById('celebrationTrigger');
+        if (!howl) return;
+        const NEAR = 200;        // px — start gentle shake
+        const VERY_NEAR = 80;    // px — fast shake (matches :hover)
+        let lastFrame = 0;
+        document.addEventListener('mousemove', (e) => {
+            // throttle to ~30fps
+            const now = performance.now();
+            if (now - lastFrame < 33) return;
+            lastFrame = now;
+            const r = howl.getBoundingClientRect();
+            const cx = r.left + r.width / 2;
+            const cy = r.top + r.height / 2;
+            const d = Math.hypot(e.clientX - cx, e.clientY - cy);
+            if (d < VERY_NEAR) {
+                howl.classList.add('howl-very-near', 'howl-near');
+            } else if (d < NEAR) {
+                howl.classList.add('howl-near');
+                howl.classList.remove('howl-very-near');
+            } else {
+                howl.classList.remove('howl-near', 'howl-very-near');
+            }
+        }, { passive: true });
+        // Reset when cursor leaves the window
+        document.addEventListener('mouseleave', () => {
+            howl.classList.remove('howl-near', 'howl-very-near');
+        }, { passive: true });
+    })();
     </script>
 </body>
 </html>

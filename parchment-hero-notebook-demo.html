@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hero — Notebook Concept Demo (P4-1)</title>
 
-<!-- Reuse parchment background + drop-cap + ink-bleed style from main parchment edition -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Reenie+Beanie&family=Indie+Flower&family=Spectral:ital,wght@0,400;0,700;1,400&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Caveat:wght@400;500;600;700&family=Shadows+Into+Light&family=Spectral:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --ink-deep: oklch(0.10 0.04 30);
-    --ink-mid:  oklch(0.30 0.08 30);
+    --ink-deep:  oklch(0.10 0.04 30);
+    --ink-mid:   oklch(0.30 0.08 30);
+    --ink-soft:  oklch(0.42 0.05 30);
     --maroon-bright: oklch(0.55 0.20 27);
+    --maroon-soft:   oklch(0.62 0.14 27);
     --gold-bright:   oklch(0.78 0.18 80);
-    --gold-deep:     oklch(0.55 0.18 65);
     --parchment-base: oklch(0.93 0.03 78);
 }
 
@@ -33,6 +33,13 @@ html {
     background-attachment: fixed, fixed, fixed, fixed, fixed;
     min-height: 100vh;
 }
+@supports (-webkit-touch-callout: none) {
+    html { background-attachment: scroll, scroll, scroll, scroll, scroll; }
+}
+@media (hover: none) and (pointer: coarse) {
+    html { background-attachment: scroll, scroll, scroll, scroll, scroll; }
+}
+
 body {
     margin: 0;
     font-family: 'Indie Flower', 'Spectral', Georgia, serif;
@@ -51,8 +58,7 @@ body {
 }
 
 /* ============================================================================
- * The notebook = a 2-page spread. Wide aspect ratio, central spine shadow,
- * left-page = identity, right-page = research direction (sketched).
+ * NOTEBOOK 2-page spread
  * ========================================================================= */
 .notebook {
     width: min(1400px, 100%);
@@ -60,24 +66,18 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     position: relative;
-    /* Outer shadow — book sitting on desk */
     box-shadow:
         0 18px 60px rgba(60, 30, 5, 0.30),
         0 4px 12px rgba(60, 30, 5, 0.15);
     border-radius: 6px 6px 8px 8px / 8px 8px 4px 4px;
-    /* Subtle vignette on edges */
-    background:
-        radial-gradient(ellipse 95% 95% at 50% 50%, transparent 60%, rgba(80, 50, 10, 0.08) 100%);
-    overflow: hidden;
+    background: radial-gradient(ellipse 95% 95% at 50% 50%, transparent 60%, rgba(80, 50, 10, 0.08) 100%);
+    overflow: visible;
     isolation: isolate;
 }
-
-/* Central spine — dark groove down the middle */
 .notebook::before {
     content: "";
     position: absolute;
-    top: 0; bottom: 0;
-    left: 50%;
+    top: 0; bottom: 0; left: 50%;
     width: 28px;
     transform: translateX(-50%);
     background: linear-gradient(90deg,
@@ -86,61 +86,81 @@ body {
         rgba(60, 30, 5, 0.45) 50%,
         rgba(80, 50, 10, 0.18) 72%,
         rgba(80, 50, 10, 0.00) 100%);
-    z-index: 2;
+    z-index: 5;
     pointer-events: none;
 }
-/* Page curl shadow on each side */
 .notebook::after {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(90deg, transparent 0%, transparent 47%, rgba(120, 80, 20, 0.12) 50%, transparent 53%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, transparent 47%, rgba(120, 80, 20, 0.12) 50%, transparent 53%, transparent 100%);
     pointer-events: none;
-    z-index: 3;
+    z-index: 6;
 }
 
 .page {
-    padding: 4.5em 4.5em 3.5em 4.5em;
+    padding: 2.4em 3em;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
-.page-left  { padding-right: 5em; }
-.page-right { padding-left: 5em; }
 
 /* ============================================================================
- * LEFT PAGE: identity — handwritten name + photo + role + signature
+ * LEFT PAGE — IDENTITY
  * ========================================================================= */
-.identity-name {
-    font-family: 'Caveat', 'Reenie Beanie', cursive;
-    font-weight: 700;
-    font-size: 4.2em;
-    line-height: 1;
-    color: var(--maroon-bright);
-    letter-spacing: 0.005em;
-    margin: 0 0 0.15em 0;
-    text-shadow:
-        0 -1px 0   rgba(255, 225, 150, 0.85),
-        0  1px 0   rgba( 50,  15,   3, 0.85),
-        2px 3px 3px rgba( 80,  25,  10, 0.55);
-    transform: rotate(-1.4deg);
-    transform-origin: left center;
-}
-.identity-credential {
-    font-family: 'Caveat', cursive;
-    font-size: 1.5em;
-    color: var(--ink-mid);
-    margin: 0 0 1.4em 0;
-    transform: rotate(-0.8deg);
-    transform-origin: left center;
+
+/* Date corner */
+.identity-date {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    font-family: 'Reenie Beanie', cursive;
+    color: var(--ink-soft);
+    font-size: 1em;
+    opacity: 0.65;
+    transform: rotate(2deg);
+    z-index: 3;
 }
 
+/* Name — match index_parchment .hero-h1-name (74.88px / 700 / ls 0.75px) */
+.identity-name {
+    font-family: 'Reenie Beanie', 'Indie Flower', cursive;
+    font-weight: 700;
+    font-size: 74.88px;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--ink-deep);
+    margin: 0.1em 0 0 0;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55);
+    transform: rotate(-1.0deg);
+    transform-origin: left center;
+}
+/* Sub-credential — Caveat handwritten cursive (was Spectral italic, too printed) */
+.identity-credential {
+    font-family: 'Caveat', 'Shadows Into Light', cursive;
+    font-weight: 500;
+    font-size: 1.40em;
+    color: var(--ink-mid);
+    margin: 0.05em 0 0 0.6em;
+    transform: rotate(-0.5deg);
+    transform-origin: left center;
+    letter-spacing: 0.01em;
+}
+
+/* Photo + side info row — fills the page horizontally */
+.identity-photo-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.6em;
+    margin: 1em 0 0.6em 0.4em;
+}
 .identity-photo-wrap {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
     position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 0.6em 0 1.4em 0;
-    transform: rotate(-2.2deg);
+    animation: photo-wobble 14s ease-in-out infinite;
     transform-origin: center center;
 }
 .identity-photo {
@@ -148,7 +168,6 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    /* Soft mask — fade into parchment */
     mask-image: radial-gradient(circle at 50% 48%,
         rgba(0,0,0,1) 30%,
         rgba(0,0,0,0.95) 48%,
@@ -166,77 +185,194 @@ body {
     filter: contrast(1.04) saturate(1.05);
     opacity: 0.88;
 }
-/* Hand-drawn arrow + label pointing at photo */
+@keyframes photo-wobble {
+    0%    { transform: rotate(2.2deg); }
+    11%   { transform: rotate(2.7deg); }
+    23%   { transform: rotate(1.5deg); }
+    37%   { transform: rotate(3.1deg); }
+    49%   { transform: rotate(2.0deg); }
+    61%   { transform: rotate(1.6deg); }
+    74%   { transform: rotate(2.6deg); }
+    88%   { transform: rotate(2.3deg); }
+    100%  { transform: rotate(2.2deg); }
+}
+
+/* Side area to the RIGHT of photo — holds "that's me" arrow + role lines */
+.photo-side {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.1em;
+    padding-top: 0.6em;
+}
+/* "that's me" arrow — sits ABOVE role lines, arrow points LEFT to photo */
 .photo-label {
-    position: absolute;
-    right: -150px;
-    top: 70px;
-    font-family: 'Caveat', cursive;
-    font-size: 1.3em;
-    color: var(--maroon-bright);
-    transform: rotate(8deg);
-    width: 140px;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 1.45em;
+    line-height: 1;
+    color: var(--maroon-soft);
+    transform: rotate(-3deg);
+    transform-origin: left center;
+    position: relative;
+    padding-left: 32px;
+    align-self: flex-start;
 }
 .photo-label::before {
     content: "";
     position: absolute;
-    left: -100px;
-    top: 14px;
-    width: 90px;
-    height: 16px;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 16'><path d='M5,8 Q40,4 80,9' stroke='%23a02020' stroke-width='1.5' fill='none' stroke-linecap='round'/><polyline points='2,7 8,8 5,12' stroke='%23a02020' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center;
+    left: -52px;
+    top: 6px;
+    width: 80px;
+    height: 18px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 18'><path d='M75,9 Q40,4 8,11' stroke='%23a8483a' stroke-width='1.5' fill='none' stroke-linecap='round'/><polyline points='12,7 6,11 11,15' stroke='%23a8483a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center;
 }
 
-.identity-role {
-    font-size: 1.1em;
-    margin: 0 0 0.4em 0;
-    color: var(--ink-deep);
+/* Role lines — sit beside photo */
+.role-below-photo {
+    margin: 0;
+    font-family: 'Indie Flower', cursive;
+    line-height: 1.4;
 }
-.identity-keywords {
-    font-family: 'Caveat', cursive;
+.role-below-photo .role-line {
+    display: block;
+    transform-origin: left center;
+}
+.role-below-photo .role-line-1 {
+    font-size: 1.45em;
+    color: var(--maroon-bright);
+    font-weight: 700;
+    margin-left: 0;
+    transform: rotate(-0.8deg);
+}
+.role-below-photo .role-line-2 {
     font-size: 1.15em;
     color: var(--ink-mid);
-    line-height: 1.6;
-    margin: 0 0 1.6em 0;
+    margin-left: 1.4em;
+    margin-top: 0.15em;
+    transform: rotate(0.5deg);
 }
-.identity-keywords span { color: var(--maroon-bright); font-weight: 700; }
 
-.identity-signature {
-    position: absolute;
-    bottom: 2.2em;
-    left: 4.5em;
-    font-family: 'Caveat', cursive;
-    font-style: italic;
+/* "work done" handwritten section label */
+.work-done-label {
+    margin: 0.6em 0 0.3em 0;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 1.55em;
     color: var(--maroon-bright);
-    font-size: 1.4em;
-    transform: rotate(-3deg);
-    border-bottom: 1px dashed rgba(140, 30, 30, 0.4);
-    padding-bottom: 0.2em;
+    transform: rotate(-1deg);
+    transform-origin: left center;
+    letter-spacing: 0.015em;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.40);
 }
-.identity-date {
+.work-done-label::after {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 7px;
+    margin-top: 2px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 7'><path d='M2,4 Q30,1 55,4 T108,3' stroke='%23a02020' stroke-width='1.3' fill='none' stroke-linecap='round' opacity='0.55'/></svg>") no-repeat left center;
+}
+
+/* Checklist as 2-column grid (long-short alternation) */
+.work-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0.4em 0 0 0;
+    font-family: 'Indie Flower', cursive;
+    color: var(--ink-deep);
+    font-size: 0.92em;          /* slightly smaller so each item fits one line */
+    line-height: 1.45;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55em 0.3em;
+}
+.work-checklist li {
+    position: relative;
+    padding-left: 0;
+    margin: 0 0 0.55em 0;
+    transform-origin: left center;
+    list-style: none;
+}
+.work-checklist li:nth-child(1) { transform: rotate(-0.5deg); }
+.work-checklist li:nth-child(2) { transform: rotate(0.5deg); }
+
+/* Each fact gets its own ✓ ::before */
+.fact {
+    position: relative;
+    padding-left: 1.7em;
+    display: inline;
+}
+.fact::before {
+    content: "";
     position: absolute;
-    bottom: 2.2em;
-    right: 4.5em;
-    font-family: 'Caveat', cursive;
-    color: var(--ink-mid);
-    font-size: 1.05em;
+    left: 0;
+    top: 0.05em;
+    width: 1.4em;
+    height: 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.fact-1::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M3,11 Q5,12 8,16 Q9,17 18,4' stroke='%23a02020' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(-4deg);
+}
+.fact-2::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M2,12 L9,18 L19,6' stroke='%23a02020' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/><path d='M19,6 L20,5' stroke='%23a02020' stroke-width='2.6' fill='none' stroke-linecap='round'/></svg>");
+    transform: rotate(6deg);
+}
+.fact-3::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M4,10 Q6,11 8,15 Q9.5,17 11,15 Q14,9 19,3' stroke='%23a02020' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(-7deg);
+}
+.fact-4::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M2,13 L7,17 L18,5' stroke='%23a02020' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(3deg);
+}
+.fact + .fact { margin-left: 1.6em; }
+
+/* Link style — match index_parchment .hero-signature: dashed default → solid hover */
+.work-checklist a {
+    color: var(--maroon-bright);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(140, 30, 30, 0.45);
+    transition: color 0.2s ease, border-color 0.2s ease, border-bottom-style 0.2s ease;
+    padding-bottom: 0.05em;
+}
+.work-checklist a:hover {
+    color: oklch(0.40 0.22 27);
+    border-bottom: 1px solid var(--maroon-bright);
+}
+.work-checklist a strong { font-weight: 700; }
+
+/* Library names — Caveat cursive (handwritten, not printed) */
+.work-checklist .lib-name {
+    font-family: 'Caveat', 'Shadows Into Light', cursive;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.18em;
+    color: var(--maroon-bright);
+    letter-spacing: 0.005em;
+    line-height: 0.85;
+    vertical-align: -0.05em;
 }
 
 /* ============================================================================
- * RIGHT PAGE: research direction — sketch-style heading + a small bubble
- * map + 3 key questions handwritten.
+ * RIGHT PAGE — RESEARCH
  * ========================================================================= */
 .research-heading {
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 2.5em;
+    font-family: 'Reenie Beanie', cursive;
+    font-weight: 400;
+    font-size: 2.1em;
     color: var(--maroon-bright);
-    margin: 0 0 0.6em 0;
+    margin: 0 0 0.3em 0;
     transform: rotate(-0.6deg);
     text-shadow:
-        0 -1px 0   rgba(255, 225, 150, 0.85),
-        0  1px 0   rgba( 50,  15,   3, 0.85),
-        2px 3px 3px rgba( 80,  25,  10, 0.55);
+        -1px -1px 0 rgba(255, 240, 200, 0.6),
+         1px  1px 1.5px rgba(20, 8, 0, 0.55);
 }
 .research-heading::before {
     content: "★";
@@ -245,95 +381,167 @@ body {
     -webkit-text-stroke: 0.5px var(--maroon-bright);
 }
 
-/* Bubble map — central concept + 4 satellites with hand-drawn lines */
 .bubble-map {
     width: 100%;
     height: 280px;
     position: relative;
-    margin: 1em 0 1.4em 0;
+    margin: 0.8em 0 1.0em 0;
 }
-
 .bubble {
     position: absolute;
     color: var(--maroon-bright);
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
+    font-family: 'Reenie Beanie', cursive;
+    font-weight: 400;
     text-align: center;
     background: transparent;
-    border-radius: 50% / 70%;
+    border-radius: 50% / 65%;
     box-shadow:
         inset 0 0 0 1.5px rgba(140, 30, 30, 0.55),
         2px 3px 5px rgba(80, 20, 5, 0.15);
-    padding: 0.45em 1em;
-    line-height: 1.1;
+    padding: 0.5em 1em;
+    line-height: 1.05;
+    white-space: nowrap;
 }
 .bubble.center {
     top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(-1deg);
-    font-size: 1.5em;
+    font-size: 1.85em;
+    padding: 0.55em 1.3em;
+    color: var(--ink-deep);
     box-shadow:
-        inset 0 0 0 2px rgba(140, 30, 30, 0.75),
-        3px 4px 6px rgba(80, 20, 5, 0.20);
+        inset 0 0 0 2.5px rgba(140, 30, 30, 0.85),
+        3px 5px 8px rgba(80, 20, 5, 0.25),
+        0 0 18px rgba(255, 200, 100, 0.30);
 }
-.bubble.b1 { top: 6%; left: 8%; transform: rotate(-3deg); font-size: 1.1em; }
-.bubble.b2 { top: 12%; right: 4%; transform: rotate(2deg); font-size: 1.1em; }
-.bubble.b3 { bottom: 8%; left: 6%; transform: rotate(1.5deg); font-size: 1.05em; }
-.bubble.b4 { bottom: 4%; right: 8%; transform: rotate(-2deg); font-size: 1.05em; }
-
-/* Connecting hand-drawn lines via SVG */
+.bubble.b1 { top: 0%;    left: 0%;  transform: rotate(-3deg);   font-size: 1.30em; }
+.bubble.b2 { top: 4%;    right: 0%; transform: rotate(2.5deg);  font-size: 1.30em; }
+.bubble.b3 { bottom: 0%; left: 0%;  transform: rotate(1.8deg);  font-size: 1.25em; }
+.bubble.b4 { bottom: 0%; right: 0%; transform: rotate(-2.2deg); font-size: 1.25em; }
 .bubble-map > svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
 }
+.bubble { z-index: 1; }
 
-/* Three key questions handwritten below */
-.questions {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: 'Caveat', cursive;
-    font-size: 1.25em;
-    line-height: 1.55;
+/* Single key question — one line */
+.key-question {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 1.10em;
+    line-height: 1.3;
     color: var(--ink-deep);
+    text-align: right;
+    margin: 0 1.6em 0 0.5em;     /* right margin = breathing room from edge */
+    padding: 0.4em 0;
+    transform: rotate(-0.3deg);
+    white-space: nowrap;
+    overflow: visible;
 }
-.questions li {
-    margin-bottom: 0.5em;
-    padding-left: 1.5em;
-    position: relative;
-}
-.questions li::before {
+.key-question strong { color: var(--maroon-bright); }
+.key-question em { color: oklch(0.45 0.20 35); font-style: italic; font-weight: 700; }
+.key-question::before {
     content: "?";
-    position: absolute;
-    left: 0;
-    top: -0.1em;
-    font-size: 1.3em;
     color: var(--maroon-bright);
+    margin-right: 0.3em;
+    font-size: 1.3em;
     font-weight: 700;
+    vertical-align: -0.05em;
 }
 
-/* Hand-drawn arrow at top-right of right page (pointing back to left page) */
-.cross-arrow {
+/* "open to opportunities" — bottom-right of RIGHT page (was on left page),
+ * irregular breathing pulse with random-feel intervals + variable peaks. */
+.opportunities-badge {
     position: absolute;
-    top: 1em;
-    left: -2.5em;
-    width: 60px;
-    transform: rotate(-15deg);
-    pointer-events: none;
+    right: 1.8em;
+    bottom: 1.4em;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 1.5em;
+    color: var(--maroon-bright);
+    transform-origin: right center;
+    z-index: 4;
+    letter-spacing: 0.015em;
+    /* Long, irregular cycle (12s) — unpredictable breath */
+    animation: opportunities-breathe 12s ease-in-out infinite;
+    transform: rotate(-2deg) scale(1);
+}
+@keyframes opportunities-breathe {
+    /* Long quiet stretch, then a small swell */
+    0%, 14% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    20% {     /* small breath, peak ~1.06 */
+        transform: rotate(-2deg) scale(1.06);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 3px rgba(255, 230, 150, 0.65),
+             0 0 9px rgba(255, 200, 100, 0.45);
+        filter: drop-shadow(0 0 5px rgba(255, 200, 80, 0.35));
+    }
+    27%, 42% {        /* return to baseline, longer pause */
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    51% {     /* big breath, peak ~1.14 */
+        transform: rotate(-2deg) scale(1.14);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 5px  rgba(255, 235, 160, 1.00),
+             0 0 14px rgba(255, 200, 100, 0.85),
+             0 0 30px rgba(255, 175,  60, 0.65),
+             0 0 56px rgba(255, 145,  30, 0.40);
+        filter: drop-shadow(0 0 10px rgba(255, 200, 80, 0.65));
+    }
+    60%, 76% {        /* cool down + long quiet */
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    84% {     /* medium breath, peak ~1.09 */
+        transform: rotate(-2deg) scale(1.09);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 4px rgba(255, 230, 150, 0.80),
+             0 0 11px rgba(255, 200, 100, 0.60),
+             0 0 22px rgba(255, 175, 60, 0.40);
+        filter: drop-shadow(0 0 7px rgba(255, 200, 80, 0.50));
+    }
+    93%, 100% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
 }
 
 /* ============================================================================
- * Header (back to main) + footer note
+ * Header back-link + footer note
  * ========================================================================= */
 .demo-header {
     position: fixed;
     top: 1em;
     left: 1.5em;
     z-index: 100;
-    font-family: 'Caveat', cursive;
+    font-family: 'Reenie Beanie', cursive;
 }
 .demo-header a {
     color: var(--maroon-bright);
@@ -345,18 +553,77 @@ body {
 .demo-footer {
     position: fixed;
     bottom: 1em;
-    right: 1.5em;
-    font-family: 'Caveat', cursive;
-    color: var(--ink-mid);
-    font-size: 1em;
+    left: 1.5em;          /* moved to LEFT (since opportunities is now bottom-right) */
+    font-family: 'Indie Flower', cursive;
+    color: var(--ink-soft);
+    font-size: 0.9em;
     z-index: 100;
+    opacity: 0.7;
 }
 
+/* ============================================================================
+ * MOBILE
+ * ========================================================================= */
 @media (max-width: 900px) {
-    .notebook { aspect-ratio: auto; grid-template-columns: 1fr; }
+    body { padding: 2vh 3vw; align-items: flex-start; }
+    .notebook {
+        aspect-ratio: auto;
+        grid-template-columns: 1fr;
+        border-radius: 4px;
+    }
     .notebook::before { display: none; }
-    .page-left, .page-right { padding: 3em 2em; }
-    .photo-label { display: none; }
+    .notebook::after { display: none; }
+    .page { padding: 2.5em 1.5em; }
+    .identity-name { font-size: 3.4em; }
+    .identity-credential { font-size: 1.2em; }
+    .identity-photo-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8em;
+    }
+    .photo-side { align-items: center; gap: 0.6em; }
+    .photo-label { display: none; }     /* hide arrow on mobile */
+    .role-below-photo { text-align: center; }
+    .role-below-photo .role-line-1 { font-size: 1.2em; }
+    .role-below-photo .role-line-2 { font-size: 1.0em; margin-left: 0; }
+    .work-done-label { font-size: 1.35em; }
+    .work-checklist {
+        grid-template-columns: 1fr;     /* single column on mobile */
+        gap: 0.55em;
+        font-size: 0.95em;
+    }
+    .opportunities-badge {
+        position: relative;
+        right: auto; bottom: auto;
+        margin: 1em 0 0 auto;
+        width: fit-content;
+        font-size: 1.25em;
+    }
+    .identity-date {
+        position: relative;
+        top: auto; right: auto;
+        text-align: right;
+        margin-bottom: 0.4em;
+    }
+    .research-heading { font-size: 1.7em; }
+    .bubble-map { height: 260px; margin-top: 0.5em; }
+    .bubble.center { font-size: 1.4em; padding: 0.5em 1em; }
+    .bubble.b1, .bubble.b2, .bubble.b3, .bubble.b4 { font-size: 1.0em; padding: 0.4em 0.7em; }
+    .key-question { font-size: 0.95em; white-space: normal; margin: 0 0.5em; }
+    .demo-header, .demo-footer { font-size: 0.9em; }
+}
+@media (max-width: 480px) {
+    .identity-name { font-size: 2.7em; }
+    .identity-photo-wrap { width: 150px; height: 150px; }
+    .bubble-map { height: 240px; }
+    .bubble.center { font-size: 1.2em; }
+    .bubble.b1, .bubble.b2, .bubble.b3, .bubble.b4 { font-size: 0.85em; padding: 0.35em 0.55em; }
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .identity-photo-wrap { animation: none; transform: rotate(2.2deg); }
+    .opportunities-badge { animation: none; transform: rotate(-2deg) scale(1.05); }
 }
 </style>
 </head>
@@ -368,59 +635,85 @@ body {
 
 <div class="notebook">
 
-    <!-- LEFT PAGE: identity ============================================== -->
+    <!-- =========================================================
+         LEFT PAGE — IDENTITY
+         ========================================================= -->
     <div class="page page-left">
+
+        <div class="identity-date">opened — Apr 2026</div>
+
         <h1 class="identity-name">Linlin Jia</h1>
         <p class="identity-credential">— Ph.D. in Machine Learning</p>
 
-        <div class="identity-photo-wrap">
-            <img class="identity-photo" src="img/profile.jpeg" alt="Linlin Jia" onerror="this.style.opacity=0.3">
-            <div class="photo-label">that's me<br>(circa 2025)</div>
+        <div class="identity-photo-row">
+            <div class="identity-photo-wrap">
+                <picture>
+                    <source srcset="images/photo.avif" type="image/avif">
+                    <source srcset="images/photo.webp" type="image/webp">
+                    <img class="identity-photo" src="images/photo.jpg" alt="Linlin Jia, Ph.D.">
+                </picture>
+            </div>
+            <div class="photo-side">
+                <span class="photo-label">that's me</span>
+                <p class="role-below-photo">
+                    <span class="role-line role-line-1">Research Scientist · Postdoc</span>
+                    <span class="role-line role-line-2">University of Bern, Switzerland</span>
+                </p>
+            </div>
         </div>
 
-        <p class="identity-role">
-            Research Scientist · Postdoc<br>
-            <em>University of Bern, Switzerland</em>
-        </p>
+        <div class="work-done-label">work done</div>
 
-        <p class="identity-keywords">
-            interests: <span>graph ML</span>, <span>spatio-temporal</span><br>
-            <span>graph AI for science</span>, <span>LLM agents</span>
-        </p>
-
-        <div class="identity-signature">L. Jia</div>
-        <div class="identity-date">opened — Apr 2026</div>
+        <ul class="work-checklist">
+            <li>
+                <span class="fact fact-1">
+                    <a href="https://www.snf.ch/en" target="_blank" rel="noopener noreferrer"><strong>SNSF</strong></a>
+                    + <a href="https://www.innosuisse.admin.ch/en" target="_blank" rel="noopener noreferrer"><strong>Innosuisse</strong></a>
+                    + <a href="https://anr.fr/en/" target="_blank" rel="noopener noreferrer"><strong>ANR</strong></a> funded
+                </span>
+                <span class="fact fact-2">8+ projects / grants delivered</span>
+            </li>
+            <li>
+                <span class="fact fact-3">
+                    Authored
+                    <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer"><span class="lib-name">graphkit-learn</span></a>
+                    + <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer"><span class="lib-name">LIULIAN</span></a>
+                </span>
+                <span class="fact fact-4">9 papers published</span>
+            </li>
+        </ul>
     </div>
 
-    <!-- RIGHT PAGE: research direction ==================================== -->
+    <!-- =========================================================
+         RIGHT PAGE — RESEARCH
+         ========================================================= -->
     <div class="page page-right">
-        <svg class="cross-arrow" viewBox="0 0 60 30">
-            <path d="M55,15 Q30,10 8,18" stroke="#a02020" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-            <polyline points="3,16 9,18 7,22" stroke="#a02020" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
 
         <h2 class="research-heading">today's research</h2>
 
         <div class="bubble-map">
             <svg viewBox="0 0 600 280" preserveAspectRatio="none">
-                <!-- Hand-drawn connecting lines, center → 4 satellites -->
-                <path d="M300,140 Q230,120 100,55"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
-                <path d="M300,140 Q400,100 510,60"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
-                <path d="M300,140 Q220,200 90,250"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
-                <path d="M300,140 Q400,210 520,260" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <!-- Lines start at center-bubble edge and end at satellite-bubble edge,
+                     so the bubbles aren't pierced by the dashed connectors. -->
+                <path d="M231,110 Q210,100 130,64"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M370,113 Q400,100 469,76"  stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M233,173 Q210,200 129,224" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
+                <path d="M370,173 Q400,200 471,224" stroke="rgba(140,30,30,0.40)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-dasharray="3,3"/>
             </svg>
-            <div class="bubble center">graph<br>ML</div>
-            <div class="bubble b1">spatio-<br>temporal</div>
-            <div class="bubble b2">drug<br>discovery</div>
-            <div class="bubble b3">LLM<br>agents</div>
-            <div class="bubble b4">computational<br>chemistry</div>
+            <div class="bubble center">Graph Machine<br>Learning</div>
+            <div class="bubble b1">Graph Representation<br>Learning</div>
+            <div class="bubble b2">Spatio-Temporal<br>Learning</div>
+            <div class="bubble b3">Graph AI for<br>Science &amp; Industry</div>
+            <div class="bubble b4">LLM Systems<br>&amp; Agents</div>
         </div>
 
-        <ul class="questions">
-            <li>can graphs learn faster than transformers?</li>
-            <li>what does a kernel-GNN bridge teach us?</li>
-            <li>can LLM agents do real science?</li>
-        </ul>
+        <p class="key-question">
+            can <strong>graphs + LLM agents</strong> do real science <em>or industry work</em>?
+        </p>
+
+        <div class="opportunities-badge" aria-label="Open to opportunities">
+            open to opportunities
+        </div>
     </div>
 
 </div>

@@ -595,16 +595,30 @@ strong, b, em, .news-content strong, .pub-card strong, .pub-card em,
 }
 
 /* V6.4: links — maroon-bright (brighter than V4 highlight) + emboss + bold */
-a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-secondary):not(.hero-badge):not(.chatbot-trigger):not(.filter-tag):not(.skill-tag):not(.animal):not(.howl-wrap):not(.thesis-highlight):not(.outline-item):not(.word) {
+a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-secondary):not(.hero-badge):not(.chatbot-trigger):not(.filter-tag):not(.skill-tag):not(.animal):not(.howl-wrap):not(.thesis-highlight):not(.outline-item):not(.word):not(.hn-opportunities):not(.hn-jump-about):not(.link-plain) {
     color: var(--maroon-bright) !important;
     font-weight: 700 !important;
     text-shadow:
         -0.5px -0.5px 0 rgba(255, 220, 200, 0.4),
          0.5px  1px 1px rgba(80, 10, 10, 0.55) !important;
 }
-a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-secondary):not(.hero-badge):not(.chatbot-trigger):not(.filter-tag):not(.skill-tag):not(.animal):not(.howl-wrap):not(.thesis-highlight):not(.outline-item):not(.word):hover {
+a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-secondary):not(.hero-badge):not(.chatbot-trigger):not(.filter-tag):not(.skill-tag):not(.animal):not(.howl-wrap):not(.thesis-highlight):not(.outline-item):not(.word):not(.hn-opportunities):not(.hn-jump-about):not(.link-plain):hover {
     color: var(--maroon-glow) !important;
     text-shadow: 0 0 5px rgba(180, 60, 60, 0.5) !important;
+}
+/* `.link-plain` — opt-out style for links that shouldn't get the maroon emboss
+ * (e.g. PRG mention in About row, where the link is reference-only). */
+.link-plain {
+    color: oklch(0.32 0.05 30) !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+    text-decoration: underline dotted oklch(0.50 0.05 30 / 0.55) !important;
+    text-underline-offset: 3px !important;
+    text-decoration-thickness: 1px !important;
+}
+.link-plain:hover {
+    color: oklch(0.20 0.06 30) !important;
+    text-decoration-color: oklch(0.40 0.06 30) !important;
 }
 
 /* V6.5: numbers (citations / pub count / etc.) — JetBrains Mono + emboss + maroon */
@@ -685,7 +699,8 @@ a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-second
 }
 
 .section-title > span[data-i18n]::first-letter,
-.beyond-research h2 > span[data-i18n]::first-letter {
+.beyond-research h2 > span[data-i18n]::first-letter,
+.otw-title > span[data-i18n]::first-letter {
     font-family: 'Caveat', 'Reenie Beanie', 'Indie Flower', cursive !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -742,7 +757,8 @@ a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-second
 
 /* ZH locale: brush calligraphy for the first Chinese character, same red+gold treatment */
 html[lang="zh"] .section-title > span[data-i18n]::first-letter,
-html[lang="zh"] .beyond-research h2 > span[data-i18n]::first-letter {
+html[lang="zh"] .beyond-research h2 > span[data-i18n]::first-letter,
+html[lang="zh"] .otw-title > span[data-i18n]::first-letter {
     font-family: 'Ma Shan Zheng', 'Zhi Mang Xing', cursive !important;
     font-size: 2.2em !important;
     margin-right: 0.06em !important;
@@ -1374,4 +1390,1674 @@ section + section::before {
     box-shadow:
         inset 0 0 0 1.5px rgba(140, 30, 30, 0.65),
         3px 4px 6px rgba(80, 20, 5, 0.18) !important;
+}
+
+/* ============================================================================
+ * §HERO-NOTEBOOK (V8). Hero replaced with an open notebook spread:
+ *   left page = identity (name + photo + role + work-done checklist)
+ *   right page = research (today's research + bubble map + key question +
+ *                          "open to opportunities" breathing badge).
+ *   Scoped under .hero-notebook so styles don't leak. CSS-only (no JS).
+ * ========================================================================= */
+
+/* Override the section .hero default layout — content sits directly on parchment */
+.hero.hero-notebook-section {
+    background: transparent !important;
+    padding: 2em 0 5em !important;       /* tighter top (navbar hidden by default), keep generous bottom */
+    min-height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-notebook {
+    width: 100%;
+    max-width: 1100px;             /* match .container width below */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;               /* tight gap brings two sides close */
+    position: relative;
+    /* No background, no box-shadow, no border-radius, no spine — naked on parchment */
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible;
+}
+.hero-notebook::before, .hero-notebook::after { display: none !important; }
+.hero-notebook .hn-page {
+    padding: 0.5em 0;              /* minimal padding — no card chrome */
+    position: relative;
+    overflow: visible;
+}
+
+/* ----- LEFT PAGE — IDENTITY ----- */
+.hero-notebook .hn-date {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    font-family: 'Reenie Beanie', cursive !important;
+    color: oklch(0.42 0.05 30);
+    font-size: 1em !important;
+    opacity: 0.65;
+    transform: rotate(2deg);
+    z-index: 3;
+    text-shadow: none !important;
+}
+
+/* Name — exact match to canonical .hero-h1-name (74.88px / fw 700 / ls 0.75px) */
+.hero-notebook .hn-name {
+    font-family: 'Reenie Beanie', 'Indie Flower', cursive !important;
+    font-weight: 700 !important;
+    font-size: 74.88px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.01em !important;
+    color: oklch(0.10 0.04 30) !important;
+    margin: 0.1em 0 0 0 !important;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.55) !important;
+    transform: rotate(-1.0deg);
+    transform-origin: center center;     /* match hover origin → no jump on hover */
+    text-align: left !important;
+    display: block !important;
+}
+
+/* Sub-credential — Caveat handwritten cursive */
+.hero-notebook .hn-credential {
+    font-family: 'Caveat', 'Shadows Into Light', cursive !important;
+    font-weight: 500 !important;
+    font-size: 1.40em !important;
+    color: oklch(0.30 0.08 30) !important;
+    margin: 0.05em 0 0 0.6em !important;
+    transform: rotate(-0.5deg);
+    transform-origin: left center;
+    letter-spacing: 0.01em;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+/* Photo + side info row */
+.hero-notebook .hn-photo-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.6em;
+    margin: 1em 0 0.6em 0.4em !important;
+}
+.hero-notebook .hn-photo-wrap {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    position: relative;
+    animation: hn-photo-wobble 14s ease-in-out infinite;
+    transform-origin: center center;
+}
+.hero-notebook .hn-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%);
+    -webkit-mask-image: radial-gradient(circle at 50% 48%,
+        rgba(0,0,0,1) 30%,
+        rgba(0,0,0,0.95) 48%,
+        rgba(0,0,0,0.78) 62%,
+        rgba(0,0,0,0.50) 76%,
+        rgba(0,0,0,0.22) 88%,
+        rgba(0,0,0,0) 100%);
+    filter: contrast(1.04) saturate(1.05);
+    opacity: 0.88;
+}
+@keyframes hn-photo-wobble {
+    0%   { transform: rotate(2.2deg); }
+    11%  { transform: rotate(2.7deg); }
+    23%  { transform: rotate(1.5deg); }
+    37%  { transform: rotate(3.1deg); }
+    49%  { transform: rotate(2.0deg); }
+    61%  { transform: rotate(1.6deg); }
+    74%  { transform: rotate(2.6deg); }
+    88%  { transform: rotate(2.3deg); }
+    100% { transform: rotate(2.2deg); }
+}
+
+.hero-notebook .hn-photo-side {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.1em;
+    padding-top: 0.6em;
+}
+.hero-notebook .hn-photo-label {
+    font-family: 'Reenie Beanie', cursive !important;
+    font-size: 1.45em !important;
+    line-height: 1 !important;
+    color: oklch(0.62 0.14 27) !important;
+    transform: rotate(-3deg);
+    transform-origin: left center;
+    position: relative;
+    padding-left: 32px;
+    align-self: flex-start;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+.hero-notebook .hn-photo-label::before {
+    content: "";
+    position: absolute;
+    left: -52px;
+    top: 6px;
+    width: 80px;
+    height: 18px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 18'><path d='M75,9 Q40,4 8,11' stroke='%23a8483a' stroke-width='1.5' fill='none' stroke-linecap='round'/><polyline points='12,7 6,11 11,15' stroke='%23a8483a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center;
+}
+
+.hero-notebook .hn-role {
+    margin: 0 !important;
+    font-family: 'Indie Flower', cursive !important;
+    line-height: 1.4 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    /* Break the global "p { font-size: 1.20em }" cascade so role-1/role-2 em
+     * calculations match the demo (base 17.5px instead of 21px). */
+    font-size: 17.5px !important;
+}
+.hero-notebook .hn-role-line {
+    display: block;
+    transform-origin: left center;
+}
+.hero-notebook .hn-role-1 {
+    font-size: 1.45em !important;
+    color: oklch(0.55 0.20 27) !important;
+    font-weight: 700 !important;
+    margin-left: 0;
+    transform: rotate(-0.8deg);
+}
+.hero-notebook .hn-role-2 {
+    font-size: 1.15em !important;
+    color: oklch(0.30 0.08 30) !important;
+    margin-left: 1.4em;
+    margin-top: 0.15em;
+    transform: rotate(0.5deg);
+    font-weight: 600 !important;
+}
+
+/* "work done" handwritten label */
+.hero-notebook .hn-work-label {
+    margin: 0.6em 0 0.3em 0 !important;
+    font-family: 'Reenie Beanie', cursive !important;
+    font-size: 1.55em !important;
+    color: oklch(0.55 0.20 27) !important;
+    transform: rotate(-1deg);
+    transform-origin: left center;
+    letter-spacing: 0.015em;
+    opacity: 1 !important;
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.5),
+         1px  1px 1px rgba(20, 8, 0, 0.40) !important;
+}
+.hero-notebook .hn-work-label::after {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 7px;
+    margin-top: 2px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 7'><path d='M2,4 Q30,1 55,4 T108,3' stroke='%23a02020' stroke-width='1.3' fill='none' stroke-linecap='round' opacity='0.55'/></svg>") no-repeat left center;
+}
+
+/* Checklist — 2 rows, each row is one continuous text block (no grid).
+ * The "·" separator visually divides two facts inside each row, but they
+ * flow as one paragraph so long content can't force-wrap into ugly columns. */
+.hero-notebook .hn-checklist {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0.4em 0 0 0 !important;
+    font-family: 'Indie Flower', cursive !important;
+    color: oklch(0.10 0.04 30) !important;
+    font-size: 0.92em !important;
+    line-height: 1.55 !important;
+}
+.hero-notebook .hn-checklist li {
+    position: relative;
+    padding-left: 0 !important;
+    margin: 0 0 0.55em 0 !important;
+    /* Break global "li { font-size: 1.20em }" cascade — inherit ul's 0.92em */
+    font-size: inherit !important;
+    transform-origin: left center;
+    background: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    list-style: none;
+}
+.hero-notebook .hn-checklist li:nth-child(1) { transform: rotate(-0.5deg); }
+.hero-notebook .hn-checklist li:nth-child(2) { transform: rotate(0.5deg); }
+
+/* Each fact gets its own hand-drawn ✓ ::before — 4 distinct check marks */
+.hero-notebook .hn-fact {
+    position: relative;
+    padding-left: 1.7em;
+    display: inline;     /* flow inline so the row is one paragraph */
+}
+.hero-notebook .hn-fact::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    width: 1.4em;
+    height: 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.hero-notebook .hn-fact-1::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M3,11 Q5,12 8,16 Q9,17 18,4' stroke='%23a02020' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(-4deg);
+}
+.hero-notebook .hn-fact-2::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M2,12 L9,18 L19,6' stroke='%23a02020' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/><path d='M19,6 L20,5' stroke='%23a02020' stroke-width='2.6' fill='none' stroke-linecap='round'/></svg>");
+    transform: rotate(6deg);
+}
+.hero-notebook .hn-fact-3::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M4,10 Q6,11 8,15 Q9.5,17 11,15 Q14,9 19,3' stroke='%23a02020' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(-7deg);
+}
+.hero-notebook .hn-fact-4::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'><path d='M2,13 L7,17 L18,5' stroke='%23a02020' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transform: rotate(3deg);
+}
+/* Gap between two facts on the same row */
+.hero-notebook .hn-fact + .hn-fact {
+    margin-left: 1.6em;
+}
+
+.hero-notebook .hn-checklist a {
+    color: oklch(0.55 0.20 27) !important;
+    text-decoration: none !important;
+    border-bottom: 1px dashed rgba(140, 30, 30, 0.45) !important;
+    transition: color 0.2s ease, border-color 0.2s ease, border-bottom-style 0.2s ease;
+    padding-bottom: 0.05em;
+    background: none !important;
+}
+.hero-notebook .hn-checklist a:hover {
+    color: oklch(0.40 0.22 27) !important;
+    border-bottom: 1px solid oklch(0.55 0.20 27) !important;
+}
+.hero-notebook .hn-checklist a strong { font-weight: 700 !important; color: inherit !important; }
+
+/* Library names — Caveat cursive */
+.hero-notebook .hn-checklist .hn-lib {
+    font-family: 'Caveat', 'Shadows Into Light', cursive !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 1.18em !important;
+    color: oklch(0.55 0.20 27) !important;
+    letter-spacing: 0.005em;
+    line-height: 0.85;
+    vertical-align: -0.05em;
+}
+
+/* ----- RIGHT PAGE — RESEARCH ----- */
+.hero-notebook .hn-research-heading {
+    font-family: 'Reenie Beanie', cursive !important;
+    font-weight: 400 !important;
+    font-size: 2.1em !important;
+    color: oklch(0.55 0.20 27) !important;
+    margin: 0 0 0.3em 0 !important;
+    transform: rotate(-0.6deg);
+    text-shadow:
+        -1px -1px 0 rgba(255, 240, 200, 0.6),
+         1px  1px 1.5px rgba(20, 8, 0, 0.55) !important;
+}
+.hero-notebook .hn-research-heading::before {
+    content: "★";
+    color: oklch(0.78 0.18 80);
+    margin-right: 0.3em;
+    -webkit-text-stroke: 0.5px oklch(0.55 0.20 27);
+}
+
+.hero-notebook .hn-bubble-map {
+    width: 100%;
+    height: 280px;
+    position: relative;
+    margin: 0.8em 0 1.0em 0;
+}
+.hero-notebook .hn-bubble {
+    position: absolute;
+    color: oklch(0.55 0.20 27) !important;
+    font-family: 'Reenie Beanie', cursive !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    background: transparent !important;
+    border-radius: 50% / 65%;
+    box-shadow:
+        inset 0 0 0 1.5px rgba(140, 30, 30, 0.55),
+        2px 3px 5px rgba(80, 20, 5, 0.15) !important;
+    padding: 0.5em 1em !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    z-index: 1;
+}
+.hero-notebook .hn-bubble-center {
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-1deg);
+    font-size: 1.85em !important;
+    padding: 0.55em 1.3em !important;
+    color: oklch(0.10 0.04 30) !important;
+    box-shadow:
+        inset 0 0 0 2.5px rgba(140, 30, 30, 0.85),
+        3px 5px 8px rgba(80, 20, 5, 0.25),
+        0 0 18px rgba(255, 200, 100, 0.30) !important;
+}
+.hero-notebook .hn-bubble-1 { top: 0%;    left: 0%;  transform: rotate(-3deg);   font-size: 1.30em !important; }
+.hero-notebook .hn-bubble-2 { top: 4%;    right: 0%; transform: rotate(2.5deg);  font-size: 1.30em !important; }
+.hero-notebook .hn-bubble-3 { bottom: 0%; left: 0%;  transform: rotate(1.8deg);  font-size: 1.25em !important; }
+.hero-notebook .hn-bubble-4 { bottom: 0%; right: 0%; transform: rotate(-2.2deg); font-size: 1.25em !important; }
+.hero-notebook .hn-bubble-map > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Key question */
+.hero-notebook .hn-key-question {
+    font-family: 'Reenie Beanie', cursive !important;
+    font-size: 1.10em !important;
+    line-height: 1.3 !important;
+    color: oklch(0.10 0.04 30) !important;
+    text-align: right !important;
+    margin: 0 1.6em 0 0.5em !important;
+    padding: 0.4em 0 !important;
+    transform: rotate(-0.3deg);
+    white-space: nowrap;
+    overflow: visible;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+.hero-notebook .hn-key-question strong { color: oklch(0.55 0.20 27) !important; }
+.hero-notebook .hn-key-question em { color: oklch(0.45 0.20 35) !important; font-style: italic !important; font-weight: 700 !important; }
+.hero-notebook .hn-key-question::before {
+    content: "?";
+    color: oklch(0.55 0.20 27);
+    margin-right: 0.3em;
+    font-size: 1.3em;
+    font-weight: 700;
+    vertical-align: -0.05em;
+}
+
+/* Open to opportunities — sits slightly LOWER than the left page's last line,
+ * widens the gap between the hero and the news ticker section below. */
+.hero-notebook .hn-opportunities {
+    display: block;
+    text-align: right;
+    margin: 2.4em 1em 0 auto;        /* push down: 2.4em top */
+    font-family: 'Reenie Beanie', cursive !important;
+    font-size: 1.5em !important;
+    color: oklch(0.55 0.20 27);    /* NO !important — so :hover keyframes can animate color */
+    transform-origin: right center;
+    z-index: 4;
+    letter-spacing: 0.015em;
+    animation: hn-opportunities-breathe 12s ease-in-out infinite;
+    transform: rotate(-2deg) scale(1);
+    text-decoration: none !important;
+    border: none !important;
+    text-shadow: none;             /* NO !important — so :hover keyframes can animate text-shadow */
+    opacity: 1 !important;
+    background: none !important;
+    width: fit-content;
+    position: relative;
+}
+
+/* Hover — warm hearth burn. Text + color stay STATIC (no flicker, no
+ * brightness pulse, no transform). Only the FLAME text-shadows rise & fall
+ * in height — flames literally lick up taller and settle shorter, like
+ * real fire tongues slowly breathing. */
+.hero-notebook .hn-opportunities:hover,
+.hero-notebook .hn-opportunities:focus-visible {
+    color: oklch(0.78 0.16 70);     /* warm amber — static throughout hover */
+    animation: hn-flame-undulate 3s ease-in-out infinite;
+}
+@keyframes hn-flame-undulate {
+    /* Each stop changes the OFFSETS of the flame text-shadow layers AND
+     * subtly brightens the text color to sync with peak flame intensity.
+     * 0%/100% = flames at REST (short, darker amber).
+     * 35%     = flames at MEDIUM height (medium amber).
+     * 65%     = flames at PEAK (tallest tongue, brightest amber-gold). */
+    0%, 100% {
+        color: oklch(0.62 0.16 65);          /* deep ember amber (rest) */
+        text-shadow:
+            0  0    2px   rgba(255, 235, 195, 0.85),
+            0  0    5px   rgba(255, 215, 150, 0.70),
+            0 -3px  6px   rgba(255, 190, 110, 0.70),
+            0 -6px  9px   rgba(245, 155,  75, 0.55),
+            0 -10px 13px  rgba(220, 110,  45, 0.42),
+            0 -14px 17px  rgba(200,  85,  30, 0.30),
+            0 -18px 21px  rgba(180,  70,  25, 0.20),
+            0 -22px 25px  rgba(140,  45,  15, 0.10);
+    }
+    35% {
+        color: oklch(0.77 0.17 70);          /* medium warm amber */
+        text-shadow:
+            0  0    2px   rgba(255, 235, 195, 0.95),
+            0  0    5px   rgba(255, 215, 150, 0.85),
+            0 -5px  8px   rgba(255, 190, 110, 0.90),
+            0 -10px 12px  rgba(245, 155,  75, 0.78),
+            0 -16px 18px  rgba(220, 110,  45, 0.65),
+            0 -22px 24px  rgba(200,  85,  30, 0.48),
+            0 -28px 30px  rgba(180,  70,  25, 0.32),
+            0 -34px 36px  rgba(140,  45,  15, 0.18);
+    }
+    65% {
+        color: oklch(0.92 0.16 80);          /* bright amber-gold at peak burn */
+        text-shadow:
+            0  0    2.5px rgba(255, 240, 200, 1.0),
+            0  0    6px   rgba(255, 220, 155, 0.92),
+            0 -6px  10px  rgba(255, 195, 115, 0.95),
+            0 -12px 15px  rgba(245, 160,  80, 0.85),
+            0 -20px 22px  rgba(220, 115,  50, 0.72),
+            0 -28px 30px  rgba(200,  90,  35, 0.55),
+            0 -36px 38px  rgba(180,  75,  28, 0.38),
+            0 -44px 46px  rgba(140,  50,  18, 0.22);
+    }
+}
+@keyframes hn-opportunities-breathe {
+    0%, 14% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    20% {
+        transform: rotate(-2deg) scale(1.06);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 3px rgba(255, 230, 150, 0.65),
+             0 0 9px rgba(255, 200, 100, 0.45);
+        filter: drop-shadow(0 0 5px rgba(255, 200, 80, 0.35));
+    }
+    27%, 42% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    51% {
+        transform: rotate(-2deg) scale(1.14);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 5px  rgba(255, 235, 160, 1.00),
+             0 0 14px rgba(255, 200, 100, 0.85),
+             0 0 30px rgba(255, 175,  60, 0.65),
+             0 0 56px rgba(255, 145,  30, 0.40);
+        filter: drop-shadow(0 0 10px rgba(255, 200, 80, 0.65));
+    }
+    60%, 76% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    84% {
+        transform: rotate(-2deg) scale(1.09);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 4px rgba(255, 230, 150, 0.80),
+             0 0 11px rgba(255, 200, 100, 0.60),
+             0 0 22px rgba(255, 175, 60, 0.40);
+        filter: drop-shadow(0 0 7px rgba(255, 200, 80, 0.50));
+    }
+    93%, 100% {
+        transform: rotate(-2deg) scale(1);
+        text-shadow:
+            -0.5px -0.5px 0 rgba(255, 240, 200, 0.35),
+             0.5px  0.5px 1px rgba(40, 20, 0, 0.30),
+             0 0 1px rgba(255, 200, 100, 0.25);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+}
+
+/* Mobile (notebook stacks vertically) */
+@media (max-width: 900px) {
+    .hero-notebook { aspect-ratio: auto; grid-template-columns: 1fr; border-radius: 4px; }
+    .hero-notebook::before, .hero-notebook::after { display: none; }
+    .hero-notebook .hn-page { padding: 2.5em 1.5em; }
+    .hero-notebook .hn-name { font-size: 3.4em !important; }
+    .hero-notebook .hn-credential { font-size: 1.2em !important; }
+    .hero-notebook .hn-photo-row { flex-direction: column; align-items: center; gap: 0.8em; }
+    .hero-notebook .hn-photo-side { align-items: center; gap: 0.6em; }
+    .hero-notebook .hn-photo-label { display: none !important; }
+    .hero-notebook .hn-role { text-align: center; }
+    .hero-notebook .hn-role-1 { font-size: 1.2em !important; margin-left: 0; }
+    .hero-notebook .hn-role-2 { font-size: 1.0em !important; margin-left: 0; }
+    .hero-notebook .hn-work-label { font-size: 1.35em !important; }
+    .hero-notebook .hn-checklist { grid-template-columns: 1fr; gap: 0.55em; font-size: 0.95em !important; }
+    .hero-notebook .hn-checklist li:nth-child(4) { margin-left: 0 !important; }
+    .hero-notebook .hn-opportunities {
+        position: relative !important;
+        right: auto; bottom: auto;
+        margin: 1em 0 0 auto;
+        width: fit-content;
+        font-size: 1.25em !important;
+    }
+    .hero-notebook .hn-date { position: relative !important; top: auto; right: auto; text-align: right; margin-bottom: 0.4em; }
+    .hero-notebook .hn-research-heading { font-size: 1.7em !important; }
+    .hero-notebook .hn-bubble-map { height: 260px; margin-top: 0.5em; }
+    .hero-notebook .hn-bubble-center { font-size: 1.4em !important; padding: 0.5em 1em !important; }
+    .hero-notebook .hn-bubble-1, .hero-notebook .hn-bubble-2,
+    .hero-notebook .hn-bubble-3, .hero-notebook .hn-bubble-4 { font-size: 1.0em !important; padding: 0.4em 0.7em !important; }
+    .hero-notebook .hn-key-question { font-size: 0.95em !important; white-space: normal; margin: 0 0.5em !important; text-align: center !important; }
+}
+@media (max-width: 480px) {
+    .hero-notebook .hn-name { font-size: 2.7em !important; }
+    .hero-notebook .hn-photo-wrap { width: 150px; height: 150px; }
+    .hero-notebook .hn-bubble-map { height: 240px; }
+    .hero-notebook .hn-bubble-center { font-size: 1.2em !important; }
+    .hero-notebook .hn-bubble-1, .hero-notebook .hn-bubble-2,
+    .hero-notebook .hn-bubble-3, .hero-notebook .hn-bubble-4 { font-size: 0.85em !important; padding: 0.35em 0.55em !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-notebook .hn-photo-wrap { animation: none; transform: rotate(2.2deg); }
+    .hero-notebook .hn-opportunities { animation: none; transform: rotate(-2deg) scale(1.05); }
+}
+
+/* ============================================================================
+ * §NAVBAR-AUTO-HIDE. At top of page (scrollY ≤ 50, no .scrolled class on
+ *   .navbar) the navbar slides off-screen. Once the user scrolls down it
+ *   slides back in. Existing JS in main.js already toggles .scrolled at 50px
+ *   threshold — we just key the visibility off that class.
+ * ========================================================================= */
+.navbar {
+    transform: translateY(-110%) !important;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    pointer-events: none;
+}
+.navbar.scrolled {
+    transform: translateY(0) !important;
+    pointer-events: auto;
+}
+/* When the mobile hamburger menu is open, force navbar visible (it lives
+ * inside the navbar — needs to be reachable even at the top of the page). */
+.navbar.menu-open {
+    transform: translateY(0) !important;
+    pointer-events: auto;
+}
+
+/* ============================================================================
+ * §OTW-TITLE-MATCH. OTW heading visually equals .section-title (size + drop
+ *   cap), but the gilded first letter uses Chinese-painting 青绿 (qingluse)
+ *   instead of maroon, to differentiate from About Me / Publications etc.
+ *   Briefcase icon is hidden so the cap leads the heading.
+ * ========================================================================= */
+.otw-title {
+    font-size: 32px !important;
+    line-height: 36.8px !important;
+    /* Match .section-title's flex display so the box auto-grows to fit
+     * the 86.4px ::first-letter (block display kept it at line-height) */
+    display: flex !important;
+    align-items: baseline !important;
+}
+.otw-icon, .otw-header > .otw-icon {
+    display: none !important;
+}
+/* OTW drop cap — 国画石绿白描 effect: bright malachite-green body with a
+ * fine white-pigment outline (国画白描 / 撞粉 technique) and soft 水墨晕染
+ * (ink-wash) halo. NO gold — replaces the gilded edge with the white-on-
+ * green "mineral pigment" technique seen in Tang-Song court painting. */
+.otw-title > span[data-i18n]::first-letter {
+    color: oklch(0.65 0.18 165) !important;        /* bright 石绿 — malachite */
+    -webkit-text-fill-color: oklch(0.65 0.18 165) !important;
+    text-shadow:
+        /* 白描 — 8-direction fine white-pigment outline (mimics how mineral
+         * green is built up with a thin white edge in classical paintings) */
+        -1px -1px 0 rgba(255, 250, 235, 0.95),
+         0   -1px 0 rgba(255, 250, 235, 0.95),
+         1px -1px 0 rgba(255, 250, 235, 0.95),
+        -1px  0   0 rgba(255, 250, 235, 0.85),
+         1px  0   0 rgba(255, 250, 235, 0.85),
+        -1px  1px 0 rgba(255, 250, 235, 0.65),
+         0    1px 0 rgba(255, 250, 235, 0.65),
+         1px  1px 0 rgba(255, 250, 235, 0.50),
+        /* 水墨晕染 — soft green ink-wash bleed beyond the white edge */
+        0 0 6px  oklch(0.60 0.18 165 / 0.45),
+        0 0 14px oklch(0.50 0.15 170 / 0.30),
+        /* Carved depth — green-tinted shadow under the letter (as if the
+         * green pigment was pressed deeper into paper than surroundings) */
+        2px 3px 3px rgba( 25,  55,  45, 0.55),
+        3px 6px 8px rgba( 15,  40,  30, 0.40)
+    !important;
+}
+
+/* Hero name + photo are jump-to-About-Me anchors. Hover gestures:
+ *   NAME  — shakes left-right twice (handwritten "look here" wiggle)
+ *   PHOTO — spins one full circle clockwise (playful "spin to view") */
+.hero-notebook .hn-jump-about {
+    display: block;
+    color: inherit !important;
+    text-decoration: none !important;
+    border: none !important;
+    cursor: pointer;
+}
+/* Anchor wrapping the h1 should not break the h1's own styling */
+.hero-notebook .hn-jump-about > .hn-name {
+    margin: 0;
+}
+
+/* NAME hover — quick 2-shake wiggle, composed with the base rotate(-1deg) */
+.hero-notebook .hn-jump-about:not(.hn-photo-wrap):hover > .hn-name,
+.hero-notebook .hn-jump-about:not(.hn-photo-wrap):focus-visible > .hn-name {
+    animation: hn-name-shake 0.55s ease-in-out;
+}
+@keyframes hn-name-shake {
+    0%   { transform: rotate(-1deg); }
+    20%  { transform: rotate( 2deg); }
+    40%  { transform: rotate(-3deg); }
+    60%  { transform: rotate( 1.5deg); }
+    80%  { transform: rotate(-1.5deg); }
+    100% { transform: rotate(-1deg); }
+}
+
+/* PHOTO hover — large CW/CCW shake twice (mirrors the name shake idea but
+ * with a wider arc, since the photo is a bigger element). */
+.hero-notebook .hn-jump-about.hn-photo-wrap:hover,
+.hero-notebook .hn-jump-about.hn-photo-wrap:focus-visible {
+    animation: hn-photo-shake 0.7s ease-in-out !important;
+}
+@keyframes hn-photo-shake {
+    0%   { transform: rotate(2.2deg);  }
+    20%  { transform: rotate(20deg);   }   /* swing CW */
+    40%  { transform: rotate(-16deg);  }   /* swing CCW */
+    60%  { transform: rotate(14deg);   }   /* swing CW (smaller) */
+    80%  { transform: rotate(-9deg);   }   /* swing CCW (smaller) */
+    100% { transform: rotate(2.2deg);  }   /* settle back to wobble base */
+}
+
+/* ============================================================================
+ * §HOWL-IDLE-CALM. Welcome howl button: idle = only steam + gentle float.
+ *   Cursor-proximity-based shake (driven by inline JS that adds .howl-near
+ *   when cursor is within ~200px and .howl-very-near within ~80px):
+ *      far          → float only
+ *      .howl-near   → slow gentle shake
+ *      .howl-very-near / :hover → fast original shake
+ *   Steam remains independent on .howl-steam.
+ * ========================================================================= */
+.howl-wrap.idle .howl-body {
+    animation: howl-float 2.8s ease-in-out infinite !important;
+}
+.howl-wrap.idle.howl-near .howl-body {
+    animation:
+        howl-shake 0.55s ease-in-out infinite,
+        howl-float 2.8s ease-in-out infinite !important;
+}
+.howl-wrap.idle.howl-very-near .howl-body,
+.howl-wrap.idle:hover .howl-body,
+.howl-wrap.idle:focus-visible .howl-body {
+    animation:
+        howl-shake 0.32s ease-in-out infinite,
+        howl-float 2.8s ease-in-out infinite !important;
+}
+
+/* ============================================================================
+ * §OTW-RESTYLE. Open-to-Work card overhaul — 国画青绿鎏金 palette:
+ *   - Whole module uses malachite green (matches OTW heading drop cap)
+ *   - Primary tags = filled green ink stamp w/ gold rim (青绿鎏金)
+ *   - Secondary tags = outlined green
+ *   - Distinct from the maroon-red of other sections
+ * ========================================================================= */
+
+/* Fix #5: Status — quieter so primary tags become the visual anchor, not status.
+ * Smaller + lighter color, still handwritten Indie Flower. */
+.otw-status {
+    font-family: 'Indie Flower', cursive !important;
+    font-size: 0.92em !important;                     /* down from 1.05em */
+    color: oklch(0.55 0.10 175) !important;           /* lighter, less saturated */
+    margin: 0.4em 0 0.2em 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 600 !important;                      /* down from 700 */
+    letter-spacing: 0.005em;
+    opacity: 0.85;
+}
+.otw-status .otw-dot {
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 50%;
+    background: oklch(0.55 0.16 170) !important;
+    box-shadow: 0 0 6px rgba(40, 130, 110, 0.65), inset 0 -1px 0 rgba(200, 255, 230, 0.45);
+    animation: otw-dot-pulse 1.6s ease-in-out infinite;
+}
+@keyframes otw-dot-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.15); opacity: 0.75; }
+}
+
+/* Fix #7: looser grid + block spacing for breathing rhythm */
+.otw-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.2em 2.8em !important;                      /* was 1.6em 2em */
+    margin: 1.4em 0 2em 0 !important;
+}
+.otw-block {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.9em;                                        /* was 0.6em */
+}
+
+/* Fix #4: Labels — switch to Reenie Beanie (still handwritten, more 草 cursive)
+ * to break the Indie-Flower monoculture inside the OTW card. Highlighter swipe
+ * background instead of dashed underline (avoids the "underline-everywhere"
+ * conflict with CTA wavy underlines). */
+.otw-label {
+    font-family: 'Reenie Beanie', 'Indie Flower', cursive !important;
+    font-size: 1.55em !important;
+    font-weight: 400 !important;
+    color: oklch(0.32 0.14 175) !important;           /* deeper qing for contrast */
+    text-transform: none;                              /* Reenie Beanie reads better mixed-case */
+    letter-spacing: 0.01em;
+    margin-bottom: 0.35em !important;
+    padding: 0.05em 0.4em 0.05em 0.3em !important;
+    border-bottom: none !important;
+    width: fit-content;
+    /* Highlighter swipe — looks like a yellow-green marker pass on parchment */
+    background:
+        linear-gradient(180deg,
+            transparent 0%,
+            transparent 55%,
+            oklch(0.86 0.11 160 / 0.55) 55%,
+            oklch(0.86 0.11 160 / 0.55) 88%,
+            transparent 88%) !important;
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 250, 235, 0.40),
+         0.5px  0.5px 1px rgba(20, 60, 50, 0.30) !important;
+    opacity: 1 !important;
+    line-height: 1.0 !important;
+    transform: rotate(-0.5deg);                        /* slight hand-noted tilt */
+}
+.otw-block:nth-child(2) .otw-label { transform: rotate(0.6deg); }
+.otw-block:nth-child(3) .otw-label { transform: rotate(-0.3deg); }
+
+/* Tags wrapper — wrap with consistent gap */
+.otw-tags {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 0.45em 0.55em !important;
+    align-items: center;
+}
+
+/* SECONDARY tag — bare handwritten text wrapped in curly quotes, no chrome.
+ * Per-tag default tilt so the row doesn't feel mechanically aligned. */
+.otw-tag,
+.otw-card .otw-tag {
+    display: inline-flex !important;
+    align-items: baseline;
+    gap: 0.25em;
+    padding: 0.05em 0.15em !important;
+    margin: 0 !important;
+    font-family: 'Indie Flower', cursive !important;
+    font-size: 0.96em !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    color: oklch(0.40 0.13 175) !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    transform-origin: center;
+    opacity: 1 !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease-out;
+}
+/* Default per-tag tilt — handwritten notes never align perfectly */
+.otw-tag:not(.otw-tag-primary):nth-child(2n)   { transform: rotate(-1.6deg); }
+.otw-tag:not(.otw-tag-primary):nth-child(2n+1) { transform: rotate(1.2deg); }
+.otw-tag:not(.otw-tag-primary):nth-child(3n)   { transform: rotate(-2.4deg); }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+1) { transform: rotate(2.0deg); }
+.otw-tag:not(.otw-tag-primary):nth-child(7n)   { transform: rotate(-0.8deg); }
+/* Curly quotes around each secondary tag — handwritten quote marks (not on primary).
+ * "ML Engineer"  "Data Scientist"  ... */
+.otw-tag:not(.otw-tag-primary)::before {
+    content: '\201C';                                 /* left double quote " */
+    margin-right: 0.05em;
+    color: oklch(0.55 0.13 175);
+    font-size: 1.3em;
+    font-weight: 700;
+    opacity: 0.8;
+    line-height: 0.7;
+    align-self: center;
+}
+.otw-tag:not(.otw-tag-primary)::after {
+    content: '\201D';                                 /* right double quote " */
+    margin-left: 0.05em;
+    color: oklch(0.55 0.13 175);
+    font-size: 1.3em;
+    font-weight: 700;
+    opacity: 0.8;
+    line-height: 0.7;
+    align-self: center;
+}
+
+.otw-tag i {
+    font-size: 0.85em;
+    color: oklch(0.50 0.14 170);
+}
+.otw-tag small {
+    font-size: 0.78em !important;
+    font-weight: 600 !important;
+    opacity: 0.75;
+    margin-left: 0.15em;
+}
+
+/* PRIMARY (preferred) tag — true sticky-note (便利贴) in 青绿:
+ *   - light qing-green flat paper, NOT gradient ink
+ *   - deep-ink hand-written text on top
+ *   - washi tape strip on the upper edge (::before)
+ *   - peeled bottom-right corner (::after)
+ *   - soft drop-shadow like a real note stuck on parchment
+ *   - per-tag rotation for hand-stuck feel
+ * No image asset needed — pure CSS. */
+.otw-tag.otw-tag-primary,
+.otw-card .otw-tag.otw-tag-primary {
+    --tilt: -1.2deg;                                   /* per-tag tilt as variable so animations can use it */
+    --otw-tilt: var(--tilt);                           /* alias so the 5 secondary-tag keyframes also work on primary */
+    position: relative !important;
+    font-size: 1.20em !important;
+    padding: 0.55em 0.95em 0.50em !important;
+    color: oklch(0.28 0.12 175) !important;
+    /* Sticky-note light qing-green paper */
+    background:
+        linear-gradient(135deg,
+            oklch(0.84 0.10 165) 0%,
+            oklch(0.79 0.11 168) 100%) !important;
+    border: none !important;
+    border-radius: 2px 2px 4px 4px !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.40),
+        2px 4px 6px rgba(20, 60, 50, 0.22),
+        5px 9px 14px rgba(20, 60, 50, 0.10) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    transform: rotate(var(--tilt));                    /* no !important so :hover animation can override */
+    margin: 6px 4px !important;
+    /* Torn-paper edges on LEFT and RIGHT only — top/bottom stay straight so the
+     * washi-tape (::before, top edge) and folded corner (::after, bottom-right)
+     * stay intact. Inner text is unaffected. */
+    clip-path: polygon(
+        /* top edge raised to -35% so the washi tape (::before, top: -7px) stays visible */
+        0% -35%, 100% -35%,
+        /* right edge zigzag — inward dips */
+        97% 8%, 100% 18%, 95% 30%, 100% 44%, 96% 58%, 100% 72%, 95% 86%, 100% 100%,
+        0% 100%,
+        /* left edge zigzag — inward dips */
+        4% 88%, 0% 74%, 5% 60%, 1% 46%, 5% 32%, 0% 18%, 3% 6%
+    );
+    transition: box-shadow 0.3s ease-out;
+}
+.otw-tag.otw-tag-primary:nth-of-type(2n) { --tilt: 1.6deg; }
+.otw-tag.otw-tag-primary:nth-of-type(3n) { --tilt: -0.6deg; }
+/* Washi-tape strip across the top — semi-transparent warm cream */
+.otw-tag.otw-tag-primary::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2.5deg);
+    width: 42%;
+    height: 12px;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 240, 185, 0.80) 0%,
+            rgba(255, 230, 160, 0.72) 100%);
+    border-left: 1px solid rgba(180, 140, 60, 0.22);
+    border-right: 1px solid rgba(180, 140, 60, 0.22);
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.14),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.30);
+    z-index: 2;
+    pointer-events: none;
+}
+/* Peeled bottom-right corner — diagonal fold */
+.otw-tag.otw-tag-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    background:
+        linear-gradient(135deg,
+            transparent 50%,
+            rgba(20, 50, 40, 0.10) 50%,
+            rgba(255, 255, 255, 0.55) 80%,
+            rgba(20, 50, 40, 0.18) 100%);
+    border-bottom-right-radius: 4px;
+    z-index: 1;
+    pointer-events: none;
+}
+.otw-tag.otw-tag-primary i {
+    color: oklch(0.92 0.10 80);                       /* gold icon */
+}
+.otw-tag.otw-tag-primary small {
+    color: oklch(0.88 0.06 90);
+    opacity: 0.95;
+}
+/* Tag hover — small lift */
+/* Hover — random per-tag micro-animations. NO gold edge, NO border ever.
+ * Each nth-child group gets a different signature wiggle. */
+.otw-tag:not(.otw-tag-primary):hover {
+    color: oklch(0.22 0.16 175) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+/* 5 distinct hover wiggles cycled by nth-child */
+@keyframes otw-tag-bounce  { 0%,100%{transform:translateY(0) rotate(var(--otw-tilt,0deg));} 50%{transform:translateY(-4px) rotate(var(--otw-tilt,0deg));} }
+@keyframes otw-tag-swing   { 0%,100%{transform:rotate(var(--otw-tilt,0deg));} 25%{transform:rotate(calc(var(--otw-tilt,0deg) - 4deg));} 75%{transform:rotate(calc(var(--otw-tilt,0deg) + 4deg));} }
+@keyframes otw-tag-jitter  { 0%,100%{transform:rotate(var(--otw-tilt,0deg)) translateX(0);} 25%{transform:rotate(var(--otw-tilt,0deg)) translateX(-2px);} 75%{transform:rotate(var(--otw-tilt,0deg)) translateX(2px);} }
+@keyframes otw-tag-pop     { 0%,100%{transform:rotate(var(--otw-tilt,0deg)) scale(1);} 50%{transform:rotate(var(--otw-tilt,0deg)) scale(1.10);} }
+@keyframes otw-tag-tilt    { 0%,100%{transform:rotate(var(--otw-tilt,0deg));} 50%{transform:rotate(calc(var(--otw-tilt,0deg) + 6deg));} }
+
+.otw-tag:not(.otw-tag-primary):nth-child(2n)   { --otw-tilt: -1.6deg; }
+.otw-tag:not(.otw-tag-primary):nth-child(2n+1) { --otw-tilt: 1.2deg; }
+.otw-tag:not(.otw-tag-primary):nth-child(3n)   { --otw-tilt: -2.4deg; }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+1) { --otw-tilt: 2.0deg; }
+.otw-tag:not(.otw-tag-primary):nth-child(7n)   { --otw-tilt: -0.8deg; }
+
+.otw-tag:not(.otw-tag-primary):nth-child(5n+1):hover { animation: otw-tag-bounce  0.55s ease-in-out; }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+2):hover { animation: otw-tag-swing   0.60s ease-in-out; }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+3):hover { animation: otw-tag-jitter  0.45s ease-in-out; }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+4):hover { animation: otw-tag-pop     0.50s ease-in-out; }
+.otw-tag:not(.otw-tag-primary):nth-child(5n+5):hover { animation: otw-tag-tilt    0.55s ease-in-out; }
+
+/* Primary sticky-note hover — common: deeper drop-shadow (lift). Animation
+ * varies per column so each of the 3 primaries gets a unique signature
+ * wiggle, mirroring the secondary 5-flavour scheme. */
+.otw-tag.otw-tag-primary:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.40),
+        3px 6px 10px rgba(20, 60, 50, 0.30),
+        7px 12px 18px rgba(20, 60, 50, 0.14) !important;
+}
+/* Distinct animation per column — Roles col → peel, Locations col → bounce, Employment col → swing */
+.otw-block:nth-child(1) .otw-tag.otw-tag-primary:hover {
+    animation: otw-sticky-peel 0.55s ease-in-out;
+}
+.otw-block:nth-child(2) .otw-tag.otw-tag-primary:hover {
+    animation: otw-tag-bounce 0.50s ease-in-out;
+}
+.otw-block:nth-child(3) .otw-tag.otw-tag-primary:hover {
+    animation: otw-tag-swing 0.60s ease-in-out;
+}
+/* Sticky-peel uses --tilt directly; the other two reuse the secondary keyframes
+ * which read --otw-tilt — already aliased to --tilt on primary above. */
+@keyframes otw-sticky-peel {
+    0%,100% { transform: rotate(var(--tilt)) translateY(0); }
+    50%     { transform: rotate(calc(var(--tilt) * 1.8)) translateY(-3px); }
+}
+
+/* CTA — pure handwritten text in qing-green. NO underline, NO border, NO bg.
+ * Just words on parchment, like a note margin. Tight margin to the tags above. */
+.otw-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    margin-top: 0.4em;                                 /* tighter to tags above */
+    align-items: center;
+}
+.otw-cta .btn,
+.otw-cta a.btn {
+    font-family: 'Indie Flower', cursive !important;
+    font-size: 1.05em !important;
+    font-weight: 700 !important;
+    padding: 0.1em 0.15em !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: oklch(0.40 0.13 175) !important;            /* 青绿 — match the OTW palette */
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 250, 235, 0.40),
+         0.5px  0.5px 1px rgba(20, 60, 50, 0.25) !important;
+    text-decoration: none !important;
+    transition: color 0.18s ease-out, transform 0.18s ease-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.otw-cta .btn i {
+    font-size: 0.95em;
+    opacity: 0.85;
+    color: oklch(0.50 0.14 170);
+}
+.otw-cta .btn:hover {
+    color: oklch(0.28 0.15 175) !important;
+    animation: otw-btn-wobble 0.45s ease-in-out;
+}
+@keyframes otw-btn-wobble {
+    0%,100% { transform: translateX(0) rotate(0); }
+    25%     { transform: translateX(-2px) rotate(-1deg); }
+    50%     { transform: translateX(0) rotate(0); }
+    75%     { transform: translateX(2px) rotate(1deg); }
+}
+/* Different wobble for the second CTA so they don't move identically */
+.otw-cta .btn-primary:hover ~ * { /* placeholder for selector grouping below */ }
+.otw-cta .btn:not(.btn-primary):hover {
+    animation: otw-btn-bounce 0.45s ease-in-out;
+}
+@keyframes otw-btn-bounce {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-3px); }
+}
+.otw-cta .btn-primary,
+.otw-cta a.btn-primary {
+    /* No bg, no border — just slightly heavier color emphasis */
+    color: oklch(0.32 0.14 175) !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0.1em 0.15em !important;
+    transform: none;
+}
+.otw-cta .btn-primary:hover {
+    color: oklch(0.22 0.16 175) !important;
+    background: none !important;
+    border-color: transparent !important;
+    /* uses otw-btn-wobble defined above */
+}
+
+/* Hide the global hand-drawn divider line BELOW the OTW section
+ * (the 1px rosy gradient between #open-to-work and the next section). */
+#open-to-work + section::before,
+#open-to-work + .section::before {
+    display: none !important;
+}
+
+/* ============================================================================
+ * §ABOUT-NOTEBOOK. About me — hand-drawn notebook table (icon | label | value).
+ *   Outer frame + row dividers use SVG wobble paths with irregular dashes
+ *   (no mechanical CSS dashed borders). Value font: Patrick Hand for clarity.
+ *   Mobile: stats jump above the notebook + render as 4-col chip strip.
+ * ========================================================================= */
+
+.about-grid {
+    display: grid !important;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "bullets stats";
+    gap: 2rem;
+    align-items: start;
+}
+.about-bullets-col { grid-area: bullets; }
+.about-grid .stats-grid {
+    grid-area: stats;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.about-headline {
+    font-family: 'Patrick Hand', 'Indie Flower', cursive !important;
+    font-size: 1.30em !important;            /* one notch smaller */
+    line-height: 1.55 !important;
+    color: oklch(0.30 0.10 30) !important;
+    margin-bottom: 1.0em !important;
+    padding: 0 0.4em;
+    font-weight: 400 !important;
+    /* Notebook handwriting principle: slight slant + oblique = the page wasn't
+     * written on a ruler. transform-origin top-left so the slant tilts down-right. */
+    font-style: italic;                       /* synthesized oblique on Patrick Hand */
+    transform: rotate(-0.5deg);
+    transform-origin: 0% 0%;
+    letter-spacing: 0.005em;
+}
+
+.about-notebook {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4em 0.4em 0.6em;              /* tight — no outer frame, just inner row dividers */
+    /* No outer frame — table is implied by row dividers + label/value column rhythm. */
+}
+
+.about-row {
+    display: grid;
+    grid-template-columns: 32px 105px 1fr;
+    column-gap: 0.7em;
+    align-items: center;
+    padding: 0.55em 0;
+    position: relative;
+}
+/* Hand-drawn wobble dashed divider between rows */
+.about-row + .about-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 5' preserveAspectRatio='none'><path d='M 2 3 Q 30 1.5 60 3 T 120 2.5 T 178 3 L 198 3' fill='none' stroke='%23804030' stroke-opacity='0.45' stroke-width='1.4' stroke-linecap='round' stroke-dasharray='8,3,5,4,9,2,6,3'/></svg>");
+    background-repeat: repeat-x;
+    background-size: 200px 5px;
+    background-position: 0 50%;
+}
+
+.about-icon {
+    width: 28px;
+    height: 28px;
+    color: oklch(0.42 0.13 30);                     /* maroon ink */
+    align-self: center;
+    grid-column: 1;
+    transform-origin: center;
+}
+.about-row:nth-child(2n)   .about-icon { transform: rotate(-4deg); }
+.about-row:nth-child(2n+1) .about-icon { transform: rotate(3deg); }
+.about-row:nth-child(3n)   .about-icon { transform: rotate(-6deg); }
+.about-row:nth-child(5n)   .about-icon { transform: rotate(5deg); }
+
+.about-row-label {
+    font-family: 'Indie Flower', cursive !important;
+    font-weight: 700 !important;
+    font-size: 1.05em !important;            /* back down one notch — was 1.20em */
+    color: oklch(0.32 0.13 30) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    align-self: center;
+    grid-column: 2;
+    border-right: none;                       /* replaced by SVG wobble line below */
+    padding: 0.3em 0.9em 0.3em 0;
+    line-height: 1.2;
+    /* Hand-drawn wobble vertical divider on the right edge — repeats per row */
+    background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 60' preserveAspectRatio='none'><path d='M 3 2 Q 1.5 15 3 30 T 2.5 50 L 3 58' fill='none' stroke='%23804030' stroke-opacity='0.42' stroke-width='1.3' stroke-linecap='round' stroke-dasharray='6,3,4,4,7,3'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 5px 100%;
+    /* Letterpress hover prep — base text-shadow makes label look "raised" off the page */
+    cursor: pointer;
+    text-shadow:
+        -0.5px -0.5px 0 rgba(255, 250, 235, 0.40),
+         0.5px  0.5px 1px rgba(20, 60, 50, 0.30) !important;
+    transition:
+        transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 0.18s ease-out,
+        text-shadow 0.18s ease-out;
+    transform-origin: center;
+}
+/* Hover = letterpress carved INTO the page.
+ * Light from above → carved letter bottom edge gets bright highlight, top edge sits in shadow.
+ *   1) text color very dark (sits at bottom of dent)
+ *   2) bright cream highlight pushed DOWN (positive y)  ← bottom edge of carved letter
+ *   3) dark shadow pushed UP (negative y)               ← top edge of carved letter in shadow
+ *   4) translateY positive + scale < 1                  ← physically sinks into page */
+.about-row-label:hover {
+    color: oklch(0.10 0.16 30) !important;
+    text-shadow:
+        0  1.5px 0     rgba(255, 250, 240, 0.95),
+        0  2.5px 1.5px rgba(255, 248, 235, 0.55),
+        0 -0.7px 0     rgba(40, 10, 0, 0.55),
+        0 -1.5px 1.2px rgba(40, 10, 0, 0.30) !important;
+    transform: translateY(2.5px) scale(0.93);
+}
+
+.about-row-value {
+    font-family: 'Patrick Hand', 'Indie Flower', cursive !important;
+    font-weight: 400 !important;
+    font-size: 1.08em !important;            /* one notch smaller (was 1.20em) */
+    line-height: 1.50 !important;
+    color: oklch(0.22 0.05 30) !important;
+    align-self: center;
+    grid-column: 3;
+    padding: 0.3em 0;
+    /* Notebook handwriting: oblique + slight per-row tilt — never written on a ruler.
+     * Per-row rotate goes via .about-row:nth-child below. */
+    font-style: italic;                       /* synthesized oblique */
+    letter-spacing: 0.008em;
+    transform-origin: 0% 50%;
+}
+/* Per-row tilt — each row leans slightly differently */
+.about-row:nth-child(2n)   .about-row-value { transform: rotate(-0.6deg); }
+.about-row:nth-child(2n+1) .about-row-value { transform: rotate(0.5deg); }
+.about-row:nth-child(3n)   .about-row-value { transform: rotate(-0.9deg); }
+.about-row:nth-child(5n)   .about-row-value { transform: rotate(0.7deg); }
+.about-row-value strong {
+    font-weight: 700 !important;
+}
+/* About row links — every <a> gets one of 5 random handwritten hover animations
+ * (cycled by nth-of-type), keeping the notebook "alive" feeling. */
+.about-row-value a {
+    transition: color 0.18s ease-out, text-decoration-color 0.18s ease-out;
+    transform-origin: center;
+    display: inline-block;            /* needed so transform works on inline-level <a> */
+}
+@keyframes about-link-wiggle  { 0%,100%{transform:rotate(0)}            25%{transform:rotate(-4deg)}                                  75%{transform:rotate(4deg)} }
+@keyframes about-link-bounce  { 0%,100%{transform:translateY(0)}        50%{transform:translateY(-4px)} }
+@keyframes about-link-scale   { 0%,100%{transform:scale(1)}             50%{transform:scale(1.12)} }
+@keyframes about-link-jitter  { 0%,100%{transform:translateX(0) rotate(0)}   25%{transform:translateX(-2px) rotate(-2deg)}     75%{transform:translateX(2px) rotate(2deg)} }
+@keyframes about-link-pop     { 0%,100%{transform:translateY(0) rotate(0)}   50%{transform:translateY(-3px) rotate(3deg) scale(1.06)} }
+
+.about-row-value a:nth-of-type(5n+1):hover { animation: about-link-wiggle 0.45s ease-in-out; }
+.about-row-value a:nth-of-type(5n+2):hover { animation: about-link-bounce 0.40s ease-in-out; }
+.about-row-value a:nth-of-type(5n+3):hover { animation: about-link-scale  0.45s ease-in-out; }
+.about-row-value a:nth-of-type(5n+4):hover { animation: about-link-jitter 0.42s ease-in-out; }
+.about-row-value a:nth-of-type(5n+5):hover { animation: about-link-pop    0.45s ease-in-out; }
+/* Code spans (graphkit-learn / liulian / redoxprediction) — handwritten, NOT mono */
+.about-row-value code {
+    font-family: 'Patrick Hand', 'Indie Flower', cursive !important;
+    font-size: 1.0em;
+    background: rgba(255, 240, 210, 0.50);
+    padding: 0.05em 0.32em;
+    border-radius: 4px;
+}
+
+/* Stat-label readability bump — bumped to 24px for clearer scanning */
+.about-grid .stats-grid .stat-label,
+.about-grid .stats-grid .stat-card .stat-label {
+    font-size: 24px !important;
+    line-height: 1.25 !important;
+}
+
+/* Stat-card hover — PAPER DEPRESSION (not a UI control press).
+ * The look we want: a thumb pressed a stamp into wet paper, leaving an ink-pooled
+ * depression with a soft halo that radiates outward + ink bled into fibers.
+ *   - No sharp box-shaped inset shadow (= UI button feel)
+ *   - Use radial-gradient bg + multiple LARGE-blur low-opacity inset shadows
+ *   - Irregular hand-cut radius shifts subtly on press
+ *   - Border vanishes on hover (no rectangle)
+ *   - Numbers darken + get ink-bleed (small offset glow) */
+.about-grid .stats-grid .stat-card {
+    cursor: pointer;
+    /* Hover-out: quick smooth recovery. Hover-in: animation (snap + tiny overshoot) below. */
+    transition:
+        transform 0.18s cubic-bezier(0.4, 0, 0.6, 1),
+        box-shadow 0.16s ease-out,
+        background 0.16s ease-out,
+        border-color 0.12s ease-out,
+        border-radius 0.16s ease-out !important;
+    transform-origin: center;
+    border-radius: 6px 4px 7px 5px !important;       /* base hand-cut corners */
+}
+/* Snap-press animation: punch DOWN past rest, then settle — gives a "咔嚓" feel */
+@keyframes about-stat-snap {
+    0%   { transform: translateY(0)     scale(1); }
+    50%  { transform: translateY(4.5px) scale(0.945); }   /* overshoot — past rest */
+    100% { transform: translateY(2.5px) scale(0.965); }    /* settle */
+}
+.about-grid .stats-grid .stat-card:hover {
+    animation: about-stat-snap 0.18s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+    transform: translateY(2.5px) scale(0.965) !important;
+    /* Paper-fiber depression bg — soft elliptical darkening, not a flat color */
+    background:
+        radial-gradient(ellipse 105% 80% at 50% 38%,
+            rgba(120, 60, 30, 0.11) 0%,
+            rgba(120, 60, 30, 0.05) 55%,
+            rgba(120, 60, 30, 0.01) 90%,
+            transparent 100%) !important;
+    box-shadow:
+        /* Soft, large-blur depression halos (paper, not button) */
+        inset 0  6px 16px -4px rgba(80, 30, 10, 0.28),
+        inset 0  2px  4px -1px rgba(80, 30, 10, 0.12),
+        /* Subtle highlight inside bottom edge (light from above hits bottom of dent) */
+        inset 0 -3px  9px -2px rgba(255, 250, 232, 0.42),
+        /* Tiny side darkening for 3D depression */
+        inset  4px 0 8px -6px rgba(80, 30, 10, 0.10),
+        inset -4px 0 8px -6px rgba(80, 30, 10, 0.10),
+        /* Outside: paper around depression bulges slightly outward (top highlight) */
+        0 -1px 2px rgba(255, 250, 230, 0.30),
+        0  3px 8px -3px rgba(60, 20, 10, 0.12) !important;
+    border-color: transparent !important;             /* drop the rectangular border */
+    border-radius: 9px 5px 7px 6px !important;        /* radius shifts under press */
+}
+.about-grid .stats-grid .stat-card:hover .stat-number {
+    color: oklch(0.20 0.20 25) !important;            /* darker maroon ink, pooled in dent */
+    text-shadow:
+        0 0.5px 0    rgba(255, 248, 232, 0.65),       /* subtle bottom highlight */
+        0 -0.5px 1.5px rgba(80, 20, 5, 0.50),         /* dark above */
+        0  1.5px 3.5px rgba(80, 20, 5, 0.22) !important;  /* ink bleed downward into fibers */
+}
+.about-grid .stats-grid .stat-card:hover .stat-label {
+    color: oklch(0.26 0.07 30) !important;
+    text-shadow:
+        0 0.5px 0    rgba(255, 248, 232, 0.50),
+        0 1.5px 2.5px rgba(80, 20, 5, 0.18) !important;
+}
+
+/* ----- Mobile (≤760px) — stats jump ABOVE bullets, single column, 4-col chips ----- */
+@media (max-width: 760px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "stats"
+            "bullets";
+        gap: 1.4rem;
+    }
+    .about-grid .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 0.5rem !important;
+    }
+    .about-grid .stats-grid .stat-card {
+        padding: 0.55em 0.25em !important;
+        text-align: center;
+    }
+    .about-grid .stats-grid .stat-number {
+        font-size: 22px !important;
+    }
+    .about-grid .stats-grid .stat-label {
+        font-size: 18px !important;          /* mobile bump */
+        line-height: 1.2 !important;
+    }
+    .about-row {
+        grid-template-columns: 26px 80px 1fr;
+        column-gap: 0.5em;
+    }
+    .about-notebook {
+        padding: 0.7em 0.8em;
+    }
+    .about-row-label  { font-size: 0.92em !important; padding: 0.3em 0.5em 0.3em 0; }
+    .about-row-value  { font-size: 1.10em !important; padding: 0.3em 0; }
+    .about-icon       { width: 24px; height: 24px; }
+    .about-headline   { font-size: 1.25em !important; }
+}
+@media (max-width: 380px) {
+    .about-grid .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;  /* 4 cols too tight on tiny phones */
+    }
+    .about-row {
+        grid-template-columns: 22px 65px 1fr;
+        column-gap: 0.4em;
+    }
+    .about-notebook { padding: 0.6em 0.7em; }
+    .about-row-label  { font-size: 0.85em !important; }
+    .about-row-value  { font-size: 1.0em !important; }
+}
+
+/* ============================================================================
+ * §CARD-SNAP-PRESS. Universal hover: every card "snap-presses" into the page
+ *   (paper depression) PLUS one of 10 random personalities. Cycled by
+ *   :nth-of-type(10n+N) so each row of cards feels alive. Overrides main.css
+ *   translateY(-4px) lift. Scope: pubs / projects / awards / talks / thesis /
+ *   timeline / skills (categories + tags) / services / research outline / word
+ *   cloud spans.
+ *
+ *   All keyframes share: 0% rest → ~50% overshoot DOWN past final → 100% settle.
+ * ========================================================================= */
+
+/* ----- Original 6 personalities ----- */
+@keyframes card-snap-tilt-l {
+    0%   { transform: translateY(0)    scale(1)     rotate(0); }
+    50%  { transform: translateY(4.5px) scale(0.955) rotate(-0.8deg); }
+    100% { transform: translateY(2px)   scale(0.975) rotate(-0.4deg); }
+}
+@keyframes card-snap-tilt-r {
+    0%   { transform: translateY(0)    scale(1)     rotate(0); }
+    50%  { transform: translateY(4.5px) scale(0.955) rotate(0.8deg); }
+    100% { transform: translateY(2px)   scale(0.975) rotate(0.4deg); }
+}
+@keyframes card-snap-bounce {
+    0%   { transform: translateY(0)    scale(1); }
+    35%  { transform: translateY(5.5px) scale(0.945); }
+    70%  { transform: translateY(0px)   scale(1.005); }
+    100% { transform: translateY(2px)   scale(0.975); }
+}
+@keyframes card-snap-jitter {
+    0%   { transform: translateY(0)    translateX(0)    scale(1); }
+    25%  { transform: translateY(3px)  translateX(-2px) scale(0.97); }
+    50%  { transform: translateY(4.5px) translateX(0)   scale(0.955); }
+    75%  { transform: translateY(3px)  translateX(2px)  scale(0.97); }
+    100% { transform: translateY(2px)  translateX(0)    scale(0.975); }
+}
+@keyframes card-snap-shake {
+    0%   { transform: translateY(0)    rotate(0); }
+    20%  { transform: translateY(2.5px) rotate(-1.2deg); }
+    40%  { transform: translateY(4.5px) rotate(1.2deg); }
+    60%  { transform: translateY(3px)  rotate(-0.6deg); }
+    100% { transform: translateY(2px)  rotate(0); }
+}
+@keyframes card-snap-zoom {
+    0%   { transform: scale(1)     translateY(0); }
+    40%  { transform: scale(0.945) translateY(4.5px); }
+    100% { transform: scale(0.975) translateY(2px); }
+}
+/* ----- 4 NEW personalities ----- */
+/* skew: lateral squash on press (like rubber stamp tilting on impact) */
+@keyframes card-snap-skew {
+    0%   { transform: translateY(0)    skewX(0)     scale(1); }
+    50%  { transform: translateY(4.5px) skewX(-2.5deg) scale(0.955); }
+    100% { transform: translateY(2px)   skewX(-1deg) scale(0.975); }
+}
+/* twist: brief rotational spin then back to a small angle */
+@keyframes card-snap-twist {
+    0%   { transform: translateY(0)    rotate(0)    scale(1); }
+    35%  { transform: translateY(4.5px) rotate(2.5deg) scale(0.95); }
+    70%  { transform: translateY(2.5px) rotate(-1.5deg) scale(0.97); }
+    100% { transform: translateY(2px)   rotate(0.3deg) scale(0.975); }
+}
+/* pulse: double-tap (down, briefly back, down again, settle) */
+@keyframes card-snap-pulse {
+    0%   { transform: translateY(0)    scale(1); }
+    25%  { transform: translateY(4px)  scale(0.96); }
+    50%  { transform: translateY(1px)  scale(0.99); }
+    75%  { transform: translateY(4.5px) scale(0.95); }
+    100% { transform: translateY(2px)  scale(0.975); }
+}
+/* wobble: oscillating sway after the press */
+@keyframes card-snap-wobble {
+    0%   { transform: translateY(0)    rotate(0)     scale(1); }
+    25%  { transform: translateY(4.5px) rotate(-1.5deg) scale(0.955); }
+    45%  { transform: translateY(3px)  rotate(1.2deg)  scale(0.97); }
+    65%  { transform: translateY(2.5px) rotate(-0.8deg) scale(0.975); }
+    85%  { transform: translateY(2px)  rotate(0.4deg)  scale(0.975); }
+    100% { transform: translateY(2px)  rotate(0)       scale(0.975); }
+}
+
+/* Card selector groups — scoped to all relevant section classes */
+.pub-card,
+.project-card,
+.award-card,
+.talk-card,
+.thesis-highlight,
+.timeline-card,
+.skill-category,
+.service-card,
+.outline-item {
+    cursor: pointer;
+    transition:
+        background 0.16s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.16s ease-out !important;
+}
+
+/* 10 personality cycle — all card sections share the rule via long selector list */
+.pub-card:nth-of-type(10n+1):hover,
+.project-card:nth-of-type(10n+1):hover,
+.award-card:nth-of-type(10n+1):hover,
+.talk-card:nth-of-type(10n+1):hover,
+.thesis-highlight:nth-of-type(10n+1):hover,
+.timeline-card:nth-of-type(10n+1):hover,
+.skill-category:nth-of-type(10n+1):hover,
+.service-card:nth-of-type(10n+1):hover,
+.outline-item:nth-of-type(10n+1):hover {
+    animation: card-snap-tilt-l 0.22s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+2):hover,
+.project-card:nth-of-type(10n+2):hover,
+.award-card:nth-of-type(10n+2):hover,
+.talk-card:nth-of-type(10n+2):hover,
+.thesis-highlight:nth-of-type(10n+2):hover,
+.timeline-card:nth-of-type(10n+2):hover,
+.skill-category:nth-of-type(10n+2):hover,
+.service-card:nth-of-type(10n+2):hover,
+.outline-item:nth-of-type(10n+2):hover {
+    animation: card-snap-tilt-r 0.22s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+3):hover,
+.project-card:nth-of-type(10n+3):hover,
+.award-card:nth-of-type(10n+3):hover,
+.talk-card:nth-of-type(10n+3):hover,
+.thesis-highlight:nth-of-type(10n+3):hover,
+.timeline-card:nth-of-type(10n+3):hover,
+.skill-category:nth-of-type(10n+3):hover,
+.service-card:nth-of-type(10n+3):hover,
+.outline-item:nth-of-type(10n+3):hover {
+    animation: card-snap-bounce 0.26s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+4):hover,
+.project-card:nth-of-type(10n+4):hover,
+.award-card:nth-of-type(10n+4):hover,
+.talk-card:nth-of-type(10n+4):hover,
+.thesis-highlight:nth-of-type(10n+4):hover,
+.timeline-card:nth-of-type(10n+4):hover,
+.skill-category:nth-of-type(10n+4):hover,
+.service-card:nth-of-type(10n+4):hover,
+.outline-item:nth-of-type(10n+4):hover {
+    animation: card-snap-jitter 0.24s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+5):hover,
+.project-card:nth-of-type(10n+5):hover,
+.award-card:nth-of-type(10n+5):hover,
+.talk-card:nth-of-type(10n+5):hover,
+.thesis-highlight:nth-of-type(10n+5):hover,
+.timeline-card:nth-of-type(10n+5):hover,
+.skill-category:nth-of-type(10n+5):hover,
+.service-card:nth-of-type(10n+5):hover,
+.outline-item:nth-of-type(10n+5):hover {
+    animation: card-snap-shake 0.24s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+6):hover,
+.project-card:nth-of-type(10n+6):hover,
+.award-card:nth-of-type(10n+6):hover,
+.talk-card:nth-of-type(10n+6):hover,
+.thesis-highlight:nth-of-type(10n+6):hover,
+.timeline-card:nth-of-type(10n+6):hover,
+.skill-category:nth-of-type(10n+6):hover,
+.service-card:nth-of-type(10n+6):hover,
+.outline-item:nth-of-type(10n+6):hover {
+    animation: card-snap-zoom 0.20s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+7):hover,
+.project-card:nth-of-type(10n+7):hover,
+.award-card:nth-of-type(10n+7):hover,
+.talk-card:nth-of-type(10n+7):hover,
+.thesis-highlight:nth-of-type(10n+7):hover,
+.timeline-card:nth-of-type(10n+7):hover,
+.skill-category:nth-of-type(10n+7):hover,
+.service-card:nth-of-type(10n+7):hover,
+.outline-item:nth-of-type(10n+7):hover {
+    animation: card-snap-skew 0.22s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+8):hover,
+.project-card:nth-of-type(10n+8):hover,
+.award-card:nth-of-type(10n+8):hover,
+.talk-card:nth-of-type(10n+8):hover,
+.thesis-highlight:nth-of-type(10n+8):hover,
+.timeline-card:nth-of-type(10n+8):hover,
+.skill-category:nth-of-type(10n+8):hover,
+.service-card:nth-of-type(10n+8):hover,
+.outline-item:nth-of-type(10n+8):hover {
+    animation: card-snap-twist 0.26s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+9):hover,
+.project-card:nth-of-type(10n+9):hover,
+.award-card:nth-of-type(10n+9):hover,
+.talk-card:nth-of-type(10n+9):hover,
+.thesis-highlight:nth-of-type(10n+9):hover,
+.timeline-card:nth-of-type(10n+9):hover,
+.skill-category:nth-of-type(10n+9):hover,
+.service-card:nth-of-type(10n+9):hover,
+.outline-item:nth-of-type(10n+9):hover {
+    animation: card-snap-pulse 0.30s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.pub-card:nth-of-type(10n+10):hover,
+.project-card:nth-of-type(10n+10):hover,
+.award-card:nth-of-type(10n+10):hover,
+.talk-card:nth-of-type(10n+10):hover,
+.thesis-highlight:nth-of-type(10n+10):hover,
+.timeline-card:nth-of-type(10n+10):hover,
+.skill-category:nth-of-type(10n+10):hover,
+.service-card:nth-of-type(10n+10):hover,
+.outline-item:nth-of-type(10n+10):hover {
+    animation: card-snap-wobble 0.34s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+/* Pressed-card paper depression — soft inset shadow, NO sharp box.
+ * Override existing :hover styles for all cards with !important. */
+.pub-card:hover,
+.project-card:hover,
+.award-card:hover,
+.talk-card:hover,
+.thesis-highlight:hover,
+.timeline-card:hover,
+.skill-category:hover,
+.service-card:hover,
+.outline-item:hover {
+    background:
+        radial-gradient(ellipse 105% 80% at 50% 38%,
+            rgba(120, 60, 30, 0.07) 0%,
+            rgba(120, 60, 30, 0.03) 60%,
+            transparent 100%),
+        oklch(0.96 0.020 78 / 0.55) !important;
+    box-shadow:
+        inset 0  6px 16px -4px rgba(80, 30, 10, 0.22),
+        inset 0  2px  4px -1px rgba(80, 30, 10, 0.10),
+        inset 0 -3px  9px -2px rgba(255, 250, 232, 0.35),
+        0 -1px 2px rgba(255, 250, 230, 0.20),
+        0  3px 8px -3px rgba(60, 20, 10, 0.10) !important;
+    border-color: transparent !important;
+}
+
+/* Word-cloud spans + skill-tags get a lighter snap (smaller, inline elements) */
+.wordcloud .word,
+.skill-tag {
+    cursor: pointer;
+    display: inline-block;
+    transition: color 0.16s ease-out, text-shadow 0.16s ease-out !important;
+}
+@keyframes word-snap-down {
+    0%   { transform: translateY(0)    scale(1); }
+    50%  { transform: translateY(2.5px) scale(0.92); }
+    100% { transform: translateY(1px)   scale(0.96); }
+}
+@keyframes word-snap-tilt {
+    0%   { transform: translateY(0)    rotate(0); }
+    50%  { transform: translateY(2.5px) rotate(-3deg); }
+    100% { transform: translateY(1px)   rotate(-1.5deg); }
+}
+@keyframes word-snap-jitter {
+    0%   { transform: translateY(0)    translateX(0); }
+    25%  { transform: translateY(2px)  translateX(-1.5px); }
+    50%  { transform: translateY(3px)  translateX(0); }
+    75%  { transform: translateY(2px)  translateX(1.5px); }
+    100% { transform: translateY(1px)  translateX(0); }
+}
+.wordcloud .word:nth-of-type(3n+1):hover,
+.skill-tag:nth-of-type(3n+1):hover { animation: word-snap-down 0.20s cubic-bezier(0.4, 0, 0.6, 1) forwards; }
+.wordcloud .word:nth-of-type(3n+2):hover,
+.skill-tag:nth-of-type(3n+2):hover { animation: word-snap-tilt 0.22s cubic-bezier(0.4, 0, 0.6, 1) forwards; }
+.wordcloud .word:nth-of-type(3n+3):hover,
+.skill-tag:nth-of-type(3n+3):hover { animation: word-snap-jitter 0.22s cubic-bezier(0.4, 0, 0.6, 1) forwards; }
+
+/* ----- Award/grant logo fix: brand wordmarks should NOT get torn-paper clip-path ----- */
+.award-card img.award-icon,
+.award-card img.award-icon--brand,
+.award-card .award-icon img {
+    clip-path: none !important;
+    transform: none !important;
+    box-shadow: none !important;
 }

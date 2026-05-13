@@ -21,7 +21,7 @@
   },
   "otw": {
     "title": "Offen für neue Rollen",
-    "status": "Aktive Bewerbungen: schneller Einstieg möglich",
+    "status": "schneller Einstieg möglich",
     "roles": "Rollen",
     "locations": "Orte",
     "employment": "Anstellungsart",
@@ -273,20 +273,41 @@
     "label": "Gedanken & Texte"
   },
   "about": {
-    "p1": "Ich bin <strong>Postdoctoral Researcher</strong> an der Universität Bern, Schweiz, und arbeite in der <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Pattern Recognition Group</a>. Meine Expertise umfasst <strong>Graph-Repräsentationslernen</strong>, <strong>räumlich-zeitliches Deep Learning</strong> und <strong>LLM-basierte KI-Systeme</strong>.",
-    "p2": "Meinen Ph.D. in Informatik habe ich 2021 am <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a> der INSA Rouen, Normandy University (Frankreich) erworben: unter Betreuung von Prof. <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Paul Honeine</a> und Prof. <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Benoit Gaüzère</a>, mit Fokus auf Graph-Machine-Learning und Mustererkennung in der Chemieinformatik. Seither habe ich an Projekten zu Graph-ML für Computerchemie (Polymeroptimierung, Redox-Vorhersage), Dokumentenanalyse (historische Papyri, Konstruktionszeichnungen) und Umweltwissenschaften (Flusswassertemperatur-Prognose) mitgewirkt. Ich habe über 20 Studierende betreut und zu mehreren Drittmittelprojekten beigetragen. Zuvor erwarb ich meinen <strong>M.Sc. in Software Engineering</strong> (2017) und meinen <strong>B.Sc. in Information Engineering</strong> (2014), beide an der <strong>Xi'an Jiaotong University</strong>, China.",
-    "p3": "Neben der Wissenschaft wirke ich als <strong>Key AI Advisor</strong> bei N-Banker, einem FinTech-Startup, und verantworte dort die KI-Strategie und die Entwicklung von LLM-Agenten. Darüber hinaus habe ich mehrere Open-Source-Bibliotheken, ML-Toolkits und LLM-Agent-Systeme aufgebaut bzw. dazu beigetragen.",
-    "p4": "Ich suche aktiv <strong>ML Research Scientist / Engineer</strong>-Positionen in Wissenschaft und Industrie: mit Schwerpunkt auf graphbasiertem Lernen, raumzeitlichem Lernen, wissenschaftlichem Rechnen sowie KI-gestützter Entdeckung und industriellen Anwendungen.",
-    "headline": "Forschung zu <strong>Graph-Repräsentationslernen</strong> und domänenübergreifenden Anwendungen: <strong>Open-Source-Tools</strong>, <strong>Modelle</strong> und <strong>KI-Systeme</strong> für Wissenschaft &amp; Industrie.",
-    "b1": "<span class=\"about-emoji\" aria-hidden=\"true\">📍</span> <a href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">🇨🇭 Pattern Recognition Group (PRG), Universität Bern</a>: <strong>Postdoc</strong>.",
-    "b2": "<span class=\"about-emoji\" aria-hidden=\"true\">🧠</span> Akademischer Schwerpunkt: <strong>Graph-Repräsentationslernen</strong>: Graph-Kerne, Graph-Edit-Distanzen, GNNs, Transformer, Pre-Image &amp; Generierung.",
-    "b3": "<span class=\"about-emoji\" aria-hidden=\"true\">🧪</span> Anwendungsschwerpunkte: <strong>Redoxpotentialvorhersage</strong> (Grundlage für Wirkstoffforschung &amp; Polymeroptimierung), <strong>raumzeitliche Hydrologie</strong> (Schweizer Flusswassertemperaturen) und <strong>technische Zeichnungsanalyse</strong> (<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>).",
-    "b4": "<span class=\"about-emoji\" aria-hidden=\"true\">🤝</span> Industriekooperationen: <strong>KI-Strategie &amp; LLM-Agenten</strong> mit dem FinTech-Startup <strong>N-Banker</strong>; <strong>HLK-Konzept-Audit</strong> mit <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> (PLANALYSER).",
-    "b5": "<span class=\"about-emoji\" aria-hidden=\"true\">🛠</span> Open-Source-Bibliotheken: <a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a>, <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a>, <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>RedoxPrediction</code></a> usw.",
-    "b6": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> Promotion (2021), <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">🇫🇷 LITIS Lab</a>, INSA Rouen: Dissertation <em>Graph- und Kernräume verbinden: eine Pre-Image-Perspektive</em>: Graph-Kerne, Graph-Edit-Distanzen &amp; ML für strukturierte Daten (Betreuer: <a href=\"http://honeine.fr/wp/\" target=\"_blank\" rel=\"noopener\">Prof. Paul Honeine</a> &amp; <a href=\"https://bgauzere.github.io/\" target=\"_blank\" rel=\"noopener\">Prof. Benoit Gaüzère</a>).",
-    "b7": "<span class=\"about-emoji\" aria-hidden=\"true\">🎓</span> M.Sc. Software Engineering (2017) &amp; B.Sc. Information Engineering (2014), <strong>🇨🇳 Xi'an Jiaotong University</strong>, China.",
-    "b8": "<span class=\"about-emoji\" aria-hidden=\"true\">👥</span> Betreuung von <strong>20+ Studierenden</strong> ; Mitwirkung / Antragstellung an <strong>mehreren durch SNSF, Innosuisse, ANR und UniBE finanzierten Projekten</strong>.",
-    "b9": "<span class=\"about-emoji\" aria-hidden=\"true\">🎯</span> Offen für <strong>ML Research Scientist / Research Engineer</strong>-Stellen: Akademie &amp; Industrie, vor Ort / hybrid / remote."
+    "headline": "<strong>Graph-Repräsentationslernen</strong> über Domänen hinweg aufbauen: <strong>Algorithmen</strong>, <strong>Modelle</strong>, <strong>Open-Source-Tools</strong> und <strong>KI-Infrastruktur</strong> für Wissenschaft &amp; Industrie.",
+    "row": {
+      "now": {
+        "label": "Aktuell",
+        "value": "<strong>Postdoc</strong> · <a class=\"link-plain\" href=\"https://prg.inf.unibe.ch/\" target=\"_blank\" rel=\"noopener\">PRG</a>, <a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">Universität Bern</a> · <strong>Graph-Repräsentationslernen</strong>"
+      },
+      "domains": {
+        "label": "Domänen",
+        "value": "Schweizer Hydrologie · technische Zeichnungen (<a href=\"https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900\" target=\"_blank\" rel=\"noopener\">PLANALYSER</a>) · Digital Humanities · Computerchemie (Redox)"
+      },
+      "industry": {
+        "label": "Industrie",
+        "value": "<strong>N-Banker</strong> (KI-Strategie / LLM-Agenten) · <a href=\"https://www.startup.ch/WATTELSE\" target=\"_blank\" rel=\"noopener\">WATTELSE</a> (HLK-Audit)"
+      },
+      "oss": {
+        "label": "Bibliotheken",
+        "value": "<a href=\"https://github.com/jajupmochi/graphkit-learn\" target=\"_blank\" rel=\"noopener\"><code>graphkit-learn</code></a> · <a href=\"https://github.com/jajupmochi/liulian-python\" target=\"_blank\" rel=\"noopener\"><code>liulian</code></a> · <a href=\"https://github.com/jajupmochi/RedoxPrediction\" target=\"_blank\" rel=\"noopener\"><code>redoxprediction</code></a> · <a href=\"https://github.com/jajupmochi/swiss-river-network-benchmark\" target=\"_blank\" rel=\"noopener\"><code>swiss-river-network-benchmark</code></a>"
+      },
+      "mentor": {
+        "label": "Betreut",
+        "value": "<strong>20+ Studierende</strong> betreut"
+      },
+      "funded": {
+        "label": "Gefördert",
+        "value": "<a href=\"https://www.snf.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>SNSF</strong></a> · <a href=\"https://www.innosuisse.admin.ch/en\" target=\"_blank\" rel=\"noopener\"><strong>Innosuisse</strong></a> · <a href=\"https://anr.fr/en/\" target=\"_blank\" rel=\"noopener\"><strong>ANR</strong></a> · <a href=\"https://www.unibe.ch/\" target=\"_blank\" rel=\"noopener\">UniBE</a>-Projekte"
+      },
+      "past": {
+        "label": "Werdegang",
+        "value": "Promotion '21 <a href=\"https://www.litislab.fr/\" target=\"_blank\" rel=\"noopener\">LITIS Lab</a>, <a href=\"https://www.insa-rouen.fr/en\" target=\"_blank\" rel=\"noopener\">INSA Rouen</a> · MSc/BSc <a href=\"https://en.xjtu.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>XJTU</strong></a>"
+      },
+      "looking": {
+        "label": "Suche",
+        "value": "<strong>ML Research Scientist / Engineer</strong>-Stellen · Akademie &amp; Industrie"
+      }
+    }
   },
   "comingSoon": {
     "title": "Demnächst verfügbar",

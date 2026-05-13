@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Linlin Jia, Ph.D. — parchment edition (preview)</title>
-    <meta name="description" content="Parchment-themed preview of the academic site — borderless, single global background. Not the canonical version.">
+    <title>Linlin Jia, Ph.D. | ML Research Scientist | Graph ML · LLM</title>
+    <meta name="description" content="Linlin Jia, Ph.D. | Graph ML, LLM Agents, Spatio-Temporal Forecasting, AI for Science. Postdoc at U. Bern. Open to ML Research Scientist roles.">
     <meta name="author" content="Linlin Jia">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
 
     <!-- Security headers (meta-equiv; GH Pages doesn't let us set real HTTP headers).
          See setup/security-headers.md for the rationale behind each directive. -->
@@ -27,17 +27,15 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://jajupmochi.github.io/index_en.html">
+    <!-- Canonical: this clear-version site is the canonical for zh/fr/de.
+         English canonical lives on the parchment site (`index_en.html`). -->
+    <link rel="canonical" href="https://jajupmochi.github.io/index_en_clear.html">
 
-    <!-- Multilingual alternates: JS-rendered per locale, keyed off `?lang=` URL param.
-         Each ?lang= URL is a distinct crawlable entry point; main.js reads the param
-         on load and renders that locale's content. Canonical still points to the
-         base URL to avoid fragmenting link equity. -->
-    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html?lang=en">
-    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en.html?lang=zh">
-    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en.html?lang=fr">
-    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en.html?lang=de">
+    <!-- EN canonical = parchment (`index_en.html`). zh/fr/de live on this clear backup. -->
+    <link rel="alternate" hreflang="en" href="https://jajupmochi.github.io/index_en.html">
+    <link rel="alternate" hreflang="zh" href="https://jajupmochi.github.io/index_en_clear.html?lang=zh">
+    <link rel="alternate" hreflang="fr" href="https://jajupmochi.github.io/index_en_clear.html?lang=fr">
+    <link rel="alternate" hreflang="de" href="https://jajupmochi.github.io/index_en_clear.html?lang=de">
     <link rel="alternate" hreflang="x-default" href="https://jajupmochi.github.io/index_en.html">
 
     <!-- Open Graph -->
@@ -476,11 +474,6 @@
     <!-- Confetti loaded lazily on first use via loadConfetti() helper (v7 round2) -->
 
     <link rel="stylesheet" href="css/main.css">
-    <!-- Parchment-edition handwritten font stack (Google Fonts SIL OFL) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600;700&display=swap">
-    <link rel="stylesheet" href="css/parchment-overrides.css">
 </head>
 <body data-theme="academic">
     <!-- Wonderland Effects Container (visible only in fancy theme) -->
