@@ -1934,8 +1934,8 @@ section + section::before {
     }
 }
 
-/* Mobile (notebook stacks vertically) */
-@media (max-width: 900px) {
+/* Mobile + tablet portrait (notebook stacks vertically) — md breakpoint */
+@media (max-width: 768px) {
     .hero-notebook { aspect-ratio: auto; grid-template-columns: 1fr; border-radius: 4px; }
     .hero-notebook::before, .hero-notebook::after { display: none; }
     .hero-notebook .hn-page { padding: 2.5em 1.5em; }
@@ -2760,8 +2760,8 @@ section + section::before {
         0 1.5px 2.5px rgba(80, 20, 5, 0.18) !important;
 }
 
-/* ----- Mobile (≤760px) — stats jump ABOVE bullets, single column, 4-col chips ----- */
-@media (max-width: 760px) {
+/* ----- Mobile + tablet portrait (md breakpoint) — stats stack below bullets, 4-col chips ----- */
+@media (max-width: 768px) {
     .about-grid {
         grid-template-columns: 1fr;
         /* Mobile order: bullets first (the actual content), stats last (supporting numbers).
@@ -2798,7 +2798,8 @@ section + section::before {
     .about-icon       { width: 24px; height: 24px; }
     .about-headline   { font-size: 1.25em !important; }
 }
-@media (max-width: 380px) {
+/* Small mobile (sm breakpoint) — tightest tweaks for narrow phones */
+@media (max-width: 480px) {
     .about-grid .stats-grid {
         grid-template-columns: repeat(2, 1fr) !important;  /* 4 cols too tight on tiny phones */
     }
