@@ -1941,26 +1941,31 @@ section + section::before {
     .hero-notebook .hn-page { padding: 2.5em 1.5em; }
     .hero-notebook .hn-name { font-size: 3.4em !important; }
     .hero-notebook .hn-credential { font-size: 1.2em !important; }
-    .hero-notebook .hn-photo-row { flex-direction: column; align-items: center; gap: 0.8em; }
-    .hero-notebook .hn-photo-side { align-items: center; gap: 0.6em; }
-    /* "that's me" — restored on mobile, arrow now points UP toward the photo above */
+    /* 481-768px (mobile + tablet portrait): keep photo-row as ROW
+     * — photo on left, photo-side (with "that's me" + role) on right.
+     * Same idiom as desktop, just slightly smaller. */
+    .hero-notebook .hn-photo-row { flex-direction: row !important; align-items: flex-start !important; gap: 1em; }
+    .hero-notebook .hn-photo-wrap { flex-shrink: 0; max-width: 45% !important; align-self: flex-start; }
+    .hero-notebook .hn-photo-side { align-items: flex-start !important; gap: 0.55em; flex: 1; min-width: 0; }
+    /* "that's me" — to the right of the photo, slightly above, leftward arrow */
     .hero-notebook .hn-photo-label {
         display: inline-block !important;
-        align-self: center !important;
-        padding-left: 0 !important;
-        padding-top: 38px !important;
-        margin-top: 0.2em !important;
-        transform: rotate(-2deg) !important;
-        transform-origin: center top !important;
+        align-self: flex-start !important;
+        padding-left: 38px !important;
+        padding-top: 0 !important;
+        margin-top: 0.4em !important;
+        font-size: 1.25em !important;
+        transform: rotate(-3deg) !important;
+        transform-origin: left center !important;
     }
     .hero-notebook .hn-photo-label::before {
-        left: 50% !important;
-        top: 2px !important;
-        width: 22px !important;
-        height: 34px !important;
-        transform: translateX(-50%) rotate(2deg);
-        /* curved arrow pointing UP toward the photo above */
-        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 34'><path d='M11,32 Q14,15 9,5' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round'/><polyline points='3,9 8,4 15,8' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center !important;
+        left: -8px !important;
+        top: 7px !important;
+        width: 50px !important;
+        height: 16px !important;
+        transform: none;
+        /* leftward-pointing curved arrow toward photo (web-style, scaled smaller) */
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 16'><path d='M47,8 Q25,4 6,10' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round'/><polyline points='9,6 4,10 10,13' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center !important;
     }
     .hero-notebook .hn-role { text-align: center; }
     .hero-notebook .hn-role-1 { font-size: 1.2em !important; margin-left: 0; }
@@ -1988,11 +1993,34 @@ section + section::before {
 }
 @media (max-width: 480px) {
     .hero-notebook .hn-name { font-size: 2.7em !important; }
-    .hero-notebook .hn-photo-wrap { width: 150px; height: 150px; }
+    .hero-notebook .hn-photo-wrap { width: 150px; height: 150px; max-width: 150px !important; }
     .hero-notebook .hn-bubble-map { height: 240px; }
     .hero-notebook .hn-bubble-center { font-size: 1.2em !important; }
     .hero-notebook .hn-bubble-1, .hero-notebook .hn-bubble-2,
     .hero-notebook .hn-bubble-3, .hero-notebook .hn-bubble-4 { font-size: 0.85em !important; padding: 0.35em 0.55em !important; }
+
+    /* Very narrow screens: stack photo + photo-side vertically, "that's me"
+     * goes ABOVE photo with downward arrow (or below photo, here we put it
+     * below with upward arrow as before — feels less cluttered). */
+    .hero-notebook .hn-photo-row { flex-direction: column !important; align-items: center !important; gap: 0.6em !important; }
+    .hero-notebook .hn-photo-wrap { max-width: 60% !important; align-self: center !important; }
+    .hero-notebook .hn-photo-side { align-items: center !important; }
+    .hero-notebook .hn-photo-label {
+        align-self: center !important;
+        padding-left: 0 !important;
+        padding-top: 38px !important;
+        margin-top: 0.2em !important;
+        transform: rotate(-2deg) !important;
+        transform-origin: center top !important;
+    }
+    .hero-notebook .hn-photo-label::before {
+        left: 50% !important;
+        top: 2px !important;
+        width: 22px !important;
+        height: 34px !important;
+        transform: translateX(-50%) rotate(2deg);
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 34'><path d='M11,32 Q14,15 9,5' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round'/><polyline points='3,9 8,4 15,8' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center !important;
+    }
 }
 
 /* Reduced motion */
