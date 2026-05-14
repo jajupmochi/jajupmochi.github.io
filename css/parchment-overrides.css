@@ -1943,7 +1943,25 @@ section + section::before {
     .hero-notebook .hn-credential { font-size: 1.2em !important; }
     .hero-notebook .hn-photo-row { flex-direction: column; align-items: center; gap: 0.8em; }
     .hero-notebook .hn-photo-side { align-items: center; gap: 0.6em; }
-    .hero-notebook .hn-photo-label { display: none !important; }
+    /* "that's me" — restored on mobile, arrow now points UP toward the photo above */
+    .hero-notebook .hn-photo-label {
+        display: inline-block !important;
+        align-self: center !important;
+        padding-left: 0 !important;
+        padding-top: 38px !important;
+        margin-top: 0.2em !important;
+        transform: rotate(-2deg) !important;
+        transform-origin: center top !important;
+    }
+    .hero-notebook .hn-photo-label::before {
+        left: 50% !important;
+        top: 2px !important;
+        width: 22px !important;
+        height: 34px !important;
+        transform: translateX(-50%) rotate(2deg);
+        /* curved arrow pointing UP toward the photo above */
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 34'><path d='M11,32 Q14,15 9,5' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round'/><polyline points='3,9 8,4 15,8' stroke='%23a8483a' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center !important;
+    }
     .hero-notebook .hn-role { text-align: center; }
     .hero-notebook .hn-role-1 { font-size: 1.2em !important; margin-left: 0; }
     .hero-notebook .hn-role-2 { font-size: 1.0em !important; margin-left: 0; }
