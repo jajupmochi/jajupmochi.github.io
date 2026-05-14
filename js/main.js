@@ -1229,6 +1229,29 @@
                     const delta = e.shiftKey ? e.deltaY : e.deltaX;
                     if (delta > 0) nextBtn.click(); else prevBtn.click();
                 }, { passive: false });
+
+                // ----- Touch swipe (mobile / tablet) -----
+                // Finger drag horizontally → triggers prev/next. Threshold: 40px.
+                // Vertical drags pass through (page can still scroll).
+                let touchStartX = 0, touchStartY = 0, touchActive = false;
+                container.addEventListener('touchstart', (e) => {
+                    if (!e.touches || e.touches.length !== 1) return;
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    touchActive = true;
+                }, { passive: true });
+                container.addEventListener('touchend', (e) => {
+                    if (!touchActive) return;
+                    touchActive = false;
+                    const t = (e.changedTouches && e.changedTouches[0]);
+                    if (!t) return;
+                    const dx = t.clientX - touchStartX;
+                    const dy = t.clientY - touchStartY;
+                    if (Math.abs(dx) < 40) return;            // too small — ignore
+                    if (Math.abs(dy) > Math.abs(dx)) return;  // vertical swipe — let page scroll
+                    if (dx < 0) nextBtn.click(); else prevBtn.click();
+                }, { passive: true });
+                container.addEventListener('touchcancel', () => { touchActive = false; }, { passive: true });
             }
 
             // Keep offset accurate when the viewport resizes (perPage can change)
@@ -1315,21 +1338,31 @@
             list.addEventListener('mouseleave', () => paused = false);
             list.addEventListener('focusin', () => paused = true);
             list.addEventListener('focusout', () => paused = false);
-            // Rotate every 3.5s. Cleanup `is-leaving` AFTER the 1.0s disperse animation
-            // finishes (was 600ms — truncated disperse mid-flight, creating a perceived
-            // "empty" gap between disperse vanishing and coalesce becoming readable).
+            // Sequential rotation: each news fills a 7s slot —
+            //   1.5s disperse out → 1.5s coalesce in (next) → 4.0s steady.
+            // The next item's coalesce STARTS only after the current item's disperse
+            // ENDS, so there's no parallel overlap (which was perceived as "empty
+            // gap in the middle"). User asked for: A's output animation ends → B's
+            // input animation immediately begins.
+            const DISPERSE_MS = 1500;
+            const COALESCE_MS = 1500;
+            const STEADY_MS   = 4000;
+            const TOTAL_CYCLE = DISPERSE_MS + COALESCE_MS + STEADY_MS;  // 7000ms
             setInterval(() => {
                 if (paused || document.hidden) return;
                 const cur = items[idx];
                 idx = (idx + 1) % items.length;
                 const next = items[idx];
+                // Phase 1: disperse current item
                 cur.classList.remove('is-active', 'is-marquee');
                 cur.classList.add('is-leaving');
-                next.classList.remove('is-leaving');
-                next.classList.add('is-active');
-                requestAnimationFrame(() => applyMarquee(next));
-                setTimeout(() => cur.classList.remove('is-leaving'), 1000);
-            }, 3500);
+                // Phase 2 (after disperse fully done): hide cur, coalesce next in
+                setTimeout(() => {
+                    cur.classList.remove('is-leaving');
+                    next.classList.add('is-active');
+                    requestAnimationFrame(() => applyMarquee(next));
+                }, DISPERSE_MS);
+            }, TOTAL_CYCLE);
             // Re-measure after locale change (content widths shift).
             window.addEventListener('resize', () => applyMarquee(items[idx]));
             document.addEventListener('languageChanged', () => applyMarquee(items[idx]));
