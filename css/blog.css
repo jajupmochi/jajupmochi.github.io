@@ -40,12 +40,12 @@
   transform: rotate(-3deg);
 }
 .blog-brand-text {
-  font-family: 'Caveat', cursive; font-size: 1.5em; font-weight: 700;
+  font-family: 'Patrick Hand', 'Caveat', cursive; font-size: 1.35em; font-weight: 700;
   color: var(--blog-maroon); letter-spacing: 0.01em;
 }
 .blog-nav-right { display: flex; align-items: center; gap: 1em; }
 .blog-nav-home {
-  font-family: 'Indie Flower', cursive; font-size: 1.1em; font-weight: 700;
+  font-family: 'Patrick Hand', 'Indie Flower', cursive; font-size: 1.1em; font-weight: 700;
   color: var(--blog-maroon-br); text-decoration: none;
   border-bottom: 1.5px dashed transparent; transition: border-color .18s;
 }
@@ -67,9 +67,13 @@
 
 /* ----- Index ----- */
 .blog-index-head { text-align: center; margin-bottom: 2.4em; }
-.blog-index-title { font-size: 2.6em !important; margin: 0 0 0.2em !important; }
+/* Override the parchment .section-title scrawl (Reenie Beanie) with clear Patrick Hand */
+.blog-index-title {
+  font-family: 'Patrick Hand', 'Caveat', cursive !important;
+  font-size: 2.6em !important; margin: 0 0 0.2em !important;
+}
 .blog-index-tagline {
-  font-family: 'Caveat', 'LXGW WenKai', cursive; font-size: 1.4em;
+  font-family: 'Patrick Hand', 'LXGW WenKai', cursive; font-size: 1.25em;
   color: var(--blog-ink-soft); margin: 0; transform: rotate(-0.4deg);
 }
 .blog-post-list { display: flex; flex-direction: column; gap: 1.8em; }
@@ -103,7 +107,7 @@
   border: 1px solid rgba(120, 60, 30, 0.16);
 }
 .blog-card-more {
-  display: inline-block; margin-top: 0.6em; font-family: 'Indie Flower', cursive;
+  display: inline-block; margin-top: 0.6em; font-family: 'Patrick Hand', 'Indie Flower', cursive;
   font-weight: 700; font-size: 1.15em; color: var(--blog-maroon-br);
 }
 
@@ -122,7 +126,7 @@
 .blog-fallback-note { margin: 0.6em 0 0; }
 
 /* ----- Single post ----- */
-.blog-back, .blog-langpill, .blog-avail-label { font-family: 'Indie Flower', cursive; }
+.blog-back, .blog-langpill, .blog-avail-label { font-family: 'Patrick Hand', 'Indie Flower', cursive; }
 .blog-back {
   display: inline-block; margin-bottom: 1em; font-size: 1.15em; font-weight: 700;
   color: var(--blog-maroon-br); text-decoration: none;
@@ -238,7 +242,7 @@
   border-top: 1.5px dashed var(--blog-rule); color: var(--blog-ink-soft); font-size: 0.9em;
 }
 .blog-footer a { color: var(--blog-maroon-br); }
-.blog-footer-note { font-family: 'Indie Flower', cursive; font-size: 1.05em; margin-top: 0.4em; }
+.blog-footer-note { font-family: 'Patrick Hand', 'Indie Flower', cursive; font-size: 1.05em; margin-top: 0.4em; }
 
 /* ===== Mobile (md breakpoint) ===== */
 @media (max-width: 768px) {
