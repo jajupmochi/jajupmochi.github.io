@@ -6,7 +6,7 @@
       "langs": ["zh", "en"],
       "primaryLang": "zh",
       "tags": ["linux", "ubuntu", "fcitx5", "input-method", "tooling", "human×AI"],
-      "translationStatus": { "zh": "human", "en": "human", "fr": "pending", "de": "pending" },
+      "translationStatus": { "zh": "ai_edited", "en": "ai_edited", "fr": "pending", "de": "pending" },
       "author": "jajupmochi × Claude Code (Opus 4.7)",
       "cover": "assets/final-with-dog.png",
       "readingMinutes": { "zh": 12, "en": 13 },

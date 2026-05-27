@@ -38,6 +38,7 @@
       'blog.readmore': 'Read →',
       'st.human': 'human-written',
       'st.ai': 'AI-translated',
+      'st.ai_edited': 'AI draft · edited, unreviewed',
       'st.checked': 'AI + human-checked',
       'st.pending': 'translation pending',
       'lang.en': 'English', 'lang.zh': '中文', 'lang.fr': 'Français', 'lang.de': 'Deutsch'
@@ -56,6 +57,7 @@
       'blog.readmore': '阅读 →',
       'st.human': '人类撰写',
       'st.ai': 'AI 翻译',
+      'st.ai_edited': 'AI 起草 · 人工编辑 · 未审阅',
       'st.checked': 'AI + 人类校验',
       'st.pending': '翻译待补',
       'lang.en': 'English', 'lang.zh': '中文', 'lang.fr': 'Français', 'lang.de': 'Deutsch'
@@ -74,6 +76,7 @@
       'blog.readmore': 'Lire →',
       'st.human': 'écrit par un humain',
       'st.ai': 'traduit par IA',
+      'st.ai_edited': 'brouillon IA · édité, non relu',
       'st.checked': 'IA + vérifié par un humain',
       'st.pending': 'traduction à venir',
       'lang.en': 'English', 'lang.zh': '中文', 'lang.fr': 'Français', 'lang.de': 'Deutsch'
@@ -92,6 +95,7 @@
       'blog.readmore': 'Lesen →',
       'st.human': 'von Menschen geschrieben',
       'st.ai': 'KI-übersetzt',
+      'st.ai_edited': 'KI-Entwurf · bearbeitet, ungeprüft',
       'st.checked': 'KI + von Menschen geprüft',
       'st.pending': 'Übersetzung ausstehend',
       'lang.en': 'English', 'lang.zh': '中文', 'lang.fr': 'Français', 'lang.de': 'Deutsch'
@@ -218,7 +222,7 @@
 
   // ---- Views ---------------------------------------------------------------
   function statusBadge(status) {
-    const map = { human: 'st.human', ai: 'st.ai', checked: 'st.checked', pending: 'st.pending' };
+    const map = { human: 'st.human', ai: 'st.ai', ai_edited: 'st.ai_edited', checked: 'st.checked', pending: 'st.pending' };
     const key = map[status] || 'st.pending';
     return `<span class="blog-badge blog-badge-${status}">${t(key)}</span>`;
   }
@@ -325,7 +329,7 @@
   }
 
   function statusKey(st) {
-    return ({ human: 'human', ai: 'ai', checked: 'checked', pending: 'pending' })[st] || 'pending';
+    return ({ human: 'human', ai: 'ai', ai_edited: 'ai_edited', checked: 'checked', pending: 'pending' })[st] || 'pending';
   }
 
   // ---- Boot ---------------------------------------------------------------

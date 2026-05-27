@@ -64,7 +64,8 @@
 }
 
 /* ----- Main layout ----- */
-.blog-main { max-width: 820px; margin: 0 auto; padding: 2.4em 1.2em 3em; }
+/* Narrower measure (≈68ch) — long handwriting lines are tiring to read */
+.blog-main { max-width: 720px; margin: 0 auto; padding: 2.4em 1.2em 3em; }
 
 /* ----- Index ----- */
 .blog-index-head { text-align: center; margin-bottom: 2.4em; }
@@ -120,6 +121,7 @@
 .blog-badge-human   { background: rgba(40,130,80,0.14);  color: oklch(0.42 0.12 150); border: 1px solid oklch(0.55 0.12 150 / .3); }
 .blog-badge-ai      { background: rgba(60,90,200,0.12);  color: oklch(0.45 0.14 265); border: 1px solid oklch(0.55 0.14 265 / .3); }
 .blog-badge-checked { background: rgba(150,90,20,0.13);  color: oklch(0.50 0.13 70);  border: 1px solid oklch(0.6 0.13 70 / .3); }
+.blog-badge-ai_edited { background: rgba(200,120,20,0.15); color: oklch(0.48 0.15 55); border: 1px solid oklch(0.6 0.15 55 / .35); }
 .blog-badge-pending { background: rgba(120,120,120,0.12);color: oklch(0.50 0.02 60);  border: 1px solid oklch(0.6 0.02 60 / .3); }
 .blog-fallback-chip, .blog-fallback-note {
   font-size: 0.8em; color: var(--blog-ink-soft); font-style: italic;
@@ -154,9 +156,10 @@
 /* ===== markdown-body — readable technical content on parchment ===== */
 .markdown-body {
   /* Clear handwriting body. !important to beat parchment-overrides' p/h !important rules.
-     Patrick Hand reads a touch smaller → bump size + leading. */
+     Sized down (1.22→1.05rem) + tighter leading so long-form reading isn't tiring. */
   font-family: 'Patrick Hand', 'LXGW WenKai', cursive !important;
-  font-size: 1.22rem; line-height: 1.85; color: var(--blog-ink);
+  font-size: 1.05rem; line-height: 1.68; color: var(--blog-ink);
+  letter-spacing: 0.005em;
   word-wrap: break-word;
 }
 .markdown-body p, .markdown-body li, .markdown-body blockquote,
