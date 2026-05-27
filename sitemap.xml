@@ -15,6 +15,25 @@
     <xhtml:link rel="alternate" hreflang="de"        href="https://jajupmochi.github.io/index_en_clear.html?lang=de"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jajupmochi.github.io/index_en.html"/>
   </url>
+  <!-- Blog (static, client-rendered; 4-language UI). Post pages use ?post=&lang= -->
+  <url>
+    <loc>https://jajupmochi.github.io/blog.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jajupmochi.github.io/blog.html?post=ubuntu-fcitx5-pinyin&amp;lang=en</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jajupmochi.github.io/blog.html?post=ubuntu-fcitx5-pinyin&amp;lang=zh</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://jajupmochi.github.io/index_en_clear.html?lang=zh</loc>
     <lastmod>2026-05-04</lastmod>

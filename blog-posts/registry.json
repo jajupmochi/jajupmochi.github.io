@@ -1,0 +1,27 @@
+{
+  "posts": [
+    {
+      "slug": "ubuntu-fcitx5-pinyin",
+      "date": "2026-05-27",
+      "langs": ["zh", "en"],
+      "primaryLang": "zh",
+      "tags": ["linux", "ubuntu", "fcitx5", "input-method", "tooling", "human×AI"],
+      "translationStatus": { "zh": "human", "en": "human", "fr": "pending", "de": "pending" },
+      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "cover": "assets/final-with-dog.png",
+      "readingMinutes": { "zh": 12, "en": 13 },
+      "title": {
+        "zh": "Ubuntu 上把搜狗换成 fcitx5：云拼音、模糊音，外加一只跑动的狗",
+        "en": "Replacing Sogou with fcitx5 on Ubuntu: cloud pinyin, fuzzy pinyin, and a running dog",
+        "fr": "Remplacer Sogou par fcitx5 sur Ubuntu : pinyin cloud, pinyin flou, et un chien qui court",
+        "de": "Sogou durch fcitx5 unter Ubuntu ersetzen: Cloud-Pinyin, Fuzzy-Pinyin und ein laufender Hund"
+      },
+      "excerpt": {
+        "zh": "搜狗在 Wayland 下打不出字，整套换成 fcitx5：云拼音、模糊音、自学习、Kimpanel 面板，外加云加载时一只跑动的狗。命令可直接复制。",
+        "en": "Sogou stopped typing under Wayland — a full move to fcitx5 with cloud pinyin, fuzzy pinyin, self-learning, a Kimpanel theme, and a dog that runs while the cloud loads. Copy-paste ready.",
+        "fr": "Sogou ne tapait plus sous Wayland — passage complet à fcitx5 : pinyin cloud, pinyin flou, auto-apprentissage, et un chien qui court pendant le chargement.",
+        "de": "Sogou tippte unter Wayland nicht mehr — kompletter Umstieg auf fcitx5: Cloud-Pinyin, Fuzzy-Pinyin, Selbstlernen und ein laufender Hund während des Ladens."
+      }
+    }
+  ]
+}
