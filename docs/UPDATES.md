@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-28](#2026-05-28)
+    - [V5 — App Gallery merged into one data-driven page (Cards+Detailed), bento cards](#v5--app-gallery-merged-into-one-data-driven-page-cardsdetailed-bento-cards) — Merged `apps-gallery.html` + `portfolio.html` into **one data-driven page** (approach A): `js/projects-data.js` (data only) + `js/projects-render.js` (render logic) + CSS (design) — clean separation. In-page `Cards | Detailed` toggle (localStorage-persisted), homepage-style controls (filter pills + search + **Sort**). Cards view is now a **bento** (featured LIULIAN spans 2×2, varied tiles — de-monotonous); Detailed view = project-cards. Shared carousel + lightbox (prev/next, counter, scroll-lock). `portfolio.html` deleted.
     - [V4 — Homepage Projects: multi-image cards (dots+swipe) + LIULIAN Online Demo](#v4--homepage-projects-multi-image-cards-dotsswipe--liulian-online-demo) — LIULIAN (studio+mobile) and N-Banker (chat+canvas) home cards become 2-slide carousels matching the gallery (dots + pointer/touch swipe; `stopPropagation` so the outer carousel + card-nav don't fire); LIULIAN gains an **Online Demo** link + card-click → liulian-web demo. New `proj_link.online_demo` key ×4 locales (parity OK).
     - [V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish](#v3--gallery-optimization-pass-lazy-load-keyboard-a11y-reduced-motion-lightbox-polish) — Ten-round polish on `apps-gallery.html`: lazy-load + `decoding=async` on all 12 slides (defers the 1.24 MB translator GIF); cards keyboard-focusable (`tabindex`/`role`/`aria-label`, Enter/Space to open); `prefers-reduced-motion` disables transitions; lightbox locks body scroll + shows an `n / total` counter; verified mobile (1-col), Detailed view, and homepage carousel.
     - [V2 — App Gallery overhaul: Detailed view restored, persistent controls row, 3-col, hover fix, borderless, WebP](#v2--app-gallery-overhaul-detailed-view-restored-persistent-controls-row-3-col-hover-fix-borderless-webp) — Reverses V1's single-page consolidation per Linlin's new direction: restored `portfolio.html` (Detailed view) and put the `Cards | Detailed` toggle into a persistent **controls row** (filter tags · search) on both views — gallery gains a working tag filter + search. Gallery: 3 cards/row on large screens, hover-overlay overflow + typography fixed, card rounding removed (blend into parchment). Speed: the 5 screenshots converted PNG→WebP (4.25 MB → 194 KB). Homepage Projects LIULIAN/N-Banker images synced to the gallery screenshots.
@@ -40,6 +41,20 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-28
+
+## V5 — App Gallery merged into one data-driven page (Cards+Detailed), bento cards
+
+Per Linlin: the two-file (Cards = `apps-gallery.html`, Detailed = `portfolio.html`) design was wrong — they share everything but the project display format, so merge + refactor, with **design / logic / data separated**, and apply to the homepage too. This V5 does the gallery; homepage follows.
+
+- **One data-driven page** (approach A). `apps-gallery.html` rebuilt as a shell (nav · header · controls · empty `#gal` · footer) that renders from data via JS. `portfolio.html` deleted (merged).
+- **Separation of concerns**:
+    - `js/projects-data.js` — `window.PROJECTS`, the single source of truth (content only; loaded synchronously so no fetch races).
+    - `js/projects-render.js` — render logic (`cardEl`, `detailedEl`, shared carousel + lightbox, filter/search/sort, view toggle) via `window.Projects.mountGallery`.
+    - CSS — design only.
+- **Controls in homepage style** — `.filter-tags`/`.filter-tag` + `.search-box` + `.sort-select` (from `css/main.css`) + a new **Sort** dropdown (Featured / Newest / Oldest) + the `Cards | Detailed` toggle (in-page view switch, persisted in `localStorage`).
+- **Cards view = bento** (de-monotonous, Linlin: "方方正正太单调") — featured LIULIAN tile spans 2×2, other featured tiles vary in height, `grid-auto-flow:dense`. Detailed view = `.project-card`s with bullets + washi tape.
+- **Shared** in-card carousel (dots + pointer swipe, `stopPropagation`) and lightbox (prev/next + `n / total` counter + body scroll-lock) across both views.
+- Verified at 1440: 9 cards, Cards↔Detailed toggle, filter (Industry→LIULIAN/N-Banker/PLANALYSER), search, sort, dots on the 3 multi-image cards, lightbox studio→mobile.
 
 ## V4 — Homepage Projects: multi-image cards (dots+swipe) + LIULIAN Online Demo
 
