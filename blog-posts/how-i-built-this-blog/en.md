@@ -72,6 +72,8 @@ Each post lives at `blog-posts/<slug>/<lang>.md` with its images alongside. The
 `human` (human-written). The index renders that as a small badge so a reader
 knows what they are getting.
 
+![The blog index: search, tag filter, sort, and three view modes.](blog-index.webp)
+
 ## Rendering Markdown in the browser
 
 Four libraries, all from `cdn.jsdelivr.net`, do the heavy lifting:
@@ -122,6 +124,8 @@ a hand-made, skeuomorphic direction: light "manuscript paper" code blocks with a
 soft syntax palette, the table of contents drawn as a hanging parchment scroll,
 and an ink-style reading-progress mark. That part is its own long story; the point
 here is that it is all plain CSS over the same rendered HTML.
+
+![A rendered post: light manuscript-paper code blocks, a parchment-scroll table of contents, fleuron list markers.](blog-render.webp)
 
 ## Build it yourself
 

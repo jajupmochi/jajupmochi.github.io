@@ -50,6 +50,8 @@ One page, `index_en.html`, is what visitors see. It pulls translations and data
 from JSON at runtime, and `js/main.js` wires up the interactive parts. Pushing to
 `master` deploys it. That is the entire architecture.
 
+![The deployed homepage: warm parchment, handwritten type, hand-drawn accents.](site-home.webp)
+
 ## Internationalisation without a framework
 
 The site ships in English, Chinese, French, and German. The mechanism is small
@@ -115,6 +117,8 @@ CSS variables, so one control repaints the whole page and the choice persists in
 Some assets were made in a loop with Claude: a first draft from Claude Code, then
 a design pass to refine it. The running-dog loader in my input-method post came
 out of exactly that loop.
+
+![The App Gallery page reuses the very same design system and parchment background.](site-apps.webp)
 
 ## Forms and analytics, still static
 

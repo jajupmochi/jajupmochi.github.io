@@ -43,6 +43,8 @@ flowchart TD
 访客看到的是一个页面 `index_en.html`。它在运行时从 JSON 拉取翻译和数据，`js/main.js`
 把交互部分接起来。推送到 `master` 就部署。整个架构就这些。
 
+![部署后的主页：暖色羊皮纸、手写字体、手绘点缀。](site-home.webp)
+
 ## 不用框架做国际化
 
 站点有英、中、法、德四语。机制刻意做得很小：
@@ -99,6 +101,8 @@ python3 -m http.server 8000
 
 有些资源是和 Claude 在循环里做出来的：Claude Code 出初稿，再做一轮 design 精修。我
 输入法那篇文章里奔跑的小狗加载图，就是这么来的。
+
+![App Gallery 页面复用了完全相同的设计系统与羊皮纸背景。](site-apps.webp)
 
 ## 表单与统计，依然静态
 
