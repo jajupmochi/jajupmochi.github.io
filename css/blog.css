@@ -21,11 +21,11 @@
   /* Reading-body type token. The WHOLE article scales off these two so every
      element stays in proportion. Default = Standard (modern density); .reading-comfort
      on <body> bumps to the larger, relaxed setting. One scale, no arbitrary sizes. */
-  --blog-fs: 1.05rem;   /* Standard — modern web density (Patrick Hand reads small, so not below this) */
-  --blog-lh: 1.64;
+  --blog-fs: 1.0rem;    /* Standard (普通版) — clean modern 16px density */
+  --blog-lh: 1.6;
 }
-/* Comfort reading mode — larger type + looser leading, set on <body class="reading-comfort"> */
-.reading-comfort { --blog-fs: 1.2rem; --blog-lh: 1.74; }
+/* Easy-read mode (易读版) — distinctly larger (+22%) + looser leading for relaxed reading */
+.reading-comfort { --blog-fs: 1.22rem; --blog-lh: 1.75; }
 
 .blog-body {
   min-height: 100vh;
@@ -262,6 +262,8 @@
   font-size: var(--blog-fs); line-height: var(--blog-lh); color: var(--blog-ink);
   letter-spacing: 0.005em;
   word-wrap: break-word;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 .markdown-body p, .markdown-body li, .markdown-body blockquote,
 .markdown-body td, .markdown-body th {
@@ -272,7 +274,7 @@
    reading-body element resolves to the one --blog-fs token — no drift between p/li/quote/table. */
 #blogPostBody p, #blogPostBody li, #blogPostBody blockquote,
 #blogPostBody td, #blogPostBody th, #blogPostBody dd, #blogPostBody dt {
-  font-size: var(--blog-fs) !important; line-height: var(--blog-lh);
+  font-size: var(--blog-fs) !important; line-height: var(--blog-lh) !important;
 }
 .markdown-body h1, .markdown-body h2, .markdown-body h3,
 .markdown-body h4, .markdown-body h5 {
@@ -499,10 +501,45 @@
   font-family: 'Patrick Hand', 'Caveat', cursive; font-size: 1.2em; color: var(--blog-maroon);
 }
 .blog-toc-title { letter-spacing: 0.02em; }
-.blog-toc-chevron { transition: transform .2s; font-size: 0.8em; }
-.blog-toc.collapsed .blog-toc-chevron { transform: rotate(-90deg); }
-.blog-toc.collapsed .blog-toc-nav { display: none; }
-.blog-toc-nav { display: flex; flex-direction: column; padding: 0 0.5em 0.6em; }
+/* toggle = a little scroll DOWEL with a triangle → reads as "roll the scroll",
+   and the arrow makes the action obvious. Expanded: points UP (roll up).
+   Collapsed: flips DOWN (unroll). */
+.blog-toc-chevron {
+  flex: none; width: 24px; height: 13px; border-radius: 7px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, oklch(0.54 0.08 45), oklch(0.80 0.06 72) 45%, oklch(0.47 0.08 42));
+  box-shadow: 0 1px 3px rgba(80,40,10,0.30), inset 0 1px 0 rgba(255,245,225,0.5);
+}
+.blog-toc-chevron i {
+  width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-bottom: 5px solid #fff6e6;  /* up-pointing (expanded = can roll up) */
+  transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.blog-toc.collapsed .blog-toc-chevron i { transform: rotate(180deg); }  /* down = unroll */
+
+/* roll / unroll the scroll body — grid-template-rows 1fr↔0fr is smooth + content-exact */
+.blog-toc-rollwrap {
+  display: grid; grid-template-rows: 1fr;
+  transition: grid-template-rows .45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.blog-toc.collapsed .blog-toc-rollwrap { grid-template-rows: 0fr; transition-duration: .34s; } /* exit faster */
+.blog-toc-nav {
+  display: flex; flex-direction: column; padding: 0 0.5em 0.6em; min-height: 0;
+  overflow-y: auto; overflow-x: hidden;
+  scrollbar-width: thin; scrollbar-color: var(--blog-maroon-br) transparent;
+  transition: padding-bottom .34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.blog-toc.collapsed .blog-toc-nav { padding-bottom: 0; overflow: hidden; }  /* fully rolled, no sliver */
+/* scrollbar dressed as a slim inked dowel so it reads as part of the scroll */
+.blog-toc-nav::-webkit-scrollbar { width: 7px; }
+.blog-toc-nav::-webkit-scrollbar-track { background: transparent; margin: 4px 0; }
+.blog-toc-nav::-webkit-scrollbar-thumb {
+  border-radius: 7px; border: 1px solid rgba(255,245,225,0.45);
+  background: linear-gradient(90deg, oklch(0.58 0.09 50), oklch(0.46 0.10 38));
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-toc-rollwrap, .blog-toc-chevron i { transition: none; }
+}
 .toc-link {
   font-family: 'Patrick Hand', 'LXGW WenKai', cursive; text-decoration: none;
   color: var(--blog-ink-soft); font-size: 0.96em; line-height: 1.35;
@@ -536,7 +573,7 @@
   .blog-search { flex: 1 1 100%; order: -1; }
   .blog-card-compact { padding: 0.6em 0.3em; }
   .blog-card-compact .blog-card-title { flex: 1 1 100%; }
-  .blog-body:not(.reading-comfort) { --blog-fs: 1.0rem; }  /* hair tighter on small screens, comfort still bumps */
+  .blog-body:not(.reading-comfort) { --blog-fs: 0.96rem; }  /* tighter standard on small screens, easy-read still bumps */
   .markdown-body h1 { font-size: 1.6em; }
   .markdown-body h2 { font-size: 1.32em; }
   .markdown-body pre { padding: 0.8em; }
