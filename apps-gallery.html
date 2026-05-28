@@ -28,9 +28,22 @@
   .mode a.on { background:var(--maroon); color:#fdf3e3; }
   .pf-head { max-width:1600px; margin:0 auto; padding:2.2em 2vw 0.2em; }
   .pf-title { font-family:'Patrick Hand',cursive !important; font-size:clamp(2.2rem,5vw,3.4rem); color:var(--ink); margin:0; }
+  /* persistent controls row: filter tags · search · Cards|Detailed toggle */
+  .pf-controls { max-width:1600px; margin:0 auto; padding:0.5em 2vw 0.3em; display:flex; flex-wrap:wrap; align-items:center; gap:0.7em 1em; }
+  .gtags { display:flex; flex-wrap:wrap; gap:0.4em; }
+  .gtag { font-family:'JetBrains Mono',monospace !important; font-size:0.72rem; color:var(--soft); cursor:pointer;
+    background:rgba(255,250,235,0.5); border:1px solid rgba(120,80,40,0.25); border-radius:7px 5px 8px 5px; padding:0.3em 0.75em; transition:color .16s, background .16s, border-color .16s; }
+  .gtag:hover { color:var(--maroon); border-color:rgba(154,43,30,0.6); }
+  .gtag.on { background:var(--maroon); color:#fdf3e3; border-color:var(--maroon); }
+  .gsearch { display:flex; align-items:center; gap:0.45em; background:rgba(255,250,235,0.6); border:1px solid rgba(120,80,40,0.25); border-radius:8px; padding:0.32em 0.75em; color:var(--soft); }
+  .gsearch input { border:none; background:transparent; outline:none; font-family:'Spectral','Noto Serif SC',serif !important; font-size:0.9rem; color:var(--ink); width:11em; }
+  .pf-controls .mode { margin-left:auto; }
+  .g-card.is-hidden { display:none !important; }
+  .gal-empty { grid-column:1/-1; text-align:center; color:var(--soft); font-family:'Patrick Hand',cursive !important; font-size:1.3rem; padding:2em 0; display:none; }
+  .gal-empty.on { display:block; }
   .gal { max-width:1600px; margin:0 auto; padding:1.2em 2vw 1em;
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.5em; }
-  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1.6em; }
+  .g-card { position:relative; aspect-ratio:16/10; border-radius:0; overflow:hidden; cursor:pointer;
     background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); touch-action:pan-y; }
   .g-card:hover { transform:translateY(-3px); }
   /* image carousel: wrap (gets hover-dim) > track (slides via translateX) */
@@ -44,15 +57,16 @@
     font-family:'Patrick Hand',cursive !important; font-size:1.45rem; color:#fff;
     background:linear-gradient(180deg, transparent, rgba(40,22,8,0.8)); transition:opacity .35s; }
   .g-over { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:flex-end;
-    padding:1.3em 1.3em 1.2em; gap:0.5em; opacity:0; transition:opacity .4s;
-    background:linear-gradient(180deg, rgba(247,240,224,0.32), rgba(247,240,224,0.95)); }
-  .g-over h3 { font-family:'Patrick Hand',cursive !important; font-size:1.5rem; margin:0; color:var(--ink); line-height:1.1; }
-  .g-over p { margin:0; font-size:0.95rem; color:#4c3a24; }
-  .g-over .why { font-style:italic; color:#6b5436; font-size:0.9rem; }
-  .g-over .tags { display:flex; flex-wrap:wrap; gap:0.35em; }
-  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon);
-    background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
-  .g-over .acts { display:flex; flex-wrap:wrap; align-items:center; gap:0.9em; margin-top:0.2em; font-family:'Patrick Hand',cursive !important; font-size:1.05rem; }
+    padding:18px 20px 18px; gap:7px; opacity:0; transition:opacity .4s; overflow:hidden; line-height:1.32;
+    background:linear-gradient(180deg, rgba(247,240,224,0.32), rgba(247,240,224,0.96)); }
+  .g-over h3 { font-family:'Patrick Hand',cursive !important; font-size:23px; margin:0; color:var(--ink); line-height:1.12; }
+  .g-over p { margin:0; font-size:14.5px; line-height:1.42; color:#4c3a24;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .g-over .why { font-style:italic; color:#6b5436; font-size:13px; line-height:1.35; -webkit-line-clamp:2; }
+  .g-over .tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:10.5px; line-height:1.6; color:var(--maroon);
+    background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:1px 7px; }
+  .g-over .acts { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:2px; font-family:'Patrick Hand',cursive !important; font-size:15.5px; }
   .g-over .acts a, .g-over .acts button { color:var(--maroon); text-decoration:none; background:none; border:none; cursor:pointer; font:inherit; display:inline-flex; align-items:center; gap:0.3em; padding:0; }
   .g-over .acts a:hover, .g-over .acts button:hover { text-decoration:underline; }
   .g-over .acts .zoom { margin-left:auto; }
@@ -75,7 +89,8 @@
   .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none;
     border:1px solid rgba(120,80,40,0.25); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
   .pf-foot .copy { font-family:'JetBrains Mono',monospace !important; font-size:0.78rem; color:var(--soft); }
-  @media (max-width:560px){ .gal{ grid-template-columns:1fr; } .pf-nav .links{ gap:0.8em; font-size:0.92rem; } }
+  @media (max-width:1024px){ .gal{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .gal{ grid-template-columns:1fr; } .pf-nav .links{ gap:0.8em; font-size:0.92rem; } }
 </style>
 </head>
 <body data-theme="academic">
@@ -95,14 +110,33 @@
   <h1 class="pf-title">App Gallery</h1>
 </header>
 
+<div class="pf-controls">
+  <div class="gtags" id="galFilter" role="group" aria-label="Filter by tag">
+    <button class="gtag on" data-filter="all">All</button>
+    <button class="gtag" data-filter="llm">LLM</button>
+    <button class="gtag" data-filter="agents">Agents</button>
+    <button class="gtag" data-filter="graph">Graph</button>
+    <button class="gtag" data-filter="vision">Vision</button>
+    <button class="gtag" data-filter="software">Software</button>
+    <button class="gtag" data-filter="industry">Industry</button>
+    <button class="gtag" data-filter="academia">Academia</button>
+  </div>
+  <div class="gsearch"><i class="fas fa-search" aria-hidden="true"></i><input type="text" id="galSearch" placeholder="Search apps..." aria-label="Search apps"></div>
+  <div class="mode" role="group" aria-label="View mode">
+    <a href="apps-gallery.html" class="on"><i class="fas fa-table-cells-large"></i> Cards</a>
+    <a href="portfolio.html"><i class="fas fa-list"></i> Detailed</a>
+  </div>
+</div>
+
 <main class="gal" id="gal">
+  <div class="gal-empty" id="galEmpty">No apps match that filter.</div>
 
   <!-- LIULIAN (2 images, live demo) -->
-  <div class="g-card" data-href="https://liulian-ai.github.io/liulian-web/">
+  <div class="g-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-href="https://liulian-ai.github.io/liulian-web/">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/liulian_studio.png" alt="LIULIAN Studio (desktop)">
-      <img class="g-slide" src="res/portfolio/img/liulian_mobile.png" alt="LIULIAN mobile forecast">
+      <img class="g-slide" src="res/portfolio/img/liulian_studio.webp" alt="LIULIAN Studio (desktop)">
+      <img class="g-slide" src="res/portfolio/img/liulian_mobile.webp" alt="LIULIAN mobile forecast">
     </div></div>
     <div class="g-dots"></div>
     <div class="g-cap">LIULIAN</div>
@@ -115,11 +149,11 @@
   </div>
 
   <!-- N-Banker (2 images, private/NDA — no public link) -->
-  <div class="g-card">
+  <div class="g-card" data-tags="industry,llm,agents">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/neobanker_chat.png" alt="N-Banker assistant">
-      <img class="g-slide" src="res/portfolio/img/neobanker_canvas.png" alt="N-Banker canvas dashboard">
+      <img class="g-slide" src="res/portfolio/img/neobanker_chat.webp" alt="N-Banker assistant">
+      <img class="g-slide" src="res/portfolio/img/neobanker_canvas.webp" alt="N-Banker canvas dashboard">
     </div></div>
     <div class="g-dots"></div>
     <div class="g-cap">N-Banker</div>
@@ -133,7 +167,7 @@
   </div>
 
   <!-- graphkit-learn (code) -->
-  <div class="g-card" data-href="https://github.com/jajupmochi/graphkit-learn">
+  <div class="g-card" data-tags="software,academia,graph" data-href="https://github.com/jajupmochi/graphkit-learn">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div></div>
     <div class="g-dots"></div>
@@ -147,7 +181,7 @@
   </div>
 
   <!-- Swiss River (code) -->
-  <div class="g-card" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
+  <div class="g-card" data-tags="academia,graph,spatio-temporal,software" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div></div>
     <div class="g-dots"></div>
@@ -161,9 +195,9 @@
   </div>
 
   <!-- Linlin's homepage (2 images: site + blog) -->
-  <div class="g-card" data-href="https://jajupmochi.github.io/index_en.html">
+  <div class="g-card" data-tags="software,fun,llm" data-href="https://jajupmochi.github.io/index_en.html">
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/personal_site.png" alt="Linlin's homepage">
+      <img class="g-slide" src="res/portfolio/img/personal_site.webp" alt="Linlin's homepage">
       <img class="g-slide" src="res/figures/2026_blog.webp" alt="Linlin's blog">
     </div></div>
     <div class="g-dots"></div>
@@ -177,7 +211,7 @@
   </div>
 
   <!-- Local Confidential Translator (code) -->
-  <div class="g-card" data-href="https://github.com/jajupmochi/confidential-translator">
+  <div class="g-card" data-tags="fun,llm,software" data-href="https://github.com/jajupmochi/confidential-translator">
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">Local Confidential Translator</div>
@@ -190,7 +224,7 @@
   </div>
 
   <!-- OCTOPUSSY (code) -->
-  <div class="g-card" data-href="https://github.com/jajupmochi/RedoxPrediction">
+  <div class="g-card" data-tags="academia,graph,chemoinformatics,software" data-href="https://github.com/jajupmochi/RedoxPrediction">
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">OCTOPUSSY — RedoxPrediction</div>
@@ -203,7 +237,7 @@
   </div>
 
   <!-- PLANALYSER (private/NDA — no public link) -->
-  <div class="g-card">
+  <div class="g-card" data-tags="academia,industry,vision,graph">
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">PLANALYSER</div>
@@ -217,7 +251,7 @@
   </div>
 
   <!-- GraphInk (no code yet) -->
-  <div class="g-card">
+  <div class="g-card" data-tags="academia,graph,vision">
     <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">GraphInk</div>
@@ -293,6 +327,33 @@
       if (href) window.open(href, '_blank', 'noopener');
     });
   });
+
+  // tag filter + search (persistent controls row)
+  (function(){
+    const cards = [...document.querySelectorAll('.g-card')];
+    const tagBtns = [...document.querySelectorAll('#galFilter .gtag')];
+    const search = document.getElementById('galSearch');
+    const empty = document.getElementById('galEmpty');
+    let activeTag = 'all';
+    function apply(){
+      const q = (search.value || '').trim().toLowerCase();
+      let shown = 0;
+      cards.forEach(c => {
+        const tags = (c.getAttribute('data-tags') || '').split(',');
+        const hit = (activeTag === 'all' || tags.includes(activeTag)) &&
+                    (!q || c.textContent.toLowerCase().includes(q));
+        c.classList.toggle('is-hidden', !hit);
+        if (hit) shown++;
+      });
+      empty.classList.toggle('on', shown === 0);
+    }
+    tagBtns.forEach(b => b.addEventListener('click', () => {
+      tagBtns.forEach(x => x.classList.toggle('on', x === b));
+      activeTag = b.dataset.filter; apply();
+    }));
+    search.addEventListener('input', apply);
+    apply();
+  })();
 </script>
 </body>
 </html>
