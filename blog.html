@@ -69,6 +69,10 @@
         </div>
     </nav>
 
+    <!-- Reusable SVG filter: roughen the progress fill into a wet brush-ink edge -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <filter id="inkRough"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.16" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
+    </svg>
     <!-- Reading-progress ink trail (fills as you scroll a post) -->
     <div class="blog-progress" id="blogProgress" aria-hidden="true"><i></i></div>
 

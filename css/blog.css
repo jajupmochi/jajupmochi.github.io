@@ -23,6 +23,11 @@
      on <body> bumps to the larger, relaxed setting. One scale, no arbitrary sizes. */
   --blog-fs: 1.0rem;    /* Standard (普通版) — clean modern 16px density */
   --blog-lh: 1.6;
+  /* skeuomorphic accents (manuscript ink + gilt) */
+  --blog-cinnabar:  oklch(0.55 0.20 30);
+  --blog-gold:      oklch(0.78 0.12 80);
+  --blog-gold-deep: oklch(0.62 0.12 72);
+  --blog-paper-solid: oklch(0.955 0.015 85);
 }
 /* Easy-read mode (易读版) — distinctly larger (+22%) + looser leading for relaxed reading */
 .reading-comfort { --blog-fs: 1.22rem; --blog-lh: 1.75; }
@@ -559,6 +564,166 @@
 @media (max-width: 1179px) {
   .blog-toc { top: 62px; left: 0.7rem; width: 200px; max-width: 62vw; padding: 0.15em; }
   .blog-toc-nav { max-height: 50vh; overflow-y: auto; }
+}
+
+/* ===================================================================
+   Skeuomorphic handwritten-paper redesign (2026-05-28) — recommended set.
+   Each module = one lab variant; swap any on request. #id-scoped to beat
+   parchment-overrides + base rules. Lab: docs/strategy/redesign-2026-05-28/.
+   =================================================================== */
+
+/* ① reading progress → 笔走墨带 (brush ink, rough edge + wet tip) */
+.blog-progress { height: 7px !important; }
+.blog-progress i {
+  position: relative;
+  background: linear-gradient(90deg, oklch(0.5 0.17 35), oklch(0.4 0.16 28)) !important;
+  border-radius: 0 5px 5px 0; filter: url(#inkRough);
+}
+.blog-progress i::after {
+  content: ''; position: absolute; right: -3px; top: 50%; transform: translateY(-50%);
+  width: 13px; height: 13px; border-radius: 50%; filter: blur(.3px);
+  background: radial-gradient(circle at 40% 40%, oklch(0.37 0.16 28), transparent 70%);
+}
+@media (prefers-reduced-motion: reduce) { .blog-progress i { filter: none; } }
+
+/* ② TOC toggle → 镇纸 paperweight (carved sandalwood-bronze bar). A real weight:
+   cast shadow on the paper. Expanded = lifted + near-upright at top-right;
+   collapsed = dropped onto the rolled scroll's bottom-right, tilted + pressed. */
+.blog-toc-toggle { position: static; }              /* let the weight escape to .blog-toc */
+.blog-toc-chevron {
+  position: absolute; right: 12px; top: 8px; z-index: 3;
+  width: 42px !important; height: 15px !important; border-radius: 4px / 7px !important;
+  background: linear-gradient(180deg,
+      oklch(0.50 0.07 55) 0%, oklch(0.67 0.09 64) 20%, oklch(0.43 0.07 48) 56%, oklch(0.31 0.05 45) 100%) !important;
+  box-shadow:
+      inset 0 1px 0 oklch(0.84 0.08 72 / .6),
+      inset 0 -1.5px 1px rgba(0,0,0,.32),
+      2px 8px 9px rgba(60,30,10,.30) !important;   /* big soft cast shadow = lifted, has weight */
+  transform: rotate(-2deg) translateY(-2px);
+  transition: transform .55s cubic-bezier(.22,1,.36,1), top .55s cubic-bezier(.22,1,.36,1),
+              right .55s cubic-bezier(.22,1,.36,1), bottom .55s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+}
+.blog-toc-chevron i { display: none !important; }
+.blog-toc-chevron::before {                          /* end-cap bevels */
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, oklch(0.3 0.05 45 / .55), transparent 14%, transparent 86%, oklch(0.3 0.05 45 / .55));
+}
+.blog-toc-chevron::after {                            /* carved groove */
+  content: ''; position: absolute; left: 6px; right: 6px; top: 50%; height: 2px; transform: translateY(-50%);
+  border-radius: 2px; background: oklch(0.3 0.05 45 / .5); box-shadow: 0 1px 0 oklch(0.86 0.08 72 / .45);
+}
+.blog-toc.collapsed .blog-toc-chevron {              /* pressed onto rolled scroll, tilted */
+  top: auto; bottom: 4px; right: 7px;
+  transform: rotate(12deg) translateY(2px);
+  box-shadow: inset 0 1px 0 oklch(0.84 0.08 72 / .5), inset 0 -1.5px 1px rgba(0,0,0,.32), 1px 3px 4px rgba(60,30,10,.42) !important;
+}
+.blog-toc-toggle:active .blog-toc-chevron { transform: rotate(4deg) translateY(3px) scale(.98); }
+@media (prefers-reduced-motion: reduce){ .blog-toc-chevron{ transition:none; } }
+
+/* ③ TOC scrollbar → 书签丝带 silk bookmark ribbon thumb (CSS-faithful; a full
+   hanging tassel needs the JS custom bar — offered separately). */
+.blog-toc-nav { scrollbar-width: thin; scrollbar-color: var(--blog-maroon) transparent; }
+.blog-toc-nav::-webkit-scrollbar { width: 12px; }
+.blog-toc-nav::-webkit-scrollbar-track { background: transparent; }
+.blog-toc-nav::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--blog-maroon-br), var(--blog-maroon)) !important;
+  border: 3px solid transparent !important; background-clip: padding-box !important;
+  border-radius: 2px !important;
+  box-shadow: inset 1.5px 0 0 oklch(0.72 0.13 30 / .55), inset -1.5px 0 0 rgba(80,20,20,.45);
+}
+
+/* ④ blockquote → 折角便签 (aged note: washi tape on top, folded corner, slight tilt) */
+#blogPostBody blockquote {
+  position: relative; margin: 1.7em 0 1.5em; padding: 0.95em 1.1em; border: none !important; border-radius: 3px;
+  background: oklch(0.97 0.02 90); color: var(--blog-ink); font-style: normal !important;
+  box-shadow: 2px 3px 9px rgba(80,40,10,.15); transform: rotate(-0.6deg);
+}
+#blogPostBody blockquote::before {   /* washi tape */
+  content: ''; position: absolute; left: 50%; top: -9px; transform: translateX(-50%) rotate(-2deg);
+  width: 72px; height: 18px; background: oklch(0.8 0.09 175 / .55); box-shadow: 0 1px 2px rgba(0,0,0,.12);
+}
+#blogPostBody blockquote::after {    /* folded corner */
+  content: ''; position: absolute; right: 0; bottom: 0;
+  border-width: 0 0 16px 16px; border-style: solid; border-color: transparent transparent oklch(0.88 0.04 85) transparent;
+}
+#blogPostBody blockquote p { margin: 0.3em 0; }
+
+/* ⑤ code block → 打字机纸条 (perforated top/bottom, dashed sides, red-ink language stamp) */
+.markdown-body pre {
+  background: oklch(0.975 0.008 85) !important; background-image: none !important;
+  border: none !important; border-left: 1px dashed var(--blog-rule) !important; border-right: 1px dashed var(--blog-rule) !important;
+  border-radius: 2px !important; box-shadow: 0 2px 9px rgba(80,40,10,.12) !important;
+  padding-top: 2.3em !important;
+}
+.markdown-body pre::before, .markdown-body pre::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 7px; z-index: 2;
+  background: radial-gradient(circle at 5px 50%, transparent 2.6px, oklch(0.975 0.008 85) 2.7px) 0 0 / 10px 7px repeat-x;
+}
+.markdown-body pre::before { top: -3px; }
+.markdown-body pre::after  { bottom: -3px; }
+.markdown-body pre .code-bar { background: transparent !important; border-bottom: none !important; height: auto !important; padding: 0 !important; }
+.markdown-body pre .code-lang {
+  position: absolute; left: 0.7em; top: 0.5em; background: transparent;
+  color: var(--blog-cinnabar) !important; border: 1.4px solid var(--blog-cinnabar); border-radius: 3px;
+  padding: 0 0.42em; transform: rotate(-3deg); opacity: 0.85; letter-spacing: 0.1em;
+}
+.markdown-body pre .code-copy {
+  position: absolute; right: 0.5em; top: 0.5em; background: transparent !important;
+  border: 1.2px solid rgba(120,70,40,.4) !important; border-radius: 5px 3px 6px 4px !important;
+  color: var(--blog-ink-soft) !important; font-size: 0.7rem !important; padding: 0.05em 0.55em !important;
+}
+.markdown-body pre .code-copy:hover { border-color: var(--blog-maroon) !important; color: var(--blog-maroon) !important; }
+.markdown-body pre .code-copy.copied { background: oklch(0.45 0.12 150) !important; color: #fff8ef !important; border-color: oklch(0.45 0.12 150) !important; }
+
+/* ⑥ table → 账本手绘红线 (ledger; rules are slightly wavy hand-drawn ink — homepage style) */
+#blogPostBody table { border: none !important; background: transparent !important; }
+#blogPostBody th {
+  color: var(--blog-cinnabar) !important; background-color: transparent !important; border: none !important; padding-bottom: 0.5em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='5'%3E%3Cpath d='M0 3 Q15 0 30 3 T60 3' stroke='%23a8301f' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: repeat-x !important; background-position: left bottom !important;
+}
+#blogPostBody td {
+  border: none !important; background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='4'%3E%3Cpath d='M0 2 Q15 0 30 2 T60 2' stroke='%23a8301f' stroke-width='1.1' fill='none' stroke-linecap='round' opacity='0.38'/%3E%3C/svg%3E") !important;
+  background-repeat: repeat-x !important; background-position: left bottom !important;
+}
+#blogPostBody tr:nth-child(even) td { background: transparent !important; }
+
+/* ⑦ unordered list → 朱砂花饰 fleurons */
+#blogPostBody ul { list-style: none; padding-left: 1.6em; }
+#blogPostBody ul > li { position: relative; }
+#blogPostBody ul > li::before {
+  content: '\2767'; position: absolute; left: -1.35em; top: 0.02em;
+  color: var(--blog-cinnabar); font-size: 0.92em;
+}
+#blogPostBody ul ul > li::before { content: '\2766'; }
+
+/* ⑧ headings → 书签页签 (protruding bookmark tab) + illuminated H1 initial (kept) */
+#blogPostBody h2 {
+  display: inline-block; position: relative; color: #fff6e6 !important; border: none !important;
+  background: linear-gradient(var(--blog-maroon-br), var(--blog-maroon));
+  padding: 0.16em 1.6em 0.16em 0.85em; border-radius: 5px 0 0 5px;
+  box-shadow: 1px 2px 5px rgba(80,40,10,.3); margin-top: 1.4em;
+}
+#blogPostBody h2::after {                 /* the tab's cut-out notch on the right */
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+  border-width: 0 13px; border-style: solid; border-color: transparent var(--blog-paper-solid) transparent transparent;
+}
+#blogPostBody h3 {
+  display: inline-block; color: var(--blog-maroon) !important;
+  border: none !important; border-bottom: 2.5px solid var(--blog-cinnabar) !important; padding-bottom: 0.04em;
+}
+#blogPostBody h1:first-of-type::first-letter {
+  font-family: 'Ma Shan Zheng', 'Patrick Hand', serif; font-size: 1.7em; line-height: 0.8;
+  color: var(--blog-cinnabar); padding-right: 0.04em;
+  text-shadow: 1px 1px 0 var(--blog-gold-deep), 2px 2px 0 var(--blog-gold-deep), 2px 3px 4px rgba(80,40,10,0.4);
+}
+
+/* ⑨ hr → 纸张折痕 (a pressed crease: dark above, light below, soft shadow) */
+#blogPostBody hr {
+  border: none !important; height: 3px; margin: 2.3em 0; border-radius: 2px;
+  background: linear-gradient(180deg, rgba(80,40,10,.20), rgba(255,255,255,.55)) !important;
+  box-shadow: 0 1px 2px rgba(80,40,10,.12);
 }
 
 /* ===== Mobile (md breakpoint) ===== */
