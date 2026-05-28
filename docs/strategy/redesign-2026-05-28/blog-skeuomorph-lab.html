@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog 手写纸拟物化设计实验室 — 每模块 3 种设计</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Ma+Shan+Zheng&family=Patrick+Hand&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<style>
+:root{
+  --paper: oklch(0.945 0.018 85);
+  --paper-2: oklch(0.965 0.015 85);
+  --ink: oklch(0.26 0.04 45);
+  --ink-soft: oklch(0.44 0.04 45);
+  --maroon: oklch(0.45 0.15 30);
+  --maroon-br: oklch(0.53 0.19 30);
+  --cinnabar: oklch(0.55 0.20 30);
+  --gold: oklch(0.78 0.12 80);
+  --gold-deep: oklch(0.62 0.12 72);
+  --rule: oklch(0.55 0.06 40 / .3);
+  --code-font: 'JetBrains Mono','LXGW WenKai',monospace;
+  --hand: 'Patrick Hand','LXGW WenKai',cursive;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink);
+  font-family:var(--hand); font-size:17px; line-height:1.6;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(oklch(0.5 0.05 60 / .04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.5 0.05 60 / .04) 1px, transparent 1px),
+    radial-gradient(120% 80% at 50% 0%, oklch(0.99 0.01 85 / .6), transparent 70%);
+  background-size: 26px 26px, 26px 26px, 100% 100%;
+}
+.lab-head{ max-width:1100px; margin:0 auto; padding:2.4em 1.4em 1em; }
+.lab-head h1{ font-family:var(--hand); color:var(--maroon); font-size:2.2em; margin:0 0 .2em; }
+.lab-head p{ color:var(--ink-soft); margin:.2em 0; }
+.lab-head .legend{ font-size:.92em; color:var(--ink-soft); }
+.modnav{ max-width:1100px; margin:.6em auto 0; padding:0 1.4em; display:flex; flex-wrap:wrap; gap:.5em; }
+.modnav a{ font-size:.82em; color:var(--maroon-br); text-decoration:none; border:1px solid var(--rule); border-radius:6px 4px 7px 4px; padding:.2em .6em; }
+.modnav a:hover{ background:rgba(140,30,30,.08); }
+
+section.module{ max-width:1100px; margin:0 auto; padding:1.6em 1.4em 1.2em; border-top:1.5px dashed var(--rule); }
+section.module:first-of-type{ border-top:none; }
+.module > h2{ font-family:var(--hand); color:var(--maroon); font-size:1.5em; margin:.2em 0 .1em; }
+.module > .desc{ color:var(--ink-soft); font-size:.92em; margin:0 0 1em; }
+.variants{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1em; }
+@media (max-width:820px){ .variants{ grid-template-columns:1fr; } }
+.variant{ margin:0; background:var(--paper-2); border:1.3px solid var(--rule); border-radius:9px 6px 10px 6px; padding:1em; box-shadow:2px 4px 12px rgba(80,40,10,.07); display:flex; flex-direction:column; }
+.variant figcaption{ font-family:'Caveat',var(--hand); font-weight:700; color:var(--maroon-br); font-size:1.15em; margin-bottom:.6em; }
+.variant .why{ font-size:.82em; color:var(--ink-soft); margin:.7em 0 0; line-height:1.4; }
+.demo{ flex:1; display:flex; align-items:center; justify-content:center; min-height:96px; padding:.4em 0; }
+
+/* sample prose used inside several demos */
+.s-prose{ font-family:var(--hand); font-size:1rem; color:var(--ink); }
+
+/* ============ ① reading progress ============ */
+.prog-wrap{ width:100%; }
+.prog-track{ position:relative; width:100%; height:14px; }
+/* V1 brush ink band */
+.prog-brush .fill{ height:9px; width:62%; border-radius:6px;
+  background:linear-gradient(90deg, oklch(0.5 0.17 35), oklch(0.4 0.16 28));
+  filter:url(#inkRough); }
+.prog-brush .tip{ position:absolute; left:62%; top:50%; width:16px; height:16px; transform:translate(-40%,-50%);
+  background:radial-gradient(circle at 40% 40%, oklch(0.38 0.16 28), oklch(0.42 0.16 28 / .2) 70%, transparent);
+  filter:blur(.3px); border-radius:50%; }
+/* V2 line + bleed blotches */
+.prog-line{ position:relative; height:5px; width:100%; background:oklch(0.6 0.04 60 / .25); border-radius:3px; }
+.prog-line .ifill{ position:absolute; left:0; top:0; height:100%; width:58%; background:var(--maroon); border-radius:3px; }
+.prog-line .blot{ position:absolute; top:50%; width:13px; height:13px; transform:translate(-50%,-50%);
+  background:radial-gradient(circle, oklch(0.42 0.16 28 / .85), oklch(0.42 0.16 28 / .15) 60%, transparent 75%); border-radius:50%; }
+.prog-line .drop{ position:absolute; left:58%; top:50%; width:18px; height:18px; transform:translate(-45%,-50%);
+  background:radial-gradient(circle at 45% 40%, oklch(0.36 0.16 28), transparent 70%); border-radius:50%; filter:blur(.2px); }
+/* V3 scroll unrolling */
+.prog-scroll{ position:relative; height:16px; width:100%; border-radius:3px;
+  background:linear-gradient(90deg, oklch(0.9 0.03 80) 0 56%, oklch(0.86 0.03 80 / .4) 56%); border:1px solid var(--rule); overflow:visible; }
+.prog-scroll .dowel{ position:absolute; left:56%; top:50%; transform:translate(-50%,-50%); width:10px; height:26px; border-radius:5px;
+  background:linear-gradient(90deg, var(--gold-deep), var(--gold) 45%, var(--gold-deep)); box-shadow:0 1px 4px rgba(80,40,10,.4); }
+
+/* ============ ② TOC toggle (paperweight / pin / ribbon) ============ */
+.scrolldemo{ width:100%; max-width:230px; }
+.sd-head{ position:relative; display:flex; align-items:center; gap:.5em; padding:.4em .7em; color:var(--maroon);
+  font-family:var(--hand); font-size:1.05em; background:linear-gradient(var(--paper-2),oklch(0.92 0.02 82)); border:1.2px solid var(--rule); border-radius:4px 4px 0 0; }
+.sd-body{ border:1.2px solid var(--rule); border-top:none; border-radius:0 0 4px 4px; overflow:hidden;
+  display:grid; grid-template-rows:1fr; transition:grid-template-rows .5s cubic-bezier(.22,1,.36,1); }
+.sd-inner{ min-height:0; overflow:hidden; padding:.5em .8em; font-size:.9em; color:var(--ink-soft); }
+.scrolldemo.rolled .sd-body{ grid-template-rows:0fr; }
+.sd-inner a{ display:block; color:var(--maroon-br); text-decoration:none; padding:.12em 0; }
+/* V1 paperweight bar */
+.pw{ position:absolute; right:.5em; top:50%; transform:translateY(-50%); width:54px; height:14px; border-radius:4px; cursor:pointer;
+  background:linear-gradient(180deg, oklch(0.6 0.05 160), oklch(0.78 0.05 165) 45%, oklch(0.5 0.06 160));
+  box-shadow:0 2px 4px rgba(40,60,40,.4), inset 0 1px 0 rgba(255,255,255,.4); transition:transform .15s; }
+.pw:active{ transform:translateY(-50%) scale(.94); }
+.pw::after{ content:''; position:absolute; inset:3px 6px; border-radius:2px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent); }
+/* V2 brass / wax-seal pin */
+.pin{ position:absolute; right:.5em; top:50%; transform:translateY(-50%); width:24px; height:24px; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 38% 34%, oklch(0.62 0.18 33), oklch(0.42 0.17 30) 70%);
+  box-shadow:0 2px 5px rgba(80,20,20,.45), inset 0 1px 2px rgba(255,220,200,.5); transition:transform .18s; }
+.pin::after{ content:'❉'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:oklch(0.85 0.08 60); font-size:.8em; }
+.pin:active{ transform:translateY(-50%) scale(.88) rotate(8deg); }
+/* V3 ribbon tie */
+.ribbon{ position:absolute; right:.4em; top:50%; transform:translateY(-50%); width:30px; height:22px; cursor:pointer; transition:transform .2s; }
+.ribbon::before,.ribbon::after{ content:''; position:absolute; top:50%; width:13px; height:16px; background:linear-gradient(180deg, var(--maroon-br), var(--maroon)); }
+.ribbon::before{ left:1px; transform:translateY(-50%) skewX(12deg); border-radius:60% 10% 60% 10%; }
+.ribbon::after{ right:1px; transform:translateY(-50%) skewX(-12deg); border-radius:10% 60% 10% 60%; }
+.scrolldemo.rolled .ribbon::before{ transform:translateY(-50%) skewX(40deg) scaleX(.5); }
+.scrolldemo.rolled .ribbon::after{ transform:translateY(-50%) skewX(-40deg) scaleX(.5); }
+.ribbon .knot{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:8px; height:8px; border-radius:50%; background:var(--maroon); z-index:2; }
+.tip-hint{ font-size:.74em; color:var(--ink-soft); text-align:center; margin-top:.5em; font-style:italic; }
+
+/* ============ ③ TOC scrollbar (skeuomorphic) ============ */
+.sb-demo{ position:relative; width:100%; max-width:210px; height:130px; border:1.2px solid var(--rule); border-radius:6px; background:var(--paper-2); padding:.6em .9em; overflow:hidden; font-size:.86em; color:var(--ink-soft); }
+.sb-demo p{ margin:.2em 0; }
+/* V1 rod + bead */
+.sb-rod{ position:absolute; right:7px; top:8px; bottom:8px; width:4px; border-radius:3px; background:linear-gradient(90deg, var(--gold-deep), var(--gold) 50%, var(--gold-deep)); }
+.sb-rod .bead{ position:absolute; left:50%; top:38%; width:14px; height:14px; transform:transl(-50%,0); transform:translateX(-50%);
+  border-radius:50%; background:radial-gradient(circle at 38% 34%, oklch(0.7 0.1 160), oklch(0.45 0.1 165) 72%); box-shadow:0 1px 3px rgba(40,60,40,.5); }
+/* V2 ribbon bookmark + tassel */
+.sb-ribbon{ position:absolute; right:12px; top:-2px; width:12px; height:60%; background:linear-gradient(180deg, var(--maroon-br), var(--maroon)); box-shadow:1px 0 3px rgba(80,20,20,.3); }
+.sb-ribbon::after{ content:''; position:absolute; left:0; bottom:-7px; border-left:6px solid transparent; border-right:6px solid transparent; border-top:8px solid var(--maroon); }
+.sb-ribbon .tassel{ position:absolute; left:50%; bottom:-18px; transform:translateX(-50%); width:2px; height:11px; background:var(--gold-deep); box-shadow:-3px 0 0 var(--gold-deep),3px 0 0 var(--gold-deep); }
+/* V3 curling paper roll */
+.sb-roll{ position:absolute; right:6px; top:8px; bottom:8px; width:9px; border-radius:5px; background:linear-gradient(90deg, oklch(0.86 0.03 80), oklch(0.95 0.02 82) 50%, oklch(0.82 0.03 80)); border:1px solid var(--rule); }
+.sb-roll .grip{ position:absolute; left:50%; top:34%; transform:translateX(-50%); width:13px; height:22px; border-radius:6px;
+  background:linear-gradient(90deg, oklch(0.8 0.03 80), oklch(0.93 0.02 82) 50%, oklch(0.78 0.03 80)); box-shadow:0 1px 3px rgba(80,40,10,.3), inset 0 0 0 1px oklch(0.7 0.04 70 / .4); }
+
+/* ============ ④ blockquote ============ */
+.bq{ font-family:var(--hand); }
+/* V1 folded note + washi */
+.bq-note{ position:relative; background:oklch(0.97 0.02 90); padding:.9em 1em; border-radius:3px; box-shadow:2px 3px 8px rgba(80,40,10,.14); transform:rotate(-.6deg); color:var(--ink); }
+.bq-note::before{ content:''; position:absolute; left:50%; top:-9px; transform:translateX(-50%) rotate(-2deg); width:64px; height:18px; background:oklch(0.8 0.09 175 / .55); box-shadow:0 1px 2px rgba(0,0,0,.1); }
+.bq-note::after{ content:''; position:absolute; right:0; bottom:0; border-width:0 0 16px 16px; border-style:solid; border-color:transparent transparent oklch(0.88 0.03 85) transparent; }
+/* V2 marginalia brace + manicule */
+.bq-marg{ position:relative; padding:.3em 0 .3em 2.4em; color:var(--ink-soft); font-style:italic; }
+.bq-marg::before{ content:'{'; position:absolute; left:.5em; top:50%; transform:translateY(-50%); font-family:Georgia,serif; font-size:2.8em; color:var(--cinnabar); line-height:0; }
+.bq-marg .manicule{ color:var(--cinnabar); margin-right:.3em; }
+/* V3 cinnabar quote + ruled */
+.bq-quote{ position:relative; padding:.6em 1em .6em 1.7em;
+  background:repeating-linear-gradient(oklch(0.95 0.02 85) 0 27px, oklch(0.6 0.05 220 / .12) 27px 28px); border-radius:4px; }
+.bq-quote::before{ content:'\201C'; position:absolute; left:.1em; top:.05em; font-family:Georgia,serif; font-size:3em; color:var(--cinnabar); line-height:1; }
+.bq-quote .by{ display:block; text-align:right; color:var(--maroon-br); font-size:.85em; margin-top:.2em; }
+
+/* ============ ⑤ code block ============ */
+.cb{ font-family:var(--code-font); font-size:.82rem; color:oklch(0.34 0.03 50); }
+.cb .k{ color:oklch(0.47 0.13 350); } .cb .s{ color:oklch(0.47 0.09 150); } .cb .c{ color:oklch(0.6 0.025 70); font-style:italic; }
+/* V1 grid manuscript paper + tag + seal copy */
+.cb-grid{ position:relative; padding:1.7em .9em .9em; border-radius:4px; border:1.2px solid var(--rule);
+  background-color:oklch(0.97 0.015 85); background-image:linear-gradient(oklch(0.5 0.06 30 / .07) 1px, transparent 1px), linear-gradient(90deg, oklch(0.5 0.06 30 / .07) 1px, transparent 1px); background-size:15px 15px; }
+.cb-grid .tag{ position:absolute; left:-1px; top:-1px; background:oklch(0.9 0.03 85); border:1.2px solid var(--rule); border-top:none; border-left:none; border-radius:0 0 7px 0; padding:.1em .7em; font-size:.7em; text-transform:uppercase; letter-spacing:.06em; color:var(--maroon-br); }
+.cb-grid .seal{ position:absolute; right:.5em; top:.4em; width:22px; height:22px; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 38% 34%, oklch(0.6 0.18 33), oklch(0.42 0.17 30) 72%); color:oklch(0.88 0.06 60); display:flex; align-items:center; justify-content:center; font-size:.62em; box-shadow:inset 0 1px 2px rgba(255,220,200,.4); }
+/* V2 typewriter slip */
+.cb-type{ position:relative; padding:1.5em 1em .9em; background:oklch(0.975 0.008 85); border-radius:2px; box-shadow:0 2px 8px rgba(80,40,10,.12);
+  border-left:1px dashed var(--rule); border-right:1px dashed var(--rule); }
+.cb-type::before,.cb-type::after{ content:''; position:absolute; left:0; right:0; height:7px; background:radial-gradient(circle at 5px 50%, transparent 2.5px, oklch(0.975 0.008 85) 2.6px) 0/10px 7px repeat-x; }
+.cb-type::before{ top:-3px; } .cb-type::after{ bottom:-3px; transform:rotate(180deg); }
+.cb-type .stamp{ position:absolute; left:.7em; top:.3em; color:var(--cinnabar); font-size:.66em; font-weight:600; text-transform:uppercase; letter-spacing:.12em; border:1.4px solid var(--cinnabar); border-radius:3px; padding:0 .35em; transform:rotate(-3deg); opacity:.8; }
+/* V3 mini scroll */
+.cb-scroll{ position:relative; margin:9px 0; padding:1em 1em; background:oklch(0.965 0.012 84); border-radius:3px; }
+.cb-scroll::before,.cb-scroll::after{ content:''; position:absolute; left:-4px; right:-4px; height:10px; border-radius:6px; background:linear-gradient(180deg, var(--gold-deep), var(--gold) 45%, var(--gold-deep)); box-shadow:0 1px 3px rgba(80,40,10,.3); }
+.cb-scroll::before{ top:-5px; } .cb-scroll::after{ bottom:-5px; }
+.cb-scroll .hangtag{ position:absolute; right:10px; top:-13px; background:oklch(0.9 0.03 85); border:1px solid var(--rule); border-radius:3px; padding:0 .4em; font-size:.66em; color:var(--maroon-br); }
+
+/* ============ ⑥ table ============ */
+table.t{ width:100%; border-collapse:collapse; font-family:var(--hand); font-size:.9rem; }
+.t th,.t td{ padding:.34em .5em; text-align:left; }
+/* V1 ledger */
+.t-ledger th{ color:var(--cinnabar); border-bottom:2px solid var(--cinnabar); }
+.t-ledger td{ border-bottom:1px solid oklch(0.55 0.12 30 / .3); }
+.t-ledger tr td{ border-left:1px dotted var(--rule); } .t-ledger tr td:first-child{ border-left:none; }
+/* V2 hand-drawn grid */
+.t-hand{ }
+.t-hand th{ border-bottom:2.5px solid var(--ink); }
+.t-hand th,.t-hand td{ border:1.5px solid var(--ink); border-radius:255px 15px 225px 15px/15px 225px 15px 255px; }
+/* faux wobble via irregular radius on cells */
+/* V3 card strips */
+.t-cards{ border-collapse:separate; border-spacing:0 5px; }
+.t-cards th{ color:var(--maroon-br); font-size:.8em; }
+.t-cards tbody tr{ }
+.t-cards tbody td{ background:oklch(0.97 0.015 85); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+.t-cards tbody td:first-child{ border-left:1px solid var(--rule); border-radius:7px 0 0 7px; }
+.t-cards tbody td:last-child{ border-right:1px solid var(--rule); border-radius:0 7px 7px 0; }
+
+/* ============ ⑦ lists ============ */
+ul.l{ font-family:var(--hand); padding-left:1.5em; }
+ul.l li{ margin:.3em 0; }
+/* V1 hand-drawn ink dots/ticks */
+.l-ink{ list-style:none; padding-left:1.4em; }
+.l-ink li{ position:relative; }
+.l-ink li::before{ content:''; position:absolute; left:-1.1em; top:.55em; width:7px; height:6px; background:var(--ink);
+  border-radius:60% 40% 55% 45%; transform:rotate(12deg); }
+.l-ink li.done::before{ content:'\2713'; background:none; color:oklch(0.45 0.13 150); font-weight:700; top:0; width:auto; height:auto; }
+/* V2 cinnabar fleurons */
+.l-fleur{ list-style:none; padding-left:1.6em; }
+.l-fleur li{ position:relative; }
+.l-fleur li::before{ content:'\2767'; position:absolute; left:-1.3em; color:var(--cinnabar); font-size:.9em; }
+/* V3 ruled + manicule */
+.l-ruled{ list-style:none; padding-left:1.5em; }
+.l-ruled li{ position:relative; border-bottom:1px solid oklch(0.6 0.05 220 / .14); padding:.18em 0; }
+.l-ruled li::before{ content:'\00B7'; position:absolute; left:-1em; color:var(--maroon); font-weight:700; font-size:1.4em; top:-.15em; }
+.l-ruled li.mark::before{ content:'\261E'; color:var(--cinnabar); font-size:1em; top:.1em; }
+
+/* ============ ⑧ headings ============ */
+.h-demo{ width:100%; }
+/* V1 illuminated initial */
+.h-illum{ font-family:var(--hand); color:var(--maroon); font-size:1.5em; display:flex; align-items:flex-start; gap:.1em; }
+.h-illum .cap{ font-family:'Ma Shan Zheng','Caveat',serif; font-size:2.1em; line-height:.8; color:var(--cinnabar);
+  text-shadow:1px 1px 0 var(--gold-deep), 2px 2px 0 var(--gold-deep), 0 0 6px var(--gold / .5), 2px 3px 4px rgba(80,40,10,.4); margin-right:.06em; }
+/* V2 rubricated + fleuron + flourish */
+.h-rubric{ font-family:var(--hand); color:var(--cinnabar); font-size:1.45em; position:relative; display:inline-block; }
+.h-rubric::before{ content:'\2767  '; color:var(--cinnabar); font-size:.7em; }
+.h-rubric::after{ content:''; display:block; height:7px; margin-top:2px; background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='7'%3E%3Cpath d='M2 4 Q40 0 80 3 T158 3' stroke='%23a02a1e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); }
+/* V3 bookmark tab */
+.h-tab{ display:inline-block; font-family:var(--hand); color:#fff6e6; font-size:1.3em; background:linear-gradient(var(--maroon-br),var(--maroon)); padding:.18em 1.4em .18em .9em; border-radius:5px 0 0 5px; position:relative; box-shadow:1px 2px 5px rgba(80,40,10,.3); }
+.h-tab::after{ content:''; position:absolute; right:0; top:0; bottom:0; border-width:0 12px; border-style:solid; border-color:transparent var(--paper) transparent transparent; }
+
+/* ============ ⑨ horizontal rule ============ */
+.hr-demo{ width:100%; }
+/* V1 dry-brush */
+.hr-brush{ height:10px; background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='10'%3E%3Cpath d='M4 5 Q70 2 130 5 Q160 7 200 4 Q250 2 296 5' stroke='%235a2418' stroke-width='3' fill='none' stroke-linecap='round' opacity='.85' stroke-dasharray='1 0 40 3 60 2 90'/%3E%3C/svg%3E"); }
+/* V2 fleuron asterism */
+.hr-fleur{ display:flex; align-items:center; gap:.8em; color:var(--cinnabar); }
+.hr-fleur::before,.hr-fleur::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--rule), transparent); }
+.hr-fleur span{ font-size:1.1em; }
+/* V3 paper crease */
+.hr-crease{ height:3px; background:linear-gradient(180deg, rgba(80,40,10,.18), rgba(255,255,255,.5)); box-shadow:0 1px 2px rgba(80,40,10,.12); border-radius:2px; }
+
+.foot{ max-width:1100px; margin:1em auto 3em; padding:1em 1.4em; color:var(--ink-soft); font-size:.86em; border-top:1.5px dashed var(--rule); }
+</style>
+</head>
+<body>
+
+<!-- reusable SVG filters (ink roughen / bleed) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="inkRough"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.16" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
+</svg>
+
+<header class="lab-head">
+  <h1>Blog 手写纸拟物化设计实验室</h1>
+  <p>每个 Markdown 模块给出 <strong>3 种拟物设计</strong>（实物部件：手稿 · 古文献 · 手写信 · 书籍 · 卷轴 · 魔法书）。在羊皮纸背景上并排对比，选你喜欢的我再落地到博客。</p>
+  <p class="legend">交互演示：② 目录开关可点击卷起/展开 · ① 阅读进度自动循环。其余为静态样式预览。</p>
+</header>
+<nav class="modnav">
+  <a href="#m1">①进度</a><a href="#m2">②开关</a><a href="#m3">③滚动条</a><a href="#m4">④引用</a><a href="#m5">⑤代码块</a><a href="#m6">⑥表格</a><a href="#m7">⑦列表</a><a href="#m8">⑧标题</a><a href="#m9">⑨分隔线</a>
+</nav>
+
+<!-- ① reading progress -->
+<section class="module" id="m1">
+  <h2>① 阅读进度（墨痕）</h2>
+  <p class="desc">顶部细线 → 真实墨迹感。三种：毛笔墨带 / 墨滴渗染 / 卷轴展卷。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 笔走墨带</figcaption><div class="demo"><div class="prog-wrap"><div class="prog-track prog-brush"><div class="fill" id="pb1"></div><div class="tip" id="pt1"></div></div></div></div><p class="why">SVG 湍流滤镜把墨带边缘打毛，笔头一团湿墨——一笔扫过的书写感。</p></figure>
+    <figure class="variant"><figcaption>V2 墨滴渗染</figcaption><div class="demo"><div class="prog-wrap"><div class="prog-track prog-line"><div class="ifill" id="pi2"></div><div class="blot" style="left:18%"></div><div class="blot" style="left:36%;width:9px;height:9px"></div><div class="drop" id="pd2"></div></div></div></div><p class="why">细线为骨，沿途墨点渗入纸纤维，笔尖一颗新鲜湿墨珠。克制、雅致。</p></figure>
+    <figure class="variant"><figcaption>V3 卷轴展卷</figcaption><div class="demo"><div class="prog-wrap"><div class="prog-track prog-scroll"><div class="dowel" id="ps3"></div></div></div></div><p class="why">进度=卷轴展开：左侧已展平的纸，金轴杆向右滚动。呼应侧边目录卷轴。</p></figure>
+  </div>
+</section>
+
+<!-- ② TOC toggle -->
+<section class="module" id="m2">
+  <h2>② 目录开关（三角 → 镇纸 / 别针 / 系带）</h2>
+  <p class="desc">点击任一演示，卷轴卷起或展开。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 镇纸</figcaption><div class="demo"><div class="scrolldemo" data-toggle><div class="sd-head"><span>目录</span><span class="pw" title="按下镇纸"></span></div><div class="sd-body"><div class="sd-inner"><a>为什么 fcitx5</a><a>安装步骤</a><a>云拼音配置</a></div></div></div></div><p class="why">书案镇纸压住卷轴；按下镇纸→纸卷自然收拢。中式文房直觉。</p></figure>
+    <figure class="variant"><figcaption>V2 火漆别针</figcaption><div class="demo"><div class="scrolldemo" data-toggle><div class="sd-head"><span>目录</span><span class="pin" title="按下别针"></span></div><div class="sd-body"><div class="sd-inner"><a>为什么 fcitx5</a><a>安装步骤</a><a>云拼音配置</a></div></div></div></div><p class="why">铜质/火漆胸针别住卷轴；按动→松开。西式信件/魔法书质感。</p></figure>
+    <figure class="variant"><figcaption>V3 丝带系扣</figcaption><div class="demo"><div class="scrolldemo" data-toggle><div class="sd-head"><span>目录</span><span class="ribbon" title="解开系带"><span class="knot"></span></span></div><div class="sd-body"><div class="sd-inner"><a>为什么 fcitx5</a><a>安装步骤</a><a>云拼音配置</a></div></div></div></div><p class="why">丝带蝴蝶结系住卷轴；点击→结松开、卷轴展开。最柔和优雅。</p></figure>
+  </div>
+</section>
+
+<!-- ③ scrollbar -->
+<section class="module" id="m3">
+  <h2>③ 目录侧边滚动条（拟物化卷轴部件）</h2>
+  <p class="desc">不只是变色——做成卷轴真实会有的部件。静态预览（落地时为可拖拽）。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 轴杆滑珠</figcaption><div class="demo"><div class="sb-demo"><p>章节一</p><p>章节二</p><p>章节三</p><p>章节四</p><p>章节五</p><div class="sb-rod"><span class="bead"></span></div></div></div><p class="why">侧边一根金轴，玉珠沿轴滑动=滚动位置。最贴合"卷轴"本体。</p></figure>
+    <figure class="variant"><figcaption>V2 书签丝带</figcaption><div class="demo"><div class="sb-demo"><p>章节一</p><p>章节二</p><p>章节三</p><p>章节四</p><p>章节五</p><div class="sb-ribbon"><span class="tassel"></span></div></div></div><p class="why">垂下的丝带书签，尾端流苏即滑块。书籍质感，位置一目了然。</p></figure>
+    <figure class="variant"><figcaption>V3 卷边纸卷</figcaption><div class="demo"><div class="sb-demo"><p>章节一</p><p>章节二</p><p>章节三</p><p>章节四</p><p>章节五</p><div class="sb-roll"><span class="grip"></span></div></div></div><p class="why">右缘做成卷起的纸边，握柄是一小卷纸。完全融入纸张本身。</p></figure>
+  </div>
+</section>
+
+<!-- ④ blockquote -->
+<section class="module" id="m4">
+  <h2>④ 引用（blockquote）</h2>
+  <p class="desc">从竖线框 → 实物便签 / 页边批注 / 朱砂引文。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 折角便签</figcaption><div class="demo"><div class="bq bq-note">写代码前先想清楚边界条件，比事后调试省十倍力气。</div></div><p class="why">米色便签贴在纸上：顶部 washi 胶带、右下折角、微倾。复用主页便签母题。</p></figure>
+    <figure class="variant"><figcaption>V2 页边批注</figcaption><div class="demo"><div class="bq bq-marg"><span class="manicule">☞</span>写代码前先想清楚边界条件，比事后调试省十倍力气。</div></div><p class="why">手稿页边批注：朱砂花括号 + 指示手(manicule)。轻盈、不抢正文。</p></figure>
+    <figure class="variant"><figcaption>V3 朱砂引文</figcaption><div class="demo"><div class="bq bq-quote">写代码前先想清楚边界条件，比事后调试省十倍力气。<span class="by">— 某次踩坑后</span></div></div><p class="why">大朱砂引号 + 淡蓝横格信笺。正式、有"摘抄"仪式感。</p></figure>
+  </div>
+</section>
+
+<!-- ⑤ code block -->
+<section class="module" id="m5">
+  <h2>⑤ 代码块</h2>
+  <p class="desc">语言标签 + 复制保留；外形拟物：稿纸 / 打字机纸条 / 小卷轴。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 方格稿纸</figcaption><div class="demo"><div class="cb cb-grid"><span class="tag">bash</span><span class="seal" title="复制">✿</span><div><span class="c"># 安装</span><br><span class="k">sudo</span> apt install fcitx5</div></div></div><p class="why">誊抄在方格稿纸上，语言=纸角标签，复制=火漆小印。最"手稿"。</p></figure>
+    <figure class="variant"><figcaption>V2 打字机纸条</figcaption><div class="demo"><div class="cb cb-type"><span class="stamp">bash</span><div><span class="c"># 安装</span><br><span class="k">sudo</span> apt install fcitx5</div></div></div><p class="why">打字机色带纸条，上下打孔边，红墨语言印章。复古、利落。</p></figure>
+    <figure class="variant"><figcaption>V3 小卷轴</figcaption><div class="demo"><div class="cb cb-scroll"><span class="hangtag">bash</span><div><span class="c"># 安装</span><br><span class="k">sudo</span> apt install fcitx5</div></div></div><p class="why">代码裱成小横卷，上下金轴，语言挂牌。与目录大卷轴成系列。</p></figure>
+  </div>
+</section>
+
+<!-- ⑥ table -->
+<section class="module" id="m6">
+  <h2>⑥ 表格</h2>
+  <p class="desc">从硬网格 → 账本红线 / 手绘墨格 / 卡片分栏。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 账本红线</figcaption><div class="demo"><table class="t t-ledger"><tr><th>键</th><th>值</th></tr><tr><td>引擎</td><td>fcitx5</td></tr><tr><td>云拼音</td><td>开</td></tr></table></div><p class="why">账簿式：朱砂表头双红线 + 横线为主、竖线虚点。无硬框。</p></figure>
+    <figure class="variant"><figcaption>V2 手绘墨格</figcaption><div class="demo"><table class="t t-hand"><tr><th>键</th><th>值</th></tr><tr><td>引擎</td><td>fcitx5</td></tr><tr><td>云拼音</td><td>开</td></tr></table></div><p class="why">不规则圆角模拟手画的墨线格，表头加粗墨线。随性手账感。</p></figure>
+    <figure class="variant"><figcaption>V3 卡片分栏</figcaption><div class="demo"><table class="t t-cards"><tr><th>键</th><th>值</th></tr><tr><td>引擎</td><td>fcitx5</td></tr><tr><td>云拼音</td><td>开</td></tr></table></div><p class="why">每行一条浅卡片，表头作小标签。通透、现代里带手作。</p></figure>
+  </div>
+</section>
+
+<!-- ⑦ lists -->
+<section class="module" id="m7">
+  <h2>⑦ 列表 / 项目符号</h2>
+  <p class="desc">从默认圆点 → 手绘墨点 / 朱砂花饰 / 引导线+指示手。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 手绘墨点</figcaption><div class="demo"><ul class="l l-ink"><li>下载安装包</li><li class="done">配置云拼音</li><li>重启生效</li></ul></div><p class="why">不规则墨点作符号，完成项=绿色手写勾。清单的手账写法。</p></figure>
+    <figure class="variant"><figcaption>V2 朱砂花饰</figcaption><div class="demo"><ul class="l l-fleur"><li>下载安装包</li><li>配置云拼音</li><li>重启生效</li></ul></div><p class="why">朱砂 fleuron(❧) 作项目符，古籍刻本的装饰符号。雅。</p></figure>
+    <figure class="variant"><figcaption>V3 引导线+指示手</figcaption><div class="demo"><ul class="l l-ruled"><li>下载安装包</li><li class="mark">配置云拼音（重点）</li><li>重启生效</li></ul></div><p class="why">淡横格引导阅读，重点项用朱砂指示手(☞)。手稿批读感。</p></figure>
+  </div>
+</section>
+
+<!-- ⑧ headings -->
+<section class="module" id="m8">
+  <h2>⑧ 标题</h2>
+  <p class="desc">复用主页泥金首字母；另出朱批 + 书签页两式。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 泥金首字母</figcaption><div class="demo"><div class="h-illum"><span class="cap">为</span><span>什么选 fcitx5</span></div></div><p class="why">首字朱砂+鎏金描边(复用主页 drop-cap)。泥金装饰写本气派。</p></figure>
+    <figure class="variant"><figcaption>V2 朱批花饰</figcaption><div class="demo"><div class="h-rubric">为什么选 fcitx5</div></div><p class="why">朱砂标题 + 花饰前缀 + 手绘墨线下划。古籍朱批(rubrication)。</p></figure>
+    <figure class="variant"><figcaption>V3 书签页签</figcaption><div class="demo"><div class="h-tab">为什么选 fcitx5</div></div><p class="why">标题做成凸出的书籍分隔页签。结构清晰、有翻书感。</p></figure>
+  </div>
+</section>
+
+<!-- ⑨ hr -->
+<section class="module" id="m9">
+  <h2>⑨ 分隔线</h2>
+  <p class="desc">从虚线 → 飞白墨线 / 花饰星标 / 纸张折痕。</p>
+  <div class="variants">
+    <figure class="variant"><figcaption>V1 飞白墨线</figcaption><div class="demo"><div class="hr-demo"><div class="hr-brush"></div></div></div><p class="why">毛笔扫过、中段飞白断笔的墨线。书法韵味最足。</p></figure>
+    <figure class="variant"><figcaption>V2 花饰星标</figcaption><div class="demo"><div class="hr-demo"><div class="hr-fleur"><span>⁂</span></div></div></div><p class="why">居中星标(asterism)+两侧渐隐细线。书籍章节分隔的经典做法。</p></figure>
+    <figure class="variant"><figcaption>V3 纸张折痕</figcaption><div class="demo"><div class="hr-demo"><div class="hr-crease"></div></div></div><p class="why">一道压折的纸痕(上暗下亮+投影)。极简、纯拟物。</p></figure>
+  </div>
+</section>
+
+<footer class="foot">
+  实验室页面 · 选定后落地到 <code>css/blog.css</code> + <code>js/blog.js</code>。可逐模块挑：比如「①V1 + ②V3 + ④V2 …」。
+</footer>
+
+<script>
+// ① auto-loop progress demos
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let p = 0;
+  const pb1=document.getElementById('pb1'), pt1=document.getElementById('pt1'),
+        pi2=document.getElementById('pi2'), pd2=document.getElementById('pd2'),
+        ps3=document.getElementById('ps3');
+  function frame(){
+    p += 0.6; if(p>100) p=0;
+    if(pb1){ pb1.style.width=p+'%'; pt1.style.left=p+'%'; }
+    if(pi2){ pi2.style.width=p+'%'; pd2.style.left=p+'%'; }
+    if(ps3){ ps3.style.left=p+'%';
+      ps3.parentElement.style.background='linear-gradient(90deg, oklch(0.9 0.03 80) 0 '+p+'%, oklch(0.86 0.03 80 / .4) '+p+'%)'; }
+  }
+  if(reduce){ p=62; frame(); } else { setInterval(frame, 40); }
+})();
+// ② toggle demos roll/unroll
+document.querySelectorAll('[data-toggle]').forEach(d=>{
+  d.addEventListener('click', ()=> d.classList.toggle('rolled'));
+});
+</script>
+</body>
+</html>
