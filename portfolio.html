@@ -3,317 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>App & Software Portfolio — Linlin Jia</title>
+<title>App &amp; Software Portfolio — Linlin Jia</title>
 <meta name="description" content="Software engineering portfolio of Linlin Jia, Ph.D. — open-source libraries, LLM/agent platforms, and applied ML tools shipped in Python.">
 <link rel="canonical" href="https://jajupmochi.github.io/portfolio.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<!-- Same design system as the homepage: parchment background + project-card effects -->
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="css/parchment-overrides.css">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
 <style>
-:root{
-  --paper:    oklch(0.955 0.014 85);
-  --paper-2:  oklch(0.985 0.008 85);
-  --ink:      oklch(0.26 0.03 50);
-  --ink-soft: oklch(0.46 0.03 50);
-  --maroon:   oklch(0.46 0.15 30);
-  --maroon-br:oklch(0.54 0.19 30);
-  --gold:     oklch(0.66 0.10 75);
-  --rule:     oklch(0.55 0.05 50 / 0.22);
-  --shadow:   28px 30px 60px -34px rgba(70,40,15,0.45);
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --serif:'Spectral',Georgia,serif;
-  --hand:'Patrick Hand','Spectral',cursive;
-  --maxw: 1120px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; color:var(--ink); font-family:var(--serif); font-size:18px; line-height:1.65;
-  background-color:var(--paper);
-  background-image:radial-gradient(130% 90% at 50% -10%, var(--paper-2), transparent 60%);
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-}
-a{color:var(--maroon-br); text-decoration:none}
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 1.5em}
-
-/* ---- nav ---- */
-.nav{position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.1);
-  background:oklch(0.955 0.014 85 / 0.82); border-bottom:1px solid var(--rule)}
-.nav-inner{max-width:var(--maxw); margin:0 auto; padding:0.7em 1.5em; display:flex; align-items:center; justify-content:space-between}
-.brand{display:flex; align-items:center; gap:0.5em; font-family:var(--hand); font-size:1.35em; color:var(--ink)}
-.brand .mark{width:30px; height:30px; border-radius:8px; background:linear-gradient(150deg,#1e3a8a,#2b4db8); color:#fff;
-  display:grid; place-items:center; font-family:'PingFang SC','Microsoft YaHei',sans-serif; font-weight:900; font-size:0.62em}
-.nav-links{display:flex; align-items:center; gap:1.4em; font-family:var(--hand); font-size:1.05em}
-.nav-links a{color:var(--ink-soft); transition:color .15s}
-.nav-links a:hover{color:var(--maroon)}
-.nav-links a.here{color:var(--maroon)}
-
-/* ---- hero ---- */
-.hero{padding:4.2em 0 2.4em}
-.hero .eyebrow{font-family:var(--mono); font-size:0.8em; letter-spacing:0.22em; text-transform:uppercase; color:var(--maroon-br); margin:0 0 0.7em}
-.hero h1{font-family:var(--hand); font-weight:400; font-size:clamp(2.6rem,6vw,4.2rem); line-height:1.02; margin:0 0 0.3em; color:var(--ink); letter-spacing:0.01em}
-.hero h1 em{font-style:normal; color:var(--maroon)}
-.hero .lede{font-size:1.2em; max-width:34ch; color:var(--ink-soft); margin:0 0 1.5em}
-.hero .facts{display:flex; flex-wrap:wrap; gap:0.5em 0.5em; font-family:var(--mono); font-size:0.8em}
-.hero .facts span{border:1px solid var(--rule); border-radius:999px; padding:0.3em 0.85em; color:var(--ink-soft); background:var(--paper-2)}
-.hero .facts strong{color:var(--maroon-br)}
-
-/* ---- section heads ---- */
-.sec{padding:2.2em 0}
-.sec-head{display:flex; align-items:baseline; gap:0.8em; margin:0 0 1.2em}
-.sec-head h2{font-family:var(--hand); font-weight:400; font-size:2rem; margin:0; color:var(--ink)}
-.sec-head .n{font-family:var(--mono); font-size:0.78em; color:var(--maroon-br); border:1px solid var(--rule); border-radius:6px; padding:0.05em 0.5em}
-.sec-head .line{flex:1; height:1px; background:var(--rule)}
-
-/* ---- tech filter ---- */
-.filter{display:flex; flex-wrap:wrap; gap:0.5em; margin:0 0 1.6em}
-.filter button{font-family:var(--mono); font-size:0.78em; cursor:pointer; color:var(--ink-soft);
-  background:var(--paper-2); border:1px solid var(--rule); border-radius:999px; padding:0.34em 0.85em; transition:all .15s}
-.filter button:hover{border-color:var(--maroon); color:var(--maroon)}
-.filter button.on{background:var(--maroon); color:#fdf6e8; border-color:var(--maroon)}
-
-/* ---- featured cards (large, 2-up) ---- */
-.feat{display:grid; grid-template-columns:repeat(2,1fr); gap:1.5em}
-@media (max-width:780px){.feat{grid-template-columns:1fr}}
-.card{display:flex; flex-direction:column; background:var(--paper-2); border:1px solid var(--rule);
-  border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s}
-.card:hover{transform:translateY(-4px); box-shadow:32px 36px 66px -32px rgba(70,40,15,0.5)}
-.card-fig{aspect-ratio:16/8; overflow:hidden; background:oklch(0.92 0.02 80); border-bottom:1px solid var(--rule)}
-.card-fig img,.card-fig object{width:100%; height:100%; object-fit:cover; display:block}
-.card-body{padding:1.5em 1.5em 1.6em; display:flex; flex-direction:column; flex:1}
-.card-meta{display:flex; align-items:center; gap:0.7em; margin:0 0 0.5em; font-family:var(--mono); font-size:0.72em}
-.badge{border-radius:999px; padding:0.2em 0.7em; letter-spacing:0.04em; text-transform:uppercase; font-weight:600}
-.badge.soft{background:oklch(0.55 0.13 250 / 0.14); color:oklch(0.45 0.13 255)}
-.badge.dual{background:oklch(0.6 0.13 150 / 0.16); color:oklch(0.42 0.12 155)}
-.badge.ind{background:oklch(0.62 0.14 60 / 0.18); color:oklch(0.46 0.13 55)}
-.badge.fun{background:oklch(0.6 0.16 350 / 0.16); color:oklch(0.47 0.16 350)}
-.card-date{color:var(--ink-soft)}
-.card h3{font-family:var(--hand); font-weight:400; font-size:1.55em; line-height:1.12; margin:0 0 0.5em; color:var(--ink)}
-.card .role{font-size:0.96em; color:var(--ink); margin:0 0 0.7em}
-.card ul{margin:0 0 1em; padding-left:1.15em; font-size:0.95em; color:var(--ink-soft); line-height:1.5}
-.card ul li{margin:0.25em 0}
-.card ul li strong{color:var(--ink); font-weight:600}
-.chips{display:flex; flex-wrap:wrap; gap:0.4em; margin:auto 0 1em}
-.chip{font-family:var(--mono); font-size:0.7em; color:var(--maroon-br); background:oklch(0.55 0.12 30 / 0.08);
-  border:1px solid oklch(0.55 0.12 30 / 0.18); border-radius:6px; padding:0.16em 0.5em}
-.card-links{display:flex; flex-wrap:wrap; gap:1.1em; font-family:var(--hand); font-size:1.05em}
-.card-links a{display:inline-flex; align-items:center; gap:0.35em; color:var(--maroon-br)}
-.card-links a:hover{color:var(--maroon); text-decoration:underline}
-.card-links .stat{margin-left:auto; font-family:var(--mono); font-size:0.78em; color:var(--ink-soft)}
-
-/* ---- more projects (compact, 2-up) ---- */
-.more{display:grid; grid-template-columns:repeat(2,1fr); gap:1.1em}
-@media (max-width:780px){.more{grid-template-columns:1fr}}
-.mcard{background:var(--paper-2); border:1px solid var(--rule); border-radius:12px; padding:1.2em 1.3em; transition:transform .3s, box-shadow .3s}
-.mcard:hover{transform:translateY(-3px); box-shadow:20px 22px 44px -30px rgba(70,40,15,0.45)}
-.mcard .card-meta{margin-bottom:0.4em}
-.mcard h3{font-family:var(--hand); font-weight:400; font-size:1.25em; line-height:1.15; margin:0 0 0.4em; color:var(--ink)}
-.mcard p{font-size:0.92em; color:var(--ink-soft); margin:0 0 0.8em}
-.mcard .card-links{font-size:0.98em}
-.hidden{display:none !important}
-
-/* ---- footer ---- */
-.foot{margin-top:2.5em; border-top:1px solid var(--rule); padding:2.4em 0 3.4em; text-align:center}
-.foot .tags{display:flex; flex-wrap:wrap; justify-content:center; gap:0.8em; margin:0 0 1.1em}
-.foot .tags a{font-family:var(--hand); font-size:1.2em; color:var(--maroon-br); border:1px solid var(--rule);
-  border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:var(--paper-2); transition:all .18s}
-.foot .tags a:hover{border-color:var(--maroon); color:var(--maroon); transform:translateY(-2px)}
-.foot .copy{font-family:var(--mono); font-size:0.78em; color:var(--ink-soft)}
+  /* === Portfolio overrides: keep the homepage look; only the FONT is more readable === */
+  body, p, li, span, .project-content, .project-desc-list, .project-desc-list li,
+  .project-title, .project-date, .project-meta, .pf-lede, .pf-nav a, .pf-foot a {
+    font-family: 'Spectral', 'Noto Serif SC', Georgia, serif !important;
+  }
+  .pf-title { font-family: 'Patrick Hand', 'Caveat', cursive !important; }
+  /* lightweight top bar (parchment-toned) */
+  .pf-nav { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7em 2vw; background: rgba(247,240,224,0.86); backdrop-filter: saturate(1.1) blur(2px);
+    border-bottom: 1px solid rgba(120,80,40,0.22); }
+  .pf-brand { display: flex; align-items: center; gap: 0.5em; font-family: 'Patrick Hand', cursive !important; font-size: 1.35rem; color: #3a2c20; text-decoration: none; }
+  .pf-brand .mk { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(150deg,#1e3a8a,#2b4db8); color: #fff; display: grid; place-items: center; font-family: 'PingFang SC','Microsoft YaHei',sans-serif; font-weight: 900; font-size: 0.85rem; }
+  .pf-nav .links { display: flex; gap: 1.3em; font-size: 1.05rem; }
+  .pf-nav .links a { color: #6b5436; text-decoration: none; }
+  .pf-nav .links a:hover, .pf-nav .links a.here { color: #9a2b1e; }
+  /* header */
+  .pf-head { max-width: 1500px; margin: 0 auto; padding: 2.8em 2vw 1em; }
+  .pf-eyebrow { font-family: 'JetBrains Mono', monospace !important; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9a2b1e; margin: 0 0 0.4em; }
+  .pf-title { font-size: clamp(2.2rem, 5vw, 3.4rem); color: #3a2c20; margin: 0 0 0.3em; line-height: 1.05; }
+  .pf-lede { font-size: 1.15rem; color: #5e4a32; max-width: 60ch; margin: 0; }
+  /* full-width main + single grid, featured first */
+  .pf-main { max-width: 1500px; margin: 0 auto; padding: 1.4em 2vw 1em; }
+  .pf-controls { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0 0 1.6em; }
+  .pf-controls button { font-family: 'JetBrains Mono', monospace !important; font-size: 0.78rem; cursor: pointer;
+    color: #6b5436; background: rgba(255,250,235,0.6); border: 1px solid rgba(120,80,40,0.25); border-radius: 999px; padding: 0.34em 0.9em; transition: all .15s; }
+  .pf-controls button:hover { border-color: #9a2b1e; color: #9a2b1e; }
+  .pf-controls button.on { background: #9a2b1e; color: #fdf3e3; border-color: #9a2b1e; }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.7em; align-items: stretch; }
+  /* let the homepage card fill the grid cell instead of the carousel's fixed width */
+  .portfolio-grid .project-card { width: auto !important; min-width: 0 !important; max-width: none !important;
+    flex: none !important; margin: 0 !important; height: 100% !important; cursor: pointer; }
+  .portfolio-grid .project-card.is-hidden { display: none !important; }
+  /* footer tags → home / blog / cv / github */
+  .pf-foot { max-width: 1500px; margin: 2em auto 0; padding: 2.4em 2vw 3.4em; text-align: center; border-top: 1px solid rgba(120,80,40,0.22); }
+  .pf-foot .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8em; margin: 0 0 1em; }
+  .pf-foot .tags a { font-family: 'Patrick Hand', cursive !important; font-size: 1.2rem; color: #9a2b1e; text-decoration: none;
+    border: 1px solid rgba(120,80,40,0.25); border-radius: 8px 5px 9px 5px; padding: 0.3em 1.1em; background: rgba(255,250,235,0.6); transition: all .18s; }
+  .pf-foot .tags a:hover { border-color: #9a2b1e; transform: translateY(-2px); }
+  .pf-foot .copy { font-family: 'JetBrains Mono', monospace !important; font-size: 0.78rem; color: #6b5436; }
+  .proj-soon { display: inline-flex; align-items: center; gap: 0.35em; color: #8a7a5a !important; font-style: italic; }
+  @media (max-width: 560px){ .pf-nav .links { gap: 0.9em; font-size: 0.95rem; } .portfolio-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
-<body>
+<body data-theme="academic">
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="index_en.html"><span class="mark">林</span> Linlin Jia</a>
-    <div class="nav-links">
-      <a href="index_en.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="portfolio.html" class="here">Portfolio</a>
-      <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
-    </div>
+<nav class="pf-nav">
+  <a class="pf-brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
+  <div class="links">
+    <a href="index_en.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="portfolio.html" class="here">Portfolio</a>
+    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
 
-<header class="hero wrap">
-  <p class="eyebrow">App &amp; Software Engineering</p>
-  <h1>I build <em>shipped</em> software<br>from research ideas.</h1>
-  <p class="lede">Ph.D. in machine learning who writes production Python: open-source libraries, LLM/agent platforms, and applied ML tools used in academia and industry.</p>
-  <div class="facts">
-    <span><strong>8</strong> software &amp; tool projects</span>
-    <span><strong>graphkit-learn</strong> · 128★ · on PyPI</span>
-    <span>Python · LLMs · GNNs · Docker</span>
-  </div>
+<header class="pf-head">
+  <p class="pf-eyebrow">App &amp; Software Engineering</p>
+  <h1 class="pf-title">Selected builds</h1>
+  <p class="pf-lede">Open-source libraries, LLM / agent platforms, and applied ML tools — shipped in Python, used in academia and industry.</p>
 </header>
 
-<main class="wrap">
-
-  <!-- tech filter -->
-  <div class="filter" id="filter" role="group" aria-label="Filter by stack">
+<main class="pf-main">
+  <div class="pf-controls" id="pfFilter" role="group" aria-label="Filter by stack">
     <button class="on" data-f="all">All</button>
+    <button data-f="software">Software / Open Source</button>
     <button data-f="llm">LLMs &amp; Agents</button>
-    <button data-f="graphml">Graph ML / GNNs</button>
-    <button data-f="cv">Computer Vision</button>
-    <button data-f="oss">Open Source</button>
-    <button data-f="systems">Systems</button>
+    <button data-f="graph">Graph ML / GNNs</button>
+    <button data-f="vision">Computer Vision</button>
+    <button data-f="spatio-temporal">Spatio-Temporal</button>
   </div>
 
-  <!-- ===== Featured ===== -->
-  <section class="sec" id="featured">
-    <div class="sec-head"><h2>Featured</h2><span class="n">4 flagship builds</span><span class="line"></span></div>
-    <div class="feat">
+  <div class="portfolio-grid" id="pfGrid">
 
-      <!-- graphkit-learn -->
-      <article class="card" data-tags="oss graphml">
-        <div class="card-fig"><img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn accuracy benchmark"></div>
-        <div class="card-body">
-          <div class="card-meta"><span class="badge soft">Open Source</span><span class="card-date">2020 — Present</span></div>
-          <h3>graphkit-learn</h3>
-          <p class="role">A Python library for graph kernels, graph edit distances, and the graph pre-image problem — used worldwide.</p>
-          <ul>
-            <li><strong>Designed &amp; maintain</strong> the full package: APIs, kernels, parallelized GED solvers, tests, docs.</li>
-            <li><strong>128★ on GitHub</strong>, distributed on PyPI; the open-source output of an ANR grant.</li>
-          </ul>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Graph Kernels</span><span class="chip">scikit-learn API</span><span class="chip">Open Source</span></div>
-          <div class="card-links">
-            <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
-            <a href="https://pypi.org/project/graphkit-learn/" target="_blank" rel="noopener"><i class="fas fa-cube"></i> PyPI</a>
-            <span class="stat">128★ · worldwide use</span>
-          </div>
+    <!-- ===== Featured (first): graphkit-learn · LIULIAN · N-Banker · Swiss River ===== -->
+
+    <div class="project-card" data-tags="software,academia,graph" data-year="2020" data-primary-href="https://github.com/jajupmochi/graphkit-learn" tabindex="0" role="link" aria-label="Project: graphkit-learn">
+      <div class="project-image">
+        <img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn accuracy benchmark on graph kernels" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge">Software</span><span class="project-date">2020 - Present</span></div>
+        <h3 class="project-title">graphkit-learn</h3>
+        <ul class="project-desc-list"><li><strong>Python library</strong> for graph kernels, graph edit distances, and the graph pre-image problem.</li><li>Used <strong>worldwide</strong> for graph classification and regression.</li><li><strong>Open-source output</strong> of the APi (ANR) grant.</li></ul>
+        <div class="project-stats" aria-label="Live project metrics">
+          <a href="https://github.com/jajupmochi/graphkit-learn/stargazers" target="_blank" rel="noopener noreferrer" class="project-stat-pill" title="GitHub stars"><i class="fab fa-github" aria-hidden="true"></i> <strong>128</strong> ⭐</a>
+          <a href="https://pypi.org/project/graphkit-learn/" target="_blank" rel="noopener noreferrer" class="project-stat-pill" title="PyPI package"><i class="fas fa-cube" aria-hidden="true"></i> PyPI</a>
         </div>
-      </article>
-
-      <!-- LIULIAN -->
-      <article class="card" data-tags="llm graphml oss">
-        <div class="card-fig"><img src="res/figures/2026_liulian_architecture.png" alt="LIULIAN platform architecture"></div>
-        <div class="card-body">
-          <div class="card-meta"><span class="badge dual">Platform</span><span class="card-date">2026 — Present</span></div>
-          <h3>LIULIAN</h3>
-          <p class="role">A spatio-temporal data platform: collection, processing, analysis, and visualization, with LLM-driven interfaces.</p>
-          <ul>
-            <li><strong>Architecting the platform</strong> end-to-end: data pipelines, multimodal scientific graph benchmarks, BI agent systems.</li>
-            <li>Consolidates years of graph-ML research (kernels, GED, GNNs) into one <strong>productizable</strong> Python codebase.</li>
-          </ul>
-          <div class="chips"><span class="chip">Python</span><span class="chip">LLMs</span><span class="chip">Agents</span><span class="chip">Spatio-Temporal</span></div>
-          <div class="card-links">
-            <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
-            <span class="stat">Innosuisse application in prep</span>
-          </div>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Graph Kernels</span><span class="project-tag">Open Source</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+          <a href="https://pypi.org/project/graphkit-learn/" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-cube"></i> PyPI</a>
         </div>
-      </article>
-
-      <!-- Confidential Translator -->
-      <article class="card" data-tags="llm oss">
-        <div class="card-fig"><img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator demo"></div>
-        <div class="card-body">
-          <div class="card-meta"><span class="badge fun">App</span><span class="card-date">2026 — Present</span></div>
-          <h3>Local Confidential Translator</h3>
-          <p class="role">Fully offline, privacy-first document translation powered by local LLMs — your documents never leave the machine.</p>
-          <ul>
-            <li><strong>Built end-to-end</strong>: local-LLM inference, document pipeline, UI; ships via a <strong>single Docker command</strong>.</li>
-            <li><strong>MIT-licensed</strong> open source; MVP in testing.</li>
-          </ul>
-          <div class="chips"><span class="chip">Local LLM</span><span class="chip">Docker</span><span class="chip">Privacy</span><span class="chip">Open Source</span></div>
-          <div class="card-links">
-            <a href="https://github.com/jajupmochi/confidential-translator" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
-            <span class="stat">one-command deploy</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- PLANALYSER -->
-      <article class="card" data-tags="cv graphml">
-        <div class="card-fig"><img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER project"></div>
-        <div class="card-body">
-          <div class="card-meta"><span class="badge ind">Industry</span><span class="card-date">2024 — 2025</span></div>
-          <h3>PLANALYSER</h3>
-          <p class="role">Innosuisse-funded AI that audits and optimizes HVAC concepts directly from engineering drawings.</p>
-          <ul>
-            <li><strong>Built the ML pipeline</strong>: data preprocessing, symbol / edge / topology extraction models, training &amp; evaluation.</li>
-            <li>Delivered with industry partners <strong>iCoSys (HES-SO)</strong> × <strong>WATTELSE AG</strong>.</li>
-          </ul>
-          <div class="chips"><span class="chip">Computer Vision</span><span class="chip">GNNs</span><span class="chip">Pipelines</span></div>
-          <div class="card-links">
-            <a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a>
-            <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener"><i class="fas fa-handshake"></i> Partner</a>
-          </div>
-        </div>
-      </article>
-
+      </div>
     </div>
-  </section>
 
-  <!-- ===== More ===== -->
-  <section class="sec" id="more">
-    <div class="sec-head"><h2>More builds</h2><span class="n">tools, systems &amp; research code</span><span class="line"></span></div>
-    <div class="more">
-
-      <article class="mcard" data-tags="llm">
-        <div class="card-meta"><span class="badge ind">Industry</span><span class="card-date">2024 — Present</span></div>
-        <h3>N-Banker — Neobank Research Center</h3>
-        <p>Leading AI strategy and <strong>LLM-agent development</strong>: automated information retrieval, analysis, and consultation on a RAG + agents + FinTech stack.</p>
-        <div class="chips"><span class="chip">LLMs</span><span class="chip">RAG</span><span class="chip">Agents</span><span class="chip">FinTech</span></div>
-        <div class="card-links"><a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener"><i class="fas fa-handshake"></i> Partner</a></div>
-      </article>
-
-      <article class="mcard" data-tags="graphml oss">
-        <div class="card-meta"><span class="badge soft">Open Source</span><span class="card-date">2021 — 2024</span></div>
-        <h3>OCTOPUSSY — RedoxPrediction</h3>
-        <p>Graph-based ML &amp; chemical-descriptor design for polymer / redox-potential prediction. <strong>Open-sourced</strong> as the RedoxPrediction package; published in J. Comp. Chem.</p>
-        <div class="chips"><span class="chip">Python</span><span class="chip">GNNs</span><span class="chip">Chemoinformatics</span></div>
-        <div class="card-links"><a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Paper</a></div>
-      </article>
-
-      <article class="mcard" data-tags="graphml oss">
-        <div class="card-meta"><span class="badge dual">Research code</span><span class="card-date">2025 — Present</span></div>
-        <h3>Swiss River Forecasting</h3>
-        <p>SNSF project on river-temperature forecasting with <strong>spatio-temporal transformer / LLM</strong> architectures; benchmark code open-sourced. Paper at ICPR 2026.</p>
-        <div class="chips"><span class="chip">GNNs</span><span class="chip">Transformers</span><span class="chip">Benchmark</span></div>
-        <div class="card-links"><a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a></div>
-      </article>
-
-      <article class="mcard" data-tags="systems">
-        <div class="card-meta"><span class="badge ind">Patent</span><span class="card-date">2014 — 2017</span></div>
-        <h3>Software-Defined Network Control</h3>
-        <p>Service-oriented programmable control &amp; scheduling for SDN; applied <strong>extreme learning machines</strong> to predict mobility in Named Data Networks. <strong>China patent CN106376041B</strong>.</p>
-        <div class="chips"><span class="chip">SDN</span><span class="chip">ELM</span><span class="chip">Systems</span></div>
-        <div class="card-links"><a href="https://patents.google.com/patent/CN106376041B/en" target="_blank" rel="noopener"><i class="fas fa-certificate"></i> Patent</a></div>
-      </article>
-
+    <div class="project-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-year="2026" data-primary-href="https://github.com/jajupmochi/liulian-python" tabindex="0" role="link" aria-label="Project: LIULIAN platform">
+      <div class="project-image project-image--contain">
+        <img src="res/figures/2026_liulian_architecture.png" alt="LIULIAN platform architecture overview" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge project-badge--dual">Academia + Industry</span><span class="project-date">2026 - Present</span></div>
+        <h3 class="project-title">LIULIAN: Liquid Intelligence and Unified Logic for Interactive Adaptive Networks</h3>
+        <ul class="project-desc-list"><li><strong>Spatio-temporal data platform</strong>: collection, processing, analysis, and visualization.</li><li><strong>Multimodal scientific graph benchmarks</strong> and <strong>LLM-driven data interfaces + BI agent systems</strong>.</li><li>Consolidates years of graph-ML research into one productizable Python codebase.</li></ul>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Platform</span><span class="project-tag">LLMs</span><span class="project-tag">Agents</span><span class="project-tag">Spatio-Temporal</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
     </div>
-  </section>
 
+    <div class="project-card" data-tags="industry,llm,agents" data-year="2024" aria-label="Project: N-Banker, 1st Global Neobank Research Center">
+      <div class="project-image">
+        <img src="res/figures/2026_neobanker_agent_demo.png" alt="N-Banker agentic neobank information platform demo" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge">Industry</span><span class="project-date">2024 - Present</span></div>
+        <h3 class="project-title">N-Banker: 1st Global Neobank Research Center</h3>
+        <ul class="project-desc-list"><li><strong>Leading AI strategy and LLM-agent development</strong> for the Neobank Research Center platform.</li><li>Automated <strong>information retrieval, analysis, and strategic consultation</strong> for business partners.</li><li>Built on an <strong>ML + LLM stack</strong> (RAG, agents, FinTech pipelines).</li></ul>
+        <div class="project-tags"><span class="project-tag">LLMs</span><span class="project-tag">RAG</span><span class="project-tag">Agents</span><span class="project-tag">FinTech</span></div>
+        <div class="project-links">
+          <a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-handshake"></i> Partner</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" data-tags="academia,graph,spatio-temporal,software" data-year="2025" data-primary-href="https://github.com/jajupmochi/swiss-river-network-benchmark" tabindex="0" role="link" aria-label="Project: Swiss river temperature forecasting">
+      <div class="project-image">
+        <img src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Spatio-temporal transformer for Swiss river water temperature forecasting" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge">Academia</span><span class="project-date">2025 - Present</span></div>
+        <h3 class="project-title">Spatio-Temporal Graph Networks for River Temperature Forecasting</h3>
+        <ul class="project-desc-list"><li><strong>SNSF-funded</strong> graph-based Swiss river water-temperature forecasting.</li><li>Built <strong>spatio-temporal transformer + LLM architectures</strong> with entity embeddings + graph structure.</li><li><strong>Benchmark open-sourced</strong>; paper accepted at ICPR 2026.</li></ul>
+        <div class="project-tags"><span class="project-tag">GNNs</span><span class="project-tag">Transformers</span><span class="project-tag">Spatio-Temporal</span><span class="project-tag">Benchmark</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+          <a href="https://data.snf.ch/grants/grant/206352" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-file-signature"></i> Funding</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== The rest ===== -->
+
+    <div class="project-card" data-tags="fun,llm,software" data-year="2026" data-primary-href="https://github.com/jajupmochi/confidential-translator" tabindex="0" role="link" aria-label="Project: Local Confidential Translator">
+      <div class="project-image">
+        <img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator demo" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge project-badge--fun">Software</span><span class="project-date">2026 - Present</span></div>
+        <h3 class="project-title">Local Confidential Translator</h3>
+        <ul class="project-desc-list"><li><strong>Fully offline, privacy-first document translation</strong> powered by local LLMs.</li><li><strong>MIT-licensed open source</strong>, deployable via a single Docker command.</li><li>Built end-to-end via AI-assisted (vibe) coding; MVP in testing.</li></ul>
+        <div class="project-tags"><span class="project-tag">Local LLM</span><span class="project-tag">Docker</span><span class="project-tag">Privacy</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/confidential-translator" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" data-tags="academia,industry,vision,graph" data-year="2024" data-primary-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" tabindex="0" role="link" aria-label="Project: PLANALYSER">
+      <div class="project-image">
+        <img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER Innosuisse grant page" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge project-badge--dual">Academia + Industry</span><span class="project-date">2024 - 2025</span></div>
+        <h3 class="project-title">PLANALYSER: Automated HVAC-Concept Audit using AI</h3>
+        <ul class="project-desc-list"><li><strong>Innosuisse-funded</strong> AI audit + optimization of HVAC concepts on engineering drawings.</li><li>Built the ML pipeline: <strong>data preprocessing, symbol / edge / topology extraction</strong>, training.</li><li class="project-partners">🤝 <strong>Partners:</strong> iCoSys (HES-SO Fribourg) × WATTELSE AG.</li></ul>
+        <div class="project-tags"><span class="project-tag">CV</span><span class="project-tag">GNNs</span><span class="project-tag">Smart Engineering</span></div>
+        <div class="project-links">
+          <a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-file-signature"></i> Funding</a>
+          <a href="https://www.startup.ch/WATTELSE" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-handshake"></i> Partner</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" data-tags="academia,graph,chemoinformatics,software" data-year="2021" data-primary-href="https://github.com/jajupmochi/RedoxPrediction" tabindex="0" role="link" aria-label="Project: OCTOPUSSY / RedoxPrediction">
+      <div class="project-image">
+        <img src="res/figures/2023_jcc_redox_framework.svg" alt="Graph-based redox potential prediction pipeline" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge">Software</span><span class="project-date">2021 - 2024</span></div>
+        <h3 class="project-title">OCTOPUSSY — RedoxPrediction</h3>
+        <ul class="project-desc-list"><li><strong>Graph-based ML</strong> + chemical-descriptor design for polymer optimization and redox-potential prediction.</li><li><strong>RedoxPrediction</strong> package open-sources the implementation; published in J. Comp. Chem. (2024).</li></ul>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">GNNs</span><span class="project-tag">Chemoinformatics</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+          <a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-file-lines"></i> Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" data-tags="academia,graph,vision" data-year="2024" data-primary-href="https://data.snf.ch/grants/grant/217594" tabindex="0" role="link" aria-label="Project: Image + graph neural networks for handwriting recognition">
+      <div class="project-image">
+        <img src="res/figures/2025_graphink_framework.svg" alt="GraphInk: image + graph-based neural networks for handwriting recognition" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge">Academia</span><span class="project-date">2024 - Present</span></div>
+        <h3 class="project-title">GraphInk: Image + Graph Networks for Handwriting Recognition</h3>
+        <ul class="project-desc-list"><li><strong>SNSF-funded</strong> handwritten historical-document analysis.</li><li>Combines <strong>image semantics with graph topology</strong> for deep learning.</li><li class="project-partners">🤝 <strong>Partners:</strong> iCoSys (HES-SO Fribourg) × TU Dortmund.</li></ul>
+        <div class="project-tags"><span class="project-tag">CV</span><span class="project-tag">GNNs</span><span class="project-tag">Document Analysis</span></div>
+        <div class="project-links">
+          <a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-file-signature"></i> Funding</a>
+          <span class="project-link proj-soon"><i class="fas fa-clock"></i> Library coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- This site itself, as a software build -->
+    <div class="project-card" data-tags="software,fun,llm" data-year="2026" data-primary-href="https://github.com/jajupmochi/jajupmochi.github.io" tabindex="0" role="link" aria-label="Project: this personal website and blog">
+      <div class="project-image">
+        <img src="res/figures/2026_personal_site.png" alt="Linlin Jia personal website and blog" loading="lazy" width="400" height="180">
+      </div>
+      <div class="project-content">
+        <div class="project-meta"><span class="project-badge project-badge--fun">Software</span><span class="project-date">2026 - Present</span></div>
+        <h3 class="project-title">This Website + Blog</h3>
+        <ul class="project-desc-list"><li><strong>Static personal site + blog</strong> on GitHub Pages — no backend, no build step.</li><li><strong>4-language i18n</strong>, a hand-built parchment design system, and a <strong>client-rendered blog engine</strong> (Markdown · LaTeX · Jupyter · Mermaid).</li><li>Designed and built <strong>human × AI</strong>; fully open source.</li></ul>
+        <div class="project-tags"><span class="project-tag">HTML/CSS/JS</span><span class="project-tag">i18n</span><span class="project-tag">Static Site</span></div>
+        <div class="project-links">
+          <a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a>
+          <a href="index_en.html" class="project-link"><i class="fas fa-house"></i> Live</a>
+          <a href="blog.html" class="project-link"><i class="fas fa-feather"></i> Blog</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </main>
 
-<footer class="foot">
+<footer class="pf-foot">
   <div class="tags">
     <a href="index_en.html"><i class="fas fa-house"></i> Home</a>
     <a href="blog.html"><i class="fas fa-feather"></i> Blog</a>
     <a href="res/cv/CV_Linlin_Jia_en.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> CV</a>
     <a href="https://github.com/jajupmochi" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
   </div>
-  <p class="copy">© <span id="yr"></span> Linlin Jia · built as a static page, no trackers</p>
+  <p class="copy">© <span id="yr"></span> Linlin Jia · static page, no trackers</p>
 </footer>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  // tech-stack filter (mirrors the homepage projects + blog tag-filter behaviour)
-  const fbtns = document.querySelectorAll('#filter button');
-  const cards = document.querySelectorAll('.card, .mcard');
-  fbtns.forEach(b => b.addEventListener('click', () => {
-    fbtns.forEach(x => x.classList.toggle('on', x === b));
+  // tech-stack filter (data-tags are comma-separated, like the homepage projects module)
+  const btns = document.querySelectorAll('#pfFilter button');
+  const cards = document.querySelectorAll('#pfGrid .project-card');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.classList.toggle('on', x === b));
     const f = b.dataset.f;
     cards.forEach(c => {
-      const show = f === 'all' || (c.dataset.tags || '').split(' ').includes(f);
-      c.classList.toggle('hidden', !show);
+      const tags = (c.getAttribute('data-tags') || '').split(',');
+      c.classList.toggle('is-hidden', !(f === 'all' || tags.includes(f)));
     });
-    // hide a section head if its grid has no visible cards
-    document.querySelectorAll('.sec').forEach(sec => {
-      const any = [...sec.querySelectorAll('.card, .mcard')].some(c => !c.classList.contains('hidden'));
-      sec.style.display = any ? '' : 'none';
-    });
+  }));
+  // whole-card click opens the primary link (mirrors the homepage card behaviour)
+  cards.forEach(c => c.addEventListener('click', e => {
+    if (e.target.closest('a')) return;
+    const href = c.getAttribute('data-primary-href');
+    if (href) window.open(href, '_blank', 'noopener');
   }));
 </script>
 </body>
