@@ -1534,6 +1534,45 @@
         })();
 
         // ========================================
+        // Multi-image project cards: in-card carousel (gallery-style dots + swipe).
+        // stopPropagation so the outer projects carousel doesn't page and a
+        // swipe doesn't fire the card's delegated navigate-click.
+        // ========================================
+        (function initProjectImageCarousels() {
+            document.querySelectorAll('.project-image.pimg-carousel').forEach(function(wrap) {
+                const track = wrap.querySelector('.pimg-track');
+                const slides = Array.from(wrap.querySelectorAll('.pimg-slide'));
+                const dotsWrap = wrap.querySelector('.pimg-dots');
+                if (!track || slides.length < 2 || !dotsWrap) return;
+                let idx = 0;
+                function go(n) {
+                    idx = (n + slides.length) % slides.length;
+                    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+                    Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('on', i === idx));
+                    wrap.dataset.idx = String(idx);
+                }
+                slides.forEach(function(_, i) {
+                    const d = document.createElement('i');
+                    d.addEventListener('click', function(e) { e.stopPropagation(); go(i); });
+                    dotsWrap.appendChild(d);
+                });
+                go(0);
+                let sx = null, swiped = false;
+                wrap.addEventListener('pointerdown', function(e) { sx = e.clientX; swiped = false; });
+                wrap.addEventListener('pointerup', function(e) {
+                    if (sx == null) return;
+                    const dx = e.clientX - sx; sx = null;
+                    if (Math.abs(dx) > 35) { swiped = true; go(idx + (dx < 0 ? 1 : -1)); }
+                });
+                // a swipe must not trigger the card's navigate-click (capture phase)
+                wrap.addEventListener('click', function(e) { if (swiped) { e.stopPropagation(); e.preventDefault(); swiped = false; } }, true);
+                // keep touch swipes from bubbling to the outer projects carousel
+                wrap.addEventListener('touchstart', function(e) { e.stopPropagation(); }, { passive: true });
+                wrap.addEventListener('touchend', function(e) { e.stopPropagation(); }, { passive: true });
+            });
+        })();
+
+        // ========================================
         // Site-wide search (Cmd/Ctrl+K)
         // Indexes About/News/Projects/Publications/Experience/Services/Beyond/Thesis
         // Keyboard nav, scroll-to + flash highlight on select.

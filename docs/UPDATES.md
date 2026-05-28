@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-28](#2026-05-28)
+    - [V4 — Homepage Projects: multi-image cards (dots+swipe) + LIULIAN Online Demo](#v4--homepage-projects-multi-image-cards-dotsswipe--liulian-online-demo) — LIULIAN (studio+mobile) and N-Banker (chat+canvas) home cards become 2-slide carousels matching the gallery (dots + pointer/touch swipe; `stopPropagation` so the outer carousel + card-nav don't fire); LIULIAN gains an **Online Demo** link + card-click → liulian-web demo. New `proj_link.online_demo` key ×4 locales (parity OK).
     - [V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish](#v3--gallery-optimization-pass-lazy-load-keyboard-a11y-reduced-motion-lightbox-polish) — Ten-round polish on `apps-gallery.html`: lazy-load + `decoding=async` on all 12 slides (defers the 1.24 MB translator GIF); cards keyboard-focusable (`tabindex`/`role`/`aria-label`, Enter/Space to open); `prefers-reduced-motion` disables transitions; lightbox locks body scroll + shows an `n / total` counter; verified mobile (1-col), Detailed view, and homepage carousel.
     - [V2 — App Gallery overhaul: Detailed view restored, persistent controls row, 3-col, hover fix, borderless, WebP](#v2--app-gallery-overhaul-detailed-view-restored-persistent-controls-row-3-col-hover-fix-borderless-webp) — Reverses V1's single-page consolidation per Linlin's new direction: restored `portfolio.html` (Detailed view) and put the `Cards | Detailed` toggle into a persistent **controls row** (filter tags · search) on both views — gallery gains a working tag filter + search. Gallery: 3 cards/row on large screens, hover-overlay overflow + typography fixed, card rounding removed (blend into parchment). Speed: the 5 screenshots converted PNG→WebP (4.25 MB → 194 KB). Homepage Projects LIULIAN/N-Banker images synced to the gallery screenshots.
     - [V1 — App Gallery: hi-res screenshots + single-page consolidation; LIULIAN home card](#v1--app-gallery-hi-res-screenshots--single-page-consolidation-liulian-home-card) — `apps-gallery.html` is now the single apps page: swapped LIULIAN/N-Banker/homepage cards to `res/portfolio/img` hi-res PNG screenshots (diagrams stay SVG), deleted `portfolio.html` (Detailed view) + its `Cards | Detailed` toggle, and pointed the home Projects LIULIAN card at the architecture diagram + GitHub (Demo link & unused `proj_link.demo` i18n key removed).
@@ -39,6 +40,14 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-28
+
+## V4 — Homepage Projects: multi-image cards (dots+swipe) + LIULIAN Online Demo
+
+Per Linlin: sync the homepage Projects carousel to the gallery, give multi-image cards the same in-card switching, and add the gallery's links.
+
+- **Multi-image home cards** — LIULIAN (`liulian_studio.webp` + `liulian_mobile.webp`) and N-Banker (`neobanker_chat.webp` + `neobanker_canvas.webp`) `.project-image` now wrap a `.pimg-track` of `.pimg-slide`s + `.pimg-dots`, matching the gallery. New `.pimg-*` CSS in `css/main.css` (scoped — single-image cards untouched), new `initProjectImageCarousels()` in `js/main.js`: dots + pointer swipe, `go(n)` translateX, `wrap.dataset.idx` for the lightbox. Critical: `stopPropagation` on dot clicks, on the post-swipe click (capture), and on touchstart/touchend so the **outer projects carousel doesn't page** and the card's delegated navigate-click doesn't fire mid-swipe. `touch-action:pan-y` keeps vertical page-scroll working. Verified at 1440 (dots render, dot-click → `translateX(-100%)`).
+- **LIULIAN Online Demo** — card-click `data-primary-href` and a new project link both point at `https://liulian-ai.github.io/liulian-web/` ("Online Demo"). New `proj_link.online_demo` i18n key ×4 locales (en/zh/fr/de), parity verified.
+- **All other home cards already matched** the gallery's images (shared SVG/PNG/GIF), so only LIULIAN + N-Banker changed.
 
 ## V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish
 

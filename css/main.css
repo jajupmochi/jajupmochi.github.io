@@ -1730,6 +1730,29 @@
             pointer-events: none;
         }
 
+        /* Multi-image card carousel (gallery-style dots + swipe). Scoped to
+           .pimg-carousel so single-image cards are untouched. */
+        .project-image.pimg-carousel { touch-action: pan-y; }
+        .project-image .pimg-track {
+            position: absolute; inset: 0; display: flex; height: 100%;
+            transition: transform .4s cubic-bezier(.22,1,.36,1);
+        }
+        .project-image .pimg-slide {
+            flex: 0 0 100%; min-width: 100%; height: 100%;
+            object-fit: cover; background: var(--bg-white);
+        }
+        .project-image .pimg-dots {
+            position: absolute; left: 0; right: 0; bottom: 8px; z-index: 4;
+            display: flex; justify-content: center; gap: 6px;
+        }
+        .project-image .pimg-dots i {
+            width: 7px; height: 7px; border-radius: 50%; cursor: pointer;
+            background: rgba(255,255,255,0.6); box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            transition: transform .2s, background .2s;
+        }
+        .project-image .pimg-dots i.on { background: #fff; transform: scale(1.3); }
+        @media (prefers-reduced-motion: reduce) { .project-image .pimg-track { transition: none; } }
+
         .project-content { padding: 1.5rem; }
         
         .project-meta {
