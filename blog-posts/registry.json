@@ -34,7 +34,8 @@
       "excerpt": {
         "en": "A personal academic site as plain HTML/CSS/JS on GitHub Pages — runtime i18n from JSON, data-driven cards, a hand-built parchment design system, and git-push deploy. Copy-paste reproducible.",
         "zh": "把个人学术站做成 GitHub Pages 上的纯 HTML/CSS/JS：运行时从 JSON 做 i18n、数据驱动卡片、手工羊皮纸设计系统、git push 即部署。可复制复刻。"
-      }
+      },
+      "cover": "site-home.webp"
     },
     {
       "slug": "how-i-built-this-blog",
@@ -70,7 +71,8 @@
       "excerpt": {
         "en": "A blog with no second toolchain: Markdown posts fetched and rendered in the browser with marked, highlight.js, KaTeX, and mermaid; a JSON registry; TOC, reading progress, and a reading-size toggle. Reproducible by reading.",
         "zh": "不要第二套工具链的博客：Markdown 文章在浏览器里用 marked、highlight.js、KaTeX、mermaid 渲染；JSON registry；目录、阅读进度、字号切换。照着读就能复刻。"
-      }
+      },
+      "cover": "blog-render.webp"
     },
     {
       "slug": "ubuntu-fcitx5-pinyin",

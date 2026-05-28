@@ -27,8 +27,12 @@
     padding: 0.7em 2vw; background: rgba(247,240,224,0.86); backdrop-filter: saturate(1.1) blur(2px); border-bottom: 1px solid rgba(120,80,40,0.22); }
   .pf-brand { display: flex; align-items: center; gap: 0.5em; font-family: 'Patrick Hand', cursive !important; font-size: 1.35rem; color: #3a2c20; text-decoration: none; }
   .pf-brand .mk { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(150deg,#1e3a8a,#2b4db8); color: #fff; display: grid; place-items: center; font-family: 'PingFang SC','Microsoft YaHei',sans-serif; font-weight: 900; font-size: 0.85rem; }
+  .pf-nav .right { display: flex; align-items: center; gap: 1.3em; }
   .pf-nav .links { display: flex; gap: 1.3em; font-size: 1.05rem; }
-  .pf-nav .links a { color: #6b5436; text-decoration: none; } .pf-nav .links a:hover, .pf-nav .links a.here { color: #9a2b1e; }
+  .pf-nav .links a { color: #6b5436; text-decoration: none; } .pf-nav .links a:hover { color: #9a2b1e; }
+  .mode { display: inline-flex; border: 1px solid rgba(120,80,40,0.3); border-radius: 999px; overflow: hidden; }
+  .mode a { font-family: 'JetBrains Mono', monospace !important; font-size: 0.74rem; padding: 0.34em 0.8em; color: #6b5436; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35em; }
+  .mode a.on { background: #9a2b1e; color: #fdf3e3; }
   /* header */
   .pf-head { max-width: 1500px; margin: 0 auto; padding: 2.6em 2vw 0.6em; }
   .pf-eyebrow { font-family: 'JetBrains Mono', monospace !important; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9a2b1e; margin: 0 0 0.3em; }
@@ -66,18 +70,21 @@
 
 <nav class="pf-nav">
   <a class="pf-brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
-  <div class="links">
-    <a href="index_en.html">Home</a>
-    <a href="blog.html">Blog</a>
-    <a href="portfolio.html" class="here">Apps</a>
-    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
+  <div class="right">
+    <div class="links">
+      <a href="index_en.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="mode" role="group" aria-label="View mode">
+      <a href="apps-gallery.html"><i class="fas fa-table-cells-large"></i> Cards</a>
+      <a href="portfolio.html" class="on"><i class="fas fa-list"></i> Detailed</a>
+    </div>
   </div>
 </nav>
 
 <header class="pf-head">
-  <p class="pf-eyebrow">App &amp; Software Engineering</p>
   <h1 class="pf-title">App Gallery</h1>
-  <a class="pf-alt" href="apps-gallery.html">↳ try the image-first gallery view</a>
 </header>
 
 <main class="pf-main">
@@ -110,7 +117,7 @@
 
     <!-- ===== Featured (taped): graphkit-learn · LIULIAN · N-Banker · Swiss River ===== -->
 
-    <div class="project-card" data-tags="software,academia,graph" data-year="2020" data-priority="100" data-primary-href="https://github.com/jajupmochi/graphkit-learn" tabindex="0" role="link" aria-label="Project: graphkit-learn">
+    <div class="project-card" data-tags="software,academia,graph" data-year="2020" data-priority="240" data-primary-href="https://github.com/jajupmochi/graphkit-learn" tabindex="0" role="link" aria-label="Project: graphkit-learn">
       <span class="pf-tape">Featured</span>
       <div class="project-image"><img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn accuracy benchmark on graph kernels" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
@@ -129,21 +136,21 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-year="2026" data-priority="99" data-primary-href="https://github.com/jajupmochi/liulian-python" tabindex="0" role="link" aria-label="Project: LIULIAN platform">
+    <div class="project-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-year="2026" data-priority="320" data-primary-href="https://liulian-ai.github.io/liulian-web/" tabindex="0" role="link" aria-label="Project: LIULIAN platform">
       <span class="pf-tape">Featured</span>
-      <div class="project-image project-image--contain"><img src="res/figures/2026_liulian_architecture.png" alt="LIULIAN platform architecture overview" loading="lazy" width="400" height="180"></div>
+      <div class="project-image"><img src="res/figures/2026_liulian_studio.webp" alt="LIULIAN Studio — data platform UI" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge project-badge--dual">Academia + Industry</span><span class="project-date">2026 - Present</span></div>
         <h3 class="project-title">LIULIAN: Liquid Intelligence and Unified Logic for Interactive Adaptive Networks</h3>
         <ul class="project-desc-list"><li><strong>Spatio-temporal data platform</strong>: collection, processing, analysis, and visualization.</li><li><strong>Multimodal scientific graph benchmarks</strong> and <strong>LLM-driven data interfaces + BI agent systems</strong>.</li><li>Consolidates years of graph-ML research into one productizable Python codebase.</li></ul>
         <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Platform</span><span class="project-tag">LLMs</span><span class="project-tag">Agents</span><span class="project-tag">Spatio-Temporal</span></div>
-        <div class="project-links"><a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a></div>
+        <div class="project-links"><a href="https://liulian-ai.github.io/liulian-web/" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-arrow-up-right-from-square"></i> Open app</a><a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Code</a></div>
       </div>
     </div>
 
-    <div class="project-card" data-tags="industry,llm,agents" data-year="2024" data-priority="98" aria-label="Project: N-Banker, 1st Global Neobank Research Center">
+    <div class="project-card" data-tags="industry,llm,agents" data-year="2024" data-priority="130" aria-label="Project: N-Banker, 1st Global Neobank Research Center">
       <span class="pf-tape">Featured</span>
-      <div class="project-image"><img src="res/figures/2026_neobanker_agent_demo.png" alt="N-Banker agentic neobank information platform demo" loading="lazy" width="400" height="180"></div>
+      <div class="project-image"><img src="res/figures/2026_neobanker_chat.webp" alt="N-Banker agentic neobank platform" loading="lazy" width="400" height="180" data-rotate="res/figures/2026_neobanker_chat.webp,res/figures/2026_neobanker_canvas.webp"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge">Industry</span><span class="project-date">2024 - Present</span></div>
         <h3 class="project-title">N-Banker: 1st Global Neobank Research Center</h3>
@@ -153,7 +160,7 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="academia,graph,spatio-temporal,software" data-year="2025" data-priority="97" data-primary-href="https://github.com/jajupmochi/swiss-river-network-benchmark" tabindex="0" role="link" aria-label="Project: Swiss river temperature forecasting">
+    <div class="project-card" data-tags="academia,graph,spatio-temporal,software" data-year="2025" data-priority="230" data-primary-href="https://github.com/jajupmochi/swiss-river-network-benchmark" tabindex="0" role="link" aria-label="Project: Swiss river temperature forecasting">
       <span class="pf-tape">Featured</span>
       <div class="project-image"><img src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Spatio-temporal transformer for Swiss river water temperature forecasting" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
@@ -170,7 +177,7 @@
 
     <!-- ===== The rest ===== -->
 
-    <div class="project-card" data-tags="fun,llm,software" data-year="2026" data-priority="96" data-primary-href="https://github.com/jajupmochi/confidential-translator" tabindex="0" role="link" aria-label="Project: Local Confidential Translator">
+    <div class="project-card" data-tags="fun,llm,software" data-year="2026" data-priority="220" data-primary-href="https://github.com/jajupmochi/confidential-translator" tabindex="0" role="link" aria-label="Project: Local Confidential Translator">
       <div class="project-image"><img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator demo" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge project-badge--fun">Software</span><span class="project-date">2026 - Present</span></div>
@@ -181,7 +188,7 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="academia,industry,vision,graph" data-year="2024" data-priority="95" data-primary-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" tabindex="0" role="link" aria-label="Project: PLANALYSER">
+    <div class="project-card" data-tags="academia,industry,vision,graph" data-year="2024" data-priority="120" data-primary-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" tabindex="0" role="link" aria-label="Project: PLANALYSER">
       <div class="project-image"><img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER Innosuisse grant page" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge project-badge--dual">Academia + Industry</span><span class="project-date">2024 - 2025</span></div>
@@ -195,7 +202,7 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="academia,graph,chemoinformatics,software" data-year="2021" data-priority="94" data-primary-href="https://github.com/jajupmochi/RedoxPrediction" tabindex="0" role="link" aria-label="Project: OCTOPUSSY / RedoxPrediction">
+    <div class="project-card" data-tags="academia,graph,chemoinformatics,software" data-year="2021" data-priority="210" data-primary-href="https://github.com/jajupmochi/RedoxPrediction" tabindex="0" role="link" aria-label="Project: OCTOPUSSY / RedoxPrediction">
       <div class="project-image"><img src="res/figures/2023_jcc_redox_framework.svg" alt="Graph-based redox potential prediction pipeline" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge">Software</span><span class="project-date">2021 - 2024</span></div>
@@ -209,7 +216,7 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="academia,graph,vision" data-year="2024" data-priority="93" data-primary-href="https://data.snf.ch/grants/grant/217594" tabindex="0" role="link" aria-label="Project: Image + graph neural networks for handwriting recognition">
+    <div class="project-card" data-tags="academia,graph,vision" data-year="2024" data-priority="110" data-primary-href="https://data.snf.ch/grants/grant/217594" tabindex="0" role="link" aria-label="Project: Image + graph neural networks for handwriting recognition">
       <div class="project-image"><img src="res/figures/2025_graphink_framework.svg" alt="GraphInk: image + graph-based neural networks for handwriting recognition" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge">Academia</span><span class="project-date">2024 - Present</span></div>
@@ -223,7 +230,7 @@
       </div>
     </div>
 
-    <div class="project-card" data-tags="software,fun,llm" data-year="2026" data-priority="92" data-primary-href="https://github.com/jajupmochi/jajupmochi.github.io" tabindex="0" role="link" aria-label="Project: this personal website and blog">
+    <div class="project-card" data-tags="software,fun,llm" data-year="2026" data-priority="310" data-primary-href="https://github.com/jajupmochi/jajupmochi.github.io" tabindex="0" role="link" aria-label="Project: this personal website and blog">
       <div class="project-image"><img src="res/figures/2026_personal_site.png" alt="Linlin Jia personal website and blog" loading="lazy" width="400" height="180"></div>
       <div class="project-content">
         <div class="project-meta"><span class="project-badge project-badge--fun">Software</span><span class="project-date">2026 - Present</span></div>
@@ -253,6 +260,21 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+  // rotate images on cards that list several frames (N-Banker: chat <-> canvas)
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('img[data-rotate]').forEach(img => {
+      const frames = img.getAttribute('data-rotate').split(',').map(s => s.trim()).filter(Boolean);
+      if (frames.length < 2) return;
+      frames.forEach(src => { const p = new Image(); p.src = src; });
+      let i = frames.indexOf(img.getAttribute('src')); if (i < 0) i = 0;
+      img.style.transition = 'opacity .4s';
+      setInterval(() => {
+        i = (i + 1) % frames.length;
+        img.style.opacity = '0';
+        setTimeout(() => { img.src = frames[i]; img.style.opacity = ''; }, 380);
+      }, 4000);
+    });
+  }
   const grid = document.getElementById('pfGrid');
   const cards = [...grid.querySelectorAll('.project-card')];
   const tagBtns = document.querySelectorAll('#pfFilter .filter-tag');
