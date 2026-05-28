@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>App Gallery — Linlin Jia</title>
-<meta name="description" content="App gallery of Linlin Jia — hover a tile to reveal details, click to open the live page, demo, or code.">
+<meta name="description" content="App gallery of Linlin Jia — hover a tile to reveal details, swipe multi-image cards, click to open the live page, demo, or code.">
 <link rel="canonical" href="https://jajupmochi.github.io/apps-gallery.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,43 +28,52 @@
   .mode a.on { background:var(--maroon); color:#fdf3e3; }
   .pf-head { max-width:1600px; margin:0 auto; padding:2.2em 2vw 0.2em; }
   .pf-title { font-family:'Patrick Hand',cursive !important; font-size:clamp(2.2rem,5vw,3.4rem); color:var(--ink); margin:0; }
-  .gal { max-width:1600px; margin:0 auto; padding:1.2em 2vw 1em; display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.5em; }
-  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer; background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); }
+  .gal { max-width:1600px; margin:0 auto; padding:1.2em 2vw 1em;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.5em; }
+  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer;
+    background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); touch-action:pan-y; }
   .g-card:hover { transform:translateY(-3px); }
-  .g-img { position:absolute; inset:0; }
-  .g-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .35s; }
-  .g-cap { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:1.5em 1em 0.9em; font-family:'Patrick Hand',cursive !important; font-size:1.45rem; color:#fff; background:linear-gradient(180deg, transparent, rgba(40,22,8,0.8)); transition:opacity .35s; }
-  .g-over { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:flex-end; padding:1.3em 1.3em 1.7em; gap:0.5em; opacity:0; transition:opacity .4s; background:linear-gradient(180deg, rgba(247,240,224,0.32), rgba(247,240,224,0.94)); }
+  /* image carousel: wrap (gets hover-dim) > track (slides via translateX) */
+  .g-imgwrap { position:absolute; inset:0; overflow:hidden; transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .5s; }
+  .g-track { display:flex; height:100%; transition:transform .45s cubic-bezier(.22,1,.36,1); }
+  .g-slide { min-width:100%; height:100%; object-fit:cover; display:block; }
+  .g-dots { position:absolute; left:0; right:0; bottom:9px; z-index:5; display:flex; justify-content:center; gap:6px; transition:opacity .35s; }
+  .g-dots i { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.55); box-shadow:0 0 3px rgba(40,20,5,0.5); cursor:pointer; transition:transform .2s, background .2s; }
+  .g-dots i.on { background:#fff; transform:scale(1.3); }
+  .g-cap { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:1.5em 1em 1.6em;
+    font-family:'Patrick Hand',cursive !important; font-size:1.45rem; color:#fff;
+    background:linear-gradient(180deg, transparent, rgba(40,22,8,0.8)); transition:opacity .35s; }
+  .g-over { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:flex-end;
+    padding:1.3em 1.3em 1.2em; gap:0.5em; opacity:0; transition:opacity .4s;
+    background:linear-gradient(180deg, rgba(247,240,224,0.32), rgba(247,240,224,0.95)); }
   .g-over h3 { font-family:'Patrick Hand',cursive !important; font-size:1.5rem; margin:0; color:var(--ink); line-height:1.1; }
   .g-over p { margin:0; font-size:0.95rem; color:#4c3a24; }
+  .g-over .why { font-style:italic; color:#6b5436; font-size:0.9rem; }
   .g-over .tags { display:flex; flex-wrap:wrap; gap:0.35em; }
-  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon); background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
-  .g-over .note { font-size:0.82rem; color:#7a6747; font-style:italic; }
+  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon);
+    background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
   .g-over .acts { display:flex; flex-wrap:wrap; align-items:center; gap:0.9em; margin-top:0.2em; font-family:'Patrick Hand',cursive !important; font-size:1.05rem; }
   .g-over .acts a, .g-over .acts button { color:var(--maroon); text-decoration:none; background:none; border:none; cursor:pointer; font:inherit; display:inline-flex; align-items:center; gap:0.3em; padding:0; }
   .g-over .acts a:hover, .g-over .acts button:hover { text-decoration:underline; }
   .g-over .acts .zoom { margin-left:auto; }
-  .g-card:hover .g-img img, .g-card.is-open .g-img img { transform:scale(0.94); filter:blur(3px) brightness(0.6); opacity:0.4; }
+  .g-card:hover .g-imgwrap, .g-card.is-open .g-imgwrap { transform:scale(0.94); filter:blur(3px) brightness(0.6); opacity:0.4; }
   .g-card:hover .g-over, .g-card.is-open .g-over { opacity:1; }
-  .g-card:hover .g-cap, .g-card.is-open .g-cap { opacity:0; }
-  /* carousel dots for multi-image cards */
-  .g-dots { position:absolute; left:0; right:0; bottom:8px; z-index:5; display:flex; justify-content:center; gap:7px; }
-  .g-dot { width:8px; height:8px; padding:0; border-radius:50%; border:1px solid rgba(255,255,255,0.85); background:rgba(255,255,255,0.35); cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,0.35); transition:background .2s, transform .2s; }
-  .g-dot.on { background:#fff; transform:scale(1.25); }
-  .g-card.is-open .g-dots, .g-card:hover .g-dots { bottom:6px; }
-  .g-tape { position:absolute; top:13px; left:-34px; z-index:6; transform:rotate(-32deg); font-family:'Patrick Hand',cursive !important; font-size:0.8rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#5a3a16; padding:0.25em 2.6em; box-shadow:0 3px 7px rgba(80,50,15,0.3); background:linear-gradient(135deg, rgba(228,206,146,0.95), rgba(206,178,112,0.9)); clip-path:polygon(2% 0,98% 5%,100% 95%,0 100%); }
+  .g-card:hover .g-cap, .g-card.is-open .g-cap, .g-card:hover .g-dots, .g-card.is-open .g-dots { opacity:0; }
+  .g-tape { position:absolute; top:13px; left:-34px; z-index:6; transform:rotate(-32deg);
+    font-family:'Patrick Hand',cursive !important; font-size:0.8rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#5a3a16;
+    padding:0.25em 2.6em; box-shadow:0 3px 7px rgba(80,50,15,0.3);
+    background:linear-gradient(135deg, rgba(228,206,146,0.95), rgba(206,178,112,0.9)); clip-path:polygon(2% 0,98% 5%,100% 95%,0 100%); }
   /* lightbox with prev/next */
   .lb { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center; background:rgba(30,18,8,0.85); padding:3vw; }
   .lb.on { display:flex; }
-  .lb img { max-width:90vw; max-height:88vh; border-radius:8px; box-shadow:0 30px 60px rgba(0,0,0,0.5); background:#fff; }
+  .lb img { max-width:88vw; max-height:88vh; border-radius:8px; box-shadow:0 30px 60px rgba(0,0,0,0.5); background:#fff; }
   .lb .x { position:absolute; top:3vw; right:4vw; color:#fff; font-size:2rem; cursor:pointer; background:none; border:none; }
-  .lb .nav { position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:2.2rem; cursor:pointer; background:rgba(0,0,0,0.25); border:none; width:54px; height:54px; border-radius:50%; display:none; align-items:center; justify-content:center; }
-  .lb.multi .nav { display:flex; }
-  .lb .prev { left:3vw; } .lb .next { right:3vw; }
-  .lb .count { position:absolute; bottom:3vw; left:0; right:0; text-align:center; color:#fff; font-family:'JetBrains Mono',monospace; font-size:0.85rem; opacity:0.8; }
+  .lb .nav { position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:3rem; line-height:1; cursor:pointer; background:none; border:none; padding:0 1.5vw; opacity:0.7; }
+  .lb .nav:hover { opacity:1; } .lb .prev { left:1vw; } .lb .next { right:1vw; }
   .pf-foot { max-width:1600px; margin:1.4em auto 0; padding:2.2em 2vw 3.2em; text-align:center; border-top:1px solid rgba(120,80,40,0.22); }
   .pf-foot .tags { display:flex; flex-wrap:wrap; justify-content:center; gap:0.8em; margin:0 0 1em; }
-  .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none; border:1px solid rgba(120,80,40,0.25); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
+  .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none;
+    border:1px solid rgba(120,80,40,0.25); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
   .pf-foot .copy { font-family:'JetBrains Mono',monospace !important; font-size:0.78rem; color:var(--soft); }
   @media (max-width:560px){ .gal{ grid-template-columns:1fr; } .pf-nav .links{ gap:0.8em; font-size:0.92rem; } }
 </style>
@@ -86,14 +95,20 @@
   </div>
 </nav>
 
-<header class="pf-head"><h1 class="pf-title">App Gallery</h1></header>
+<header class="pf-head">
+  <h1 class="pf-title">App Gallery</h1>
+</header>
 
 <main class="gal" id="gal">
 
-  <!-- 1. LIULIAN (demo + code) — 2 images -->
-  <div class="g-card" data-imgs="res/figures/2026_liulian_studio.webp,res/figures/2026_liulian_mobile.webp" data-href="https://liulian-ai.github.io/liulian-web/">
+  <!-- LIULIAN (2 images, live demo) -->
+  <div class="g-card" data-href="https://liulian-ai.github.io/liulian-web/">
     <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2026_liulian_studio.webp" alt="LIULIAN Studio — data platform"></div>
+    <div class="g-imgwrap"><div class="g-track">
+      <img class="g-slide" src="res/figures/2026_liulian_studio.webp" alt="LIULIAN Studio (desktop)">
+      <img class="g-slide" src="res/figures/2026_liulian_mobile.webp" alt="LIULIAN mobile forecast">
+    </div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">LIULIAN</div>
     <div class="g-over">
       <h3>LIULIAN</h3>
@@ -103,24 +118,29 @@
     </div>
   </div>
 
-  <!-- 2. N-Banker (private / NDA) — 2 images, no public links -->
-  <div class="g-card" data-imgs="res/figures/2026_neobanker_chat.webp,res/figures/2026_neobanker_canvas.webp" data-href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/">
+  <!-- N-Banker (2 images, private/NDA — no public link) -->
+  <div class="g-card">
     <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2026_neobanker_chat.webp" alt="N-Banker assistant"></div>
+    <div class="g-imgwrap"><div class="g-track">
+      <img class="g-slide" src="res/figures/2026_neobanker_chat.webp" alt="N-Banker assistant">
+      <img class="g-slide" src="res/figures/2026_neobanker_canvas.webp" alt="N-Banker canvas dashboard">
+    </div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">N-Banker</div>
     <div class="g-over">
       <h3>N-Banker</h3>
       <p>AI strategy and LLM-agent development for a neobank research center (RAG, agents, FinTech).</p>
+      <p class="why">Private / NDA engagement — no public repo or live demo.</p>
       <div class="tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">FinTech</span></div>
-      <p class="note">Industry engagement — platform &amp; code are private (under NDA).</p>
-      <div class="acts"><a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener"><i class="fas fa-handshake"></i> Partner</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+      <div class="acts"><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
 
-  <!-- 3. graphkit-learn (code) -->
-  <div class="g-card" data-imgs="res/figures/2021_prl_gklearn_accuracy.svg" data-href="https://github.com/jajupmochi/graphkit-learn">
+  <!-- graphkit-learn (code) -->
+  <div class="g-card" data-href="https://github.com/jajupmochi/graphkit-learn">
     <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">graphkit-learn</div>
     <div class="g-over">
       <h3>graphkit-learn</h3>
@@ -130,10 +150,11 @@
     </div>
   </div>
 
-  <!-- 4. Swiss River (code) -->
-  <div class="g-card" data-imgs="res/figures/2026_icpr_swissriver_diagram.svg" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
+  <!-- Swiss River (code) -->
+  <div class="g-card" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
     <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">Swiss River forecasting</div>
     <div class="g-over">
       <h3>Swiss River Forecasting</h3>
@@ -143,21 +164,26 @@
     </div>
   </div>
 
-  <!-- 5. Linlin's homepage (live + code) — 2 images -->
-  <div class="g-card" data-imgs="res/figures/2026_personal_site.png,blog-posts/how-i-built-this-blog/blog-render.webp" data-href="https://jajupmochi.github.io/index_en.html">
-    <div class="g-img"><img src="res/figures/2026_personal_site.png" alt="Linlin's homepage"></div>
+  <!-- Linlin's homepage (2 images: site + blog) -->
+  <div class="g-card" data-href="https://jajupmochi.github.io/index_en.html">
+    <div class="g-imgwrap"><div class="g-track">
+      <img class="g-slide" src="res/figures/2026_personal_site.png" alt="Linlin's homepage">
+      <img class="g-slide" src="res/figures/2026_blog.webp" alt="Linlin's blog">
+    </div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">Linlin's homepage</div>
     <div class="g-over">
       <h3>Linlin's homepage</h3>
       <p>Static 4-language site + client-rendered blog engine on GitHub Pages, built human × AI.</p>
       <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">i18n</span><span class="tag">Static</span></div>
-      <div class="acts"><a href="https://jajupmochi.github.io/index_en.html" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Open site</a><a href="blog.html"><i class="fas fa-feather"></i> Blog</a><a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+      <div class="acts"><a href="https://jajupmochi.github.io/index_en.html" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Open site</a><a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
 
-  <!-- 6. Local Confidential Translator (code) -->
-  <div class="g-card" data-imgs="res/figures/2026_confidential_translator_presentation.gif" data-href="https://github.com/jajupmochi/confidential-translator">
-    <div class="g-img"><img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div>
+  <!-- Local Confidential Translator (code) -->
+  <div class="g-card" data-href="https://github.com/jajupmochi/confidential-translator">
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">Local Confidential Translator</div>
     <div class="g-over">
       <h3>Local Confidential Translator</h3>
@@ -167,9 +193,10 @@
     </div>
   </div>
 
-  <!-- 7. OCTOPUSSY — RedoxPrediction (code) -->
-  <div class="g-card" data-imgs="res/figures/2023_jcc_redox_framework.svg" data-href="https://github.com/jajupmochi/RedoxPrediction">
-    <div class="g-img"><img src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div>
+  <!-- OCTOPUSSY (code) -->
+  <div class="g-card" data-href="https://github.com/jajupmochi/RedoxPrediction">
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">OCTOPUSSY — RedoxPrediction</div>
     <div class="g-over">
       <h3>OCTOPUSSY — RedoxPrediction</h3>
@@ -179,28 +206,30 @@
     </div>
   </div>
 
-  <!-- 8. PLANALYSER (industry, code private) -->
-  <div class="g-card" data-imgs="res/figures/2024_planalyser_company_page.png" data-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900">
-    <div class="g-img"><img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div>
+  <!-- PLANALYSER (private/NDA — no public link) -->
+  <div class="g-card">
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">PLANALYSER</div>
     <div class="g-over">
       <h3>PLANALYSER</h3>
       <p>Innosuisse AI auditing HVAC concepts from engineering drawings (symbol / topology extraction).</p>
+      <p class="why">Industrial NDA project — code and data are private.</p>
       <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span></div>
-      <p class="note">Industry project (Innosuisse) — code &amp; data are private.</p>
       <div class="acts"><a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
 
-  <!-- 9. GraphInk (library coming soon) -->
-  <div class="g-card" data-imgs="res/figures/2025_graphink_framework.svg" data-href="https://data.snf.ch/grants/grant/217594">
-    <div class="g-img"><img src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div>
+  <!-- GraphInk (no code yet) -->
+  <div class="g-card">
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div></div>
+    <div class="g-dots"></div>
     <div class="g-cap">GraphInk</div>
     <div class="g-over">
       <h3>GraphInk</h3>
       <p>SNSF image + graph networks for handwriting recognition on historical documents.</p>
+      <p class="why">Research in progress — the library is not released yet.</p>
       <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span><span class="tag">Docs</span></div>
-      <p class="note">Library not released yet — coming soon.</p>
       <div class="acts"><a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
@@ -209,10 +238,9 @@
 
 <div class="lb" id="lb">
   <button class="x" id="lbx" aria-label="Close">&times;</button>
-  <button class="nav prev" id="lbprev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+  <button class="nav prev" id="lbprev" aria-label="Previous">&#8249;</button>
   <img id="lbimg" src="" alt="">
-  <button class="nav next" id="lbnext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-  <div class="count" id="lbcount"></div>
+  <button class="nav next" id="lbnext" aria-label="Next">&#8250;</button>
 </div>
 
 <footer class="pf-foot">
@@ -227,44 +255,47 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcount = document.getElementById('lbcount');
-  let lbCard = null, lbIdx = 0;
-  function lbShow(){ if(!lbCard) return; const im = lbCard._imgs; lbimg.src = im[lbIdx]; lbcount.textContent = im.length>1 ? (lbIdx+1)+' / '+im.length : ''; }
-  function openLb(card){ lbCard = card; lbIdx = card._idx || 0; lb.classList.toggle('multi', card._imgs.length>1); lbShow(); lb.classList.add('on'); }
-  function closeLb(){ lb.classList.remove('on'); lbimg.src=''; lbCard=null; }
-  function lbNav(d){ if(!lbCard) return; const n=lbCard._imgs.length; lbIdx=(lbIdx+d+n)%n; lbShow(); lbCard._go(lbIdx); }
+  const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
+  let lbImgs = [], lbIdx = 0;
+  function lbShow(){ lbimg.src = lbImgs[lbIdx]; const multi = lbImgs.length > 1; document.getElementById('lbprev').style.display = multi?'':'none'; document.getElementById('lbnext').style.display = multi?'':'none'; }
+  function openLb(imgs, i){ lbImgs = imgs; lbIdx = i; lbShow(); lb.classList.add('on'); }
+  function closeLb(){ lb.classList.remove('on'); lbimg.src=''; }
+  function lbGo(n){ if(!lbImgs.length) return; lbIdx = (n + lbImgs.length) % lbImgs.length; lbShow(); }
   document.getElementById('lbx').addEventListener('click', closeLb);
-  document.getElementById('lbprev').addEventListener('click', e=>{ e.stopPropagation(); lbNav(-1); });
-  document.getElementById('lbnext').addEventListener('click', e=>{ e.stopPropagation(); lbNav(1); });
-  lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
-  document.addEventListener('keydown', e=>{ if(!lb.classList.contains('on')) return; if(e.key==='Escape') closeLb(); else if(e.key==='ArrowLeft') lbNav(-1); else if(e.key==='ArrowRight') lbNav(1); });
+  document.getElementById('lbprev').addEventListener('click', e => { e.stopPropagation(); lbGo(lbIdx-1); });
+  document.getElementById('lbnext').addEventListener('click', e => { e.stopPropagation(); lbGo(lbIdx+1); });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowLeft') lbGo(lbIdx-1);
+    else if (e.key === 'ArrowRight') lbGo(lbIdx+1);
+  });
 
   document.querySelectorAll('.g-card').forEach(card => {
-    const imgs = (card.getAttribute('data-imgs')||'').split(',').map(s=>s.trim()).filter(Boolean);
-    const imgEl = card.querySelector('.g-img img');
-    card._imgs = imgs; card._idx = 0;
-    function go(k){ card._idx = (k%imgs.length+imgs.length)%imgs.length; imgEl.style.opacity='0';
-      setTimeout(()=>{ imgEl.src = imgs[card._idx]; imgEl.style.opacity=''; }, 280);
-      card.querySelectorAll('.g-dot').forEach((d,j)=>d.classList.toggle('on', j===card._idx)); }
-    card._go = go;
-    if (imgs.length > 1) {
-      imgs.forEach(s=>{ const p=new Image(); p.src=s; });           // preload
-      const dots = document.createElement('div'); dots.className='g-dots';
-      imgs.forEach((_,k)=>{ const d=document.createElement('button'); d.type='button'; d.className='g-dot'+(k===0?' on':''); d.setAttribute('aria-label','Image '+(k+1));
-        d.addEventListener('click', e=>{ e.stopPropagation(); go(k); }); dots.appendChild(d); });
-      card.appendChild(dots);
-      let sx=null;
-      card.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; }, {passive:true});
-      card.addEventListener('touchend', e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) go(card._idx + (dx<0?1:-1)); sx=null; });
-      if (!reduce) setInterval(()=>{ if(!lb.classList.contains('on')) go(card._idx+1); }, 4500);  // gentle auto-advance
+    const track = card.querySelector('.g-track');
+    const slides = [...card.querySelectorAll('.g-slide')];
+    const dotsWrap = card.querySelector('.g-dots');
+    let idx = 0;
+    function go(n){ idx = (n + slides.length) % slides.length; track.style.transform = `translateX(${-idx*100}%)`;
+      if (dotsWrap) [...dotsWrap.children].forEach((d,i) => d.classList.toggle('on', i===idx)); }
+    if (slides.length > 1) {
+      slides.forEach((_, i) => { const d = document.createElement('i'); d.addEventListener('click', e => { e.stopPropagation(); go(i); }); dotsWrap.appendChild(d); });
+      go(0);
     }
+    // swipe (pointer)
+    let sx = null;
+    card.addEventListener('pointerdown', e => { sx = e.clientX; });
+    card.addEventListener('pointerup', e => {
+      if (sx == null) return; const dx = e.clientX - sx; sx = null;
+      if (slides.length > 1 && Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); }
+    });
     card.addEventListener('click', e => {
-      if (e.target.closest('a')) return;
-      if (e.target.closest('.zoom')) { openLb(card); return; }
-      if (e.target.closest('.g-dot')) return;
+      if (e.target.closest('a') || e.target.closest('.g-dots')) return;
+      if (e.target.closest('.zoom')) { openLb(slides.map(s => s.src), idx); return; }
       if (matchMedia('(hover: none)').matches && !card.classList.contains('is-open')) { card.classList.add('is-open'); return; }
-      const href = card.getAttribute('data-href'); if (href) window.open(href, '_blank', 'noopener');
+      const href = card.getAttribute('data-href');
+      if (href) window.open(href, '_blank', 'noopener');
     });
   });
 </script>
