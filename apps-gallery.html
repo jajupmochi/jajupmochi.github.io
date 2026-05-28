@@ -14,92 +14,119 @@
 <link rel="stylesheet" href="css/parchment-overrides.css">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
 <style>
-  :root{ --maroon:#9a2b1e; --ink:#3a2c20; --soft:#6b5436; }
+  :root{ --maroon:#9a2b1e; --ink:#3a2c20; --soft:#6b5436; --rule:rgba(120,80,40,0.28); }
   body, p, span, h3 { font-family:'Spectral','Noto Serif SC',Georgia,serif !important; }
   .pf-nav { position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
-    padding:0.7em 2vw; background:rgba(247,240,224,0.86); backdrop-filter:saturate(1.1) blur(2px); border-bottom:1px solid rgba(120,80,40,0.22); }
+    padding:0.7em 2vw; background:rgba(247,240,224,0.86); backdrop-filter:saturate(1.1) blur(2px); border-bottom:1px solid var(--rule); }
   .pf-brand { display:flex; align-items:center; gap:0.5em; font-family:'Patrick Hand',cursive !important; font-size:1.35rem; color:var(--ink); text-decoration:none; }
   .pf-brand .mk { width:30px; height:30px; border-radius:8px; background:linear-gradient(150deg,#1e3a8a,#2b4db8); color:#fff; display:grid; place-items:center; font-family:sans-serif; font-weight:900; font-size:0.85rem; }
-  .pf-nav .right { display:flex; align-items:center; gap:1.3em; }
   .pf-nav .links { display:flex; gap:1.3em; font-size:1.05rem; }
   .pf-nav .links a { color:var(--soft); text-decoration:none; } .pf-nav .links a:hover { color:var(--maroon); }
-  /* top-right mode toggle: Cards (this page) <-> Detailed */
-  .mode { display:inline-flex; border:1px solid rgba(120,80,40,0.3); border-radius:999px; overflow:hidden; }
+  .pf-head { max-width:1600px; margin:0 auto; padding:2.0em 2vw 0.2em; }
+  .pf-title { font-family:'Patrick Hand',cursive !important; font-size:clamp(2.2rem,5vw,3.4rem); color:var(--ink); margin:0; }
+  /* persistent controls row: filter tags · search · sort · Cards/Detailed toggle */
+  .pf-controls { max-width:1600px; margin:0 auto; padding:0.6em 2vw 0.2em; display:flex; flex-wrap:wrap; align-items:center; gap:0.6em; }
+  .pf-controls .filter-tags { display:flex; flex-wrap:wrap; gap:0.4em; }
+  .pf-controls .filter-tag { font-family:'JetBrains Mono',monospace !important; font-size:0.76rem; cursor:pointer; color:var(--soft);
+    background:rgba(255,250,235,0.6); border:1px solid var(--rule); border-radius:999px; padding:0.3em 0.8em; transition:all .15s; }
+  .pf-controls .filter-tag:hover { border-color:var(--maroon); color:var(--maroon); }
+  .pf-controls .filter-tag.active { background:var(--maroon); color:#fdf3e3; border-color:var(--maroon); }
+  .pf-search { display:flex; align-items:center; gap:0.4em; background:rgba(255,250,235,0.6); border:1px solid var(--rule); border-radius:999px; padding:0.28em 0.8em; }
+  .pf-search input { border:none; background:transparent; outline:none; font-family:'Spectral',serif !important; font-size:0.92rem; color:var(--ink); width:9rem; }
+  .pf-search i { color:var(--maroon); font-size:0.82em; }
+  .pf-sort { font-family:'JetBrains Mono',monospace !important; font-size:0.76rem; color:var(--soft); background:rgba(255,250,235,0.6); border:1px solid var(--rule); border-radius:999px; padding:0.3em 0.7em; cursor:pointer; }
+  .mode { margin-left:auto; display:inline-flex; border:1px solid var(--rule); border-radius:999px; overflow:hidden; }
   .mode a { font-family:'JetBrains Mono',monospace !important; font-size:0.74rem; padding:0.34em 0.8em; color:var(--soft); text-decoration:none; display:inline-flex; align-items:center; gap:0.35em; }
   .mode a.on { background:var(--maroon); color:#fdf3e3; }
-  .pf-head { max-width:1600px; margin:0 auto; padding:2.2em 2vw 0.2em; }
-  .pf-title { font-family:'Patrick Hand',cursive !important; font-size:clamp(2.2rem,5vw,3.4rem); color:var(--ink); margin:0; }
-  /* image-first tiles, borderless, blended into the parchment */
-  .gal { max-width:1600px; margin:0 auto; padding:1.2em 2vw 1em;
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.5em; }
-  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer;
-    background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); }
+  /* image-first tiles, borderless */
+  .gal { max-width:1600px; margin:0 auto; padding:1em 2vw 1em; display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.5em; }
+  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer; background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); }
+  .g-card.is-hidden { display:none; }
   .g-card:hover { transform:translateY(-3px); }
   .g-img { position:absolute; inset:0; }
-  .g-img img { width:100%; height:100%; object-fit:cover; display:block;
-    transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .5s; }
-  .g-cap { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:1.5em 1em 0.9em;
+  .g-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .35s; }
+  .g-cap { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:1.5em 1em 1.4em;
     font-family:'Patrick Hand',cursive !important; font-size:1.45rem; color:#fff;
     background:linear-gradient(180deg, transparent, rgba(40,22,8,0.8)); transition:opacity .35s; }
   .g-over { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:flex-end;
-    padding:1.3em 1.3em 1.2em; gap:0.5em; opacity:0; transition:opacity .4s;
+    padding:1.3em 1.3em 1.6em; gap:0.5em; opacity:0; transition:opacity .4s;
     background:linear-gradient(180deg, rgba(247,240,224,0.32), rgba(247,240,224,0.94)); }
   .g-over h3 { font-family:'Patrick Hand',cursive !important; font-size:1.5rem; margin:0; color:var(--ink); line-height:1.1; }
   .g-over p { margin:0; font-size:0.95rem; color:#4c3a24; }
+  .g-over .note { font-size:0.82rem; color:#8a7a5a; font-style:italic; }
   .g-over .tags { display:flex; flex-wrap:wrap; gap:0.35em; }
-  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon);
-    background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
+  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon); background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
   .g-over .acts { display:flex; flex-wrap:wrap; align-items:center; gap:0.9em; margin-top:0.2em; font-family:'Patrick Hand',cursive !important; font-size:1.05rem; }
-  .g-over .acts a, .g-over .acts button { color:var(--maroon); text-decoration:none; background:none; border:none; cursor:pointer; font:inherit; display:inline-flex; align-items:center; gap:0.3em; padding:0; }
-  .g-over .acts a:hover, .g-over .acts button:hover { text-decoration:underline; }
+  .g-over .acts a, .g-over .acts button.zoom { color:var(--maroon); text-decoration:none; background:none; border:none; cursor:pointer; font:inherit; display:inline-flex; align-items:center; gap:0.3em; padding:0; }
+  .g-over .acts a:hover, .g-over .acts button.zoom:hover { text-decoration:underline; }
   .g-over .acts .zoom { margin-left:auto; }
   .g-card:hover .g-img img, .g-card.is-open .g-img img { transform:scale(0.94); filter:blur(3px) brightness(0.6); opacity:0.4; }
   .g-card:hover .g-over, .g-card.is-open .g-over { opacity:1; }
   .g-card:hover .g-cap, .g-card.is-open .g-cap { opacity:0; }
-  .g-tape { position:absolute; top:13px; left:-34px; z-index:4; transform:rotate(-32deg);
-    font-family:'Patrick Hand',cursive !important; font-size:0.8rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#5a3a16;
-    padding:0.25em 2.6em; box-shadow:0 3px 7px rgba(80,50,15,0.3);
-    background:linear-gradient(135deg, rgba(228,206,146,0.95), rgba(206,178,112,0.9)); clip-path:polygon(2% 0,98% 5%,100% 95%,0 100%); }
-  .lb { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center; background:rgba(30,18,8,0.82); padding:3vw; }
+  .g-tape { position:absolute; top:13px; left:-34px; z-index:4; transform:rotate(-32deg); font-family:'Patrick Hand',cursive !important; font-size:0.8rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#5a3a16; padding:0.25em 2.6em; box-shadow:0 3px 7px rgba(80,50,15,0.3); background:linear-gradient(135deg, rgba(228,206,146,0.95), rgba(206,178,112,0.9)); clip-path:polygon(2% 0,98% 5%,100% 95%,0 100%); }
+  /* carousel dots + arrows for multi-image cards */
+  .g-dots { position:absolute; left:0; right:0; bottom:7px; z-index:6; display:flex; justify-content:center; gap:6px; }
+  .g-dot { width:8px; height:8px; border-radius:50%; border:none; padding:0; cursor:pointer; background:rgba(255,255,255,0.55); box-shadow:0 1px 2px rgba(0,0,0,0.4); }
+  .g-dot.on { background:#fff; }
+  .g-arrow { position:absolute; top:42%; transform:translateY(-50%); z-index:6; width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; background:rgba(40,22,8,0.45); color:#fff; font-size:1.4rem; line-height:1; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .25s; }
+  .g-card:hover .g-arrow { opacity:1; } .g-arrow.prev { left:8px; } .g-arrow.next { right:8px; }
+  /* lightbox with prev/next */
+  .lb { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center; background:rgba(30,18,8,0.85); padding:3vw; }
   .lb.on { display:flex; }
-  .lb img { max-width:92vw; max-height:88vh; border-radius:8px; box-shadow:0 30px 60px rgba(0,0,0,0.5); background:#fff; }
+  .lb img { max-width:90vw; max-height:88vh; border-radius:8px; box-shadow:0 30px 60px rgba(0,0,0,0.5); background:#fff; }
   .lb .x { position:absolute; top:3vw; right:4vw; color:#fff; font-size:2rem; cursor:pointer; background:none; border:none; }
-  .pf-foot { max-width:1600px; margin:1.4em auto 0; padding:2.2em 2vw 3.2em; text-align:center; border-top:1px solid rgba(120,80,40,0.22); }
+  .lb .nav { position:absolute; top:50%; transform:translateY(-50%); width:54px; height:54px; border-radius:50%; border:none; background:rgba(255,255,255,0.14); color:#fff; font-size:2rem; cursor:pointer; }
+  .lb .nav.prev { left:3vw; } .lb .nav.next { right:3vw; } .lb .nav[hidden] { display:none; }
+  .pf-foot { max-width:1600px; margin:1.4em auto 0; padding:2.2em 2vw 3.2em; text-align:center; border-top:1px solid var(--rule); }
   .pf-foot .tags { display:flex; flex-wrap:wrap; justify-content:center; gap:0.8em; margin:0 0 1em; }
-  .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none;
-    border:1px solid rgba(120,80,40,0.25); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
+  .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none; border:1px solid var(--rule); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
   .pf-foot .copy { font-family:'JetBrains Mono',monospace !important; font-size:0.78rem; color:var(--soft); }
-  @media (max-width:560px){ .gal{ grid-template-columns:1fr; } .pf-nav .links{ gap:0.8em; font-size:0.92rem; } }
+  @media (max-width:560px){ .gal{ grid-template-columns:1fr; } .pf-nav .links{ gap:0.8em; font-size:0.92rem; } .mode{ margin-left:0; } }
 </style>
 </head>
 <body data-theme="academic">
 
 <nav class="pf-nav">
   <a class="pf-brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
-  <div class="right">
-    <div class="links">
-      <a href="index_en.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <div class="mode" role="group" aria-label="View mode">
-      <a href="apps-gallery.html" class="on"><i class="fas fa-table-cells-large"></i> Cards</a>
-      <a href="portfolio.html"><i class="fas fa-list"></i> Detailed</a>
-    </div>
+  <div class="links">
+    <a href="index_en.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
 
-<header class="pf-head">
-  <h1 class="pf-title">App Gallery</h1>
-</header>
+<header class="pf-head"><h1 class="pf-title">App Gallery</h1></header>
+
+<div class="pf-controls">
+  <div class="filter-tags" id="pfFilter">
+    <button class="filter-tag active" data-filter="all">All</button>
+    <button class="filter-tag" data-filter="software">Software</button>
+    <button class="filter-tag" data-filter="llm">LLM</button>
+    <button class="filter-tag" data-filter="agents">Agents</button>
+    <button class="filter-tag" data-filter="graph">Graph</button>
+    <button class="filter-tag" data-filter="vision">Vision</button>
+    <button class="filter-tag" data-filter="spatio-temporal">Spatio-temporal</button>
+    <button class="filter-tag" data-filter="industry">Industry</button>
+    <button class="filter-tag" data-filter="fun">Fun</button>
+  </div>
+  <div class="pf-search"><i class="fas fa-search"></i><input type="text" id="pfSearch" placeholder="Search apps..."></div>
+  <select class="pf-sort" id="pfSort" aria-label="Sort apps">
+    <option value="featured" selected>Featured</option>
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+  </select>
+  <div class="mode" role="group" aria-label="View mode">
+    <a href="apps-gallery.html" class="on"><i class="fas fa-table-cells-large"></i> Cards</a>
+    <a href="portfolio.html"><i class="fas fa-list"></i> Detailed</a>
+  </div>
+</div>
 
 <main class="gal" id="gal">
 
-  <!-- ===== Tier 1: has a live page / demo ===== -->
-
-  <div class="g-card" data-img="res/figures/2026_liulian_studio.webp" data-href="https://liulian-ai.github.io/liulian-web/">
+  <!-- 1 LIULIAN -->
+  <div class="g-card" data-tags="llm,agents,graph,software,spatio-temporal" data-year="2026" data-priority="100" data-frames="res/figures/2026_liulian_studio.webp,res/figures/2026_liulian_mobile.webp" data-href="https://liulian-ai.github.io/liulian-web/">
     <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2026_liulian_studio.webp" alt="LIULIAN Studio — data platform UI"></div>
+    <div class="g-img"><img src="res/figures/2026_liulian_studio.webp" alt="LIULIAN"></div>
     <div class="g-cap">LIULIAN</div>
     <div class="g-over">
       <h3>LIULIAN</h3>
@@ -109,20 +136,22 @@
     </div>
   </div>
 
-  <div class="g-card" data-img="res/figures/2026_personal_site.png" data-href="https://jajupmochi.github.io/index_en.html">
-    <div class="g-img"><img src="res/figures/2026_personal_site.png" alt="This website + blog"></div>
-    <div class="g-cap">This Website + Blog</div>
+  <!-- 2 N-Banker -->
+  <div class="g-card" data-tags="llm,agents,industry" data-year="2024" data-priority="99" data-frames="res/figures/2026_neobanker_chat.webp,res/figures/2026_neobanker_canvas.webp" data-href="">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2026_neobanker_chat.webp" alt="N-Banker"></div>
+    <div class="g-cap">N-Banker</div>
     <div class="g-over">
-      <h3>This Website + Blog</h3>
-      <p>Static 4-language site + client-rendered blog engine on GitHub Pages, built human × AI.</p>
-      <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">i18n</span><span class="tag">Static</span></div>
-      <div class="acts"><a href="https://jajupmochi.github.io/index_en.html" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Open site</a><a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+      <h3>N-Banker</h3>
+      <p>AI strategy and LLM-agent development for a neobank research center (RAG, agents, FinTech).</p>
+      <p class="note">Private engagement (NDA): no public demo or code link.</p>
+      <div class="tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">FinTech</span></div>
+      <div class="acts"><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
 
-  <!-- ===== Tier 2: has code ===== -->
-
-  <div class="g-card" data-img="res/figures/2021_prl_gklearn_accuracy.svg" data-href="https://github.com/jajupmochi/graphkit-learn">
+  <!-- 3 graphkit-learn -->
+  <div class="g-card" data-tags="software,graph" data-year="2020" data-priority="98" data-href="https://github.com/jajupmochi/graphkit-learn">
     <span class="g-tape">Featured</span>
     <div class="g-img"><img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div>
     <div class="g-cap">graphkit-learn</div>
@@ -134,7 +163,8 @@
     </div>
   </div>
 
-  <div class="g-card" data-img="res/figures/2026_icpr_swissriver_diagram.svg" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
+  <!-- 4 Swiss River -->
+  <div class="g-card" data-tags="graph,spatio-temporal,software" data-year="2025" data-priority="97" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
     <span class="g-tape">Featured</span>
     <div class="g-img"><img src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div>
     <div class="g-cap">Swiss River forecasting</div>
@@ -146,7 +176,21 @@
     </div>
   </div>
 
-  <div class="g-card" data-img="res/figures/2026_confidential_translator_presentation.gif" data-href="https://github.com/jajupmochi/confidential-translator">
+  <!-- 5 Linlin's Homepage -->
+  <div class="g-card" data-tags="software,fun" data-year="2026" data-priority="96" data-frames="res/figures/2026_personal_site.webp,res/figures/2026_site_blog.webp" data-href="https://jajupmochi.github.io/index_en.html">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2026_personal_site.webp" alt="Linlin's homepage and blog"></div>
+    <div class="g-cap">Linlin's Homepage</div>
+    <div class="g-over">
+      <h3>Linlin's Homepage</h3>
+      <p>Static 4-language site + client-rendered blog engine on GitHub Pages, built human × AI.</p>
+      <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">i18n</span><span class="tag">Static</span></div>
+      <div class="acts"><a href="https://jajupmochi.github.io/index_en.html" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Open site</a><a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <!-- 6 Confidential Translator -->
+  <div class="g-card" data-tags="llm,software,fun" data-year="2026" data-priority="95" data-href="https://github.com/jajupmochi/confidential-translator">
     <div class="g-img"><img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div>
     <div class="g-cap">Local Confidential Translator</div>
     <div class="g-over">
@@ -157,7 +201,8 @@
     </div>
   </div>
 
-  <div class="g-card" data-img="res/figures/2023_jcc_redox_framework.svg" data-href="https://github.com/jajupmochi/RedoxPrediction">
+  <!-- 7 OCTOPUSSY -->
+  <div class="g-card" data-tags="graph,software" data-year="2021" data-priority="94" data-href="https://github.com/jajupmochi/RedoxPrediction">
     <div class="g-img"><img src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div>
     <div class="g-cap">OCTOPUSSY — RedoxPrediction</div>
     <div class="g-over">
@@ -168,37 +213,27 @@
     </div>
   </div>
 
-  <!-- ===== Tier 3: no public page or code yet ===== -->
-
-  <div class="g-card" data-img="res/figures/2026_neobanker_chat.webp" data-href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/">
-    <span class="g-tape">Featured</span>
-    <div class="g-img"><img src="res/figures/2026_neobanker_chat.webp" alt="N-Banker" data-rotate="res/figures/2026_neobanker_chat.webp,res/figures/2026_neobanker_canvas.webp"></div>
-    <div class="g-cap">N-Banker</div>
-    <div class="g-over">
-      <h3>N-Banker</h3>
-      <p>AI strategy and LLM-agent development for a neobank research center (RAG, agents, FinTech).</p>
-      <div class="tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">FinTech</span></div>
-      <div class="acts"><a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener"><i class="fas fa-handshake"></i> Partner</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
-    </div>
-  </div>
-
-  <div class="g-card" data-img="res/figures/2024_planalyser_company_page.png" data-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900">
+  <!-- 8 PLANALYSER -->
+  <div class="g-card" data-tags="vision,graph,industry" data-year="2024" data-priority="93" data-href="">
     <div class="g-img"><img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div>
     <div class="g-cap">PLANALYSER</div>
     <div class="g-over">
       <h3>PLANALYSER</h3>
       <p>Innosuisse AI auditing HVAC concepts from engineering drawings (symbol / topology extraction).</p>
+      <p class="note">Industrial project (NDA): no public demo or code link.</p>
       <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span></div>
       <div class="acts"><a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
   </div>
 
-  <div class="g-card" data-img="res/figures/2025_graphink_framework.svg" data-href="https://data.snf.ch/grants/grant/217594">
+  <!-- 9 GraphInk -->
+  <div class="g-card" data-tags="vision,graph" data-year="2024" data-priority="92" data-href="">
     <div class="g-img"><img src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div>
     <div class="g-cap">GraphInk</div>
     <div class="g-over">
       <h3>GraphInk</h3>
-      <p>SNSF image + graph networks for handwriting recognition on historical documents. Library coming soon.</p>
+      <p>SNSF image + graph networks for handwriting recognition on historical documents.</p>
+      <p class="note">Library coming soon: code not yet public.</p>
       <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span><span class="tag">Docs</span></div>
       <div class="acts"><a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
     </div>
@@ -206,7 +241,12 @@
 
 </main>
 
-<div class="lb" id="lb"><button class="x" id="lbx" aria-label="Close">&times;</button><img id="lbimg" src="" alt=""></div>
+<div class="lb" id="lb">
+  <button class="x" id="lbx" aria-label="Close">&times;</button>
+  <button class="nav prev" id="lbprev" aria-label="Previous">&lsaquo;</button>
+  <img id="lbimg" src="" alt="">
+  <button class="nav next" id="lbnext" aria-label="Next">&rsaquo;</button>
+</div>
 
 <footer class="pf-foot">
   <div class="tags">
@@ -220,37 +260,81 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  // rotate images on cards that list several (e.g. N-Banker: chat <-> canvas)
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('img[data-rotate]').forEach(img => {
-      const frames = img.getAttribute('data-rotate').split(',').map(s => s.trim()).filter(Boolean);
-      if (frames.length < 2) return;
-      frames.forEach(src => { const p = new Image(); p.src = src; });   // preload
-      let i = frames.indexOf(img.getAttribute('src')); if (i < 0) i = 0;
-      img.style.transition = 'opacity .4s';
-      setInterval(() => {
-        i = (i + 1) % frames.length;
-        img.style.opacity = '0';
-        setTimeout(() => { img.src = frames[i]; img.style.opacity = ''; }, 380);
-      }, 4000);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const grid = document.getElementById('gal');
+  const cards = [...grid.querySelectorAll('.g-card')];
+
+  // ---- per-card carousel (multi-image): dots + arrows + swipe + gentle auto ----
+  cards.forEach(card => {
+    const frames = (card.dataset.frames || '').split(',').map(s => s.trim()).filter(Boolean);
+    const img = card.querySelector('.g-img img');
+    card._frames = frames.length ? frames : [img.getAttribute('src')];
+    card._idx = 0;
+    if (frames.length < 2) return;
+    frames.forEach(s => { const p = new Image(); p.src = s; });
+    const dots = document.createElement('div'); dots.className = 'g-dots';
+    frames.forEach((_, k) => { const d = document.createElement('button'); d.type = 'button'; d.className = 'g-dot' + (k ? '' : ' on');
+      d.addEventListener('click', e => { e.stopPropagation(); go(k); }); dots.appendChild(d); });
+    card.appendChild(dots);
+    const arrow = (cls, html, delta) => { const a = document.createElement('button'); a.type = 'button'; a.className = 'g-arrow ' + cls; a.innerHTML = html;
+      a.addEventListener('click', e => { e.stopPropagation(); go(card._idx + delta); }); card.appendChild(a); };
+    arrow('prev', '&lsaquo;', -1); arrow('next', '&rsaquo;', 1);
+    function go(n) { card._idx = (n + frames.length) % frames.length; img.src = frames[card._idx];
+      dots.querySelectorAll('.g-dot').forEach((d, k) => d.classList.toggle('on', k === card._idx)); }
+    card._go = go;
+    let x0 = null;
+    card.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+    card.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) go(card._idx + (dx < 0 ? 1 : -1)); x0 = null; });
+    if (!reduce) { let t = setInterval(() => go(card._idx + 1), 4500);
+      card.addEventListener('mouseenter', () => clearInterval(t));
+      card.addEventListener('mouseleave', () => { clearInterval(t); t = setInterval(() => go(card._idx + 1), 4500); }); }
+  });
+
+  // ---- lightbox with prev/next (mouse + keyboard), cycling the active card's frames ----
+  const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
+  const lbprev = document.getElementById('lbprev'), lbnext = document.getElementById('lbnext');
+  let lbFrames = [], lbIdx = 0;
+  function lbShow() { lbimg.src = lbFrames[lbIdx]; const multi = lbFrames.length > 1; lbprev.hidden = !multi; lbnext.hidden = !multi; }
+  function openLb(card) { lbFrames = card._frames; lbIdx = card._idx || 0; lb.classList.add('on'); lbShow(); }
+  function closeLb() { lb.classList.remove('on'); lbimg.src = ''; }
+  function lbStep(d) { if (lbFrames.length < 2) return; lbIdx = (lbIdx + d + lbFrames.length) % lbFrames.length; lbShow(); }
+  document.getElementById('lbx').addEventListener('click', closeLb);
+  lbprev.addEventListener('click', e => { e.stopPropagation(); lbStep(-1); });
+  lbnext.addEventListener('click', e => { e.stopPropagation(); lbStep(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') closeLb(); else if (e.key === 'ArrowLeft') lbStep(-1); else if (e.key === 'ArrowRight') lbStep(1); });
+
+  cards.forEach(card => card.addEventListener('click', e => {
+    if (e.target.closest('a')) return;
+    if (e.target.closest('.zoom')) { openLb(card); return; }
+    if (matchMedia('(hover: none)').matches && !card.classList.contains('is-open')) { card.classList.add('is-open'); return; }
+    const href = card.getAttribute('data-href');
+    if (href) window.open(href, '_blank', 'noopener');
+  }));
+
+  // ---- filter · search · sort (persistent controls row) ----
+  const tagBtns = document.querySelectorAll('#pfFilter .filter-tag');
+  const search = document.getElementById('pfSearch'), sortSel = document.getElementById('pfSort');
+  let activeTag = 'all';
+  function apply() {
+    const s = sortSel.value;
+    cards.slice().sort((a, b) => {
+      if (s === 'newest') return (+b.dataset.year) - (+a.dataset.year);
+      if (s === 'oldest') return (+a.dataset.year) - (+b.dataset.year);
+      return (+(b.dataset.priority || 0)) - (+(a.dataset.priority || 0));
+    }).forEach(c => grid.appendChild(c));
+    const q = (search.value || '').trim().toLowerCase();
+    cards.forEach(c => {
+      const tags = (c.getAttribute('data-tags') || '').split(',');
+      const hit = (activeTag === 'all' || tags.includes(activeTag)) && (!q || c.textContent.toLowerCase().includes(q));
+      c.classList.toggle('is-hidden', !hit);
     });
   }
-  const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
-  function openLb(src, alt){ lbimg.src = src; lbimg.alt = alt || ''; lb.classList.add('on'); }
-  function closeLb(){ lb.classList.remove('on'); lbimg.src = ''; }
-  document.getElementById('lbx').addEventListener('click', closeLb);
-  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-  document.querySelectorAll('.g-card').forEach(card => {
-    const img = card.querySelector('.g-img img');
-    card.addEventListener('click', e => {
-      if (e.target.closest('a')) return;
-      if (e.target.closest('.zoom')) { openLb(img.src, img.alt); return; }
-      if (matchMedia('(hover: none)').matches && !card.classList.contains('is-open')) { card.classList.add('is-open'); return; }
-      const href = card.getAttribute('data-href');
-      if (href) window.open(href, '_blank', 'noopener');
-    });
-  });
+  tagBtns.forEach(b => b.addEventListener('click', () => { tagBtns.forEach(x => x.classList.toggle('active', x === b)); activeTag = b.dataset.filter; apply(); }));
+  search.addEventListener('input', apply);
+  sortSel.addEventListener('change', apply);
+  apply();
 </script>
 </body>
 </html>
