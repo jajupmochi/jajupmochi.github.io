@@ -36,6 +36,7 @@
       'blog.fallback': 'Not translated to this language yet — showing {LANG}.',
       'blog.empty': 'No posts yet. Check back soon.',
       'blog.readmore': 'Read →',
+      'blog.copy': 'Copy', 'blog.copied': 'Copied!', 'blog.contents': 'Contents',
       'st.human': 'human-written',
       'st.ai': 'AI-translated',
       'st.ai_edited': 'AI draft · edited, unreviewed',
@@ -55,6 +56,7 @@
       'blog.fallback': '本文尚未翻译为该语言 —— 显示{LANG}版本。',
       'blog.empty': '还没有文章，敬请期待。',
       'blog.readmore': '阅读 →',
+      'blog.copy': '复制', 'blog.copied': '已复制!', 'blog.contents': '目录',
       'st.human': '人类撰写',
       'st.ai': 'AI 翻译',
       'st.ai_edited': 'AI 起草 · 人工编辑 · 未审阅',
@@ -74,6 +76,7 @@
       'blog.fallback': 'Pas encore traduit dans cette langue — affichage en {LANG}.',
       'blog.empty': 'Pas encore d\'articles. Revenez bientôt.',
       'blog.readmore': 'Lire →',
+      'blog.copy': 'Copier', 'blog.copied': 'Copié !', 'blog.contents': 'Sommaire',
       'st.human': 'écrit par un humain',
       'st.ai': 'traduit par IA',
       'st.ai_edited': 'brouillon IA · édité, non relu',
@@ -93,6 +96,7 @@
       'blog.fallback': 'Noch nicht in diese Sprache übersetzt — zeige {LANG}.',
       'blog.empty': 'Noch keine Beiträge. Schau bald wieder vorbei.',
       'blog.readmore': 'Lesen →',
+      'blog.copy': 'Kopieren', 'blog.copied': 'Kopiert!', 'blog.contents': 'Inhalt',
       'st.human': 'von Menschen geschrieben',
       'st.ai': 'KI-übersetzt',
       'st.ai_edited': 'KI-Entwurf · bearbeitet, ungeprüft',
@@ -146,6 +150,17 @@
     markedReady = true;
   }
 
+  // Clipboard fallback for non-secure contexts / older browsers.
+  function fallbackCopy(text, done) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      if (done) done();
+    } catch (e) {}
+  }
+
   // GitHub-compatible heading slugger (matches github-slugger output, incl. CJK).
   function ghSlug(text) {
     return text.normalize('NFKD').toLowerCase().trim()
@@ -192,6 +207,39 @@
         try { hljs.highlightElement(block); } catch (e) {}
       });
     }
+    // 2b. Code-block toolbar: language label (left) + copy button (right)
+    container.querySelectorAll('pre').forEach(pre => {
+      if (pre.querySelector('.code-bar')) return;
+      const code = pre.querySelector('code');
+      if (!code) return;
+      let lng = '';
+      const m = (code.className || '').match(/language-([\w+#.-]+)/i);
+      if (m) lng = m[1];
+      const bar = document.createElement('div');
+      bar.className = 'code-bar';
+      bar.contentEditable = 'false';
+      const label = document.createElement('span');
+      label.className = 'code-lang';
+      label.textContent = lng || 'text';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'code-copy';
+      btn.textContent = t('blog.copy');
+      btn.addEventListener('click', () => {
+        const text = code.innerText.replace(/\n$/, '');
+        const done = () => {
+          btn.textContent = t('blog.copied');
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = t('blog.copy'); btn.classList.remove('copied'); }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+        } else { fallbackCopy(text, done); }
+      });
+      bar.appendChild(label);
+      bar.appendChild(btn);
+      pre.insertBefore(bar, pre.firstChild);
+    });
     // 3. KaTeX math
     if (window.renderMathInElement) {
       try {
@@ -236,6 +284,7 @@
 
   function renderIndex() {
     document.getElementById('blogPost').hidden = true;
+    resetChrome();   // hide TOC + reading-progress on the index
     const idx = document.getElementById('blogIndex');
     idx.hidden = false;
     const list = document.getElementById('blogPostList');
@@ -315,6 +364,8 @@
       const md = await res.text();
       body.innerHTML = renderMarkdown(md, slug);
       postProcess(body, slug);
+      buildTOC(body);          // floating table of contents + scroll-spy
+      initReadingProgress();   // ink-trail progress bar
       // Title for browser tab
       const title = (post.title && (post.title[cl] || post.title[lang])) || slug;
       document.title = title + ' — Linlin Jia';
@@ -330,6 +381,83 @@
 
   function statusKey(st) {
     return ({ human: 'human', ai: 'ai', ai_edited: 'ai_edited', checked: 'checked', pending: 'pending' })[st] || 'pending';
+  }
+
+  // ---- Table of contents (h2 + h3) + scroll-spy ---------------------------
+  let tocObserver = null;
+  function buildTOC(body) {
+    const toc = document.getElementById('blogToc');
+    const nav = document.getElementById('blogTocNav');
+    if (!toc || !nav) return;
+    const heads = [...body.querySelectorAll('h2, h3')].filter(h => h.id);
+    if (heads.length < 2) { toc.hidden = true; return; }
+    nav.innerHTML = heads.map(h =>
+      `<a href="#${encodeURIComponent(h.id)}" class="toc-link toc-${h.tagName.toLowerCase()}" data-target="${h.id}">${h.textContent}</a>`
+    ).join('');
+    toc.hidden = false;
+    // Collapsed by default on narrow screens (where it overlays content)
+    if (window.innerWidth < 1180) toc.classList.add('collapsed');
+    else toc.classList.remove('collapsed');
+    // Smooth-scroll + active state on click
+    nav.querySelectorAll('.toc-link').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const el = document.getElementById(a.dataset.target);
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', '#' + encodeURIComponent(a.dataset.target)); }
+      });
+    });
+    // Scroll-spy: highlight the heading currently in view
+    if (tocObserver) tocObserver.disconnect();
+    const linkFor = {};
+    nav.querySelectorAll('.toc-link').forEach(a => { linkFor[a.dataset.target] = a; });
+    tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        const a = linkFor[en.target.id];
+        if (!a) return;
+        if (en.isIntersecting) {
+          nav.querySelectorAll('.toc-link.active').forEach(x => x.classList.remove('active'));
+          a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+    heads.forEach(h => tocObserver.observe(h));
+    // Collapse toggle
+    const toggle = document.getElementById('blogTocToggle');
+    if (toggle && !toggle.dataset.wired) {
+      toggle.dataset.wired = '1';
+      toggle.addEventListener('click', () => {
+        const collapsed = toc.classList.toggle('collapsed');
+        toggle.setAttribute('aria-expanded', String(!collapsed));
+      });
+    }
+  }
+
+  // ---- Reading progress (ink trail) ---------------------------------------
+  let progressWired = false;
+  function initReadingProgress() {
+    const bar = document.getElementById('blogProgress');
+    if (!bar) return;
+    bar.classList.add('visible');
+    const fill = bar.querySelector('i');
+    const update = () => {
+      const doc = document.documentElement;
+      const max = (doc.scrollHeight - doc.clientHeight) || 1;
+      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      if (fill) fill.style.width = pct + '%';
+    };
+    if (!progressWired) {
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      progressWired = true;
+    }
+    update();
+  }
+  function resetChrome() {
+    const toc = document.getElementById('blogToc');
+    if (toc) toc.hidden = true;
+    const bar = document.getElementById('blogProgress');
+    if (bar) bar.classList.remove('visible');
+    if (tocObserver) tocObserver.disconnect();
   }
 
   // ---- Boot ---------------------------------------------------------------
