@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-site="portfolio">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Gallery (image view) — Linlin Jia</title>
+<meta name="description" content="Image-first app gallery of Linlin Jia — hover a tile to reveal details, click to open or zoom.">
+<link rel="canonical" href="https://jajupmochi.github.io/apps-gallery.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/parchment-overrides.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,Microsoft YaHei,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
+<style>
+  :root{ --maroon:#9a2b1e; --ink:#3a2c20; --soft:#6b5436; }
+  body, p, span, h3 { font-family:'Spectral','Noto Serif SC',Georgia,serif !important; }
+  .pf-nav { position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
+    padding:0.7em 2vw; background:rgba(247,240,224,0.86); backdrop-filter:saturate(1.1) blur(2px); border-bottom:1px solid rgba(120,80,40,0.22); }
+  .pf-brand { display:flex; align-items:center; gap:0.5em; font-family:'Patrick Hand',cursive !important; font-size:1.35rem; color:var(--ink); text-decoration:none; }
+  .pf-brand .mk { width:30px; height:30px; border-radius:8px; background:linear-gradient(150deg,#1e3a8a,#2b4db8); color:#fff; display:grid; place-items:center; font-family:sans-serif; font-weight:900; font-size:0.85rem; }
+  .pf-nav .links { display:flex; gap:1.3em; font-size:1.05rem; }
+  .pf-nav .links a { color:var(--soft); text-decoration:none; } .pf-nav .links a:hover, .pf-nav .links a.here { color:var(--maroon); }
+  .pf-head { max-width:1600px; margin:0 auto; padding:2.4em 2vw 0.4em; }
+  .pf-eyebrow { font-family:'JetBrains Mono',monospace !important; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--maroon); margin:0 0 0.3em; }
+  .pf-title { font-family:'Patrick Hand',cursive !important; font-size:clamp(2.2rem,5vw,3.4rem); color:var(--ink); margin:0; }
+  .pf-alt { display:block; margin:0.5em 0 0; font-family:'Patrick Hand',cursive !important; color:var(--maroon); text-decoration:none; }
+  /* ---- gallery grid: image-first tiles ---- */
+  .gal { max-width:1600px; margin:0 auto; padding:1.4em 2vw 1em;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:1.4em; }
+  .g-card { position:relative; aspect-ratio:16/10; border-radius:14px; overflow:hidden; cursor:pointer;
+    box-shadow:0 18px 34px -22px rgba(70,40,15,0.55); border:1px solid rgba(120,80,40,0.2); background:#efe6d2; }
+  .g-img { position:absolute; inset:0; }
+  .g-img img { width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .5s; }
+  /* caption shown by default (image-first) */
+  .g-cap { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:1.4em 1em 0.9em;
+    font-family:'Patrick Hand',cursive !important; font-size:1.45rem; color:#fff; letter-spacing:0.01em;
+    background:linear-gradient(180deg, transparent, rgba(40,22,8,0.78)); transition:opacity .35s; }
+  /* overlay revealed on hover / open: image recedes + dims, text floats up */
+  .g-over { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:flex-end;
+    padding:1.3em 1.3em 1.2em; gap:0.5em; opacity:0; transition:opacity .4s;
+    background:linear-gradient(180deg, rgba(247,240,224,0.30), rgba(247,240,224,0.93)); }
+  .g-over h3 { font-family:'Patrick Hand',cursive !important; font-size:1.5rem; margin:0; color:var(--ink); line-height:1.1; }
+  .g-over p { margin:0; font-size:0.95rem; color:#4c3a24; }
+  .g-over .tags { display:flex; flex-wrap:wrap; gap:0.35em; }
+  .g-over .tag { font-family:'JetBrains Mono',monospace !important; font-size:0.66rem; color:var(--maroon);
+    background:rgba(154,43,30,0.08); border:1px solid rgba(154,43,30,0.2); border-radius:6px; padding:0.12em 0.5em; }
+  .g-over .acts { display:flex; flex-wrap:wrap; align-items:center; gap:0.9em; margin-top:0.2em; font-family:'Patrick Hand',cursive !important; font-size:1.05rem; }
+  .g-over .acts a, .g-over .acts button { color:var(--maroon); text-decoration:none; background:none; border:none; cursor:pointer;
+    font:inherit; display:inline-flex; align-items:center; gap:0.3em; padding:0; }
+  .g-over .acts a:hover, .g-over .acts button:hover { text-decoration:underline; }
+  .g-over .acts .zoom { margin-left:auto; }
+  .g-card:hover .g-img img, .g-card.is-open .g-img img { transform:scale(0.94); filter:blur(3px) brightness(0.6); opacity:0.4; }
+  .g-card:hover .g-over, .g-card.is-open .g-over { opacity:1; }
+  .g-card:hover .g-cap, .g-card.is-open .g-cap { opacity:0; }
+  .g-tape { position:absolute; top:13px; left:-34px; z-index:4; transform:rotate(-32deg);
+    font-family:'Patrick Hand',cursive !important; font-size:0.8rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#5a3a16;
+    padding:0.25em 2.6em; box-shadow:0 3px 7px rgba(80,50,15,0.3);
+    background:linear-gradient(135deg, rgba(228,206,146,0.95), rgba(206,178,112,0.9)); clip-path:polygon(2% 0,98% 5%,100% 95%,0 100%); }
+  /* ---- lightbox ---- */
+  .lb { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
+    background:rgba(30,18,8,0.82); padding:3vw; }
+  .lb.on { display:flex; }
+  .lb img { max-width:92vw; max-height:88vh; border-radius:8px; box-shadow:0 30px 60px rgba(0,0,0,0.5); background:#fff; }
+  .lb .x { position:absolute; top:3vw; right:4vw; color:#fff; font-size:2rem; cursor:pointer; background:none; border:none; }
+  .pf-foot { max-width:1600px; margin:1.4em auto 0; padding:2.2em 2vw 3.2em; text-align:center; border-top:1px solid rgba(120,80,40,0.22); }
+  .pf-foot .tags { display:flex; flex-wrap:wrap; justify-content:center; gap:0.8em; margin:0 0 1em; }
+  .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none;
+    border:1px solid rgba(120,80,40,0.25); border-radius:8px 5px 9px 5px; padding:0.3em 1.1em; background:rgba(255,250,235,0.6); }
+  .pf-foot .copy { font-family:'JetBrains Mono',monospace !important; font-size:0.78rem; color:var(--soft); }
+  @media (max-width:560px){ .gal{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body data-theme="academic">
+
+<nav class="pf-nav">
+  <a class="pf-brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
+  <div class="links">
+    <a href="index_en.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="portfolio.html">Apps</a>
+    <a href="apps-gallery.html" class="here">Gallery</a>
+    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<header class="pf-head">
+  <p class="pf-eyebrow">App &amp; Software Engineering</p>
+  <h1 class="pf-title">App Gallery — image view</h1>
+  <a class="pf-alt" href="portfolio.html">↳ back to the detailed card view</a>
+</header>
+
+<main class="gal" id="gal">
+
+  <div class="g-card" data-img="res/figures/2021_prl_gklearn_accuracy.svg" data-href="https://github.com/jajupmochi/graphkit-learn">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div>
+    <div class="g-cap">graphkit-learn</div>
+    <div class="g-over">
+      <h3>graphkit-learn</h3>
+      <p>Python library for graph kernels, GED, and the graph pre-image problem. 128★, on PyPI.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Graph Kernels</span><span class="tag">Open Source</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><a href="https://pypi.org/project/graphkit-learn/" target="_blank" rel="noopener"><i class="fas fa-cube"></i> PyPI</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2026_liulian_architecture.png" data-href="https://github.com/jajupmochi/liulian-python">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2026_liulian_architecture.png" alt="LIULIAN platform"></div>
+    <div class="g-cap">LIULIAN platform</div>
+    <div class="g-over">
+      <h3>LIULIAN</h3>
+      <p>Spatio-temporal data platform with LLM-driven interfaces and BI agent systems.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">LLMs</span><span class="tag">Agents</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2026_neobanker_agent_demo.png" data-href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2026_neobanker_agent_demo.png" alt="N-Banker"></div>
+    <div class="g-cap">N-Banker</div>
+    <div class="g-over">
+      <h3>N-Banker</h3>
+      <p>AI strategy and LLM-agent development for a neobank research center (RAG, agents, FinTech).</p>
+      <div class="tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">FinTech</span></div>
+      <div class="acts"><a href="https://www.polyu.edu.hk/kteo/entrepreneurship/start-ups/polyu-start-ups-list/mf/2023/digital-financial-services-research-center-limited/" target="_blank" rel="noopener"><i class="fas fa-handshake"></i> Partner</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2026_icpr_swissriver_diagram.svg" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
+    <span class="g-tape">Featured</span>
+    <div class="g-img"><img src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div>
+    <div class="g-cap">Swiss River forecasting</div>
+    <div class="g-over">
+      <h3>Swiss River Forecasting</h3>
+      <p>SNSF spatio-temporal transformer / LLM forecasting; benchmark open-sourced. ICPR 2026.</p>
+      <div class="tags"><span class="tag">GNNs</span><span class="tag">Transformers</span><span class="tag">Benchmark</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/swiss-river-network-benchmark" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><a href="https://data.snf.ch/grants/grant/206352" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2026_confidential_translator_presentation.gif" data-href="https://github.com/jajupmochi/confidential-translator">
+    <div class="g-img"><img src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div>
+    <div class="g-cap">Local Confidential Translator</div>
+    <div class="g-over">
+      <h3>Local Confidential Translator</h3>
+      <p>Offline, privacy-first document translation via local LLMs; one-command Docker deploy.</p>
+      <div class="tags"><span class="tag">Local LLM</span><span class="tag">Docker</span><span class="tag">Privacy</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/confidential-translator" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2024_planalyser_company_page.png" data-href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900">
+    <div class="g-img"><img src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div>
+    <div class="g-cap">PLANALYSER</div>
+    <div class="g-over">
+      <h3>PLANALYSER</h3>
+      <p>Innosuisse AI auditing HVAC concepts from engineering drawings (symbol / topology extraction).</p>
+      <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span></div>
+      <div class="acts"><a href="https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2023_jcc_redox_framework.svg" data-href="https://github.com/jajupmochi/RedoxPrediction">
+    <div class="g-img"><img src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div>
+    <div class="g-cap">OCTOPUSSY — RedoxPrediction</div>
+    <div class="g-over">
+      <h3>OCTOPUSSY — RedoxPrediction</h3>
+      <p>Graph-based ML for polymer / redox-potential prediction; open-sourced package, J. Comp. Chem.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">GNNs</span><span class="tag">Chemoinformatics</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/RedoxPrediction" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><a href="https://doi.org/10.1002/jcc.27380" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Paper</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2025_graphink_framework.svg" data-href="https://data.snf.ch/grants/grant/217594">
+    <div class="g-img"><img src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div>
+    <div class="g-cap">GraphInk</div>
+    <div class="g-over">
+      <h3>GraphInk</h3>
+      <p>SNSF image + graph networks for handwriting recognition on historical documents.</p>
+      <div class="tags"><span class="tag">CV</span><span class="tag">GNNs</span><span class="tag">Docs</span></div>
+      <div class="acts"><a href="https://data.snf.ch/grants/grant/217594" target="_blank" rel="noopener"><i class="fas fa-file-signature"></i> Funding</a><span class="proj-soon" style="color:#8a7a5a;font-style:italic"><i class="fas fa-clock"></i> Lib soon</span><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+  <div class="g-card" data-img="res/figures/2026_personal_site.png" data-href="https://github.com/jajupmochi/jajupmochi.github.io">
+    <div class="g-img"><img src="res/figures/2026_personal_site.png" alt="This website + blog"></div>
+    <div class="g-cap">This Website + Blog</div>
+    <div class="g-over">
+      <h3>This Website + Blog</h3>
+      <p>Static 4-language site + client-rendered blog engine on GitHub Pages, built human × AI.</p>
+      <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">i18n</span><span class="tag">Static</span></div>
+      <div class="acts"><a href="https://github.com/jajupmochi/jajupmochi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a><a href="index_en.html"><i class="fas fa-house"></i> Live</a><button class="zoom" type="button"><i class="fas fa-expand"></i> Zoom</button></div>
+    </div>
+  </div>
+
+</main>
+
+<div class="lb" id="lb"><button class="x" id="lbx" aria-label="Close">&times;</button><img id="lbimg" src="" alt=""></div>
+
+<footer class="pf-foot">
+  <div class="tags">
+    <a href="index_en.html"><i class="fas fa-house"></i> Home</a>
+    <a href="blog.html"><i class="fas fa-feather"></i> Blog</a>
+    <a href="portfolio.html"><i class="fas fa-table-cells-large"></i> Detailed view</a>
+    <a href="https://github.com/jajupmochi" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+  </div>
+  <p class="copy">© <span id="yr"></span> Linlin Jia</p>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
+  function openLb(src, alt){ lbimg.src = src; lbimg.alt = alt || ''; lb.classList.add('on'); }
+  function closeLb(){ lb.classList.remove('on'); lbimg.src = ''; }
+  document.getElementById('lbx').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  document.querySelectorAll('.g-card').forEach(card => {
+    const img = card.querySelector('.g-img img');
+    // touch devices: tap toggles the overlay (no hover)
+    let opened = false;
+    card.addEventListener('click', e => {
+      if (e.target.closest('a')) return;                  // links jump
+      if (e.target.closest('.zoom')) { openLb(img.src, img.alt); return; }  // zoom button
+      if (matchMedia('(hover: none)').matches && !card.classList.contains('is-open')) {
+        card.classList.add('is-open'); opened = true; return; // first tap reveals
+      }
+      // otherwise a click on the (revealed) tile opens the primary link
+      const href = card.getAttribute('data-href');
+      if (href) window.open(href, '_blank', 'noopener');
+    });
+  });
+</script>
+</body>
+</html>
