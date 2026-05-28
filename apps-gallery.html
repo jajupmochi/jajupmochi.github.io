@@ -46,6 +46,9 @@
   .g-card { position:relative; aspect-ratio:16/10; border-radius:0; overflow:hidden; cursor:pointer;
     background:transparent; transition:transform .4s cubic-bezier(.22,1,.36,1); touch-action:pan-y; }
   .g-card:hover { transform:translateY(-3px); }
+  .g-card:focus-visible { outline:2px solid var(--maroon); outline-offset:3px; }
+  .gtag:focus-visible, .gsearch input:focus-visible, .mode a:focus-visible { outline:2px solid var(--maroon); outline-offset:2px; }
+  @media (prefers-reduced-motion: reduce){ .g-card, .g-imgwrap, .g-track, .g-over, .g-cap, .g-dots { transition:none !important; } .g-card:hover, .g-card:focus-visible { transform:none; } }
   /* image carousel: wrap (gets hover-dim) > track (slides via translateX) */
   .g-imgwrap { position:absolute; inset:0; overflow:hidden; transition:transform .5s cubic-bezier(.22,1,.36,1), filter .5s, opacity .5s; }
   .g-track { display:flex; height:100%; transition:transform .45s cubic-bezier(.22,1,.36,1); }
@@ -84,6 +87,7 @@
   .lb .x { position:absolute; top:3vw; right:4vw; color:#fff; font-size:2rem; cursor:pointer; background:none; border:none; }
   .lb .nav { position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:3rem; line-height:1; cursor:pointer; background:none; border:none; padding:0 1.5vw; opacity:0.7; }
   .lb .nav:hover { opacity:1; } .lb .prev { left:1vw; } .lb .next { right:1vw; }
+  .lbcount { position:absolute; bottom:2.4vw; left:50%; transform:translateX(-50%); color:#fdf3e3; font-family:'JetBrains Mono',monospace !important; font-size:0.82rem; letter-spacing:0.1em; opacity:0.8; }
   .pf-foot { max-width:1600px; margin:1.4em auto 0; padding:2.2em 2vw 3.2em; text-align:center; border-top:1px solid rgba(120,80,40,0.22); }
   .pf-foot .tags { display:flex; flex-wrap:wrap; justify-content:center; gap:0.8em; margin:0 0 1em; }
   .pf-foot .tags a { font-family:'Patrick Hand',cursive !important; font-size:1.2rem; color:var(--maroon); text-decoration:none;
@@ -135,8 +139,8 @@
   <div class="g-card" data-tags="academia,industry,llm,agents,graph,software,spatio-temporal" data-href="https://liulian-ai.github.io/liulian-web/">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/liulian_studio.webp" alt="LIULIAN Studio (desktop)">
-      <img class="g-slide" src="res/portfolio/img/liulian_mobile.webp" alt="LIULIAN mobile forecast">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/portfolio/img/liulian_studio.webp" alt="LIULIAN Studio (desktop)">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/portfolio/img/liulian_mobile.webp" alt="LIULIAN mobile forecast">
     </div></div>
     <div class="g-dots"></div>
     <div class="g-cap">LIULIAN</div>
@@ -152,8 +156,8 @@
   <div class="g-card" data-tags="industry,llm,agents">
     <span class="g-tape">Featured</span>
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/neobanker_chat.webp" alt="N-Banker assistant">
-      <img class="g-slide" src="res/portfolio/img/neobanker_canvas.webp" alt="N-Banker canvas dashboard">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/portfolio/img/neobanker_chat.webp" alt="N-Banker assistant">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/portfolio/img/neobanker_canvas.webp" alt="N-Banker canvas dashboard">
     </div></div>
     <div class="g-dots"></div>
     <div class="g-cap">N-Banker</div>
@@ -169,7 +173,7 @@
   <!-- graphkit-learn (code) -->
   <div class="g-card" data-tags="software,academia,graph" data-href="https://github.com/jajupmochi/graphkit-learn">
     <span class="g-tape">Featured</span>
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2021_prl_gklearn_accuracy.svg" alt="graphkit-learn"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">graphkit-learn</div>
     <div class="g-over">
@@ -183,7 +187,7 @@
   <!-- Swiss River (code) -->
   <div class="g-card" data-tags="academia,graph,spatio-temporal,software" data-href="https://github.com/jajupmochi/swiss-river-network-benchmark">
     <span class="g-tape">Featured</span>
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2026_icpr_swissriver_diagram.svg" alt="Swiss River forecasting"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">Swiss River forecasting</div>
     <div class="g-over">
@@ -197,8 +201,8 @@
   <!-- Linlin's homepage (2 images: site + blog) -->
   <div class="g-card" data-tags="software,fun,llm" data-href="https://jajupmochi.github.io/index_en.html">
     <div class="g-imgwrap"><div class="g-track">
-      <img class="g-slide" src="res/portfolio/img/personal_site.webp" alt="Linlin's homepage">
-      <img class="g-slide" src="res/figures/2026_blog.webp" alt="Linlin's blog">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/portfolio/img/personal_site.webp" alt="Linlin's homepage">
+      <img class="g-slide" loading="lazy" decoding="async" src="res/figures/2026_blog.webp" alt="Linlin's blog">
     </div></div>
     <div class="g-dots"></div>
     <div class="g-cap">Linlin's homepage</div>
@@ -212,7 +216,7 @@
 
   <!-- Local Confidential Translator (code) -->
   <div class="g-card" data-tags="fun,llm,software" data-href="https://github.com/jajupmochi/confidential-translator">
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2026_confidential_translator_presentation.gif" alt="Local Confidential Translator"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">Local Confidential Translator</div>
     <div class="g-over">
@@ -225,7 +229,7 @@
 
   <!-- OCTOPUSSY (code) -->
   <div class="g-card" data-tags="academia,graph,chemoinformatics,software" data-href="https://github.com/jajupmochi/RedoxPrediction">
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2023_jcc_redox_framework.svg" alt="OCTOPUSSY / RedoxPrediction"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">OCTOPUSSY — RedoxPrediction</div>
     <div class="g-over">
@@ -238,7 +242,7 @@
 
   <!-- PLANALYSER (private/NDA — no public link) -->
   <div class="g-card" data-tags="academia,industry,vision,graph">
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2024_planalyser_company_page.png" alt="PLANALYSER"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">PLANALYSER</div>
     <div class="g-over">
@@ -252,7 +256,7 @@
 
   <!-- GraphInk (no code yet) -->
   <div class="g-card" data-tags="academia,graph,vision">
-    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div></div>
+    <div class="g-imgwrap"><div class="g-track"><img class="g-slide" loading="lazy" decoding="async" src="res/figures/2025_graphink_framework.svg" alt="GraphInk"></div></div>
     <div class="g-dots"></div>
     <div class="g-cap">GraphInk</div>
     <div class="g-over">
@@ -271,6 +275,7 @@
   <button class="nav prev" id="lbprev" aria-label="Previous">&#8249;</button>
   <img id="lbimg" src="" alt="">
   <button class="nav next" id="lbnext" aria-label="Next">&#8250;</button>
+  <div class="lbcount" id="lbcount" aria-hidden="true"></div>
 </div>
 
 <footer class="pf-foot">
@@ -286,9 +291,9 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
   const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
   let lbImgs = [], lbIdx = 0;
-  function lbShow(){ lbimg.src = lbImgs[lbIdx]; const multi = lbImgs.length > 1; document.getElementById('lbprev').style.display = multi?'':'none'; document.getElementById('lbnext').style.display = multi?'':'none'; }
-  function openLb(imgs, i){ lbImgs = imgs; lbIdx = i; lbShow(); lb.classList.add('on'); }
-  function closeLb(){ lb.classList.remove('on'); lbimg.src=''; }
+  function lbShow(){ lbimg.src = lbImgs[lbIdx]; const multi = lbImgs.length > 1; document.getElementById('lbprev').style.display = multi?'':'none'; document.getElementById('lbnext').style.display = multi?'':'none'; document.getElementById('lbcount').textContent = multi ? (lbIdx+1)+' / '+lbImgs.length : ''; }
+  function openLb(imgs, i){ lbImgs = imgs; lbIdx = i; lbShow(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function closeLb(){ lb.classList.remove('on'); lbimg.src=''; document.body.style.overflow = ''; }
   function lbGo(n){ if(!lbImgs.length) return; lbIdx = (n + lbImgs.length) % lbImgs.length; lbShow(); }
   document.getElementById('lbx').addEventListener('click', closeLb);
   document.getElementById('lbprev').addEventListener('click', e => { e.stopPropagation(); lbGo(lbIdx-1); });
@@ -319,12 +324,18 @@
       if (sx == null) return; const dx = e.clientX - sx; sx = null;
       if (slides.length > 1 && Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); }
     });
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', card.dataset.href ? 'link' : 'button');
+    card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || 'Project').trim() + (card.dataset.href ? ' — open project' : ' — view details'));
+    const openCard = () => { const href = card.getAttribute('data-href'); if (href) window.open(href, '_blank', 'noopener'); };
     card.addEventListener('click', e => {
       if (e.target.closest('a') || e.target.closest('.g-dots')) return;
       if (e.target.closest('.zoom')) { openLb(slides.map(s => s.src), idx); return; }
       if (matchMedia('(hover: none)').matches && !card.classList.contains('is-open')) { card.classList.add('is-open'); return; }
-      const href = card.getAttribute('data-href');
-      if (href) window.open(href, '_blank', 'noopener');
+      openCard();
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.dataset.href ? openCard() : openLb(slides.map(s => s.src), idx); }
     });
   });
 

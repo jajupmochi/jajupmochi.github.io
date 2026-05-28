@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-28](#2026-05-28)
+    - [V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish](#v3--gallery-optimization-pass-lazy-load-keyboard-a11y-reduced-motion-lightbox-polish) — Ten-round polish on `apps-gallery.html`: lazy-load + `decoding=async` on all 12 slides (defers the 1.24 MB translator GIF); cards keyboard-focusable (`tabindex`/`role`/`aria-label`, Enter/Space to open); `prefers-reduced-motion` disables transitions; lightbox locks body scroll + shows an `n / total` counter; verified mobile (1-col), Detailed view, and homepage carousel.
     - [V2 — App Gallery overhaul: Detailed view restored, persistent controls row, 3-col, hover fix, borderless, WebP](#v2--app-gallery-overhaul-detailed-view-restored-persistent-controls-row-3-col-hover-fix-borderless-webp) — Reverses V1's single-page consolidation per Linlin's new direction: restored `portfolio.html` (Detailed view) and put the `Cards | Detailed` toggle into a persistent **controls row** (filter tags · search) on both views — gallery gains a working tag filter + search. Gallery: 3 cards/row on large screens, hover-overlay overflow + typography fixed, card rounding removed (blend into parchment). Speed: the 5 screenshots converted PNG→WebP (4.25 MB → 194 KB). Homepage Projects LIULIAN/N-Banker images synced to the gallery screenshots.
     - [V1 — App Gallery: hi-res screenshots + single-page consolidation; LIULIAN home card](#v1--app-gallery-hi-res-screenshots--single-page-consolidation-liulian-home-card) — `apps-gallery.html` is now the single apps page: swapped LIULIAN/N-Banker/homepage cards to `res/portfolio/img` hi-res PNG screenshots (diagrams stay SVG), deleted `portfolio.html` (Detailed view) + its `Cards | Detailed` toggle, and pointed the home Projects LIULIAN card at the architecture diagram + GitHub (Demo link & unused `proj_link.demo` i18n key removed).
 - [2026-04-23](#2026-04-23)
@@ -38,6 +39,16 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-28
+
+## V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish
+
+Ten-round optimization pass on `apps-gallery.html` (Linlin: "进行十轮优化"):
+
+- **Lazy-load** — `loading="lazy" decoding="async"` on all 12 `.g-slide` images; defers the 1.24 MB Local-Confidential-Translator GIF and other below-fold media (first-screen WebP still load eagerly).
+- **Keyboard a11y** — cards are now `tabindex="0"` with `role` (link/button) + `aria-label` (project name); Enter / Space opens the card (link) or the lightbox (no-link cards). Focus-visible outlines on cards, tags, search box, and the toggle.
+- **Reduced motion** — `@media (prefers-reduced-motion: reduce)` disables card / overlay / track transitions and the hover lift.
+- **Lightbox polish** — opening locks `body` scroll (no background scroll-through), restored on close; multi-image lightbox shows an `n / total` counter (hidden for single-image cards).
+- **Verification rounds** — mobile (1-col grid, controls wrap, no horizontal overflow), Detailed view (`portfolio.html`: 0 broken images, toggle round-trip), and homepage Projects carousel (WebP refs confirmed on disk/git/served) all checked in-browser at 1440 / 1600 / 390 px.
 
 ## V2 — App Gallery overhaul: Detailed view restored, persistent controls row, 3-col, hover fix, borderless, WebP
 
