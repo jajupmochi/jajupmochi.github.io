@@ -231,5 +231,53 @@
     render();
   }
 
-  window.Projects = { cardEl, detailedEl, initCarousel, makeLightbox, wireCard, mountGallery };
+  // ---- Homepage card (i18n via data-i18n; SEO <object> for single SVG) ----
+  // Produces the homepage's existing .project-card structure so main.js's own
+  // handlers (carousel, lightbox, card-click, filter, applyTranslations) wire it.
+  function homeImage(p) {
+    const imgs = p.images || [];
+    if (imgs.length > 1) {
+      return '<div class="project-image pimg-carousel"><div class="pimg-track">' +
+        imgs.map(im => `<img class="pimg-slide" src="${im.src}" alt="${im.alt || ''}" loading="lazy" decoding="async">`).join('') +
+        '</div><div class="pimg-dots"></div></div>';
+    }
+    const im = imgs[0] || {};
+    if (/\.svg(\?|$)/.test(im.src)) {
+      return `<div class="project-image"><object type="image/svg+xml" data="${im.src}" aria-label="${im.alt || ''}"><img src="${im.src}" alt="${im.alt || ''}" loading="lazy" width="400" height="180"></object></div>`;
+    }
+    return `<div class="project-image"><img src="${im.src}" alt="${im.alt || ''}" loading="lazy" decoding="async" width="400" height="180"></div>`;
+  }
+  function homeCardHTML(p) {
+    const h = p.home || {};
+    const badgeCls = p.badge === 'dual' ? 'project-badge project-badge--dual'
+      : p.badge === 'fun' ? 'project-badge project-badge--fun' : 'project-badge';
+    const bullets = (p.bullets || []).map(b => `<li>${b}</li>`).join('');
+    const chips = (h.chips || []).map(c => `<span class="project-tag" data-i18n="${c.key}">${c.label}</span>`).join('');
+    const stats = h.stats
+      ? `<div class="project-stats" aria-label="Live project metrics">${h.stats.map(s => `<a href="${s.href}" target="_blank" rel="noopener noreferrer" class="project-stat-pill" title="${s.title}">${s.html}</a>`).join('')}</div>`
+      : '';
+    const links = (h.links || []).map(l =>
+      `<a href="${l.href}"${l.onclick ? ` onclick="${l.onclick}"` : ' target="_blank" rel="noopener noreferrer"'} class="project-link" title="${l.label}"><i class="${l.icon}"></i> <span data-i18n="${l.key}">${l.label}</span></a>`).join('');
+    const hrefAttr = p.primaryHref ? ` data-primary-href="${p.primaryHref}"` : '';
+    const interactive = p.primaryHref ? ' tabindex="0" role="link"' : '';
+    return `<div class="project-card" data-tags="${(p.tags || []).join(',')}" data-year="${p.year}" data-priority="${p.priority}"${hrefAttr}${interactive} aria-label="Project: ${p.titleShort}">` +
+      homeImage(p) +
+      '<div class="project-content">' +
+        `<div class="project-meta"><span class="${badgeCls}" data-i18n="proj_badge.${p.badge}">${p.badgeText}</span><span class="project-date" data-i18n="proj.${p.slug}.date">${p.date}</span></div>` +
+        `<h3 class="project-title" data-i18n="proj.${p.slug}.title">${p.titleFull}</h3>` +
+        `<ul class="project-desc-list" data-i18n-html="proj.${p.slug}.desc">${bullets}</ul>` +
+        stats +
+        `<div class="project-tags">${chips}</div>` +
+        `<div class="project-links">${links}</div>` +
+      '</div></div>';
+  }
+  function mountHome(sel) {
+    const track = document.querySelector(sel);
+    if (!track || !window.PROJECTS) return;
+    const list = window.PROJECTS.filter(p => p.show && p.show.home)
+      .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+    track.innerHTML = list.map(homeCardHTML).join('');
+  }
+
+  window.Projects = { cardEl, detailedEl, initCarousel, makeLightbox, wireCard, mountGallery, homeCardHTML, mountHome };
 })();

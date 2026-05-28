@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-28](#2026-05-28)
+    - [V6 — Homepage Projects now render from the shared data source (DRY, i18n preserved)](#v6--homepage-projects-now-render-from-the-shared-data-source-dry-i18n-preserved) — Homepage `#projectsTrack` is rendered by `Projects.mountHome()` from the same `window.PROJECTS` as the gallery — the duplicate hardcoded 11-card list is gone. `homeCardHTML` emits the existing `.project-card` structure with `data-i18n` keys so `main.js`'s `applyTranslations` (4-lang), carousel, lightbox, card-click, and filter all keep working untouched. SEO preserved (single SVG → `<object>`); gklearn stats pills + liulian/nbanker dots retained. Verified en/zh/fr with no English leak; gallery (9 cards) unaffected.
     - [V5 — App Gallery merged into one data-driven page (Cards+Detailed), bento cards](#v5--app-gallery-merged-into-one-data-driven-page-cardsdetailed-bento-cards) — Merged `apps-gallery.html` + `portfolio.html` into **one data-driven page** (approach A): `js/projects-data.js` (data only) + `js/projects-render.js` (render logic) + CSS (design) — clean separation. In-page `Cards | Detailed` toggle (localStorage-persisted), homepage-style controls (filter pills + search + **Sort**). Cards view is now a **bento** (featured LIULIAN spans 2×2, varied tiles — de-monotonous); Detailed view = project-cards. Shared carousel + lightbox (prev/next, counter, scroll-lock). `portfolio.html` deleted.
     - [V4 — Homepage Projects: multi-image cards (dots+swipe) + LIULIAN Online Demo](#v4--homepage-projects-multi-image-cards-dotsswipe--liulian-online-demo) — LIULIAN (studio+mobile) and N-Banker (chat+canvas) home cards become 2-slide carousels matching the gallery (dots + pointer/touch swipe; `stopPropagation` so the outer carousel + card-nav don't fire); LIULIAN gains an **Online Demo** link + card-click → liulian-web demo. New `proj_link.online_demo` key ×4 locales (parity OK).
     - [V3 — Gallery optimization pass: lazy-load, keyboard a11y, reduced-motion, lightbox polish](#v3--gallery-optimization-pass-lazy-load-keyboard-a11y-reduced-motion-lightbox-polish) — Ten-round polish on `apps-gallery.html`: lazy-load + `decoding=async` on all 12 slides (defers the 1.24 MB translator GIF); cards keyboard-focusable (`tabindex`/`role`/`aria-label`, Enter/Space to open); `prefers-reduced-motion` disables transitions; lightbox locks body scroll + shows an `n / total` counter; verified mobile (1-col), Detailed view, and homepage carousel.
@@ -41,6 +42,16 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-28
+
+## V6 — Homepage Projects now render from the shared data source (DRY, i18n preserved)
+
+Per Linlin ("主页的也做"): the homepage Projects section now renders from the **same** `window.PROJECTS` as the App Gallery — eliminating the third hardcoded copy of the project list.
+
+- **Shared render** — `index_en.html` `#projectsTrack` is emptied and populated by `Projects.mountHome('#projectsTrack')` (loaded synchronously before `main.js`, so cards exist before `applyTranslations` + the carousel init run).
+- **i18n preserved (the hard part)** — `homeCardHTML` reproduces the homepage's existing `.project-card` markup with the correct `data-i18n` keys (`proj.{slug}.title|date|desc`, `proj_badge.{badge}`, `proj_tag.*`, `proj_link.*`). `main.js`'s `applyTranslations` fills them, so all 4 languages work with **no new translation keys**. Verified en / zh / fr render with no English leak (titles, badges, tags, links all translate).
+- **Reuses main.js** — the rendered cards are wired by the existing `initProjectImageCarousels` (multi-image dots+swipe), `initImageLightbox`, the delegated card-click, and the projects filter/search/sort carousel. No new behaviour code on the homepage.
+- **SEO preserved** — single `.svg` images render as `<object>` (indexable text); raster / multi-image use `<img>`. gklearn keeps its live-stats pills (128⭐ + PyPI); the `fun`-excluded-from-`all` filter rule still holds.
+- **Data** — `js/projects-data.js` gained a per-project `home` block (slug + i18n chips + homepage links) + 3 homepage-only projects (Graph Matching, APi, SDN). Gallery fields untouched, so the 9-card gallery is unaffected.
 
 ## V5 — App Gallery merged into one data-driven page (Cards+Detailed), bento cards
 
