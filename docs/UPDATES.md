@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-05-28](#2026-05-28)
+    - [V1 — App Gallery: hi-res screenshots + single-page consolidation; LIULIAN home card](#v1--app-gallery-hi-res-screenshots--single-page-consolidation-liulian-home-card) — `apps-gallery.html` is now the single apps page: swapped LIULIAN/N-Banker/homepage cards to `res/portfolio/img` hi-res PNG screenshots (diagrams stay SVG), deleted `portfolio.html` (Detailed view) + its `Cards | Detailed` toggle, and pointed the home Projects LIULIAN card at the architecture diagram + GitHub (Demo link & unused `proj_link.demo` i18n key removed).
 - [2026-04-23](#2026-04-23)
     - [V2 — Job-hunt P0+P1+P2 end-to-end (hero signature/ticker, About restructure, layout reorder, Featured projects, Awards section, Invited Talks, +42 i18n keys)](#v2--job-hunt-p0p1p2-end-to-end-hero-signatureticker-about-restructure-layout-reorder-featured-projects-awards-section-invited-talks-42-i18n-keys) — Single big push driven by Linlin's "run end-to-end, no stops, give me a report" directive. **B1 — Above-the-fold:** new `.hero-signature` line (`graphkit-learn` author · SNSF + Innosuisse · ICPR 2026 · MSCA Alumni); About replaced 4 paragraphs with `about-headline` + 6 emoji bullets; M.Sc./B.S. (XJTU 2010-2017 with patent) moved to Experience timeline; drug-discovery reframed as "molecular property prediction (foundations for drug discovery — redox potentials, polymer optimization)"; 11 project cards got `data-priority`, new "Featured" sort option as default in Projects (graphkit-learn → top). **B2 — Credibility:** Publications default sort flipped to Most Cited; new H-index (6) + Grants (5+) stat cards (8 total); YOLO moved Domain → AI/ML; graphkit-learn live-stats pills (128⭐ + ~300 PyPI / mo). **B3 — Authority:** Invited Talks card added to Services (GRAPHADON, ACPR 2023, PhD defence); brand-new `#awards` section with 4 award cards (SNSF Postdoc.Mobility / SNSF Bodmer / SNSF GraphInk / Innosuisse PLANALYSER + ANR APi + MCAA). **B4 — Recruiter UX:** full-page section reorder via Python (hero → ticker → OTW → about → publications → projects → research → experience → skills → awards → services → news → contact); new hero `.hero-ticker` CSS marquee with 5 ticker items (ICPR 2026, Neobanker, GRAPHADON, SNSF Bodmer, graphkit-learn stars), `prefers-reduced-motion` fallback, ~255 lines of new CSS. **B5 — i18n:** 42 new keys × 4 locales (388 → **430**), parity verified. SEO audit deliberately skipped per Linlin.
     - [V1 — Anti-spam hardening + 12-item polish pass (flag emojis, zh fixes, chatbot UX)](#v1--anti-spam-hardening--12-item-polish-pass-flag-emojis-zh-fixes-chatbot-ux) — (A) Backfill: Apps Script anti-spam trio (honeypot + origin allowlist + dwell-time ≥ 2 s) + new `docs/setup/local-dev.md` + form-backend Security & privacy section + welcome-card `welcome.privacy_note`. (B) 12-item polish: 🇨🇭/🇫🇷/🇯🇵 flag emojis on geo items; zh wording fixes (hero badge, "可快速入职", 预映射, HES-SO / INSA full Chinese names, PRG, "贾林林" navbar+footer); River-Water-Temp authors appended (B. Fankhauser, V. Bigler, K. Riesen); removed redundant `contact.connect`; chatbot toast i18n × 4 locales; **chatbot UX fix** — 🤖 always visible (stacked above 🎁), welcome 🎁 only disappears after form-submit (skip path keeps it).
@@ -33,6 +35,27 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-28
+
+## V1 — App Gallery: hi-res screenshots + single-page consolidation; LIULIAN home card
+
+The App Gallery (`apps-gallery.html`) was built across several commits today (per-card image carousels with dots + swipe, lightbox with mouse + keyboard ←/→ nav, curated order, "Featured" washi-tape, NDA/no-link projects each annotated with a `.why` line). This entry logs that feature plus the finishing batch.
+
+**Apps gallery — final state (verified in browser via chrome-devtools):**
+
+- **Curated order** — LIULIAN → N-Banker → graphkit-learn → Swiss River → Linlin's homepage → Local Confidential Translator → OCTOPUSSY → PLANALYSER → GraphInk.
+- **Multi-image cards** — LIULIAN (studio + mobile), N-Banker (chat + canvas), and Linlin's homepage (site + blog) each carry 2 slides with bottom dots (shown when the card is collapsed, hidden on hover) + pointer swipe; single-image cards render no dots.
+- **Lightbox** — Zoom opens a full-screen viewer; prev/next arrows (mouse) and ArrowLeft / ArrowRight (keyboard) cycle the card's frames, Esc closes.
+- **No-link projects explained** — N-Banker (`Private / NDA engagement — no public repo or live demo.`), PLANALYSER (`Industrial NDA project — code and data are private.`), GraphInk (`Research in progress — the library is not released yet.`).
+- **"this website" → "Linlin's homepage"** naming.
+
+**Finishing batch (this session):**
+
+- **Hi-res screenshots** — LIULIAN, N-Banker, and Linlin's homepage cards now point at dedicated `res/portfolio/img/*.png` high-res screenshots (1280×644 / 1400×900) instead of the small `res/figures/*.webp` thumbnails. Diagram/chart cards (graphkit-learn, Swiss River, GraphInk, OCTOPUSSY) deliberately keep their `.svg` sources — vector stays sharper than a raster export. The homepage's 2nd frame (blog) stays `res/figures/2026_blog.webp` (no portfolio/img blog shot exists).
+- **Single-page consolidation** — deleted `portfolio.html` (the "Detailed" filter/search/sort view) per Linlin; removed the `Cards | Detailed` toggle from the nav and the "Detailed view" footer link. `apps-gallery.html` is now the one apps page; grep-verified no dangling `portfolio.html` links remain.
+
+**Home Projects carousel (`index_en.html` + locales):** the LIULIAN card now shows `2026_liulian_architecture.png` (`.project-image--contain`), its primary href targets the `liulian-python` GitHub repo, and the **Demo** link was removed (public demo URL retired). The now-unused `proj_link.demo` key was dropped from all four locales; i18n parity re-verified, all locales valid JSON.
 
 # 2026-04-23
 
