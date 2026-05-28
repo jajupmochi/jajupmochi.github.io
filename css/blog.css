@@ -95,17 +95,19 @@
 
 /* ----- Main layout ----- */
 /* Narrower measure (≈68ch) — long handwriting lines are tiring to read */
-.blog-main { max-width: 720px; margin: 0 auto; padding: 2.4em 1.2em 3em; }
+.blog-main { max-width: 1060px; margin: 0 auto; padding: 2.4em 1.2em 3em; }
+/* a single post keeps a narrow ~720px reading measure; the index uses the full width */
+#blogPost { max-width: 720px; margin: 0 auto; }
 
 /* ----- Index ----- */
 .blog-index-head { text-align: center; margin-bottom: 2.4em; }
 /* Override the parchment .section-title scrawl (Reenie Beanie) with clear Patrick Hand */
 .blog-index-title {
   font-family: 'Patrick Hand', 'Caveat', cursive !important;
-  font-size: 2.6em !important; margin: 0 0 0.2em !important;
+  font-size: 2.4rem !important; margin: 0 0 0.2em !important;
 }
 .blog-index-tagline {
-  font-family: 'Patrick Hand', 'LXGW WenKai', cursive; font-size: 1.25em;
+  font-family: 'Patrick Hand', 'LXGW WenKai', cursive; font-size: 1.05rem;
   color: var(--blog-ink-soft); margin: 0; transform: rotate(-0.4deg);
 }
 /* ----- Index controls: search · sort · view-mode ----- */
@@ -203,10 +205,10 @@
 .blog-card-date { font-family: 'JetBrains Mono', monospace; font-size: 0.8em; color: var(--blog-maroon-br); }
 .blog-card-read { font-size: 0.8em; color: var(--blog-ink-soft); }
 .blog-card-title {
-  font-family: 'Patrick Hand', 'LXGW WenKai', cursive !important; font-weight: 700; font-size: 1.5em;
+  font-family: 'Patrick Hand', 'LXGW WenKai', cursive !important; font-weight: 700; font-size: 1.15rem;
   line-height: 1.25; margin: 0.1em 0 0.3em; color: var(--blog-ink);
 }
-.blog-card-excerpt { font-size: 0.98em; line-height: 1.6; color: var(--blog-ink-soft); margin: 0 0 0.6em; }
+.blog-card-excerpt { font-size: 0.9rem; line-height: 1.5; color: var(--blog-ink-soft); margin: 0 0 0.6em; }
 .blog-card-tags { display: flex; flex-wrap: wrap; gap: 0.4em; }
 .blog-tag {
   font-family: 'JetBrains Mono', monospace; font-size: 0.72em;

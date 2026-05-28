@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linlin Jia — Blog</title>
@@ -6,7 +7,7 @@
     <atom:link href="https://jajupmochi.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Notes on ML, tooling, and building things — written human × AI, in four languages.</description>
     <language>en</language>
-    <lastBuildDate>Thu, 28 May 2026 09:48:21 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 15:01:40 GMT</lastBuildDate>
     <item>
       <title>Ubuntu 上把搜狗换成 fcitx5：云拼音、模糊音，外加一只跑动的狗</title>
       <link>https://jajupmochi.github.io/blog.html?post=ubuntu-fcitx5-pinyin&amp;lang=zh</link>
