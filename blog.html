@@ -19,6 +19,7 @@
     <title>Blog — Linlin Jia, Ph.D.</title>
     <meta name="description" content="Notes on machine learning, tooling, and building things — by Linlin Jia. Markdown / LaTeX / Jupyter, four languages, human × AI.">
     <link rel="canonical" href="https://jajupmochi.github.io/blog.html">
+    <link rel="alternate" type="application/rss+xml" title="Linlin Jia — Blog" href="feed.xml">
 
     <!-- Fonts (match homepage) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,6 +54,11 @@
             </a>
             <div class="blog-nav-right">
                 <a href="index_en.html" class="blog-nav-home" data-i18n="blog.nav_home">← Home</a>
+                <!-- Reading size: Standard / Comfort (post view only; shown by blog.js) -->
+                <div class="blog-reading" id="blogReading" role="group" aria-label="Reading size" hidden>
+                    <button type="button" data-fs="standard" class="active" aria-label="Standard text size">A</button>
+                    <button type="button" data-fs="comfort" aria-label="Comfortable text size">A</button>
+                </div>
                 <div class="blog-lang-switch" role="group" aria-label="Language">
                     <button data-lang="en" class="active">EN</button>
                     <button data-lang="zh">中文</button>
@@ -83,7 +89,24 @@
                 <h1 class="blog-index-title section-title" data-i18n="blog.title">Blog</h1>
                 <p class="blog-index-tagline" data-i18n="blog.tagline">Notes on ML, tooling, and building things — written human × AI, in four languages.</p>
             </header>
-            <div id="blogPostList" class="blog-post-list">
+            <!-- Controls: search · sort · view-mode (gallery / list / compact) -->
+            <div class="blog-controls" id="blogControls" hidden>
+                <div class="blog-search">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="search" id="blogSearch" autocomplete="off"
+                           data-i18n-ph="blog.search" placeholder="Search posts…">
+                </div>
+                <select class="blog-sort" id="blogSort" aria-label="Sort posts"></select>
+                <div class="blog-viewmodes" id="blogViewModes" role="group" aria-label="View mode">
+                    <button type="button" data-view="gallery" title="Gallery"><i class="fas fa-table-cells-large" aria-hidden="true"></i></button>
+                    <button type="button" data-view="list" class="active" title="List"><i class="fas fa-list" aria-hidden="true"></i></button>
+                    <button type="button" data-view="compact" title="Compact"><i class="fas fa-bars" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <!-- Tag / category filter chips -->
+            <div class="blog-tagfilter" id="blogTagFilter" hidden></div>
+
+            <div id="blogPostList" class="blog-post-list" data-view="list">
                 <!-- post cards injected by js/blog.js -->
                 <p class="blog-loading" data-i18n="blog.loading">Loading posts…</p>
             </div>
@@ -103,7 +126,8 @@
     <footer class="blog-footer">
         <p>© <span id="blogYear"></span> Linlin Jia ·
            <a href="index_en.html" data-i18n="blog.nav_home">← Home</a> ·
-           <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a>
+           <a href="https://github.com/jajupmochi" target="_blank" rel="noopener">GitHub</a> ·
+           <a href="feed.xml" target="_blank" rel="noopener" title="RSS feed"><i class="fas fa-rss" aria-hidden="true"></i> RSS</a>
         </p>
         <p class="blog-footer-note" data-i18n="blog.foot_note">Built as a static, client-rendered blog — Markdown · LaTeX · Jupyter · Mermaid.</p>
     </footer>

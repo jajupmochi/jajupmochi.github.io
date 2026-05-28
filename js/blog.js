@@ -37,6 +37,9 @@
       'blog.empty': 'No posts yet. Check back soon.',
       'blog.readmore': 'Read →',
       'blog.copy': 'Copy', 'blog.copied': 'Copied!', 'blog.contents': 'Contents',
+      'blog.search': 'Search posts…', 'blog.all': 'All', 'blog.noresults': 'No posts match your search.',
+      'sort.newest': 'Newest', 'sort.oldest': 'Oldest', 'sort.reading': 'Reading time', 'sort.title': 'Title A–Z',
+      'blog.cite': 'Cite this post', 'blog.edit': 'Edit on GitHub', 'blog.updated': 'Updated', 'blog.comments': 'Comments',
       'st.human': 'human-written',
       'st.ai': 'AI-translated',
       'st.ai_edited': 'AI draft · edited, unreviewed',
@@ -57,6 +60,9 @@
       'blog.empty': '还没有文章，敬请期待。',
       'blog.readmore': '阅读 →',
       'blog.copy': '复制', 'blog.copied': '已复制!', 'blog.contents': '目录',
+      'blog.search': '搜索文章…', 'blog.all': '全部', 'blog.noresults': '没有匹配的文章。',
+      'sort.newest': '最新', 'sort.oldest': '最早', 'sort.reading': '阅读时长', 'sort.title': '标题 A–Z',
+      'blog.cite': '引用本文', 'blog.edit': '在 GitHub 编辑', 'blog.updated': '更新于', 'blog.comments': '评论',
       'st.human': '人类撰写',
       'st.ai': 'AI 翻译',
       'st.ai_edited': 'AI 起草 · 人工编辑 · 未审阅',
@@ -77,6 +83,9 @@
       'blog.empty': 'Pas encore d\'articles. Revenez bientôt.',
       'blog.readmore': 'Lire →',
       'blog.copy': 'Copier', 'blog.copied': 'Copié !', 'blog.contents': 'Sommaire',
+      'blog.search': 'Rechercher…', 'blog.all': 'Tous', 'blog.noresults': 'Aucun article ne correspond.',
+      'sort.newest': 'Plus récents', 'sort.oldest': 'Plus anciens', 'sort.reading': 'Temps de lecture', 'sort.title': 'Titre A–Z',
+      'blog.cite': 'Citer cet article', 'blog.edit': 'Éditer sur GitHub', 'blog.updated': 'Mis à jour', 'blog.comments': 'Commentaires',
       'st.human': 'écrit par un humain',
       'st.ai': 'traduit par IA',
       'st.ai_edited': 'brouillon IA · édité, non relu',
@@ -97,6 +106,9 @@
       'blog.empty': 'Noch keine Beiträge. Schau bald wieder vorbei.',
       'blog.readmore': 'Lesen →',
       'blog.copy': 'Kopieren', 'blog.copied': 'Kopiert!', 'blog.contents': 'Inhalt',
+      'blog.search': 'Beiträge suchen…', 'blog.all': 'Alle', 'blog.noresults': 'Keine passenden Beiträge.',
+      'sort.newest': 'Neueste', 'sort.oldest': 'Älteste', 'sort.reading': 'Lesezeit', 'sort.title': 'Titel A–Z',
+      'blog.cite': 'Diesen Beitrag zitieren', 'blog.edit': 'Auf GitHub bearbeiten', 'blog.updated': 'Aktualisiert', 'blog.comments': 'Kommentare',
       'st.human': 'von Menschen geschrieben',
       'st.ai': 'KI-übersetzt',
       'st.ai_edited': 'KI-Entwurf · bearbeitet, ungeprüft',
@@ -215,6 +227,9 @@
       let lng = '';
       const m = (code.className || '').match(/language-([\w+#.-]+)/i);
       if (m) lng = m[1];
+      // text / plaintext / no-language → soft-wrap; real code keeps structure (h-scroll)
+      const isText = !lng || /^(text|plaintext|plain|txt|nohighlight|none)$/i.test(lng);
+      if (isText) pre.classList.add('wrap');
       const bar = document.createElement('div');
       bar.className = 'code-bar';
       bar.contentEditable = 'false';
@@ -282,44 +297,147 @@
     return post.langs[0];
   }
 
+  // ---- Index: search · tag filter · sort · 3 view modes -------------------
+  const indexState = { q: '', tag: null, sort: 'newest', view: localStorage.getItem('blogView') || 'list' };
+  let indexWired = false;
+
+  function allTags() {
+    const m = new Map();
+    (registry.posts || []).forEach(p => (p.tags || []).forEach(tg => m.set(tg, (m.get(tg) || 0) + 1)));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  }
+  function sortOptions() {
+    return [['newest', t('sort.newest')], ['oldest', t('sort.oldest')],
+            ['reading', t('sort.reading')], ['title', t('sort.title')]];
+  }
+  function rmOf(p) {
+    if (!p.readingMinutes) return 0;
+    return p.readingMinutes[lang] || Object.values(p.readingMinutes)[0] || 0;
+  }
+  function titleOf(p) {
+    const cl = pickLang(p);
+    return (p.title && (p.title[lang] || p.title[cl])) || p.slug;
+  }
+
+  function buildControls() {
+    const controls = document.getElementById('blogControls');
+    const tagWrap = document.getElementById('blogTagFilter');
+    const sortSel = document.getElementById('blogSort');
+    const search = document.getElementById('blogSearch');
+    const vmodes = document.getElementById('blogViewModes');
+    if (!controls) return;
+    controls.hidden = false;
+    sortSel.innerHTML = sortOptions().map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+    sortSel.value = indexState.sort;
+    if (search) { search.placeholder = t('blog.search'); search.value = indexState.q; }
+    const tags = allTags();
+    if (tags.length) {
+      tagWrap.hidden = false;
+      tagWrap.innerHTML =
+        `<button class="blog-filterchip ${!indexState.tag ? 'active' : ''}" data-tag="">${t('blog.all')}</button>` +
+        tags.map(([tg, n]) => `<button class="blog-filterchip ${indexState.tag === tg ? 'active' : ''}" data-tag="${tg}">${tg} <small>${n}</small></button>`).join('');
+    }
+    vmodes.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.view === indexState.view));
+
+    if (indexWired) return;
+    indexWired = true;
+    if (search) search.addEventListener('input', e => { indexState.q = e.target.value.trim().toLowerCase(); renderCards(); });
+    sortSel.addEventListener('change', e => { indexState.sort = e.target.value; renderCards(); });
+    vmodes.addEventListener('click', e => {
+      const b = e.target.closest('button[data-view]'); if (!b) return;
+      indexState.view = b.dataset.view; localStorage.setItem('blogView', indexState.view);
+      vmodes.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      renderCards();
+    });
+    tagWrap.addEventListener('click', e => {
+      const b = e.target.closest('button[data-tag]'); if (!b) return;
+      indexState.tag = b.dataset.tag || null;
+      tagWrap.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      renderCards();
+    });
+  }
+
+  function filteredPosts() {
+    let posts = (registry.posts || []).slice();
+    if (indexState.tag) posts = posts.filter(p => (p.tags || []).includes(indexState.tag));
+    if (indexState.q) {
+      posts = posts.filter(p => {
+        const cl = pickLang(p);
+        const hay = [
+          (p.title && (p.title[lang] || p.title[cl])) || '',
+          (p.excerpt && (p.excerpt[lang] || p.excerpt[cl])) || '',
+          (p.tags || []).join(' ')
+        ].join(' ').toLowerCase();
+        return hay.includes(indexState.q);
+      });
+    }
+    const s = indexState.sort;
+    posts.sort((a, b) => {
+      if (s === 'oldest') return (a.date || '').localeCompare(b.date || '');
+      if (s === 'reading') return rmOf(b) - rmOf(a);
+      if (s === 'title') return titleOf(a).localeCompare(titleOf(b));
+      return (b.date || '').localeCompare(a.date || '');
+    });
+    return posts;
+  }
+
+  function cardHTML(p, view) {
+    const cl = pickLang(p);
+    const title = titleOf(p);
+    const excerpt = (p.excerpt && (p.excerpt[lang] || p.excerpt[cl])) || '';
+    const cover = p.cover ? `blog-posts/${p.slug}/${p.cover}` : '';
+    const rm = (p.readingMinutes && (p.readingMinutes[lang] || p.readingMinutes[cl])) || null;
+    const tags = (p.tags || []).slice(0, 5).map(tg => `<span class="blog-tag">${tg}</span>`).join('');
+    const status = (p.translationStatus && p.translationStatus[lang]) || null;
+    const fallbackNote = (!p.langs.includes(lang))
+      ? `<span class="blog-fallback-chip">${t('blog.fallback').replace('{LANG}', t('lang.' + cl))}</span>` : '';
+    const href = `blog.html?post=${encodeURIComponent(p.slug)}&lang=${lang}`;
+    if (view === 'compact') {
+      return `<a class="blog-card blog-card-compact" href="${href}">
+        <time class="blog-card-date">${p.date || ''}</time>
+        <h2 class="blog-card-title">${title}</h2>
+        <div class="blog-card-tags">${tags}</div>
+      </a>`;
+    }
+    return `<a class="blog-card" href="${href}">
+      ${cover ? `<div class="blog-card-cover"><img src="${cover}" alt="" loading="lazy"></div>` : ''}
+      <div class="blog-card-body">
+        <div class="blog-card-metarow">
+          <time class="blog-card-date">${p.date || ''}</time>
+          ${rm ? `<span class="blog-card-read">${rm} ${t('blog.read')}</span>` : ''}
+          ${status ? statusBadge(status) : ''}
+        </div>
+        <h2 class="blog-card-title">${title}</h2>
+        <p class="blog-card-excerpt">${excerpt}</p>
+        <div class="blog-card-tags">${tags}</div>
+        ${fallbackNote}
+        <span class="blog-card-more">${t('blog.readmore')}</span>
+      </div>
+    </a>`;
+  }
+
+  function renderCards() {
+    const list = document.getElementById('blogPostList');
+    const posts = filteredPosts();
+    list.setAttribute('data-view', indexState.view);
+    list.innerHTML = posts.length
+      ? posts.map(p => cardHTML(p, indexState.view)).join('')
+      : `<p class="blog-empty">${t('blog.noresults')}</p>`;
+  }
+
   function renderIndex() {
     document.getElementById('blogPost').hidden = true;
     resetChrome();   // hide TOC + reading-progress on the index
-    const idx = document.getElementById('blogIndex');
-    idx.hidden = false;
+    document.getElementById('blogIndex').hidden = false;
     const list = document.getElementById('blogPostList');
     if (!registry || !registry.posts || !registry.posts.length) {
+      const c = document.getElementById('blogControls'); if (c) c.hidden = true;
+      const tf = document.getElementById('blogTagFilter'); if (tf) tf.hidden = true;
       list.innerHTML = `<p class="blog-empty">${t('blog.empty')}</p>`;
       return;
     }
-    const posts = registry.posts.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    list.innerHTML = posts.map(p => {
-      const cl = pickLang(p);
-      const title = (p.title && (p.title[lang] || p.title[cl])) || p.slug;
-      const excerpt = (p.excerpt && (p.excerpt[lang] || p.excerpt[cl])) || '';
-      const cover = p.cover ? `blog-posts/${p.slug}/${p.cover}` : '';
-      const rm = (p.readingMinutes && (p.readingMinutes[lang] || p.readingMinutes[cl])) || null;
-      const tags = (p.tags || []).slice(0, 5).map(tg => `<span class="blog-tag">${tg}</span>`).join('');
-      const status = (p.translationStatus && p.translationStatus[lang]) || null;
-      const fallbackNote = (!p.langs.includes(lang))
-        ? `<span class="blog-fallback-chip">${t('blog.fallback').replace('{LANG}', t('lang.' + cl))}</span>` : '';
-      return `
-        <a class="blog-card" href="blog.html?post=${encodeURIComponent(p.slug)}&lang=${lang}">
-          ${cover ? `<div class="blog-card-cover"><img src="${cover}" alt="" loading="lazy"></div>` : ''}
-          <div class="blog-card-body">
-            <div class="blog-card-metarow">
-              <time class="blog-card-date">${p.date || ''}</time>
-              ${rm ? `<span class="blog-card-read">${rm} ${t('blog.read')}</span>` : ''}
-              ${status ? statusBadge(status) : ''}
-            </div>
-            <h2 class="blog-card-title">${title}</h2>
-            <p class="blog-card-excerpt">${excerpt}</p>
-            <div class="blog-card-tags">${tags}</div>
-            ${fallbackNote}
-            <span class="blog-card-more">${t('blog.readmore')}</span>
-          </div>
-        </a>`;
-    }).join('');
+    buildControls();
+    renderCards();
   }
 
   async function renderPost(slug) {
@@ -328,6 +446,7 @@
     document.getElementById('blogIndex').hidden = true;
     const art = document.getElementById('blogPost');
     art.hidden = false;
+    const rd = document.getElementById('blogReading'); if (rd) rd.hidden = false;  // reading-size toggle: post view only
 
     const cl = pickLang(post);
     const status = (post.translationStatus && post.translationStatus[cl]) || null;
@@ -369,6 +488,7 @@
       // Title for browser tab
       const title = (post.title && (post.title[cl] || post.title[lang])) || slug;
       document.title = title + ' — Linlin Jia';
+      buildPostFoot(post, cl, title);   // cite (BibTeX/APA) · edit-on-GitHub · comments
       // Scroll to anchor if present in hash
       if (location.hash) {
         const target = document.getElementById(location.hash.slice(1));
@@ -381,6 +501,74 @@
 
   function statusKey(st) {
     return ({ human: 'human', ai: 'ai', ai_edited: 'ai_edited', checked: 'checked', pending: 'pending' })[st] || 'pending';
+  }
+
+  // ---- Post footer: cite · edit-on-GitHub · comments ----------------------
+  const REPO = 'jajupmochi/jajupmochi.github.io';
+  // Giscus: fill repoId + categoryId from https://giscus.app after enabling
+  // GitHub Discussions on the repo. Left blank → comments are simply not shown.
+  const GISCUS = { repo: REPO, repoId: '', category: 'Announcements', categoryId: '' };
+
+  function copyButtonHandler(btn, text) {
+    const done = () => {
+      btn.textContent = t('blog.copied'); btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = t('blog.copy'); btn.classList.remove('copied'); }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    else fallbackCopy(text, done);
+  }
+
+  function buildPostFoot(post, cl, title) {
+    const foot = document.getElementById('blogPostFoot');
+    if (!foot) return;
+    const year = (post.date || '').slice(0, 4) || String(new Date().getFullYear());
+    const url = `https://jajupmochi.github.io/blog.html?post=${post.slug}&lang=${cl}`;
+    const key = 'jia' + year + post.slug.replace(/[^a-z0-9]/gi, '');
+    const bib = `@misc{${key},\n  author       = {Linlin Jia},\n  title        = {${title}},\n  year         = {${year}},\n  howpublished = {\\url{${url}}},\n  note         = {Blog post, jajupmochi.github.io}\n}`;
+    const apa = `Jia, L. (${year}). ${title}. Linlin Jia's Blog. ${url}`;
+    const ghEdit = `https://github.com/${REPO}/edit/master/blog-posts/${post.slug}/${cl}.md`;
+    const updated = post.updated || post.date || '';
+
+    foot.innerHTML = `
+      <section class="blog-cite">
+        <h3 class="blog-foot-h">${t('blog.cite')}</h3>
+        <div class="blog-cite-block">
+          <div class="blog-cite-head"><span>BibTeX</span><button type="button" class="code-copy" data-cite="bib">${t('blog.copy')}</button></div>
+          <pre class="blog-cite-pre" data-cite-out="bib"></pre>
+        </div>
+        <div class="blog-cite-block">
+          <div class="blog-cite-head"><span>APA</span><button type="button" class="code-copy" data-cite="apa">${t('blog.copy')}</button></div>
+          <pre class="blog-cite-pre" data-cite-out="apa"></pre>
+        </div>
+      </section>
+      <p class="blog-foot-meta">
+        ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${updated}</span><span class="blog-foot-sep">·</span>` : ''}
+        <a href="${ghEdit}" target="_blank" rel="noopener"><i class="fas fa-pen" aria-hidden="true"></i> ${t('blog.edit')}</a>
+      </p>
+      <section class="blog-comments" id="blogComments"></section>`;
+    foot.querySelector('[data-cite-out="bib"]').textContent = bib;
+    foot.querySelector('[data-cite-out="apa"]').textContent = apa;
+    foot.querySelector('[data-cite="bib"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, bib));
+    foot.querySelector('[data-cite="apa"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, apa));
+    mountGiscus();
+  }
+
+  function mountGiscus() {
+    const mount = document.getElementById('blogComments');
+    if (!mount || !GISCUS.repoId || !GISCUS.categoryId) return;  // not configured → no comments UI
+    mount.innerHTML = `<h3 class="blog-foot-h">${t('blog.comments')}</h3>`;
+    const s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.async = true; s.crossOrigin = 'anonymous';
+    Object.entries({
+      'data-repo': GISCUS.repo, 'data-repo-id': GISCUS.repoId,
+      'data-category': GISCUS.category, 'data-category-id': GISCUS.categoryId,
+      'data-mapping': 'pathname', 'data-strict': '1', 'data-reactions-enabled': '1',
+      'data-emit-metadata': '0', 'data-input-position': 'top', 'data-theme': 'light',
+      'data-lang': lang
+    }).forEach(([k, v]) => s.setAttribute(k, v));
+    mount.appendChild(s);
   }
 
   // ---- Table of contents (h2 + h3) + scroll-spy ---------------------------
@@ -457,6 +645,7 @@
     if (toc) toc.hidden = true;
     const bar = document.getElementById('blogProgress');
     if (bar) bar.classList.remove('visible');
+    const rd = document.getElementById('blogReading'); if (rd) rd.hidden = true;
     if (tocObserver) tocObserver.disconnect();
   }
 
@@ -482,11 +671,30 @@
     });
   }
 
+  // ---- Reading size: Standard (default) / Comfort ----
+  function applyReadingMode(mode) {
+    const comfort = mode === 'comfort';
+    document.body.classList.toggle('reading-comfort', comfort);
+    document.querySelectorAll('#blogReading button').forEach(b =>
+      b.classList.toggle('active', b.dataset.fs === (comfort ? 'comfort' : 'standard')));
+    try { localStorage.setItem('blogReading', comfort ? 'comfort' : 'standard'); } catch (e) {}
+  }
+  function wireReadingToggle() {
+    const box = document.getElementById('blogReading');
+    if (!box) return;
+    box.addEventListener('click', e => {
+      const b = e.target.closest('button[data-fs]'); if (!b) return;
+      applyReadingMode(b.dataset.fs);
+    });
+  }
+
   async function init() {
     const yearEl = document.getElementById('blogYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
     applyChromeI18n();
     wireLangSwitch();
+    wireReadingToggle();
+    applyReadingMode(localStorage.getItem('blogReading') || 'standard');
     try {
       const res = await fetch(REGISTRY_URL, { cache: 'no-cache' });
       registry = await res.json();
