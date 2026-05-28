@@ -1,15 +1,105 @@
 {
   "posts": [
     {
+      "slug": "how-i-built-this-site",
+      "date": "2026-05-28",
+      "langs": [
+        "en",
+        "zh"
+      ],
+      "primaryLang": "en",
+      "tags": [
+        "web",
+        "static-site",
+        "i18n",
+        "github-pages",
+        "design",
+        "human×AI"
+      ],
+      "translationStatus": {
+        "en": "ai_edited",
+        "zh": "ai_edited",
+        "fr": "pending",
+        "de": "pending"
+      },
+      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "readingMinutes": {
+        "en": 7,
+        "zh": 7
+      },
+      "title": {
+        "en": "How I built this whole site: static, four-language, hand-illustrated",
+        "zh": "我是怎么搭起整个个人站点的：纯静态、四语言、手绘风"
+      },
+      "excerpt": {
+        "en": "A personal academic site as plain HTML/CSS/JS on GitHub Pages — runtime i18n from JSON, data-driven cards, a hand-built parchment design system, and git-push deploy. Copy-paste reproducible.",
+        "zh": "把个人学术站做成 GitHub Pages 上的纯 HTML/CSS/JS：运行时从 JSON 做 i18n、数据驱动卡片、手工羊皮纸设计系统、git push 即部署。可复制复刻。"
+      }
+    },
+    {
+      "slug": "how-i-built-this-blog",
+      "date": "2026-05-28",
+      "langs": [
+        "en",
+        "zh"
+      ],
+      "primaryLang": "en",
+      "tags": [
+        "web",
+        "blog",
+        "markdown",
+        "javascript",
+        "github-pages",
+        "human×AI"
+      ],
+      "translationStatus": {
+        "en": "ai_edited",
+        "zh": "ai_edited",
+        "fr": "pending",
+        "de": "pending"
+      },
+      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "readingMinutes": {
+        "en": 6,
+        "zh": 6
+      },
+      "title": {
+        "en": "How I built this blog: a no-backend, client-rendered, four-language engine",
+        "zh": "我是怎么搭起这个博客的：无后端、客户端渲染、四语言引擎"
+      },
+      "excerpt": {
+        "en": "A blog with no second toolchain: Markdown posts fetched and rendered in the browser with marked, highlight.js, KaTeX, and mermaid; a JSON registry; TOC, reading progress, and a reading-size toggle. Reproducible by reading.",
+        "zh": "不要第二套工具链的博客：Markdown 文章在浏览器里用 marked、highlight.js、KaTeX、mermaid 渲染；JSON registry；目录、阅读进度、字号切换。照着读就能复刻。"
+      }
+    },
+    {
       "slug": "ubuntu-fcitx5-pinyin",
       "date": "2026-05-27",
-      "langs": ["zh", "en"],
+      "langs": [
+        "zh",
+        "en"
+      ],
       "primaryLang": "zh",
-      "tags": ["linux", "ubuntu", "fcitx5", "input-method", "tooling", "human×AI"],
-      "translationStatus": { "zh": "ai_edited", "en": "ai_edited", "fr": "pending", "de": "pending" },
+      "tags": [
+        "linux",
+        "ubuntu",
+        "fcitx5",
+        "input-method",
+        "tooling",
+        "human×AI"
+      ],
+      "translationStatus": {
+        "zh": "ai_edited",
+        "en": "ai_edited",
+        "fr": "pending",
+        "de": "pending"
+      },
       "author": "jajupmochi × Claude Code (Opus 4.7)",
       "cover": "assets/final-with-dog.png",
-      "readingMinutes": { "zh": 12, "en": 13 },
+      "readingMinutes": {
+        "zh": 12,
+        "en": 13
+      },
       "title": {
         "zh": "Ubuntu 上把搜狗换成 fcitx5：云拼音、模糊音，外加一只跑动的狗",
         "en": "Replacing Sogou with fcitx5 on Ubuntu: cloud pinyin, fuzzy pinyin, and a running dog",
