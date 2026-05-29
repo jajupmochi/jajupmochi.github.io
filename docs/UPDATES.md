@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-05-29](#2026-05-29)
+    - [V1 — Multi-image project cards auto-advance](#v1--multi-image-project-cards-auto-advance) — gallery + homepage multi-image carousels now auto-cycle every ~4.2 s (pause on hover; disabled under `prefers-reduced-motion`).
 - [2026-05-28](#2026-05-28)
     - [V6 — Homepage Projects now render from the shared data source (DRY, i18n preserved)](#v6--homepage-projects-now-render-from-the-shared-data-source-dry-i18n-preserved) — Homepage `#projectsTrack` is rendered by `Projects.mountHome()` from the same `window.PROJECTS` as the gallery — the duplicate hardcoded 11-card list is gone. `homeCardHTML` emits the existing `.project-card` structure with `data-i18n` keys so `main.js`'s `applyTranslations` (4-lang), carousel, lightbox, card-click, and filter all keep working untouched. SEO preserved (single SVG → `<object>`); gklearn stats pills + liulian/nbanker dots retained. Verified en/zh/fr with no English leak; gallery (9 cards) unaffected.
     - [V5 — App Gallery merged into one data-driven page (Cards+Detailed), bento cards](#v5--app-gallery-merged-into-one-data-driven-page-cardsdetailed-bento-cards) — Merged `apps-gallery.html` + `portfolio.html` into **one data-driven page** (approach A): `js/projects-data.js` (data only) + `js/projects-render.js` (render logic) + CSS (design) — clean separation. In-page `Cards | Detailed` toggle (localStorage-persisted), homepage-style controls (filter pills + search + **Sort**). Cards view is now a **bento** (featured LIULIAN spans 2×2, varied tiles — de-monotonous); Detailed view = project-cards. Shared carousel + lightbox (prev/next, counter, scroll-lock). `portfolio.html` deleted.
@@ -40,6 +42,12 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-29
+
+## V1 — Multi-image project cards auto-advance
+
+Per Linlin: multi-image project cards were static — make them auto-switch. Both carousel implementations — gallery `js/projects-render.js` `initCarousel` and homepage `js/main.js` `initProjectImageCarousels` — now auto-advance every ~4.2 s via a self-rescheduling `setTimeout`, **pause on hover** (`pointerenter`/`pointerleave`), and are **disabled under `prefers-reduced-motion`**. Manual dot-click / swipe reschedules the timer (no immediate double-jump). Verified in-browser: gallery LIULIAN cycles 0→1→0; homepage LIULIAN advances.
 
 # 2026-05-28
 

@@ -81,12 +81,15 @@
     const slides = Array.from(track.querySelectorAll('.g-slide'));
     if (!dots || slides.length < 2) return;
     const area = track.parentElement;
-    let idx = 0;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let idx = 0, timer = null, paused = false;
+    function schedule() { if (reduce || paused) return; clearTimeout(timer); timer = setTimeout(function () { go(idx + 1); }, 4200); }
     function go(n) {
       idx = (n + slides.length) % slides.length;
       track.style.transform = 'translateX(' + (-idx * 100) + '%)';
       Array.from(dots.children).forEach((d, i) => d.classList.toggle('on', i === idx));
       area.dataset.idx = String(idx);
+      schedule();
     }
     slides.forEach((_, i) => {
       const d = document.createElement('i');
@@ -94,6 +97,8 @@
       dots.appendChild(d);
     });
     go(0);
+    card.addEventListener('pointerenter', function () { paused = true; clearTimeout(timer); });
+    card.addEventListener('pointerleave', function () { paused = false; schedule(); });
     let sx = null, swiped = false;
     area.addEventListener('pointerdown', e => { sx = e.clientX; swiped = false; });
     area.addEventListener('pointerup', e => {

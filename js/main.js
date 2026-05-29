@@ -1544,12 +1544,15 @@
                 const slides = Array.from(wrap.querySelectorAll('.pimg-slide'));
                 const dotsWrap = wrap.querySelector('.pimg-dots');
                 if (!track || slides.length < 2 || !dotsWrap) return;
-                let idx = 0;
+                const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                let idx = 0, timer = null, paused = false;
+                function schedule() { if (reduce || paused) return; clearTimeout(timer); timer = setTimeout(function () { go(idx + 1); }, 4200); }
                 function go(n) {
                     idx = (n + slides.length) % slides.length;
                     track.style.transform = 'translateX(' + (-idx * 100) + '%)';
                     Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('on', i === idx));
                     wrap.dataset.idx = String(idx);
+                    schedule();
                 }
                 slides.forEach(function(_, i) {
                     const d = document.createElement('i');
@@ -1557,6 +1560,8 @@
                     dotsWrap.appendChild(d);
                 });
                 go(0);
+                wrap.addEventListener('pointerenter', function () { paused = true; clearTimeout(timer); });
+                wrap.addEventListener('pointerleave', function () { paused = false; schedule(); });
                 let sx = null, swiped = false;
                 wrap.addEventListener('pointerdown', function(e) { sx = e.clientX; swiped = false; });
                 wrap.addEventListener('pointerup', function(e) {
