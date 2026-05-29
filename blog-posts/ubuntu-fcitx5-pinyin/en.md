@@ -6,6 +6,8 @@ Author: jajupmochi (human) × Claude Code (Opus 4.7)
 
 Sogou stopped typing under Wayland, the author didn't want to fall back to Xorg, so the whole thing moved to fcitx5 — and picked up a few custom touches along the way. Commands are copy-paste ready.
 
+**Full source code** — the fcitx5 config, the Kimpanel theme, the dog frames, and `dog-design.zip` — lives in the companion repo: <https://github.com/jajupmochi/ubuntu-fcitx5-pinyin>
+
 ---
 
 ## A prompt for your AI agent
@@ -155,7 +157,7 @@ echo "$GTK_IM_MODULE / $QT_IM_MODULE / $XMODIFIERS"   # expect fcitx / fcitx / @
 
 ## 5. Tuning the pinyin engine
 
-All of this edits text under `~/.config/fcitx5/conf/`. Full files in [`resources/fcitx5/`](resources/fcitx5/), copyable (read 5.1 first).
+All of this edits text under `~/.config/fcitx5/conf/`. Full files in [`resources/fcitx5/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/fcitx5), copyable (read 5.1 first).
 
 ### 5.1 Config gets rewritten (read first)
 
@@ -270,7 +272,7 @@ The candidate window flickers now and then, especially on the cloud spinner. Roo
 
 The fix isn't to patch classicui but to bypass it: let GNOME draw the panel via the Kimpanel extension. fcitx5 tells it the candidates over D-Bus; it draws with GNOME's native St toolkit, no extra system window, flicker gone. Bonus: theme, font, even a dog become controllable.
 
-Install "Input Method Panel (Kimpanel)" from the store (<https://extensions.gnome.org/extension/261/kimpanel/>, UUID `kimpanel@kde.org`), then **log out and back in**. The edited files are in [`resources/kimpanel/`](resources/kimpanel/).
+Install "Input Method Panel (Kimpanel)" from the store (<https://extensions.gnome.org/extension/261/kimpanel/>, UUID `kimpanel@kde.org`), then **log out and back in**. The edited files are in [`resources/kimpanel/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/kimpanel).
 
 Enable:
 
@@ -360,13 +362,13 @@ With `CloudPinyinAnimation=True`, while waiting on the cloud fcitx5 cycles four 
 
    ![Early hand-drawn version](assets/dog-handdrawn-early.gif)
 
-2. **The author calibrates round by round, Claude edits the script**: round cheek, rounded ears, connected neck, a perspective-correct near-side collar arc, smaller tag, trimmed rump, smaller head — seven or eight revisions. That parameterized script is at [`resources/kimpanel/dog/draw_dog_handdrawn_reference.py`](resources/kimpanel/dog/draw_dog_handdrawn_reference.py).
+2. **The author calibrates round by round, Claude edits the script**: round cheek, rounded ears, connected neck, a perspective-correct near-side collar arc, smaller tag, trimmed rump, smaller head — seven or eight revisions. That parameterized script is at [`resources/kimpanel/dog/draw_dog_handdrawn_reference.py`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/dog/draw_dog_handdrawn_reference.py).
 
 3. **Claude Design finalizes**: 8 frames, 160×120, transparent, a proper gallop gait, with trailing dust. The version in use:
 
    ![8-frame filmstrip](assets/dog-8frame-filmstrip.png)
 
-The whole design package (8 frames + notes + CSS + preview) is in [`resources/dog-design.zip`](resources/dog-design.zip).
+The whole design package (8 frames + notes + CSS + preview) is in [`resources/dog-design.zip`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/raw/main/resources/dog-design.zip).
 
 **How it moves (Claude's part, with one trap).** The naive idea is "character mapping": map each of `◐◓◑◒` to an image. But fcitx5 has only 4 spinner characters at its own cadence — at most 4 frames, uncontrollable rate. The final is 8 frames at 75ms.
 
@@ -422,7 +424,7 @@ _stopDog() {
 }
 ```
 
-Call `this._stopDog()` once in `destroy()` to avoid a leak. Full file: [`resources/kimpanel/panel.js`](resources/kimpanel/panel.js).
+Call `this._stopDog()` once in `destroy()` to avoid a leak. Full file: [`resources/kimpanel/panel.js`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/panel.js).
 
 Put the 8 PNGs `d0.png`…`d7.png` into the extension's `dog/`, then `stylesheet.css`:
 
@@ -442,7 +444,7 @@ After placing images and editing both files, **log out and back in**, type a lon
 
 ### 7.4 Lua extras
 
-The author added a calculator and weekday via fcitx5's Lua. `~/.local/share/fcitx5/lua/imeapi/extensions/custom.lua` (full file in [`resources/fcitx5/lua/custom.lua`](resources/fcitx5/lua/custom.lua)):
+The author added a calculator and weekday via fcitx5's Lua. `~/.local/share/fcitx5/lua/imeapi/extensions/custom.lua` (full file in [`resources/fcitx5/lua/custom.lua`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/fcitx5/lua/custom.lua)):
 
 ```lua
 -- Chinese mode: js(1+2)*3 -> 9 ; xq -> the weekday
@@ -477,7 +479,7 @@ The value here is swapping in your own. First, everything you can change; then h
 2. **Swap font/size (live)**: after installing the font, run that `gsettings ... font 'your-family size'`. Make sure `panel.js`'s `updateFont()` has no hardcoded `font-size` (see 7.2), or the gsetting is overridden.
 
 3. **Swap Mimi (or another animal)**:
-   - Draw with code: follow [`draw_dog_handdrawn_reference.py`](resources/kimpanel/dog/draw_dog_handdrawn_reference.py) — break the animal into ellipses/lines/polygons in PIL, nudge leg/tail coordinates per frame, supersample at `SS=6` and shrink with `LANCZOS`.
+   - Draw with code: follow [`draw_dog_handdrawn_reference.py`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/dog/draw_dog_handdrawn_reference.py) — break the animal into ellipses/lines/polygons in PIL, nudge leg/tail coordinates per frame, supersample at `SS=6` and shrink with `LANCZOS`.
    - Generate with AI: prompt a text-to-image model — "draw a side-view running X, flat cartoon style, a standard 8-frame gallop cycle, each frame 160×120, transparent PNG, all facing left, smooth leg transitions between adjacent frames, named d0.png to d7.png".
    - With N frames: drop them in `dog/`, keep N `.kimpanel-dog-i` classes, change both `% 8` in `panel.js` to `% N`. It needn't be 8 — 3 works. Relogin after.
 
@@ -498,7 +500,9 @@ The value here is swapping in your own. First, everything you can change; then h
 
 ## 10. Downloads
 
-Bundled under `resources/`:
+Everything below lives in the companion repo — clone it, or browse/download any single file online: <https://github.com/jajupmochi/ubuntu-fcitx5-pinyin>
+
+Layout under `resources/`:
 
 ```
 resources/

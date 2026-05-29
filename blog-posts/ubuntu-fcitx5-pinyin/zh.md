@@ -6,6 +6,8 @@
 
 搜狗在 Wayland 下打不出字了，作者不想退回 Xorg，于是整套换成 fcitx5，过程中顺手做了点自己的东西。命令都能直接复制。
 
+**完整代码**——fcitx5 配置、Kimpanel 主题、跑动的狗的帧图、`dog-design.zip`——都在配套仓库：<https://github.com/jajupmochi/ubuntu-fcitx5-pinyin>
+
 ---
 
 ## 给 AI Agent 的一段话
@@ -151,7 +153,7 @@ echo "$GTK_IM_MODULE / $QT_IM_MODULE / $XMODIFIERS"   # 期望 fcitx / fcitx / @
 
 ## 五、调拼音引擎
 
-以下都在 `~/.config/fcitx5/conf/` 改文本。完整文件在 [`resources/fcitx5/`](resources/fcitx5/)，可直接覆盖（先读 5.1）。
+以下都在 `~/.config/fcitx5/conf/` 改文本。完整文件在 [`resources/fcitx5/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/fcitx5)，可直接覆盖（先读 5.1）。
 
 ### 5.1 配置会被回写（先读）
 
@@ -266,7 +268,7 @@ PredictionSize=10
 
 解法不是修 classicui，而是绕过它：让 GNOME 用 Kimpanel 扩展画候选框。fcitx5 通过 D-Bus 把候选告诉扩展，扩展用 GNOME 原生 St 工具画，不建额外系统窗口，闪烁消失。附带好处：主题、字体、塞只狗都变得可控。
 
-从扩展商店装「Input Method Panel (Kimpanel)」（<https://extensions.gnome.org/extension/261/kimpanel/>，UUID `kimpanel@kde.org`），装完**注销重登**。改好的文件在 [`resources/kimpanel/`](resources/kimpanel/)。
+从扩展商店装「Input Method Panel (Kimpanel)」（<https://extensions.gnome.org/extension/261/kimpanel/>，UUID `kimpanel@kde.org`），装完**注销重登**。改好的文件在 [`resources/kimpanel/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/kimpanel)。
 
 启用：
 
@@ -356,13 +358,13 @@ updateFont(textStyle) {
 
    ![早期手绘版](assets/dog-handdrawn-early.gif)
 
-2. **作者逐轮校准、Claude 改脚本**：圆脸颊、收圆耳朵、连上脖子、项圈改成有透视的近侧弧、缩小名牌、削掉突出的屁股、缩小头……七八版。这版的参数化脚本在 [`resources/kimpanel/dog/draw_dog_handdrawn_reference.py`](resources/kimpanel/dog/draw_dog_handdrawn_reference.py)。
+2. **作者逐轮校准、Claude 改脚本**：圆脸颊、收圆耳朵、连上脖子、项圈改成有透视的近侧弧、缩小名牌、削掉突出的屁股、缩小头……七八版。这版的参数化脚本在 [`resources/kimpanel/dog/draw_dog_handdrawn_reference.py`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/dog/draw_dog_handdrawn_reference.py)。
 
 3. **Claude Design 出定稿**：8 帧、160×120、透明、标准 gallop 步态，身后加扬尘。就是现在用的版本：
 
    ![8 帧胶片条](assets/dog-8frame-filmstrip.png)
 
-整套设计包（8 帧 + 说明 + CSS + 预览）打包在 [`resources/dog-design.zip`](resources/dog-design.zip)。
+整套设计包（8 帧 + 说明 + CSS + 预览）打包在 [`resources/dog-design.zip`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/raw/main/resources/dog-design.zip)。
 
 **怎么动起来（Claude 实现，有个坑）。** 直觉是「字符映射」：把 `◐◓◑◒` 四个字符各映射一张图。但 fcitx5 只有 4 个转圈字符、节奏也由它定，最多放 4 帧、帧率不可控。定稿是 8 帧、要求 75ms 一帧。
 
@@ -418,7 +420,7 @@ _stopDog() {
 }
 ```
 
-`destroy()` 里记得调一次 `this._stopDog()` 防止泄漏。完整文件见 [`resources/kimpanel/panel.js`](resources/kimpanel/panel.js)。
+`destroy()` 里记得调一次 `this._stopDog()` 防止泄漏。完整文件见 [`resources/kimpanel/panel.js`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/panel.js)。
 
 8 张 PNG 命名 `d0.png`…`d7.png` 放进扩展 `dog/` 目录，`stylesheet.css`：
 
@@ -438,7 +440,7 @@ _stopDog() {
 
 ### 7.4 Lua 小工具
 
-顺手用 fcitx5 的 Lua 能力加了计算器和星期。`~/.local/share/fcitx5/lua/imeapi/extensions/custom.lua`（完整在 [`resources/fcitx5/lua/custom.lua`](resources/fcitx5/lua/custom.lua)）：
+顺手用 fcitx5 的 Lua 能力加了计算器和星期。`~/.local/share/fcitx5/lua/imeapi/extensions/custom.lua`（完整在 [`resources/fcitx5/lua/custom.lua`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/fcitx5/lua/custom.lua)）：
 
 ```lua
 -- 中文模式下：js(1+2)*3 -> 9 ；xq -> 星期X
@@ -473,7 +475,7 @@ ime.register_command("xq", "custom_weekday", "星期",   "alpha", "今天星期�
 2. **换字体/字号（实时）**：装好字体后跑那条 `gsettings ... font '你的字族 字号'`。务必确认 `panel.js` 的 `updateFont()` 没有硬编码 `font-size`（见 7.2），否则 gsetting 被盖。
 
 3. **换狗（或别的动物）**：
-   - 想代码画：参考 [`draw_dog_handdrawn_reference.py`](resources/kimpanel/dog/draw_dog_handdrawn_reference.py)，用 PIL 把动物拆成椭圆/线条/多边形，逐帧微调腿尾坐标，`SS=6` 超采样后 `LANCZOS` 缩小。
+   - 想代码画：参考 [`draw_dog_handdrawn_reference.py`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/blob/main/resources/kimpanel/dog/draw_dog_handdrawn_reference.py)，用 PIL 把动物拆成椭圆/线条/多边形，逐帧微调腿尾坐标，`SS=6` 超采样后 `LANCZOS` 缩小。
    - 想 AI 出图：给文生图模型这样的提示词 ——「画一只侧面奔跑的 X，卡通扁平风，标准 gallop 8 帧序列，每帧 160×120、透明 PNG、统一朝左、相邻帧腿部平滑过渡，命名 d0.png 到 d7.png」。
    - 拿到 N 帧后：放进 `dog/`，CSS 留 N 个 `.kimpanel-dog-i`，把 `panel.js` 里两处 `% 8` 改成 `% N`。帧数不必是 8，3 帧也行。改完重登。
 
@@ -494,7 +496,9 @@ ime.register_command("xq", "custom_weekday", "星期",   "alpha", "今天星期�
 
 ## 十、资源下载
 
-随文打包在 `resources/`：
+以下内容都在配套仓库——可克隆，或在线浏览/下载任意单个文件：<https://github.com/jajupmochi/ubuntu-fcitx5-pinyin>
+
+`resources/` 目录结构：
 
 ```
 resources/

@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-29](#2026-05-29)
+    - [V2 — fcitx5 blog: link the published repo + fix resource/zip links](#v2--fcitx5-blog-link-the-published-repo--fix-resourcezip-links) — added the companion-repo link (intro + Downloads) to the `ubuntu-fcitx5-pinyin` post (en+zh); its broken `resources/` links (config, theme, panel.js, custom.lua, dog script, `dog-design.zip`) repointed to the published repo (tree/blob/raw) — all verified 200.
     - [V1 — Multi-image project cards auto-advance](#v1--multi-image-project-cards-auto-advance) — gallery + homepage multi-image carousels now auto-cycle every ~4.2 s (pause on hover; disabled under `prefers-reduced-motion`).
 - [2026-05-28](#2026-05-28)
     - [V6 — Homepage Projects now render from the shared data source (DRY, i18n preserved)](#v6--homepage-projects-now-render-from-the-shared-data-source-dry-i18n-preserved) — Homepage `#projectsTrack` is rendered by `Projects.mountHome()` from the same `window.PROJECTS` as the gallery — the duplicate hardcoded 11-card list is gone. `homeCardHTML` emits the existing `.project-card` structure with `data-i18n` keys so `main.js`'s `applyTranslations` (4-lang), carousel, lightbox, card-click, and filter all keep working untouched. SEO preserved (single SVG → `<object>`); gklearn stats pills + liulian/nbanker dots retained. Verified en/zh/fr with no English leak; gallery (9 cards) unaffected.
@@ -44,6 +45,14 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-29
+
+## V2 — fcitx5 blog: link the published repo + fix resource/zip links
+
+The `ubuntu-fcitx5-pinyin` project was published to <https://github.com/jajupmochi/ubuntu-fcitx5-pinyin>. The blog post referenced `resources/…` paths (fcitx5 config, Kimpanel theme, `panel.js`, `custom.lua`, the dog script, `dog-design.zip`) that were **never bundled with the site** → all broken.
+
+- **Companion-repo link added** — both `en.md` + `zh.md` get a "Full source code" line in the intro and a repo pointer in the §10 Downloads section.
+- **All `resources/` links repointed** to the repo: directories → `/tree/main/…`, files → `/blob/main/…`, the zip → `/raw/main/resources/dog-design.zip` (direct download). 7 links per file.
+- **Link audit** — every link tested: the 6 repo resource URLs return 200; external links (Arch wiki, GNOME Kimpanel, unibeCols, LXGW WenKai, brandcolors) all 200; `assets/*` images are local and present. No broken/local links remain. Render-verified in the blog engine (en post: repo link shows, 7 repo links, 5 images load, 0 broken).
 
 ## V1 — Multi-image project cards auto-advance
 
