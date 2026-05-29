@@ -9,7 +9,7 @@
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         img-src 'self' data: blob: https:;
-        connect-src 'self' https://*.clarity.ms;
+        connect-src 'self' https://*.clarity.ms https://raw.githubusercontent.com;
         frame-src 'self';
         worker-src 'self' blob:;
         base-uri 'self';
@@ -37,6 +37,8 @@
     <!-- Syntax highlighting (highlight.js) + KaTeX CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <!-- Version-history diff rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/css/diff2html.min.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="css/main.css">
@@ -144,6 +146,9 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+    <!-- Version-history diff (jsdiff computes, diff2html renders; both reuse highlight.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js"></script>
     <script src="js/blog.js"></script>
 </body>
 </html>

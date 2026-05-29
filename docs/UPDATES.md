@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-29](#2026-05-29)
+    - [V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff](#v3--blog-post-version-history-t0t4-edit-log-view-old-version-in-page-diff) — Zhihu/Wiki-style edit history on the static blog. Registry-driven 「编辑记录」panel + "last updated · N edits · full history ↗" stamp (T0–T2, zero API), in-page **view of any past version** (T3) and **side-by-side diff** (T4) via `raw.githubusercontent` + jsdiff/diff2html, contributors + `?rev=` permalink (T4+). Verified en/zh. Design: `docs/strategy/blog-version-history-design-2026-05-29.md`.
     - [V2 — fcitx5 blog: link the published repo + fix resource/zip links](#v2--fcitx5-blog-link-the-published-repo--fix-resourcezip-links) — added the companion-repo link (intro + Downloads) to the `ubuntu-fcitx5-pinyin` post (en+zh); its broken `resources/` links (config, theme, panel.js, custom.lua, dog script, `dog-design.zip`) repointed to the published repo (tree/blob/raw) — all verified 200.
     - [V1 — Multi-image project cards auto-advance](#v1--multi-image-project-cards-auto-advance) — gallery + homepage multi-image carousels now auto-cycle every ~4.2 s (pause on hover; disabled under `prefers-reduced-motion`).
 - [2026-05-28](#2026-05-28)
@@ -45,6 +46,19 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-29
+
+## V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff
+
+Per Linlin (after the design round): build the full Zhihu/Wikipedia-style version-record tool. The blog is git-backed, so **a post's versions are its commits** — surfaced with no backend. Design doc: `docs/strategy/blog-version-history-design-2026-05-29.md`. Tiers are progressive (each layers on the same revision data):
+
+- **T0** — "Updated &lt;date&gt; · N edits · Full history ↗ · Edit on GitHub" stamp under each post (full-history link → the file's GitHub commits page).
+- **T1** — in-page **「编辑记录 / Edit history」** panel, **registry-driven**: each post gains a `revisions[]` array in `registry.json` (`{date, sha, by, summary:{en,zh}}`) → rows of date · localized summary · author. Zero API, fully static, bilingual.
+- **T2** — each revision deep-links to its **GitHub commit/diff** (`…/commit/<sha>`).
+- **T3** — **view any past version in-page**: fetch the `.md` at that commit from `raw.githubusercontent.com` (short SHAs resolve; CDN, **no API rate limit**), render through the existing `marked` pipeline, with a "you're viewing the version from … · back to latest" banner.
+- **T4** — **in-page side-by-side diff** (Zhihu/Wiki style): `jsdiff` computes a patch, `diff2html` renders it (reuses the already-loaded highlight.js).
+- **T4+** — contributors per revision (**Linlin × Claude**), `?rev=<sha>` permalink (opens that version), and the existing "edit on GitHub" = suggest-edit→PR.
+- **Plumbing** — `+8` blog i18n keys × 4 langs; CSP `connect-src += https://raw.githubusercontent.com`; `blog.html` loads jsdiff + diff2html (+ CSS) from jsDelivr (already CSP-allowed); `css/blog.css` gains the history/diff styling (parchment, timeline dots). `revisions[]` seeded for all 3 existing posts.
+- **Verified** in-browser (en + zh): stamp, 2-revision panel, view (old version loads without the later repo-link edit), diff (24 insertions / 16 deletions), localized summaries + buttons.
 
 ## V2 — fcitx5 blog: link the published repo + fix resource/zip links
 

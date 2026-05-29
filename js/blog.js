@@ -40,6 +40,7 @@
       'blog.search': 'Search posts…', 'blog.all': 'All', 'blog.noresults': 'No posts match your search.',
       'sort.newest': 'Newest', 'sort.oldest': 'Oldest', 'sort.reading': 'Reading time', 'sort.title': 'Title A–Z',
       'blog.cite': 'Cite this post', 'blog.edit': 'Edit on GitHub', 'blog.updated': 'Updated', 'blog.comments': 'Comments',
+      'blog.history': 'Edit history', 'blog.edits': 'edits', 'blog.fullhistory': 'Full history on GitHub', 'blog.viewver': 'View this version', 'blog.compare': 'Diff', 'blog.backlatest': 'Back to latest version', 'blog.viewingver': "You're viewing the version from {DATE}", 'blog.diffvs': 'Changes since {DATE}',
       'st.human': 'human-written',
       'st.ai': 'AI-translated',
       'st.ai_edited': 'AI draft · edited, unreviewed',
@@ -63,6 +64,7 @@
       'blog.search': '搜索文章…', 'blog.all': '全部', 'blog.noresults': '没有匹配的文章。',
       'sort.newest': '最新', 'sort.oldest': '最早', 'sort.reading': '阅读时长', 'sort.title': '标题 A–Z',
       'blog.cite': '引用本文', 'blog.edit': '在 GitHub 编辑', 'blog.updated': '更新于', 'blog.comments': '评论',
+      'blog.history': '编辑记录', 'blog.edits': '次编辑', 'blog.fullhistory': 'GitHub 完整历史', 'blog.viewver': '查看此版本', 'blog.compare': '差异', 'blog.backlatest': '返回最新版本', 'blog.viewingver': '正在查看 {DATE} 的版本', 'blog.diffvs': '自 {DATE} 以来的改动',
       'st.human': '人类撰写',
       'st.ai': 'AI 翻译',
       'st.ai_edited': 'AI 起草 · 人工编辑 · 未审阅',
@@ -86,6 +88,7 @@
       'blog.search': 'Rechercher…', 'blog.all': 'Tous', 'blog.noresults': 'Aucun article ne correspond.',
       'sort.newest': 'Plus récents', 'sort.oldest': 'Plus anciens', 'sort.reading': 'Temps de lecture', 'sort.title': 'Titre A–Z',
       'blog.cite': 'Citer cet article', 'blog.edit': 'Éditer sur GitHub', 'blog.updated': 'Mis à jour', 'blog.comments': 'Commentaires',
+      'blog.history': 'Historique', 'blog.edits': 'modifications', 'blog.fullhistory': 'Historique complet sur GitHub', 'blog.viewver': 'Voir cette version', 'blog.compare': 'Diff', 'blog.backlatest': 'Revenir à la dernière version', 'blog.viewingver': 'Vous consultez la version du {DATE}', 'blog.diffvs': 'Modifications depuis le {DATE}',
       'st.human': 'écrit par un humain',
       'st.ai': 'traduit par IA',
       'st.ai_edited': 'brouillon IA · édité, non relu',
@@ -109,6 +112,7 @@
       'blog.search': 'Beiträge suchen…', 'blog.all': 'Alle', 'blog.noresults': 'Keine passenden Beiträge.',
       'sort.newest': 'Neueste', 'sort.oldest': 'Älteste', 'sort.reading': 'Lesezeit', 'sort.title': 'Titel A–Z',
       'blog.cite': 'Diesen Beitrag zitieren', 'blog.edit': 'Auf GitHub bearbeiten', 'blog.updated': 'Aktualisiert', 'blog.comments': 'Kommentare',
+      'blog.history': 'Verlauf', 'blog.edits': 'Änderungen', 'blog.fullhistory': 'Vollständiger Verlauf auf GitHub', 'blog.viewver': 'Diese Version ansehen', 'blog.compare': 'Diff', 'blog.backlatest': 'Zur aktuellen Version', 'blog.viewingver': 'Sie sehen die Version vom {DATE}', 'blog.diffvs': 'Änderungen seit {DATE}',
       'st.human': 'von Menschen geschrieben',
       'st.ai': 'KI-übersetzt',
       'st.ai_edited': 'KI-Entwurf · bearbeitet, ungeprüft',
@@ -488,7 +492,10 @@
       // Title for browser tab
       const title = (post.title && (post.title[cl] || post.title[lang])) || slug;
       document.title = title + ' — Linlin Jia';
-      buildPostFoot(post, cl, title);   // cite (BibTeX/APA) · edit-on-GitHub · comments
+      buildPostFoot(post, cl, title);   // cite · history · edit-on-GitHub · comments
+      // Permalink to a specific revision (?rev=<sha>) → open that version in-page
+      const _rev = new URLSearchParams(location.search).get('rev');
+      if (_rev) { const r = (post.revisions || []).find(x => x.sha === _rev || x.sha.indexOf(_rev) === 0); if (r && r !== (post.revisions || [])[0]) showVersion(post, cl, r.sha, r.date); }
       // Scroll to anchor if present in hash
       if (location.hash) {
         const target = document.getElementById(location.hash.slice(1));
@@ -529,6 +536,8 @@
     const apa = `Jia, L. (${year}). ${title}. Linlin Jia's Blog. ${url}`;
     const ghEdit = `https://github.com/${REPO}/edit/master/blog-posts/${post.slug}/${cl}.md`;
     const updated = post.updated || post.date || '';
+    const revs = post.revisions || [];
+    const ghHist = `https://github.com/${REPO}/commits/master/blog-posts/${post.slug}/${cl}.md`;
 
     foot.innerHTML = `
       <section class="blog-cite">
@@ -543,15 +552,97 @@
         </div>
       </section>
       <p class="blog-foot-meta">
-        ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${updated}</span><span class="blog-foot-sep">·</span>` : ''}
-        <a href="${ghEdit}" target="_blank" rel="noopener"><i class="fas fa-pen" aria-hidden="true"></i> ${t('blog.edit')}</a>
+        ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${updated}</span>` : ''}
+        ${revs.length > 1 ? `<span class="blog-foot-sep">·</span><span class="blog-foot-edits">${revs.length} ${t('blog.edits')}</span>` : ''}
+        <span class="blog-foot-sep">·</span><a href="${ghHist}" target="_blank" rel="noopener">${t('blog.fullhistory')} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        <span class="blog-foot-sep">·</span><a href="${ghEdit}" target="_blank" rel="noopener"><i class="fas fa-pen" aria-hidden="true"></i> ${t('blog.edit')}</a>
       </p>
+      <section class="blog-history" id="blogHistory"></section>
       <section class="blog-comments" id="blogComments"></section>`;
     foot.querySelector('[data-cite-out="bib"]').textContent = bib;
     foot.querySelector('[data-cite-out="apa"]').textContent = apa;
     foot.querySelector('[data-cite="bib"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, bib));
     foot.querySelector('[data-cite="apa"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, apa));
+    buildHistory(post, cl);
     mountGiscus();
+  }
+
+  // ---- Version history (registry-driven; old content/diff via raw.githubusercontent, no API/rate limit) ----
+  const _verCache = {};
+  async function versionMd(slug, cl, sha) {
+    const k = slug + '@' + sha + '@' + cl;
+    if (_verCache[k] != null) return _verCache[k];
+    const url = `https://raw.githubusercontent.com/${REPO}/${sha}/blog-posts/${slug}/${cl}.md`;
+    const res = await fetch(url, { cache: 'force-cache' });
+    if (!res.ok) throw new Error('version fetch ' + res.status);
+    const md = await res.text();
+    _verCache[k] = md;
+    return md;
+  }
+
+  function buildHistory(post, cl) {
+    const host = document.getElementById('blogHistory');
+    if (!host) return;
+    const revs = post.revisions || [];
+    if (!revs.length) { host.innerHTML = ''; return; }
+    const sumOf = r => (r.summary && (r.summary[cl] || r.summary[post.primaryLang] || r.summary.en)) || '';
+    const rows = revs.map((r, i) => {
+      const latest = i === 0;
+      const ghCommit = `https://github.com/${REPO}/commit/${r.sha}`;
+      const acts = latest
+        ? `<span class="blog-rev-cur">${t('blog.updated')}</span>`
+        : `<button type="button" class="blog-rev-btn" data-act="view" data-sha="${r.sha}" data-date="${r.date}">${t('blog.viewver')}</button>` +
+          `<button type="button" class="blog-rev-btn" data-act="diff" data-sha="${r.sha}" data-date="${r.date}">${t('blog.compare')}</button>`;
+      return `<li class="blog-rev${latest ? ' is-latest' : ''}">
+        <span class="blog-rev-date">${r.date}</span>
+        <span class="blog-rev-sum">${sumOf(r)}</span>
+        ${r.by ? `<span class="blog-rev-by">${r.by}</span>` : ''}
+        <span class="blog-rev-acts">${acts}<a class="blog-rev-link" href="${ghCommit}" target="_blank" rel="noopener" title="${t('blog.compare')} · GitHub"><i class="fab fa-github" aria-hidden="true"></i></a></span>
+      </li>`;
+    }).join('');
+    host.innerHTML = `<h3 class="blog-foot-h">${t('blog.history')}</h3><ol class="blog-rev-list">${rows}</ol><div id="blogDiff" class="blog-diff" hidden></div>`;
+    host.querySelectorAll('.blog-rev-btn').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.act === 'view') showVersion(post, cl, b.dataset.sha, b.dataset.date);
+      else showDiff(post, cl, b.dataset.sha, b.dataset.date);
+    }));
+  }
+
+  async function showVersion(post, cl, sha, date) {
+    const body = document.getElementById('blogPostBody');
+    body.innerHTML = `<p class="blog-loading">${t('blog.loading')}</p>`;
+    try {
+      const md = await versionMd(post.slug, cl, sha);
+      body.innerHTML = renderMarkdown(md, post.slug);
+      postProcess(body, post.slug);
+      const banner = document.createElement('div');
+      banner.className = 'blog-ver-banner';
+      banner.innerHTML = `<span><i class="fas fa-clock-rotate-left" aria-hidden="true"></i> ${t('blog.viewingver').replace('{DATE}', date)}</span> <button type="button" class="blog-rev-btn" id="blogBackLatest">${t('blog.backlatest')}</button>`;
+      body.insertBefore(banner, body.firstChild);
+      document.getElementById('blogBackLatest').addEventListener('click', () => renderPost(post.slug));
+      buildTOC(body);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) { body.innerHTML = `<p class="blog-error">Failed to load that version (${e.message}).</p>`; }
+  }
+
+  async function showDiff(post, cl, sha, date) {
+    const panel = document.getElementById('blogDiff');
+    if (!panel) return;
+    panel.hidden = false;
+    panel.innerHTML = `<p class="blog-loading">${t('blog.loading')}</p>`;
+    try {
+      if (typeof Diff === 'undefined' || typeof Diff2Html === 'undefined') {
+        panel.innerHTML = `<p class="blog-error">Diff viewer not loaded.</p>`; return;
+      }
+      const [oldMd, newRes] = await Promise.all([
+        versionMd(post.slug, cl, sha),
+        fetch(`blog-posts/${post.slug}/${cl}.md`, { cache: 'no-cache' }).then(r => r.text())
+      ]);
+      const fname = `${post.slug}/${cl}.md`;
+      const patch = Diff.createTwoFilesPatch(`${fname} (${date})`, `${fname} (latest)`, oldMd, newRes, '', '');
+      const out = Diff2Html.html(patch, { drawFileList: false, matching: 'words', outputFormat: 'side-by-side' });
+      panel.innerHTML = `<div class="blog-diff-head">${t('blog.diffvs').replace('{DATE}', date)}</div>${out}`;
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) { panel.innerHTML = `<p class="blog-error">Diff failed (${e.message}).</p>`; }
   }
 
   function mountGiscus() {

@@ -2,6 +2,11 @@
   "posts": [
     {
       "slug": "how-i-built-this-site",
+      "updated": "2026-05-28",
+      "revisions": [
+        { "date": "2026-05-28", "sha": "5838ca6", "by": "Linlin × Claude", "summary": { "en": "Add inline screenshots", "zh": "补充内嵌截图" } },
+        { "date": "2026-05-28", "sha": "c3c3dd0", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+      ],
       "date": "2026-05-28",
       "langs": [
         "en",
@@ -39,6 +44,11 @@
     },
     {
       "slug": "how-i-built-this-blog",
+      "updated": "2026-05-28",
+      "revisions": [
+        { "date": "2026-05-28", "sha": "5838ca6", "by": "Linlin × Claude", "summary": { "en": "Add inline screenshots", "zh": "补充内嵌截图" } },
+        { "date": "2026-05-28", "sha": "c3c3dd0", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+      ],
       "date": "2026-05-28",
       "langs": [
         "en",
@@ -76,6 +86,11 @@
     },
     {
       "slug": "ubuntu-fcitx5-pinyin",
+      "updated": "2026-05-29",
+      "revisions": [
+        { "date": "2026-05-29", "sha": "cdebc55", "by": "Linlin × Claude", "summary": { "en": "Link the published GitHub repo; fix the resource & zip links", "zh": "接入已发布的代码仓库，修复资源 / zip 链接" } },
+        { "date": "2026-05-27", "sha": "ab8c9f7", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+      ],
       "date": "2026-05-27",
       "langs": [
         "zh",
