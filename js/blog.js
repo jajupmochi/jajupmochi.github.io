@@ -512,9 +512,12 @@
 
   // ---- Post footer: cite · edit-on-GitHub · comments ----------------------
   const REPO = 'jajupmochi/jajupmochi.github.io';
-  // Giscus: fill repoId + categoryId from https://giscus.app after enabling
-  // GitHub Discussions on the repo. Left blank → comments are simply not shown.
-  const GISCUS = { repo: REPO, repoId: '', category: 'Announcements', categoryId: '' };
+  // Giscus (GitHub Discussions-powered comments). repoId/categoryId from the
+  // GitHub API for this repo; "Announcements" category = only the giscus app +
+  // maintainers can open threads (spam-resistant). Mapping is 'specific' keyed
+  // by post slug because the blog routes via ?post=<slug> (every post shares
+  // the /blog.html pathname, so 'pathname' mapping would merge all threads).
+  const GISCUS = { repo: REPO, repoId: 'MDEwOlJlcG9zaXRvcnk3ODI1NDg1Ng==', category: 'Announcements', categoryId: 'DIC_kwDOBKoTCM4C-GDD' };
 
   function copyButtonHandler(btn, text) {
     const done = () => {
@@ -564,7 +567,7 @@
     foot.querySelector('[data-cite="bib"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, bib));
     foot.querySelector('[data-cite="apa"]').addEventListener('click', e => copyButtonHandler(e.currentTarget, apa));
     buildHistory(post, cl);
-    mountGiscus();
+    mountGiscus(post);
   }
 
   // ---- Version history (registry-driven; old content/diff via raw.githubusercontent, no API/rate limit) ----
@@ -645,17 +648,18 @@
     } catch (e) { panel.innerHTML = `<p class="blog-error">Diff failed (${e.message}).</p>`; }
   }
 
-  function mountGiscus() {
+  function mountGiscus(post) {
     const mount = document.getElementById('blogComments');
     if (!mount || !GISCUS.repoId || !GISCUS.categoryId) return;  // not configured → no comments UI
     mount.innerHTML = `<h3 class="blog-foot-h">${t('blog.comments')}</h3>`;
+    const term = post ? 'post:' + post.slug : (location.pathname + location.search);
     const s = document.createElement('script');
     s.src = 'https://giscus.app/client.js';
     s.async = true; s.crossOrigin = 'anonymous';
     Object.entries({
       'data-repo': GISCUS.repo, 'data-repo-id': GISCUS.repoId,
       'data-category': GISCUS.category, 'data-category-id': GISCUS.categoryId,
-      'data-mapping': 'pathname', 'data-strict': '1', 'data-reactions-enabled': '1',
+      'data-mapping': 'specific', 'data-term': term, 'data-strict': '1', 'data-reactions-enabled': '1',
       'data-emit-metadata': '0', 'data-input-position': 'top', 'data-theme': 'light',
       'data-lang': lang
     }).forEach(([k, v]) => s.setAttribute(k, v));

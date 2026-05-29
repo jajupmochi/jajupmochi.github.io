@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-29](#2026-05-29)
+    - [V4 — Comments live (giscus / GitHub Discussions)](#v4--comments-live-giscus--github-discussions) — turned on the pre-wired giscus comment system: filled `repoId`/`categoryId` (derived via the GitHub API), switched mapping `pathname`→`specific` keyed by `post:<slug>` (the blog routes via `?post=`, so `pathname` would merge every post into one thread), and opened CSP for `giscus.app` (script/frame/style). Verified: per-post thread, no console errors, in-page sign-in box.
     - [V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff](#v3--blog-post-version-history-t0t4-edit-log-view-old-version-in-page-diff) — Zhihu/Wiki-style edit history on the static blog. Registry-driven 「编辑记录」panel + "last updated · N edits · full history ↗" stamp (T0–T2, zero API), in-page **view of any past version** (T3) and **side-by-side diff** (T4) via `raw.githubusercontent` + jsdiff/diff2html, contributors + `?rev=` permalink (T4+). Verified en/zh. Design: `docs/strategy/blog-version-history-design-2026-05-29.md`.
     - [V2 — fcitx5 blog: link the published repo + fix resource/zip links](#v2--fcitx5-blog-link-the-published-repo--fix-resourcezip-links) — added the companion-repo link (intro + Downloads) to the `ubuntu-fcitx5-pinyin` post (en+zh); its broken `resources/` links (config, theme, panel.js, custom.lua, dog script, `dog-design.zip`) repointed to the published repo (tree/blob/raw) — all verified 200.
     - [V1 — Multi-image project cards auto-advance](#v1--multi-image-project-cards-auto-advance) — gallery + homepage multi-image carousels now auto-cycle every ~4.2 s (pause on hover; disabled under `prefers-reduced-motion`).
@@ -46,6 +47,16 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-29
+
+## V4 — Comments live (giscus / GitHub Discussions)
+
+The blog already had a `mountGiscus()` scaffold with blank IDs (so comments were hidden). Turned it on after Linlin enabled Discussions + installed the giscus app.
+
+- **IDs** — `repoId = MDEwOlJlcG9zaXRvcnk3ODI1NDg1Ng==`, category **Announcements** `DIC_kwDOBKoTCM4C-GDD`, derived authoritatively via `gh api` (repo `node_id`) + the discussion-categories GraphQL query (not guessed).
+- **Mapping fix** — `data-mapping` `pathname` → **`specific`** with `data-term = "post:<slug>"`. The blog is a single `blog.html` routing on `?post=<slug>`, so `pathname` mapping would have merged every post's comments into one shared thread. Slug-keyed terms give each post its own discussion (stable across title edits/translations).
+- **CSP** — added `https://giscus.app` to `script-src`, `frame-src`, and `style-src` (its loader pulls `giscus.app/default.css`). Without these the widget/iframe is blocked.
+- **Category choice** — "Announcements" type = only the giscus app + maintainers can open threads → spam-resistant (visitors comment, but can't spawn arbitrary discussions).
+- **Verified** in-browser: per-post `term`, giscus iframe mounts under the version-history panel, "Sign in with GitHub" + reactions + Write/Preview render, **0 console/CSP errors**. ("Discussion not found" is the expected first-load state — the thread is created on the first comment.)
 
 ## V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff
 
