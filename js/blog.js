@@ -660,7 +660,10 @@
       'data-repo': GISCUS.repo, 'data-repo-id': GISCUS.repoId,
       'data-category': GISCUS.category, 'data-category-id': GISCUS.categoryId,
       'data-mapping': 'specific', 'data-term': term, 'data-strict': '1', 'data-reactions-enabled': '1',
-      'data-emit-metadata': '0', 'data-input-position': 'top', 'data-theme': 'light',
+      'data-emit-metadata': '0', 'data-input-position': 'top',
+      // custom parchment theme (giscus.app's iframe fetches this absolute URL;
+      // only takes effect on the deployed site, not localhost)
+      'data-theme': 'https://jajupmochi.github.io/css/giscus-parchment.css',
       'data-lang': lang
     }).forEach(([k, v]) => s.setAttribute(k, v));
     mount.appendChild(s);

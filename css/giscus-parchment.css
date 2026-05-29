@@ -1,0 +1,142 @@
+/* ============================================================================
+ * giscus-parchment.css — custom giscus theme matching the blog's parchment look.
+ *
+ * Loaded by giscus INSIDE its cross-origin iframe via `data-theme=<this URL>`.
+ * Because it runs in the iframe (not the page), it cannot use the blog's
+ * --blog-* variables or its already-loaded fonts; everything is self-contained
+ * here (concrete colors + its own @import for the fonts).
+ *
+ * Strategy: keep giscus's light syntax-highlight palette (so code blocks inside
+ * comments still read correctly), then override the GitHub-Primer UI variables
+ * (canvas/fg/border/accent/buttons) to the parchment palette from css/blog.css,
+ * and set serif + LXGW WenKai body type so comments feel written on the page.
+ *
+ * NOTE: only verifiable on the live URL — giscus.app's iframe fetches this from
+ * https://jajupmochi.github.io/css/giscus-parchment.css; it cannot reach
+ * localhost.
+ * ========================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+main {
+  /* --- giscus light syntax-highlight palette (kept; for code in comments) --- */
+  --color-prettylights-syntax-comment: #6e7781;
+  --color-prettylights-syntax-constant: #0550ae;
+  --color-prettylights-syntax-entity: #8250df;
+  --color-prettylights-syntax-storage-modifier-import: #24292f;
+  --color-prettylights-syntax-entity-tag: #116329;
+  --color-prettylights-syntax-keyword: #cf222e;
+  --color-prettylights-syntax-string: #0a3069;
+  --color-prettylights-syntax-variable: #953800;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+  --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+  --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+  --color-prettylights-syntax-carriage-return-bg: #cf222e;
+  --color-prettylights-syntax-string-regexp: #116329;
+  --color-prettylights-syntax-markup-list: #3b2300;
+  --color-prettylights-syntax-markup-heading: #0550ae;
+  --color-prettylights-syntax-markup-italic: #24292f;
+  --color-prettylights-syntax-markup-bold: #24292f;
+  --color-prettylights-syntax-markup-deleted-text: #82071e;
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+  --color-prettylights-syntax-markup-inserted-text: #116329;
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+  --color-prettylights-syntax-markup-changed-text: #953800;
+  --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+  --color-prettylights-syntax-markup-ignored-text: #eaeef2;
+  --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+  --color-prettylights-syntax-meta-diff-range: #8250df;
+  --color-prettylights-syntax-brackethighlighter-angle: #57606a;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+  --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+
+  /* --- buttons --- */
+  --color-btn-text: oklch(0.26 0.04 45);
+  --color-btn-bg: oklch(0.97 0.012 85 / 0.65);
+  --color-btn-border: oklch(0.5 0.06 40 / 0.28);
+  --color-btn-shadow: 0 1px 0 oklch(0.4 0.04 40 / 0.06);
+  --color-btn-inset-shadow: inset 0 1px 0 oklch(1 0 0 / 0.25);
+  --color-btn-hover-bg: oklch(0.93 0.02 80);
+  --color-btn-hover-border: oklch(0.5 0.08 35 / 0.45);
+  --color-btn-active-bg: oklch(0.91 0.025 78);
+  --color-btn-active-border: oklch(0.5 0.08 35 / 0.45);
+  --color-btn-selected-bg: oklch(0.91 0.025 78);
+  --color-btn-primary-text: #fdf3e3;
+  --color-btn-primary-bg: oklch(0.45 0.15 30);
+  --color-btn-primary-border: oklch(0.4 0.1 30 / 0.4);
+  --color-btn-primary-shadow: 0 1px 0 oklch(0.3 0.05 30 / 0.1);
+  --color-btn-primary-inset-shadow: inset 0 1px 0 oklch(1 0 0 / 0.1);
+  --color-btn-primary-hover-bg: oklch(0.40 0.15 30);
+  --color-btn-primary-hover-border: oklch(0.4 0.1 30 / 0.4);
+  --color-btn-primary-selected-bg: oklch(0.37 0.15 30);
+  --color-btn-primary-disabled-text: oklch(1 0 0 / 0.8);
+  --color-btn-primary-disabled-bg: oklch(0.6 0.08 30 / 0.6);
+  --color-btn-primary-disabled-border: oklch(0.4 0.1 30 / 0.3);
+  --color-action-list-item-default-hover-bg: oklch(0.5 0.06 40 / 0.12);
+  --color-segmented-control-bg: oklch(0.93 0.018 82);
+  --color-segmented-control-button-bg: oklch(0.97 0.012 85);
+  --color-segmented-control-button-selected-border: oklch(0.5 0.08 35 / 0.5);
+
+  /* --- text --- */
+  --color-fg-default: oklch(0.26 0.04 45);
+  --color-fg-muted: oklch(0.42 0.04 42);
+  --color-fg-subtle: oklch(0.52 0.04 50);
+
+  /* --- canvas (parchment cream) --- */
+  --color-canvas-default: oklch(0.955 0.015 85);
+  --color-canvas-overlay: oklch(0.97 0.012 85);
+  --color-canvas-inset: oklch(0.93 0.018 80);
+  --color-canvas-subtle: oklch(0.935 0.018 82);
+
+  /* --- borders --- */
+  --color-border-default: oklch(0.55 0.06 40 / 0.32);
+  --color-border-muted: oklch(0.55 0.06 40 / 0.18);
+  --color-neutral-muted: oklch(0.55 0.06 40 / 0.15);
+
+  /* --- accent = maroon (links, usernames, focus) --- */
+  --color-accent-fg: oklch(0.52 0.19 30);
+  --color-accent-emphasis: oklch(0.45 0.15 30);
+  --color-accent-muted: oklch(0.55 0.15 30 / 0.40);
+  --color-accent-subtle: oklch(0.55 0.15 30 / 0.10);
+
+  /* --- semantic --- */
+  --color-success-fg: oklch(0.45 0.12 175);
+  --color-attention-fg: oklch(0.55 0.12 80);
+  --color-attention-muted: oklch(0.6 0.12 80 / 0.40);
+  --color-attention-subtle: oklch(0.92 0.06 90);
+  --color-danger-fg: oklch(0.50 0.18 28);
+  --color-danger-muted: oklch(0.6 0.18 28 / 0.40);
+  --color-danger-subtle: oklch(0.92 0.05 30);
+  --color-primer-shadow-inset: inset 0 1px 0 oklch(0.5 0.06 40 / 0.15);
+  --color-scale-gray-1: oklch(0.93 0.018 82);
+  --color-scale-blue-1: oklch(0.8 0.1 30 / 0.5);
+  --color-social-reaction-bg-hover: var(--color-scale-gray-1);
+  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-1);
+
+  /* --- type: serif + LXGW WenKai, like the blog body --- */
+  font-family: 'Spectral', 'LXGW WenKai', 'Noto Serif SC', Georgia, serif;
+}
+
+main .pagination-loader-container {
+  background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line.svg");
+}
+main .gsc-loading-image {
+  background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
+}
+
+/* code inside comments uses the blog's one code stack */
+main .markdown-body code,
+main .markdown-body pre,
+main .markdown-body tt { font-family: 'JetBrains Mono', 'LXGW WenKai', 'Courier New', monospace; }
+
+/* gentle parchment cosmetics (visual only; never touch layout) */
+main .gsc-comment-box,
+main .gsc-comment > .gsc-comment-content,
+main .gsc-reply > .gsc-comment-content {
+  border-radius: 8px 5px 9px 5px;   /* the blog's hand-cut corners */
+}
+main .gsc-comment-box-textarea { border-radius: 7px 4px 8px 5px; }
+main .gsc-reactions-count,
+main .gsc-comments > .gsc-header { border-color: var(--color-border-muted); }

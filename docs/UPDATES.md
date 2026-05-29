@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-29](#2026-05-29)
+    - [V6 — Custom parchment giscus theme](#v6--custom-parchment-giscus-theme) — `css/giscus-parchment.css` restyles the giscus comment box to the blog's parchment palette + serif/LXGW fonts (overrides GitHub-Primer CSS vars; keeps syntax-highlight colors). `mountGiscus` `data-theme` → the live theme URL. Only renders on the deployed site (giscus's iframe fetches the absolute URL; can't reach localhost).
     - [V5 — Two build-process blog posts: version history + giscus comments (bilingual)](#v5--two-build-process-blog-posts-version-history--giscus-comments-bilingual) — wrote `blog-version-history` and `blog-comments-giscus` (en+zh), documenting the two features just shipped, per `docs/conventions/blog-writing-style.md` (problem-first, AI-prompt + agent paragraph, reproducible code, real gotchas, Mermaid, human×AI authorship). Registered in `registry.json`. Also two design docs (per-paragraph annotation; blog↔homepage linking) and the `giscus` repo topic.
     - [V4 — Comments live (giscus / GitHub Discussions)](#v4--comments-live-giscus--github-discussions) — turned on the pre-wired giscus comment system: filled `repoId`/`categoryId` (derived via the GitHub API), switched mapping `pathname`→`specific` keyed by `post:<slug>` (the blog routes via `?post=`, so `pathname` would merge every post into one thread), and opened CSP for `giscus.app` (script/frame/style). Verified: per-post thread, no console errors, in-page sign-in box.
     - [V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff](#v3--blog-post-version-history-t0t4-edit-log-view-old-version-in-page-diff) — Zhihu/Wiki-style edit history on the static blog. Registry-driven 「编辑记录」panel + "last updated · N edits · full history ↗" stamp (T0–T2, zero API), in-page **view of any past version** (T3) and **side-by-side diff** (T4) via `raw.githubusercontent` + jsdiff/diff2html, contributors + `?rev=` permalink (T4+). Verified en/zh. Design: `docs/strategy/blog-version-history-design-2026-05-29.md`.
@@ -48,6 +49,25 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-29
+
+## V6 — Custom parchment giscus theme
+
+Linlin: the default giscus box "completely doesn't fit". giscus runs in a
+cross-origin iframe, so its DOM/interaction can't be changed, but its visual
+theme can via `data-theme=<custom CSS URL>` (ADVANCED-USAGE).
+
+- **`css/giscus-parchment.css`** — based on giscus's `light.css` (keeps the
+  `--color-prettylights-syntax-*` palette so code in comments still reads),
+  overrides the GitHub-Primer UI variables to the parchment palette from
+  `css/blog.css` (cream canvas, warm-ink text, maroon links/usernames, maroon
+  "Comment" button, hand-cut corner radii), and `@import`s Spectral + LXGW WenKai
+  + JetBrains Mono so comments are set in the blog's body/code fonts.
+- **`js/blog.js`** — `mountGiscus` `data-theme` `'light'` →
+  `https://jajupmochi.github.io/css/giscus-parchment.css`.
+- **Verification caveat** — only visible on the deployed site: giscus.app's
+  iframe fetches the theme from the absolute URL and cannot reach localhost.
+  Locally confirmed only that giscus still mounts and nothing breaks; the
+  parchment visual must be verified live after deploy (and iterated there).
 
 ## V5 — Two build-process blog posts: version history + giscus comments (bilingual)
 
