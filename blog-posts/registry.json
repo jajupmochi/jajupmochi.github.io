@@ -1,6 +1,80 @@
 {
   "posts": [
     {
+      "slug": "blog-comments-giscus",
+      "updated": "2026-05-29",
+      "date": "2026-05-29",
+      "langs": [
+        "en",
+        "zh"
+      ],
+      "primaryLang": "en",
+      "tags": [
+        "web",
+        "static-site",
+        "giscus",
+        "github-pages",
+        "comments",
+        "human×AI"
+      ],
+      "translationStatus": {
+        "en": "ai_edited",
+        "zh": "ai_edited",
+        "fr": "pending",
+        "de": "pending"
+      },
+      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "readingMinutes": {
+        "en": 6,
+        "zh": 6
+      },
+      "title": {
+        "en": "Comments on a static blog with giscus, and the three gotchas nobody mentions",
+        "zh": "用 giscus 给静态博客加评论，以及没人提的三个坑"
+      },
+      "excerpt": {
+        "en": "Wiring giscus (GitHub Discussions) into a static blog with no backend: derive the IDs from the API, fix the pathname-mapping trap on query-string routing, and patch all three CSP holes (script, frame AND style).",
+        "zh": "给无后端的静态博客接 giscus（GitHub Discussions）：用 API 取 ID、修掉查询串路由下 pathname 映射的陷阱、补齐三个 CSP 洞（script、frame 和 style）。"
+      }
+    },
+    {
+      "slug": "blog-version-history",
+      "updated": "2026-05-29",
+      "date": "2026-05-29",
+      "langs": [
+        "en",
+        "zh"
+      ],
+      "primaryLang": "en",
+      "tags": [
+        "web",
+        "static-site",
+        "git",
+        "github-pages",
+        "version-history",
+        "human×AI"
+      ],
+      "translationStatus": {
+        "en": "ai_edited",
+        "zh": "ai_edited",
+        "fr": "pending",
+        "de": "pending"
+      },
+      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "readingMinutes": {
+        "en": 6,
+        "zh": 6
+      },
+      "title": {
+        "en": "Version history for a static blog, when the version store is already git",
+        "zh": "给静态博客做版本历史：版本库其实就是 git"
+      },
+      "excerpt": {
+        "en": "A post's versions are its git commits, so a Wikipedia/Zhihu-style edit history needs no backend: a registry-driven panel, view any past version from raw.githubusercontent.com, and an in-page diff with jsdiff + diff2html.",
+        "zh": "一篇文章的版本就是它的 git commit，所以维基/知乎式的编辑记录无需后端：registry 驱动的面板、从 raw.githubusercontent.com 查看任意旧版、用 jsdiff + diff2html 做页内差异。"
+      }
+    },
+    {
       "slug": "how-i-built-this-site",
       "updated": "2026-05-28",
       "revisions": [

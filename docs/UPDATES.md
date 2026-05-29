@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-29](#2026-05-29)
+    - [V5 — Two build-process blog posts: version history + giscus comments (bilingual)](#v5--two-build-process-blog-posts-version-history--giscus-comments-bilingual) — wrote `blog-version-history` and `blog-comments-giscus` (en+zh), documenting the two features just shipped, per `docs/conventions/blog-writing-style.md` (problem-first, AI-prompt + agent paragraph, reproducible code, real gotchas, Mermaid, human×AI authorship). Registered in `registry.json`. Also two design docs (per-paragraph annotation; blog↔homepage linking) and the `giscus` repo topic.
     - [V4 — Comments live (giscus / GitHub Discussions)](#v4--comments-live-giscus--github-discussions) — turned on the pre-wired giscus comment system: filled `repoId`/`categoryId` (derived via the GitHub API), switched mapping `pathname`→`specific` keyed by `post:<slug>` (the blog routes via `?post=`, so `pathname` would merge every post into one thread), and opened CSP for `giscus.app` (script/frame/style). Verified: per-post thread, no console errors, in-page sign-in box.
     - [V3 — Blog post version history (T0–T4+): edit log, view old version, in-page diff](#v3--blog-post-version-history-t0t4-edit-log-view-old-version-in-page-diff) — Zhihu/Wiki-style edit history on the static blog. Registry-driven 「编辑记录」panel + "last updated · N edits · full history ↗" stamp (T0–T2, zero API), in-page **view of any past version** (T3) and **side-by-side diff** (T4) via `raw.githubusercontent` + jsdiff/diff2html, contributors + `?rev=` permalink (T4+). Verified en/zh. Design: `docs/strategy/blog-version-history-design-2026-05-29.md`.
     - [V2 — fcitx5 blog: link the published repo + fix resource/zip links](#v2--fcitx5-blog-link-the-published-repo--fix-resourcezip-links) — added the companion-repo link (intro + Downloads) to the `ubuntu-fcitx5-pinyin` post (en+zh); its broken `resources/` links (config, theme, panel.js, custom.lua, dog script, `dog-design.zip`) repointed to the published repo (tree/blob/raw) — all verified 200.
@@ -47,6 +48,17 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-29
+
+## V5 — Two build-process blog posts: version history + giscus comments (bilingual)
+
+Per Linlin: turn the two features just built (version history + comments) into blog posts, following `docs/conventions/blog-writing-style.md`.
+
+- **`blog-version-history`** (en+zh) — "Version history for a static blog, when the version store is already git." Problem → the key insight (versions are commits) → tiered T0–T4+ build → the raw.githubusercontent + jsdiff/diff2html mechanics → real gotchas (short-sha, the CSP line, curate-don't-scrape) → "make it yours".
+- **`blog-comments-giscus`** (en+zh) — "Comments on a static blog with giscus, and the three gotchas nobody mentions." Why giscus → derive IDs via `gh api` (not by hand) → **gotcha 1** pathname-mapping merges all `?post=` routes (use `specific`+slug term) → **gotcha 2** three CSP holes (script/frame/**style**) → **gotcha 3** "Discussion not found" is normal → the mount code → category/spam choice.
+- Both follow the convention: problem-first first-person, AI-prompt block + agent-read-this-URL paragraph, copy-pasteable code, document our own config (what/why/where), Mermaid diagram, human author vs Claude disambiguated, `translationStatus` en/zh = `ai_edited` (AI draft, edited, unreviewed), fr/de pending. No cover images (coverless cards degrade gracefully). Registered in `blog-posts/registry.json` (5 posts total).
+- **Design docs** (separate, awaiting approval): `docs/strategy/blog-per-paragraph-annotation-design-2026-05-29.md` and `docs/strategy/blog-homepage-linking-research-2026-05-29.md`.
+- **Repo topic** `giscus` added for discoverability (github.com/topics/giscus).
+- Verified in-browser: both posts render (TOC, Mermaid, code blocks, meta stamp, comments mount), 0 errors.
 
 ## V4 — Comments live (giscus / GitHub Discussions)
 
