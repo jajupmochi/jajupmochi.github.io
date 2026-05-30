@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-05-30](#2026-05-30)
+    - [V1 — App Codex deck: standalone full-screen "web PowerPoint" prototype](#v1--app-codex-deck-standalone-full-screen-web-powerpoint-prototype) — new standalone `apps-deck.html`: the App Gallery reimagined as a full-screen, one-app-per-page codex (Swiper.js; auto-leaf + swipe + keyboard; marginalia controls hidden until mouse-move; 3 layout variants; parallax + zoom + fullscreen; mobile force-landscape). Reads `window.PROJECTS` (DRY). Designed with `impeccable` (brand register); research + plan + critique in `docs/strategy/apps-deck-redesign-2026-05-30/`. **Standalone, not merged** — for review.
 - [2026-05-29](#2026-05-29)
     - [V6 — Custom parchment giscus theme](#v6--custom-parchment-giscus-theme) — `css/giscus-parchment.css` restyles the giscus comment box to the blog's parchment palette + serif/LXGW fonts (overrides GitHub-Primer CSS vars; keeps syntax-highlight colors). `mountGiscus` `data-theme` → the live theme URL. Only renders on the deployed site (giscus's iframe fetches the absolute URL; can't reach localhost).
     - [V5 — Two build-process blog posts: version history + giscus comments (bilingual)](#v5--two-build-process-blog-posts-version-history--giscus-comments-bilingual) — wrote `blog-version-history` and `blog-comments-giscus` (en+zh), documenting the two features just shipped, per `docs/conventions/blog-writing-style.md` (problem-first, AI-prompt + agent paragraph, reproducible code, real gotchas, Mermaid, human×AI authorship). Registered in `registry.json`. Also two design docs (per-paragraph annotation; blog↔homepage linking) and the `giscus` repo topic.
@@ -47,6 +49,21 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-30
+
+## V1 — App Codex deck: standalone full-screen "web PowerPoint" prototype
+
+Per Linlin: redesign the App Gallery as a full-screen, one-app-at-a-time slide deck (web PowerPoint) that reads like a continuous parchment **book**, not slides on a stage; build it as a **standalone page first** for review, then decide on merging.
+
+- **`apps-deck.html`** (new, standalone; does NOT touch `apps-gallery.html` / homepage). Full-viewport codex of the 9 gallery apps, on the site's real `wm-02-pergament-aged.jpg` parchment.
+- **Engine: Swiper.js** (jsDelivr; CSP already allows it). Auto-leaf (7s, pause-on-hover, off under reduced-motion) + manual swipe/drag + keyboard + mousewheel + `#slug` deep-link + Parallax + Zoom (click-to-magnify) + custom pagination.
+- **Marginalia controls, hidden by default** (clean full plate): top ribbon (search · tag filter · app index · autoplay · fullscreen · grid link), bottom gilt page-slider, edge page-turn chevrons. Revealed on mouse-move / at the top.
+- **3 bespoke layout variants** by app type: **Plate** (matted screenshot + margin column, side alternates), **Specimen** (centered diagram + museum caption), **Sealed** (wax seal + why-note for NDA apps). Oversize Patrick Hand plate-titles with a cinnabar accent letter, gilt folio numbers, per-slide entrance reveal.
+- **Mobile**: portrait phones get a "turn your phone" hint and the deck force-rotates to landscape (center-rotate recipe); attempts `screen.orientation.lock` in fullscreen on Android. iOS can't truly lock (honest limit, documented).
+- **DRY**: reads `window.PROJECTS` from `js/projects-data.js` — a third view of the one source.
+- **Design process**: lane named via the `impeccable` plugin (brand register) = "a naturalist's codex of inventions"; passed the 4 UI_AUDIT tests + impeccable absolute bans; 0 console errors. Research / plan / critique / screenshots in `docs/strategy/apps-deck-redesign-2026-05-30/` (00-research, 00-plan, round-1-notes, DELIVERY, round-*.png).
+- **Not merged.** Merge options (standalone link · third `Cards|Detailed|Deck` toggle · default view) deferred to Linlin.
 
 # 2026-05-29
 
