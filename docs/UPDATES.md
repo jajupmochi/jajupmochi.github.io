@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-30](#2026-05-30)
+    - [V2 — Apps deck: fixes + UX pass (autoplay, multi-image rotate, reused controls, big arrows, mobile swipe)](#v2--apps-deck-fixes--ux-pass-autoplay-multi-image-rotate-reused-controls-big-arrows-mobile-swipe) — addressed Linlin's review of the deck: multi-image plates auto-rotate; the deck auto-advances (removed the `pauseOnMouseEnter` trap) with a progress bar; removed "codex" branding; image zoom = click-the-image + zoom cursor (dropped the tiny button); reused the gallery's `.section-controls` controls verbatim; big left/right arrows + a first-load swipe hint; mobile swipe fixed (custom handler for the rotated deck). Plus web-researched UX (a11y aria-live/keyboard, autoplay-off-on-mobile, empty/single states) and a mixed-aspect `contain` fix. 0 console errors.
     - [V1 — App Codex deck: standalone full-screen "web PowerPoint" prototype](#v1--app-codex-deck-standalone-full-screen-web-powerpoint-prototype) — new standalone `apps-deck.html`: the App Gallery reimagined as a full-screen, one-app-per-page codex (Swiper.js; auto-leaf + swipe + keyboard; marginalia controls hidden until mouse-move; 3 layout variants; parallax + zoom + fullscreen; mobile force-landscape). Reads `window.PROJECTS` (DRY). Designed with `impeccable` (brand register); research + plan + critique in `docs/strategy/apps-deck-redesign-2026-05-30/`. **Standalone, not merged** — for review.
 - [2026-05-29](#2026-05-29)
     - [V6 — Custom parchment giscus theme](#v6--custom-parchment-giscus-theme) — `css/giscus-parchment.css` restyles the giscus comment box to the blog's parchment palette + serif/LXGW fonts (overrides GitHub-Primer CSS vars; keeps syntax-highlight colors). `mountGiscus` `data-theme` → the live theme URL. Only renders on the deployed site (giscus's iframe fetches the absolute URL; can't reach localhost).
@@ -49,6 +50,23 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-30
+
+## V2 — Apps deck: fixes + UX pass (autoplay, multi-image rotate, reused controls, big arrows, mobile swipe)
+
+Linlin reviewed the V1 deck and reported several issues; fixed them all + did a web-researched UX pass. Single commit (per the clean-history rule). Notes: `docs/strategy/apps-deck-redesign-2026-05-30/round-2-notes.md`.
+
+- **Multi-image plates auto-rotate** (crossfade + dots + pause-on-hover); LIULIAN / N-Banker / homepage cycle their screenshots.
+- **Deck auto-advances** between apps again. Root cause: `pauseOnMouseEnter` on a full-viewport deck kept autoplay paused forever (mouse always "over" it). Removed it; autoplay 6s + explicit pause + a **progress bar**.
+- **Removed "codex"** branding (title/brand/hint) → "Apps".
+- **Image zoom** = `zoom-in` cursor + magnifier cue on hover, click-the-image opens the lightbox (multi-image prev/next, Esc + arrow keys); the tiny corner button is gone.
+- **Reused the gallery controls verbatim**: linked `css/main.css` + `parchment-overrides.css`, used `.section-controls` / `.filter-tag` / `.search-box` / `.sort-select`.
+- **Big left/right arrows** appear on mouse-move; a **first-load teaching hint** (arrows pulse + onboard toast) shows every open so users know it leafs.
+- **Mobile swipe fixed**: in the rotated portrait→landscape mode, Swiper's own touch is disabled and a custom handler maps a physical vertical swipe to prev/next.
+- **Web-researched UX**: autoplay disabled on mobile (best practice), `aria-live` slide announcements + keyboard shortcuts + focus-visible, empty/single-result states hide the arrows, lazy-load.
+- **Mixed-aspect fix**: desktop + mobile screenshots in one rotator cropped badly with `cover`; switched the plate to a fixed-aspect `contain` box matted on cream.
+- Fixed a Swiper init crash (`rotorTimers` used before its `var`). 0 console errors; verified at 1440×980 + 390×844.
 
 # 2026-05-30
 
