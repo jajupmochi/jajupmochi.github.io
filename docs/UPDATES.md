@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-30](#2026-05-30)
+    - [V3 — Apps deck: review pass 2 (mobile landscape unified, horizontal layout, embedded images, transition options) + cross-page tag-contrast fix](#v3--apps-deck-review-pass-2-mobile-landscape-unified-horizontal-layout-embedded-images-transition-options--cross-page-tag-contrast-fix) — moved all controls into `.deck-rotor` so mobile rotates the whole UI to landscape; unified every slide to a horizontal two-column spread (fixes vertical overflow); embedded images directly on the paper (no card frame) + ink-style page arrows; added in-image hover rotate arrows for multi-image; a transition picker (Slide / Page drift / 3D Cube / 3D Flip); tightened text-image gap; aligned the NDA seal. **Cross-page**: fixed the active filter-tag contrast (red-on-maroon → cream-on-maroon) by excluding `.filter-tag` from a red-ink rule in `parchment-overrides.css` (affects homepage / gallery / deck; blog chip hardened too).
     - [V2 — Apps deck: fixes + UX pass (autoplay, multi-image rotate, reused controls, big arrows, mobile swipe)](#v2--apps-deck-fixes--ux-pass-autoplay-multi-image-rotate-reused-controls-big-arrows-mobile-swipe) — addressed Linlin's review of the deck: multi-image plates auto-rotate; the deck auto-advances (removed the `pauseOnMouseEnter` trap) with a progress bar; removed "codex" branding; image zoom = click-the-image + zoom cursor (dropped the tiny button); reused the gallery's `.section-controls` controls verbatim; big left/right arrows + a first-load swipe hint; mobile swipe fixed (custom handler for the rotated deck). Plus web-researched UX (a11y aria-live/keyboard, autoplay-off-on-mobile, empty/single states) and a mixed-aspect `contain` fix. 0 console errors.
     - [V1 — App Codex deck: standalone full-screen "web PowerPoint" prototype](#v1--app-codex-deck-standalone-full-screen-web-powerpoint-prototype) — new standalone `apps-deck.html`: the App Gallery reimagined as a full-screen, one-app-per-page codex (Swiper.js; auto-leaf + swipe + keyboard; marginalia controls hidden until mouse-move; 3 layout variants; parallax + zoom + fullscreen; mobile force-landscape). Reads `window.PROJECTS` (DRY). Designed with `impeccable` (brand register); research + plan + critique in `docs/strategy/apps-deck-redesign-2026-05-30/`. **Standalone, not merged** — for review.
 - [2026-05-29](#2026-05-29)
@@ -52,6 +53,19 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-05-30
+
+## V3 — Apps deck: review pass 2 (mobile landscape unified, horizontal layout, embedded images, transition options) + cross-page tag-contrast fix
+
+Linlin's second review of the deck; all points fixed + a cross-page tag bug. Single commit. Notes: `docs/strategy/apps-deck-redesign-2026-05-30/round-3-notes.md`.
+
+- **Mobile landscape unified** — all controls (ribbon, arrows, folio, progress, lightbox) moved INSIDE `.deck-rotor`, so a portrait phone rotates the whole UI to landscape as one unit (previously content was landscape but controls stayed portrait). The "turn your phone" hint stays outside, upright.
+- **Horizontal layout** — every slide is now a two-column spread (side alternates by index); removed the centered vertical "specimen" layout that caused overflow / clipped images / overrun text.
+- **Images embedded into the paper** — removed the matted border + drop-shadow + cream card bg; screenshots sit directly on the parchment with a faint `sepia(0.06)` (matching the homepage `.project-image`), so the page reads as one manuscript. The big page arrows are restyled as ink marks (no button chrome).
+- **In-image rotate arrows** — multi-image plates get `‹ ›` on the image edges (hover) to rotate the images, distinct from the deck page arrows.
+- **Transition options** — a "Turn:" picker in the ribbon switches Slide / Page drift / 3D Cube / 3D Flip live (Swiper re-inits); the 3D options rotate in from inside the screen.
+- **Gap + seal** — tightened the text-image gap; the `NDA` text now centers on the wax seal (both at `-18px`).
+- **Cross-page tag contrast** — root cause: `parchment-overrides.css` `button[class*="filter"].active` forced red text `oklch(0.40 0.22 27)` on the maroon active chip (red-on-maroon, illegible) at higher specificity. Excluded `.filter-tag` from that rule (`:not(.filter-tag)`) so active filter-tags keep maroon fill + bright cream text (weight 700); hardened `.blog-filterchip.active`. Affects homepage / gallery / deck / blog. Verified cream-on-maroon.
+- Verified 1440×980 + 390×844; 0 console errors.
 
 ## V2 — Apps deck: fixes + UX pass (autoplay, multi-image rotate, reused controls, big arrows, mobile swipe)
 

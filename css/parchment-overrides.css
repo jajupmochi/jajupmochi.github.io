@@ -474,9 +474,13 @@ input, select, textarea, button.icon-btn {
     color: var(--text-secondary) !important;
 }
 .filter-tag:hover, .filter-tag.active {
-    background: oklch(0.45 0.16 27) !important;
-    border-color: oklch(0.45 0.16 27) !important;
-    color: oklch(0.96 0.04 60) !important;
+    background: oklch(0.42 0.17 27) !important;
+    border-color: oklch(0.42 0.17 27) !important;
+    /* bright near-white text + weight + a dark edge so the thin Indie Flower
+       handwriting font stays legible on the maroon chip (was muddy cream). */
+    color: oklch(0.985 0.012 85) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 1.5px oklch(0.22 0.10 27 / 0.6) !important;
 }
 .filter-tag:disabled, .filter-tag[aria-disabled="true"] {
     opacity: 0.4 !important;
@@ -1075,7 +1079,10 @@ button.filter, button[class*="filter"] {
     text-underline-offset: 4px !important;
     box-shadow: none !important;
 }
-button.filter.active, button[class*="filter"].active,
+/* red-ink "active" style is for parchment-background tabs/chips only — NOT the
+   .filter-tag chips (those get a maroon fill + light text, so red text on maroon
+   would be illegible). Exclude .filter-tag here. */
+button.filter.active, button[class*="filter"]:not(.filter-tag).active,
 .filter-chip.active, .pub-filter-tab.active {
     color: oklch(0.40 0.22 27) !important;
     text-decoration-style: double !important;

@@ -28,33 +28,34 @@
   body{ background:transparent !important; }
 
   .deck{ width:100vw; height:100vh; height:100dvh; }
+  /* every slide is a horizontal two-column spread (image one side, text the other);
+     side alternates by index. Never vertical (avoids overflow / clipped images). */
   .deck-slide{ position:relative; width:100%; height:100%; display:grid; align-items:center;
-    padding: clamp(2rem,5vw,5.5rem) clamp(3.4rem,8vw,8.5rem); overflow:hidden; }
-  .deck-slide--plate{ grid-template-columns:1.15fr 0.85fr; gap:clamp(1.4rem,4vw,4.5rem); }
-  .deck-slide--plate.flip{ grid-template-columns:0.85fr 1.15fr; }
-  .deck-slide--plate.flip .plate{ order:2; }
-  .deck-slide--specimen{ grid-template-columns:1fr; justify-items:center; }
+    grid-template-columns:1.04fr 0.96fr; gap:clamp(1rem,2.4vw,2.6rem);
+    padding: clamp(1.4rem,3.5vw,3.6rem) clamp(2.4rem,5.5vw,6rem); overflow:hidden; }
+  .deck-slide.flip{ grid-template-columns:0.96fr 1.04fr; }
+  .deck-slide.flip .plate{ order:2; }
 
-  /* plate (screenshot / diagram), with optional in-plate image rotator */
+  /* plate (screenshot / diagram): embedded directly into the paper, NO frame /
+     shadow / card background — the whole page reads as one manuscript. */
   .plate{ position:relative; max-width:100%; }
-  .plate-frame{ position:relative; padding:clamp(8px,1vw,16px); background:oklch(0.96 0.015 86); border:1px solid var(--rule);
-    box-shadow:0 1px 0 oklch(1 0 0 / 0.6) inset, 0 18px 40px oklch(0.3 0.04 50 / 0.22), 0 3px 8px oklch(0.3 0.04 50 / 0.18); border-radius:3px; }
-  .deck-slide--plate .plate-frame{ transform:rotate(-0.6deg); }
-  .deck-slide--plate.flip .plate-frame{ transform:rotate(0.7deg); }
-  /* fixed-aspect plate box; all screenshots shown whole (contain), matted on cream
-     so mixed desktop/mobile aspect ratios both read cleanly */
-  .rstack{ position:relative; width:100%; aspect-ratio:16/10; cursor:zoom-in; border-radius:2px; overflow:hidden; background:oklch(0.95 0.012 86); }
-  .rimg{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .8s ease; }
+  .plate-frame{ position:relative; }
+  .rstack{ position:relative; width:100%; aspect-ratio:16/10; cursor:zoom-in; overflow:hidden; }
+  .rimg{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .8s ease; filter:sepia(0.06); }
   .rimg.on{ opacity:1; }
-  .deck-slide--specimen .rstack{ aspect-ratio:16/9; background:oklch(0.97 0.012 86); }
-  .deck-slide--specimen .plate-frame{ background:oklch(0.97 0.012 86); padding:clamp(14px,2vw,30px); }
-  .deck-slide--specimen .plate{ max-width:min(70vw,860px); }
-  .rdots{ position:absolute; left:0; right:0; bottom:9px; z-index:4; display:flex; justify-content:center; gap:6px; }
-  .rdots i{ width:7px; height:7px; border-radius:50%; background:oklch(1 0 0 / 0.6); box-shadow:0 0 3px oklch(0.2 0 0 / 0.5); cursor:pointer; transition:transform .2s, background .2s; }
-  .rdots i.on{ background:#fff; transform:scale(1.3); }
-  .plate-zoomcue{ position:absolute; top:10px; right:10px; z-index:4; width:30px; height:30px; display:grid; place-items:center;
-    background:oklch(0.96 0.02 86 / 0.8); border:1px solid var(--rule); border-radius:50%; color:var(--ink-soft); opacity:0; transition:opacity .25s; pointer-events:none; }
-  .plate:hover .plate-zoomcue{ opacity:1; }
+  .deck-slide--specimen .rstack{ aspect-ratio:16/9; }
+  .rdots{ position:absolute; left:0; right:0; bottom:-18px; z-index:4; display:flex; justify-content:center; gap:6px; }
+  .rdots i{ width:7px; height:7px; border-radius:50%; background:var(--gilt-deep); opacity:0.5; cursor:pointer; transition:transform .2s, opacity .2s; }
+  .rdots i.on{ opacity:1; background:var(--cinnabar); transform:scale(1.3); }
+  /* in-image rotate arrows for multi-image plates (rotate the images, not the deck) */
+  .rnav{ position:absolute; top:50%; transform:translateY(-50%); z-index:6; width:34px; height:48px; display:grid; place-items:center;
+    background:none; border:none; color:var(--maroon); font-size:1.9rem; cursor:pointer; opacity:0; transition:opacity .25s, color .2s;
+    text-shadow:0 1px 3px oklch(0.95 0.02 80 / 0.8); }
+  .rnav.prev{ left:-6px; } .rnav.next{ right:-6px; }
+  .plate[data-multi]:hover .rnav{ opacity:0.85; }
+  .rnav:hover{ color:var(--cinnabar); opacity:1; }
+  .plate-zoomcue{ position:absolute; top:8px; right:8px; z-index:4; color:var(--ink-soft); opacity:0; transition:opacity .25s; pointer-events:none; text-shadow:0 1px 2px oklch(0.95 0.02 80 / 0.8); }
+  .plate:hover .plate-zoomcue{ opacity:0.7; }
   .plate-tape{ position:absolute; top:-13px; left:-26px; z-index:3; transform:rotate(-24deg); font-family:var(--disp); font-size:0.82rem;
     letter-spacing:0.18em; text-transform:uppercase; color:#5a3a16; padding:0.2em 2.2em; box-shadow:0 3px 7px oklch(0.4 0.05 40 / 0.3);
     background:linear-gradient(135deg,oklch(0.86 0.07 86 / 0.95),oklch(0.78 0.09 84 / 0.92)); clip-path:polygon(2% 0,98% 6%,100% 96%,0 100%); }
@@ -62,27 +63,24 @@
     background:radial-gradient(circle at 38% 34%,oklch(0.55 0.19 28),oklch(0.40 0.17 28) 70%); border-radius:50%;
     box-shadow:0 6px 14px oklch(0.3 0.1 30 / 0.4), inset 0 2px 6px oklch(1 0 0 / 0.18);
     clip-path:polygon(50% 0,62% 12%,80% 8%,82% 27%,98% 38%,88% 53%,95% 72%,76% 75%,67% 93%,50% 84%,33% 93%,24% 75%,5% 72%,12% 53%,2% 38%,18% 27%,20% 8%,38% 12%); }
-  .plate.sealed .seal-txt{ position:absolute; right:1px; bottom:1px; width:74px; height:74px; z-index:5; display:grid; place-items:center;
-    transform:rotate(-8deg); font-family:var(--disp); font-size:0.86rem; color:oklch(0.9 0.04 40 / 0.85); pointer-events:none; }
+  /* seal text overlays the ::after seal exactly (both at right/bottom -18, 74x74) */
+  .plate.sealed .seal-txt{ position:absolute; right:-18px; bottom:-18px; width:74px; height:74px; z-index:5; display:grid; place-items:center;
+    transform:rotate(-8deg); font-family:var(--disp); font-size:0.9rem; letter-spacing:0.04em; color:oklch(0.93 0.04 60 / 0.92); pointer-events:none; }
 
   .margin{ max-width:46ch; }
-  .deck-slide--specimen .margin{ text-align:center; max-width:64ch; margin-top:clamp(0.8rem,2vw,1.6rem); }
   .m-role{ font-family:var(--mono); font-size:clamp(0.72rem,1vw,0.86rem); letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 0.5em; }
-  .m-title{ font-family:var(--disp); font-weight:400; color:var(--ink); font-size:clamp(2.6rem,6.5vw,5.6rem); line-height:0.96; margin:0 0 0.32em; }
+  .m-title{ font-family:var(--disp); font-weight:400; color:var(--ink); font-size:clamp(2.4rem,5.6vw,5rem); line-height:0.98; margin:0 0 0.34em; }
   .m-title .hl{ color:var(--cinnabar); }
-  .deck-slide--specimen .m-title{ font-size:clamp(2.2rem,5vw,4.4rem); transform:rotate(-0.8deg); }
+  .deck-slide--specimen .m-title{ font-size:clamp(2rem,4.4vw,3.9rem); }
   .m-desc{ font-family:var(--serif); font-size:clamp(0.98rem,1.15vw,1.18rem); line-height:1.5; color:var(--ink); margin:0 0 1em; }
   .m-why{ font-family:var(--serif); font-style:italic; font-size:0.95rem; color:var(--ink-soft); margin:0 0 1em; }
   .m-tags{ list-style:none; display:flex; flex-wrap:wrap; gap:0.45em; padding:0; margin:0 0 1.1em; }
-  .deck-slide--specimen .m-tags{ justify-content:center; }
   .m-tags li{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em; color:var(--maroon); border-bottom:1px solid oklch(0.5 0.12 30 / 0.4); padding:0 0.1em 0.1em; }
   .m-acts{ display:flex; flex-wrap:wrap; gap:1.1em; align-items:center; }
-  .deck-slide--specimen .m-acts{ justify-content:center; }
   .m-acts a{ font-family:var(--disp); font-size:1.18rem; color:var(--maroon); text-decoration:none; display:inline-flex; align-items:center; gap:0.35em; }
   .m-acts a:hover{ color:var(--cinnabar); }
   .m-acts a .pip{ width:7px; height:7px; border-radius:50%; background:var(--qing); display:inline-block; box-shadow:0 0 6px var(--qing); }
   .folio{ position:absolute; bottom:clamp(1.2rem,3vh,2.4rem); right:clamp(1.6rem,4vw,4rem); font-family:var(--mono); font-size:0.82rem; letter-spacing:0.18em; color:var(--gilt-deep); }
-  .deck-slide--specimen .folio{ right:auto; left:50%; transform:translateX(-50%); }
 
   /* entrance reveal */
   .deck-slide .m-role,.deck-slide .m-title,.deck-slide .m-desc,.deck-slide .m-why,.deck-slide .m-tags,.deck-slide .m-acts,.deck-slide .plate{ opacity:0; transform:translateY(10px); }
@@ -95,15 +93,15 @@
   .swiper-slide-active .plate{ animation:rise .7s .04s cubic-bezier(0.16,1,0.3,1) forwards; }
   @keyframes rise{ to{ opacity:1; transform:none; } }
 
-  /* ===== big left/right navigation arrows ===== */
-  .deck-arrow{ position:fixed; top:50%; transform:translateY(-50%); z-index:24; width:clamp(48px,5vw,68px); height:clamp(48px,5vw,68px);
-    display:grid; place-items:center; border-radius:50%; cursor:pointer;
-    background:oklch(0.95 0.025 84 / 0.78); border:1px solid var(--rule); color:var(--maroon);
-    box-shadow:0 6px 18px oklch(0.3 0.04 50 / 0.2); font-size:clamp(1.3rem,2vw,1.8rem);
-    opacity:0; transition:opacity .35s, transform .35s, background .2s; }
-  .deck-arrow--prev{ left:clamp(0.8rem,2vw,2rem); }
-  .deck-arrow--next{ right:clamp(0.8rem,2vw,2rem); }
-  .deck-arrow:hover{ background:oklch(0.96 0.03 84 / 0.95); transform:translateY(-50%) scale(1.06); }
+  /* ===== big left/right page-turn marks: ink on paper, no card button ===== */
+  .deck-arrow{ position:fixed; top:50%; transform:translateY(-50%); z-index:24;
+    background:none; border:none; border-radius:0; box-shadow:none; padding:0.2em 0.3em;
+    color:var(--maroon); font-size:clamp(2.4rem,4.2vw,3.8rem); cursor:pointer;
+    text-shadow:0 1px 3px oklch(0.94 0.02 80 / 0.85);
+    opacity:0; transition:opacity .35s, transform .35s, color .2s; }
+  .deck-arrow--prev{ left:clamp(0.4rem,1.6vw,1.6rem); }
+  .deck-arrow--next{ right:clamp(0.4rem,1.6vw,1.6rem); }
+  .deck-arrow:hover{ color:var(--cinnabar); transform:translateY(-50%) scale(1.14); }
   body.controls-on .deck-arrow{ opacity:1; }
   body.single .deck-arrow, body.single .deck-folio{ display:none; }  /* nothing to leaf to */
   /* first-load teaching nudge: arrows appear + pulse left-right so users know it leafs */
@@ -176,44 +174,53 @@
 </head>
 <body data-theme="academic">
 
+<!-- everything lives inside .deck-rotor so it ALL rotates to landscape on mobile -->
 <div class="deck-rotor">
   <div class="swiper deck" id="deck"><div class="swiper-wrapper" id="deckWrap"></div></div>
+
+  <button class="deck-arrow deck-arrow--prev" id="arrowPrev" aria-label="Previous app"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+  <button class="deck-arrow deck-arrow--next" id="arrowNext" aria-label="Next app"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+  <div class="deck-onboard" id="onboard">Swipe, or use the arrows to leaf through</div>
+  <div class="deck-prog" id="deckProg"></div>
+  <div class="deck-folio" id="deckFolio" role="group" aria-label="App index"></div>
+
+  <header class="deck-ribbon" id="ribbon">
+    <a class="brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
+    <div class="section-controls">
+      <div class="filter-tags" id="deckTags" role="group" aria-label="Filter by tag"></div>
+      <div class="search-box"><i class="fas fa-search" aria-hidden="true"></i><input type="text" id="deckSearch" placeholder="Search apps..." aria-label="Search apps"></div>
+      <select class="sort-select" id="deckSort" aria-label="Sort apps">
+        <option value="featured" selected>Featured</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
+    <div class="deck-tools">
+      <select class="sort-select" id="deckFx" title="Page-turn style" aria-label="Transition style">
+        <option value="slide" selected>Turn: Slide</option>
+        <option value="pageturn">Turn: Page drift</option>
+        <option value="cube">Turn: 3D Cube</option>
+        <option value="flip">Turn: 3D Flip</option>
+      </select>
+      <button id="btnAuto" title="Play / pause auto-leaf" aria-label="Play or pause autoplay"><i class="fas fa-pause" aria-hidden="true"></i></button>
+      <button id="btnFull" title="Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand" aria-hidden="true"></i></button>
+      <a href="apps-gallery.html" title="Grid view" aria-label="Grid view"><i class="fas fa-table-cells-large" aria-hidden="true"></i></a>
+    </div>
+  </header>
+
+  <div class="deck-empty" id="deckEmpty">No apps match that filter.</div>
+  <div class="sr-only" aria-live="polite" id="deckLive"></div>
+
+  <div class="deck-lb" id="deckLb">
+    <button class="x" id="deckLbX" aria-label="Close">&times;</button>
+    <button class="nav prev" id="deckLbPrev" aria-label="Previous image">&#8249;</button>
+    <img id="deckLbImg" src="" alt="">
+    <button class="nav next" id="deckLbNext" aria-label="Next image">&#8250;</button>
+  </div>
 </div>
 
-<button class="deck-arrow deck-arrow--prev" id="arrowPrev" aria-label="Previous app"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-<button class="deck-arrow deck-arrow--next" id="arrowNext" aria-label="Next app"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
-<div class="deck-onboard" id="onboard">Swipe, or use the arrows to leaf through</div>
-<div class="deck-prog" id="deckProg"></div>
-<div class="deck-folio" id="deckFolio" role="group" aria-label="App index"></div>
-
-<header class="deck-ribbon" id="ribbon">
-  <a class="brand" href="index_en.html"><span class="mk">林</span> Linlin Jia</a>
-  <div class="section-controls">
-    <div class="filter-tags" id="deckTags" role="group" aria-label="Filter by tag"></div>
-    <div class="search-box"><i class="fas fa-search" aria-hidden="true"></i><input type="text" id="deckSearch" placeholder="Search apps..." aria-label="Search apps"></div>
-    <select class="sort-select" id="deckSort" aria-label="Sort apps">
-      <option value="featured" selected>Featured</option>
-      <option value="newest">Newest</option>
-      <option value="oldest">Oldest</option>
-    </select>
-  </div>
-  <div class="deck-tools">
-    <button id="btnAuto" title="Play / pause auto-leaf" aria-label="Play or pause autoplay"><i class="fas fa-pause" aria-hidden="true"></i></button>
-    <button id="btnFull" title="Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand" aria-hidden="true"></i></button>
-    <a href="apps-gallery.html" title="Grid view" aria-label="Grid view"><i class="fas fa-table-cells-large" aria-hidden="true"></i></a>
-  </div>
-</header>
-
-<div class="deck-empty" id="deckEmpty">No apps match that filter.</div>
+<!-- portrait-only "turn your phone" hint: stays UPRIGHT outside the rotor -->
 <div class="deck-hint" id="deckHint"><i class="fas fa-mobile-screen-button" aria-hidden="true"></i><p>Turn your phone to view.</p></div>
-<div class="sr-only" aria-live="polite" id="deckLive"></div>
-
-<div class="deck-lb" id="deckLb">
-  <button class="x" id="deckLbX" aria-label="Close">&times;</button>
-  <button class="nav prev" id="deckLbPrev" aria-label="Previous image">&#8249;</button>
-  <img id="deckLbImg" src="" alt="">
-  <button class="nav next" id="deckLbNext" aria-label="Next image">&#8250;</button>
-</div>
 
 <script src="js/projects-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -235,14 +242,15 @@
     }).join('');
   }
   function slideHTML(p, idx, total){
-    var v=variantOf(p), flip=v==='plate'&&idx%2===1, sealed=!!p.why, imgs=p.images||[];
+    var v=variantOf(p), flip=idx%2===1, sealed=!!p.why, imgs=p.images||[], multi=imgs.length>1;
     var stack=imgs.map(function(im,k){ return '<img class="rimg'+(k===0?' on':'')+'" src="'+im.src+'" alt="'+(im.alt||'')+'" loading="'+(idx<2?'eager':'lazy')+'" decoding="async">'; }).join('');
-    var dots = imgs.length>1 ? '<div class="rdots"></div>' : '';
+    var dots = multi ? '<div class="rdots"></div>' : '';
+    var rnav = multi ? '<button class="rnav prev" type="button" aria-label="Previous image">&#8249;</button><button class="rnav next" type="button" aria-label="Next image">&#8250;</button>' : '';
     var tags=(p.tagLabels||[]).slice(0,4).map(function(t){ return '<li>'+t+'</li>'; }).join('');
-    var plate='<div class="plate'+(sealed?' sealed':'')+'"'+(imgs.length>1?' data-multi="1"':'')+' data-swiper-parallax="'+(v==='specimen'?'-90':'-130')+'">'+
+    var plate='<div class="plate'+(sealed?' sealed':'')+'"'+(multi?' data-multi="1"':'')+' data-swiper-parallax="'+(v==='specimen'?'-90':'-130')+'">'+
         (p.featured?'<span class="plate-tape">Featured</span>':'')+
         '<div class="plate-frame">'+
-          '<div class="rstack" tabindex="0" role="button" aria-label="Enlarge image">'+stack+'</div>'+ dots +
+          '<div class="rstack" tabindex="0" role="button" aria-label="Enlarge image">'+stack+'</div>'+ rnav + dots +
           '<span class="plate-zoomcue"><i class="fas fa-magnifying-glass-plus"></i></span>'+
         '</div>'+ (sealed?'<span class="seal-txt">NDA</span>':'') + '</div>';
     var margin='<div class="margin">'+
@@ -253,7 +261,7 @@
         '<ul class="m-tags" data-swiper-parallax="-16">'+tags+'</ul>'+
         '<div class="m-acts" data-swiper-parallax="-12">'+actsHTML(p)+'</div>'+
       '</div>';
-    var inner = v==='specimen' ? (plate+margin) : (flip?(margin+plate):(plate+margin));
+    var inner = flip?(margin+plate):(plate+margin);
     return '<div class="swiper-slide deck-slide deck-slide--'+v+(flip?' flip':'')+'" data-hash="'+p.id+'" role="group" aria-roledescription="slide" aria-label="'+(p.titleShort||p.id)+', app '+(idx+1)+' of '+total+'">'+
       inner+'<span class="folio" data-swiper-parallax="-200">'+roman(idx+1)+' / '+roman(total)+'</span></div>';
   }
@@ -293,41 +301,63 @@
 
   buildTags(); buildSlides();
 
-  var swiper=new Swiper('#deck', {
-    speed:720, parallax:true, grabCursor:true,
-    keyboard:{ enabled:true }, mousewheel:{ forceToAxis:true, thresholdDelta:24 },
-    hashNavigation:{ watchState:true }, a11y:{ enabled:true },
-    autoplay:(reduce||isTouch)?false:{ delay:6000, disableOnInteraction:false },
-    pagination:{ el:'#deckFolio', clickable:true, bulletClass:'tick', bulletActiveClass:'on',
-      renderBullet:function(i,cls){ return '<button class="'+cls+'" data-i="'+i+'" aria-label="Go to app '+(i+1)+'"></button>'; } },
-    on:{
-      init:function(){ announce(this); setupRotators(); },
-      slideChange:function(){ announce(this); },
-      slideChangeTransitionStart:function(){ setupRotators(); },
-      autoplayTimeLeft:function(s,time,progress){ document.getElementById('deckProg').style.width=((1-progress)*100).toFixed(1)+'%'; },
-      autoplayStop:function(){ document.getElementById('deckProg').style.width='0%'; }
-    }
-  });
-  window.__deck=swiper;
+  // ===== Swiper with switchable transition effect (page-turn options) =====
+  var fx='slide', swiper;
+  function makeConfig(effect){
+    var cfg={ speed:720, grabCursor:true,
+      keyboard:{ enabled:true }, mousewheel:{ forceToAxis:true, thresholdDelta:24 },
+      hashNavigation:{ watchState:true }, a11y:{ enabled:true },
+      autoplay:(reduce||isTouch)?false:{ delay:6000, disableOnInteraction:false },
+      pagination:{ el:'#deckFolio', clickable:true, bulletClass:'tick', bulletActiveClass:'on',
+        renderBullet:function(i,cls){ return '<button class="'+cls+'" data-i="'+i+'" aria-label="Go to app '+(i+1)+'"></button>'; } },
+      on:{
+        init:function(){ announce(this); setupRotators(); },
+        slideChange:function(){ announce(this); },
+        slideChangeTransitionStart:function(){ setupRotators(); },
+        autoplayTimeLeft:function(s,time,progress){ document.getElementById('deckProg').style.width=((1-progress)*100).toFixed(1)+'%'; },
+        autoplayStop:function(){ document.getElementById('deckProg').style.width='0%'; }
+      } };
+    if(effect==='cube'){ cfg.effect='cube'; cfg.cubeEffect={ shadow:false, slideShadows:false }; }
+    else if(effect==='flip'){ cfg.effect='flip'; cfg.flipEffect={ slideShadows:false }; }
+    else if(effect==='coverflow'){ cfg.effect='coverflow'; cfg.centeredSlides=true; cfg.slidesPerView='auto'; cfg.coverflowEffect={ rotate:30, depth:170, modifier:1, slideShadows:false }; }
+    else if(effect==='pageturn'){ cfg.effect='creative'; cfg.parallax=true; cfg.creativeEffect={ prev:{ shadow:false, translate:['-22%',0,-1] }, next:{ translate:['100%',0,0] } }; }
+    else { cfg.parallax=true; }  // slide (default)
+    return cfg;
+  }
+  function buildSwiper(effect, startIndex){
+    fx=effect;
+    if(swiper){ try{ swiper.destroy(true,true); }catch(e){} }
+    swiper=new Swiper('#deck', makeConfig(effect));
+    window.__deck=swiper;
+    if(startIndex){ swiper.slideTo(startIndex,0); }
+    if(typeof applyRotMode==='function') applyRotMode();
+  }
+  buildSwiper(fx, 0);
 
   function announce(s){
     s=s||swiper; if(!s) return; var i=s.realIndex||s.activeIndex||0; var p=current[i];
     if(p) document.getElementById('deckLive').textContent='App '+(i+1)+' of '+current.length+': '+(p.titleShort||p.id);
   }
 
-  // ===== in-plate multi-image rotators (auto + dots + click-zoom) =====
+  // ===== in-plate multi-image rotators (auto + dots + hover arrows + click-zoom) =====
   function setupRotators(){
     rotorTimers.forEach(clearInterval); rotorTimers=[];
     document.querySelectorAll('.deck-slide .plate[data-multi]').forEach(function(plate){
-      if(plate.__inited) { return; } plate.__inited=true;
-      var imgs=[].slice.call(plate.querySelectorAll('.rimg'));
-      var dotsWrap=plate.querySelector('.rdots'); var i=0;
-      imgs.forEach(function(_,k){ var d=document.createElement('i'); d.addEventListener('click',function(e){ e.stopPropagation(); go(k); }); dotsWrap.appendChild(d); });
-      function go(n){ i=(n+imgs.length)%imgs.length; imgs.forEach(function(im,k){ im.classList.toggle('on',k===i); }); [].forEach.call(dotsWrap.children,function(d,k){ d.classList.toggle('on',k===i); }); plate.dataset.cur=i; }
-      go(0);
-      if(!reduce){ var t=setInterval(function(){ go(i+1); },3800); rotorTimers.push(t);
-        plate.addEventListener('mouseenter',function(){ clearInterval(t); });
-        plate.addEventListener('mouseleave',function(){ clearInterval(t); t=setInterval(function(){ go(i+1); },3800); rotorTimers.push(t); }); }
+      var imgs=[].slice.call(plate.querySelectorAll('.rimg')); if(imgs.length<2) return;
+      if(!plate.__go){
+        var dotsWrap=plate.querySelector('.rdots'); var st={ i:0 };
+        var go=function(n){ st.i=(n+imgs.length)%imgs.length; imgs.forEach(function(im,k){ im.classList.toggle('on',k===st.i); });
+          [].forEach.call(dotsWrap.children,function(d,k){ d.classList.toggle('on',k===st.i); }); plate.dataset.cur=st.i; };
+        imgs.forEach(function(_,k){ var d=document.createElement('i'); d.addEventListener('click',function(e){ e.stopPropagation(); go(k); }); dotsWrap.appendChild(d); });
+        var pv=plate.querySelector('.rnav.prev'), nx=plate.querySelector('.rnav.next');
+        if(pv) pv.addEventListener('click',function(e){ e.stopPropagation(); e.preventDefault(); go(st.i-1); });
+        if(nx) nx.addEventListener('click',function(e){ e.stopPropagation(); e.preventDefault(); go(st.i+1); });
+        plate.addEventListener('mouseenter',function(){ plate.__hover=true; });
+        plate.addEventListener('mouseleave',function(){ plate.__hover=false; });
+        go(0); plate.__go=go; plate.__st=st;
+      }
+      if(!reduce){ var g=plate.__go, s=plate.__st;
+        var t=setInterval(function(){ if(!plate.__hover) g(s.i+1); },3800); rotorTimers.push(t); }
     });
   }
 
@@ -362,6 +392,7 @@
     [].forEach.call(this.querySelectorAll('.filter-tag'),function(x){ x.classList.toggle('active',x===b); }); state.tag=b.dataset.tag; refresh(); });
   document.getElementById('deckSearch').addEventListener('input', function(){ state.q=(this.value||'').trim().toLowerCase(); refresh(); });
   document.getElementById('deckSort').addEventListener('change', function(){ state.sort=this.value; refresh(); });
+  document.getElementById('deckFx').addEventListener('change', function(){ buildSwiper(this.value, swiper.realIndex||0); });
 
   // ===== autoplay toggle + fullscreen =====
   var autoBtn=document.getElementById('btnAuto');
@@ -394,7 +425,8 @@
   var rotor=document.querySelector('.deck-rotor');
   var mqRot=window.matchMedia('(orientation: portrait) and (max-width: 820px)');
   function applyRotMode(){
-    var on=mqRot.matches; swiper.allowTouchMove=!on;  // Swiper's own touch only when NOT rotated
+    if(!mqRot||!swiper) return;  // mqRot is defined after the first buildSwiper; guard the early call
+    swiper.allowTouchMove=!mqRot.matches;  // Swiper's own touch only when NOT rotated
   }
   applyRotMode(); (mqRot.addEventListener?mqRot.addEventListener('change',applyRotMode):mqRot.addListener(applyRotMode));
   var tsx=null, tsy=null;
