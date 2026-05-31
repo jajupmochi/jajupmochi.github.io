@@ -15,17 +15,23 @@
 不想手敲的话，把下面这段交给 Claude Code 或任意能跑命令的 agent：
 
 ```text
-你是我的 Linux 桌面配置助手，环境 Ubuntu 24.04 + GNOME + Wayland。
+你是我的 Linux 桌面配置助手，环境 Ubuntu 24.04 + GNOME，Xorg 或 Wayland（fcitx5 两者都支持）。
 请按这篇教程复刻整套 fcitx5 配置（云拼音、模糊音、自学习、Kimpanel
 面板、主题、字体、云加载时跑动的狗）。
 
 先拿到教程全文：
-- 你若能抓网页，直接读取这篇文章的地址 <这里填本文 URL>，把正文读进来；
-- 抓不到（例如知乎反爬返回 403），就让我把本文从下一节起到结尾复制给你。
+- 本博客是客户端渲染的 SPA：直接抓阅读地址
+  https://jajupmochi.github.io/blog.html?post=ubuntu-fcitx5-pinyin&lang=zh
+  只会拿到页面外壳，不是正文。要拿正文，请直接抓原始 Markdown：
+  https://jajupmochi.github.io/blog-posts/ubuntu-fcitx5-pinyin/zh.md
+  （英文版换成 .../en.md），把正文读进来；
+- 两个都抓不到（反爬 / 403 / 离线），就让我把本文从下一节起到结尾复制给你。
 
 然后：
-1. 先探测环境：whoami、echo $XDG_SESSION_TYPE、gnome-shell --version、
-   dpkg -l | grep fcitx，结果讲给我听；
+1. 先探测环境：whoami、echo $XDG_SESSION_TYPE（x11/wayland）、
+   localectl status（键盘布局）、gnome-shell --version、
+   dpkg -l | grep -E 'fcitx|ibus'，结果讲给我听；并留意「一·五」节
+   （Xorg 还是 Wayland）和 5.1 节（键盘布局坑）；
 2. 按章节顺序执行，命令里的用户名/路径换成我机器上的真实值；
 3. 改 ~/.config/fcitx5 下任何文件前先 pkill -x fcitx5，改完再后台拉起，
    否则 fcitx5 退出时会用旧配置把改动覆盖掉；
@@ -39,6 +45,7 @@
 ## 目录
 
 - [一、为什么换 fcitx5](#一为什么换-fcitx5)
+- [一·五、Xorg 还是 Wayland：检查、取舍与切换](#一五xorg-还是-wayland检查取舍与切换)
 - [二、最终效果](#二最终效果)
 - [三、两层架构](#三两层架构)
 - [四、装 fcitx5 和中文支持](#四装-fcitx5-和中文支持)
@@ -58,6 +65,8 @@
 - [八、自己改：所有可配置项](#八自己改所有可配置项)
 - [九、踩坑速查](#九踩坑速查)
 - [十、资源下载](#十资源下载)
+- [十一、附录：词库（向搜狗看齐）](#十一附录词库向搜狗看齐)
+- [十二、附录：完整命令与脚本](#十二附录完整命令与脚本)
 
 ---
 
@@ -75,6 +84,43 @@
 所以作者的选择是留在 Wayland、放弃搜狗。不用 ibus（拼音体验差一截），改用 fcitx5：插件齐全、对 Wayland 的 `text-input-v3` 支持好。参考 [Arch Wiki: Fcitx5](https://wiki.archlinux.org/title/Fcitx5)。
 
 方案：**fcitx5 引擎 + 自带拼音 + GNOME 的 Kimpanel 扩展画候选框**。为什么候选框要单独拎出来，见第六节。
+
+## 一·五、Xorg 还是 Wayland：检查、取舍与切换
+
+整套配置在 **Xorg 和 Wayland 上都能用**——fcitx5 两者都支持。作者当时在 Wayland；如果你在别的机器上复刻，先确认自己在哪个上面，因为有两处差异取决于显示服务器。
+
+```bash
+echo "$XDG_SESSION_TYPE"                 # x11 = Xorg，wayland = Wayland
+loginctl show-session "$(loginctl | awk 'NR==2{print $1}')" -p Type
+```
+
+**两者的差异：**
+
+- **第六节（闪烁）只在 Wayland 上存在。** 候选框闪烁来自 classicui 在 GNOME Wayland 下用 `xdg_popup`。在 **Xorg 上没有这种闪烁**，所以那边 Kimpanel 扩展是*可选*的——只为主题/字体/狗（六、七节）才装，不是为修闪烁。
+- **环境变量（第四节）在 Xorg 上更重要。** 原生 Wayland 应用走 `text-input-v3`，不设 `GTK_IM_MODULE` 也行；但在 **Xorg** 上每个 GTK/Qt/X11 应用都靠那三个变量，而 `im-config -n fcitx5`（写 `~/.xinputrc`）是那边的标准切换方式。
+
+**你为什么可能被卡在 Xorg。** Ubuntu 的 GDM 在检测到 NVIDIA 闭源驱动时会禁用 Wayland，于是 `/etc/gdm3/custom.conf` 里留下一行：
+
+```bash
+grep -n WaylandEnable /etc/gdm3/custom.conf   # WaylandEnable=false → Wayland 被关掉了
+```
+
+**取舍（方便你自己决定，这是第一节作者体感的提炼）：**
+
+- *选 Wayland：* 文件管理器/浏览器/VS Code 更顺，以及——几乎决定性的——多屏混合 DPI 下正确的**每屏分数缩放**。fcitx5 在 Wayland 上通过 `text-input-v3` 支持良好。
+- *不选 Wayland：* 部分**录屏/远程桌面**工具和 **X11 自动化**（xdotool、autokey、x11vnc、老版 Zoom/TeamViewer 共享）行为不同或要走 portal。**Intel/AMD** 核显切过去风险低；**NVIDIA** 可能更不稳（驱动 545+/显式同步后改善很多，但要测）。提示：若你是 Intel+NVIDIA 混合、且 NVIDIA 闭源驱动其实没加载，那当前是 Intel 在驱动，切 Wayland 很安全。
+- *搜狗（fcitx4）* 基本只在 Xorg 上能用——但本文已用 fcitx5 把它替换掉，而 fcitx5 两边都行，所以这条不再是留在 Xorg 的理由。
+
+**从 Xorg 切到 Wayland**（在 GDM 里重新开启，再到登录界面选会话）。需要 root：
+
+```bash
+sudo cp /etc/gdm3/custom.conf /etc/gdm3/custom.conf.bak     # 备份，可回退
+sudo sed -i 's/^WaylandEnable=false/#WaylandEnable=false/' /etc/gdm3/custom.conf
+# 然后重启。在 GDM 登录界面点右下角齿轮 ⚙，选 “Ubuntu”（Wayland），
+# 不要选 “Ubuntu on Xorg”。
+```
+
+想退回：还原备份（`sudo cp /etc/gdm3/custom.conf.bak /etc/gdm3/custom.conf`），或在登录界面直接选 “Ubuntu on Xorg”。登录后用 `echo $XDG_SESSION_TYPE` 确认（期望 `wayland`）。
 
 ## 二、最终效果
 
@@ -117,10 +163,12 @@ flowchart TB
 
 ```bash
 sudo apt update
-sudo apt install -y fcitx5 fcitx5-chinese-addons fcitx5-config-qt
+sudo apt install -y fcitx5 fcitx5-chinese-addons fcitx5-config-qt fcitx5-module-lua fonts-lxgw-wenkai
 ```
 
 `fcitx5-chinese-addons` 最关键，拼音引擎、云拼音、双拼、拆字都在里面。需要 RIME 或码表再加 `fcitx5-rime fcitx5-table-extra`（可选，本文用自带拼音）。
+
+其中两个包容易漏：**`fcitx5-module-lua`** 是单独的包，7.4 节的 Lua 工具要靠它——不装的话 `custom.lua` 会静默失效。**`fonts-lxgw-wenkai`** 直接从 apt 装面板字体，比 7.2 节手动下载省事（仅 Debian/Ubuntu）。
 
 环境变量，写到 `~/.config/environment.d/`（GNOME 在 Wayland 通过 systemd 用户环境读它）：
 
@@ -135,6 +183,8 @@ im-config -n fcitx5
 ```
 
 注意：GNOME 原生 Wayland 应用走 `text-input-v3`，不设 `GTK_IM_MODULE` 也能用 fcitx5；上面三个变量主要给 XWayland、Qt、Electron 应用兜底。不设的话部分软件打不了中文。
+
+在 **Xorg** 上，这三个变量对*所有* GTK/Qt/X11 应用都重要（不只是 XWayland），而 `im-config -n fcitx5`——它会往 `~/.xinputrc` 写入 `run_im fcitx5`——是那边的标准切换方式（见一·五）。
 
 设开机自启，然后**注销重登**：
 
@@ -168,6 +218,18 @@ setsid fcitx5 -d </dev/null &>/dev/null &
 ```
 
 下文每处手改都默认在这个框架里。用 `fcitx5-configtool` 图形界面改则不受此限。
+
+> **抄配置文件前先知道两件事：**
+>
+> **(a) ⚠️ 键盘布局——要和你的物理键盘一致。** 仓库里的 `profile` 把布局**写死成 US**（`Default Layout=us`、输入法 `keyboard-us`）。如果你的键盘不是 US（法语 AZERTY、德语、瑞士…），fcitx5 接管后会强制成 US QWERTY，键位和你打的对不上。先用 `localectl status`（看 *X11 Layout* 那行）查出真实布局，再到 `~/.config/fcitx5/profile` 把 `Default Layout=<xkb>` 和输入法名 `keyboard-<xkb>` 改对，并同步 GNOME。以法语为例：
+>
+> ```bash
+> sed -i 's/^Default Layout=us/Default Layout=fr/' ~/.config/fcitx5/profile
+> sed -i 's/^Name=keyboard-us/Name=keyboard-fr/'   ~/.config/fcitx5/profile
+> gsettings set org.gnome.desktop.input-sources sources "[('xkb','fr')]"
+> ```
+>
+> **(b) 用「预置」绕开回写。** 对付上面的「退出回写」最省事的办法：在 fcitx5 **第一次运行之前**就把整套仓库 `resources/fcitx5/` 铺进 `~/.config/fcitx5/`——仓库的 `pinyin.conf` 带 `FirstRun=False`，首启不会重置；且仓库的 `profile` 已经把*拼音*放进了输入法组，于是连图形界面里「添加输入法」那步都省了。（完整部署命令见 12.3。）
 
 ### 5.2 显示拼音预编辑
 
@@ -280,6 +342,19 @@ gnome-extensions info kimpanel@kde.org | grep State   # 期望 ACTIVE
 
 注意：作者在这卡过——`disable-user-extensions` 若为 `true` 会静默禁用所有用户扩展，扩展状态一直停在 `INITIALIZED`。必须先设回 `false`。
 
+**不用浏览器装（可脚本化 / 对 AI 友好）。** 不走商店，按 UUID 拿到对应 GNOME Shell 版本的扩展，装上，再覆盖仓库文件：
+
+```bash
+VER=$(gnome-shell --version | grep -oE '[0-9]+' | head -1)
+url=$(curl -sL "https://extensions.gnome.org/extension-info/?uuid=kimpanel@kde.org&shell_version=$VER" \
+      | python3 -c 'import sys,json;print("https://extensions.gnome.org"+json.load(sys.stdin)["download_url"])')
+curl -sL "$url" -o /tmp/kimpanel.zip
+gnome-extensions install --force /tmp/kimpanel.zip
+# 然后把 resources/kimpanel/{panel.js,stylesheet.css} 和 dog/ 覆盖到已装扩展上（见 12.4）
+```
+
+坑：刚装好的扩展，**正在运行**的 shell 还不认识它，所以 `gnome-extensions enable` 可能没反应、`info` 也查不到，直到你重登。可以先把 UUID 写进启用列表再注销重登（完整片段见 12.4）。
+
 ## 七、自定义部分
 
 以下是作者和 Claude 自己做的东西，改的都是 Kimpanel 扩展目录下的 `stylesheet.css`（样子）和 `panel.js`（行为）。
@@ -324,6 +399,8 @@ mv ~/Downloads/LXGWWenKai-Regular.ttf ~/.local/share/fonts/
 fc-cache -f
 fc-list | grep -i wenkai
 ```
+
+在 Debian/Ubuntu 上可以完全跳过手动下载——字体有打包：`sudo apt install fonts-lxgw-wenkai`（已在上面第四节的安装命令里）。
 
 注意：Kimpanel 字体不能用 CSS 设——St 忽略 CSS 里的 `!important`，扩展会用一段从 gsetting 读出的内联样式盖过 CSS。所以走 gsetting，且**实时生效不用重登**：
 
@@ -493,6 +570,10 @@ ime.register_command("xq", "custom_weekday", "星期",   "alpha", "今天星期�
 | 字体改了没反应 | St 忽略 CSS 字体 | 用 gsetting，不用 CSS（7.2） |
 | 改 panel.js / 狗没生效 | GNOME 缓存扩展 JS | 注销重登，`disable/enable` 无效 |
 | 想用搜狗云 | fcitx5 没有搜狗后端 | 用百度（5.3） |
+| 键位打出来字母不对 | `profile` 强制了 `us` 布局 | 把 `Default Layout`/`keyboard-XX` 改成你真实的布局（5.1） |
+| `js`/`xq`（Lua）没反应 | 没装 `fcitx5-module-lua` | `sudo apt install fcitx5-module-lua`（四） |
+| 刚启动 `fcitx5-remote` 报 “Failed to get reply” | 还在加载大词库 | 正常，等几秒再试（十一） |
+| 候选不如搜狗 | 只加载了默认词库 | 导入词库（附录十一） |
 
 ## 十、资源下载
 
@@ -524,3 +605,208 @@ resources/
 字体文件（25MB）因体积没随包，用上面链接自取。
 
 咪咪没什么实用价值，纯粹是作者的小乐趣——等云端取词的空当瞄一眼它跑过去，挺解压。想换成别的动物见第八节。
+
+---
+
+## 十一、附录：词库（向搜狗看齐）
+
+上面几节给你一套能用、好看的 fcitx5。它没做的是追平搜狗的*词汇量*——刚装好的 fcitx5 在生僻词、人名、行话上确实比搜狗弱。这一节就补这块。（作者在第二台机器上复刻时加的。）
+
+**底层引擎是什么。** fcitx5 的拼音是 **libime**——n-gram 语言模型 + 词库 + 自学习（它写 `~/.local/share/fcitx5/pinyin/user.dict` 和 `user.history`，打得越多排序越懂你）。开箱只带默认词库（`/usr/share/libime/sc.dict`），这正是它比搜狗单薄的原因。候选排序 ≈ 语言模型的整句概率 × 词频 × 你自己的历史；百度云（5.3）在第 2 位补一个在线候选。
+
+**能用搜狗的*云*吗？** 不能。fcitx5 的 cloudpinyin 只有 `Baidu | Google | GoogleCN`（老的 fcitx4 才有搜狗后端，fcitx5 砍了）。百度是国内最优，且已经开着。**但是**搜狗真正的强项是它的*词库*，而词库**可以导进来**——这就是本节剩下的内容。
+
+**词库放哪。** 把任意 `*.dict` 丢进 `~/.local/share/fcitx5/pinyin/dictionaries/`（没有就建），fcitx5 会加载该目录所有 `.dict`。重载用 `fcitx5 -r`（或 `pkill -x fcitx5; setsid fcitx5 -d </dev/null &>/dev/null &`）。
+
+> ⚠️ **别贪多。** 这些词库重叠很厉害（光 `zhwiki` 就已覆盖科学/技术/人名/地名）。堆太多会让生僻词挤到前面、候选变吵、内存上涨——下面整套约 74 MB 磁盘 → ~210 MB 内存。挑几个贴合你打字习惯的就好。以后删某个：`rm ~/.local/share/fcitx5/pinyin/dictionaries/foo.dict && fcitx5 -r`。
+
+### 11.1 现成 `.dict`（下载即用）
+
+| 词库 | 大小 | 内容 | 推荐度（开发/ML/学术用户） | 来源 |
+|---|---|---|---|---|
+| **zhwiki** | ~32 MB | 中文维基百科——术语、人名、地名、科学、技术 | ✅✅ 最值得装的一个 | [felixonmars/fcitx5-pinyin-zhwiki releases](https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases) |
+| **肥猫百万词库** | ~30 MB | ~150 万通用高频词 | ✅ 极好的日常底座，和 zhwiki 互补 | [wuhgit/CustomPinyinDictionary releases](https://github.com/wuhgit/CustomPinyinDictionary/releases)，资源 `CustomPinyinDictionary_Fcitx.dict` |
+| **zhwiktionary** | ~4.6 MB | 维基词典——词语/成语/释义 | ⚠️ 可选（与 zhwiki 重叠；写作多可加） | felixonmars（同一 release） |
+| **zhwikisource** | ~3.9 MB | 维基文库——文言/古籍 | ❌ 除非写文言，跳过 | felixonmars（同一 release） |
+| **web-slang** | ~8 KB | 网络流行语——搜狗官方「网络流行新词」的替代（后者转不了，见 11.2） | ✅ 很小，顺手装 | felixonmars（同一 release） |
+| **moegirl 萌娘** | ~2.7 MB | ACG/动漫/游戏/二次元黑话 | ❌ 除非你二次元，跳过 | [outloudvi/mw2fcitx releases](https://github.com/outloudvi/mw2fcitx/releases)，`moegirl.dict` |
+
+> 坑：felixonmars 的 release 带好几种资源——`zhwiki-*.dict`、`zhwiktionary-*.dict`、`web-slang-*.dict`，**外加**同名的 `*.dict.yaml` *源文件*。fcitx5 只要 `*.dict`；别下那个 55 MB 的 `.yaml`。
+
+### 11.2 搜狗细胞词库——转换后导入
+
+搜狗官网（<https://pinyin.sogou.com/dict/>）把用户词库分成 **12 大类**（大致数量）：城市信息 (167)、自然科学、社会科学 (76)、工程应用 (96)、农林渔畜 (127)、医学医药 (132)、电子游戏 (436)、艺术设计 (154)、生活百科 (389)、运动休闲 (367)、人文科学 (31)、娱乐休闲 (403)。
+
+fcitx5 不能直接读 `.scel`，用 `fcitx5-chinese-addons-bin` / `libime-bin` 自带的两个工具转：
+
+```bash
+scel2org5 -o out.txt your.scel        # .scel → 文本（每行：词<TAB>拼音<TAB>0）
+libime_pinyindict out.txt out.dict    # 文本 → libime 二进制
+mv out.dict ~/.local/share/fcitx5/pinyin/dictionaries/ && fcitx5 -r
+```
+
+**装哪些（开发 / ML / 学术画像）：**
+
+| 搜狗词库（示例 id） | 内容 | 推荐度 |
+|---|---|---|
+| 计算机专业词库 (403，约 7.6k)、实用IT词汇 (6239)、互联网 (2664)、编程术语 (1216) | IT / 编程 | ✅✅ 最有用 |
+| 人工智能 (4070)、机器学习 (31696)、深度学习 (79782)、人工智能专业术语【官方】(72476)、算法与数据结构 (54015) | AI / ML | ✅✅ |
+| 数学词汇大全【官方】(15202，约 1.6 万)、统计学名词 (8162) | 数学 / 统计 | ✅ |
+| 物理词汇大全【官方】(15203，约 1.3 万) | 物理 | ✅（与 zhwiki 重叠） |
+| 化学化工词汇大全【官方】(15205，约 1.3 万)、化学词汇大全 (148) | 化学 | ⚠️ 研究涉及分子时 |
+| 生物词汇大全【官方】(15124，约 4.3 万)、生物信息学 (1375) | 生物 / 生信 | ⚠️ 相关才装 |
+| 医学词汇大全【官方】(15125，约 9 万) | 医学 | ⚠️ 相关才装 |
+| 中国地名大全 (1596) | 地名 | ⚠️ 可选（zhwiki 已含大量） |
+| 电子游戏 / 娱乐明星 / 体育 / 法律财经 / 农林渔畜 | 各类 | ❌ |
+
+> 找 ID：浏览分类页，或用这份索引 gist：<https://gist.github.com/leiless/55eddb489c53500373a5bc46c75afc4b>。某个词库的直链是 `https://pinyin.sogou.com/d/dict/download_cell.php?id=<ID>&name=<随便>`。
+
+> ⭐ **格式坑（ECS vs DCS）——这个真花了时间。** 搜狗**官方自动生成**的词库（如「网络流行新词」id 4）现在是新版头 `40 15 00 00 45('E') 43 53 01`，`scel2org5` 拒绝它（`format error`；把那个字节改回 `44('D')` 能过头校验，但转出 **0 词**——词体格式也变了）。**用户上传**的词库还是经典 `44('D')` "DCS"，能正常转。转之前先判断：
+>
+> ```bash
+> xxd -s4 -l1 your.scel    # 44 → 可转（DCS）；45 → 不可转（新 ECS）
+> ```
+>
+> 所以官方那个流行语词库现在转不了——用 felixonmars 的 **web-slang**（11.1）顶替。12.5 的批量脚本会检查这个字节、自动跳过 ECS 的。
+
+12.5 的脚本会批量下载一份精选 id 列表、跳过转不了的（ECS）、合并去重、编译成一个 `sogou.dict`（上面这组约 17.2 万词条）。
+
+## 十二、附录：完整命令与脚本
+
+全部集中在这——从上到下复制粘贴即可，或把整篇丢给 AI agent。需要管理员权限的步骤标了 **[root]**，由你自己来跑。
+
+### 12.1 需要管理员权限（root）的命令
+
+下面这些是**仅有的**需要 `sudo` 的命令（没有免密 sudo 的机器用 `pkexec`——会弹 GNOME 密码框）。本附录其余都是用户级。
+
+```bash
+# [root] 装 fcitx5 + 中文插件 + Lua 模块 + 面板字体
+sudo apt update
+sudo apt install -y fcitx5 fcitx5-chinese-addons fcitx5-config-qt \
+                    fcitx5-module-lua fonts-lxgw-wenkai
+
+# [root]（仅当要切到 Wayland）在 GDM 重新开启 Wayland，并备份
+sudo cp /etc/gdm3/custom.conf /etc/gdm3/custom.conf.bak
+sudo sed -i 's/^WaylandEnable=false/#WaylandEnable=false/' /etc/gdm3/custom.conf
+
+# [root]（可选）从 ibus 迁出？保留 ibus 核心——卸它会连带卸 Zoom 等依赖。
+# 只删现在没用的 ibus 拼音引擎：
+sudo apt remove -y ibus-libpinyin
+```
+
+### 12.2 一键安装脚本（`finish-install.sh`）
+
+用 `bash finish-install.sh` 跑。它在装包那步调 `sudo`，以 root 运行也照样可用（例如 `pkexec` 下）：
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+SUDO=""; [ "$(id -u)" -ne 0 ] && SUDO="sudo"
+export DEBIAN_FRONTEND=noninteractive
+$SUDO apt-get update
+$SUDO apt-get install -y fcitx5 fcitx5-chinese-addons fcitx5-config-qt \
+                         fcitx5-module-lua fonts-lxgw-wenkai
+im-config -n fcitx5                              # 切换输入法框架（写 ~/.xinputrc）
+mkdir -p ~/.config/environment.d
+cat > ~/.config/environment.d/fcitx.conf <<'EOF'
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+EOF
+mkdir -p ~/.config/autostart
+cp /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart/ 2>/dev/null || true
+echo "完成。接着部署 ~/.config/fcitx5（12.3），然后注销重登。"
+```
+
+### 12.3 部署引擎配置（从配套仓库）
+
+```bash
+git clone --depth 1 https://github.com/jajupmochi/ubuntu-fcitx5-pinyin /tmp/u5
+pkill -x fcitx5; sleep 1                          # 5.1：改前先停
+mkdir -p ~/.config/fcitx5/conf \
+         ~/.local/share/fcitx5/lua/imeapi/extensions \
+         ~/.local/share/fcitx5/data/quickphrase.d
+cp /tmp/u5/resources/fcitx5/profile               ~/.config/fcitx5/profile
+cp /tmp/u5/resources/fcitx5/config                ~/.config/fcitx5/config
+cp /tmp/u5/resources/fcitx5/conf/*.conf           ~/.config/fcitx5/conf/
+cp /tmp/u5/resources/fcitx5/lua/custom.lua        ~/.local/share/fcitx5/lua/imeapi/extensions/
+cp /tmp/u5/resources/fcitx5/quickphrase/custom.mb ~/.local/share/fcitx5/data/quickphrase.d/
+
+# ⚠️ 设置你的键盘布局——仓库 profile 写死成 "us"
+LAYOUT=fr                                         # 查你的：localectl status → X11 Layout
+sed -i "s/^Default Layout=.*/Default Layout=$LAYOUT/" ~/.config/fcitx5/profile
+sed -i "s/^Name=keyboard-.*/Name=keyboard-$LAYOUT/"   ~/.config/fcitx5/profile
+gsettings set org.gnome.desktop.input-sources sources "[('xkb','$LAYOUT')]"
+
+setsid fcitx5 -d </dev/null &>/dev/null &         # 重新拉起
+```
+
+### 12.4 Kimpanel 扩展（无浏览器）+ 主题 + 字体 + 狗
+
+```bash
+EXT=~/.local/share/gnome-shell/extensions/kimpanel@kde.org
+VER=$(gnome-shell --version | grep -oE '[0-9]+' | head -1)
+url=$(curl -sL "https://extensions.gnome.org/extension-info/?uuid=kimpanel@kde.org&shell_version=$VER" \
+      | python3 -c 'import sys,json;print("https://extensions.gnome.org"+json.load(sys.stdin)["download_url"])')
+curl -sL "$url" -o /tmp/kimpanel.zip && gnome-extensions install --force /tmp/kimpanel.zip
+cp /tmp/u5/resources/kimpanel/panel.js       "$EXT/panel.js"
+cp /tmp/u5/resources/kimpanel/stylesheet.css "$EXT/stylesheet.css"
+mkdir -p "$EXT/dog"; cp /tmp/u5/resources/kimpanel/dog/d?.png "$EXT/dog/"
+gsettings set org.gnome.shell disable-user-extensions false
+gsettings --schemadir "$EXT/schemas" set org.gnome.shell.extensions.kimpanel font 'LXGW WenKai 14'
+# 预置成下次登录自动启用（运行中的 shell 看不到新装的扩展）：
+python3 - <<'PY'
+import subprocess, ast
+k, key = 'org.gnome.shell', 'enabled-extensions'
+cur = ast.literal_eval(subprocess.check_output(['gsettings','get',k,key]).decode())
+if 'kimpanel@kde.org' not in cur: cur.append('kimpanel@kde.org')
+subprocess.run(['gsettings','set',k,key,'['+', '.join("'%s'"%x for x in cur)+']'])
+PY
+# 然后注销重登（panel.js 和新装扩展都需要 shell 重载）。
+```
+
+### 12.5 词库——装现成的 + 批量导入搜狗（见第十一节）
+
+```bash
+D=~/.local/share/fcitx5/pinyin/dictionaries; mkdir -p "$D"
+T=/tmp/sg; mkdir -p "$T"; : > "$T/all.txt"
+
+# 现成 .dict
+curl -L -o "$D/zhwiki.dict" "$(curl -s https://api.github.com/repos/felixonmars/fcitx5-pinyin-zhwiki/releases/latest \
+   | grep -oE 'https://[^\"]*zhwiki-[0-9]+\.dict' | head -1)"
+curl -L -o "$D/feimao.dict" \
+   https://github.com/wuhgit/CustomPinyinDictionary/releases/download/assets/CustomPinyinDictionary_Fcitx.dict
+
+# 搜狗细胞词库——精选 id（IT/AI/数学/物理/化学/生物/医学/地名）；自动跳过 ECS 格式
+for id in 4070 31696 79782 72476 54015 403 6239 2664 1216 15202 8162 15203 165 15205 148 15124 1375 12825 15125 1596; do
+  curl -sL "https://pinyin.sogou.com/d/dict/download_cell.php?id=$id&name=d$id" -o "$T/$id.scel"
+  [ "$(xxd -s4 -l1 "$T/$id.scel" | awk '{print $2}')" = "44" ] || { echo "跳过 $id（新 ECS 格式）"; continue; }
+  scel2org5 -o "$T/$id.txt" "$T/$id.scel" 2>/dev/null && grep -P '\t' "$T/$id.txt" >> "$T/all.txt"
+done
+sort -u "$T/all.txt" > "$T/merged.txt"
+libime_pinyindict "$T/merged.txt" "$D/sogou.dict"
+fcitx5 -r
+```
+
+### 12.6 切到 Wayland（如果你原来在 Xorg）
+
+见一·五。一个 **[root]** 步骤加一次重启：
+
+```bash
+sudo cp /etc/gdm3/custom.conf /etc/gdm3/custom.conf.bak
+sudo sed -i 's/^WaylandEnable=false/#WaylandEnable=false/' /etc/gdm3/custom.conf
+# 重启 → 登录界面齿轮 ⚙ → 选 “Ubuntu”（Wayland）
+```
+
+### 12.7 验证（`verify.sh`）
+
+```bash
+#!/usr/bin/env bash
+echo "会话    : ${XDG_SESSION_TYPE:-?}"                       # wayland（或 x11）
+pgrep -x fcitx5 >/dev/null && echo "fcitx5  : 运行中" || echo "fcitx5  : 没在跑"
+echo "环境变量: $GTK_IM_MODULE / $QT_IM_MODULE / $XMODIFIERS" # fcitx / fcitx / @im=fcitx
+gnome-extensions info kimpanel@kde.org 2>/dev/null | grep -i state   # State: ACTIVE
+fcitx5-remote -n                                              # 当前输入法（keyboard-xx / pinyin）
+```
+
+> 如果刚启动时 `fcitx5-remote` 打印 **“Failed to get reply”**，那是还在加载词库（~74 MB 那套要几秒）——等一下再试，不是错误。
