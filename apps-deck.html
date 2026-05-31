@@ -27,18 +27,18 @@
   html,body{ margin:0 !important; padding:0 !important; height:100%; max-width:none !important; overflow:hidden !important; font-family:var(--serif); color:var(--ink); }
   body{ background:transparent !important; }
 
-  .deck{ width:100vw; height:100vh; height:100dvh; }
-  /* every slide is a horizontal two-column spread; image + text both HUG the
-     centre gutter so the gap is consistent (regardless of image aspect) and the
-     whole composition stays centred. Side alternates by index. Never vertical. */
-  .deck-slide{ position:relative; width:100%; height:100%; display:grid; grid-template-columns:1fr 1fr;
-    align-items:center; gap:clamp(1.4rem,3vw,3.6rem);
+  .deck{ width:100vw; height:100vh; height:100dvh; perspective:1600px; }
+  /* image + text are two auto-width columns CENTRED as one group (justify-content
+     :center), so the composition is always centred regardless of image/text size.
+     Side alternates by index. Never vertical. */
+  .deck-slide{ position:relative; width:100%; height:100%; display:grid; grid-template-columns:auto auto;
+    justify-content:center; align-items:center; gap:clamp(1.6rem,3.4vw,4rem);
     padding: clamp(1.3rem,3vw,3.2rem) clamp(1.8rem,4vw,4.6rem); overflow:hidden; }
-  .deck-slide .plate{ justify-self:end; width:100%; max-width:clamp(320px,44vw,600px); }
-  .deck-slide .margin{ justify-self:start; width:100%; max-width:44ch; }
-  .deck-slide.flip .plate{ order:2; justify-self:start; }
-  .deck-slide.flip .margin{ order:1; justify-self:end; }
-  .deck-slide--specimen .plate{ max-width:clamp(360px,50vw,720px); }
+  .deck-slide .plate{ width:clamp(300px,42vw,560px); }
+  .deck-slide .margin{ width:clamp(260px,34vw,30rem); }
+  .deck-slide.flip .plate{ order:2; }
+  .deck-slide.flip .margin{ order:1; }
+  .deck-slide--specimen .plate{ width:clamp(340px,48vw,680px); }
 
   /* plate (screenshot / diagram): embedded directly into the paper, NO frame /
      shadow / card background — the whole page reads as one manuscript. */
@@ -232,12 +232,6 @@
       </select>
     </div>
     <div class="deck-tools">
-      <select class="sort-select" id="deckFx" title="Page-turn style" aria-label="Transition style">
-        <option value="cube" selected>Turn: 3D Cube</option>
-        <option value="slide">Turn: Slide</option>
-        <option value="pageturn">Turn: Page drift</option>
-        <option value="flip">Turn: 3D Flip</option>
-      </select>
       <button id="btnAuto" title="Play / pause auto-leaf" aria-label="Play or pause autoplay"><i class="fas fa-pause" aria-hidden="true"></i></button>
       <button id="btnFull" title="Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand" aria-hidden="true"></i></button>
       <a href="apps-gallery.html" title="Grid view" aria-label="Grid view"><i class="fas fa-table-cells-large" aria-hidden="true"></i></a>
@@ -353,15 +347,13 @@
         autoplayTimeLeft:function(s,time,progress){ document.getElementById('deckProg').style.width=((1-progress)*100).toFixed(1)+'%'; },
         autoplayStop:function(){ document.getElementById('deckProg').style.width='0%'; }
       } };
-    // "3D Cube" as a creative rotateY turn — same from-inside-the-screen look as
-    // Swiper's cube effect, but it loops cleanly (the built-in cube overlaps the
-    // first slide onto the last at the loop boundary).
-    if(effect==='cube'){ cfg.effect='creative'; cfg.creativeEffect={ limitProgress:1,
-      prev:{ shadow:false, translate:['-100%',0,-280], rotate:[0,-52,0] },
-      next:{ shadow:false, translate:['100%',0,-280], rotate:[0,52,0] } }; }
-    else if(effect==='flip'){ cfg.effect='flip'; cfg.flipEffect={ slideShadows:false }; }
-    else if(effect==='pageturn'){ cfg.effect='creative'; cfg.parallax=true; cfg.creativeEffect={ prev:{ shadow:false, translate:['-22%',0,-1] }, next:{ translate:['100%',0,0] } }; }
-    else { cfg.parallax=true; }  // slide (default)
+    // Always a 3D cube turn: a creative rotateY where the adjacent faces sit
+    // edge-on (rotate ±90°) at rest, so NOTHING peeks / overlaps the active page;
+    // they turn in to the front as you swipe (from inside the screen). Loop-clean.
+    cfg.effect='creative';
+    cfg.creativeEffect={ limitProgress:1,
+      prev:{ shadow:false, translate:['-100%',0,0], rotate:[0,-90,0] },
+      next:{ shadow:false, translate:['100%',0,0], rotate:[0,90,0] } };
     return cfg;
   }
   function buildSwiper(effect, startIndex){
@@ -432,7 +424,6 @@
     [].forEach.call(this.querySelectorAll('.filter-tag'),function(x){ x.classList.toggle('active',x===b); }); state.tag=b.dataset.tag; refresh(); });
   document.getElementById('deckSearch').addEventListener('input', function(){ state.q=(this.value||'').trim().toLowerCase(); refresh(); });
   document.getElementById('deckSort').addEventListener('change', function(){ state.sort=this.value; refresh(); });
-  document.getElementById('deckFx').addEventListener('change', function(){ buildSwiper(this.value, swiper.realIndex||0); });
 
   // ===== autoplay toggle + fullscreen =====
   var autoBtn=document.getElementById('btnAuto');

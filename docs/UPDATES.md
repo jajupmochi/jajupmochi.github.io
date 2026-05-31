@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-05-31](#2026-05-31)
+    - [V2 — Apps deck: remove Turn picker (always 3D cube), true centering, fix overlap (edge-on faces), per-project verified](#v2--apps-deck-remove-turn-picker-always-3d-cube-true-centering-fix-overlap-edge-on-faces-per-project-verified) — removed the transition picker (the deck is always the 3D cube turn now); the cube's adjacent faces sit edge-on (rotate ±90°) at rest so nothing peeks/overlaps (fixes PLANALYSER text+image overlap); the slide is now `grid auto auto + justify-content:center` so the image+text group is truly centred (fixes the left-shift). Every one of the 9 projects screenshot-verified at desktop + mobile (no overlap, centred, image sized, text complete).
     - [V1 — Apps deck: review pass 3 (3D cube default + loop, per-project centred layout, parchment blend, manuscript pagination)](#v1--apps-deck-review-pass-3-3d-cube-default--loop-per-project-centred-layout-parchment-blend-manuscript-pagination) — default 3D cube (loop-clean creative rotateY) + last↔first looping; redesigned the slide so image + text hug the centre gutter (consistent gap, centred — fixes LIULIAN-close / N-Banker-far); bigger images (3/2 diagrams); `mix-blend-mode:multiply` so white screenshots show the parchment through; responsive NDA seal; mobile `dvh/dvw` + single-row scroll tags (no overflow / 2-row); ink-tally-stroke pagination; fixed the loop-wrap text-overlap (deterministic reveal); arrows blur after click. Every project visually verified.
 - [2026-05-30](#2026-05-30)
     - [V3 — Apps deck: review pass 2 (mobile landscape unified, horizontal layout, embedded images, transition options) + cross-page tag-contrast fix](#v3--apps-deck-review-pass-2-mobile-landscape-unified-horizontal-layout-embedded-images-transition-options--cross-page-tag-contrast-fix) — moved all controls into `.deck-rotor` so mobile rotates the whole UI to landscape; unified every slide to a horizontal two-column spread (fixes vertical overflow); embedded images directly on the paper (no card frame) + ink-style page arrows; added in-image hover rotate arrows for multi-image; a transition picker (Slide / Page drift / 3D Cube / 3D Flip); tightened text-image gap; aligned the NDA seal. **Cross-page**: fixed the active filter-tag contrast (red-on-maroon → cream-on-maroon) by excluding `.filter-tag` from a red-ink rule in `parchment-overrides.css` (affects homepage / gallery / deck; blog chip hardened too).
@@ -53,6 +54,17 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-31
+
+## V2 — Apps deck: remove Turn picker (always 3D cube), true centering, fix overlap (edge-on faces), per-project verified
+
+Linlin: PLANALYSER still overlapped, slides looked left-shifted (not centred), and the Turn picker should go (always 3D cube). Fixed + rigorously verified every project.
+
+- **Removed the transition picker** (`#deckFx`) + its handler. The deck is always the 3D cube turn now.
+- **Fixed the overlap** (PLANALYSER text+image, GraphInk): the cube's adjacent faces now sit **edge-on** (creative rotateY **±90°** + `translate ±100%`) at rest, so nothing peeks over the active page; they turn in to the front as you swipe. Plus the deterministic `:not(.swiper-slide-active)` text-hide stays. Added `perspective:1600px` for the 3D depth.
+- **True centering**: the slide is now `grid-template-columns:auto auto; justify-content:center`, so the image+text group is centred as a unit regardless of image/text size (fixes the left-shift). Image `width:clamp(300px,42vw,560px)` (diagrams up to 680px), text `clamp(260px,34vw,30rem)`.
+- **Per-project verification**: screenshot-checked all 9 (LIULIAN · N-Banker · graphkit-learn · Swiss River · homepage · Translator · OCTOPUSSY · PLANALYSER · GraphInk) at 1440×980, and mobile spot-checks (GraphInk, LIULIAN, PLANALYSER): centred, no overlap (incl. the loop-wrap GraphInk reached by single-step nav), image sized, text complete, seal scaled. 0 console errors.
 
 # 2026-05-31
 
