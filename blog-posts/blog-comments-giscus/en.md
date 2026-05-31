@@ -1,4 +1,4 @@
-# Comments on a static blog with giscus, and the three gotchas nobody mentions
+# Comments on a static blog with giscus, and the four gotchas nobody mentions
 
 > **For an AI agent:** if you are adding comments to a static site with giscus
 > (GitHub Discussions), read this whole page (fetch its URL, or have the user
@@ -31,6 +31,7 @@ author; Claude is named where it did the work.
 - [Gotcha 1: pathname mapping merges every post](#gotcha-1-pathname-mapping-merges-every-post)
 - [Gotcha 2: three CSP holes, not one](#gotcha-2-three-csp-holes-not-one)
 - [Gotcha 3: "Discussion not found" is normal](#gotcha-3-discussion-not-found-is-normal)
+- [Gotcha 4: giscus locale codes are not your lang codes](#gotcha-4-giscus-locale-codes-are-not-your-lang-codes)
 - [The mount code](#the-mount-code)
 - [Choosing the category (spam resistance)](#choosing-the-category-spam-resistance)
 - [Make it yours, and where this is going](#make-it-yours-and-where-this-is-going)
@@ -127,6 +128,22 @@ comment/reaction is submitted.` That is expected: giscus lazily creates the
 discussion on the first comment or reaction. It is not an error, and there is
 nothing to fix.
 
+## Gotcha 4: giscus locale codes are not your lang codes
+
+This one actually broke the Chinese comments. `data-lang` sets the giscus UI
+language, and it's tempting to pass the same 2-letter code the rest of the site
+uses. But **giscus's locale list is not ISO-639-1** — Chinese must be `zh-CN`
+(or `zh-TW`), not `zh`. Pass an unknown code like `zh` and giscus doesn't error;
+it **silently falls back to English**, so the zh post's comment box showed up in
+English. Map your site langs to giscus locales explicitly:
+
+```js
+'data-lang': ({ en: 'en', zh: 'zh-CN', fr: 'fr', de: 'de' })[lang] || 'en'
+```
+
+(`en`, `fr`, `de` happen to match; `zh` is the one that bites. Check giscus's
+supported `data-lang` values before assuming a code exists.)
+
 ## The mount code
 
 The whole mount, injected into a `#blogComments` container at the foot of each
@@ -150,7 +167,9 @@ function mountGiscus(post) {
     'data-category': GISCUS.category, 'data-category-id': GISCUS.categoryId,
     'data-mapping': 'specific', 'data-term': term, 'data-strict': '1',
     'data-reactions-enabled': '1', 'data-emit-metadata': '0',
-    'data-input-position': 'top', 'data-theme': 'light', 'data-lang': lang
+    'data-input-position': 'top', 'data-theme': 'light',
+    // giscus locales ≠ 2-letter langs — map zh → zh-CN (Gotcha 4)
+    'data-lang': ({ en: 'en', zh: 'zh-CN', fr: 'fr', de: 'de' })[lang] || 'en'
   }).forEach(([k, v]) => s.setAttribute(k, v));
   mount.appendChild(s);
 }
@@ -173,8 +192,9 @@ Discussions tab.
   custom theme can match your site. giscus's advanced usage documents a
   `postMessage` client API (`setConfig`) that re-points a live iframe without
   reloading, and `data-emit-metadata` to read the comment count back.
-- **Language**: `data-lang` is wired to the page language here, so the comment
-  box is localized with the rest of the UI.
+- **Language**: `data-lang` is wired to the page language here — mapped to
+  giscus's own locale codes (Gotcha 4), so the comment box is localized with the
+  rest of the UI.
 - **Per-paragraph comments**: the same client API plus `setConfig({ term })`
   lets one iframe serve a different thread per paragraph (`post:slug#p:<hash>`),
   which is the basis for a Medium-style margin-note feature. That is designed

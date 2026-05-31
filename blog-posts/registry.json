@@ -29,8 +29,8 @@
         "zh": 6
       },
       "title": {
-        "en": "Comments on a static blog with giscus, and the three gotchas nobody mentions",
-        "zh": "用 giscus 给静态博客加评论，以及没人提的三个坑"
+        "en": "Comments on a static blog with giscus, and the four gotchas nobody mentions",
+        "zh": "用 giscus 给静态博客加评论，以及没人提的四个坑"
       },
       "excerpt": {
         "en": "Wiring giscus (GitHub Discussions) into a static blog with no backend: derive the IDs from the API, fix the pathname-mapping trap on query-string routing, and patch all three CSP holes (script, frame AND style).",

@@ -118,12 +118,12 @@ const out = Diff2Html.html(patch, { drawFileList: false, matching: 'words',
                                     outputFormat: 'side-by-side' });
 ```
 
-两个库都从 CDN 引入，和之前的 marked、KaTeX 一样：
+两个库都从 CDN 引入——而且和 marked / highlight.js / KaTeX / mermaid 一样，现在由 `blog.js` **按需加载**（只在你第一次点「差异」时），不再是 `blog.html` 里的静态 `<script>`。小小的 diff2html CSS 仍放在 `<head>`；JS 在需要时注入：
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/css/diff2html.min.css">
+```js
+// blog.js 在第一次点「差异」时注入（ensureDiffLibs）
+'https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js'
+'https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js'
 ```
 
 ## T4+：贡献者与版本永久链接
@@ -136,6 +136,15 @@ if (rev) { const r = (post.revisions || []).find(x => x.sha.indexOf(rev) === 0);
            if (r) showVersion(post, cl, r.sha, r.date); }
 ```
 
+## T5：用 CI 自动保持最新
+
+手维护 `revisions` 一不留神就过时——改完文章一推送，印章就是旧的。于是现在有一个小 GitHub Action，在每次动到文章 Markdown 的推送后从 git 重算它：
+
+- `scripts/gen-registry.py` 对每篇的 `<lang>.md` 跑 `git log`，把 `updated` 设成最新 commit 的日期，并按时间倒序重建 `revisions`。**按 commit sha 匹配保留**已手写的 `summary`/`by`，所以手写说明会跨次保留；真正新增的 commit 用 commit 标题作占位摘要，之后可再润色。
+- `.github/workflows/update-registry.yml` 只在 `blog-posts/**/*.md` 改动时触发（**不**含 `registry.json`），所以机器人自己的提交不会再触发它；它把刷新后的 `registry.json` 带 `[skip ci]` 提交回去。运行时依旧零 GitHub API，读者不付限流代价。
+
+而且 T0 的「更新于」日期现在直接链到那个最新 commit。净效果：历史自动跟随 git，但你仍可手工润色任意一行。
+
 ## 我们真正踩到的坑
 
 - **短 SHA vs 完整 SHA。** raw.githubusercontent.com 认 7 位短 sha，所以 registry 可以直接存 `git log` 打印的那些短 sha。`?rev=` 处理里我们仍按前缀匹配，所以完整 sha 也能用。
@@ -145,14 +154,14 @@ if (rev) { const r = (post.revisions || []).find(x => x.sha.indexOf(rev) === 0);
   connect-src 'self' https://*.clarity.ms https://raw.githubusercontent.com;
   ```
 
-- **手写摘要，别去爬 commit 信息。** 这里的 commit 是 conventional-commit、仓库级的（`docs(blog): link published repo…`），当成每篇的更新日志读起来很糟。每篇就几次编辑，手写一行双语既便宜又清楚得多。
+- **默认爬取，必要时手写（已更新）。** 最初我们手写每条摘要，因为仓库级的 conventional-commit 标题（`docs(blog): link published repo…`）当每篇更新日志读很糟。CI（T5）接手后，它用 commit 标题作每条新版本的摘要，并保留你手改过的行（按 sha 匹配）——值得好好写的那几条仍有干净双语，其余自动保持最新。小技巧：把 commit 第一行写好，占位摘要就已经够用。
 
 ## 改成你自己的
 
 一切都可配置：
 
 - **哪些文章有历史**：`registry.json` 里任何带 `revisions` 数组的文章就显示面板；没有数组就只显示 T0 印章。
-- **摘要和作者**：改 `summary.{en,zh}` 和 `by` 字段。想从 git 里取种子数据，跑 `git log --format='%h %ad %s' --date=short -- blog-posts/<slug>/`，对你想呈现的每个 commit 写一行。
+- **摘要和作者**：CI（T5）会从 git 自动生成，并保留你手改的内容（按 sha 匹配）。想润色就改 `registry.json` 里的 `summary.{en,zh}` 和 `by`；想手工取种子数据则跑 `git log --format='%h %ad %s' --date=short -- blog-posts/<slug>/`。
 - **差异样式**：diff2html 可用 `outputFormat: 'line-by-line'` 代替 `'side-by-side'`；大文章上逐词匹配太慢时用 `matching: 'lines'`。
 - **仓库 + 分支**：改 `js/blog.js` 里 commit/raw URL 中的 `REPO` 和 `master` 段。
 

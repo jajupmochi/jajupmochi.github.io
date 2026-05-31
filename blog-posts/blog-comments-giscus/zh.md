@@ -1,4 +1,4 @@
-# 用 giscus 给静态博客加评论，以及没人提的三个坑
+# 用 giscus 给静态博客加评论，以及没人提的四个坑
 
 > **给 AI Agent：** 如果你要用 giscus（GitHub Discussions）给静态站加评论，请通读本页（抓取它的 URL，或让用户把下面的 Markdown 贴给你）。那些 ID、mapping 的修正、以及确切的 CSP 行都是真实的，也正是真正会出问题的地方。下一个框里有提示词。
 
@@ -18,6 +18,7 @@ AI 提示词 —— 粘贴给你的编程 agent
 - [坑 1：pathname 映射会把所有文章并到一起](#坑-1pathname-映射会把所有文章并到一起)
 - [坑 2：CSP 有三个洞，不是一个](#坑-2csp-有三个洞不是一个)
 - [坑 3：「Discussion not found」是正常的](#坑-3discussion-not-found-是正常的)
+- [坑 4：giscus 的 locale 代码不是你的语言代码](#坑-4giscus-的-locale-代码不是你的语言代码)
 - [挂载代码](#挂载代码)
 - [选分类（防刷）](#选分类防刷)
 - [改成你自己的，以及接下来](#改成你自己的以及接下来)
@@ -87,6 +88,16 @@ frame-src  'self' https://giscus.app;
 
 第一次打开一篇还没人评论的文章时，控制台会警告 `[giscus] Discussion not found. A new discussion will be created if a comment/reaction is submitted.`。这是预期行为：giscus 会在第一条评论或反应时惰性创建那个 discussion。它不是错误，也没什么要修的。
 
+## 坑 4：giscus 的 locale 代码不是你的语言代码
+
+这个真把中文评论搞坏了。`data-lang` 设的是 giscus 界面语言，很容易顺手把站点其余部分用的那个两字母代码传进去。但 **giscus 的语言列表不是 ISO-639-1**——中文得是 `zh-CN`（或 `zh-TW`），不是 `zh`。传一个它不认识的代码（比如 `zh`），giscus 不报错，而是**静默回退到英文**，于是中文版文章的评论框显示成了英文。把站点语言显式映射到 giscus 的 locale：
+
+```js
+'data-lang': ({ en: 'en', zh: 'zh-CN', fr: 'fr', de: 'de' })[lang] || 'en'
+```
+
+（`en`、`fr`、`de` 正好对得上；`zh` 是会咬人的那个。用之前先查 giscus 支持的 `data-lang` 取值。）
+
 ## 挂载代码
 
 整个挂载，注入到每篇文章末尾的 `#blogComments` 容器里：
@@ -109,7 +120,9 @@ function mountGiscus(post) {
     'data-category': GISCUS.category, 'data-category-id': GISCUS.categoryId,
     'data-mapping': 'specific', 'data-term': term, 'data-strict': '1',
     'data-reactions-enabled': '1', 'data-emit-metadata': '0',
-    'data-input-position': 'top', 'data-theme': 'light', 'data-lang': lang
+    'data-input-position': 'top', 'data-theme': 'light',
+    // giscus 的 locale ≠ 两字母语言代码 —— 把 zh 映射成 zh-CN（坑 4）
+    'data-lang': ({ en: 'en', zh: 'zh-CN', fr: 'fr', de: 'de' })[lang] || 'en'
   }).forEach(([k, v]) => s.setAttribute(k, v));
   mount.appendChild(s);
 }
@@ -124,7 +137,7 @@ function mountGiscus(post) {
 ## 改成你自己的，以及接下来
 
 - **主题**：`data-theme` 接受 `light`、`dark`，或一个指向你自己 CSS 的 URL，所以可以做个自定义主题贴合你的站。giscus 的高级用法文档里有一套 `postMessage` 客户端 API（`setConfig`），能不重载就给运行中的 iframe 换内容，还有 `data-emit-metadata` 用来读回评论数。
-- **语言**：这里 `data-lang` 接到了页面语言，所以评论框跟着 UI 一起本地化。
+- **语言**：这里 `data-lang` 接到了页面语言——并映射到 giscus 自己的 locale 代码（坑 4），所以评论框跟着 UI 一起本地化。
 - **逐段评论**：同一套客户端 API 加上 `setConfig({ term })`，能让一个 iframe 按段落服务不同的串（`post:slug#p:<hash>`），这是做 Medium 式边注功能的基础。这个本站已经设计好，但还没实现。
 
 AI agent 读 `js/blog.js`（`mountGiscus`）和 `blog.html` 里的 CSP 块，再对你自己的仓库跑上面那两条 `gh api`，就能复现。

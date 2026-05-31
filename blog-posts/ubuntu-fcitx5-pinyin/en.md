@@ -651,17 +651,19 @@ mv out.dict ~/.local/share/fcitx5/pinyin/dictionaries/ && fcitx5 -r
 
 **Which to install (dev / ML / academic profile):**
 
-| Sogou dictionary (example id) | Content | Recommend |
+| Sogou dictionary — *gloss* (example id) | Content | Recommend |
 |---|---|---|
-| 计算机专业词库 (403, ~7.6k), 实用IT词汇 (6239), 互联网 (2664), 编程术语 (1216) | IT / programming | ✅✅ most useful |
-| 人工智能 (4070), 机器学习 (31696), 深度学习 (79782), 人工智能专业术语【官方】(72476), 算法与数据结构 (54015) | AI / ML | ✅✅ |
-| 数学词汇大全【官方】(15202, ~16k), 统计学名词 (8162) | math / stats | ✅ |
-| 物理词汇大全【官方】(15203, ~13k) | physics | ✅ (overlaps zhwiki) |
-| 化学化工词汇大全【官方】(15205, ~13k), 化学词汇大全 (148) | chemistry | ⚠️ if your work touches molecules |
-| 生物词汇大全【官方】(15124, ~43k), 生物信息学 (1375) | biology / bioinformatics | ⚠️ if relevant |
-| 医学词汇大全【官方】(15125, ~90k) | medicine | ⚠️ if relevant |
-| 中国地名大全 (1596) | place names | ⚠️ optional (zhwiki already has many) |
-| 电子游戏 / 娱乐明星 / 体育 / 法律财经 / 农林渔畜 | various | ❌ |
+| 计算机专业词库 *CS terms* (403, ~7.6k), 实用IT词汇 *practical IT* (6239), 互联网 *internet* (2664), 编程术语 *programming terms* (1216) | IT / programming | ✅✅ most useful |
+| 人工智能 *AI* (4070), 机器学习 *machine learning* (31696), 深度学习 *deep learning* (79782), 人工智能专业术语【官方】*AI terms (official)* (72476), 算法与数据结构 *algorithms & data structures* (54015) | AI / ML | ✅✅ |
+| 数学词汇大全【官方】*math (official)* (15202, ~16k), 统计学名词 *statistics* (8162) | math / stats | ✅ |
+| 物理词汇大全【官方】*physics (official)* (15203, ~13k) | physics | ✅ (overlaps zhwiki) |
+| 化学化工词汇大全【官方】*chemistry & chem-eng (official)* (15205, ~13k), 化学词汇大全 *chemistry* (148) | chemistry | ⚠️ if your work touches molecules |
+| 生物词汇大全【官方】*biology (official)* (15124, ~43k), 生物信息学 *bioinformatics* (1375) | biology / bioinformatics | ⚠️ if relevant |
+| 医学词汇大全【官方】*medicine (official)* (15125, ~90k) | medicine | ⚠️ if relevant |
+| 中国地名大全 *Chinese place names* (1596) | place names | ⚠️ optional (zhwiki already has many) |
+| 电子游戏 *games* / 娱乐明星 *celebrities* / 体育 *sports* / 法律财经 *law & finance* / 农林渔畜 *agriculture* | various | ❌ |
+
+> The dictionary names are kept in Chinese on purpose — that's exactly how they appear on Sogou's site, so you can search for them there; the *italic* English is just a gloss.
 
 > Find IDs by browsing the category pages, or via this index gist: <https://gist.github.com/leiless/55eddb489c53500373a5bc46c75afc4b>. A dictionary's direct download is `https://pinyin.sogou.com/d/dict/download_cell.php?id=<ID>&name=<anything>`.
 

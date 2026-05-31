@@ -140,15 +140,9 @@
         <p class="blog-footer-note" data-i18n="blog.foot_note">Built as a static, client-rendered blog — Markdown · LaTeX · Jupyter · Mermaid.</p>
     </footer>
 
-    <!-- ===== Render libs (deferred) ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-    <!-- Version-history diff (jsdiff computes, diff2html renders; both reuse highlight.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js"></script>
+    <!-- Render libs (marked · highlight.js · KaTeX · mermaid · jsdiff+diff2html)
+         are loaded on demand by blog.js, for post view only — the index page
+         needs none of them, which keeps the list fast. -->
     <script src="js/blog.js"></script>
 </body>
 </html>

@@ -166,6 +166,71 @@
     markedReady = true;
   }
 
+  // ---- Lazy-loaded render libraries ----------------------------------------
+  // The post LIST needs none of these (marked/highlight/katex/mermaid/diff), so
+  // they're no longer in blog.html — load them on demand, only for post view,
+  // and only the ones a given post actually uses. Big win for the index page.
+  const LIB = {
+    marked:    'https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js',
+    hljs:      'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js',
+    katex:     'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js',
+    katexAuto: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js',
+    mermaid:   'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js',
+    diff:      'https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js',
+    diff2html: 'https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js'
+  };
+  const _loaded = {};
+  function loadScript(src) {
+    if (_loaded[src]) return _loaded[src];
+    _loaded[src] = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = () => resolve();
+      s.onerror = () => { delete _loaded[src]; reject(new Error('failed to load ' + src)); };
+      document.head.appendChild(s);
+    });
+    return _loaded[src];
+  }
+  // marked + highlight always; KaTeX only if the post has math; mermaid only if
+  // it has a mermaid block. postProcess() already guards on window.* so a lib
+  // that wasn't loaded is simply skipped.
+  async function ensureRenderLibs(md) {
+    await loadScript(LIB.marked);
+    const jobs = [loadScript(LIB.hljs)];
+    if (/\$\$|\$[^\n$]+\$|\\\(|\\\[/.test(md)) jobs.push(loadScript(LIB.katex).then(() => loadScript(LIB.katexAuto)));
+    if (/```\s*mermaid/.test(md)) jobs.push(loadScript(LIB.mermaid));
+    try { await Promise.all(jobs); } catch (e) { /* non-fatal: feature degrades */ }
+  }
+  async function ensureDiffLibs() {
+    await loadScript(LIB.diff);
+    await loadScript(LIB.diff2html);
+  }
+
+  // ---- Scroll position: save per URL, restore on reload --------------------
+  // renderPost is async, so the browser's native scroll restoration can't work
+  // (the content isn't there yet on reload). Persist scrollY per ?post&lang and
+  // restore it once the post is rendered.
+  function scrollKey() { return 'blogScroll:' + location.search; }
+  let _scrollPending = false;
+  function saveScrollSoon() {
+    if (_scrollPending) return;
+    _scrollPending = true;
+    requestAnimationFrame(() => {
+      _scrollPending = false;
+      try { sessionStorage.setItem(scrollKey(), String(Math.round(window.scrollY))); } catch (e) {}
+    });
+  }
+  function restoreScroll() {
+    let y = null;
+    try { y = sessionStorage.getItem(scrollKey()); } catch (e) {}
+    if (y == null) return;
+    const target = parseInt(y, 10) || 0;
+    if (!target) return;
+    const go = () => window.scrollTo(0, target);
+    requestAnimationFrame(go);
+    setTimeout(go, 250);   // re-apply after late layout (images / web fonts)
+  }
+
   // Clipboard fallback for non-secure contexts / older browsers.
   function fallbackCopy(text, done) {
     try {
@@ -442,6 +507,7 @@
     }
     buildControls();
     renderCards();
+    restoreScroll();
   }
 
   async function renderPost(slug) {
@@ -485,6 +551,7 @@
       const res = await fetch(`blog-posts/${slug}/${cl}.md`, { cache: 'no-cache' });
       if (!res.ok) throw new Error('md fetch failed: ' + res.status);
       const md = await res.text();
+      await ensureRenderLibs(md);   // load marked/highlight/katex/mermaid on demand
       body.innerHTML = renderMarkdown(md, slug);
       postProcess(body, slug);
       buildTOC(body);          // floating table of contents + scroll-spy
@@ -496,10 +563,13 @@
       // Permalink to a specific revision (?rev=<sha>) → open that version in-page
       const _rev = new URLSearchParams(location.search).get('rev');
       if (_rev) { const r = (post.revisions || []).find(x => x.sha === _rev || x.sha.indexOf(_rev) === 0); if (r && r !== (post.revisions || [])[0]) showVersion(post, cl, r.sha, r.date); }
-      // Scroll to anchor if present in hash
+      // Scroll to anchor if present in hash; otherwise restore previous scroll
+      // position (so a reload returns to where you were, not the top).
       if (location.hash) {
         const target = document.getElementById(location.hash.slice(1));
         if (target) target.scrollIntoView();
+      } else {
+        restoreScroll();
       }
     } catch (e) {
       body.innerHTML = `<p class="blog-error">Failed to load this post (${e.message}).</p>`;
@@ -615,6 +685,7 @@
     body.innerHTML = `<p class="blog-loading">${t('blog.loading')}</p>`;
     try {
       const md = await versionMd(post.slug, cl, sha);
+      await ensureRenderLibs(md);
       body.innerHTML = renderMarkdown(md, post.slug);
       postProcess(body, post.slug);
       const banner = document.createElement('div');
@@ -633,9 +704,7 @@
     panel.hidden = false;
     panel.innerHTML = `<p class="blog-loading">${t('blog.loading')}</p>`;
     try {
-      if (typeof Diff === 'undefined' || typeof Diff2Html === 'undefined') {
-        panel.innerHTML = `<p class="blog-error">Diff viewer not loaded.</p>`; return;
-      }
+      await ensureDiffLibs();   // jsdiff + diff2html, loaded on demand
       const [oldMd, newRes] = await Promise.all([
         versionMd(post.slug, cl, sha),
         fetch(`blog-posts/${post.slug}/${cl}.md`, { cache: 'no-cache' }).then(r => r.text())
@@ -664,7 +733,9 @@
       // custom parchment theme (giscus.app's iframe fetches this absolute URL;
       // only takes effect on the deployed site, not localhost)
       'data-theme': 'https://jajupmochi.github.io/css/giscus-parchment.css',
-      'data-lang': lang
+      // giscus locale codes are not our 2-letter langs — Chinese must be zh-CN,
+      // else giscus silently falls back to English on the zh post.
+      'data-lang': ({ en: 'en', zh: 'zh-CN', fr: 'fr', de: 'de' })[lang] || 'en'
     }).forEach(([k, v]) => s.setAttribute(k, v));
     mount.appendChild(s);
   }
@@ -793,6 +864,9 @@
     wireLangSwitch();
     wireReadingToggle();
     applyReadingMode(localStorage.getItem('blogReading') || 'standard');
+    try { history.scrollRestoration = 'manual'; } catch (e) {}
+    window.addEventListener('scroll', saveScrollSoon, { passive: true });
+    window.addEventListener('pagehide', () => { try { sessionStorage.setItem(scrollKey(), String(Math.round(window.scrollY))); } catch (e) {} });
     try {
       const res = await fetch(REGISTRY_URL, { cache: 'no-cache' });
       registry = await res.json();

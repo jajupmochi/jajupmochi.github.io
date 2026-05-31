@@ -160,12 +160,12 @@ const out = Diff2Html.html(patch, { drawFileList: false, matching: 'words',
                                     outputFormat: 'side-by-side' });
 ```
 
-The two libraries come from a CDN, exactly like marked and KaTeX before them:
+The two libraries come from a CDN — and, like marked / highlight.js / KaTeX / mermaid, they are now **loaded on demand** by `blog.js` (only when you first open a diff), not as static `<script>` tags in `blog.html`. The small diff2html CSS stays in `<head>`; the JS is injected when needed:
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/css/diff2html.min.css">
+```js
+// blog.js injects these on the first "Diff" click (ensureDiffLibs)
+'https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js'
+'https://cdn.jsdelivr.net/npm/diff2html@3.4.48/bundles/js/diff2html.min.js'
 ```
 
 ## T4+: contributors and rev permalinks
@@ -181,6 +181,15 @@ if (rev) { const r = (post.revisions || []).find(x => x.sha.indexOf(rev) === 0);
            if (r) showVersion(post, cl, r.sha, r.date); }
 ```
 
+## T5: keep it current automatically (CI)
+
+Hand-maintaining `revisions` drifts the moment you forget — push a post edit and the stamp is stale. So a small GitHub Action now regenerates it from git on every push that touches a post's Markdown:
+
+- `scripts/gen-registry.py` runs `git log` over each post's `<lang>.md` files, sets `updated` to the newest commit's date, and rebuilds `revisions` newest-first. A curated `summary`/`by` is **preserved by matching commit sha**, so hand-written notes survive across runs; genuinely new commits get the commit subject as a placeholder you can refine later.
+- `.github/workflows/update-registry.yml` triggers on `blog-posts/**/*.md` only (**not** `registry.json`), so the bot's own commit can't re-trigger it; it commits the refreshed `registry.json` back with `[skip ci]`. Still no runtime GitHub API — the reader pays zero rate limit.
+
+And the T0 "Updated" date now links straight to that latest commit. Net effect: the history is git-truth automatically, but you can still curate any line by hand.
+
 ## Gotchas we actually hit
 
 - **Short SHA vs full SHA.** raw.githubusercontent.com accepts the 7-char short
@@ -194,10 +203,13 @@ if (rev) { const r = (post.revisions || []).find(x => x.sha.indexOf(rev) === 0);
   connect-src 'self' https://*.clarity.ms https://raw.githubusercontent.com;
   ```
 
-- **Curate summaries, do not scrape commit messages.** The commits here are
-  conventional-commit and repo-wide (`docs(blog): link published repo…`), which
-  reads badly as a per-post changelog. A few edits per post means hand-writing
-  one bilingual line each is cheap and far clearer.
+- **Scrape by default, curate when it matters (updated).** We first hand-wrote
+  every summary, because repo-wide conventional-commit subjects (`docs(blog):
+  link published repo…`) read badly as a per-post changelog. Once the CI (T5)
+  took over, it seeds each new revision's summary from the commit subject and
+  keeps any line you hand-edit (matched by sha) — so the few edits that deserve a
+  clean bilingual note still get one, and the rest stay current for free. Tip:
+  write a decent first-line commit subject and the placeholder is already fine.
 
 ## Make it yours
 
@@ -205,9 +217,10 @@ Everything is configurable:
 
 - **Which posts have history**: any post with a `revisions` array in
   `registry.json` shows the panel. No array means just the T0 stamp.
-- **Summaries and authors**: edit the `summary.{en,zh}` and `by` fields. To seed
-  them from git, run `git log --format='%h %ad %s' --date=short --
-  blog-posts/<slug>/` and write one line per commit you want to surface.
+- **Summaries and authors**: the CI (T5) seeds these from git automatically and
+  keeps anything you hand-edit (matched by sha). To curate, edit the
+  `summary.{en,zh}` and `by` fields in `registry.json`; to seed by hand instead,
+  run `git log --format='%h %ad %s' --date=short -- blog-posts/<slug>/`.
 - **The diff style**: diff2html takes `outputFormat: 'line-by-line'` instead of
   `'side-by-side'`, and `matching: 'lines'` if word-matching is too slow on big
   posts.
