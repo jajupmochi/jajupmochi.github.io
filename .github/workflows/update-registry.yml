@@ -1,0 +1,42 @@
+name: Update blog registry (dates + history)
+
+# Regenerates blog-posts/registry.json (per-post `updated` + `revisions`) from
+# git history whenever a post's Markdown changes, so the footer "Updated" date
+# and edit history always follow GitHub — with no runtime GitHub API call.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'blog-posts/**/*.md'      # NOT registry.json → the bot commit can't re-trigger this
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-registry
+  cancel-in-progress: false
+
+jobs:
+  update-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history is needed by `git log`
+
+      - name: Regenerate registry from git history
+        run: python3 scripts/gen-registry.py
+
+      - name: Commit registry.json if it changed
+        run: |
+          if [ -n "$(git status --porcelain blog-posts/registry.json)" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add blog-posts/registry.json
+            git commit -m "chore(registry): auto-update dates + edit history from git [skip ci]"
+            git push
+            echo "registry.json updated and pushed"
+          else
+            echo "registry.json already current — nothing to do"
+          fi

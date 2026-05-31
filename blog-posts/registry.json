@@ -35,7 +35,18 @@
       "excerpt": {
         "en": "Wiring giscus (GitHub Discussions) into a static blog with no backend: derive the IDs from the API, fix the pathname-mapping trap on query-string routing, and patch all three CSP holes (script, frame AND style).",
         "zh": "给无后端的静态博客接 giscus（GitHub Discussions）：用 API 取 ID、修掉查询串路由下 pathname 映射的陷阱、补齐三个 CSP 洞（script、frame 和 style）。"
-      }
+      },
+      "revisions": [
+        {
+          "date": "2026-05-29",
+          "sha": "1f9c4b9",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "feat(blog): two build-process posts — version history + giscus comments (bilingual)",
+            "zh": "feat(blog): two build-process posts — version history + giscus comments (bilingual)"
+          }
+        }
+      ]
     },
     {
       "slug": "blog-version-history",
@@ -72,14 +83,41 @@
       "excerpt": {
         "en": "A post's versions are its git commits, so a Wikipedia/Zhihu-style edit history needs no backend: a registry-driven panel, view any past version from raw.githubusercontent.com, and an in-page diff with jsdiff + diff2html.",
         "zh": "一篇文章的版本就是它的 git commit，所以维基/知乎式的编辑记录无需后端：registry 驱动的面板、从 raw.githubusercontent.com 查看任意旧版、用 jsdiff + diff2html 做页内差异。"
-      }
+      },
+      "revisions": [
+        {
+          "date": "2026-05-29",
+          "sha": "1f9c4b9",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "feat(blog): two build-process posts — version history + giscus comments (bilingual)",
+            "zh": "feat(blog): two build-process posts — version history + giscus comments (bilingual)"
+          }
+        }
+      ]
     },
     {
       "slug": "how-i-built-this-site",
       "updated": "2026-05-28",
       "revisions": [
-        { "date": "2026-05-28", "sha": "5838ca6", "by": "Linlin × Claude", "summary": { "en": "Add inline screenshots", "zh": "补充内嵌截图" } },
-        { "date": "2026-05-28", "sha": "c3c3dd0", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+        {
+          "date": "2026-05-28",
+          "sha": "5838ca6",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "Add inline screenshots",
+            "zh": "补充内嵌截图"
+          }
+        },
+        {
+          "date": "2026-05-28",
+          "sha": "c3c3dd0",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "First published",
+            "zh": "首次发布"
+          }
+        }
       ],
       "date": "2026-05-28",
       "langs": [
@@ -120,8 +158,24 @@
       "slug": "how-i-built-this-blog",
       "updated": "2026-05-28",
       "revisions": [
-        { "date": "2026-05-28", "sha": "5838ca6", "by": "Linlin × Claude", "summary": { "en": "Add inline screenshots", "zh": "补充内嵌截图" } },
-        { "date": "2026-05-28", "sha": "c3c3dd0", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+        {
+          "date": "2026-05-28",
+          "sha": "5838ca6",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "Add inline screenshots",
+            "zh": "补充内嵌截图"
+          }
+        },
+        {
+          "date": "2026-05-28",
+          "sha": "c3c3dd0",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "First published",
+            "zh": "首次发布"
+          }
+        }
       ],
       "date": "2026-05-28",
       "langs": [
@@ -160,10 +214,35 @@
     },
     {
       "slug": "ubuntu-fcitx5-pinyin",
-      "updated": "2026-05-29",
+      "updated": "2026-05-31",
       "revisions": [
-        { "date": "2026-05-29", "sha": "cdebc55", "by": "Linlin × Claude", "summary": { "en": "Link the published GitHub repo; fix the resource & zip links", "zh": "接入已发布的代码仓库，修复资源 / zip 链接" } },
-        { "date": "2026-05-27", "sha": "ab8c9f7", "by": "Linlin × Claude", "summary": { "en": "First published", "zh": "首次发布" } }
+        {
+          "date": "2026-05-31",
+          "sha": "74de12e",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "Add the Xorg↔Wayland section, plus the dictionaries and full-commands appendices; fix the AI-prompt fetch URL",
+            "zh": "新增 Xorg↔Wayland 一节，以及词库、完整命令两个附录；修复给 AI 那段的抓取 URL"
+          }
+        },
+        {
+          "date": "2026-05-29",
+          "sha": "cdebc55",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "Link the published GitHub repo; fix the resource & zip links",
+            "zh": "接入已发布的代码仓库，修复资源 / zip 链接"
+          }
+        },
+        {
+          "date": "2026-05-27",
+          "sha": "ab8c9f7",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "First published",
+            "zh": "首次发布"
+          }
+        }
       ],
       "date": "2026-05-27",
       "langs": [

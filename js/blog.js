@@ -555,7 +555,7 @@
         </div>
       </section>
       <p class="blog-foot-meta">
-        ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${updated}</span>` : ''}
+        ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${revs[0] && revs[0].sha ? `<a href="https://github.com/${REPO}/commit/${revs[0].sha}" target="_blank" rel="noopener" title="${t('blog.updated')} · GitHub">${updated}</a>` : updated}</span>` : ''}
         ${revs.length > 1 ? `<span class="blog-foot-sep">·</span><span class="blog-foot-edits">${revs.length} ${t('blog.edits')}</span>` : ''}
         <span class="blog-foot-sep">·</span><a href="${ghHist}" target="_blank" rel="noopener">${t('blog.fullhistory')} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         <span class="blog-foot-sep">·</span><a href="${ghEdit}" target="_blank" rel="noopener"><i class="fas fa-pen" aria-hidden="true"></i> ${t('blog.edit')}</a>

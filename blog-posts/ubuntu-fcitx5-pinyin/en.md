@@ -679,6 +679,8 @@ The script in **12.5** batch-downloads a curated id list, skips the unconvertibl
 
 Everything in one place — copy-paste top to bottom, or hand the whole post to an AI agent. Steps that need admin rights are flagged **[root]**; run those yourself.
 
+> Every script below is also a ready-to-run file in the companion repo: [`resources/scripts/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/scripts) (with a README of the run order and which steps need root). Clone the repo, or download one directly.
+
 ### 12.1 What needs admin (root)
 
 These are the **only** commands that need `sudo` (or `pkexec` on a box without passwordless sudo — it pops a GNOME password dialog). Everything else in this appendix is user-level.

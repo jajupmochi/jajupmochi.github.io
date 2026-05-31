@@ -675,6 +675,8 @@ mv out.dict ~/.local/share/fcitx5/pinyin/dictionaries/ && fcitx5 -r
 
 全部集中在这——从上到下复制粘贴即可，或把整篇丢给 AI agent。需要管理员权限的步骤标了 **[root]**，由你自己来跑。
 
+> 下面每个脚本在配套仓库里都有现成文件：[`resources/scripts/`](https://github.com/jajupmochi/ubuntu-fcitx5-pinyin/tree/main/resources/scripts)（附带运行顺序、以及哪些步骤需要 root 的 README）。克隆仓库，或单独下载某个。
+
 ### 12.1 需要管理员权限（root）的命令
 
 下面这些是**仅有的**需要 `sudo` 的命令（没有免密 sudo 的机器用 `pkexec`——会弹 GNOME 密码框）。本附录其余都是用户级。
