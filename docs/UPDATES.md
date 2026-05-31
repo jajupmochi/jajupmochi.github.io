@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-05-31](#2026-05-31)
+    - [V1 — Apps deck: review pass 3 (3D cube default + loop, per-project centred layout, parchment blend, manuscript pagination)](#v1--apps-deck-review-pass-3-3d-cube-default--loop-per-project-centred-layout-parchment-blend-manuscript-pagination) — default 3D cube (loop-clean creative rotateY) + last↔first looping; redesigned the slide so image + text hug the centre gutter (consistent gap, centred — fixes LIULIAN-close / N-Banker-far); bigger images (3/2 diagrams); `mix-blend-mode:multiply` so white screenshots show the parchment through; responsive NDA seal; mobile `dvh/dvw` + single-row scroll tags (no overflow / 2-row); ink-tally-stroke pagination; fixed the loop-wrap text-overlap (deterministic reveal); arrows blur after click. Every project visually verified.
 - [2026-05-30](#2026-05-30)
     - [V3 — Apps deck: review pass 2 (mobile landscape unified, horizontal layout, embedded images, transition options) + cross-page tag-contrast fix](#v3--apps-deck-review-pass-2-mobile-landscape-unified-horizontal-layout-embedded-images-transition-options--cross-page-tag-contrast-fix) — moved all controls into `.deck-rotor` so mobile rotates the whole UI to landscape; unified every slide to a horizontal two-column spread (fixes vertical overflow); embedded images directly on the paper (no card frame) + ink-style page arrows; added in-image hover rotate arrows for multi-image; a transition picker (Slide / Page drift / 3D Cube / 3D Flip); tightened text-image gap; aligned the NDA seal. **Cross-page**: fixed the active filter-tag contrast (red-on-maroon → cream-on-maroon) by excluding `.filter-tag` from a red-ink rule in `parchment-overrides.css` (affects homepage / gallery / deck; blog chip hardened too).
     - [V2 — Apps deck: fixes + UX pass (autoplay, multi-image rotate, reused controls, big arrows, mobile swipe)](#v2--apps-deck-fixes--ux-pass-autoplay-multi-image-rotate-reused-controls-big-arrows-mobile-swipe) — addressed Linlin's review of the deck: multi-image plates auto-rotate; the deck auto-advances (removed the `pauseOnMouseEnter` trap) with a progress bar; removed "codex" branding; image zoom = click-the-image + zoom cursor (dropped the tiny button); reused the gallery's `.section-controls` controls verbatim; big left/right arrows + a first-load swipe hint; mobile swipe fixed (custom handler for the rotated deck). Plus web-researched UX (a11y aria-live/keyboard, autoplay-off-on-mobile, empty/single states) and a mixed-aspect `contain` fix. 0 console errors.
@@ -51,6 +53,23 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-05-31
+
+## V1 — Apps deck: review pass 3 (3D cube default + loop, per-project centred layout, parchment blend, manuscript pagination)
+
+Linlin's third review of the deck; all points fixed + every project visually verified. Single commit. Notes: `docs/strategy/apps-deck-redesign-2026-05-30/round-4-notes.md`.
+
+- **3D Cube default + loop** — the deck defaults to the 3D cube turn and loops (last→first in one smooth turn, no rewind). The built-in Swiper cube overlapped the first slide onto the last at the loop boundary, so "3D Cube" is a loop-clean **creative rotateY** effect (same from-inside look). Picker still offers Slide / Page drift / Flip.
+- **Per-project centred layout** — the two-column grid now has image + text both hug the centre gutter (`1fr 1fr` + `justify-self`), so the gap is consistent regardless of image aspect (fixes LIULIAN-too-close, N-Banker-too-far) and the composition is centred.
+- **Bigger images** — larger `max-width`; diagrams use a `3/2` box (redox / gklearn / swissriver read much larger).
+- **Parchment shows through white** — `mix-blend-mode:multiply` on the screenshots, so a white-UI shot reads as printed on the page.
+- **NDA seal responsive** (clamp var, smaller on mobile); **no text cut off** (rotated-mobile + short-landscape content tightened; PLANALYSER fits).
+- **Mobile unified + no overflow** — rotor uses `dvh/dvw`; filter-tags are a single horizontal-scroll row (no 2-row / edge overflow).
+- **Manuscript pagination** — plain dots → ink tally-strokes on a gilt rule (active = tall cinnabar stroke).
+- **Loop-wrap overlap bug fixed** — the reveal used `animation … forwards` whose fill left the first slide's text visible (~0.92) on the 3D side face over the active page (GraphInk). Replaced with a deterministic `:not(.swiper-slide-active)` reveal (non-active text hidden; image may peek).
+- **Arrow focus box** removed (arrows `.blur()` after click).
+- 0 console errors; all 9 projects verified at 1440×980 + mobile spot-checks.
 
 # 2026-05-30
 
