@@ -218,6 +218,15 @@
       "revisions": [
         {
           "date": "2026-05-31",
+          "sha": "33c4da2",
+          "by": "Linlin × Claude",
+          "summary": {
+            "zh": "blog: auto-update footer Updated/history from git; link Updated to latest commit; link appendix scripts",
+            "en": "blog: auto-update footer Updated/history from git; link Updated to latest commit; link appendix scripts"
+          }
+        },
+        {
+          "date": "2026-05-31",
           "sha": "74de12e",
           "by": "Linlin × Claude",
           "summary": {
