@@ -2,7 +2,7 @@
   "posts": [
     {
       "slug": "blog-comments-giscus",
-      "updated": "2026-05-29",
+      "updated": "2026-05-31",
       "date": "2026-05-29",
       "langs": [
         "en",
@@ -38,6 +38,15 @@
       },
       "revisions": [
         {
+          "date": "2026-05-31",
+          "sha": "dfd47dc",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts",
+            "zh": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts"
+          }
+        },
+        {
           "date": "2026-05-29",
           "sha": "1f9c4b9",
           "by": "Linlin × Claude",
@@ -50,7 +59,7 @@
     },
     {
       "slug": "blog-version-history",
-      "updated": "2026-05-29",
+      "updated": "2026-05-31",
       "date": "2026-05-29",
       "langs": [
         "en",
@@ -85,6 +94,15 @@
         "zh": "一篇文章的版本就是它的 git commit，所以维基/知乎式的编辑记录无需后端：registry 驱动的面板、从 raw.githubusercontent.com 查看任意旧版、用 jsdiff + diff2html 做页内差异。"
       },
       "revisions": [
+        {
+          "date": "2026-05-31",
+          "sha": "dfd47dc",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts",
+            "zh": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts"
+          }
+        },
         {
           "date": "2026-05-29",
           "sha": "1f9c4b9",
@@ -216,6 +234,15 @@
       "slug": "ubuntu-fcitx5-pinyin",
       "updated": "2026-05-31",
       "revisions": [
+        {
+          "date": "2026-05-31",
+          "sha": "dfd47dc",
+          "by": "Linlin × Claude",
+          "summary": {
+            "zh": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts",
+            "en": "blog: fix zh comments locale, lazy-load render libs, scroll-restore; update the two related posts"
+          }
+        },
         {
           "date": "2026-05-31",
           "sha": "33c4da2",
