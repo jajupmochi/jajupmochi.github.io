@@ -33,6 +33,8 @@ giscus 把每条评论存成仓库里的一个 GitHub Discussion。没有数据�
 
 博客本来就有一个 `mountGiscus()` 脚手架，ID 留空，所以评论一直是隐藏的，直到配置好。把它打开，就是填 ID + 把三件小事做对。
 
+![文章末尾的 giscus 评论框，主题与羊皮纸站点一致：表情反应、Write/Preview 编辑器，以及用 GitHub 登录。](comments-giscus.webp)
+
 ## GitHub 侧的设置
 
 在仓库上（这部分人类作者做）：

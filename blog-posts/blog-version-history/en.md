@@ -83,6 +83,8 @@ flowchart TD
 
 The tiers are progressive: each one layers on the same per-post revision data.
 
+![The edit-history panel with its View this version and Diff buttons, and the in-page side-by-side diff: red removed, green added.](version-history.webp)
+
 ## T0: the "last updated" stamp
 
 Under each post, a one-line stamp: `Updated 2026-05-29 · 2 edits · Full history

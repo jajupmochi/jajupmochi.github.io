@@ -55,6 +55,8 @@ The blog already had a `mountGiscus()` scaffold with blank IDs, so comments were
 simply hidden until configured. Turning it on is filling in IDs and getting
 three small things right.
 
+![The giscus comment box at the foot of a post, themed to match the parchment site: reactions, a Write/Preview composer, and Sign in with GitHub.](comments-giscus.webp)
+
 ## GitHub-side setup
 
 On the repo (the human author did this part):

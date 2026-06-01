@@ -86,6 +86,22 @@
 
 ## Media & diagrams
 
+- **Cover image — required, content-matching.** Every post ships a cover via the
+  `cover` field in `blog-posts/registry.json` (path relative to the post folder,
+  e.g. `cover.webp` or `assets/x.png`). It renders in the blog list / cards. No
+  post ships without one. The cover must be a screenshot or crop of the post's
+  **own** subject — the feature, UI, result, or asset the post is about — never
+  generic stock art. Default rule: **wherever a fitting image can be found, add
+  it.**
+- **Inline images — at least one, placed where the feature is shown.** Drop a
+  standalone `![descriptive alt](file.webp)` line (blank line above and below) at
+  the point in the body where that screen / result is discussed. `blog.js`
+  rewrites a relative `src` to `blog-posts/<slug>/`, so reference the file name
+  only. Add the **same** image to both `en.md` and `zh.md` with a translated alt.
+- **How to produce one.** Screenshot the real feature in a browser, crop out the
+  browser chrome (navbar), and convert to WebP at roughly 16:10:
+  `convert shot.png -crop WxH+X+Y +repage -resize 820x -quality 85 cover.webp`
+  (ImageMagick). Use PNG / GIF only when the format needs it (e.g. animations).
 - **Image + text throughout.** Reuse the real screenshots from the work where
   they help; place them next to the step they illustrate.
 - **Architecture / flow diagrams use Mermaid or SVG**, authored in the post (the
@@ -110,6 +126,8 @@ Before a post is "done", confirm:
 - [ ] "How to make this yourself" section (configurable list, then how-to)
 - [ ] AI prompt at the top + an agent-read-this-URL paragraph
 - [ ] Human author vs Claude disambiguated everywhere
+- [ ] Cover image set in registry (`cover`), content-matching, WebP; renders in the blog list
+- [ ] At least one inline screenshot, same image in en + zh, placed where the feature is shown
 - [ ] Diagrams in Mermaid / SVG; relevant screenshots placed inline
 - [ ] zh + en files registered; honest `translationStatus`
 - [ ] De-AI'd: no filler, not verbose, no em dashes, no decorative emoji

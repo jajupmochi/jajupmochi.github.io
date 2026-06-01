@@ -2,6 +2,7 @@
   "posts": [
     {
       "slug": "blog-comments-giscus",
+      "cover": "comments-giscus.webp",
       "updated": "2026-05-31",
       "date": "2026-05-29",
       "langs": [
@@ -59,6 +60,7 @@
     },
     {
       "slug": "blog-version-history",
+      "cover": "version-history.webp",
       "updated": "2026-05-31",
       "date": "2026-05-29",
       "langs": [
