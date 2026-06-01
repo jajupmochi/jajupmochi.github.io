@@ -1,0 +1,24 @@
+# Dependabot config — https://docs.github.com/code-security/dependabot
+#
+# This repo's deployed site is plain static HTML/CSS/JS (no build, no runtime deps).
+# The only dependency manifests live in two LEGACY, non-deployed subprojects that
+# are never built, installed, or run by the GitHub Pages deploy:
+#   - blog/package.json                       (old Hux Blog grunt toolchain)
+#   - docs/_archive-jekyll-minima/Gemfile*    (archived Jekyll minima)
+# Their security alerts were reviewed as not-exploitable and dismissed (not_used),
+# and we deliberately do NOT register those directories below, so Dependabot opens
+# no version-update PRs for them. (Dependabot security *alerts* are repo-wide and
+# cannot be excluded per-path via this file; the legacy alerts are handled by the
+# dismissal, not by this config.)
+#
+# We DO keep the one active automation surface current: the GitHub Actions pinned
+# in .github/workflows/*.yml (actions/checkout, actions/setup-python).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore(ci)
