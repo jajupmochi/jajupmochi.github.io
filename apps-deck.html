@@ -196,12 +196,22 @@
   .deck-hint i{ font-size:3rem; color:var(--maroon); animation:tilt 2s ease-in-out infinite; }
   .deck-hint p{ font-size:1.3rem; max-width:18ch; }
   @keyframes tilt{ 0%,100%{ transform:rotate(0); } 50%{ transform:rotate(90deg); } }
-  /* filter-tags: single scrollable row on small screens (no 2-row crowd / overflow) */
+  /* mobile ribbon: ONE compact scrollable row, never wrap. It used to wrap to
+     2-3 rows (brand + tags + search + sort + tools) → a 138px bar that overlapped
+     the slide. Now the 林 mark + a horizontally-scrolling tag strip + search +
+     sort + tools all sit on a single ~40px row; only the tags scroll. */
   @media (max-width:1024px){
-    .deck-ribbon .filter-tags{ flex-wrap:nowrap !important; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; min-width:0; }
+    .deck-ribbon{ flex-wrap:nowrap !important; gap:0.55em;
+      background:linear-gradient(180deg, oklch(0.93 0.03 80 / 0.98) 72%, oklch(0.93 0.03 80 / 0)); }
+    .deck-ribbon .brand{ flex:0 0 auto; font-size:0; gap:0; }            /* keep the 林 mark, drop the name text */
+    .deck-ribbon .section-controls{ flex-direction:row !important; flex-wrap:nowrap !important; align-items:center; min-width:0; gap:0.5em; }
+    .deck-ribbon .filter-tags{ flex:1 1 auto; flex-wrap:nowrap !important; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; min-width:0; }
     .deck-ribbon .filter-tags::-webkit-scrollbar{ display:none; }
     .deck-ribbon .filter-tag{ flex:0 0 auto !important; white-space:nowrap; }
-    .deck-ribbon .section-controls{ flex-wrap:nowrap !important; min-width:0; }
+    .deck-ribbon .search-box{ flex:0 0 auto; }
+    .deck-ribbon .search-box input{ width:7em; }
+    .deck-ribbon .sort-select{ flex:0 0 auto; }
+    .deck-tools{ flex:0 0 auto; gap:0.7em; }
   }
   /* rotated portrait → landscape. dvh/dvw so the rotated frame fits the VISIBLE
      viewport (browser chrome included), and content tightened for the short frame. */
