@@ -192,7 +192,7 @@
   .deck-arrow:focus-visible, .deck-folio .tick:focus-visible, .deck-tools button:focus-visible, .rstack:focus-visible{ outline:2px solid var(--cinnabar); outline-offset:3px; }
 
   /* mobile: force landscape by rotating the deck; custom touch handler restores swipe */
-  .deck-hint{ position:fixed; inset:0; z-index:40; display:none; flex-direction:column; align-items:center; justify-content:center; gap:1em; background:var(--cream); color:var(--ink); text-align:center; font-family:var(--disp); }
+  .deck-hint{ position:fixed; inset:0; z-index:40; display:none; flex-direction:column; align-items:center; justify-content:center; gap:1em; background:var(--cream); color:var(--ink); text-align:center; font-family:var(--disp); transition:opacity .45s ease, visibility .45s ease; }
   .deck-hint i{ font-size:3rem; color:var(--maroon); animation:tilt 2s ease-in-out infinite; }
   .deck-hint p{ font-size:1.3rem; max-width:18ch; }
   @keyframes tilt{ 0%,100%{ transform:rotate(0); } 50%{ transform:rotate(90deg); } }
@@ -218,7 +218,7 @@
     .deck-arrow{ font-size:1.6rem; }
     .deck-ribbon{ padding:0.3em 0.7em; gap:0.5em; }
     .folio{ font-size:0.64rem; bottom:0.6rem; right:1rem; }
-    .deck-hint{ display:flex; } .deck-hint.dismissed{ display:none; }
+    .deck-hint{ display:flex; } .deck-hint.dismissed{ opacity:0; visibility:hidden; pointer-events:none; }
   }
   /* real landscape on a short phone viewport (browser landscape, not fullscreen) */
   @media (orientation:landscape) and (max-height:520px){
@@ -528,8 +528,13 @@
     var dx=t.clientX-tsx, dy=t.clientY-tsy; tsx=tsy=null;
     if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>40){ if(dy<0) swiper.slideNext(); else swiper.slidePrev(); } }, {passive:true});
 
-  document.getElementById('deckHint').addEventListener('click', function(){ this.classList.add('dismissed'); });
-  window.addEventListener('orientationchange', function(){ setTimeout(function(){ document.getElementById('deckHint').classList.toggle('dismissed', !mqRot.matches); applyRotMode(); relayout(); }, 300); });
+  var deckHintEl = document.getElementById('deckHint');
+  var hintDone = false;
+  function dismissHint(){ hintDone = true; if(deckHintEl) deckHintEl.classList.add('dismissed'); }
+  if(deckHintEl) deckHintEl.addEventListener('click', dismissHint);
+  // Auto-reveal the deck after the rotate hint has shown briefly — no manual tap needed.
+  setTimeout(dismissHint, 3000);
+  window.addEventListener('orientationchange', function(){ setTimeout(function(){ if(!hintDone && deckHintEl) deckHintEl.classList.toggle('dismissed', !mqRot.matches); applyRotMode(); relayout(); }, 300); });
   // fullscreen toggling (and its landscape-lock) changes the usable viewport — refit.
   document.addEventListener('fullscreenchange', function(){ setTimeout(relayout, 250); });
   document.addEventListener('webkitfullscreenchange', function(){ setTimeout(relayout, 250); });
