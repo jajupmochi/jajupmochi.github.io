@@ -3,7 +3,7 @@
     {
       "slug": "blog-comments-giscus",
       "cover": "comments-giscus.webp",
-      "updated": "2026-05-31",
+      "updated": "2026-06-01",
       "date": "2026-05-29",
       "langs": [
         "en",
@@ -39,6 +39,15 @@
       },
       "revisions": [
         {
+          "date": "2026-06-01",
+          "sha": "d919289",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "feat(site): deck as default apps view (3-way toggle), unify deck fonts, blog images",
+            "zh": "feat(site): deck as default apps view (3-way toggle), unify deck fonts, blog images"
+          }
+        },
+        {
           "date": "2026-05-31",
           "sha": "dfd47dc",
           "by": "Linlin × Claude",
@@ -61,7 +70,7 @@
     {
       "slug": "blog-version-history",
       "cover": "version-history.webp",
-      "updated": "2026-05-31",
+      "updated": "2026-06-01",
       "date": "2026-05-29",
       "langs": [
         "en",
@@ -96,6 +105,15 @@
         "zh": "一篇文章的版本就是它的 git commit，所以维基/知乎式的编辑记录无需后端：registry 驱动的面板、从 raw.githubusercontent.com 查看任意旧版、用 jsdiff + diff2html 做页内差异。"
       },
       "revisions": [
+        {
+          "date": "2026-06-01",
+          "sha": "d919289",
+          "by": "Linlin × Claude",
+          "summary": {
+            "en": "feat(site): deck as default apps view (3-way toggle), unify deck fonts, blog images",
+            "zh": "feat(site): deck as default apps view (3-way toggle), unify deck fonts, blog images"
+          }
+        },
         {
           "date": "2026-05-31",
           "sha": "dfd47dc",
