@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog code-block scrollbar options</title>
+<style>
+  body{ margin:0; padding:2rem clamp(1rem,4vw,3rem); background:oklch(0.93 0.03 84);
+    font-family:'Segoe UI',system-ui,sans-serif; color:oklch(0.30 0.03 50); }
+  h1{ font-size:1.4rem; font-weight:700; }
+  p.note{ max-width:60ch; color:oklch(0.42 0.03 50); }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:1.6rem; margin-top:1.5rem; }
+  .opt h2{ font-size:1rem; margin:0 0 .2rem; color:oklch(0.45 0.15 30); }
+  .opt .desc{ font-size:.82rem; color:oklch(0.45 0.03 50); margin:0 0 .5rem; }
+
+  /* mirrors css/blog.css .markdown-body pre (the parchment "paper slip") */
+  .pre{ background:oklch(0.975 0.012 85); color:oklch(0.32 0.03 50);
+    padding:1.1em 1.2em; border-radius:8px 5px 9px 6px; overflow:auto;
+    box-shadow:2px 3px 10px rgba(80,40,10,0.10); border:1.5px solid rgba(120,70,40,0.20);
+    max-height:170px; font-family:'JetBrains Mono','Courier New',monospace; font-size:.82rem; line-height:1.5; white-space:pre; }
+
+  /* ---- 0 · Default (current — the clash) ---- */
+
+  /* ---- 1 · Gilt thread (thin gold, cream-inset, transparent track) ---- */
+  .v-gilt{ scrollbar-width:thin; scrollbar-color:oklch(0.70 0.10 80) transparent; }
+  .v-gilt::-webkit-scrollbar{ width:10px; height:10px; }
+  .v-gilt::-webkit-scrollbar-track{ background:transparent; }
+  .v-gilt::-webkit-scrollbar-thumb{ background:oklch(0.70 0.10 80); border-radius:999px; border:2.5px solid oklch(0.975 0.012 85); }
+  .v-gilt::-webkit-scrollbar-thumb:hover{ background:oklch(0.62 0.12 78); }
+  .v-gilt::-webkit-scrollbar-corner{ background:transparent; }
+
+  /* ---- 2 · Cinnabar seal (red-ink thumb on a faint warm track) ---- */
+  .v-cinnabar{ scrollbar-width:thin; scrollbar-color:oklch(0.55 0.15 32) oklch(0.93 0.03 60); }
+  .v-cinnabar::-webkit-scrollbar{ width:10px; height:10px; }
+  .v-cinnabar::-webkit-scrollbar-track{ background:oklch(0.93 0.03 60); border-radius:999px; }
+  .v-cinnabar::-webkit-scrollbar-thumb{ background:oklch(0.55 0.15 32); border-radius:999px; border:2.5px solid oklch(0.975 0.012 85); }
+  .v-cinnabar::-webkit-scrollbar-thumb:hover{ background:oklch(0.48 0.16 30); }
+  .v-cinnabar::-webkit-scrollbar-corner{ background:transparent; }
+
+  /* ---- 3 · Ink hairline (ultra-thin, soft ink, transparent track) ---- */
+  .v-ink{ scrollbar-width:thin; scrollbar-color:oklch(0.45 0.03 50 / 0.5) transparent; }
+  .v-ink::-webkit-scrollbar{ width:6px; height:6px; }
+  .v-ink::-webkit-scrollbar-track{ background:transparent; }
+  .v-ink::-webkit-scrollbar-thumb{ background:oklch(0.45 0.03 50 / 0.45); border-radius:999px; }
+  .v-ink::-webkit-scrollbar-thumb:hover{ background:oklch(0.38 0.03 50 / 0.75); }
+  .v-ink::-webkit-scrollbar-corner{ background:transparent; }
+
+  /* ---- 4 · Bound book (aged-brown gradient thumb in an inset track) ---- */
+  .v-bound{ scrollbar-width:auto; scrollbar-color:oklch(0.48 0.06 45) oklch(0.91 0.02 80); }
+  .v-bound::-webkit-scrollbar{ width:12px; height:12px; }
+  .v-bound::-webkit-scrollbar-track{ background:oklch(0.91 0.02 80); border-radius:6px; box-shadow:inset 0 0 3px rgba(80,40,10,0.20); }
+  .v-bound::-webkit-scrollbar-thumb{ background:linear-gradient(oklch(0.53 0.06 48),oklch(0.43 0.06 42)); border-radius:6px; border:2.5px solid oklch(0.91 0.02 80); }
+  .v-bound::-webkit-scrollbar-thumb:hover{ background:linear-gradient(oklch(0.49 0.07 46),oklch(0.39 0.07 40)); }
+  .v-bound::-webkit-scrollbar-corner{ background:oklch(0.91 0.02 80); }
+</style>
+</head>
+<body>
+  <h1>Blog code-block scrollbar options</h1>
+  <p class="note">Each box is the blog's parchment code block (warm cream, torn-corner radius). The first uses the current default browser scrollbar (the clash); the next four are parchment-matched. Both axes scroll. Pick one.</p>
+  <div class="grid">
+    <div class="opt">
+      <h2>0 · Default (current)</h2>
+      <p class="desc">Standard OS/browser scrollbar — gray, square, off-palette.</p>
+      <pre class="pre"><code>def transfer_ratio(graph, kernel):  # a deliberately long line to force horizontal scrolling on the parchment slip
+    K = compute_gram_matrix(graph, kernel)        # gram matrix
+    pre = preimage(K, target, method="iterative") # 预映射
+    return score(pre) / score(target)
+# line 5
+# line 6
+# line 7
+# line 8
+# line 9
+# line 10 — tall enough to force the vertical scrollbar too</code></pre>
+    </div>
+    <div class="opt">
+      <h2>1 · Gilt thread</h2>
+      <p class="desc">Thin gold thumb, cream inset, invisible track. Subtle, manuscript gold.</p>
+      <pre class="pre v-gilt"><code>def transfer_ratio(graph, kernel):  # a deliberately long line to force horizontal scrolling on the parchment slip
+    K = compute_gram_matrix(graph, kernel)        # gram matrix
+    pre = preimage(K, target, method="iterative") # 预映射
+    return score(pre) / score(target)
+# line 5
+# line 6
+# line 7
+# line 8
+# line 9
+# line 10 — tall enough to force the vertical scrollbar too</code></pre>
+    </div>
+    <div class="opt">
+      <h2>2 · Cinnabar seal</h2>
+      <p class="desc">Red-ink thumb on a faint warm track. Echoes the seals/accents.</p>
+      <pre class="pre v-cinnabar"><code>def transfer_ratio(graph, kernel):  # a deliberately long line to force horizontal scrolling on the parchment slip
+    K = compute_gram_matrix(graph, kernel)        # gram matrix
+    pre = preimage(K, target, method="iterative") # 预映射
+    return score(pre) / score(target)
+# line 5
+# line 6
+# line 7
+# line 8
+# line 9
+# line 10 — tall enough to force the vertical scrollbar too</code></pre>
+    </div>
+    <div class="opt">
+      <h2>3 · Ink hairline</h2>
+      <p class="desc">Ultra-thin soft-ink thumb, invisible track. Minimal, pen-line.</p>
+      <pre class="pre v-ink"><code>def transfer_ratio(graph, kernel):  # a deliberately long line to force horizontal scrolling on the parchment slip
+    K = compute_gram_matrix(graph, kernel)        # gram matrix
+    pre = preimage(K, target, method="iterative") # 预映射
+    return score(pre) / score(target)
+# line 5
+# line 6
+# line 7
+# line 8
+# line 9
+# line 10 — tall enough to force the vertical scrollbar too</code></pre>
+    </div>
+    <div class="opt">
+      <h2>4 · Bound book</h2>
+      <p class="desc">Aged-brown gradient thumb in an inset track. Leather-bound feel.</p>
+      <pre class="pre v-bound"><code>def transfer_ratio(graph, kernel):  # a deliberately long line to force horizontal scrolling on the parchment slip
+    K = compute_gram_matrix(graph, kernel)        # gram matrix
+    pre = preimage(K, target, method="iterative") # 预映射
+    return score(pre) / score(target)
+# line 5
+# line 6
+# line 7
+# line 8
+# line 9
+# line 10 — tall enough to force the vertical scrollbar too</code></pre>
+    </div>
+  </div>
+</body>
+</html>

@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-02](#2026-06-02)
+    - [V2 — Blog: foldable Cite module (shared `.blog-fold`) + blog-features research + code-block scrollbar options](#v2--blog-foldable-cite-module-shared-blog-fold--blog-features-research--code-block-scrollbar-options) — generalized the collapsible footer pattern into a shared `.blog-fold` (summary + chevron + collapse) and applied it to both **Cite this post** and Edit-history (both collapsed by default). Added a research note (`docs/strategy/blog-features-research-2026-06-02.md`) on view count / likes / bookmark / share / RSS / related posts and how to build each on this no-backend static site, and a pickable demo of 4 parchment-matched code-block scrollbar styles (`docs/strategy/blog-scrollbar-options-2026-06-02.html`).
     - [V1 — Blog edit-history collapsed by default (click to expand)](#v1--blog-edit-history-collapsed-by-default-click-to-expand) — the per-post "Edit history" panel now renders as a native `<details>` collapsed by default (a `<summary>` with the revision count + a ▾ chevron); click expands the revision list + diff. A global rule was forcing the children visible, so the CSS also hard-hides the list/diff when `:not([open])`. (Homepage already links to the App Gallery via the Projects CTA → `apps-deck.html` — no change needed there.)
 - [2026-06-01](#2026-06-01)
     - [V3 — apps-deck mobile control ribbon: one compact row (was 3 rows overlapping the slide)](#v3--apps-deck-mobile-control-ribbon-one-compact-row-was-3-rows-overlapping-the-slide) — on phones the revealed top control ribbon wrapped to 2-3 rows (138px in a 390px frame) and overlapped the slide. Root cause: the outer `.deck-ribbon` kept `flex-wrap:wrap` and the reused gallery `.section-controls` stacks `flex-direction:column` under 1024px. Fixed (≤1024px) to a single no-wrap ~50px row: keep the 林 mark / drop the brand text, only the filter-tags scroll horizontally, search + sort + tools pinned, near-solid bar background. Verified landscape (844×390), portrait-rotated, and desktop (unchanged); 0 console errors.
@@ -63,6 +64,14 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-02
+
+## V2 — Blog: foldable Cite module (shared .blog-fold) + blog-features research + code-block scrollbar options
+
+Three asks: make the "Cite this post" section a collapsible standard module like the edit-history; research common blog/posting features and how to implement them here; and design several code-block scrollbar styles to pick from (the parchment code block clashes with the default browser scrollbar).
+
+- **Foldable Cite module.** Generalized the collapsible footer pattern into a shared `.blog-fold` class (a `<details>`: `<summary class="blog-foot-h">` + ▾ chevron, content hidden when `:not([open])`). Applied it to both **Cite this post** (BibTeX + APA, now collapsed by default) and the Edit-history. The copy buttons still wire up inside. Verified: Cite collapsed (block height 0) → click expands (BibTeX present) → collapses; history unchanged.
+- **Blog-features research.** `docs/strategy/blog-features-research-2026-06-02.md` — surveys view count, likes/reactions, bookmark (收藏), share-to-platform, list comment counts, RSS, related posts; for each, the no-backend options on GitHub Pages with tradeoffs (privacy, **China-accessibility flagged as unverified**, effort) and a value÷effort roadmap. Notes what the site already has (giscus comments+reactions, Clarity, TOC/reading-time, etc.). Sources cited.
+- **Code-block scrollbar options (pending pick).** `docs/strategy/blog-scrollbar-options-2026-06-02.html` — 4 parchment-matched styles (1 Gilt thread · 2 Cinnabar seal · 3 Ink hairline · 4 Bound book) vs. the current default, on overflowing code blocks, for Linlin to choose. Not yet applied to `css/blog.css`.
 
 ## V1 — Blog edit-history collapsed by default (click to expand)
 

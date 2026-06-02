@@ -753,16 +753,16 @@
 /* ---- Post version history (T0–T4+) -------------------------------------- */
 .blog-foot-edits { color: var(--blog-ink-soft); }
 .blog-history { margin: 1.7em 0 0; }
-/* edit-history is collapsed by default (a <details>); click the summary to expand */
-.blog-history-d > summary.blog-foot-h { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.45em; user-select: none; margin-bottom: 0; }
-.blog-history-d > summary::-webkit-details-marker { display: none; }
-.blog-history-d > summary::after { content: '▾'; font-size: 0.8em; color: var(--blog-ink-soft); transition: transform .25s ease; }
-.blog-history-d[open] > summary::after { transform: rotate(180deg); }
-.blog-history-d[open] > summary.blog-foot-h { margin-bottom: 0.6em; }
-/* explicitly hide content when collapsed (some global CSS forces children visible,
-   defeating the native <details> collapse) */
-.blog-history-d:not([open]) > .blog-rev-list,
-.blog-history-d:not([open]) > .blog-diff { display: none !important; }
+/* foldable footer modules (Cite, Edit history): a <details> collapsed by default;
+   click the summary to expand. Shared .blog-fold so every foot module looks alike. */
+.blog-fold > summary.blog-foot-h { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.45em; user-select: none; margin-bottom: 0; }
+.blog-fold > summary::-webkit-details-marker { display: none; }
+.blog-fold > summary::after { content: '▾'; font-size: 0.8em; color: var(--blog-ink-soft); transition: transform .25s ease; }
+.blog-fold[open] > summary::after { transform: rotate(180deg); }
+.blog-fold[open] > summary.blog-foot-h { margin-bottom: 0.6em; }
+/* explicitly hide content when collapsed (some global CSS forces <details> children
+   visible, defeating the native collapse) */
+.blog-fold:not([open]) > :not(summary) { display: none !important; }
 .blog-hist-count { font-family: 'JetBrains Mono', monospace; font-size: 0.62em; font-weight: 400; color: var(--blog-ink-soft); opacity: 0.8; }
 .blog-rev-list { list-style: none; margin: 0.5em 0 0; padding: 0; border-left: 2px solid var(--blog-rule); }
 .blog-rev { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.45em 0.8em;

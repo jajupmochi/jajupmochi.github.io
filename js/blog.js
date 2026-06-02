@@ -613,8 +613,8 @@
     const ghHist = `https://github.com/${REPO}/commits/master/blog-posts/${post.slug}/${cl}.md`;
 
     foot.innerHTML = `
-      <section class="blog-cite">
-        <h3 class="blog-foot-h">${t('blog.cite')}</h3>
+      <details class="blog-fold blog-cite">
+        <summary class="blog-foot-h">${t('blog.cite')}</summary>
         <div class="blog-cite-block">
           <div class="blog-cite-head"><span>BibTeX</span><button type="button" class="code-copy" data-cite="bib">${t('blog.copy')}</button></div>
           <pre class="blog-cite-pre" data-cite-out="bib"></pre>
@@ -623,7 +623,7 @@
           <div class="blog-cite-head"><span>APA</span><button type="button" class="code-copy" data-cite="apa">${t('blog.copy')}</button></div>
           <pre class="blog-cite-pre" data-cite-out="apa"></pre>
         </div>
-      </section>
+      </details>
       <p class="blog-foot-meta">
         ${updated ? `<span class="blog-foot-updated">${t('blog.updated')}: ${revs[0] && revs[0].sha ? `<a href="https://github.com/${REPO}/commit/${revs[0].sha}" target="_blank" rel="noopener" title="${t('blog.updated')} · GitHub">${updated}</a>` : updated}</span>` : ''}
         ${revs.length > 1 ? `<span class="blog-foot-sep">·</span><span class="blog-foot-edits">${revs.length} ${t('blog.edits')}</span>` : ''}
@@ -673,7 +673,7 @@
         <span class="blog-rev-acts">${acts}<a class="blog-rev-link" href="${ghCommit}" target="_blank" rel="noopener" title="${t('blog.compare')} · GitHub"><i class="fab fa-github" aria-hidden="true"></i></a></span>
       </li>`;
     }).join('');
-    host.innerHTML = `<details class="blog-history-d"><summary class="blog-foot-h">${t('blog.history')} <span class="blog-hist-count">${revs.length}</span></summary><ol class="blog-rev-list">${rows}</ol><div id="blogDiff" class="blog-diff" hidden></div></details>`;
+    host.innerHTML = `<details class="blog-fold blog-history-d"><summary class="blog-foot-h">${t('blog.history')} <span class="blog-hist-count">${revs.length}</span></summary><ol class="blog-rev-list">${rows}</ol><div id="blogDiff" class="blog-diff" hidden></div></details>`;
     host.querySelectorAll('.blog-rev-btn').forEach(b => b.addEventListener('click', () => {
       if (b.dataset.act === 'view') showVersion(post, cl, b.dataset.sha, b.dataset.date);
       else showDiff(post, cl, b.dataset.sha, b.dataset.date);
