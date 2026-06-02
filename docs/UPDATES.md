@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-02](#2026-06-02)
+    - [V1 — Blog edit-history collapsed by default (click to expand)](#v1--blog-edit-history-collapsed-by-default-click-to-expand) — the per-post "Edit history" panel now renders as a native `<details>` collapsed by default (a `<summary>` with the revision count + a ▾ chevron); click expands the revision list + diff. A global rule was forcing the children visible, so the CSS also hard-hides the list/diff when `:not([open])`. (Homepage already links to the App Gallery via the Projects CTA → `apps-deck.html` — no change needed there.)
 - [2026-06-01](#2026-06-01)
     - [V3 — apps-deck mobile control ribbon: one compact row (was 3 rows overlapping the slide)](#v3--apps-deck-mobile-control-ribbon-one-compact-row-was-3-rows-overlapping-the-slide) — on phones the revealed top control ribbon wrapped to 2-3 rows (138px in a 390px frame) and overlapped the slide. Root cause: the outer `.deck-ribbon` kept `flex-wrap:wrap` and the reused gallery `.section-controls` stacks `flex-direction:column` under 1024px. Fixed (≤1024px) to a single no-wrap ~50px row: keep the 林 mark / drop the brand text, only the filter-tags scroll horizontally, search + sort + tools pinned, near-solid bar background. Verified landscape (844×390), portrait-rotated, and desktop (unchanged); 0 console errors.
     - [V2 — Dependabot triage (13 legacy alerts dismissed + `.github/dependabot.yml`); apps-deck mobile rotate-hint auto-reveals the deck](#v2--dependabot-triage-13-legacy-alerts-dismissed--githubdependabotyml-apps-deck-mobile-rotate-hint-auto-reveals-the-deck) — all 13 Dependabot alerts were in non-deployed legacy subprojects (`blog/package.json` grunt ×3; `docs/_archive-jekyll-minima/Gemfile.lock` addressable/rexml/kramdown ×10) — never built or run by the static deploy, so not exploitable; dismissed all as `not_used` and added a `dependabot.yml` scoping update-PRs to the active github-actions surface. On `apps-deck.html` mobile, the portrait "Turn your phone" hint now auto-reveals the deck after ~3s (one-time timer + `hintDone` flag, 0.45s fade) instead of needing a tap.
@@ -59,6 +61,15 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-06-02
+
+## V1 — Blog edit-history collapsed by default (click to expand)
+
+Two asks: (1) make sure the homepage links to the App Gallery, and (2) collapse the blog's per-post edit-history by default, expanding on click.
+
+- **Homepage App Gallery link — already present.** The Projects section already carries an "Open the full App Gallery" CTA (`common.open_gallery`) → `apps-deck.html` (the deck, the default view; the grid is one click further via the deck's grid-view button), on both `index_en.html` and `index_en_clear.html`. No change needed; a navbar entry remains an option if more prominence is wanted.
+- **Edit-history collapsed by default.** `buildHistory` in `js/blog.js` now renders the panel as a native `<details class="blog-history-d">` collapsed by default: a `<summary class="blog-foot-h">` showing the localized title + the revision count + a ▾ chevron (rotates when open); clicking it reveals the revision list and the in-page diff area. The rev-row View-this-version / Diff buttons still wire up inside. A global stylesheet was forcing the `<details>` children visible (defeating the native collapse), so `css/blog.css` also hard-hides `.blog-rev-list` / `.blog-diff` when the panel is `:not([open])`. Verified: collapsed (list height 0) → click expands (list 660px) → click collapses again; 0 console errors.
 
 # 2026-06-01
 

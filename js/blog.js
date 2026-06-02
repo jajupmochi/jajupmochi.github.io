@@ -673,7 +673,7 @@
         <span class="blog-rev-acts">${acts}<a class="blog-rev-link" href="${ghCommit}" target="_blank" rel="noopener" title="${t('blog.compare')} · GitHub"><i class="fab fa-github" aria-hidden="true"></i></a></span>
       </li>`;
     }).join('');
-    host.innerHTML = `<h3 class="blog-foot-h">${t('blog.history')}</h3><ol class="blog-rev-list">${rows}</ol><div id="blogDiff" class="blog-diff" hidden></div>`;
+    host.innerHTML = `<details class="blog-history-d"><summary class="blog-foot-h">${t('blog.history')} <span class="blog-hist-count">${revs.length}</span></summary><ol class="blog-rev-list">${rows}</ol><div id="blogDiff" class="blog-diff" hidden></div></details>`;
     host.querySelectorAll('.blog-rev-btn').forEach(b => b.addEventListener('click', () => {
       if (b.dataset.act === 'view') showVersion(post, cl, b.dataset.sha, b.dataset.date);
       else showDiff(post, cl, b.dataset.sha, b.dataset.date);
