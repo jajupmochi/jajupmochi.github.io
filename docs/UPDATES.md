@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-02](#2026-06-02)
+    - [V3 — Blog: skeuomorphic code-block scrollbar options + features implementation plan](#v3--blog-skeuomorphic-code-block-scrollbar-options--features-implementation-plan) — Linlin rejected the flat scrollbars and asked for a skeuomorphic (拟物) one; designed 4 material options (`docs/strategy/blog-scrollbar-skeuomorphic-2026-06-02.html`): 卷轴木轴 wooden rod · 黄铜 brass · 皮革缝线 stitched leather · 竹简 bamboo (layered gradients + inset/outset shadows + a `:vertical`/`:horizontal` cylinder highlight in a carved-groove track). Also wrote the implementation plan for the 4 chosen features (Share / Related / Bookmark / dedicated Like, incl. a giscus-backed vs serverless option) + a survey of more features, in `docs/strategy/blog-features-implementation-plan-2026-06-02.md`. Pending Linlin's scrollbar pick + plan sign-off.
     - [V2 — Blog: foldable Cite module (shared `.blog-fold`) + blog-features research + code-block scrollbar options](#v2--blog-foldable-cite-module-shared-blog-fold--blog-features-research--code-block-scrollbar-options) — generalized the collapsible footer pattern into a shared `.blog-fold` (summary + chevron + collapse) and applied it to both **Cite this post** and Edit-history (both collapsed by default). Added a research note (`docs/strategy/blog-features-research-2026-06-02.md`) on view count / likes / bookmark / share / RSS / related posts and how to build each on this no-backend static site, and a pickable demo of 4 parchment-matched code-block scrollbar styles (`docs/strategy/blog-scrollbar-options-2026-06-02.html`).
     - [V1 — Blog edit-history collapsed by default (click to expand)](#v1--blog-edit-history-collapsed-by-default-click-to-expand) — the per-post "Edit history" panel now renders as a native `<details>` collapsed by default (a `<summary>` with the revision count + a ▾ chevron); click expands the revision list + diff. A global rule was forcing the children visible, so the CSS also hard-hides the list/diff when `:not([open])`. (Homepage already links to the App Gallery via the Projects CTA → `apps-deck.html` — no change needed there.)
 - [2026-06-01](#2026-06-01)
@@ -64,6 +65,13 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-02
+
+## V3 — Blog: skeuomorphic code-block scrollbar options + features implementation plan
+
+Follow-ups: Linlin rejected the 4 flat scrollbar styles and asked for a **skeuomorphic** (拟物) one (research then design); and for the 4 picked features (Share / Related / Bookmark / Like) asked to be told the **implementation plan first**, then to research further features (the Like must be a dedicated button, optionally giscus-backed).
+
+- **Skeuomorphic scrollbar options.** `docs/strategy/blog-scrollbar-skeuomorphic-2026-06-02.html` — 4 material thumbs in a carved-groove track, built with layered gradients + inset/outset `box-shadow` and a `::-webkit-scrollbar-thumb:vertical`/`:horizontal` cylinder highlight (Firefox falls back to a matching solid via `scrollbar-color`): **1 卷轴木轴 wooden rod · 2 黄铜 brass · 3 皮革缝线 stitched leather · 4 竹简 bamboo**. For Linlin to pick; not yet applied to `css/blog.css`.
+- **Features implementation plan.** `docs/strategy/blog-features-implementation-plan-2026-06-02.md` — concrete build plan for Share (Web Share + Weibo/X/LinkedIn/email/copy + WeChat QR), Related (tag-overlap from the registry), Bookmark (localStorage + a "Saved" filter), and a dedicated Like (D1 giscus-backed count + scroll-to-react, or D2 a Cloudflare-Worker one-click), all in a new `.blog-actions` bar; plus a survey of further features (per-post OG share image, image lightbox, footnotes/callouts, series, donate, TTS, webmentions, …). Pending sign-off before building.
 
 ## V2 — Blog: foldable Cite module (shared .blog-fold) + blog-features research + code-block scrollbar options
 
