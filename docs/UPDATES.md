@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-03](#2026-06-03)
+    - [V1 — Apps entry in the homepage navbar; deferred blog work tracked in PLAN.md; 3D Personal-space work started](#v1--apps-entry-in-the-homepage-navbar-deferred-blog-work-tracked-in-planmd-3d-personal-space-work-started) — added an **Apps** nav link (`nav.apps` ×4 locales) → `apps-deck.html` after Projects on both `index_en.html` and `index_en_clear.html` (9 items, no wrap). Logged the pending blog work (scrollbar pick, Share/Related/Bookmark/Like, extras) under `docs/PLAN.md` H3.M3.2 G3–G5, and opened M3.5 for the three.js Personal-space home environment.
 - [2026-06-02](#2026-06-02)
     - [V3 — Blog: skeuomorphic code-block scrollbar options + features implementation plan](#v3--blog-skeuomorphic-code-block-scrollbar-options--features-implementation-plan) — Linlin rejected the flat scrollbars and asked for a skeuomorphic (拟物) one; designed 4 material options (`docs/strategy/blog-scrollbar-skeuomorphic-2026-06-02.html`): 卷轴木轴 wooden rod · 黄铜 brass · 皮革缝线 stitched leather · 竹简 bamboo (layered gradients + inset/outset shadows + a `:vertical`/`:horizontal` cylinder highlight in a carved-groove track). Also wrote the implementation plan for the 4 chosen features (Share / Related / Bookmark / dedicated Like, incl. a giscus-backed vs serverless option) + a survey of more features, in `docs/strategy/blog-features-implementation-plan-2026-06-02.md`. Pending Linlin's scrollbar pick + plan sign-off.
     - [V2 — Blog: foldable Cite module (shared `.blog-fold`) + blog-features research + code-block scrollbar options](#v2--blog-foldable-cite-module-shared-blog-fold--blog-features-research--code-block-scrollbar-options) — generalized the collapsible footer pattern into a shared `.blog-fold` (summary + chevron + collapse) and applied it to both **Cite this post** and Edit-history (both collapsed by default). Added a research note (`docs/strategy/blog-features-research-2026-06-02.md`) on view count / likes / bookmark / share / RSS / related posts and how to build each on this no-backend static site, and a pickable demo of 4 parchment-matched code-block scrollbar styles (`docs/strategy/blog-scrollbar-options-2026-06-02.html`).
@@ -64,7 +66,13 @@
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
-# 2026-06-02
+# 2026-06-03
+
+## V1 — Apps entry in the homepage navbar; deferred blog work tracked in PLAN.md; 3D Personal-space work started
+
+- **App Gallery entry on the homepage.** Added an **Apps** link to the main navbar (after Projects) → `apps-deck.html`, on both `index_en.html` and `index_en_clear.html`; new `nav.apps` key ×4 locales (parity verified). Navbar stays one row (9 items, no wrap at desktop). The existing Projects-section CTA stays as a secondary entry.
+- **Deferred blog work → PLAN.md.** Recorded the still-pending blog items under `docs/PLAN.md` H3.M3.2: G3 (foldable Cite/history, done), G4 (skeuomorphic scrollbar — awaiting pick of wood/brass/leather/bamboo), G5 (Share / Related / Bookmark / dedicated Like + extras). Full plans remain in `docs/strategy/blog-features-*.md` + the scrollbar demo.
+- **Personal-space 3D environment (started).** Opened `docs/PLAN.md` H3.M3.5 for the three.js skeuomorphic home (living room/study with photo album, hiking/dancing hobby objects); research + 10-round design + integration tracked there and under `docs/strategy/personal-3d-room-2026-06-02/`.
 
 ## V3 — Blog: skeuomorphic code-block scrollbar options + features implementation plan
 

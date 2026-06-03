@@ -100,6 +100,7 @@ get hard to track. Prefer flat lists of small `T`s.
     - [M3.2 — Blog / writing](#m32--blog--writing) `[ ]`
     - [M3.3 — Multi-language fidelity](#m33--multi-language-fidelity) `[ ]`
     - [M3.4 — Theme expansion](#m34--theme-expansion) `[ ]`
+    - [M3.5 — Personal-space 3D environment (three.js)](#m35--personal-space-3d-environment-threejs) `[~]`
 - **[H4 — Documentation & AI-Collaboration Infrastructure](#h4--documentation--ai-collaboration-infrastructure)** `[ ]`
     - [M4.1 — Master Plan + Master TOC + bilingual convention](#m41--master-plan--master-toc--bilingual-convention) `[✓]`
     - [M4.2 — Reader-segmented documentation](#m42--reader-segmented-documentation) `[ ]`
@@ -415,6 +416,20 @@ writing demonstrate technical communication ability beyond the homepage scroll.
 - `[ ]` H3.M2.G2.T2 — "Vibe-coding workflow for solo researchers" — using Claude Code / Codex.
 - `[ ]` H3.M2.G2.T3 — "Job-hunt journal — switching from postdoc to industry" (optional, may stay private).
 
+#### G3 — Blog reading-UX modules (foldable footer) `[✓]`
+- `[✓]` H3.M2.G3.T1 — (2026-06-02) Shared `.blog-fold` collapsible (summary + ▾ chevron); applied to **Edit history** and **Cite this post** (both collapsed by default, click to expand). See `docs/UPDATES.md` 2026-06-02 V1/V2.
+
+#### G4 — Code-block scrollbar (skeuomorphic) `[?]`
+- `[?]` H3.M2.G4.T1 — Pick one of 4 skeuomorphic parchment scrollbar styles (1 卷轴木轴 wooden rod · 2 黄铜 brass · 3 皮革缝线 stitched leather · 4 竹简 bamboo) and apply to `.markdown-body pre` in `css/blog.css`. Options demo: `docs/strategy/blog-scrollbar-skeuomorphic-2026-06-02.html`. Awaiting Linlin's pick.
+
+#### G5 — Blog engagement features `[ ]`
+> Full build plan + tradeoffs: `docs/strategy/blog-features-implementation-plan-2026-06-02.md` + `blog-features-research-2026-06-02.md`. All client-only except the Like's count store. New `.blog-actions` bar under the title + `js/blog-actions.js`.
+- `[ ]` H3.M2.G5.T1 — **Share**: `navigator.share` + intent fallbacks (Weibo / X / LinkedIn / email / copy) + WeChat QR.
+- `[ ]` H3.M2.G5.T2 — **Related posts**: top-3 by tag-overlap from the registry, at the post foot.
+- `[ ]` H3.M2.G5.T3 — **Bookmark / 收藏**: `localStorage` slug list + a "Saved" filter on the list.
+- `[ ]` H3.M2.G5.T4 — **Like (dedicated button)**: D1 giscus-backed count + scroll-to-react (no new infra) OR D2 Cloudflare-Worker one-click. Linlin to choose D1/D2.
+- `[ ]` H3.M2.G5.T5 — **Extras** (later): per-post OG/share image, in-post image lightbox, footnotes/callouts, post series, donate/赞赏 (incl. WeChat QR), TTS, webmentions, back-to-top, print stylesheet.
+
 ### M3.3 — Multi-language fidelity
 
 #### G1 — Translation completeness
@@ -429,6 +444,16 @@ writing demonstrate technical communication ability beyond the homepage scroll.
 - `[ ]` H3.M4.G1.T1 — `industrial` theme: polish Orbitron font fallback for slow connections.
 - `[ ]` H3.M4.G2.T1 — `fancy` theme: tune animation easing on mobile (currently slightly janky).
 - `[ ]` H3.M4.G3.T1 — Optional: `print` theme for clean PDF export of the page.
+
+### M3.5 — Personal-space 3D environment (three.js)
+
+> The site's `personal` section becomes an interactive three.js skeuomorphic home (living room / study) surfacing Linlin's hobbies + photos. Research + resources + 10-round design + spec under `docs/strategy/personal-3d-room-2026-06-02/`.
+
+#### G1 — Research, design, build
+- `[~]` H3.M5.G1.T1 — Research + resource doc (open-source room scenes, GLTF/GLB model sources, three.js room kits, interaction + performance patterns).
+- `[~]` H3.M5.G1.T2 — Detailed design: room elements + skeuomorphic forms (photo wall/album, hiking gear, dancing, bookshelf=publications, desk, plants) mapped to Linlin's content.
+- `[~]` H3.M5.G1.T3 — 10-round design iteration (full render + screenshot + notes per round).
+- `[ ]` H3.M5.G1.T4 — Integrate the locked scene into the Personal section (replace the coming-soon toast); 0 console errors at 1440×980; mobile fallback.
 
 ---
 
