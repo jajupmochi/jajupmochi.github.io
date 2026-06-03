@@ -449,11 +449,11 @@ writing demonstrate technical communication ability beyond the homepage scroll.
 
 > The site's `personal` section becomes an interactive three.js skeuomorphic home (living room / study) surfacing Linlin's hobbies + photos. Research + resources + 10-round design + spec under `docs/strategy/personal-3d-room-2026-06-02/`.
 
-#### G1 — Research, design, build
-- `[~]` H3.M5.G1.T1 — Research + resource doc (open-source room scenes, GLTF/GLB model sources, three.js room kits, interaction + performance patterns).
-- `[~]` H3.M5.G1.T2 — Detailed design: room elements + skeuomorphic forms (photo wall/album, hiking gear, dancing, bookshelf=publications, desk, plants) mapped to Linlin's content.
-- `[~]` H3.M5.G1.T3 — 10-round design iteration (full render + screenshot + notes per round).
-- `[ ]` H3.M5.G1.T4 — Integrate the locked scene into the Personal section (replace the coming-soon toast); 0 console errors at 1440×980; mobile fallback.
+#### G1 — Research, design, build `[✓]`
+- `[✓]` H3.M5.G1.T1 — (2026-06-03) Research + resource doc: `docs/strategy/personal-3d-room-2026-06-02/00-research.md` (decision: three.js primitives over downloaded models for robustness/China-access; CC0 kits noted as fallback).
+- `[✓]` H3.M5.G1.T2 — (2026-06-03) Design: `00-plan.md` — elements → skeuomorphic form → content (desk→Apps, shelf→Publications, photo board→album, hiking, dancing, travel) + the 10-round lens plan.
+- `[✓]` H3.M5.G1.T3 — (2026-06-03) Built `personal.html` over the 10 lenses (`round-notes.md`; screenshots round-5/7/8). Orbit + 6 clickable hotspots → parchment panels + album lightbox; a11y Explore menu; reduced-motion; no-WebGL fallback. 0 console errors.
+- `[✓]` H3.M5.G1.T4 — (2026-06-03) Wired homepage navbar **Personal** → `personal.html` (both index files), replacing the coming-soon toast. Photos/copy are placeholders for Linlin to personalize.
 
 ---
 

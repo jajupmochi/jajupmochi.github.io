@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-03](#2026-06-03)
+    - [V2 — Personal section: interactive three.js 3D study/living-room (`personal.html`)](#v2--personal-section-interactive-threejs-3d-studyliving-room-personalhtml) — built a standalone three.js cozy study you orbit, with 6 clickable skeuomorphic hotspots → parchment panels (My desk → Apps, Bookshelf → Publications, Photos → album lightbox, Hiking, Dancing, Travel). All from three.js primitives in the parchment palette (one CDN dep, no model downloads). a11y Explore menu, reduced-motion, no-WebGL fallback, 0 console errors. Wired navbar **Personal** → `personal.html` (both index files). Docs + 10-round notes under `docs/strategy/personal-3d-room-2026-06-02/`.
     - [V1 — Apps entry in the homepage navbar; deferred blog work tracked in PLAN.md; 3D Personal-space work started](#v1--apps-entry-in-the-homepage-navbar-deferred-blog-work-tracked-in-planmd-3d-personal-space-work-started) — added an **Apps** nav link (`nav.apps` ×4 locales) → `apps-deck.html` after Projects on both `index_en.html` and `index_en_clear.html` (9 items, no wrap). Logged the pending blog work (scrollbar pick, Share/Related/Bookmark/Like, extras) under `docs/PLAN.md` H3.M3.2 G3–G5, and opened M3.5 for the three.js Personal-space home environment.
 - [2026-06-02](#2026-06-02)
     - [V3 — Blog: skeuomorphic code-block scrollbar options + features implementation plan](#v3--blog-skeuomorphic-code-block-scrollbar-options--features-implementation-plan) — Linlin rejected the flat scrollbars and asked for a skeuomorphic (拟物) one; designed 4 material options (`docs/strategy/blog-scrollbar-skeuomorphic-2026-06-02.html`): 卷轴木轴 wooden rod · 黄铜 brass · 皮革缝线 stitched leather · 竹简 bamboo (layered gradients + inset/outset shadows + a `:vertical`/`:horizontal` cylinder highlight in a carved-groove track). Also wrote the implementation plan for the 4 chosen features (Share / Related / Bookmark / dedicated Like, incl. a giscus-backed vs serverless option) + a survey of more features, in `docs/strategy/blog-features-implementation-plan-2026-06-02.md`. Pending Linlin's scrollbar pick + plan sign-off.
@@ -67,6 +68,16 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-03
+
+## V2 — Personal section: interactive three.js 3D study/living-room (personal.html)
+
+The `personal` section is no longer a coming-soon toast — it's a room you can wander.
+
+- **`personal.html`** — a standalone three.js cozy study/living-room. Orbit it (drag / scroll, damped + clamped to the corner), with an intro auto-orbit. Six **clickable skeuomorphic hotspots**, each opening a parchment info panel: **My desk** (laptop with a graph plot → Apps / Projects), **Bookshelf** (spines = the 9 papers + thesis → Publications), **Photos** (pinned board → an album lightbox), **Hiking** (backpack/boots/mountain photo), **Dancing** (turntable/vinyl/shoes), **Travel** (globe, 西安 → Rouen → Bern). Plus ambient props: sofa + coffee table, rug, plant, floor lamp, a sleeping cat.
+- **Built from three.js primitives** in the site's parchment palette (cream/wood/cinnabar/gilt/qing), warm golden-hour lighting (ACESFilmic, soft shadows). The only runtime dependency is three.js from a CDN — **no model downloads**, so it's fast and robust (no repeat of the giscus/Valkey China-access risk).
+- **a11y + resilience:** raycast hover labels + a keyboard / screen-reader **Explore** menu mirroring every hotspot; `prefers-reduced-motion`; pause-when-hidden; resize; a loading state; a **no-WebGL fallback**; Esc closes overlays; pixelratio capped. **0 console errors** at 1440×980. *Two bugs fixed during the build:* `controls.setAzimuthalAngle` (not in three r160 → manual offset rotation) and an undefined `COL.maroon`.
+- **Wired in:** homepage navbar **Personal** → `personal.html` on both `index_en.html` and `index_en_clear.html` (replaced `showComingSoon('personal')`).
+- **Docs:** `docs/strategy/personal-3d-room-2026-06-02/` (00-research, 00-plan, round-notes, DELIVERY, screenshots); `docs/PLAN.md` H3.M3.5 marked done. **Photos + hobby copy are warm placeholders** for Linlin to personalize (drop in real images; make the blurbs specific).
 
 ## V1 — Apps entry in the homepage navbar; deferred blog work tracked in PLAN.md; 3D Personal-space work started
 
