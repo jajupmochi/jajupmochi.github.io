@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-04](#2026-06-04)
+    - [V1 — Personal 3D room: graceful no-WebGL / no-hardware-acceleration fallback](#v1--personal-3d-room-graceful-no-webgl--no-hardware-acceleration-fallback) — `personal.html` showed a bare "needs WebGL" when the browser had hardware acceleration off (or only WebGL1; three r160 needs WebGL2). Replaced it with a content fallback (room image + "turn on hardware acceleration" instructions + 6 content cards → Apps / Publications / hobbies), `failIfMajorPerformanceCaveat:false` to allow a software context, and a CDN-load-failure timeout. Verified live.
 - [2026-06-03](#2026-06-03)
     - [V2 — Personal section: interactive three.js 3D study/living-room (`personal.html`)](#v2--personal-section-interactive-threejs-3d-studyliving-room-personalhtml) — built a standalone three.js cozy study you orbit, with 6 clickable skeuomorphic hotspots → parchment panels (My desk → Apps, Bookshelf → Publications, Photos → album lightbox, Hiking, Dancing, Travel). All from three.js primitives in the parchment palette (one CDN dep, no model downloads). a11y Explore menu, reduced-motion, no-WebGL fallback, 0 console errors. Wired navbar **Personal** → `personal.html` (both index files). Docs + 10-round notes under `docs/strategy/personal-3d-room-2026-06-02/`.
     - [V1 — Apps entry in the homepage navbar; deferred blog work tracked in PLAN.md; 3D Personal-space work started](#v1--apps-entry-in-the-homepage-navbar-deferred-blog-work-tracked-in-planmd-3d-personal-space-work-started) — added an **Apps** nav link (`nav.apps` ×4 locales) → `apps-deck.html` after Projects on both `index_en.html` and `index_en_clear.html` (9 items, no wrap). Logged the pending blog work (scrollbar pick, Share/Related/Bookmark/Like, extras) under `docs/PLAN.md` H3.M3.2 G3–G5, and opened M3.5 for the three.js Personal-space home environment.
@@ -67,7 +69,17 @@
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
-# 2026-06-03
+# 2026-06-04
+
+## V1 — Personal 3D room: graceful no-WebGL fallback (was a bare "needs WebGL")
+
+Linlin's browser showed `personal.html`'s no-WebGL screen. That screen only appears when three.js loaded but `new THREE.WebGLRenderer()` threw — i.e. the browser couldn't make a WebGL context (almost always **hardware acceleration is switched off**, or the GPU only has WebGL1 while three r160 needs WebGL2).
+
+- **Graceful content fallback.** Replaced the bare "needs WebGL" message with a real page: a rendered **image of the room** (`res/portfolio/img/personal-room.png`) + a clear note ("turn on *Use hardware acceleration* and reload") + **6 content cards** (desk → Apps, bookshelf → Publications, photos, hiking, dancing, travel). So visitors without WebGL (recruiters on locked-down machines included) still get the content and the key links.
+- **Try to render anyway.** Added `failIfMajorPerformanceCaveat:false` + `powerPreference:'default'` to the renderer so the browser can hand back a **software** WebGL context where it otherwise would refuse (rescues some hardware-accel-off cases).
+- **CDN-load resilience.** A classic (non-module) script defines the fallback before the module and arms a ~9 s timeout: if three.js never initialised (e.g. its CDN was blocked), it shows the fallback with a "couldn't load (network?)" note. A guard makes sure the WebGL-off case keeps its own (hardware-acceleration) message.
+- Verified live: the headless test browser happened to have no WebGL, so the fallback rendered for real — room image + correct message + all 6 cards.
+- **For Linlin:** to see the actual 3D room, turn on hardware acceleration (Chrome/Edge: Settings → System → "Use graphics acceleration when available" → on, then relaunch), or use a browser/GPU with WebGL2.
 
 ## V2 — Personal section: interactive three.js 3D study/living-room (personal.html)
 
