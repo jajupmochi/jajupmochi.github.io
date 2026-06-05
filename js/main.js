@@ -204,6 +204,12 @@
             }, 2500);
         }
 
+        // Personal-room teaser (temporary: the 3D study at personal.html isn't finished, so
+        // the nav shows a peek + "coming soon" instead of opening it). Attached to window so
+        // the inline onclick reaches it regardless of this file's scoping.
+        window.showPersonalTeaser = function(){ var t=document.getElementById('personalTeaser'); if(t) t.classList.add('on'); };
+        window.closePersonalTeaser = function(){ var t=document.getElementById('personalTeaser'); if(t) t.classList.remove('on'); };
+
         // ========================================
         // SMOOTH SCROLL FOR ANCHOR LINKS
         // ========================================

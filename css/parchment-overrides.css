@@ -67,17 +67,19 @@ body { background: transparent !important; color: var(--text-primary); }
 
 /* ---------- 6. Navbar — fully transparent (per Linlin: 融入羊皮纸主背景) ---------- */
 .navbar {
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.20) !important;
+    /* Semi-transparent PARCHMENT: still reads as paper, but separates the bar from the
+       content scrolling underneath (was fully transparent → overlap, worst on mobile). */
+    background: oklch(0.93 0.03 84 / 0.85) !important;
+    backdrop-filter: blur(7px) saturate(1.08) !important;
+    -webkit-backdrop-filter: blur(7px) saturate(1.08) !important;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.28) !important;
     box-shadow: none !important;
 }
 .navbar.scrolled {
-    /* Linlin: 滚动时颜色不要变. Stay fully transparent like initial state. */
-    background: transparent !important;
-    box-shadow: none !important;
-    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.20) !important;
+    /* Linlin: 滚动时颜色不要变 — keep the SAME paper colour, just a soft lift for depth. */
+    background: oklch(0.93 0.03 84 / 0.85) !important;
+    box-shadow: 0 3px 14px oklch(0.42 0.10 50 / 0.12) !important;
+    border-bottom: 1px dashed oklch(0.45 0.10 50 / 0.28) !important;
 }
 /* Bigger nav-link font (was 0.8rem in main.css) */
 .nav-link {

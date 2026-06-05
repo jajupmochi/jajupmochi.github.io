@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-05](#2026-06-05)
+    - [V1 — Launch prep: navbar parchment background + Personal-room teaser](#v1--launch-prep-navbar-parchment-background--personal-room-teaser) — gave the top navbar a semi-transparent parchment background + blur (was fully transparent → overlapped content, worst on mobile), colour unchanged on scroll. Temporarily blocked the unfinished 3D room: navbar **Personal** now opens a small parchment teaser (room render + "coming soon") instead of `personal.html`, on both index files.
 - [2026-06-04](#2026-06-04)
     - [V1 — Personal 3D room: graceful no-WebGL / no-hardware-acceleration fallback](#v1--personal-3d-room-graceful-no-webgl--no-hardware-acceleration-fallback) — `personal.html` showed a bare "needs WebGL" when the browser had hardware acceleration off (or only WebGL1; three r160 needs WebGL2). Replaced it with a content fallback (room image + "turn on hardware acceleration" instructions + 6 content cards → Apps / Publications / hobbies), `failIfMajorPerformanceCaveat:false` to allow a software context, and a CDN-load-failure timeout. Verified live.
 - [2026-06-03](#2026-06-03)
@@ -69,7 +71,14 @@
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
-# 2026-06-04
+# 2026-06-05
+
+## V1 — Launch prep: navbar parchment background + Personal-room teaser (room temporarily blocked)
+
+Prepping the homepage for publishing/promotion; first the two most visible fixes.
+
+- **Navbar background.** `.navbar` was fully transparent (from a past "don't change colour on scroll" request), so it overlapped the content scrolling underneath — worst on mobile. Gave it a **semi-transparent parchment** background `oklch(0.93 0.03 84 / 0.85)` + `backdrop-filter: blur(7px) saturate(1.08)` in `parchment-overrides.css`: still reads as the same paper, but the bar now clearly separates from content. Base and `.scrolled` keep the **same colour** (so it doesn't change on scroll, per Linlin), with only a soft shadow lift when scrolled.
+- **Personal-room teaser (temporarily block the 3D room).** The 3D study (`personal.html`) isn't finished, so the navbar **Personal** now opens a small parchment **teaser** (a render of the room + "My 3D study · coming soon") instead of navigating to the live room, on both `index_en.html` and `index_en_clear.html`. New `.ptz-*` overlay (`css/main.css`) + `window.showPersonalTeaser()` (`js/main.js`); the room screenshot is `res/portfolio/img/personal-room.png`. Revert by pointing Personal back to `personal.html` once the room ships.
 
 ## V1 — Personal 3D room: graceful no-WebGL fallback (was a bare "needs WebGL")
 
