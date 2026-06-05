@@ -122,85 +122,127 @@ body { background: transparent !important; color: var(--text-primary); }
     letter-spacing: normal !important;
 }
 
-/* 7.3 ALL descendants — Spectral body, warm ink, no shadow, no my-bumps */
+/* 7.3 Base shield — neutralise parchment's ink-bumps and default body face to
+   Spectral. NOTE: no font-size / line-height / font-weight revert here — that
+   universal revert was the bug that blew labels up to 22px and the postmark to
+   17.5px. Every text element is pinned to its exact main.css value below. */
 .wp-overlay *, .wp-card * {
     font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
     color: rgb(61, 53, 40) !important;
     text-shadow: none !important;
     letter-spacing: normal !important;
-    font-size: revert !important;
-    line-height: revert !important;
-    font-weight: revert !important;
 }
 .wp-overlay strong, .wp-overlay b { font-weight: 700 !important; }
 .wp-overlay em, .wp-overlay i { font-style: italic !important; }
 
-/* 7.4 Headings — Caveat 34px italic warm-brown (canonical from main.css:934) */
+/* 7.4 Handwriting (Caveat) faces — headings, lines, scripts, inputs, buttons.
+   Sizes / colours / line-heights captured pixel-by-pixel from the canonical
+   pre-parchment render (main.css 840+) on 2026-06-05. */
 .wp-overlay .wp-h2, .wp-overlay h1, .wp-overlay h2 {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
-    font-size: 34px !important;
-    font-weight: 600 !important;
-    font-style: italic !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0 !important;
-    color: rgb(91, 79, 58) !important;
+    font-size: 34px !important; font-weight: 600 !important; font-style: italic !important;
+    line-height: 1.1 !important; letter-spacing: 0 !important; color: rgb(91, 79, 58) !important;
 }
-html[lang="zh"] .wp-overlay .wp-h2 { font-size: 30px !important; font-style: normal !important; }
-
-/* 7.5 Sub-text + script labels — Caveat 17px lighter color (canonical from main.css:939) */
 .wp-overlay .wp-sub {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
-    font-size: 17px !important;
-    color: rgb(122, 111, 90) !important;
-    font-style: italic !important;
+    font-size: 17px !important; font-weight: 600 !important; font-style: italic !important;
+    line-height: 1.65 !important; color: rgb(122, 111, 90) !important;
 }
-.wp-overlay .wp-script, .wp-overlay .wp-script-label {
+.wp-overlay .wp-line, .wp-overlay .wp-contact-row {
     font-family: 'Caveat', 'Reenie Beanie', cursive !important;
-    color: rgb(122, 111, 90) !important;
-    font-style: italic !important;
+    font-size: 22px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.4 !important; color: rgb(61, 53, 40) !important;
 }
+.wp-overlay .wp-script {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 22px !important; font-weight: 600 !important; font-style: italic !important;
+    line-height: 1.4 !important; color: rgb(61, 53, 40) !important;
+}
+.wp-overlay .wp-line .wp-script + .wp-script { color: rgb(122, 111, 90) !important; }
+.wp-overlay .wp-script-label {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 19px !important; font-weight: 600 !important; font-style: italic !important;
+    line-height: 1.65 !important; color: rgb(122, 111, 90) !important;
+}
+.wp-overlay .wp-to {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 26px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.2 !important; color: rgb(61, 53, 40) !important;
+}
+.wp-overlay .wp-blank, .wp-overlay .wp-sig {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 22px !important; font-weight: 400 !important; font-style: normal !important;
+    line-height: 1.2 !important; color: rgb(91, 79, 58) !important;
+    padding: 0 2px !important; background: transparent !important;
+}
+.wp-overlay .wp-submit {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 28px !important; font-weight: 600 !important; font-style: italic !important;
+    letter-spacing: 0.01em !important; color: rgb(91, 79, 58) !important; padding: 8px 0 !important;
+    background: transparent !important; background-color: transparent !important;
+    background-image: none !important; box-shadow: none !important; text-shadow: none !important;
+    animation: none !important; border: none !important;
+    border-bottom: 1px dashed rgba(120,113,108,0.22) !important;
+}
+.wp-overlay .wp-skip {
+    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
+    font-size: 16px !important; font-weight: 600 !important; font-style: italic !important;
+    color: rgb(168, 157, 128) !important;
+    background: transparent !important; border: none !important; box-shadow: none !important;
+}
+
+/* 7.5 Serif (Spectral) meta — labels, address, postmark, privacy, arrow */
+.wp-overlay .wp-label {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 13px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.4 !important; letter-spacing: 0.02em !important;
+    color: rgb(168, 157, 128) !important; min-width: 42px !important;
+}
+.wp-overlay .wp-to-label {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 10px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.65 !important; letter-spacing: 0.8px !important; text-transform: uppercase !important;
+    color: rgb(168, 157, 128) !important;
+}
+.wp-overlay .wp-addr, .wp-overlay .wp-signature, .wp-overlay .wp-stamp, .wp-overlay .wp-message {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 17.5px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.65 !important; color: rgb(61, 53, 40) !important;
+}
+.wp-overlay .wp-postmark {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 9px !important; font-weight: 700 !important; font-style: normal !important;
+    line-height: 1.2 !important; letter-spacing: 0.45px !important; text-transform: uppercase !important;
+    color: rgb(157, 166, 196) !important;
+}
+.wp-overlay .wp-privacy {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 11.2px !important; font-weight: 600 !important; font-style: normal !important;
+    line-height: 1.4 !important; color: rgb(168, 157, 128) !important;
+}
+.wp-overlay .wp-arrow {
+    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+    font-size: 18px !important; font-weight: 600 !important; font-style: italic !important;
+    letter-spacing: 0.28px !important; color: rgb(91, 79, 58) !important;
+}
+
+/* 7.6 zh — Caveat can't shape Chinese, so the handwriting lines fall back to a
+   serif/sans; force upright (non-italic) and slightly smaller to read cleanly. */
+html[lang="zh"] .wp-overlay .wp-h2 { font-size: 30px !important; font-style: normal !important; }
 html[lang="zh"] .wp-overlay .wp-sub { font-size: 16px !important; font-style: normal !important; }
 html[lang="zh"] .wp-overlay .wp-script,
 html[lang="zh"] .wp-overlay .wp-script-label { font-style: normal !important; }
+html[lang="zh"] .wp-overlay .wp-submit { font-size: 26px !important; font-style: normal !important; }
 
-/* 7.5b wp-line and other Caveat lines */
-.wp-overlay .wp-line {
-    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
-    font-size: 22px !important;
-    line-height: 1.4 !important;
-    color: rgb(63, 58, 54) !important;
-}
-
-/* 7.6 Submit button — Caveat 28px transparent (canonical from main.css:1060) */
-.wp-overlay .wp-submit, .wp-overlay button {
-    font-family: 'Caveat', 'Reenie Beanie', cursive !important;
-    font-size: 28px !important;
-    font-weight: 600 !important;
-    font-style: italic !important;
-    letter-spacing: 0.01em !important;
-    color: rgb(91, 79, 58) !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    animation: none !important;
-    border: none !important;
-    border-bottom: 1px dashed rgba(120,113,108,0.22) !important;
-}
-html[lang="zh"] .wp-overlay .wp-submit, html[lang="zh"] .wp-overlay button {
-    font-size: 26px !important; font-style: normal !important;
-}
-
-/* 7.7 wp-card animation owned by main.css (don't override animation) */
+/* 7.7 card animation owned by main.css (don't override animation) */
 .wp-overlay.active .wp-card {
     opacity: 1 !important;
     visibility: visible !important;
 }
 
-/* 7.8 Inputs / textarea — Spectral body */
-.wp-overlay textarea, .wp-overlay input, .wp-overlay select {
-    font-family: 'Spectral', 'Iowan Old Style', Georgia, serif !important;
+/* 7.8 textarea / select fallback (the handwriting <input> blanks are pinned to
+   Caveat in 7.4 above; do NOT add `input` here or it reverts them to Spectral). */
+.wp-overlay textarea, .wp-overlay select {
     color: rgb(61, 53, 40) !important;
     background: transparent !important;
 }

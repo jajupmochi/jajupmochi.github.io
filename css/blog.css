@@ -634,6 +634,25 @@
   box-shadow: inset 1.5px 0 0 oklch(0.72 0.13 30 / .55), inset -1.5px 0 0 rgba(80,20,20,.45);
 }
 
+/* ③b mobile collapsed TOC → a compact rolled-scroll TAB that hugs its label,
+   instead of a 200px bar banded across the article's top-left. Expanded (after a
+   tap) still unrolls to the full 200px scroll. Placed after ② so it overrides the
+   paperweight's absolute placement by source order. */
+@media (max-width: 1179px) {
+  .blog-toc.collapsed { width: auto; max-width: 60vw; }
+  /* zero the rolled-up nav's width so the tab hugs the label, not the longest link */
+  .blog-toc.collapsed .blog-toc-rollwrap { width: 0; min-width: 0; }
+  .blog-toc.collapsed .blog-toc-toggle { padding: 0.4em 0.66em 0.34em; gap: 0.5em; }
+  .blog-toc.collapsed .blog-toc-title { font-size: 1.04em; }
+  .blog-toc.collapsed .blog-toc-chevron {        /* heavy paperweight → small inline dowel pip */
+    position: static !important; inset: auto !important;
+    width: 22px !important; height: 12px !important;
+    transform: rotate(0deg) !important;
+    box-shadow: inset 0 1px 0 oklch(0.84 0.08 72 / .55), inset 0 -1.5px 1px rgba(0,0,0,.28),
+                0 1px 2px rgba(60,30,10,.25) !important;
+  }
+}
+
 /* ④ blockquote → 折角便签 (aged note: washi tape on top, folded corner, slight tilt) */
 #blogPostBody blockquote {
   position: relative; margin: 1.7em 0 1.5em; padding: 0.95em 1.1em; border: none !important; border-radius: 3px;

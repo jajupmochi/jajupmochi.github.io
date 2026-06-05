@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-05](#2026-06-05)
+    - [V2 — Launch prep (cont.): blog mobile TOC, exact postcard replication, Howler mobile size, zh postcard overflow, footer links](#v2--launch-prep-cont-blog-mobile-toc-exact-postcard-replication-howler-mobile-size-zh-postcard-overflow-footer-links) — collapsed blog TOC on mobile now hugs its label (compact tab, not a 200px bar); the parchment welcome postcard is re-pinned to its exact pre-parchment computed values (drifted §7 rewritten); the idle 尖叫信 envelope scales down on phones (140px→92px); the zh postcard clamps to the viewport + scrolls instead of overflowing; footer gains Twitter/X · ResearchGate · ORCID on both index files.
     - [V1 — Launch prep: navbar parchment background + Personal-room teaser](#v1--launch-prep-navbar-parchment-background--personal-room-teaser) — gave the top navbar a semi-transparent parchment background + blur (was fully transparent → overlapped content, worst on mobile), colour unchanged on scroll. Temporarily blocked the unfinished 3D room: navbar **Personal** now opens a small parchment teaser (room render + "coming soon") instead of `personal.html`, on both index files.
 - [2026-06-04](#2026-06-04)
     - [V1 — Personal 3D room: graceful no-WebGL / no-hardware-acceleration fallback](#v1--personal-3d-room-graceful-no-webgl--no-hardware-acceleration-fallback) — `personal.html` showed a bare "needs WebGL" when the browser had hardware acceleration off (or only WebGL1; three r160 needs WebGL2). Replaced it with a content fallback (room image + "turn on hardware acceleration" instructions + 6 content cards → Apps / Publications / hobbies), `failIfMajorPerformanceCaveat:false` to allow a software context, and a CDN-load-failure timeout. Verified live.
@@ -72,6 +73,16 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-05
+
+## V2 — Launch prep (cont.): blog mobile TOC, exact postcard replication, Howler mobile size, zh postcard overflow, footer links
+
+Continued the publish-prep fixes Linlin listed before the planned 10-round homepage pass. Visual-verified at desktop + phone viewports.
+
+- **Blog TOC collapsed on mobile.** The floating Contents scroll stayed a 200px-wide bar over the article's top-left even when collapsed. On `≤1179px` the collapsed state now hugs its label (`width:auto`; the rolled-up nav contributes `width:0` so the longest link no longer drives the width), and the heavy 镇纸 paperweight shrinks to a small inline dowel pip, i.e. a compact "Contents" tab. Tapping still unrolls the full 200px scroll. (`css/blog.css`)
+- **Welcome postcard — exact pre-parchment replication (EN).** Linlin wanted the parchment postcard to look exactly like the pre-parchment canonical design. `parchment-overrides.css` §7 was meant to re-assert it but had drifted: a universal `font-size / line-height / font-weight: revert` blew the labels up to 22px and the postmark to 17.5px, §7.8 forced the handwriting `<input>` blanks to Spectral, and several colours were off. Recaptured every postcard element's canonical computed value (getComputedStyle with the override disabled) and rewrote §7 to pin each element exactly (Caveat faces, 13px tan labels, Caveat blanks, 9px blue postmark, etc.). Verified: the current-vs-original computed-style diff is now empty (bar a never-rendered Georgia fallback). Reference shots: `docs/strategy/apps-deck-redesign-2026-05-30/postcard-{ORIGINAL-preparchment,FIXED-parchment}-en.png`.
+- **尖叫信 (Howler) too big on mobile.** The idle envelope was a fixed 140×110 (≈36% of a 390px screen) with no mobile size. Added a `≤640px` rule that scales the whole widget (envelope + steam + embers + hit target) to 0.66 from the bottom-left and tucks it to a 16px inset → ~92px (24%). (`css/main.css`)
+- **zh postcard overflowed the screen.** On `≤640px` the card becomes single-column `height:auto` but kept `overflow:visible`, so tall (especially Chinese) content spilled off-screen. Clamped it to `max-height: calc(100dvh - 24px)` (dvh accounts for mobile browser chrome) + `overflow-y:auto`, so long content scrolls inside and the card never exceeds the viewport. (`css/main.css`)
+- **Footer social links completed.** The footer carried only GitHub / Scholar / LinkedIn / email, but the zh hero exposes the full set; added **Twitter/X, ResearchGate, ORCID** to the footer on both `index_en.html` and `index_en_clear.html` (academicons already loaded; icon links use `aria-label`, no i18n keys).
 
 ## V1 — Launch prep: navbar parchment background + Personal-room teaser (room temporarily blocked)
 

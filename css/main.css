@@ -796,6 +796,16 @@
             .howl-wrap.idle .howl-ember,
             .howl-wrap.idle:hover .howl-body { animation: none; }
         }
+        /* Mobile: the idle envelope is oversized (140px ≈ 36% of a 390px screen)
+           and crowds the content. Scale the whole widget — envelope, steam, embers,
+           hit target — down uniformly from the bottom-left anchor, and tuck it into
+           the corner. */
+        @media (max-width: 640px) {
+            .howl-wrap {
+                left: 16px; bottom: 16px;
+                transform: scale(0.66); transform-origin: bottom left;
+            }
+        }
         
         /* Chatbot Button — temporarily hidden (no chatbot wired up yet).
            Re-enable by removing `display: none` when the chatbot UI is ready. */
@@ -1127,6 +1137,12 @@
             .wp-card {
                 grid-template-columns: 1fr; grid-template-rows: auto auto;
                 aspect-ratio: auto; height: auto;
+                /* never taller than the screen — long (esp. zh) content scrolls
+                   inside the card instead of spilling off-screen. dvh accounts
+                   for the mobile browser chrome that plain vh ignores. */
+                max-height: calc(100vh - 24px);
+                max-height: calc(100dvh - 24px);
+                overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
             }
             .wp-divider { display: none; }
             .wp-right { padding-top: 4px; }
