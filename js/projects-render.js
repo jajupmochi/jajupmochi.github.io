@@ -231,7 +231,11 @@
       try { localStorage.setItem('galleryView', view); } catch (_) {}
       render();
     });
-    try { const saved = localStorage.getItem('galleryView'); if (saved) { view = saved; if (modeWrap) modeWrap.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('on', x.dataset.view === view)); } } catch (_) {}
+    // Keep the Cards/Detailed toggle highlight in sync with the resolved view on load.
+    // The ?view= param (cfg.view) is authoritative; previously the active `on` class
+    // was only set on click / from localStorage, so loading ?view=detailed rendered the
+    // detailed list but left "Cards" highlighted.
+    if (modeWrap) modeWrap.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('on', x.dataset.view === view));
 
     render();
   }
