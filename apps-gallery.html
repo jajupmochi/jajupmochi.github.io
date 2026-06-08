@@ -2,6 +2,14 @@
 <html lang="en" data-site="portfolio">
 <head>
 <meta charset="UTF-8">
+<script>
+  /* apps-gallery.html now defaults to the deck (the preferred app view). Many external
+     docs link to this URL, so a bare visit lands on the full-screen deck. The deck's
+     own "Grid view" link passes ?view=cards, which keeps you on this gallery. */
+  (function () {
+    if (!new URLSearchParams(location.search).has('view')) { location.replace('apps-deck.html'); }
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>App Gallery — Linlin Jia</title>
 <meta name="description" content="App gallery of Linlin Jia — switch between visual Cards and a Detailed list; filter, search, and sort open-source libraries, LLM/agent platforms, and applied ML tools.">
@@ -166,7 +174,8 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
   Projects.mountGallery({
     mount: '#gal', filter: '#galFilter', search: '#galSearch',
-    sort: '#galSort', toggle: '#galMode', view: 'cards'
+    sort: '#galSort', toggle: '#galMode',
+    view: (new URLSearchParams(location.search).get('view') === 'detailed' ? 'detailed' : 'cards')
   });
 </script>
 </body>
