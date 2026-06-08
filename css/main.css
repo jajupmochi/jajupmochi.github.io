@@ -240,7 +240,7 @@
         
         /* Reset & Base */
         *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scroll-padding-top: 72px; }  /* clear the 57px fixed navbar on anchor jumps */
         
         body {
             font-family: var(--font-main);
@@ -2255,7 +2255,8 @@
         }
         
         .pub-title {
-            font-weight: 600;
+            font-weight: 700;          /* R3: credibility scan-target — bolder reads clearly in the handwriting face */
+            font-size: 1.18rem;        /* was inheriting ~1.09rem; a small bump for scannability */
             color: var(--text-primary);
             margin-bottom: 0.25rem;
             line-height: 1.4;

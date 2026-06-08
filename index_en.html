@@ -12,7 +12,7 @@
          See setup/security-headers.md for the rationale behind each directive. -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms https://webapi.amap.com https://*.amap.com;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.clarity.ms https://webapi.amap.com https://*.amap.com;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         img-src 'self' data: blob: https:;
@@ -462,7 +462,7 @@
          (impeccable reflex-reject list / category-cliché). Replaced by Spectral as
          the single Latin family (display + body, varied weights + italic) and
          LXGW WenKai as the Chinese body voice (loaded via jsdelivr below). -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dancing+Script:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dancing+Script:wght@500;700&family=Indie+Flower&family=JetBrains+Mono:wght@400;500;600;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Patrick+Hand&family=Reenie+Beanie&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 
     <!-- Icons -->
@@ -477,10 +477,10 @@
     <!-- Confetti loaded lazily on first use via loadConfetti() helper (v7 round2) -->
 
     <link rel="stylesheet" href="css/main.css">
-    <!-- Parchment-edition handwritten font stack (Google Fonts SIL OFL) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Indie+Flower&family=Patrick+Hand&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;600;700&display=swap">
+    <!-- Parchment handwritten fonts (Reenie Beanie / Indie Flower / Patrick Hand /
+         Zhi Mang Xing) are merged into the single Google Fonts request above.
+         R9 perf: 2 font requests → 1, no duplicate Ma Shan Zheng / JetBrains Mono,
+         ZCOOL XiaoWei dropped (0 uses); duplicate preconnects removed (already in head). -->
     <link rel="stylesheet" href="css/parchment-overrides.css">
 </head>
 <body data-theme="academic">
@@ -935,6 +935,7 @@
                                 <span class="hn-role-line hn-role-1">Research Scientist · Postdoc</span>
                                 <span class="hn-role-line hn-role-2">University of Bern, Switzerland</span>
                             </p>
+                            <a class="hn-cv-link" href="res/cv/CV_Linlin_Jia_en.pdf" target="_blank" rel="noopener" aria-label="Read my CV, PDF, opens in a new tab">read my CV <span class="hn-cv-arrow" aria-hidden="true">&#8599;</span></a>
                         </div>
                     </div>
 
@@ -954,7 +955,7 @@
                                 <a href="https://github.com/jajupmochi/graphkit-learn" target="_blank" rel="noopener noreferrer"><span class="hn-lib">graphkit-learn</span></a>
                                 + <a href="https://github.com/jajupmochi/liulian-python" target="_blank" rel="noopener noreferrer"><span class="hn-lib">LIULIAN</span></a>
                             </span>
-                            <span class="hn-fact hn-fact-4">9 papers published</span>
+                            <span class="hn-fact hn-fact-4">9 papers &middot; 130+ citations</span>
                         </li>
                     </ul>
                 </div>
@@ -1172,7 +1173,7 @@
                         <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label" data-i18n="stats.students">Students Mentored</div></div>
                         <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label" data-i18n="stats.years">Industry Experience</div></div>
                         <div class="stat-card"><div class="stat-number">130</div><div class="stat-label" data-i18n="stats.citations">Citations</div></div>
-                        <div class="stat-card"><div class="stat-number">6</div><div class="stat-label" data-i18n="stats.h_index">H-index</div></div>
+                        <div class="stat-card"><div class="stat-number">7</div><div class="stat-label" data-i18n="stats.h_index">H-index</div></div>
                     </div>
                 </div>
             </div>

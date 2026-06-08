@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-05](#2026-06-05)
+    - [V3 — Homepage 10-round optimization pass (in-place, per-round, verified)](#v3--homepage-10-round-optimization-pass-in-place-per-round-verified) — a deep 10-round audit+optimize sweep of the live homepage for the launch: hero gains a "read my CV ↗" recruiter path + "130+ citations" credibility line; anchor-jump occlusion fixed (`scroll-padding-top`); pub-title legibility; on-brand maroon focus ring; H-index 6→7 (verified); mobile CV-link tap target; 2 Google-Fonts requests merged to 1 (drop unused ZCOOL XiaoWei); Clarity analytics un-blocked (CSP). Audit confirmed hierarchy / contrast (18:1) / spacing / motion-a11y / credibility surfaces already sound. Plan + per-round notes under `docs/strategy/homepage-redesign-2026-06-05/`.
     - [V2 — Launch prep (cont.): blog mobile TOC, exact postcard replication, Howler mobile size, zh postcard overflow, footer links](#v2--launch-prep-cont-blog-mobile-toc-exact-postcard-replication-howler-mobile-size-zh-postcard-overflow-footer-links) — collapsed blog TOC on mobile now hugs its label (compact tab, not a 200px bar); the parchment welcome postcard is re-pinned to its exact pre-parchment computed values (drifted §7 rewritten); the idle 尖叫信 envelope scales down on phones (140px→92px); the zh postcard clamps to the viewport + scrolls instead of overflowing; footer gains Twitter/X · ResearchGate · ORCID on both index files.
     - [V1 — Launch prep: navbar parchment background + Personal-room teaser](#v1--launch-prep-navbar-parchment-background--personal-room-teaser) — gave the top navbar a semi-transparent parchment background + blur (was fully transparent → overlapped content, worst on mobile), colour unchanged on scroll. Temporarily blocked the unfinished 3D room: navbar **Personal** now opens a small parchment teaser (room render + "coming soon") instead of `personal.html`, on both index files.
 - [2026-06-04](#2026-06-04)
@@ -73,6 +74,45 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-05
+
+## V3 — Homepage 10-round optimization pass (in-place, per-round, verified)
+
+The deep follow-on Linlin asked for after the launch-prep fixes: 10 rounds of audit +
+optimization over the **live** homepage (not HTML mocks), each anchored to one lens,
+screenshot-verified, and committed on its own. Plan + per-round notes:
+`docs/strategy/homepage-redesign-2026-06-05/` (`00-plan.md`, `round-notes.md`,
+`DELIVERY.md`). The page is mature (months of work), so several rounds confirmed an
+area is already sound and made a focused, low-risk improvement rather than churn.
+
+- **R1 — above-the-fold.** Hero `hn-fact-4` "9 papers published" → "9 papers · 130+
+  citations" (verified from `data/citations.json`); new `.hn-cv-link` "read my CV ↗"
+  under the role → `res/cv/CV_Linlin_Jia_en.pdf`, a clear recruiter path styled as
+  parchment ink (not a SaaS button).
+- **R2 — hierarchy.** Anchor-jump occlusion fixed: sections had `scroll-margin-top:0`
+  under the 57px fixed navbar, so nav-link jumps hid the heading; added `html {
+  scroll-padding-top: 72px }`.
+- **R3 — typography.** Indie Flower body is a deliberate choice (kept); bumped
+  `.pub-title` (the credibility scan-target) to 1.18rem / weight 700. Flagged the
+  bubbly-hand-on-credibility tradeoff for Linlin.
+- **R4 — colour/contrast.** Contrast audit: all content ~18:1 (a11y strength, no fix).
+  Added an on-brand maroon `:focus-visible` ring (was the default blue) for keyboard
+  a11y (WCAG 2.4.7).
+- **R5 — spacing.** Rhythm consistent (36px sections); no forced change (flagged an
+  optional breathing-room bump).
+- **R6 — credibility.** No broken figures; flagship leads (priority sort). Fixed
+  **H-index 6 → 7** (verified from `citations.json`) on both index files.
+- **R7 — motion.** Reduced-motion is comprehensive (global `*` catch-all + scoped
+  fallbacks); marked stale PLAN H1.M3.G4.T3 done.
+- **R8 — mobile.** No horizontal overflow; cards stack cleanly. Padded the R1 CV link
+  to a 29px touch height (≥ WCAG AA 24px).
+- **R9 — performance.** Merged the EN page's 2 Google-Fonts requests into 1 (deduped
+  Ma Shan Zheng / JetBrains Mono), dropped **ZCOOL XiaoWei** (0 uses) on both index
+  files; confirmed PLAN T1 (font trim) + T2 (confetti lazy) already done. Flagged: the
+  zh page never loads the handwriting fonts; map dedup (T4) still open.
+- **R10 — final QA.** i18n parity in sync; all 5 JSON valid; no gradient-text / em-dash
+  / emoji-chrome bans. **Fixed the CSP** so Microsoft Clarity loads
+  (`script-src` → `*.clarity.ms`, matching `connect-src`) on both index files. Flagged
+  an opaque cross-origin `404×5` (not a missing local asset) for a deployed-site check.
 
 ## V2 — Launch prep (cont.): blog mobile TOC, exact postcard replication, Howler mobile size, zh postcard overflow, footer links
 

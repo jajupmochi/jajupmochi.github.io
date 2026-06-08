@@ -669,6 +669,24 @@ a:not(.nav-link):not(.dropdown-item):not(.btn):not(.btn-primary):not(.btn-second
     text-decoration-color: oklch(0.40 0.06 30) !important;
 }
 
+/* R4: keyboard focus ring matches the manuscript ink. The browser default ring
+   is blue, which clashes with parchment; this keeps keyboard a11y (WCAG 2.4.7)
+   while staying on-brand. Element-specific focus styles (hn-cv-link, opportunities,
+   carousel, …) still apply on top. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+.nav-link:focus-visible,
+.filter-tag:focus-visible,
+.project-card:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2.5px solid oklch(0.50 0.17 32);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 /* V6.5: numbers (citations / pub count / etc.) — JetBrains Mono + emboss + maroon */
 .stat-number, .timeline-card .yr, .news-date,
 .thesis-highlight .citations, .pub-card .citations {
@@ -1637,6 +1655,20 @@ section + section::before {
     transform: rotate(0.5deg);
     font-weight: 600 !important;
 }
+
+/* "read my CV" — recruiter path inside the identity block (R1). Inherits the
+   parchment maroon-ink colour from the global link rule; here we set the hero
+   handwriting face, sizing, alignment under the role, and a small hover nudge. */
+.hero-notebook .hn-cv-link {
+    display: inline-flex !important; align-items: baseline; gap: 0.22em;
+    width: fit-content; margin: 0.5em 0 0 1.4em !important; padding: 3px 2px !important;
+    font-family: 'Reenie Beanie', cursive !important;
+    font-size: 1.3em !important; line-height: 1.1 !important;
+    transition: transform .18s ease;  /* padding lifts the tap target ≥ WCAG AA 24px on touch */
+}
+.hero-notebook .hn-cv-link:hover,
+.hero-notebook .hn-cv-link:focus-visible { transform: translateX(3px); }
+.hero-notebook .hn-cv-arrow { font-style: normal; }
 
 /* "work done" handwritten label */
 .hero-notebook .hn-work-label {
