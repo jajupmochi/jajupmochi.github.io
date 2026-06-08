@@ -159,6 +159,13 @@
   .deck-tools{ display:flex; align-items:center; gap:0.9em; }
   .deck-tools button, .deck-tools a{ background:transparent; border:none; color:var(--ink-soft); cursor:pointer; font-size:1rem; display:inline-flex; align-items:center; text-decoration:none; }
   .deck-tools button:hover, .deck-tools a:hover{ color:var(--maroon); }
+  /* mode switcher (Deck active here) — mirrors the gallery's .mode pill so the
+     Deck/Cards/Detailed trio highlights the current mode on every view. */
+  .mode{ display:inline-flex; border:1px solid oklch(0.45 0.15 30 / 0.32); border-radius:999px; overflow:hidden; }
+  .mode a, .mode span{ font-family:var(--mono); font-size:0.72rem; padding:0.36em 0.85em; background:none; cursor:pointer; display:inline-flex; align-items:center; gap:0.3em; text-decoration:none; white-space:nowrap; }
+  #deckMode a:not(.on), #deckMode span:not(.on){ color:var(--ink-soft) !important; }  /* ID beats parchment's global maroon link rule */
+  #deckMode span.on, #deckMode a.on{ background:var(--maroon) !important; color:#fdf3e3 !important; cursor:default; }
+  .mode a:hover:not(.on){ background:oklch(0.45 0.15 30 / 0.12); }
 
   /* autoplay progress bar (very bottom) */
   .deck-prog{ position:fixed; left:0; bottom:0; height:3px; width:0; z-index:21; background:linear-gradient(90deg,var(--gilt),var(--cinnabar)); transition:width .15s linear; opacity:0.85; }
@@ -274,7 +281,11 @@
     <div class="deck-tools">
       <button id="btnAuto" title="Play / pause auto-leaf" aria-label="Play or pause autoplay"><i class="fas fa-pause" aria-hidden="true"></i></button>
       <button id="btnFull" title="Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand" aria-hidden="true"></i></button>
-      <a href="apps-gallery.html?view=cards" title="Grid view" aria-label="Grid view"><i class="fas fa-table-cells-large" aria-hidden="true"></i></a>
+    </div>
+    <div class="mode" id="deckMode" role="group" aria-label="View mode">
+      <span class="on" title="Deck — you are here"><i class="fas fa-clone" aria-hidden="true"></i> Deck</span>
+      <a href="apps-gallery.html?view=cards"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Cards</a>
+      <a href="apps-gallery.html?view=detailed"><i class="fas fa-list" aria-hidden="true"></i> Detailed</a>
     </div>
   </header>
 

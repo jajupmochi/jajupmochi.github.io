@@ -39,8 +39,10 @@
   .pf-controls .section-controls { margin:0; }
   .mode { display:inline-flex; border:1px solid rgba(120,80,40,0.3); border-radius:999px; overflow:hidden; margin-left:auto; }
   .mode button, .mode a { font-family:'JetBrains Mono',monospace; font-size:0.74rem; padding:0.4em 0.9em; color:var(--soft); background:none; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:0.35em; text-decoration:none; }
-  .mode button.on { background:var(--maroon); color:#fdf3e3; }
-  .mode a.mode-deck { color:var(--maroon); border-right:1px solid rgba(120,80,40,0.25); }
+  #galMode button.on, #galMode a.on, #galMode span.on { background:var(--maroon) !important; color:#fdf3e3 !important; }
+  .mode a.mode-deck { border-right:1px solid rgba(120,80,40,0.25); }
+  /* ID beats parchment's high-specificity global maroon link rule, so only the active mode highlights */
+  #galMode a:not(.on), #galMode button:not(.on) { color:var(--soft) !important; }
   .mode a.mode-deck:hover { background:rgba(120,80,40,0.12); }
   /* ---- gallery grids ---- */
   .gal { max-width:1600px; margin:0 auto; padding:1.2em 2vw 1em; }
