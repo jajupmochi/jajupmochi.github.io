@@ -13,7 +13,11 @@
    visitor READS for more than a glance. Grounded in USWDS/Toptal/
    Harvard guidance (body ≥16px, lh 1.5, 45–90ch) — see 00-research.md.
    ============================================================ */
-:root { --read-font: 'Spectral', 'LXGW WenKai', Georgia, serif; }
+:root { --read-font: 'Patrick Hand', 'LXGW WenKai', cursive; }
+/* Linlin's correction (2026-06-11): readability up, but the reading face must
+   still LOOK handwritten to match the notebook theme. Patrick Hand is the
+   neatest handwriting family already loaded (upright, consistent x-height) —
+   it replaces bubbly Indie Flower for sustained prose; sizes/leading tuned. */
 
 /* Homepage sustained prose -> reading tier (source order beats the
    parchment Indie-Flower body rule at equal specificity). */
@@ -30,19 +34,19 @@
 /* Serif renders larger than handwriting: rein in the inflated em sizes. */
 .news-content, .research-outline p, #research p,
 .timeline-card p, .timeline-content p, .project-card p, #open-to-work p {
-    font-size: 1.0em !important;
-    line-height: 1.62 !important;
-    letter-spacing: 0 !important;
+    font-size: 1.05em !important;
+    line-height: 1.66 !important;
+    letter-spacing: 0.005em !important;
 }
-.pub-authors, .pub-venue { font-size: 0.95rem !important; line-height: 1.5 !important; }
+.pub-authors, .pub-venue { font-size: 1.0rem !important; line-height: 1.5 !important; }
 /* keep prose measure comfortable (research: 45–90ch) */
 .news-content, .research-outline p, .timeline-card p { max-width: 72ch; }
 
 /* gallery card hover-descriptions read as prose too */
 .g-card p, .gal .g-card p {
     font-family: var(--read-font) !important;
-    font-size: 0.95rem !important;
-    line-height: 1.5 !important;
+    font-size: 1.0rem !important;
+    line-height: 1.52 !important;
     font-weight: 400 !important;
 }
 

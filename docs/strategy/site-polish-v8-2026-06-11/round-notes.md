@@ -35,6 +35,15 @@ Deck already used Spectral for prose (no change); personal page has no prose sur
 Critique → next: blog list still lacks site-navbar coherence; gallery header plain;
 footers inconsistent — that's R2 (theme coherence).
 
+### R1 correction (Linlin, mid-R5)
+
+Linlin: readability up, **but the reading face must still look handwritten** (notebook
+theme). Reworked: reading tier = **Patrick Hand** (the neatest loaded handwriting
+family) instead of Spectral — home prose 18.4px/1.66 (was Indie Flower 21px/600), blog
+body back to Patrick Hand with tuned tokens 17.3px/1.7, excerpts/gallery/pub-meta in
+Patrick Hand. Verified on home + blog (`r1b-*.png`). If even more legibility is ever
+wanted: propose a *legible-handwriting* font (Shantell Sans / Kalam) — never plain serif.
+
 ## Round 2 — Theme coherence
 
 Lens: 主题. The secondary pages now speak the homepage's language and the four-page web
