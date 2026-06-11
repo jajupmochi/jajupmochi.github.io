@@ -90,6 +90,24 @@ Lens: cross-cutting QA on the whole v8 set.
 - **Theme spot-check**: `academic` theme keeps the Patrick-Hand reading tier; no breakage.
 - **Console**: 0 errors/warnings across all six v8 pages.
 
+## Review fixes (Linlin, 2026-06-11)
+
+1. **Timeline truncation** — the R1 72ch measure cap pinned timeline/news text to the
+   left ~60% of their wide cards (read as truncation). Cap removed; paragraphs span
+   their designed card width again (956px of 1004px verified).
+2. **No CV on blog/gallery** — CV pill + nav links + both hire-line CV mentions removed;
+   the friendly signposts stay (publications · pat 旺财 / "built with care (and one
+   paper cat)").
+3. **Gallery defaults to deck** — confirmed intact in v8 (bare URL redirects to the
+   deck; the grid only shows with ?view=, the preview link had used ?view=cards).
+4. **R3 made VISIBLE** — Linlin couldn't see the personality round (it was all
+   micro/hover-level). Added two always-visible signatures: a hand-drawn cinnabar
+   ink swash under every homepage section title, and 旺财's fading paw trail at the
+   very end of the home + gallery footers (first placement hid behind the legal text —
+   probe-debugged, moved to .footer-legal::after). Demo shots: title swash
+   (`fix1-experience.png`), paw trail (`fix4-paws-final.png`), gilt selection
+   (`fix4-selection-demo.png`); the sign-off paw was already in `r3-signoff.png`.
+
 ## Pending locale edits (apply at swap)
 
 - `blog.nav_apps` / `blog.nav_personal` (+ zh/fr/de) if Linlin wants the new blog nav
