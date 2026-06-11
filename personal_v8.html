@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linlin's little world — a paper pop-up home</title>
+<meta name="description" content="The person behind the CV: a paper pop-up home that rises from an open book — travel map, a door to the trails, a record player, a photo album. Spin it, click around.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#2e2a25; --ink-soft:#6f6557; --cream:#f3ead4; --parch:#ece1c8;
+    --cinnabar:#b1442f; --maroon:#7c3a2e; --gilt:#c79a3b; --qing:#3f7d77;
+    --disp:'Patrick Hand','LXGW WenKai',cursive; --serif:'Spectral','LXGW WenKai',Georgia,serif;
+    --mono:'JetBrains Mono','LXGW WenKai',monospace;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; overflow:hidden; background:#e7dcc2; color:var(--ink);
+    font-family:var(--serif); -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  #app{ position:fixed; inset:0; }
+  canvas{ display:block; touch-action:none; }
+  /* CSS2D label layer */
+  #labels{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+  /* washi-tape chips, like the homepage's stickers */
+  .hot-label{ font-family:var(--disp); font-size:1.02rem; color:var(--ink);
+    background:repeating-linear-gradient(-45deg, rgba(251,244,225,0.95) 0 7px, rgba(243,232,206,0.95) 7px 14px);
+    border:1px dashed rgba(120,70,40,0.45);
+    border-radius:3px 6px 4px 7px; padding:0.1em 0.7em; white-space:nowrap;
+    box-shadow:1px 2px 5px rgba(80,40,10,0.2); opacity:0; transform:translateY(4px) rotate(-2deg);
+    transition:opacity .2s ease, transform .2s ease; }
+  .hot-label.on{ opacity:1; transform:rotate(-2deg); }
+
+  /* top ribbon */
+  .ribbon{ position:fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center;
+    gap:1em; padding:0.6em clamp(1rem,3vw,2.2rem);
+    background:linear-gradient(180deg, rgba(243,234,212,0.96), rgba(243,234,212,0)); }
+  .ribbon .brand{ font-family:var(--disp); font-size:1.2rem; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:0.4em; }
+  .ribbon .brand .mk{ width:26px; height:26px; border-radius:7px; background:linear-gradient(150deg,#1e3a8a,#2b4db8); color:#fff; display:grid; place-items:center; font-weight:900; font-size:0.78rem; font-family:sans-serif; }
+  .ribbon .hint{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em; color:var(--ink-soft); }
+  .ribbon .tools{ margin-left:auto; display:flex; gap:0.7em; }
+  .ribbon .tools a{ color:var(--ink-soft); text-decoration:none; font-size:1rem; }
+  .ribbon .tools a:hover{ color:var(--maroon); }
+
+  /* explore menu (also the keyboard/SR path) */
+  .explore{ position:fixed; left:clamp(1rem,3vw,2.2rem); bottom:1.2rem; z-index:20; display:flex; flex-wrap:wrap; gap:0.5em; max-width:min(70vw,560px); }
+  .explore button{ font-family:var(--mono); font-size:0.74rem; letter-spacing:0.03em; color:var(--ink);
+    background:rgba(250,244,228,0.85); border:1px solid rgba(120,70,40,0.32); border-radius:999px;
+    padding:0.32em 0.85em; cursor:pointer; display:inline-flex; align-items:center; gap:0.4em; transition:background .15s, transform .15s; }
+  .explore button:hover{ background:#fbf4e1; transform:translateY(-1px); }
+  .explore button i{ color:var(--maroon); }
+
+  /* lightbox */
+  .lb{ position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center; background:rgba(40,30,20,0.82); padding:4vw; }
+  .lb.on{ display:flex; }
+  .lb img{ max-width:90vw; max-height:88vh; border:6px solid #fff; border-radius:4px; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+  .lb button{ position:absolute; background:none; border:none; color:#f3ead4; cursor:pointer; }
+  .lb .x{ top:3vw; right:4vw; font-size:2rem; }
+  .lb .nav{ top:50%; transform:translateY(-50%); font-size:3rem; padding:0 1.4vw; opacity:0.8; }
+  .lb .prev{ left:1vw; } .lb .next{ right:1vw; }
+
+  /* back-to-book button */
+  .back{ position:fixed; top:0.9rem; right:1rem; z-index:45; display:none; font-family:var(--disp); font-size:1.05rem;
+    background:rgba(250,244,228,0.9); border:1px solid rgba(120,70,40,0.32); border-radius:999px; padding:0.3em 1em; cursor:pointer; color:var(--ink); }
+  .back.on{ display:inline-flex; align-items:center; gap:0.4em; }
+  .back:hover{ color:var(--maroon); }
+
+  /* loading + fallback */
+  .loader{ position:fixed; inset:0; z-index:70; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8em; background:#e7dcc1; color:var(--ink); }
+  .loader.off{ display:none; }
+  .loader .spin{ width:38px; height:38px; border:4px solid rgba(120,70,40,0.25); border-top-color:var(--cinnabar); border-radius:50%; animation:spin 1s linear infinite; }
+  .loader p{ font-family:var(--disp); font-size:1.2rem; margin:0; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .nowebgl{ position:fixed; inset:0; z-index:80; display:none; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; background:#ece1c8; overflow-y:auto; }
+  .nowebgl-inner{ max-width:760px; padding:2.4rem 1.4rem 3rem; }
+  .nowebgl-img{ width:100%; max-width:560px; border-radius:8px 5px 9px 6px; border:1.5px solid rgba(120,70,40,0.3); box-shadow:2px 4px 16px rgba(80,40,10,0.2); }
+  .nowebgl h1{ font-family:var(--disp); font-weight:400; font-size:2rem; margin:0.9rem 0 0.2rem; color:var(--ink); }
+  .nowebgl-note{ font-size:1rem; line-height:1.55; color:var(--ink-soft); max-width:60ch; margin:0 auto 1.4rem; }
+  .nowebgl-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0.8em; text-align:left; }
+  .nwc{ display:block; background:rgba(250,244,228,0.72); border:1px solid rgba(120,70,40,0.28); border-radius:9px 6px 10px 7px; padding:0.7em 0.9em; text-decoration:none; color:var(--ink); }
+  a.nwc:hover{ background:#fbf4e1; }
+  .nwc b{ font-family:var(--disp); font-weight:400; font-size:1.18rem; display:block; }
+  .nwc b i{ color:var(--maroon); margin-right:0.35em; }
+  .nwc span{ font-size:0.84rem; color:var(--ink-soft); display:block; margin-top:0.15em; }
+  .nowebgl-foot{ margin-top:1.5rem; } .nowebgl-foot a{ color:var(--maroon); }
+  .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  @media (max-width:640px){ .ribbon .hint{ display:none; } }
+  @media (prefers-reduced-motion:reduce){ .loader .spin{ animation:none; } }
+</style>
+<link rel="stylesheet" href="css/polish.css">
+</head>
+<body>
+<div id="app"></div>
+<div id="labels"></div>
+
+<header class="ribbon">
+  <a class="brand" href="index_en.html"><span class="mk">林</span> Linlin's little world</a>
+  <span class="hint"><i class="fas fa-arrows-up-down-left-right" aria-hidden="true"></i> drag to spin the book · scroll to zoom · click around the home</span>
+  <div class="tools">
+    <a href="index_en.html" title="Home"><i class="fas fa-house" aria-hidden="true"></i></a>
+  </div>
+</header>
+
+<nav class="explore" id="explore" aria-label="Explore the home"></nav>
+<button class="back" id="back"><i class="fas fa-rotate-left" aria-hidden="true"></i> back to the book</button>
+<p class="sr-only" id="story" aria-live="polite"></p>
+
+<div class="lb" id="lb">
+  <button class="x" id="lbX" aria-label="Close">&times;</button>
+  <button class="nav prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="nav next" id="lbNext" aria-label="Next">&#8250;</button>
+</div>
+
+<div class="loader" id="loader"><div class="spin"></div><p>Folding the paper home…</p></div>
+<div class="nowebgl" id="nowebgl">
+  <div class="nowebgl-inner">
+    <img class="nowebgl-img" src="res/portfolio/img/personal-room.png" alt="Linlin's paper pop-up home, rendered in 3D">
+    <h1>Linlin's little world</h1>
+    <p class="nowebgl-note" id="nowebglNote">The spin-around 3D needs <b>WebGL</b> (hardware acceleration), which looks switched off in this browser. Turn on <b>"Use hardware acceleration"</b> in your browser settings and reload to wander the little home. Meanwhile, here is what is inside:</p>
+    <div class="nowebgl-cards">
+      <div class="nwc"><b><i class="fas fa-map"></i> The wall map</b><span>西安 &rarr; Rouen &rarr; Bern — a suitcase that never unpacks</span></div>
+      <div class="nwc"><b><i class="fas fa-door-open"></i> The door</b><span>opens to the trails; weekends are out there</span></div>
+      <div class="nwc"><b><i class="fas fa-record-vinyl"></i> The record player</b><span>latin &amp; swing, music on, everything off</span></div>
+      <div class="nwc"><b><i class="fas fa-book-open"></i> The photo album</b><span>postcards &amp; snapshots on the coffee table</span></div>
+      <div class="nwc"><b><i class="fas fa-mug-hot"></i> Tea corner</b><span>a pot that never quite empties</span></div>
+      <div class="nwc"><b><i class="fas fa-cat"></i> The cat</b><span>asleep on the rug, as cats do</span></div>
+    </div>
+    <p class="nowebgl-foot"><a href="index_en.html">&larr; Back home</a></p>
+  </div>
+</div>
+
+<script>
+  // graceful fallback (defined before the module so its WebGL catch can call it).
+  window.showFallback = function(reason){
+    if(window.__fellBack) return; window.__fellBack = true;
+    var n=document.getElementById('nowebgl'); if(!n) return; n.style.display='flex';
+    var ld=document.getElementById('loader'); if(ld) ld.classList.add('off');
+    if(reason==='load'){ var note=document.getElementById('nowebglNote');
+      if(note) note.innerHTML='The 3D engine could not load (slow or blocked network?). Reload to try again. Meanwhile, here is what is in the little home:'; }
+  };
+  setTimeout(function(){ if(!window.__roomReady) window.showFallback('load'); }, 9000);
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- renderer ----------
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias:true, failIfMajorPerformanceCaveat:false, powerPreference:'default' }); }
+catch(e){ if(window.showFallback) window.showFallback('webgl'); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.04;
+document.getElementById('app').appendChild(renderer.domElement);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+document.getElementById('labels').appendChild(labelRenderer.domElement);
+
+// wait briefly for the handwriting font so canvas textures use it
+try { await Promise.race([document.fonts.ready, new Promise(r=>setTimeout(r,900))]); } catch(_){ }
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe7dcc2);
+scene.fog = new THREE.Fog(0xe7dcc2, 22, 40);
+
+const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 100);
+// HOME fills the screen with the home; distance adapts to aspect so portrait still fits
+const HOMEDIR = new THREE.Vector3(0.60, 0.52, 0.61).normalize();
+const HOME = { tgt:new THREE.Vector3(-0.3, 0.8, -0.3), pos:new THREE.Vector3() };
+function setHome(){
+  const a = camera.aspect;
+  const d = a < 0.7 ? 15.5 : a < 1.0 ? 12.6 : a < 1.5 ? 10.2 : 9.2;
+  HOME.pos.copy(HOMEDIR).multiplyScalar(d).add(HOME.tgt);
+}
+setHome();
+camera.position.copy(HOME.pos);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(HOME.tgt);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 0.9; controls.maxDistance = 19;
+controls.maxPolarAngle = Math.PI*0.47;
+controls.minPolarAngle = Math.PI*0.08;
+controls.update();
+
+// ---------- lights (flat warm daylight on paper) ----------
+scene.add(new THREE.HemisphereLight(0xfdf6e3, 0xcdbb92, 1.3));
+const keyL = new THREE.DirectionalLight(0xfff3d9, 1.3);
+keyL.position.set(7, 12, 6);
+keyL.castShadow = true;
+keyL.shadow.mapSize.set(2048,2048);
+keyL.shadow.camera.left=-11; keyL.shadow.camera.right=11; keyL.shadow.camera.top=11; keyL.shadow.camera.bottom=-11;
+keyL.shadow.camera.near=1; keyL.shadow.camera.far=34; keyL.shadow.bias=-0.0004;
+scene.add(keyL);
+const fillL = new THREE.DirectionalLight(0xe9dcc4, 0.45); fillL.position.set(-8,7,-5); scene.add(fillL);
+
+// ---------- paper materials + ink helpers ----------
+const INK = 0x3a3128;
+const COL = { page:0xf6eed9, cover:0x7c3a2e, desk:0xdfd2b2, cream:0xf3ead4,
+  cinnabar:0xb1442f, maroon:0x7c3a2e, gilt:0xc79a3b, qing:0x3f7d77, sage:0x8aa17c,
+  ink:0x3a3128, paperW:0xfbf6e8, wood:0x9a7148, woodD:0x6b4a2e, wall:0xf2e8d2,
+  floor:0xe2c89a, leaf:0x5b7d4b };
+const gradMap = (()=>{ const d=new Uint8Array([125,190,238]);
+  const t=new THREE.DataTexture(d,3,1,THREE.RedFormat); t.minFilter=THREE.NearestFilter; t.magFilter=THREE.NearestFilter; t.needsUpdate=true; return t; })();
+function pmat(color){ return new THREE.MeshToonMaterial({ color, gradientMap:gradMap }); }
+function inkLines(mesh, thr=25, op=0.55){
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, thr),
+    new THREE.LineBasicMaterial({ color:INK, transparent:true, opacity:op }));
+  mesh.add(e); return mesh;
+}
+function jit(o, a=0.04){ o.rotation.y += (Math.random()-0.5)*a; return o; }
+function box(w,h,d, color, x,y,z, o={}){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 25, o.inkOp ?? 0.5); if(!o.noJit) jit(m); return m; }
+function cyl(rt,rb,h,color,x,y,z,seg=18,o={}){ const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 38, o.inkOp ?? 0.4); return m; }
+function cone(r,h,color,x,y,z,seg=4,o={}){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,seg), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 18, o.inkOp ?? 0.5); if(!o.noJit) jit(m, 0.4); return m; }
+function group(...kids){ const g=new THREE.Group(); kids.forEach(k=>k&&g.add(k)); return g; }
+function texPlane(w,h,tex,o={}){ const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),
+  new THREE.MeshToonMaterial({ gradientMap:gradMap, map:tex, side:o.double?THREE.DoubleSide:THREE.FrontSide, transparent:!!o.alpha }));
+  m.castShadow=!o.noShadow; return m; }
+
+// ---------- canvas art ----------
+function ctxCanvas(w,h){ const c=document.createElement('canvas'); c.width=w; c.height=h; return [c, c.getContext('2d')]; }
+function asTex(c){ const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
+// ink-and-wash postcard (works portrait or landscape)
+function drawPostcard(x, W, H, caption, hue){
+  const s = W/256;
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(58,49,40,0.78)'; x.lineWidth=3*s; x.strokeRect(7*s,7*s,W-14*s,H-14*s);
+  x.lineWidth=1*s; x.strokeRect(13*s,13*s,W-26*s,H-26*s);
+  x.fillStyle=`hsla(${hue},40%,62%,0.85)`;
+  x.beginPath(); x.moveTo(20*s,H-44*s); x.lineTo(0.36*W,H-44*s-0.38*H*0.8); x.lineTo(0.62*W,H-44*s); x.closePath(); x.fill();
+  x.fillStyle=`hsla(${hue+26},34%,47%,0.88)`;
+  x.beginPath(); x.moveTo(0.38*W,H-44*s); x.lineTo(0.71*W,H-44*s-0.45*H*0.8); x.lineTo(W-10*s,H-44*s); x.closePath(); x.fill();
+  x.strokeStyle='rgba(58,49,40,0.8)'; x.lineWidth=2*s;
+  x.beginPath(); x.arc(W-50*s,50*s,15*s,0,7); x.stroke();
+  x.strokeStyle='rgba(177,68,47,0.85)'; x.strokeRect(W-40*s,16*s,24*s,30*s);
+  x.fillStyle='#3a3128'; x.font=`${26*s}px "Patrick Hand", Georgia, cursive`; x.textAlign='left';
+  x.fillText(caption, 18*s, H-16*s);
+}
+function photoTex(caption, hue, W=256, H=192){ const [c,x]=ctxCanvas(W,H); drawPostcard(x,W,H,caption,hue); return asTex(c); }
+function photoURL(caption, hue){ const [c,x]=ctxCanvas(480,360); drawPostcard(x,480,360,caption,hue); return c.toDataURL(); }
+// wooden plank floor
+function plankTex(){ const [c,x]=ctxCanvas(1024,768);
+  x.fillStyle='#e7cf9f'; x.fillRect(0,0,1024,768);
+  for(let r=0;r<6;r++){ x.fillStyle=r%2?'#e2c894':'#e9d2a4'; x.fillRect(0,r*128,1024,128);
+    x.strokeStyle='rgba(107,74,46,0.4)'; x.lineWidth=3;
+    x.beginPath(); x.moveTo(0,r*128); x.lineTo(1024,r*128); x.stroke();
+    const off=(r%2)*340+120;
+    for(let px=off; px<1024; px+=512){ x.beginPath(); x.moveTo(px,r*128); x.lineTo(px,(r+1)*128); x.stroke();
+      x.fillStyle='rgba(107,74,46,0.5)'; x.beginPath(); x.arc(px+18,r*128+22,3.4,0,7); x.fill(); }
+    // grain
+    x.strokeStyle='rgba(107,74,46,0.12)'; x.lineWidth=1.6;
+    for(let g=0; g<3; g++){ const gy=r*128+30+g*34; x.beginPath(); x.moveTo(20,gy);
+      x.bezierCurveTo(300,gy-9, 700,gy+9, 1004,gy-4); x.stroke(); } }
+  return asTex(c); }
+// hand-drawn wall map of the three cities
+function mapTex(){ const [c,x]=ctxCanvas(1024,760);
+  x.fillStyle='#f3ead2'; x.fillRect(0,0,1024,760);
+  x.strokeStyle='rgba(58,49,40,0.8)'; x.lineWidth=7; x.strokeRect(16,16,992,728);
+  x.lineWidth=2; x.strokeRect(34,34,956,692);
+  // washes: a europe-ish blob and an asia-ish blob (hand-drawn, not accurate on purpose)
+  x.fillStyle='rgba(138,161,124,0.5)';
+  x.beginPath(); x.moveTo(120,330); x.bezierCurveTo(180,180, 360,150, 430,250);
+  x.bezierCurveTo(470,330, 380,470, 280,480); x.bezierCurveTo(180,490, 90,430, 120,330); x.closePath(); x.fill();
+  x.fillStyle='rgba(63,125,119,0.42)';
+  x.beginPath(); x.moveTo(620,420); x.bezierCurveTo(660,240, 900,200, 950,340);
+  x.bezierCurveTo(980,460, 860,580, 720,560); x.bezierCurveTo(640,545, 600,500, 620,420); x.closePath(); x.fill();
+  // dashed route Xi'an -> Rouen -> Bern
+  x.strokeStyle='rgba(177,68,47,0.95)'; x.lineWidth=6; x.setLineDash([22,16]);
+  x.beginPath(); x.moveTo(830,430); x.bezierCurveTo(640,260, 420,210, 255,275); x.stroke();
+  x.beginPath(); x.moveTo(255,275); x.bezierCurveTo(300,330, 330,360, 352,392); x.stroke();
+  x.setLineDash([]);
+  // pins + labels
+  function pin(px,py,name,dy=46){ x.fillStyle='#b1442f'; x.beginPath(); x.arc(px,py,13,0,7); x.fill();
+    x.strokeStyle='#7c3a2e'; x.lineWidth=3; x.beginPath(); x.arc(px,py,13,0,7); x.stroke();
+    x.fillStyle='#3a3128'; x.font='42px "Patrick Hand", Georgia, cursive'; x.textAlign='center'; x.fillText(name, px, py+dy); }
+  pin(830,430,"西安 Xi'an"); pin(255,275,'Rouen',-26); pin(352,392,'Bern');
+  // title + story line
+  x.fillStyle='#3a3128'; x.font='52px "Patrick Hand", Georgia, cursive'; x.textAlign='left';
+  x.fillText('three cities, one suitcase', 56, 96);
+  x.font='34px "Patrick Hand", Georgia, cursive'; x.fillStyle='rgba(58,49,40,0.85)';
+  x.fillText('grew up in 西安 · PhD in Rouen · home now in Bern —', 56, 660);
+  x.fillText('the suitcase never quite unpacks.', 56, 702);
+  return asTex(c); }
+// record sleeve card
+function sleeveTex(){ const [c,x]=ctxCanvas(640,640);
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,640,640);
+  x.strokeStyle='rgba(58,49,40,0.75)'; x.lineWidth=5; x.strokeRect(12,12,616,616);
+  x.fillStyle='rgba(63,125,119,0.5)'; x.beginPath(); x.arc(320,260,150,0,7); x.fill();
+  x.fillStyle='#f6eed9'; x.beginPath(); x.arc(320,260,52,0,7); x.fill();
+  x.strokeStyle='rgba(58,49,40,0.8)'; x.lineWidth=3;
+  x.beginPath(); x.arc(320,260,150,0,7); x.stroke(); x.beginPath(); x.arc(320,260,52,0,7); x.stroke();
+  x.fillStyle='#3a3128'; x.font='44px "Patrick Hand", Georgia, cursive'; x.textAlign='center';
+  x.fillText('latin & swing, mostly —', 320, 500);
+  x.fillText('music on, everything off.', 320, 552);
+  return asTex(c); }
+// trail sign outside the door
+function signTex(){ const [c,x]=ctxCanvas(640,300);
+  x.fillStyle='#e9d9b6'; x.fillRect(0,0,640,300);
+  x.strokeStyle='rgba(58,49,40,0.85)'; x.lineWidth=6; x.strokeRect(8,8,624,284);
+  x.fillStyle='#3a3128'; x.font='44px "Patrick Hand", Georgia, cursive'; x.textAlign='center';
+  x.fillText('weekends, uphill ->', 320, 120);
+  x.font='30px "Patrick Hand", Georgia, cursive'; x.fillStyle='rgba(58,49,40,0.85)';
+  x.fillText('the best debugging happens', 320, 190);
+  x.fillText('above the treeline.', 320, 232);
+  return asTex(c); }
+// album page with a handwritten note
+function noteTex(lines, W=256, H=340){ const [c,x]=ctxCanvas(W,H);
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(58,49,40,0.5)'; x.lineWidth=2; x.strokeRect(8,8,W-16,H-16);
+  x.fillStyle='#3a3128'; x.font='26px "Patrick Hand", Georgia, cursive'; x.textAlign='center';
+  lines.forEach((ln,i)=>x.fillText(ln, W/2, H/2-((lines.length-1)/2-i)*36));
+  return asTex(c); }
+// music note glyph (transparent)
+function noteGlyphTex(){ const [c,x]=ctxCanvas(128,128);
+  x.fillStyle='rgba(58,49,40,0.92)'; x.font='96px Georgia, serif'; x.textAlign='center';
+  x.fillText('♪', 64, 96); return asTex(c); }
+
+// ---------- the stage: an open book on a parchment desk ----------
+const deskTop=new THREE.Mesh(new THREE.CylinderGeometry(12.5,12.5,0.34,56), pmat(COL.desk));
+deskTop.position.y=-0.46; deskTop.receiveShadow=true; scene.add(deskTop);
+function inkRing(r, op, ox, oz){
+  const m=new THREE.Mesh(new THREE.RingGeometry(r, r+0.05, 72),
+    new THREE.MeshBasicMaterial({ color:INK, transparent:true, opacity:op, side:THREE.DoubleSide }));
+  m.rotation.x=-Math.PI/2; m.position.set(ox,-0.282,oz); return m;
+}
+scene.add(inkRing(6.7, 0.30, 0.1, 0.05));
+scene.add(inkRing(6.82, 0.14, -0.12, -0.08));
+const coverL=box(4.7,0.2,6.7, COL.cover, -2.32,-0.10,0, {noJit:true,inkOp:0.7}); coverL.rotation.z=0.018; scene.add(coverL);
+const coverR=box(4.7,0.2,6.7, COL.cover,  2.32,-0.10,0, {noJit:true,inkOp:0.7}); coverR.rotation.z=-0.018; scene.add(coverR);
+scene.add(box(4.34,0.14,6.34, 0xefe6cd, -2.2,0.02,0, {noJit:true,inkOp:0.3}));
+scene.add(box(4.34,0.14,6.34, 0xefe6cd,  2.2,0.02,0, {noJit:true,inkOp:0.3}));
+function pageTex(side){ const [c,x]=ctxCanvas(512,716);
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,512,716);
+  x.strokeStyle='rgba(124,58,46,0.35)'; x.lineWidth=2;
+  x.beginPath(); x.moveTo(side==='L'?470:42,24); x.lineTo(side==='L'?470:42,692); x.stroke();
+  x.strokeStyle='rgba(58,49,40,0.13)'; x.lineWidth=1.6;
+  for(let y=64;y<700;y+=44){ x.beginPath(); x.moveTo(26,y); x.lineTo(486,y); x.stroke(); }
+  x.fillStyle='rgba(58,49,40,0.6)'; x.font='30px "Patrick Hand", Georgia, cursive';
+  if(side==='L'){ x.fillText('the person behind the cv —', 40, 700); }
+  else { x.textAlign='right'; x.fillText('home, hand-folded', 472, 700); }
+  return asTex(c); }
+function page(side, px){
+  const g=new THREE.BoxGeometry(4.3,0.1,6.3);
+  const edge=pmat(COL.page);
+  const top=new THREE.MeshToonMaterial({ color:0xffffff, gradientMap:gradMap, map:pageTex(side) });
+  const m=new THREE.Mesh(g, [edge,edge,top,edge,edge,edge]);
+  m.position.set(px,0.14,0); m.castShadow=true; m.receiveShadow=true; inkLines(m,25,0.4); return m;
+}
+scene.add(page('L',-2.18)); scene.add(page('R',2.18));
+const roll=cyl(0.14,0.14,6.3, 0xefe5ca, 0,0.15,0, 20, {noInk:true}); roll.rotation.x=Math.PI/2; scene.add(roll);
+scene.add(box(0.022,0.006,6.3, 0xcdbd97, -0.06,0.193,0, {noJit:true,noInk:true}));
+scene.add(box(0.022,0.006,6.3, 0xcdbd97,  0.06,0.193,0, {noJit:true,noInk:true}));
+const mark=box(0.16,0.018,1.1, COL.cinnabar, 1.7,0.2,2.9, {noJit:true,inkOp:0.4}); mark.rotation.y=-0.2; scene.add(mark);
+// desk dressing
+const pencil=group(
+  (()=>{ const b=cyl(0.05,0.05,1.1, COL.gilt, 3.6,-0.235,3.75, 6,{inkOp:0.5}); b.rotation.z=Math.PI/2; b.rotation.y=0.5; return b; })(),
+  (()=>{ const t=cone(0.05,0.16, COL.ink, 4.16,-0.235,3.47, 6,{noJit:true,noInk:true}); t.rotation.z=-Math.PI/2; t.rotation.y=0.5; return t; })(),
+  (()=>{ const e=cyl(0.052,0.052,0.1, COL.cinnabar, 3.1,-0.235,4.0, 6,{noInk:true}); e.rotation.z=Math.PI/2; e.rotation.y=0.5; return e; })());
+scene.add(pencil);
+scene.add(cyl(0.16,0.2,0.22, COL.ink, -4.3,-0.18,-3.0, 12,{inkOp:0.3}));
+scene.add(cyl(0.06,0.06,0.06, COL.gilt, -4.3,-0.04,-3.0, 10,{noInk:true}));
+function loosePostcard(cap,hue,x,z,rot){
+  const m=texPlane(1.0,0.74, photoTex(cap,hue));
+  m.rotation.x=-Math.PI/2; m.rotation.z=rot; m.position.set(x,-0.281,z); m.receiveShadow=true; return m; }
+scene.add(loosePostcard('Bern',152, -5.2,-1.2, 0.28));
+scene.add(loosePostcard('the Alps',205, 5.3,1.6, -0.3));
+
+// ---------- the paper home (rises from the pages) ----------
+// floor with plank texture (one piece across both pages)
+const floorG=new THREE.BoxGeometry(7.6,0.06,5.6);
+const floorEdge=pmat(COL.floor);
+const floorMesh=new THREE.Mesh(floorG, [floorEdge,floorEdge,
+  new THREE.MeshToonMaterial({ color:0xffffff, gradientMap:gradMap, map:plankTex() }),
+  floorEdge,floorEdge,floorEdge]);
+floorMesh.position.set(-0.1,0.225,-0.25); floorMesh.receiveShadow=true; inkLines(floorMesh,25,0.5);
+const WALL_H=2.3, FL=0.255;          // floor top y
+// --- back wall (z=-3.0) with a window opening x in [-2.25,-0.85], y in [0.95,2.0] rel floor
+const bw={ z:-3.0, x0:-3.9, x1:3.7 };
+const winX0=-2.25, winX1=-0.85, winY0=FL+0.7, winY1=FL+1.75;
+const backWall=group(
+  box(winX0-bw.x0, WALL_H,0.12, COL.wall, (bw.x0+winX0)/2, FL+WALL_H/2, bw.z, {noJit:true,inkOp:0.45}),
+  box(bw.x1-winX1, WALL_H,0.12, COL.wall, (winX1+bw.x1)/2, FL+WALL_H/2, bw.z, {noJit:true,inkOp:0.45}),
+  box(winX1-winX0, winY0-FL, 0.12, COL.wall, (winX0+winX1)/2, (FL+winY0)/2, bw.z, {noJit:true,noInk:true}),
+  box(winX1-winX0, FL+WALL_H-winY1, 0.12, COL.wall, (winX0+winX1)/2, (winY1+FL+WALL_H)/2, bw.z, {noJit:true,noInk:true})
+);
+// --- left wall (x=-3.9) with a door opening z in [-2.3,-1.35], height 1.78
+const lw={ x:-3.9, z0:-3.0, z1:2.55 };
+const doorZ0=-2.3, doorZ1=-1.35, DOOR_H=1.78;
+const leftWall=group(
+  box(0.12, WALL_H, doorZ0-lw.z0, COL.wall, lw.x, FL+WALL_H/2, (lw.z0+doorZ0)/2, {noJit:true,inkOp:0.45}),
+  box(0.12, WALL_H, lw.z1-doorZ1, COL.wall, lw.x, FL+WALL_H/2, (doorZ1+lw.z1)/2, {noJit:true,inkOp:0.45}),
+  box(0.12, WALL_H-DOOR_H, doorZ1-doorZ0, COL.wall, lw.x, FL+DOOR_H+(WALL_H-DOOR_H)/2, (doorZ0+doorZ1)/2, {noJit:true,noInk:true})
+);
+// skirting + wainscot rails inside (split around the door + window openings)
+const trims=group(
+  box(7.5,0.1,0.04, COL.paperW, -0.15, FL+0.05, bw.z+0.085, {noJit:true,noInk:true}),
+  box(0.04,0.1, doorZ0-lw.z0, COL.paperW, lw.x+0.085, FL+0.05, (lw.z0+doorZ0)/2, {noJit:true,noInk:true}),
+  box(0.04,0.1, lw.z1-doorZ1, COL.paperW, lw.x+0.085, FL+0.05, (doorZ1+lw.z1)/2, {noJit:true,noInk:true}),
+  box(winX0-bw.x0,0.035,0.03, COL.gilt, (bw.x0+winX0)/2, FL+0.95, bw.z+0.08, {noJit:true,noInk:true}),
+  box(bw.x1-winX1,0.035,0.03, COL.gilt, (winX1+bw.x1)/2, FL+0.95, bw.z+0.08, {noJit:true,noInk:true}),
+  box(0.03,0.035, doorZ0-lw.z0, COL.gilt, lw.x+0.08, FL+0.95, (lw.z0+doorZ0)/2, {noJit:true,noInk:true}),
+  box(0.03,0.035, lw.z1-doorZ1, COL.gilt, lw.x+0.08, FL+0.95, (doorZ1+lw.z1)/2, {noJit:true,noInk:true})
+);
+// --- window assembly (in the back-wall opening) + curtains
+const winA=group(
+  box(winX1-winX0+0.14, 0.09, 0.16, COL.woodD, (winX0+winX1)/2, winY0-0.02, bw.z, {noJit:true}),   // sill
+  box(winX1-winX0+0.1, 0.07, 0.13, COL.woodD, (winX0+winX1)/2, winY1+0.03, bw.z, {noJit:true,noInk:true}),
+  box(0.07, winY1-winY0, 0.13, COL.woodD, winX0-0.01, (winY0+winY1)/2, bw.z, {noJit:true,noInk:true}),
+  box(0.07, winY1-winY0, 0.13, COL.woodD, winX1+0.01, (winY0+winY1)/2, bw.z, {noJit:true,noInk:true}),
+  box(0.045, winY1-winY0, 0.05, COL.woodD, (winX0+winX1)/2, (winY0+winY1)/2, bw.z, {noJit:true,noInk:true}),
+  box(winX1-winX0, 0.045, 0.05, COL.woodD, (winX0+winX1)/2, (winY0+winY1)/2, bw.z, {noJit:true,noInk:true}),
+  (()=>{ const sky=new THREE.Mesh(new THREE.PlaneGeometry(winX1-winX0, winY1-winY0),
+      new THREE.MeshBasicMaterial({ color:0xfae9c0 })); sky.position.set((winX0+winX1)/2,(winY0+winY1)/2, bw.z-0.05); return sky; })(),
+  box(winX1-winX0+0.5, 0.05, 0.06, COL.woodD, (winX0+winX1)/2, winY1+0.22, bw.z+0.12, {noJit:true,noInk:true}), // curtain rod
+  (()=>{ const cur=box(0.34,1.25,0.05, COL.cinnabar, winX0-0.06, winY1-0.42, bw.z+0.12, {noJit:true,inkOp:0.35}); return cur; })(),
+  (()=>{ const cur=box(0.34,1.25,0.05, COL.cinnabar, winX1+0.06, winY1-0.42, bw.z+0.12, {noJit:true,inkOp:0.35}); return cur; })(),
+  cyl(0.06,0.08,0.12, COL.qing, (winX0+winX1)/2+0.3, winY0+0.06, bw.z+0.1, 10,{noInk:true})        // tiny pot on sill
+);
+// --- door (hinged, ajar; opens outward) + frame + handle
+const doorHinge=new THREE.Group(); doorHinge.position.set(lw.x, FL, doorZ0);  // hinge at back jamb
+const doorPanel=group(
+  box(0.07, DOOR_H, doorZ1-doorZ0-0.06, COL.woodD, 0, DOOR_H/2, (doorZ1-doorZ0)/2, {noJit:true,inkOp:0.7}),
+  box(0.045, 0.6, 0.56, COL.wood, -0.012, DOOR_H*0.7, (doorZ1-doorZ0)/2, {noJit:true,noInk:true}),
+  box(0.045, 0.6, 0.56, COL.wood, -0.012, DOOR_H*0.28, (doorZ1-doorZ0)/2, {noJit:true,noInk:true}),
+  cyl(0.035,0.035,0.07, COL.gilt, -0.06, DOOR_H*0.5, (doorZ1-doorZ0)*0.82, 10,{noInk:true})
+);
+doorPanel.children[3].rotation.z=Math.PI/2;
+doorHinge.add(doorPanel);
+doorHinge.rotation.y=0.42;            // ajar by default
+const doorFrame=group(
+  box(0.16, DOOR_H+0.07, 0.09, COL.woodD, lw.x, FL+(DOOR_H+0.07)/2, doorZ0-0.04, {noJit:true,noInk:true}),
+  box(0.16, DOOR_H+0.07, 0.09, COL.woodD, lw.x, FL+(DOOR_H+0.07)/2, doorZ1+0.04, {noJit:true,noInk:true}),
+  box(0.16, 0.08, doorZ1-doorZ0+0.17, COL.woodD, lw.x, FL+DOOR_H+0.04, (doorZ0+doorZ1)/2, {noJit:true,noInk:true}),
+  box(0.2, 0.045, doorZ1-doorZ0+0.1, COL.woodD, lw.x, FL+0.02, (doorZ0+doorZ1)/2, {noJit:true,noInk:true})
+);
+// --- outside the door: a pocket trail world on the left page
+const outMtn1=cone(0.62,0.95, COL.sage, -5.45,FL+0.45,-2.3, 4,{inkOp:0.6});
+const outMtn2=cone(0.45,0.66, COL.qing, -6.0,FL+0.31,-1.55, 4,{inkOp:0.55});
+const outCap=cone(0.2,0.3, COL.paperW, -5.45,FL+0.95,-2.3, 4,{noJit:true,inkOp:0.4});
+function pine(x,z,h){ return group(
+  cyl(0.04,0.05,0.16, COL.woodD, x,FL+0.08,z, 8,{noInk:true}),
+  cone(0.17,h*0.5, 0x55795b, x,FL+0.16+h*0.25,z, 6),
+  cone(0.13,h*0.4, 0x639467, x,FL+0.16+h*0.55,z, 6)); }
+const outPines=group(pine(-4.9,-0.85,0.55), pine(-5.7,-0.7,0.45), pine(-6.1,-2.6,0.6));
+const outPath=group();
+[[-4.15,-1.8],[-4.5,-1.75],[-4.85,-1.62],[-5.15,-1.42],[-5.45,-1.2]].forEach(p=>
+  outPath.add(box(0.22,0.018,0.13, 0xd9bf8e, p[0],FL+0.012,p[1],{noJit:true,noInk:true})));
+const signPost=group(
+  cyl(0.035,0.04,0.78, COL.woodD, -4.62,FL+0.39,-0.95, 8,{noInk:true}),
+  (()=>{ const s=texPlane(0.62,0.3, signTex()); s.position.set(-4.62,FL+0.74,-0.94); s.rotation.y=0.95; return s; })());
+const outSun=group(
+  cyl(0.012,0.012,1.1, COL.ink, -6.2,FL+0.55,-2.9, 6,{noInk:true}),
+  (()=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(0.16,14,12), pmat(COL.gilt)); s.position.set(-6.2,FL+1.18,-2.9); s.castShadow=true; return s; })());
+const outside=group(outMtn1,outMtn2,outCap,outPines,outPath,signPost,outSun);
+outside.position.y=-(FL-0.19);   // outside there is no wooden floor: drop onto the page top
+// hiking gear inside, by the door
+const pack=group(
+  box(0.32,0.46,0.2, COL.qing, -3.55,FL+0.23,-2.62,{inkOp:0.6}),
+  box(0.32,0.16,0.09, COL.gilt, -3.55,FL+0.42,-2.56,{noJit:true}),
+  box(0.2,0.12,0.06, COL.sage, -3.55,FL+0.18,-2.5,{noJit:true,noInk:true}));
+const boots=group(
+  box(0.13,0.12,0.26, COL.woodD, -3.6,FL+0.06,-1.1,{noJit:true}),
+  box(0.13,0.12,0.26, COL.woodD, -3.44,FL+0.06,-1.04,{noJit:true}));
+const poles=group(
+  (()=>{ const p=cyl(0.015,0.015,0.95, COL.ink, -3.72,FL+0.46,-2.85, 6,{noInk:true}); p.rotation.x=0.12; p.rotation.z=0.1; return p; })(),
+  (()=>{ const p=cyl(0.015,0.015,0.95, COL.ink, -3.64,FL+0.45,-2.9, 6,{noInk:true}); p.rotation.x=0.16; p.rotation.z=0.06; return p; })());
+const gHike=group(doorFrame,doorHinge,outside,pack,boots,poles);
+
+// --- travel corner: suitcase by the door + the wall map
+const wallMap=(()=>{ const m=texPlane(1.62,1.2, mapTex()); m.position.set(lw.x+0.1, FL+1.32, 0.55); m.rotation.y=Math.PI/2; return m; })();
+const mapTacks=group(
+  cyl(0.02,0.02,0.03, COL.cinnabar, lw.x+0.1, FL+1.9, 0.0, 8,{noInk:true}),
+  cyl(0.02,0.02,0.03, COL.cinnabar, lw.x+0.1, FL+1.9, 1.12, 8,{noInk:true}),
+  cyl(0.02,0.02,0.03, COL.cinnabar, lw.x+0.1, FL+0.74, 0.0, 8,{noInk:true}),
+  cyl(0.02,0.02,0.03, COL.cinnabar, lw.x+0.1, FL+0.74, 1.12, 8,{noInk:true}));
+mapTacks.children.forEach(t=>t.rotation.z=Math.PI/2);
+const kase=group(
+  box(0.62,0.42,0.3, COL.maroon, -3.4,FL+0.21,0.05,{inkOp:0.7}),
+  box(0.62,0.07,0.3, COL.gilt, -3.4,FL+0.45,0.05,{noJit:true}),
+  box(0.2,0.05,0.07, COL.ink, -3.4,FL+0.51,0.05,{noJit:true}),
+  box(0.05,0.08,0.045, COL.gilt, -3.22,FL+0.4,0.21,{noJit:true,noInk:true}),
+  box(0.05,0.08,0.045, COL.gilt, -3.58,FL+0.4,0.21,{noJit:true,noInk:true}),
+  box(0.16,0.12,0.015, COL.qing, -3.5,FL+0.2,0.21,{noJit:true,noInk:true}),
+  (()=>{ const s=box(0.12,0.12,0.015, COL.cinnabar, -3.28,FL+0.16,0.21,{noJit:true,noInk:true}); s.rotation.z=0.3; return s; })(),
+  cyl(0.035,0.035,0.025, COL.ink, -3.56,FL+0.012,0.13, 8,{noInk:true}),
+  cyl(0.035,0.035,0.025, COL.ink, -3.24,FL+0.012,0.13, 8,{noInk:true}));
+kase.children[7].rotation.x=Math.PI/2; kase.children[8].rotation.x=Math.PI/2;
+const gTravel=group(wallMap,mapTacks,kase);
+
+// --- dancing corner: sideboard + record player + vinyl crate + shoes
+const sideboard=group(
+  box(1.5,0.5,0.5, COL.wood, 2.7,FL+0.31,-2.62,{inkOp:0.6}),
+  box(1.56,0.05,0.54, COL.woodD, 2.7,FL+0.585,-2.62,{noJit:true}),
+  box(0.62,0.3,0.02, COL.woodD, 2.36,FL+0.3,-2.36,{noJit:true,noInk:true}),
+  box(0.62,0.3,0.02, COL.woodD, 3.04,FL+0.3,-2.36,{noJit:true,noInk:true}),
+  cyl(0.02,0.02,0.05, COL.gilt, 2.36,FL+0.3,-2.34, 8,{noInk:true}),
+  cyl(0.02,0.02,0.05, COL.gilt, 3.04,FL+0.3,-2.34, 8,{noInk:true}),
+  box(0.08,0.06,0.08, COL.woodD, 2.06,FL+0.03,-2.42,{noJit:true,noInk:true}),
+  box(0.08,0.06,0.08, COL.woodD, 3.34,FL+0.03,-2.42,{noJit:true,noInk:true}),
+  box(0.08,0.06,0.08, COL.woodD, 2.06,FL+0.03,-2.82,{noJit:true,noInk:true}),
+  box(0.08,0.06,0.08, COL.woodD, 3.34,FL+0.03,-2.82,{noJit:true,noInk:true}));
+const plinth=box(0.62,0.1,0.5, COL.ink, 2.5,FL+0.66,-2.62,{inkOp:0.8});
+const platter=cyl(0.21,0.21,0.035, 0x26211b, 2.5,FL+0.73,-2.62, 26,{noInk:true});
+const vinylLbl=cyl(0.055,0.055,0.04, COL.cinnabar, 2.5,FL+0.732,-2.62, 14,{noInk:true});
+const toneArm=new THREE.Group(); toneArm.position.set(2.76,FL+0.74,-2.84);
+toneArm.add(box(0.26,0.025,0.035, COL.gilt, -0.12,0,0.08,{noJit:true,noInk:true}));
+toneArm.add(cyl(0.03,0.03,0.05, COL.ink, 0,0.01,0, 8,{noInk:true}));
+toneArm.rotation.y=-0.55;            // parked
+const sleeve=(()=>{ const s=texPlane(0.62,0.62, sleeveTex()); s.position.set(3.18,FL+0.97,-2.6); s.rotation.y=-0.12; return s; })();
+const crate=group(
+  box(0.5,0.3,0.34, COL.woodD, 1.7,FL+0.16,-2.6,{inkOp:0.55}),
+  ...[0,1,2,3].map(i=>{ const r=box(0.025,0.26,0.26, [COL.qing,COL.cinnabar,COL.gilt,COL.sage][i], 1.6+i*0.05, FL+0.32,-2.6,{noJit:true,noInk:true}); r.rotation.z=-0.06-i*0.02; return r; }));
+const dshoes=group(
+  (()=>{ const s=box(0.13,0.1,0.27, COL.maroon, 3.3,FL+0.05,-1.9,{noJit:true}); s.rotation.y=0.45; return s; })(),
+  (()=>{ const s=box(0.13,0.1,0.27, COL.maroon, 3.5,FL+0.05,-2.02,{noJit:true}); s.rotation.y=-0.15; return s; })(),
+  cyl(0.018,0.05,0.07, COL.maroon, 3.32,FL+0.035,-1.78, 6,{noInk:true}),
+  cyl(0.018,0.05,0.07, COL.maroon, 3.52,FL+0.035,-1.9, 6,{noInk:true}));
+const danceMat=cyl(0.62,0.62,0.025, 0xead9b4, 2.6,FL+0.013,-1.55, 28,{inkOp:0.5});
+const gDance=group(sideboard,plinth,platter,vinylLbl,toneArm,sleeve,crate,dshoes,danceMat);
+// floating music notes (visible only while dancing)
+const noteTexture=noteGlyphTex();
+const notes=[];
+for(let i=0;i<4;i++){ const n=texPlane(0.22,0.22, noteTexture, {alpha:true, noShadow:true, double:true});
+  n.position.set(2.4+0.18*i, FL+0.95, -2.62+0.1*(i%2)); n.material.opacity=0; n.visible=false;
+  n.userData.phase=i*0.62; scene.add(n); notes.push(n); }
+
+// --- photos: frames on the back wall + the album on the coffee table
+const photoSet=[['Bern',205],['Trails',120],['Friends',30],["Xi'an",28],['Tea',45],['A view',190]];
+const frameCols=[COL.gilt, COL.woodD, COL.qing, COL.maroon, COL.woodD];
+const photoWall=group();
+[[0.7,FL+1.55,0.46,0.36,0],[1.5,FL+1.35,0.4,0.5,1],[2.3,FL+1.6,0.52,0.4,2],[3.05,FL+1.32,0.38,0.3,3],[1.15,FL+0.92,0.34,0.27,4]]
+ .forEach((f,i)=>{ const [fx,fy,fw,fh,ci]=f;
+   photoWall.add(box(fw+0.07,fh+0.07,0.045, frameCols[ci], fx,fy,bw.z+0.09,{noJit:true,inkOp:0.6}));
+   const p=texPlane(fw,fh, photoTex(photoSet[i][0],photoSet[i][1], 256, Math.round(256*fh/fw)));
+   p.position.set(fx,fy,bw.z+0.118); photoWall.add(p);
+   const tape=box(0.1,0.045,0.012, 0xead9b4, fx,fy+fh/2+0.045,bw.z+0.12,{noJit:true,noInk:true}); tape.rotation.z=(i%2?-1:1)*0.18; photoWall.add(tape); });
+// the album (closed on the table; opens diegetically)
+const ALB={ x:0.55, y:0, z:1.05, W:0.46, L:0.64 };   // y set after table builds
+const albumG=new THREE.Group();
+const albCoverHinge=new THREE.Group();
+const albPagesL=texPlane(ALB.W-0.04, ALB.L-0.06, noteTex(['bits of life','off-screen —','(click the corner','to flip)']));
+const albPagesR=texPlane(ALB.W-0.04, ALB.L-0.06, photoTex(photoSet[0][0],photoSet[0][1],256,340));
+const albFlipper=new THREE.Group();
+const albFlipA=texPlane(ALB.W-0.04, ALB.L-0.06, photoTex(photoSet[0][0],photoSet[0][1],256,340));
+const albFlipB=texPlane(ALB.W-0.04, ALB.L-0.06, photoTex(photoSet[1][0],photoSet[1][1],256,340));
+const albArrowR=texPlane(0.12,0.12, noteTex(['>'],128,128), {noShadow:true});
+const albArrowL=texPlane(0.12,0.12, noteTex(['<'],128,128), {noShadow:true});
+
+// --- cozy center: rug, sofa, coffee table, tea, lamp, plant, cat
+const rug=group(
+  cyl(1.7,1.7,0.022, 0xdcc59b, 0.3,FL+0.011,0.75, 36,{noInk:true}),
+  cyl(1.42,1.42,0.026, 0xe9d9b6, 0.3,FL+0.013,0.75, 36,{noInk:true}),
+  (()=>{ const r=new THREE.Mesh(new THREE.RingGeometry(1.52,1.56,40), new THREE.MeshBasicMaterial({ color:INK, transparent:true, opacity:0.35, side:THREE.DoubleSide })); r.rotation.x=-Math.PI/2; r.position.set(0.3,FL+0.028,0.75); return r; })());
+const sofa=group(
+  box(1.5,0.3,0.62, 0xc99a62, -2.0,FL+0.25,0.7,{inkOp:0.6}),
+  box(1.5,0.5,0.16, 0xc99a62, -2.0,FL+0.52,0.32,{noJit:true,inkOp:0.5}),
+  box(0.18,0.42,0.62, 0xb9874f, -2.78,FL+0.4,0.7,{noJit:true}),
+  box(0.18,0.42,0.62, 0xb9874f, -1.22,FL+0.4,0.7,{noJit:true}),
+  box(0.62,0.14,0.5, COL.qing, -2.34,FL+0.46,0.68,{noJit:true,inkOp:0.4}),
+  box(0.62,0.14,0.5, COL.gilt, -1.66,FL+0.46,0.68,{noJit:true,inkOp:0.4}),
+  (()=>{ const p=box(0.34,0.3,0.12, COL.cinnabar, -2.3,FL+0.66,0.4,{noJit:true,inkOp:0.4}); p.rotation.z=0.1; return p; })(),
+  box(0.07,0.1,0.07, COL.woodD, -2.7,FL+0.05,0.94,{noJit:true,noInk:true}),
+  box(0.07,0.1,0.07, COL.woodD, -1.3,FL+0.05,0.94,{noJit:true,noInk:true}),
+  box(0.07,0.1,0.07, COL.woodD, -2.7,FL+0.05,0.46,{noJit:true,noInk:true}),
+  box(0.07,0.1,0.07, COL.woodD, -1.3,FL+0.05,0.46,{noJit:true,noInk:true}));
+sofa.rotation.y=0.06;
+const table=group(
+  cyl(0.55,0.55,0.05, COL.wood, 0.55,FL+0.36,1.05, 22,{inkOp:0.55}),
+  cyl(0.04,0.05,0.34, COL.woodD, 0.32,FL+0.17,0.85, 8,{noInk:true}),
+  cyl(0.04,0.05,0.34, COL.woodD, 0.78,FL+0.17,0.85, 8,{noInk:true}),
+  cyl(0.04,0.05,0.34, COL.woodD, 0.32,FL+0.17,1.25, 8,{noInk:true}),
+  cyl(0.04,0.05,0.34, COL.woodD, 0.78,FL+0.17,1.25, 8,{noInk:true}));
+ALB.y=FL+0.385;
+const teaSet=group(
+  cyl(0.085,0.1,0.13, COL.qing, 0.17,FL+0.45,0.72, 14,{inkOp:0.5}),
+  (()=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(0.035,10,8), pmat(COL.gilt)); s.position.set(0.17,FL+0.53,0.72); s.castShadow=true; return s; })(),
+  (()=>{ const sp=cyl(0.018,0.026,0.09, COL.qing, 0.25,FL+0.48,0.72, 8,{noInk:true}); sp.rotation.z=-0.85; return sp; })(),
+  (()=>{ const hd=new THREE.Mesh(new THREE.TorusGeometry(0.035,0.009,8,14,Math.PI), pmat(COL.qing)); hd.position.set(0.09,FL+0.47,0.72); hd.rotation.z=Math.PI/2; hd.castShadow=true; return hd; })(),
+  cyl(0.032,0.038,0.045, COL.cream, 0.34,FL+0.41,0.64, 10,{noInk:true}),
+  cyl(0.05,0.05,0.008, COL.cream, 0.34,FL+0.39,0.64, 12,{noInk:true}));
+const lamp=group(
+  cyl(0.14,0.18,0.04, COL.woodD, -3.3,FL+0.02,1.95, 12,{noInk:true}),
+  cyl(0.022,0.022,1.15, COL.ink, -3.3,FL+0.62,1.95, 8,{noInk:true}),
+  (()=>{ const sh=cone(0.21,0.3, COL.cinnabar, -3.3,FL+1.32,1.95, 14,{noJit:true,inkOp:0.4}); sh.rotation.x=Math.PI; return sh; })(),
+  (()=>{ const gl=new THREE.Mesh(new THREE.SphereGeometry(0.045,10,8), new THREE.MeshBasicMaterial({color:0xffe9b8})); gl.position.set(-3.3,FL+1.22,1.95); return gl; })());
+const plant=group(
+  cyl(0.11,0.14,0.2, COL.maroon, 3.3,FL+0.1,1.7, 10,{inkOp:0.5}),
+  cyl(0.12,0.12,0.02, COL.woodD, 3.3,FL+0.21,1.7, 10,{noInk:true}));
+for(let i=0;i<6;i++){ const lf=box(0.045,0.44,0.14, COL.leaf, 3.3,FL+0.42,1.7,{noInk:true});
+  lf.rotation.z=(Math.random()-0.5)*1.0; lf.rotation.x=(Math.random()-0.5)*0.8; plant.add(lf); }
+// ---------- 狸花猫 — a Li Hua tabby that lives here (procedural + animated) ----------
+// mackerel-tabby fur via canvas: warm grey-brown base, darker wavy rings, dorsal line
+function catFurTex(kind){ const [c,x]=ctxCanvas(256,256);
+  x.fillStyle='#a18b6c'; x.fillRect(0,0,256,256);
+  x.strokeStyle='rgba(86,68,46,0.85)'; x.lineCap='round';
+  if(kind==='head'){
+    x.lineWidth=8;                                   // the tabby "M" + crown stripes (top of sphere = v0)
+    for(let i=0;i<5;i++){ const sx=68+i*30;
+      x.beginPath(); x.moveTo(sx,6); x.lineTo(sx+((i%2)?10:-10),70); x.stroke(); }
+    x.lineWidth=6;
+    x.beginPath(); x.moveTo(20,110); x.lineTo(70,118); x.stroke();
+    x.beginPath(); x.moveTo(236,110); x.lineTo(186,118); x.stroke();
+  } else {
+    x.lineWidth=9;                                   // body rings (v runs along the body axis)
+    for(let y=20; y<256; y+=28){ x.beginPath();
+      for(let px=0; px<=256; px+=16){ const off=Math.sin(px*0.05+y*0.7)*6;
+        if(px===0) x.moveTo(px,y+off); else x.lineTo(px,y+off); }
+      x.stroke(); }
+    x.fillStyle='rgba(86,68,46,0.5)'; x.fillRect(0,0,256,16);   // dorsal darkening
+  }
+  return asTex(c); }
+function catMat(tex){ return new THREE.MeshToonMaterial({ color:0xffffff, gradientMap:gradMap, map:tex }); }
+function catOutline(mesh, s=1.07){ const o=new THREE.Mesh(mesh.geometry,
+  new THREE.MeshBasicMaterial({ color:INK, side:THREE.BackSide }));
+  o.scale.setScalar(s); mesh.add(o); return mesh; }
+const cat=new THREE.Group();
+const catParts=(()=>{
+  const FURD=0x56442e, WHITE=0xf6efe2, bodyTex=catFurTex('body'), headTex=catFurTex('head');
+  const bodyG=new THREE.Group(); bodyG.position.y=0.21;
+  // body — lathed cat silhouette (neck -> shoulders -> belly -> haunches -> tapered rear),
+  // profile spun around the body axis, then laid along +x. Organic, not a pill.
+  const prof=[[0.004,0.235],[0.052,0.225],[0.082,0.2],[0.1,0.155],[0.108,0.1],[0.112,0.03],
+              [0.118,-0.05],[0.125,-0.13],[0.118,-0.19],[0.095,-0.24],[0.05,-0.27],[0.004,-0.28]]
+    .map(p=>new THREE.Vector2(p[0],p[1]));
+  const body=new THREE.Mesh(new THREE.LatheGeometry(prof.reverse(), 18), catMat(bodyTex));
+  body.rotation.z=-Math.PI/2; body.castShadow=true; catOutline(body, 1.05);
+  // haunches (rear thighs) + shoulder blades: the lumps that make it read as a cat
+  const mkLump=(x,y,z,r,sx,sy,sz)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(r,12,10), catMat(bodyTex));
+    m.position.set(x,y,z); m.scale.set(sx,sy,sz); m.castShadow=true; return m; };
+  const haunchL=mkLump(-0.17,-0.035,0.075, 0.085, 1.05,1.0,0.7);
+  const haunchR=mkLump(-0.17,-0.035,-0.075, 0.085, 1.05,1.0,0.7);
+  const shoulder=mkLump(0.14,0.045,0, 0.095, 0.9,0.85,1.0);
+  // neck scruff bridging into the head
+  const scruff=mkLump(0.225,0.065,0, 0.075, 0.95,0.9,0.9);
+  const belly=new THREE.Mesh(new THREE.CapsuleGeometry(0.062,0.13,5,10), pmat(WHITE));
+  belly.rotation.z=Math.PI/2; belly.position.set(-0.02,-0.075,0);
+  const chest=new THREE.Mesh(new THREE.SphereGeometry(0.07,12,10), pmat(WHITE));   // Li Hua white bib
+  chest.position.set(0.21,-0.03,0); chest.scale.set(0.7,1,0.9);
+  bodyG.add(body, haunchL, haunchR, shoulder, scruff, belly, chest);
+  // head on a neck pivot (child of body so sitting lifts it naturally)
+  const headG=new THREE.Group(); headG.position.set(0.26,0.11,0);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.105,16,14), catMat(headTex)); head.castShadow=true; catOutline(head);
+  // cheeks soften the sphere into a cat face
+  const cheekL=mkLump(0.055,-0.035,0.052, 0.045, 1,0.8,1); cheekL.material=pmat(WHITE);
+  const cheekR=mkLump(0.055,-0.035,-0.052, 0.045, 1,0.8,1); cheekR.material=pmat(WHITE);
+  const muzzle=new THREE.Mesh(new THREE.SphereGeometry(0.044,12,10), pmat(WHITE));
+  muzzle.position.set(0.078,-0.042,0); muzzle.scale.set(1,0.72,1.18);
+  const nose=new THREE.Mesh(new THREE.ConeGeometry(0.013,0.018,3), pmat(0xc98a7a));
+  nose.position.set(0.129,-0.022,0); nose.rotation.z=-Math.PI/2;
+  // eyes — Dragon Li reference (large almond, golden-green, outer corner higher);
+  // cuteness: big ROUND pupil filling the iris + two glints; the group blinks (scale.y).
+  const eyes=[];
+  const mkEye=z=>{ const g=new THREE.Group(); g.position.set(0.0915,0.026,z);
+    const rim=new THREE.Mesh(new THREE.SphereGeometry(0.0245,12,10), pmat(0x2a2118));
+    rim.scale.set(0.4,1.0,0.92);
+    const iris=new THREE.Mesh(new THREE.SphereGeometry(0.0225,12,10), pmat(0xd4b04f));
+    iris.position.x=0.0032; iris.scale.set(0.4,0.9,0.84);
+    const pupil=new THREE.Mesh(new THREE.SphereGeometry(0.019,12,10), pmat(0x171008));
+    pupil.position.x=0.0075; pupil.scale.set(0.33,0.78,0.74);
+    const glintA=new THREE.Mesh(new THREE.SphereGeometry(0.0065,8,8), pmat(0xfdfaf0));
+    glintA.position.set(0.014,0.009,0.006);
+    const glintB=new THREE.Mesh(new THREE.SphereGeometry(0.0032,6,6), pmat(0xfdfaf0));
+    glintB.position.set(0.013,-0.006,-0.005);
+    g.add(rim,iris,pupil,glintA,glintB);
+    g.rotation.y=(z>0?-1:1)*0.16;
+    g.rotation.x=(z>0? -0.14 : 0.14);             // outer corners set higher (almond tilt)
+    eyes.push(g); return g; };
+  const mkEar=z=>{ const ear=new THREE.Mesh(new THREE.ConeGeometry(0.036,0.075,4), catMat(headTex));
+    ear.position.set(-0.012,0.096,z); ear.rotation.x=z>0?0.3:-0.3; ear.castShadow=true;
+    const inner=new THREE.Mesh(new THREE.ConeGeometry(0.018,0.04,4), pmat(0xc98a7a));
+    inner.position.set(0.006,-0.008,0); ear.add(inner); return ear; };
+  const mkWhisk=(z,a)=>{ const w=new THREE.Mesh(new THREE.CylinderGeometry(0.0018,0.0018,0.1,4),
+    new THREE.MeshBasicMaterial({ color:0xfbf6e8, transparent:true, opacity:0.8 }));
+    w.position.set(0.09,-0.035,z); w.rotation.x=Math.PI/2; w.rotation.z=a; return w; };
+  headG.add(head, cheekL, cheekR, muzzle, nose, mkEye(0.047), mkEye(-0.047), mkEar(0.06), mkEar(-0.06),
+    mkWhisk(0.06,0.25), mkWhisk(0.065,-0.05), mkWhisk(-0.06,0.25), mkWhisk(-0.065,-0.05));
+  bodyG.add(headG);
+  // collar 项圈 + gilt tag「旺财」— the ring sits ⊥ to the neck axis and the tag
+  // is chained to the ring's lowest point (link wraps the collar tube).
+  const collarG=new THREE.Group(); collarG.position.set(0.235,0.062,0);
+  collarG.rotation.z=-1.074;                       // local +y = neck axis (toward the head)
+  const collar=new THREE.Mesh(new THREE.TorusGeometry(0.078,0.014,10,24), pmat(COL.cinnabar));
+  collar.rotation.x=Math.PI/2; collar.castShadow=true; collarG.add(collar);
+  bodyG.add(collarG);
+  // hang point = collarG local +x (which is world front-down of the ring)
+  const tagLink=new THREE.Mesh(new THREE.TorusGeometry(0.019,0.0038,6,14), pmat(COL.gilt));
+  tagLink.position.set(0.274,-0.010,0); tagLink.rotation.y=Math.PI/2;  // wraps the 0.014 tube
+  function tagTex(){ const [c,x]=ctxCanvas(128,128);
+    x.fillStyle='#c79a3b'; x.beginPath(); x.arc(64,64,60,0,7); x.fill();
+    x.strokeStyle='#7c3a2e'; x.lineWidth=7; x.beginPath(); x.arc(64,64,56,0,7); x.stroke();
+    x.fillStyle='#5a2a20'; x.font='bold 46px "LXGW WenKai","PingFang SC","Microsoft YaHei",sans-serif';
+    x.textAlign='center'; x.textBaseline='middle'; x.fillText('旺财', 64, 68);
+    return asTex(c); }
+  const tag=new THREE.Mesh(new THREE.CircleGeometry(0.034,20),
+    new THREE.MeshToonMaterial({ gradientMap:gradMap, map:tagTex(), side:THREE.DoubleSide }));
+  tag.position.set(0.278,-0.057,0); tag.rotation.y=Math.PI/2; tag.castShadow=true;  // top edge overlaps the link
+  bodyG.add(tagLink, tag);
+  // legs (pivot at hip/shoulder, white paws)
+  function mkLeg(x,z){ const p=new THREE.Group(); p.position.set(x,0.2,z);
+    const up=new THREE.Mesh(new THREE.CylinderGeometry(0.027,0.023,0.17,8), catMat(bodyTex));
+    up.position.y=-0.085; up.castShadow=true;
+    const paw=new THREE.Mesh(new THREE.SphereGeometry(0.03,8,8), pmat(WHITE));
+    paw.position.y=-0.175; paw.scale.set(1.15,0.6,1.3);
+    p.add(up,paw); return p; }
+  const legFL=mkLeg(0.165,0.07), legFR=mkLeg(0.165,-0.07), legBL=mkLeg(-0.155,0.07), legBR=mkLeg(-0.155,-0.07);
+  // ringed tail, rooted INSIDE the rear of the body + joint ball hiding the seam
+  function tailSeg(parent, r1,r2,len,colorTex){ const p=new THREE.Group();
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(r2,r1,len,8),
+      colorTex==='d'? pmat(FURD) : catMat(bodyTex));
+    m.position.y=len/2; m.castShadow=true; p.add(m); parent.add(p); return p; }
+  const tail0=new THREE.Group(); tail0.position.set(-0.23,0.045,0);
+  const joint=new THREE.Mesh(new THREE.SphereGeometry(0.026,8,8), catMat(bodyTex)); tail0.add(joint);
+  const t0=tailSeg(tail0, 0.024,0.021,0.13,'b');
+  const t1=tailSeg(t0, 0.02,0.017,0.11,'d'); t1.position.y=0.13;
+  const t2=tailSeg(t1, 0.016,0.013,0.1,'b'); t2.position.y=0.11;
+  const tip=new THREE.Mesh(new THREE.SphereGeometry(0.018,8,8), pmat(FURD)); tip.position.y=0.105; t2.add(tip);
+  bodyG.add(tail0);
+  cat.add(bodyG, legFL, legFR, legBL, legBR);
+  return { bodyG, headG, eyes, legs:{fl:legFL, fr:legFR, bl:legBL, br:legBR}, tail:[tail0,t0,t1,t2] };
+})();
+// --- behaviour: waypoint graph (collision-free by construction) + pose state machine
+const CATWAY=[ {x:1.7,z:1.85}, {x:-1.3,z:2.05}, {x:2.75,z:-0.7}, {x:-2.0,z:-1.55},
+               {x:-0.6,z:-1.05}, {x:2.8,z:0.9}, {x:1.9,z:0.2} ];
+const CATADJ=[[1,5,6,2],[0],[0,6,4],[4],[2,3],[0],[0,2]];
+const CATPOSE={   // y(root lift), pitch(nose up+), headP(down+), legs fl/fr/bl/br, tail[base,s1,s2]
+  stand:  { y:0,     pitch:0,    headP:0,    fl:0,     fr:0,     bl:0,    br:0,    tail:[2.4,-0.5,-0.45] },
+  sit:    { y:-0.05, pitch:0.45, headP:0.05, fl:-0.12, fr:-0.12, bl:1.2,  br:1.2,  tail:[2.9,-1.0,-0.8] },
+  sleep:  { y:-0.12, pitch:0.04, headP:0.62, fl:1.25,  fr:1.3,   bl:1.3,  br:1.25, tail:[2.6,-0.55,-0.35] },
+  stretch:{ y:-0.02, pitch:-0.4, headP:-0.18,fl:-1.3,  fr:-1.3,  bl:0.18, br:0.18, tail:[1.5,-0.15,-0.1] },
+  groom:  { y:-0.05, pitch:0.45, headP:0.6,  fl:-0.12, fr:-0.95, bl:1.2,  br:1.2,  tail:[2.9,-1.0,-0.8] },
+  // petting reactions (entered only via pet(), never via catPick)
+  happy:  { y:-0.05, pitch:0.5,  headP:-0.3, fl:-0.12, fr:-0.12, bl:1.2,  br:1.2,  tail:[2.5,-0.8,-0.85] },
+  flop:   { y:-0.125,pitch:0.05, headP:0.3,  fl:1.2,   fr:1.25,  bl:1.25, br:1.2,  tail:[2.5,-0.5,-0.3] },
+  annoyed:{ y:0,     pitch:0.1,  headP:-0.05,fl:0,     fr:0,     bl:0,    br:0,    tail:[2.2,-0.3,-0.2] }
+};
+const REACTS=['happy','flop','annoyed'];
+const catState={ node:0, st:'sit', t:0, dur:3.5, tgt:null, yaw:0, gait:0, headYawT:0 };
+cat.position.set(CATWAY[0].x, FL, CATWAY[0].z);
+cat.rotation.y=catState.yaw=2.4;
+const catCur=Object.assign({headY:0}, CATPOSE.sit);
+if(reduce){ catState.st='sleep'; Object.assign(catCur, CATPOSE.sleep); }
+function catPick(){ const r=Math.random(), s=catState.st;
+  if(s==='sleep') return r<0.8?'stretch':'sit';
+  if(s==='stretch') return r<0.6?'walk':'sit';
+  if(s==='groom') return r<0.5?'sit':'walk';
+  /* sit */ return r<0.42?'walk': r<0.62?'groom': r<0.8?'sleep':'sit'; }
+// the coffee table: walking through its zone is allowed, but slinking low (趴着走) —
+// the table top's underside is at FL+0.335, lower than a standing cat's back.
+const TABLE_ZONE={ x:0.55, z:1.05, r:0.8 };
+function tableDist(x,z){ return Math.hypot(x-TABLE_ZONE.x, z-TABLE_ZONE.z); }
+function catSet(st){ catState.st=st; catState.t=0;
+  catState.dur= st==='sleep'? 7+Math.random()*6 : st==='stretch'? 1.7 : st==='groom'? 3.5+Math.random()*2
+    : st==='happy'? 1.8 : st==='flop'? 2.1 : st==='annoyed'? 1.1 : 3+Math.random()*3.5;
+  if(st==='walk'){
+    // if a reaction interrupted a walk we may be far off the graph: route to the
+    // NEAREST node first (the old stale-node shortcut could cut across furniture)
+    const here=CATWAY[catState.node];
+    if(Math.hypot(cat.position.x-here.x, cat.position.z-here.z)>0.35){
+      let best=0, bd=1e9;
+      CATWAY.forEach((w,i)=>{ const d=Math.hypot(cat.position.x-w.x, cat.position.z-w.z); if(d<bd){bd=d;best=i;} });
+      catState.tgt=best;
+    } else {
+      const opts=CATADJ[catState.node]; catState.tgt=opts[Math.floor(Math.random()*opts.length)];
+    }
+  }
+}
+function catStep(dt){
+  if(reduce){ // asleep, breathing only
+    catParts.bodyG.scale.y=1+Math.sin(clock.elapsedTime*1.8)*0.02; return; }
+  const S=catState, P=catParts;
+  // state timing / transitions (annoyed storms off; other reactions settle into sit)
+  if(S.st!=='walk'){ S.t+=dt;
+    if(S.t>=S.dur) catSet(S.st==='annoyed' ? 'walk' : REACTS.includes(S.st) ? 'sit' : catPick()); }
+  let target=CATPOSE[S.st==='walk'?'stand':S.st];
+  // walking: steer + advance + gait
+  if(S.st==='walk'){ const w=CATWAY[S.tgt];
+    const dx=w.x-cat.position.x, dz=w.z-cat.position.z, dist=Math.hypot(dx,dz);
+    const want=Math.atan2(-dz,dx);
+    let d=want-S.yaw; while(d>Math.PI)d-=2*Math.PI; while(d<-Math.PI)d+=2*Math.PI;
+    const turn=Math.sign(d)*Math.min(Math.abs(d), 2.6*dt); S.yaw+=turn; cat.rotation.y=S.yaw;
+    if(Math.abs(d)<0.5 && dist>0.05){ const sp=0.34*(1-0.35*(catCur.crouch??0));
+      cat.position.x+=Math.cos(S.yaw)*sp*dt; cat.position.z+=-Math.sin(S.yaw)*sp*dt; }
+    S.gait+=dt*7;
+    if(dist<0.08){ S.node=S.tgt; catSet(Math.random()<0.55?'sit':'walk'); }
+  } else { S.gait*=Math.max(0,1-dt*6); }
+  // blend current pose -> target
+  const k=Math.min(1, dt*4.5);
+  for(const key of ['y','pitch','headP','fl','fr','bl','br']) catCur[key]+= (target[key]-catCur[key])*k;
+  for(let i=0;i<3;i++) catCur.tail[i]+= (target.tail[i]-catCur.tail[i])*k;
+  // sit = look around; groom = nodding; annoyed = head shake; walk = head steady
+  S.headYawT+=dt;
+  const headY= S.st==='sit'? Math.sin(S.headYawT*0.7)*0.55 : S.st==='groom'? 0.45
+    : S.st==='annoyed'? Math.sin(S.t*20)*Math.max(0,1-S.t/0.7)*0.3 : 0;
+  catCur.headY+=(headY-catCur.headY)*(S.st==='annoyed'?Math.min(1,dt*14):k);
+  // crouch under the coffee table (趴着走): low body, tucked legs, head down
+  const crouchT = (S.st==='walk' && tableDist(cat.position.x,cat.position.z)<TABLE_ZONE.r) ? 1 : 0;
+  catCur.crouch=(catCur.crouch??0) + (crouchT-(catCur.crouch??0))*Math.min(1,dt*6);
+  const cr=catCur.crouch;
+  // apply
+  const g=Math.sin(S.gait), swing=Math.min(1, S.gait>0?1:0)*0.5*(1-0.45*cr);
+  cat.position.y=FL+catCur.y - 0.105*cr;
+  P.bodyG.rotation.z=catCur.pitch;
+  // flop = roll onto the side and back; happy = lean into the hand
+  P.bodyG.rotation.x = S.st==='flop' ? Math.sin(Math.min(S.t/S.dur,1)*Math.PI)*0.95
+    : P.bodyG.rotation.x*Math.max(0,1-dt*9);
+  P.headG.rotation.z=-(catCur.headP + 0.38*cr) + (S.st==='groom'? Math.sin(S.headYawT*6)*0.07 : 0)
+    + (S.st==='happy'? Math.sin(S.t*7)*0.05 : 0);
+  P.headG.rotation.y=catCur.headY;
+  const fold=0.85*cr;
+  P.legs.fl.rotation.z=catCur.fl + fold + (S.st==='walk'? g*swing : 0);
+  P.legs.br.rotation.z=catCur.br + fold + (S.st==='walk'? g*swing : 0);
+  P.legs.fr.rotation.z=catCur.fr + fold + (S.st==='walk'? -g*swing : 0);
+  P.legs.bl.rotation.z=catCur.bl + fold + (S.st==='walk'? -g*swing : 0);
+  if(S.st==='walk') cat.position.y+=Math.abs(Math.sin(S.gait*0.5))*0.012*(1-0.7*cr);
+  // tail: pose curl + lively sway (stronger while sitting; lashing when annoyed)
+  const sway=Math.sin(clock.elapsedTime*(S.st==='annoyed'?9:S.st==='sit'?3.2:1.7))
+    *(S.st==='annoyed'?0.5:S.st==='sit'?0.22:0.1);
+  P.tail[0].rotation.z=catCur.tail[0]; P.tail[0].rotation.x=sway*0.6;
+  P.tail[1].rotation.z=catCur.tail[1]; P.tail[1].rotation.x=sway;
+  P.tail[2].rotation.z=catCur.tail[2]; P.tail[2].rotation.x=sway*1.4;
+  // blink (and eyes shut while sleeping)
+  S.blinkT=(S.blinkT??1.5)-dt;
+  if(S.blinkT<=0){ S.blink=0.13; S.blinkT=2.2+Math.random()*4.5; }
+  if(S.blink>0) S.blink-=dt;
+  const eyeS=(S.st==='sleep'||S.st==='happy'||S.blink>0)? 0.1 : 1;   // happy = blissful squint
+  for(const e of P.eyes) e.scale.y += (eyeS-e.scale.y)*Math.min(1,dt*16);
+  // sleep breathing
+  P.bodyG.scale.y= S.st==='sleep'? 1+Math.sin(clock.elapsedTime*1.8)*0.025 : 1;
+  // floating hearts (spawned by petting)
+  for(const h of hearts){ if(!h.visible) continue; h.userData.t+=dt;
+    if(h.userData.t<0) continue;
+    h.position.y+=dt*0.42; h.material.opacity=Math.max(0,1-h.userData.t/1.15);
+    h.lookAt(camera.position);
+    if(h.userData.t>1.15) h.visible=false; }
+}
+
+// assemble the home
+const home=group(floorMesh, backWall, leftWall, trims, winA, gHike, gTravel, gDance, photoWall, rug, sofa, table, teaSet, lamp, plant, cat);
+scene.add(home);
+
+// --- album assembly (after table: sits on it) ---
+albumG.position.set(ALB.x, ALB.y, ALB.z);
+const albBack=box(ALB.W,0.018,ALB.L, COL.maroon, ALB.W/2,0,0, {noJit:true,inkOp:0.6});  // back cover, spine at x=0
+const albSheets=box(ALB.W-0.05,0.03,ALB.L-0.06, COL.paperW, ALB.W/2,0.024,0, {noJit:true,noInk:true});
+albCoverHinge.position.set(0,0.045,0);
+const albCover=box(ALB.W,0.02,ALB.L, COL.maroon, ALB.W/2,0,0, {noJit:true,inkOp:0.6});
+const albTitle=texPlane(ALB.W*0.72,ALB.L*0.4, noteTex(['photos &','postcards'],256,140), {noShadow:true});
+albTitle.rotation.x=-Math.PI/2; albTitle.position.set(ALB.W/2,0.012,0);
+albCoverHinge.add(albCover); albCoverHinge.add(albTitle);
+albumG.add(albBack, albSheets, albCoverHinge);
+albPagesL.rotation.x=-Math.PI/2; albPagesL.position.set(-ALB.W/2+0.02,0.042,0); albPagesL.visible=false;
+albPagesR.rotation.x=-Math.PI/2; albPagesR.position.set(ALB.W/2,0.042,0); albPagesR.visible=false;
+albumG.add(albPagesL, albPagesR);
+albFlipA.rotation.x=-Math.PI/2; albFlipA.position.set(ALB.W/2-0.02,0.001,0);
+albFlipB.rotation.x=Math.PI/2;  albFlipB.position.set(ALB.W/2-0.02,-0.001,0);
+albFlipper.add(albFlipA, albFlipB); albFlipper.position.set(0,0.048,0); albFlipper.visible=false;
+albumG.add(albFlipper);
+albArrowR.rotation.x=-Math.PI/2; albArrowR.position.set(ALB.W-0.05,0.05,ALB.L/2+0.05); albArrowR.visible=false;
+albArrowL.rotation.x=-Math.PI/2; albArrowL.position.set(-ALB.W+0.05,0.05,ALB.L/2+0.05); albArrowL.visible=false;
+albumG.add(albArrowR, albArrowL);
+albumG.rotation.y=-0.22;
+home.add(albumG);
+const gPhotos=group(); home.add(gPhotos);   // raycast proxy: photo wall + album
+gPhotos.add(photoWall); gPhotos.add(albumG);
+
+// ---------- hotspot registry ----------
+const hotspots=[];
+function register(g, opts){ hotspots.push(Object.assign({group:g}, opts)); return g; }
+register(gTravel, { key:'travel', label:'Travel 旅行', icon:'fa-map',
+  view:{ pos:new THREE.Vector3(-1.7,1.7,0.7), tgt:new THREE.Vector3(-3.85,1.5,0.55) },
+  story:"Three cities, one suitcase: grew up in Xi'an, PhD in Rouen, home now in Bern. The suitcase never quite unpacks." });
+register(gHike, { key:'hiking', label:'Hiking 徒步', icon:'fa-person-hiking',
+  view:{ pos:new THREE.Vector3(-0.2,1.3,-0.85), tgt:new THREE.Vector3(-5.4,0.65,-1.9) },
+  story:'The door opens to the trails. Weekends, uphill: the best debugging happens above the treeline.' });
+register(gDance, { key:'dancing', label:'Dancing 跳舞', icon:'fa-record-vinyl',
+  view:{ pos:new THREE.Vector3(2.45,1.75,-0.7), tgt:new THREE.Vector3(2.6,0.85,-2.62) },
+  story:'Music on, everything off. Latin and swing, mostly; the record skips on the good part.' });
+register(gPhotos, { key:'photos', label:'Photos 相册', icon:'fa-images',
+  view:{ pos:new THREE.Vector3(0.66,1.8,1.95), tgt:new THREE.Vector3(0.52,0.42,1.02) },
+  story:'A little album of postcards and snapshots: mountains, friends, a good cup of tea. Flip through it.' });
+
+// labels
+hotspots.forEach(h=>{ const el=document.createElement('div'); el.className='hot-label'; el.textContent=h.label;
+  const obj=new CSS2DObject(el); const bb=new THREE.Box3().setFromObject(h.group); const c=bb.getCenter(new THREE.Vector3());
+  obj.position.set(c.x, bb.max.y+0.35, c.z); h.group.add(obj); h.labelEl=el; });
+
+// ---------- tween + action utilities ----------
+const acts=[];
+function act(o){ acts.push(Object.assign({t:0, dur:0.5, ease:e=>1-Math.pow(1-e,3)}, o)); }
+function actsStep(dt){ for(let i=acts.length-1;i>=0;i--){ const a=acts[i]; a.t+=dt;
+  const u=Math.min(a.t/(reduce?0.001:a.dur),1); a.step(a.ease(u));
+  if(u>=1){ if(a.onDone) a.onDone(); acts.splice(i,1); } } }
+let tween=null;
+function moveCam(pos,tgt,dur=1.0){ idle=false;
+  tween={ fromPos:camera.position.clone(), toPos:pos.clone(), fromTgt:controls.target.clone(), toTgt:tgt.clone(), t:0, dur:reduce?0.001:dur }; }
+
+// ---------- diegetic interactions ----------
+let mode=null;                       // null | travel | hiking | dancing | photos
+const backBtn=document.getElementById('back');
+const storyEl=document.getElementById('story');
+
+// album state
+let albOpen=false, albSpread=0;
+const SPREADS=[ [null,0],[1,2],[3,4],[5,null] ];   // photoSet indices per [left,right]; null=note page
+const noteL=noteTex(['bits of life','off-screen —']);
+const noteEnd=noteTex(['more soon…','(real photos','drop in here)']);
+function spreadTexture(idx, side){ const v=SPREADS[idx]?.[side==='L'?0:1];
+  if(v===null||v===undefined) return side==='L'? noteL : noteEnd;
+  return photoTex(photoSet[v][0], photoSet[v][1], 256, 340); }
+function setSpread(i){ albSpread=i;
+  albPagesL.material.map=spreadTexture(i,'L'); albPagesL.material.needsUpdate=true;
+  albPagesR.material.map=spreadTexture(i,'R'); albPagesR.material.needsUpdate=true;
+  albArrowR.visible=albOpen && i<SPREADS.length-1; albArrowL.visible=albOpen && i>0; }
+function openAlbum(){ if(albOpen) return; albOpen=true;
+  act({ dur:0.7, step:u=>{ albCoverHinge.rotation.z=u*-Math.PI*0.78; },   // propped open, like a browsed album
+    onDone:()=>{ albPagesL.visible=true; albPagesR.visible=true; setSpread(0); } }); }
+function closeAlbum(){ if(!albOpen) return; albOpen=false;
+  albPagesL.visible=false; albPagesR.visible=false; albArrowR.visible=false; albArrowL.visible=false; albFlipper.visible=false;
+  act({ dur:0.55, step:u=>{ albCoverHinge.rotation.z=(1-u)*-Math.PI*0.78; } }); }
+let flipping=false;
+function flip(dir){ if(flipping||!albOpen) return;
+  const next=albSpread+dir; if(next<0||next>=SPREADS.length) return; flipping=true;
+  if(dir>0){ albFlipA.material.map=spreadTexture(albSpread,'R'); albFlipB.material.map=spreadTexture(next,'L'); }
+  else     { albFlipA.material.map=spreadTexture(next,'R');      albFlipB.material.map=spreadTexture(albSpread,'L'); }
+  albFlipA.material.needsUpdate=true; albFlipB.material.needsUpdate=true;
+  albFlipper.visible=true; albFlipper.rotation.z = dir>0 ? 0 : -Math.PI;
+  if(dir>0){ albPagesR.material.map=spreadTexture(next,'R'); albPagesR.material.needsUpdate=true; }
+  else     { albPagesL.material.map=spreadTexture(next,'L'); albPagesL.material.needsUpdate=true; }
+  act({ dur:0.6, step:u=>{ albFlipper.rotation.z = (dir>0? u : (1-u)) * -Math.PI; },
+    onDone:()=>{ albFlipper.visible=false; flipping=false; setSpread(next); } });
+}
+// door
+function setDoor(open){ act({ dur:0.8, step:u=>{ const a0=doorHinge.rotation.y, a1=open?1.85:0.42;
+  doorHinge.rotation.y=a0+(a1-a0)*u; } }); }
+// vinyl
+function setVinyl(on){ act({ dur:0.5, step:u=>{ const a0=toneArm.rotation.y, a1=on?-0.12:-0.55;
+  toneArm.rotation.y=a0+(a1-a0)*u; } });
+  notes.forEach(n=>{ n.visible=on; if(!on) n.material.opacity=0; }); }
+let vinylOn=false;
+// map pins pop (scale bounce of the tacks) — light touch
+function popMap(){ mapTacks.children.forEach((t,i)=>{ const s0=0.2;
+  t.scale.set(s0,s0,s0);
+  act({ dur:0.5+i*0.1, step:u=>{ const k=s0+(1-s0)*(1+0.4*Math.sin(u*Math.PI))*u; t.scale.set(k,k,k); } }); }); }
+
+function exitMode(){
+  if(mode==='hiking') setDoor(false);
+  if(mode==='dancing'){ vinylOn=false; setVinyl(false); }
+  if(mode==='photos') closeAlbum();
+  mode=null;
+}
+function focusHot(h){ if(mode===h.key) return;
+  exitMode();
+  mode=h.key;
+  moveCam(h.view.pos, h.view.tgt, 1.1);
+  backBtn.classList.add('on');
+  storyEl.textContent=h.story;
+  hotspots.forEach(x=>x.labelEl.classList.remove('on'));
+  if(h.key==='hiking') setDoor(true);
+  if(h.key==='dancing'){ vinylOn=true; setVinyl(true); }
+  if(h.key==='photos') openAlbum();
+  if(h.key==='travel') popMap();
+}
+function goHome(){ if(!mode) return;
+  exitMode();
+  backBtn.classList.remove('on'); storyEl.textContent='';
+  setHome(); moveCam(HOME.pos, HOME.tgt, 1.0);
+}
+backBtn.addEventListener('click', goHome);
+
+// ---------- 旺财 focus + petting ----------
+// click the cat -> camera follows it; nearby cursor becomes a hand; click = pat,
+// with one of three random reactions; scroll out (or ESC) to step back.
+let catFocus=false;
+const isReacting=()=>REACTS.includes(catState.st);
+// hover label
+const catLabelEl=document.createElement('div'); catLabelEl.className='hot-label'; catLabelEl.textContent='旺财';
+const catLabelObj=new CSS2DObject(catLabelEl); catLabelObj.position.set(0,0.62,0); cat.add(catLabelObj);
+// a little paper hand that does the patting
+function handTex(){ const [c,x]=ctxCanvas(128,128);
+  x.fillStyle='#f6eed9'; x.strokeStyle='rgba(58,49,40,0.9)'; x.lineWidth=5;
+  function lobe(cx,cy,r){ x.beginPath(); x.arc(cx,cy,r,0,7); x.fill(); }
+  lobe(64,84,30);                                  // palm
+  lobe(40,52,11); lobe(57,44,12); lobe(75,44,12); lobe(92,52,11);  // fingers
+  lobe(34,86,12);                                  // thumb
+  x.globalCompositeOperation='source-over';
+  x.beginPath(); x.arc(64,84,30,0,7); x.stroke();
+  [[40,52,11],[57,44,12],[75,44,12],[92,52,11],[34,86,12]].forEach(p=>{ x.beginPath(); x.arc(p[0],p[1],p[2],0,7); x.stroke(); });
+  return asTex(c); }
+const patHand=texPlane(0.18,0.18, handTex(), {alpha:true, noShadow:true, double:true});
+patHand.visible=false; patHand.material.transparent=true; scene.add(patHand);
+// heart pool
+function heartTex(){ const [c,x]=ctxCanvas(128,128);
+  x.fillStyle='#b1442f'; x.strokeStyle='rgba(58,49,40,0.85)'; x.lineWidth=5;
+  x.beginPath(); x.moveTo(64,108);
+  x.bezierCurveTo(20,72, 26,30, 64,52); x.bezierCurveTo(102,30, 108,72, 64,108); x.closePath();
+  x.fill(); x.stroke(); return asTex(c); }
+const heartT=heartTex();
+const hearts=[];
+for(let i=0;i<3;i++){ const h=texPlane(0.1,0.1, heartT, {alpha:true, noShadow:true, double:true});
+  h.visible=false; h.material.transparent=true; scene.add(h); hearts.push(h); }
+function spawnHearts(){ hearts.forEach((h,i)=>{ h.visible=true; h.material.opacity=1;
+  h.userData.t=-i*0.22;
+  h.position.set(cat.position.x+(Math.random()-0.5)*0.26, cat.position.y+0.55, cat.position.z+(Math.random()-0.5)*0.26); }); }
+function enterCatFocus(){ if(catFocus) return;
+  exitMode(); backBtn.classList.remove('on'); catFocus=true;
+  storyEl.textContent='旺财. Click to pat; scroll out to step back.';
+  catLabelEl.classList.remove('on');
+  const p=cat.position;
+  moveCam(new THREE.Vector3(p.x+0.95,p.y+0.7,p.z+0.95), new THREE.Vector3(p.x,p.y+0.26,p.z), 0.9);
+}
+function exitCatFocus(){ if(!catFocus) return; catFocus=false;
+  storyEl.textContent='';
+  setHome(); moveCam(HOME.pos, HOME.tgt, 1.0);
+}
+function pet(){ if(isReacting()) return;
+  // the pat: paper hand bobs twice over the head
+  const hp=new THREE.Vector3(cat.position.x, cat.position.y+0.56, cat.position.z);
+  patHand.visible=true; patHand.material.opacity=1;
+  act({ dur:0.8, step:u=>{
+    patHand.position.set(hp.x, hp.y+0.04+0.07*Math.abs(Math.sin(u*Math.PI*2.5)), hp.z);
+    patHand.lookAt(camera.position);
+    if(u>0.8) patHand.material.opacity=1-(u-0.8)/0.2;
+  }, onDone:()=>{ patHand.visible=false; } });
+  if(reduce){ spawnHearts(); return; }                 // calm reaction only
+  if(tableDist(cat.position.x,cat.position.z)<TABLE_ZONE.r){ spawnHearts(); return; }  // no sitting up under the table
+  const r=Math.random();
+  if(r<0.4){ catSet('happy'); spawnHearts(); }         // blissful lean-in + hearts
+  else if(r<0.7){ catSet('flop'); }                    // flops over, belly up
+  else { catSet('annoyed'); }                          // offended: shake + storm off
+}
+
+// ---------- explore menu ----------
+const exploreEl=document.getElementById('explore');
+hotspots.forEach(h=>{ const b=document.createElement('button');
+  b.innerHTML=`<i class="fas ${h.icon}" aria-hidden="true"></i> ${h.label}`;
+  b.addEventListener('click',()=>focusHot(h)); exploreEl.appendChild(b); });
+
+// ---------- raycast hover + click ----------
+const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2(); let hovered=null;
+function setRay(ev){ const r=renderer.domElement.getBoundingClientRect();
+  mouse.x=((ev.clientX-r.left)/r.width)*2-1; mouse.y=-((ev.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mouse,camera); }
+function pickHot(ev){ setRay(ev);
+  for(const h of hotspots){ if(ray.intersectObject(h.group,true).length) return h; } return null; }
+function hitCat(ev){ setRay(ev); return ray.intersectObject(cat,true).length>0; }
+renderer.domElement.addEventListener('pointermove',ev=>{
+  if(catFocus){ renderer.domElement.style.cursor= hitCat(ev) ? 'grab' : 'default'; return; }
+  if(mode){ renderer.domElement.style.cursor= (mode==='photos' && pickAlbum(ev)) ? 'pointer' : 'grab'; return; }
+  if(hitCat(ev)){ catLabelEl.classList.add('on');
+    if(hovered){ hovered.labelEl.classList.remove('on'); hovered=null; }
+    renderer.domElement.style.cursor='pointer'; return; }
+  catLabelEl.classList.remove('on');
+  const h=pickHot(ev);
+  if(h!==hovered){ if(hovered) hovered.labelEl.classList.remove('on'); hovered=h;
+    if(h) h.labelEl.classList.add('on'); renderer.domElement.style.cursor=h?'pointer':'grab'; } });
+renderer.domElement.addEventListener('pointerdown',()=>{ renderer.domElement.style.cursor='grabbing'; idle=false; });
+function pickAlbum(ev){ setRay(ev);
+  if(albArrowR.visible && ray.intersectObject(albArrowR,false).length) return {kind:'next'};
+  if(albArrowL.visible && ray.intersectObject(albArrowL,false).length) return {kind:'prev'};
+  if(albOpen && ray.intersectObject(albPagesR,false).length) return {kind:'photoR'};
+  if(albOpen && ray.intersectObject(albPagesL,false).length) return {kind:'photoL'};
+  return null; }
+renderer.domElement.addEventListener('click',ev=>{
+  if(catFocus){ if(hitCat(ev)) pet(); return; }
+  if(mode==='photos'){ const a=pickAlbum(ev);
+    if(a){ if(a.kind==='next') flip(1); else if(a.kind==='prev') flip(-1);
+      else { // open lightbox on the clicked page's photo
+        const side=a.kind==='photoR'?1:0; const v=SPREADS[albSpread][side];
+        if(v!==null&&v!==undefined){ const urls=photoSet.map(p=>photoURL(p[0],p[1])); openLB(urls, v); } }
+      return; } }
+  if(mode){ // clicking elsewhere while focused = go back
+    if(!pickHot(ev)) { goHome(); return; }
+  }
+  if(hitCat(ev)){ enterCatFocus(); return; }
+  const h=pickHot(ev); if(h) focusHot(h);
+});
+
+// ---------- lightbox ----------
+const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'); let lbList=[], lbI=0;
+function openLB(list,i){ lbList=list; lbI=i; lbImg.src=lbList[lbI]; lb.classList.add('on'); }
+function closeLB(){ lb.classList.remove('on'); }
+function stepLB(d){ lbI=(lbI+d+lbList.length)%lbList.length; lbImg.src=lbList[lbI]; }
+document.getElementById('lbX').addEventListener('click',closeLB);
+document.getElementById('lbPrev').addEventListener('click',()=>stepLB(-1));
+document.getElementById('lbNext').addEventListener('click',()=>stepLB(1));
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape'){
+  if(lb.classList.contains('on')) closeLB(); else if(catFocus) exitCatFocus(); else if(mode) goHome(); } });
+
+// ---------- entrance pops ----------
+const pops=[floorMesh, backWall, leftWall, winA, gHike, gTravel, gDance, photoWall, rug, sofa, table, teaSet, lamp, plant, cat, albumG, trims];
+pops.forEach((g,i)=>{ g.userData.pop={t:0, delay:0.15+i*0.085};
+  if(!reduce) g.scale.set(1,0.012,1); });
+let popping=!reduce;
+function backOut(t){ const s=1.70158; t=t-1; return t*t*((s+1)*t+s)+1; }
+
+// ---------- loop ----------
+let idle=!reduce, idleTime=0; const clock=new THREE.Clock(); const UP=new THREE.Vector3(0,1,0);
+function animate(){ requestAnimationFrame(animate); const dt=Math.min(clock.getDelta(),0.05);
+  if(popping){ let done=true;
+    for(const g of pops){ const p=g.userData.pop; p.t+=dt;
+      const u=Math.min(Math.max((p.t-p.delay)/0.5,0),1); if(u<1) done=false;
+      g.scale.y=Math.max(0.012, backOut(u)); }
+    if(done) popping=false; }
+  actsStep(dt);
+  catStep(dt);
+  if(vinylOn){ platter.rotation.y+=dt*2.4; vinylLbl.rotation.y+=dt*2.4;
+    const T=clock.elapsedTime;
+    notes.forEach(n=>{ const ph=((T*0.55+n.userData.phase)%1.6)/1.6;
+      n.position.y=FL+0.85+ph*0.75; n.material.opacity=Math.sin(ph*Math.PI)*0.9;
+      n.lookAt(camera.position); }); }
+  if(tween){ tween.t=Math.min(tween.t+dt/tween.dur,1); const e=1-Math.pow(1-tween.t,3);
+    camera.position.lerpVectors(tween.fromPos,tween.toPos,e); controls.target.lerpVectors(tween.fromTgt,tween.toTgt,e);
+    if(tween.t>=1) tween=null; }
+  else if(catFocus){ // follow 旺财: target tracks the cat, camera keeps its offset
+    const want=new THREE.Vector3(cat.position.x, cat.position.y+0.26, cat.position.z);
+    const d=want.sub(controls.target);
+    if(d.lengthSq()>1e-7){ d.multiplyScalar(Math.min(1,dt*5)); controls.target.add(d); camera.position.add(d); }
+    if(controls.getDistance()>3.4) exitCatFocus();   // scrolled out far enough = step back
+  }
+  else if(idle && !mode){ idleTime+=dt; const off=camera.position.clone().sub(controls.target);
+    off.applyAxisAngle(UP, dt*0.05); camera.position.copy(controls.target).add(off); if(idleTime>14) idle=false; }
+  controls.update();
+  renderer.render(scene,camera); labelRenderer.render(scene,camera);
+}
+animate();
+document.getElementById('loader').classList.add('off');
+window.__roomReady = true;
+// dev/test hook
+window.__room = { camera, controls, HOME, setHome, moveCam, focusHot, goHome, hotspots,
+  flip, openAlbum, closeAlbum, cat, catState, catSet, enterCatFocus, exitCatFocus, pet,
+  patHand, hearts, spawnHearts, isCatFocus:()=>catFocus, stopIdle:()=>{ idle=false; } };
+
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight); labelRenderer.setSize(innerWidth,innerHeight);
+  if(!mode){ setHome(); } });
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) idle=false; });
+</script>
+</body>
+</html>

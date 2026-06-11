@@ -1,0 +1,7 @@
+/* ============================================================
+   clear-polish.css — refinements for the zh/fr/de "clear" page,
+   within its own clean white-green system (NOT parchment).
+   ============================================================ */
+
+/* R1 — readability within the clear page's own clean system */
+p, li { line-height: 1.65; }

@@ -1,0 +1,28 @@
+/* ============================================================
+   blog-polish.css — blog refinement layer (v8 polish rounds).
+   Loaded AFTER blog.css. Same round structure as polish.css.
+   ============================================================ */
+
+/* ============================================================
+   R1 — READABILITY: long-form reading body -> Spectral serif.
+   The blog post body is the site's biggest reading surface; the
+   handwriting voice stays in titles, headings, chips, UI.
+   ============================================================ */
+:root {
+  --read-font: 'Spectral', 'LXGW WenKai', Georgia, serif;
+  --blog-fs: 1.06rem;        /* ~17px serif body (was 1.0rem handwriting) */
+  --blog-lh: 1.68;
+}
+.markdown-body,
+.markdown-body p, .markdown-body li, .markdown-body blockquote,
+.markdown-body td, .markdown-body th, .markdown-body dd, .markdown-body dt {
+  font-family: var(--read-font) !important;
+}
+/* list excerpts: serif + a touch more size; titles stay handwriting */
+.blog-card-excerpt {
+  font-family: var(--read-font) !important;
+  font-size: 0.97rem !important; line-height: 1.58 !important;
+}
+.blog-card-title { font-size: 1.32rem !important; }
+/* intro line under the Blog washi tab reads as prose too */
+.blog-intro, .blog-sub { font-family: var(--read-font) !important; }
