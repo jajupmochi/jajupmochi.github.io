@@ -865,7 +865,7 @@
                 <a href="apps-deck.html" onclick="closeMobileNav();" class="nav-link" data-page="apps" data-i18n="nav.apps">Apps</a>
                 <a href="#research" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.research">Research</a>
                 <a href="#services" onclick="closeMobileNav();" class="nav-link" data-i18n="nav.services">Services</a>
-                <a href="#" onclick="showPersonalTeaser(); closeMobileNav(); return false;" class="nav-link" data-page="personal" data-i18n="nav.personal">Personal</a>
+                <a href="personal.html" onclick="closeMobileNav();" class="nav-link" data-page="personal" data-i18n="nav.personal">Personal</a>
                 <a href="blog.html" onclick="closeMobileNav();" class="nav-link" data-page="blog" data-i18n="nav.blog">Blog</a>
             </div>
             
@@ -2207,16 +2207,7 @@
         </figure>
     </div>
 
-    <!-- Coming-soon toast for Personal / Blog (placeholder pages) -->
-    <!-- Personal-room teaser: the 3D study isn't finished, so the nav shows this peek + "coming soon" instead of opening it. -->
-    <div class="ptz-overlay" id="personalTeaser" onclick="closePersonalTeaser()" role="dialog" aria-modal="true" aria-label="Personal room, coming soon">
-      <div class="ptz-card" onclick="event.stopPropagation()">
-        <button class="ptz-x" onclick="closePersonalTeaser()" aria-label="Close">&times;</button>
-        <img src="res/portfolio/img/personal-room.png" alt="A peek at the 3D study">
-        <div class="ptz-cap"><b>My 3D study &middot; coming soon</b><span>A little room you can wander, with my photos &amp; hobbies. Still being furnished.</span></div>
-      </div>
-    </div>
-
+    <!-- Coming-soon toast for placeholder pages -->
     <div id="comingSoonToast" class="coming-soon-toast" role="status" aria-live="polite" aria-hidden="true">
         <div class="coming-soon-icon" aria-hidden="true">
             <i class="fas fa-screwdriver-wrench"></i>

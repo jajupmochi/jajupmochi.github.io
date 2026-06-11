@@ -3576,17 +3576,6 @@
             .coming-soon-toast { transition: opacity 0.1s ease; }
         }
 
-        /* Personal-room teaser (temporary) */
-        .ptz-overlay { position: fixed; inset: 0; z-index: 9500; display: none; align-items: center; justify-content: center; background: rgba(40,28,16,0.62); padding: 5vw; }
-        .ptz-overlay.on { display: flex; }
-        .ptz-card { position: relative; max-width: 520px; width: 100%; background: #f3ead4; border: 1px solid rgba(120,70,40,0.3); border-radius: 10px 7px 11px 8px; padding: 0.7rem; box-shadow: 0 22px 60px rgba(40,20,5,0.42); }
-        .ptz-card img { width: 100%; display: block; border-radius: 6px 4px 7px 5px; }
-        .ptz-cap { padding: 0.75rem 0.6rem 0.4rem; text-align: center; }
-        .ptz-cap b { font-family: 'Patrick Hand','LXGW WenKai',cursive; font-size: 1.45rem; color: #2e2a25; display: block; }
-        .ptz-cap span { font-size: 0.92rem; line-height: 1.45; color: #6f6557; display: block; margin-top: 0.25em; }
-        .ptz-x { position: absolute; top: 0.4rem; right: 0.65rem; background: none; border: none; font-size: 1.6rem; line-height: 1; color: #6f6557; cursor: pointer; z-index: 2; }
-        .ptz-x:hover { color: #7c3a2e; }
-
         /* ============================================================
            Site-wide search (Cmd/Ctrl+K) — nav button + modal + results
            ============================================================ */

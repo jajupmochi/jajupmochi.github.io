@@ -9,6 +9,10 @@
 ## Master TOC
 
 - [2026-06-11](#2026-06-11)
+    - [V5 — 旺财 slinks under the coffee table (height-aware collision)](#v5--旺财-slinks-under-the-coffee-table-height-aware-collision) — a standing cat's head (y≈0.68) clipped through the tabletop (underside y≈0.59); now the table zone triggers a smooth crouch-walk (root −0.105, legs tucked, head down, slower gait) that clears the table by 0.05+, and post-reaction walks route to the NEAREST waypoint (the stale-node shortcut was the path that cut through furniture). Reactions are suppressed under the table (hearts only).
+    - [V4 — pet 旺财: focus-follow camera, pat with 3 reactions; cuter eyes; collar fixed](#v4--pet-旺财-focus-follow-camera-pat-with-3-reactions-cuter-eyes-collar-fixed) — click 旺财 → the camera focuses and follows him around; nearby cursor becomes a hand; click = a paper hand pats him with one of 3 random reactions (blissful lean-in + hearts / belly-flop roll / offended shake-then-storm-off); scroll out (or ESC) steps back. Eyes redesigned to Dragon-Li reference (large golden almond, outer corner higher, big round pupil, two glints). Collar now truly wraps the neck and the 旺财 tag chains to it via a link.
+    - [V3 — 旺财 gets a real body](#v3--旺财-gets-a-real-body) — the cat refined per Linlin's 4 points: lathed organic body (no more capsule-pill) + haunches/shoulder/scruff/cheeks; tail properly rooted (was floating 0.27 above the back); layered eyes (dark rim, amber iris, vertical slit pupil, glint) with random blinking; cinnabar collar + gilt tag engraved 旺财. Sleep tail flattened; fallback image re-shot.
+    - [V2 — Personal entrance opened + a living 狸花猫](#v2--personal-entrance-opened--a-living-狸花猫) — navbar Personal now opens `personal.html` directly (teaser removed, teaser/fallback image re-shot from the v3 home); the placeholder cat became a procedural Li Hua tabby with 5 random, smoothly-blended behaviours (sit+look / walk on a waypoint graph / sleep / stretch / groom).
     - [V1 — Personal page rebuilt: paper pop-up HOME with diegetic interactions (v2+v3)](#v1--personal-page-rebuilt-paper-pop-up-home-with-diegetic-interactions-v2v3) — `personal.html` redesigned twice in one arc: v2 turned the generic 3D room into a parchment-true paper pop-up-book diorama (personal content only); v3, after Linlin's 5-point review, made it an indoor paper home (hinged door opening onto a pocket trail world) with game-like in-world interactions — wall-map story, door swing, spinning vinyl + floating notes, a page-flipping photo album — replacing the right sidebar entirely. Full-screen aspect-adaptive initial view.
 - [2026-06-08](#2026-06-08)
     - [V3 — EN CV updated to the research-scientist build](#v3--en-cv-updated-to-the-research-scientist-build) — `res/cv/CV_Linlin_Jia_en.pdf` replaced (6 pp, 207 KB); same filename so every "my cv" link picks it up.
@@ -80,6 +84,92 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-11
+
+## V5 — 旺财 slinks under the coffee table (height-aware collision)
+
+Linlin spotted the cat clipping through the coffee table. Root causes + fixes:
+
+- **Height conflict.** Standing, the cat's back tops out at y≈0.595 and the head at ≈0.68,
+  while the tabletop's underside is at y≈0.59 — any crossing clipped. Fix (per Linlin's
+  suggestion): a **table zone** (r 0.8 around the tabletop) makes a walking cat
+  **crouch-slink (趴着走)**: root drops 0.105, legs tuck (+0.85 rad), head lowers, gait
+  swing/bounce damped, speed ×0.65 — crouched clearance 0.05+ under the table, eased in
+  and out (no snapping). Verified numerically (root 0.261→0.150 across the zone) and
+  visually (side shots at table height).
+- **Stale-node shortcut.** When a pet reaction interrupted a walk, the next walk targeted
+  a neighbour of the *last visited* node from wherever the cat stood — a straight line
+  that could cut across furniture. Now an off-graph cat routes to the **nearest** waypoint
+  first.
+- Reactions are suppressed while inside the table zone (no sitting up under the tabletop;
+  patting there gives hearts only).
+
+## V4 — pet 旺财: focus-follow camera, pat with 3 reactions; cuter eyes; collar fixed
+
+Third cat pass per Linlin's points:
+
+- **Click-to-focus + follow.** Clicking 旺财 (hover shows a washi「旺财」label + pointer)
+  enters a focus mode: the camera tweens close and then **follows him** as he wanders
+  (target tracks the cat each frame; the camera keeps its user-controlled orbit offset).
+  Hotspot clicks are suspended during focus; ESC or **scrolling out past 3.4 units**
+  steps back to the HOME view (the requested wheel-out exit).
+- **Patting.** While focused, the cursor near the cat becomes a **hand** (`grab`); click
+  = a paper hand (ink-outlined canvas, matching the world) bobs two pats over his head,
+  and one of **3 random reactions** plays: ① blissful — leans into the hand, eyes squint
+  shut, 3 cinnabar hearts float up; ② flop — rolls onto his side, belly up, and rights
+  himself; ③ offended — quick head-shake, tail lashing, then storms off to another
+  waypoint. Reactions blend through the same pose system (no snapping); reduced-motion
+  gets hearts only. Verified: full cycle focus→pat→pat→wheel-out→hotspots-intact, plus
+  each reaction individually; 0 console errors.
+- **Cuter eyes** (per [Dragon Li breed references](https://en.wikipedia.org/wiki/Dragon_Li):
+  large luminous almond eyes, golden-green, outer corners set higher) — rebuilt as big
+  golden almonds with **large round pupils** + two glints, outer-corner-up tilt; reads
+  warm instead of beady. Blink + sleep/bliss squint retained.
+- **Collar/tag fixed.** The collar ring now sits perpendicular to the neck axis (fully
+  around the neck, inner edge seated in the fur) and the 旺财 tag hangs from a **gilt
+  link that wraps the collar tube** — chained, not floating. Verified in macro shots.
+
+## V3 — 旺财 gets a real body
+
+Cat refinement per Linlin's 4-point review (technique grounded in a quick web check:
+[LatheGeometry profile-spinning](https://threejs.org/docs/pages/LatheGeometry.html) is the
+standard way to get organic bodies from a 2D silhouette; also referenced
+[three-low-poly](https://github.com/jasonsturges/three-low-poly) and the
+[learning-three.js lathe example](https://github.com/josdirksen/learning-threejs/blob/master/chapter-06/02-advanced-3d-geometries-lathe.html)):
+
+- **Body de-geometrized.** The capsule pill became a **lathed cat silhouette** (neck →
+  shoulders → belly → haunches → tapered rear, 12-point profile spun 18 segments), plus
+  haunch/shoulder/scruff lumps and white cheeks — reads as an animal, not a primitive.
+- **Tail rooted.** The tail base was floating 0.27 above the spine (v1 bug Linlin spotted);
+  now anchored inside the rear of the body with a joint ball hiding the seam. Sleep-pose
+  tail re-tuned to lie flat on the floor (was ending tip-up like a question mark).
+- **Eyes rebuilt.** Black dots → layered cat eyes: dark rim, amber iris (Li Hua yellow),
+  vertical slit pupil, white glint, slight outward angle — plus **random blinking**
+  (every 2–7 s) and eyes closed while sleeping.
+- **项圈 + 旺财.** Cinnabar leather collar (torus, tilted with the neck) + a gilt ring and
+  a hanging gilt tag engraved **旺财** (canvas texture, maroon rim, CJK-safe font stack).
+  Verified readable in macro screenshots.
+- Re-verified: 18 s roam (walk→sit→walk, continuous positions), all poses with the new
+  body, 0 console errors; `res/portfolio/img/personal-room.png` re-shot with the final cat.
+
+## V2 — Personal entrance opened + a living 狸花猫
+
+- **Entrance open.** Navbar **Personal** → `personal.html` directly on both index files;
+  the temporary coming-soon teaser fully removed (overlay markup ×2, `.ptz-*` CSS,
+  `showPersonalTeaser`/`closePersonalTeaser` JS). Verified: click navigates, no stray
+  references, no new console errors.
+- **Teaser/fallback image re-shot.** `res/portfolio/img/personal-room.png` now shows the
+  v3 paper home (clean render, UI hidden, cat in frame) — used by `personal.html`'s
+  no-WebGL fallback.
+- **狸花猫 (Li Hua tabby).** The 2-box placeholder became a procedural cat: canvas-painted
+  mackerel fur (rings + dorsal line + tabby-M crown), white bib/belly/paws/muzzle, pink
+  ears + nose, green eyes with glints, whiskers, ringed tail (3-segment chain), toon
+  inverted-hull outline. **Behaviour state machine** with 5 actions — sit+look-around /
+  walk / sleep (breathing) / stretch / groom (nodding) — random transitions with smooth
+  pose blending (sleep→stretch 80%, etc.), walking on a 7-node waypoint graph with
+  edge-list adjacency so paths are collision-free by construction; gait, head-bob, tail
+  sway/flick layered on top. `prefers-reduced-motion` → the cat just sleeps and breathes.
+  Verified: 25 s roam sample shows continuous positions + random state changes; all 5
+  poses screenshot-checked; 0 console errors.
 
 ## V1 — Personal page rebuilt: paper pop-up HOME with diegetic interactions (v2+v3)
 
