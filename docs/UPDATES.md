@@ -8,6 +8,12 @@
 
 ## Master TOC
 
+- [2026-06-11](#2026-06-11)
+    - [V1 — Personal page rebuilt: paper pop-up HOME with diegetic interactions (v2+v3)](#v1--personal-page-rebuilt-paper-pop-up-home-with-diegetic-interactions-v2v3) — `personal.html` redesigned twice in one arc: v2 turned the generic 3D room into a parchment-true paper pop-up-book diorama (personal content only); v3, after Linlin's 5-point review, made it an indoor paper home (hinged door opening onto a pocket trail world) with game-like in-world interactions — wall-map story, door swing, spinning vinyl + floating notes, a page-flipping photo album — replacing the right sidebar entirely. Full-screen aspect-adaptive initial view.
+- [2026-06-08](#2026-06-08)
+    - [V3 — EN CV updated to the research-scientist build](#v3--en-cv-updated-to-the-research-scientist-build) — `res/cv/CV_Linlin_Jia_en.pdf` replaced (6 pp, 207 KB); same filename so every "my cv" link picks it up.
+    - [V2 — Post-launch review corrections](#v2--post-launch-review-corrections) — apps mode-toggle now highlights the CURRENT view on all three modes (deck page gained the trio); H-index reverted to 6 per Google Scholar; "read my CV" became a "(my cv)" parenthetical in the About headline (×4 locales); footer gained DBLP and was reordered by recruiter/peer priority.
+    - [V1 — apps-gallery.html defaults to the deck; 4 referenced figures committed](#v1--apps-galleryhtml-defaults-to-the-deck-4-referenced-figures-committed) — bare `apps-gallery.html` now redirects to the deck (`?view=` stays on the grid; no loop); 4 publication figures referenced by the live pages were untracked (would 404 on deploy) — committed.
 - [2026-06-05](#2026-06-05)
     - [V3 — Homepage 10-round optimization pass (in-place, per-round, verified)](#v3--homepage-10-round-optimization-pass-in-place-per-round-verified) — a deep 10-round audit+optimize sweep of the live homepage for the launch: hero gains a "read my CV ↗" recruiter path + "130+ citations" credibility line; anchor-jump occlusion fixed (`scroll-padding-top`); pub-title legibility; on-brand maroon focus ring; H-index 6→7 (verified); mobile CV-link tap target; 2 Google-Fonts requests merged to 1 (drop unused ZCOOL XiaoWei); Clarity analytics un-blocked (CSP). Audit confirmed hierarchy / contrast (18:1) / spacing / motion-a11y / credibility surfaces already sound. Plan + per-round notes under `docs/strategy/homepage-redesign-2026-06-05/`.
     - [V2 — Launch prep (cont.): blog mobile TOC, exact postcard replication, Howler mobile size, zh postcard overflow, footer links](#v2--launch-prep-cont-blog-mobile-toc-exact-postcard-replication-howler-mobile-size-zh-postcard-overflow-footer-links) — collapsed blog TOC on mobile now hugs its label (compact tab, not a 200px bar); the parchment welcome postcard is re-pinned to its exact pre-parchment computed values (drifted §7 rewritten); the idle 尖叫信 envelope scales down on phones (140px→92px); the zh postcard clamps to the viewport + scrolls instead of overflowing; footer gains Twitter/X · ResearchGate · ORCID on both index files.
@@ -72,6 +78,72 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-06-11
+
+## V1 — Personal page rebuilt: paper pop-up HOME with diegetic interactions (v2+v3)
+
+Linlin: the v1 3D room was ugly, style-mismatched, and carried professional content. Two
+redesign passes in one arc (full docs: `docs/strategy/personal-room-v2-2026-06-11/` —
+research, plan, round notes, v2 snapshot, screenshots):
+
+- **v2 — paper pop-up book.** The room became a diorama rising from an open book on a
+  parchment desk: MeshToon 3-step shading + `EdgesGeometry` ink-line edges + hand-cut
+  jitter (the homepage's manuscript language in 3D); content reduced to personal corners
+  only (travel / hiking / dancing / photos; desk→Apps and shelf→Publications removed
+  everywhere, incl. the no-WebGL fallback cards).
+- **v3 — the paper HOME (Linlin's 5-point review).** ① Indoor dollhouse-cutaway home —
+  plank floor, walls + wainscot, curtained window, rug/sofa/coffee-table/lamp/plant/cat —
+  with a **hinged door** opening onto a pocket trail world on the left page (the
+  future-expansion area). ② Proportions humanized (mountains became small *outdoor*
+  scenery). ③ Objects rebuilt multi-part (suitcase latches/wheels/stickers, sideboard
+  drawers/knobs/feet, record player plinth/platter/label/tonearm + vinyl crate, teapot
+  spout/handle/lid, framed photo wall with washi tape…). ④ **Diegetic, game-like
+  interactions replace the right sidebar**: Travel → wall map with the story written on
+  it + popping pins; Hiking → the door swings open framing the outside; Dancing → vinyl
+  + label spin, tonearm drops, ♪ notes float; Photos → the album on the table opens
+  (propped cover), corner-tab page flips, click a photo → lightbox. aria-live `#story`
+  keeps text accessible; explore chips / ESC / click-empty-to-return all work.
+  ⑤ Full-screen initial view, camera distance adaptive to aspect (desktop and portrait).
+- Verified: all 4 modes incl. direct mode-switch (exitMode), flip fwd/back, ESC chain;
+  0 console errors/warnings at 1440×980 and 390×844.
+- Known follow-ups (PLAN H3.M5.G2.T3/T4): re-shoot the homepage teaser image (still v1)
+  and re-link navbar Personal when ready; drop in real photos later.
+
+# 2026-06-08
+
+## V3 — EN CV updated to the research-scientist build
+
+- `res/cv/CV_Linlin_Jia_en.pdf` replaced with the new research-scientist version (PDF 1.5,
+  6 pages, 207 KB, title "Linlin Jia – Ph.D."). Same filename → About-headline "my cv"
+  links (en/fr/de) and JSON-LD pick it up with no markup change.
+
+## V2 — Post-launch review corrections
+
+- **Apps mode-toggle highlight.** The Deck/Cards/Detailed pill now highlights the current
+  mode on ALL three views: `?view=` is authoritative on load (was click/localStorage-only),
+  gallery's "Deck" is no longer permanently maroon (ID-scoped rules beat parchment's global
+  link ink), and the deck page gained the same trio with **Deck** active (was missing
+  entirely). Verified across all three modes.
+- **H-index 7 → 6** on both index files + `data/citations.json`, per Google Scholar
+  (the earlier bump to 7 came from a stale json field — wrong).
+- **"read my CV" → "(my cv)"** parenthetical at the end of the About headline, per Linlin;
+  implemented in `about.headline` across all 4 locales (zh links the zh CV); the separate
+  hero link and About CV row removed.
+- **Footer links: +DBLP, reordered** by what interviewers / collaborators / peers check
+  most: Scholar → GitHub → LinkedIn → DBLP → ORCID → ResearchGate → X → Email (both
+  index files; `ai-dblp` icon, pid 152/2558).
+
+## V1 — apps-gallery.html defaults to the deck; 4 referenced figures committed
+
+- **apps-gallery.html → deck by default.** Many external docs link this URL, and the deck
+  is the preferred view: a bare visit now redirects to `apps-deck.html`; `?view=cards` /
+  `?view=detailed` stay on the grid (the deck's "Grid view" link passes `?view=cards`, so
+  no loop). Verified: redirect + grid + 0 console errors.
+- **Deploy-safety fix.** 4 publication figures (`2021_prl_gklearn_accuracy`,
+  `2023_jcc_redox_framework`, `2025_graphink_framework`, `2026_icpr_swissriver_diagram`)
+  were referenced by `js/projects-data.js` + both index files but never git-tracked —
+  fine locally, 404 on the deployed site. Committed.
 
 # 2026-06-05
 

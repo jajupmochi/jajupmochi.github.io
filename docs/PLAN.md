@@ -455,6 +455,12 @@ writing demonstrate technical communication ability beyond the homepage scroll.
 - `[✓]` H3.M5.G1.T3 — (2026-06-03) Built `personal.html` over the 10 lenses (`round-notes.md`; screenshots round-5/7/8). Orbit + 6 clickable hotspots → parchment panels + album lightbox; a11y Explore menu; reduced-motion; no-WebGL fallback. 0 console errors.
 - `[✓]` H3.M5.G1.T4 — (2026-06-03) Wired homepage navbar **Personal** → `personal.html` (both index files), replacing the coming-soon toast. Photos/copy are placeholders for Linlin to personalize.
 
+#### G2 — Paper pop-up home redesign (v2 + v3) `[✓]`
+- `[✓]` H3.M5.G2.T1 — (2026-06-11) v2: rebuilt the room as a **paper pop-up book diorama** (Linlin: v1 ugly + style-mismatched; personal content only). MeshToon + EdgesGeometry ink lines, parchment palette, 4 personal corners, pop-up entrance. `docs/strategy/personal-room-v2-2026-06-11/`.
+- `[✓]` H3.M5.G2.T2 — (2026-06-11) v3 per Linlin's 5-point review: indoor **paper home** (dollhouse cutaway; hinged door to a pocket trail world = future-expansion area), sane proportions, multi-part detailed objects, **diegetic interactions** (wall map / door swings open / vinyl spins + notes / album opens + page-flip + lightbox — right sidebar removed), aspect-adaptive full-screen HOME view. Verified: all modes + ESC chain, 0 console errors desktop + mobile.
+- `[ ]` H3.M5.G2.T3 — Post-ship: re-shoot `res/portfolio/img/personal-room.png` (homepage teaser still shows the v1 room) and decide when navbar **Personal** links `personal.html` directly again (currently the coming-soon teaser).
+- `[ ]` H3.M5.G2.T4 — Replace canvas postcard placeholders with Linlin's real photos (`photoTex`/`photoURL` call sites); optionally expand the outdoor world beyond the door.
+
 ---
 
 ## H4 — Documentation & AI-Collaboration Infrastructure

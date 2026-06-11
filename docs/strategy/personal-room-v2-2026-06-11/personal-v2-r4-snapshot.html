@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linlin's Study — a room you can wander</title>
+<meta name="description" content="The person behind the CV: a paper pop-up book of Linlin Jia's life off-screen — travel, hiking, dancing, photos. Spin it, click the corners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%231e3a8a' width='32' height='32' rx='7'/%3E%3Ctext x='50%25' y='74%25' text-anchor='middle' fill='white' font-family='PingFang SC,sans-serif' font-size='22' font-weight='900'%3E%E6%9E%97%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#2e2a25; --ink-soft:#6f6557; --cream:#f3ead4; --parch:#ece1c8;
+    --cinnabar:#b1442f; --maroon:#7c3a2e; --gilt:#c79a3b; --qing:#3f7d77;
+    --disp:'Patrick Hand','LXGW WenKai',cursive; --serif:'Spectral','LXGW WenKai',Georgia,serif;
+    --mono:'JetBrains Mono','LXGW WenKai',monospace;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; overflow:hidden; background:#d9cdb0; color:var(--ink);
+    font-family:var(--serif); -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  #app{ position:fixed; inset:0; }
+  canvas{ display:block; touch-action:none; }
+  /* CSS2D label layer */
+  #labels{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+  /* washi-tape chips, like the homepage's stickers */
+  .hot-label{ font-family:var(--disp); font-size:1.02rem; color:var(--ink);
+    background:repeating-linear-gradient(-45deg, rgba(251,244,225,0.95) 0 7px, rgba(243,232,206,0.95) 7px 14px);
+    border:1px dashed rgba(120,70,40,0.45);
+    border-radius:3px 6px 4px 7px; padding:0.1em 0.7em; white-space:nowrap;
+    box-shadow:1px 2px 5px rgba(80,40,10,0.2); opacity:0; transform:translateY(4px) rotate(-2deg);
+    transition:opacity .2s ease, transform .2s ease; }
+  .hot-label.on{ opacity:1; transform:rotate(-2deg); }
+
+  /* top ribbon */
+  .ribbon{ position:fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center;
+    gap:1em; padding:0.6em clamp(1rem,3vw,2.2rem);
+    background:linear-gradient(180deg, rgba(243,234,212,0.96), rgba(243,234,212,0)); }
+  .ribbon .brand{ font-family:var(--disp); font-size:1.2rem; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:0.4em; }
+  .ribbon .brand .mk{ width:26px; height:26px; border-radius:7px; background:linear-gradient(150deg,#1e3a8a,#2b4db8); color:#fff; display:grid; place-items:center; font-weight:900; font-size:0.78rem; font-family:sans-serif; }
+  .ribbon .hint{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em; color:var(--ink-soft); }
+  .ribbon .tools{ margin-left:auto; display:flex; gap:0.7em; }
+  .ribbon .tools a{ color:var(--ink-soft); text-decoration:none; font-size:1rem; }
+  .ribbon .tools a:hover{ color:var(--maroon); }
+
+  /* explore menu (also the keyboard/SR path) */
+  .explore{ position:fixed; left:clamp(1rem,3vw,2.2rem); bottom:1.2rem; z-index:20; display:flex; flex-wrap:wrap; gap:0.5em; max-width:min(70vw,560px); }
+  .explore button{ font-family:var(--mono); font-size:0.74rem; letter-spacing:0.03em; color:var(--ink);
+    background:rgba(250,244,228,0.85); border:1px solid rgba(120,70,40,0.32); border-radius:999px;
+    padding:0.32em 0.85em; cursor:pointer; display:inline-flex; align-items:center; gap:0.4em; transition:background .15s, transform .15s; }
+  .explore button:hover{ background:#fbf4e1; transform:translateY(-1px); }
+  .explore button i{ color:var(--maroon); }
+
+  /* info panel */
+  .panel{ position:fixed; top:0; right:0; height:100%; width:min(92vw,380px); z-index:40;
+    background:linear-gradient(180deg,#f7eed7,#efe3c6); border-left:2px solid rgba(120,70,40,0.3);
+    box-shadow:-12px 0 40px rgba(80,40,10,0.22); transform:translateX(102%); transition:transform .5s cubic-bezier(0.16,1,0.3,1);
+    padding:4.2rem clamp(1.3rem,2.4vw,1.9rem) 1.6rem; overflow-y:auto; }
+  .panel.on{ transform:none; }
+  .panel h2{ font-family:var(--disp); font-weight:400; font-size:1.9rem; margin:0 0 0.1em; color:var(--ink); }
+  .panel h2 .em{ color:var(--cinnabar); }
+  .panel .kicker{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 0.9em; }
+  .panel p{ font-size:1.02rem; line-height:1.55; margin:0 0 1em; }
+  .panel .pacts{ display:flex; flex-wrap:wrap; gap:0.6em; margin-top:0.4em; }
+  .panel .pacts a{ font-family:var(--disp); font-size:1.05rem; color:var(--maroon); text-decoration:none; display:inline-flex; align-items:center; gap:0.35em; border-bottom:1px solid rgba(124,58,46,0.4); }
+  .panel .pgrid{ display:grid; grid-template-columns:1fr 1fr; gap:0.7em; margin:0.6em 0 1em; }
+  .panel .pgrid img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:5px 3px 6px 4px; border:3px solid #fff; box-shadow:1px 2px 6px rgba(80,40,10,0.2); transform:rotate(-1deg); cursor:zoom-in; }
+  .panel .pgrid img:nth-child(even){ transform:rotate(1.2deg); }
+  .panel .x{ position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:var(--ink-soft); cursor:pointer; font-family:var(--disp); }
+  .panel .x:hover{ color:var(--maroon); }
+
+  /* lightbox */
+  .lb{ position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center; background:rgba(40,30,20,0.82); padding:4vw; }
+  .lb.on{ display:flex; }
+  .lb img{ max-width:90vw; max-height:88vh; border:6px solid #fff; border-radius:4px; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+  .lb button{ position:absolute; background:none; border:none; color:#f3ead4; cursor:pointer; }
+  .lb .x{ top:3vw; right:4vw; font-size:2rem; }
+  .lb .nav{ top:50%; transform:translateY(-50%); font-size:3rem; padding:0 1.4vw; opacity:0.8; }
+  .lb .prev{ left:1vw; } .lb .next{ right:1vw; }
+
+  /* back-to-room button */
+  .back{ position:fixed; top:0.9rem; right:1rem; z-index:45; display:none; font-family:var(--disp); font-size:1.05rem;
+    background:rgba(250,244,228,0.9); border:1px solid rgba(120,70,40,0.32); border-radius:999px; padding:0.3em 1em; cursor:pointer; color:var(--ink); }
+  .back.on{ display:inline-flex; align-items:center; gap:0.4em; }
+  .back:hover{ color:var(--maroon); }
+
+  /* loading + fallback */
+  .loader{ position:fixed; inset:0; z-index:70; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8em; background:#e7dcc1; color:var(--ink); }
+  .loader.off{ display:none; }
+  .loader .spin{ width:38px; height:38px; border:4px solid rgba(120,70,40,0.25); border-top-color:var(--cinnabar); border-radius:50%; animation:spin 1s linear infinite; }
+  .loader p{ font-family:var(--disp); font-size:1.2rem; margin:0; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .nowebgl{ position:fixed; inset:0; z-index:80; display:none; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; background:#ece1c8; overflow-y:auto; }
+  .nowebgl-inner{ max-width:760px; padding:2.4rem 1.4rem 3rem; }
+  .nowebgl-img{ width:100%; max-width:560px; border-radius:8px 5px 9px 6px; border:1.5px solid rgba(120,70,40,0.3); box-shadow:2px 4px 16px rgba(80,40,10,0.2); }
+  .nowebgl h1{ font-family:var(--disp); font-weight:400; font-size:2rem; margin:0.9rem 0 0.2rem; color:var(--ink); }
+  .nowebgl-note{ font-size:1rem; line-height:1.55; color:var(--ink-soft); max-width:60ch; margin:0 auto 1.4rem; }
+  .nowebgl-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0.8em; text-align:left; }
+  .nwc{ display:block; background:rgba(250,244,228,0.72); border:1px solid rgba(120,70,40,0.28); border-radius:9px 6px 10px 7px; padding:0.7em 0.9em; text-decoration:none; color:var(--ink); }
+  a.nwc:hover{ background:#fbf4e1; }
+  .nwc b{ font-family:var(--disp); font-weight:400; font-size:1.18rem; display:block; }
+  .nwc b i{ color:var(--maroon); margin-right:0.35em; }
+  .nwc span{ font-size:0.84rem; color:var(--ink-soft); display:block; margin-top:0.15em; }
+  .nowebgl-foot{ margin-top:1.5rem; } .nowebgl-foot a{ color:var(--maroon); }
+  .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  @media (max-width:640px){ .ribbon .hint{ display:none; } }
+  @media (prefers-reduced-motion:reduce){ .loader .spin{ animation:none; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="labels"></div>
+
+<header class="ribbon">
+  <a class="brand" href="index_en.html"><span class="mk">林</span> Linlin's little world</a>
+  <span class="hint"><i class="fas fa-arrows-up-down-left-right" aria-hidden="true"></i> drag to spin the book · scroll to zoom · click a corner</span>
+  <div class="tools">
+    <a href="index_en.html" title="Home"><i class="fas fa-house" aria-hidden="true"></i></a>
+  </div>
+</header>
+
+<nav class="explore" id="explore" aria-label="Explore the room"></nav>
+<button class="back" id="back"><i class="fas fa-rotate-left" aria-hidden="true"></i> back to the book</button>
+
+<aside class="panel" id="panel" role="dialog" aria-modal="false" aria-label="Detail"></aside>
+
+<div class="lb" id="lb">
+  <button class="x" id="lbX" aria-label="Close">&times;</button>
+  <button class="nav prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="nav next" id="lbNext" aria-label="Next">&#8250;</button>
+</div>
+
+<div class="loader" id="loader"><div class="spin"></div><p>Folding the paper world…</p></div>
+<div class="nowebgl" id="nowebgl">
+  <div class="nowebgl-inner">
+    <img class="nowebgl-img" src="res/portfolio/img/personal-room.png" alt="Linlin's paper pop-up world, rendered in 3D">
+    <h1>Linlin's little world</h1>
+    <p class="nowebgl-note" id="nowebglNote">The spin-around 3D needs <b>WebGL</b> (hardware acceleration), which looks switched off in this browser. Turn on <b>"Use hardware acceleration"</b> in your browser settings and reload to spin the book. Meanwhile, here is what pops out of it:</p>
+    <div class="nowebgl-cards">
+      <div class="nwc"><b><i class="fas fa-earth-asia"></i> Travel</b><span>西安 &rarr; Rouen &rarr; Bern, a suitcase of postcards</span></div>
+      <div class="nwc"><b><i class="fas fa-person-hiking"></i> Hiking</b><span>paper mountains; weekends above the treeline</span></div>
+      <div class="nwc"><b><i class="fas fa-music"></i> Dancing</b><span>a record player and shoes that keep going</span></div>
+      <div class="nwc"><b><i class="fas fa-images"></i> Photos</b><span>postcards on a string — mountains, friends, tea</span></div>
+      <div class="nwc"><b><i class="fas fa-mug-hot"></i> Tea corner</b><span>a pot that never quite empties</span></div>
+      <div class="nwc"><b><i class="fas fa-cat"></i> The cat</b><span>asleep in the gutter of the book, as cats do</span></div>
+    </div>
+    <p class="nowebgl-foot"><a href="index_en.html">&larr; Back home</a></p>
+  </div>
+</div>
+
+<script>
+  // graceful fallback (defined before the module so its WebGL catch can call it).
+  window.showFallback = function(reason){
+    if(window.__fellBack) return; window.__fellBack = true;
+    var n=document.getElementById('nowebgl'); if(!n) return; n.style.display='flex';
+    var ld=document.getElementById('loader'); if(ld) ld.classList.add('off');
+    if(reason==='load'){ var note=document.getElementById('nowebglNote');
+      if(note) note.innerHTML='The 3D engine could not load (slow or blocked network?). Reload to try again. Meanwhile, here is what is in the room:'; }
+  };
+  // if the scene has not initialised in ~9 s (e.g. the three.js CDN failed), show the fallback.
+  setTimeout(function(){ if(!window.__roomReady) window.showFallback('load'); }, 9000);
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- renderer / scene / camera ----------
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias:true, failIfMajorPerformanceCaveat:false, powerPreference:'default' }); }
+catch(e){ if(window.showFallback) window.showFallback('webgl'); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.04;
+document.getElementById('app').appendChild(renderer.domElement);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+document.getElementById('labels').appendChild(labelRenderer.domElement);
+
+// wait briefly for the handwriting font so canvas-drawn pages/postcards use it
+try { await Promise.race([document.fonts.ready, new Promise(r=>setTimeout(r,900))]); } catch(_){ }
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe7dcc2);
+scene.fog = new THREE.Fog(0xe7dcc2, 20, 38);
+
+const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 100);
+const HOME = { pos:new THREE.Vector3(6.9, 5.3, 8.5), tgt:new THREE.Vector3(0, 0.6, 0) };
+camera.position.copy(HOME.pos);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(HOME.tgt);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 6; controls.maxDistance = 19;
+controls.maxPolarAngle = Math.PI*0.46;        // never under the desk
+controls.minPolarAngle = Math.PI*0.10;        // nor straight down
+controls.update();                            // azimuth free: it is a diorama you spin
+
+// ---------- lights (flat warm daylight on paper; no hot points) ----------
+scene.add(new THREE.HemisphereLight(0xfdf6e3, 0xcdbb92, 1.3));
+const key = new THREE.DirectionalLight(0xfff3d9, 1.35);
+key.position.set(6, 12, 7);
+key.castShadow = true;
+key.shadow.mapSize.set(2048,2048);
+key.shadow.camera.left=-10; key.shadow.camera.right=10; key.shadow.camera.top=10; key.shadow.camera.bottom=-10;
+key.shadow.camera.near=1; key.shadow.camera.far=34; key.shadow.bias=-0.0004;
+scene.add(key);
+const fill = new THREE.DirectionalLight(0xe9dcc4, 0.4); fill.position.set(-8,7,-6); scene.add(fill);
+
+// ---------- paper-craft materials + ink-line helpers ----------
+const INK = 0x3a3128;
+const COL = { page:0xf6eed9, cover:0x7c3a2e, desk:0xdfd2b2, cream:0xf3ead4,
+  cinnabar:0xb1442f, maroon:0x7c3a2e, gilt:0xc79a3b, qing:0x3f7d77, sage:0x8aa17c,
+  ink:0x3a3128, paperW:0xfbf6e8, wood:0x6b4a2e };
+const gradMap = (()=>{ const d=new Uint8Array([125,190,238]);
+  const t=new THREE.DataTexture(d,3,1,THREE.RedFormat); t.minFilter=THREE.NearestFilter; t.magFilter=THREE.NearestFilter; t.needsUpdate=true; return t; })();
+function pmat(color){ return new THREE.MeshToonMaterial({ color, gradientMap:gradMap }); }
+function inkLines(mesh, thr=25, op=0.55){
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, thr),
+    new THREE.LineBasicMaterial({ color:INK, transparent:true, opacity:op }));
+  mesh.add(e); return mesh;
+}
+function jit(o, a=0.05){ o.rotation.y += (Math.random()-0.5)*a; return o; }
+function box(w,h,d, color, x,y,z, o={}){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 25, o.inkOp ?? 0.55); if(!o.noJit) jit(m); return m; }
+function cyl(rt,rb,h,color,x,y,z,seg=18,o={}){ const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 38, o.inkOp ?? 0.4); return m; }
+function cone(r,h,color,x,y,z,seg=4,o={}){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,seg), pmat(color));
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+  if(!o.noInk) inkLines(m, 18, o.inkOp ?? 0.5); if(!o.noJit) jit(m, 0.5); return m; }
+function group(...kids){ const g=new THREE.Group(); kids.forEach(k=>k&&g.add(k)); return g; }
+
+// ---------- ink-and-wash postcard art (canvas; real photos drop straight in later) ----------
+function drawPostcard(x, W, H, caption, hue){
+  const s = W/256;
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(58,49,40,0.78)'; x.lineWidth=3*s; x.strokeRect(7*s,7*s,W-14*s,H-14*s);
+  x.lineWidth=1*s; x.strokeRect(13*s,13*s,W-26*s,H-26*s);
+  x.fillStyle=`hsla(${hue},40%,62%,0.85)`;
+  x.beginPath(); x.moveTo(20*s,H-44*s); x.lineTo(92*s,H-118*s); x.lineTo(160*s,H-44*s); x.closePath(); x.fill();
+  x.fillStyle=`hsla(${hue+26},34%,47%,0.88)`;
+  x.beginPath(); x.moveTo(98*s,H-44*s); x.lineTo(182*s,H-132*s); x.lineTo(246*s,H-44*s); x.closePath(); x.fill();
+  x.strokeStyle='rgba(58,49,40,0.8)'; x.lineWidth=2*s;
+  x.beginPath(); x.arc(206*s,50*s,15*s,0,7); x.stroke();                    // ink sun
+  x.strokeStyle='rgba(177,68,47,0.85)'; x.strokeRect(W-40*s,16*s,24*s,30*s); // stamp
+  x.fillStyle='#3a3128'; x.font=`${26*s}px "Patrick Hand", Georgia, cursive`;
+  x.fillText(caption, 18*s, H-16*s);
+}
+function photoTex(caption, hue){
+  const c=document.createElement('canvas'); c.width=256; c.height=192;
+  drawPostcard(c.getContext('2d'), 256, 192, caption, hue);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+
+// ---------- the stage: an open book on a parchment desk ----------
+const deskTop=new THREE.Mesh(new THREE.CylinderGeometry(12.5,12.5,0.34,56), pmat(COL.desk));
+deskTop.position.y=-0.46; deskTop.receiveShadow=true; scene.add(deskTop);
+// hand-drawn ink rings grounding the book on the desk (two offset = wobbly pen stroke)
+function inkRing(r, op, ox, oz){
+  const m=new THREE.Mesh(new THREE.RingGeometry(r, r+0.05, 72),
+    new THREE.MeshBasicMaterial({ color:INK, transparent:true, opacity:op, side:THREE.DoubleSide }));
+  m.rotation.x=-Math.PI/2; m.position.set(ox,-0.282,oz); return m;
+}
+scene.add(inkRing(6.6, 0.30, 0.1, 0.05));
+scene.add(inkRing(6.72, 0.14, -0.12, -0.08));
+// hardcover, two halves meeting at the spine
+const coverL=box(4.7,0.2,6.7, COL.cover, -2.32,-0.10,0, {noJit:true,inkOp:0.7}); coverL.rotation.z=0.018; scene.add(coverL);
+const coverR=box(4.7,0.2,6.7, COL.cover,  2.32,-0.10,0, {noJit:true,inkOp:0.7}); coverR.rotation.z=-0.018; scene.add(coverR);
+// closed page-block thickness
+scene.add(box(4.34,0.14,6.34, 0xefe6cd, -2.2,0.02,0, {noJit:true,inkOp:0.3}));
+scene.add(box(4.34,0.14,6.34, 0xefe6cd,  2.2,0.02,0, {noJit:true,inkOp:0.3}));
+// open pages, ruled-ink tops with handwritten margins
+function pageTex(side){
+  const c=document.createElement('canvas'); c.width=512; c.height=716; const x=c.getContext('2d');
+  x.fillStyle='#f6eed9'; x.fillRect(0,0,512,716);
+  x.strokeStyle='rgba(124,58,46,0.35)'; x.lineWidth=2;
+  x.beginPath(); x.moveTo(side==='L'?470:42,24); x.lineTo(side==='L'?470:42,692); x.stroke();
+  x.strokeStyle='rgba(58,49,40,0.13)'; x.lineWidth=1.6;
+  for(let y=64;y<700;y+=44){ x.beginPath(); x.moveTo(26,y); x.lineTo(486,y); x.stroke(); }
+  x.fillStyle='rgba(58,49,40,0.6)'; x.font='30px "Patrick Hand", Georgia, cursive';
+  if(side==='L'){ x.fillText('the person behind the cv —', 40, 700); }
+  else { x.textAlign='right'; x.fillText('weekends & wanderings', 472, 700); }
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+function page(side, px){
+  const g=new THREE.BoxGeometry(4.3,0.1,6.3);
+  const edge=pmat(COL.page);
+  const top=new THREE.MeshToonMaterial({ color:0xffffff, gradientMap:gradMap, map:pageTex(side) });
+  const m=new THREE.Mesh(g, [edge,edge,top,edge,edge,edge]);
+  m.position.set(px,0.14,0); m.castShadow=true; m.receiveShadow=true; inkLines(m,25,0.4); return m;
+}
+scene.add(page('L',-2.18)); scene.add(page('R',2.18));
+// the page roll into the gutter (slightly darker so the seam reads)
+const roll=cyl(0.14,0.14,6.3, 0xefe5ca, 0,0.15,0, 20, {noInk:true}); roll.rotation.x=Math.PI/2; scene.add(roll);
+// crisp seam lines along the gutter
+scene.add(box(0.022,0.006,6.3, 0xcdbd97, -0.06,0.193,0, {noJit:true,noInk:true}));
+scene.add(box(0.022,0.006,6.3, 0xcdbd97,  0.06,0.193,0, {noJit:true,noInk:true}));
+// a cinnabar ribbon bookmark lying across the page's front corner
+const mark=box(0.16,0.018,1.1, COL.cinnabar, 0.6,0.2,2.55, {noJit:true,inkOp:0.4}); mark.rotation.y=-0.2; scene.add(mark);
+
+// ---------- desk dressing around the book ----------
+// a paper pencil, angled by the book's front-right corner
+const pencil=group(
+  (()=>{ const b=cyl(0.05,0.05,1.1, COL.gilt, 3.3,-0.235,3.65, 6,{inkOp:0.5}); b.rotation.z=Math.PI/2; b.rotation.y=0.5; return b; })(),
+  (()=>{ const t=cone(0.05,0.16, COL.ink, 3.86,-0.235,3.37, 6,{noJit:true,noInk:true}); t.rotation.z=-Math.PI/2; t.rotation.y=0.5; return t; })(),
+  (()=>{ const e=cyl(0.052,0.052,0.1, COL.cinnabar, 2.8,-0.235,3.9, 6,{noInk:true}); e.rotation.z=Math.PI/2; e.rotation.y=0.5; return e; })());
+scene.add(pencil);
+// an ink pot by the book's back-left corner
+scene.add(cyl(0.16,0.2,0.22, COL.ink, -4.2,-0.18,-2.9, 12,{inkOp:0.3}));
+scene.add(cyl(0.06,0.06,0.06, COL.gilt, -4.2,-0.04,-2.9, 10,{noInk:true}));
+// two loose postcards slipped half-out from under the book
+function loosePostcard(cap,hue,x,z,rot){
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(1.0,0.74),
+    new THREE.MeshToonMaterial({ gradientMap:gradMap, map:photoTex(cap,hue) }));
+  m.rotation.x=-Math.PI/2; m.rotation.z=rot; m.position.set(x,-0.281,z); m.receiveShadow=true; return m;
+}
+scene.add(loosePostcard('Bern',152, -5.15,-1.4, 0.28));
+scene.add(loosePostcard('the Alps',205, 5.2,1.8, -0.3));
+
+// ---------- hotspots registry ----------
+const hotspots = []; // {group, label, icon, view:{pos,tgt}, panel:{...}}
+function register(g, opts){ g.userData.hot = opts; hotspots.push(Object.assign({group:g}, opts)); scene.add(g); return g; }
+
+// === Travel 旅行 — left page, back: suitcase + postcards + the dashed route ===
+const kase=group(
+  box(0.92,0.58,0.42, COL.maroon, -2.55,0.48,-1.75,{inkOp:0.7}),
+  box(0.92,0.09,0.42, COL.gilt, -2.55,0.815,-1.75,{noJit:true}),
+  box(0.26,0.07,0.09, COL.ink, -2.55,0.9,-1.75,{noJit:true}),
+  box(0.22,0.15,0.02, COL.qing, -2.74,0.52,-1.53,{noJit:true}),
+  (()=>{ const s=box(0.17,0.17,0.02, COL.cinnabar, -2.36,0.4,-1.53,{noJit:true}); s.rotation.z=0.3; return s; })()
+);
+const cards=group(
+  box(0.5,0.04,0.36, COL.paperW, -1.55,0.21,-0.95),
+  box(0.5,0.04,0.36, COL.paperW, -1.5,0.26,-1.0),
+  box(0.5,0.04,0.36, COL.cream, -1.58,0.31,-0.9));
+const route=group();
+[[-3.5,-2.7],[-3.1,-2.42],[-2.7,-2.26],[-2.3,-2.2],[-1.9,-2.26],[-1.5,-2.46],[-1.15,-2.74]]
+  .forEach((p,i,arr)=>{
+    const seg=box(0.2,0.03,0.07, COL.cinnabar, p[0],0.21,p[1],{noJit:true,noInk:true});
+    if(i<arr.length-1){ seg.rotation.y=-Math.atan2(arr[i+1][1]-p[1], arr[i+1][0]-p[0]); }
+    route.add(seg); });
+function cityFlag(x,z,color){ return group(
+  cyl(0.02,0.02,0.6, COL.ink, x,0.49,z, 8,{noInk:true}),
+  cone(0.1,0.2, color, x,0.86,z, 4,{noJit:true})); }
+const flags=group(cityFlag(-3.5,-2.7,COL.qing), cityFlag(-2.3,-2.2,COL.gilt), cityFlag(-1.15,-2.74,COL.cinnabar));
+const gTravel=register(group(kase,cards,route,flags), {
+  label:'Travel 旅行', icon:'fa-earth-asia',
+  view:{pos:new THREE.Vector3(-5.8,3.6,-5.4),tgt:new THREE.Vector3(-2.4,0.7,-1.8)},
+  panel:{ kicker:'three cities, one suitcase', title:'<span class="em">Travel</span>',
+    body:'Grew up in 西安, did the PhD in Rouen, live in Bern now — with conference detours scattered in between. The suitcase never quite gets unpacked, and every trip ends as one more postcard.',
+    photos:[['Xi\'an',28],['Rouen',208],['Bern',152]] } });
+
+// === Hiking 徒步 — right page, back: paper mountains + pines + summit flag ===
+const m1=cone(1.0,1.9, COL.sage, 2.9,1.12,-1.9, 4,{inkOp:0.65});
+const m2=cone(0.74,1.3, COL.qing, 1.95,0.82,-1.4, 4,{inkOp:0.6});
+const m3=cone(0.6,1.0, 0xb9c4a4, 3.6,0.67,-1.1, 4,{inkOp:0.55});
+const snowCap=cone(0.32,0.5, COL.paperW, 2.9,1.86,-1.9, 4,{noJit:true,inkOp:0.4});
+const sumFlag=group(
+  cyl(0.018,0.018,0.5, COL.ink, 2.9,2.32,-1.9, 8,{noInk:true}),
+  cone(0.09,0.18, COL.cinnabar, 2.97,2.48,-1.9, 4,{noJit:true}));
+function pine(x,z,h){ return group(
+  cyl(0.045,0.055,0.2, COL.wood, x,0.26,z, 8,{noInk:true}),
+  cone(0.2,h*0.55, 0x55795b, x,0.36+h*0.27,z, 6),
+  cone(0.15,h*0.45, 0x639467, x,0.36+h*0.6,z, 6)); }
+const pines=group(pine(1.5,-2.4,0.9), pine(4.0,-1.9,0.7), pine(3.3,-2.65,1.0), pine(2.2,-0.9,0.6));
+const pack=group(
+  box(0.34,0.5,0.22, COL.qing, 1.45,0.44,-0.7),
+  box(0.34,0.18,0.1, COL.gilt, 1.45,0.64,-0.62,{noJit:true}));
+const gHike=register(group(m1,m2,m3,snowCap,sumFlag,pines,pack), {
+  label:'Hiking 徒步', icon:'fa-person-hiking',
+  view:{pos:new THREE.Vector3(6.2,3.8,-5.2),tgt:new THREE.Vector3(2.7,1.0,-1.6)},
+  panel:{ kicker:'weekends, uphill', title:'<span class="em">Hiking</span>',
+    body:'Boots by the door, a pack half-ready. Switzerland spoils you: a weekend above the treeline resets everything, and the best debugging still happens on a ridge.',
+    photos:[['Ridge',150],['Summit',205],['Lake',190]] } });
+
+// === Dancing 跳舞 — right page, front: little stage + record player + notes ===
+const dfloor=cyl(1.0,1.0,0.06, COL.cream, 2.5,0.22,1.6, 28,{inkOp:0.5});
+const player=group(
+  box(0.7,0.16,0.54, COL.ink, 1.7,0.32,2.4,{inkOp:0.8}),
+  cyl(0.23,0.23,0.045, 0x26211b, 1.62,0.41,2.4, 24,{noInk:true}),
+  cyl(0.045,0.045,0.06, COL.gilt, 1.62,0.44,2.4, 10,{noInk:true}),
+  box(0.26,0.03,0.04, COL.gilt, 1.95,0.44,2.28,{noJit:true}));
+function note(x,z,h){ return group(
+  cyl(0.014,0.014,h, COL.ink, x,0.2+h/2,z, 6,{noInk:true}),
+  (()=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(0.07,10,8), pmat(COL.ink)); s.position.set(x,0.2+h,z); s.scale.y=0.72; s.castShadow=true; return s; })(),
+  box(0.15,0.05,0.02, COL.cinnabar, x+0.1,0.26+h,z,{noJit:true,noInk:true})); }
+const notes=group(note(2.9,1.2,0.8), note(3.25,1.8,1.05), note(2.2,1.05,0.6));
+const shoes=group(
+  (()=>{ const s=box(0.24,0.14,0.42, COL.maroon, 3.2,0.32,2.2); s.rotation.y=0.4; return s; })(),
+  (()=>{ const s=box(0.24,0.14,0.42, COL.maroon, 3.5,0.32,2.0); s.rotation.y=-0.2; return s; })());
+const gDance=register(group(dfloor,player,notes,shoes), {
+  label:'Dancing 跳舞', icon:'fa-music',
+  view:{pos:new THREE.Vector3(6.0,3.4,5.6),tgt:new THREE.Vector3(2.5,0.8,1.8)},
+  panel:{ kicker:'music on, everything off', title:'<span class="em">Dancing</span>',
+    body:'A record that skips on the good part, and shoes that have logged more steps than any step-counter admits. Latin and swing, mostly.',
+    photos:[['Night',330],['Vinyl',40]] } });
+
+// === Photos 相册 — left page, front: postcards hanging on a string ===
+const photoSet=[['Bern',205],['Trails',120],['Friends',30],['Xi\'an',28],['Tea',45],['A view',190]];
+const postA=cyl(0.06,0.075,1.25, COL.wood, -3.35,0.77,1.15, 10);
+const postB=cyl(0.06,0.075,1.25, COL.wood, -1.15,0.77,1.95, 10);
+const strDir=new THREE.Vector3(2.2,0,0.8);
+const strand=new THREE.Mesh(new THREE.CylinderGeometry(0.013,0.013,strDir.length(),6), pmat(COL.ink));
+strand.position.set(-2.25,1.38,1.55);
+strand.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), strDir.clone().normalize());
+const garland=group(postA,postB,strand);
+for(let i=0;i<4;i++){
+  const f=0.12+0.76*(i/3);
+  const px=-3.35+2.2*f, pz=1.15+0.8*f;
+  const card=new THREE.Mesh(new THREE.PlaneGeometry(0.62,0.47),
+    new THREE.MeshToonMaterial({ gradientMap:gradMap, map:photoTex(photoSet[i][0],photoSet[i][1]), side:THREE.DoubleSide }));
+  card.position.set(px,1.12,pz); card.rotation.y=-0.35+(Math.random()-0.5)*0.12; card.castShadow=true;
+  garland.add(card);
+  garland.add(box(0.055,0.08,0.035, COL.cinnabar, px,1.37,pz,{noJit:true,noInk:true}));
+}
+const gPhotos=register(garland, {
+  label:'Photos 相册', icon:'fa-images',
+  view:{pos:new THREE.Vector3(-6.0,3.2,5.6),tgt:new THREE.Vector3(-2.3,1.2,1.6)},
+  panel:{ kicker:'postcards on a string', title:'<span class="em">Photos</span>',
+    body:'Bits of life away from the screen, pegged up to dry like prints — mountains, friends, a good cup of tea. (Hand-inked stand-ins for now; real photos drop straight in.)',
+    photos:photoSet } });
+
+// === gutter decor (no hotspot): tea set, paper plant, the cat ===
+const tea=group(
+  cyl(0.18,0.22,0.3, COL.qing, 0.45,0.34,0.2, 14),
+  (()=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(0.07,10,8), pmat(COL.gilt)); s.position.set(0.45,0.55,0.2); s.castShadow=true; return s; })(),
+  (()=>{ const sp=cyl(0.035,0.05,0.18, COL.qing, 0.6,0.44,0.2, 8,{noInk:true}); sp.rotation.z=-0.85; return sp; })(),
+  cyl(0.07,0.08,0.1, COL.cream, 0.14,0.24,0.48, 10));
+const plant=group(cyl(0.12,0.16,0.24, COL.maroon, -0.5,0.31,-0.4, 10));
+for(let i=0;i<5;i++){ const lf=box(0.05,0.5,0.16, 0x5b7d4b, -0.5,0.62,-0.4,{noInk:true});
+  lf.rotation.z=(Math.random()-0.5)*1.1; lf.rotation.x=(Math.random()-0.5)*0.8; plant.add(lf); }
+const cat=group(
+  box(0.5,0.22,0.3, 0x4a4038, 0.1,0.3,2.5,{inkOp:0.7}),
+  (()=>{ const h=new THREE.Mesh(new THREE.SphereGeometry(0.14,12,10), pmat(0x4a4038)); h.position.set(-0.14,0.36,2.5); h.castShadow=true; return h; })(),
+  cone(0.045,0.09, 0x4a4038, -0.2,0.46,2.44, 4,{noInk:true,noJit:true}),
+  cone(0.045,0.09, 0x4a4038, -0.08,0.46,2.44, 4,{noInk:true,noJit:true}),
+  (()=>{ const t=cyl(0.03,0.03,0.4, 0x4a4038, 0.42,0.3,2.62, 8,{noInk:true}); t.rotation.z=Math.PI/2; t.rotation.y=0.5; return t; })());
+scene.add(tea); scene.add(plant); scene.add(cat);
+
+// === pop-up entrance: the book's world unfolds from the pages ===
+const pops=[gTravel,gHike,gDance,gPhotos,tea,plant,cat];
+pops.forEach((g,i)=>{ g.userData.pop={t:0, delay:0.2+i*0.13};
+  if(!reduce) g.scale.set(1,0.012,1); });
+let popping=!reduce;
+function backOut(t){ const s=1.70158; t=t-1; return t*t*((s+1)*t+s)+1; }
+
+// ---------- labels (CSS2D) ----------
+hotspots.forEach(h=>{ const el=document.createElement('div'); el.className='hot-label'; el.textContent=h.label;
+  const obj=new CSS2DObject(el); const bb=new THREE.Box3().setFromObject(h.group); const c=bb.getCenter(new THREE.Vector3());
+  obj.position.set(c.x, bb.max.y+0.4, c.z); h.group.add(obj); h.labelEl=el; });
+
+// ---------- explore menu (keyboard / SR path) ----------
+const exploreEl=document.getElementById('explore');
+hotspots.forEach(h=>{ const b=document.createElement('button'); b.innerHTML=`<i class="fas ${h.icon}" aria-hidden="true"></i> ${h.label}`;
+  b.addEventListener('click',()=>focusHot(h)); exploreEl.appendChild(b); });
+
+// ---------- raycast hover + click ----------
+const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2(); let hovered=null;
+function pick(ev){ const r=renderer.domElement.getBoundingClientRect();
+  mouse.x=((ev.clientX-r.left)/r.width)*2-1; mouse.y=-((ev.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mouse,camera);
+  for(const h of hotspots){ if(ray.intersectObject(h.group,true).length) return h; } return null; }
+renderer.domElement.addEventListener('pointermove',ev=>{ const h=pick(ev); if(h!==hovered){ if(hovered) hovered.labelEl.classList.remove('on'); hovered=h; if(h) h.labelEl.classList.add('on'); renderer.domElement.style.cursor=h?'pointer':'grab'; } });
+renderer.domElement.addEventListener('pointerdown',()=>{ renderer.domElement.style.cursor='grabbing'; idle=false; });
+renderer.domElement.addEventListener('click',ev=>{ const h=pick(ev); if(h) focusHot(h); });
+
+// ---------- camera focus tween + panel ----------
+let tween=null; // {fromPos,toPos,fromTgt,toTgt,t,dur}
+function moveCam(pos,tgt,dur=1.0){ idle=false; tween={ fromPos:camera.position.clone(), toPos:pos.clone(), fromTgt:controls.target.clone(), toTgt:tgt.clone(), t:0, dur: reduce?0.001:dur }; }
+const panel=document.getElementById('panel'), back=document.getElementById('back');
+function focusHot(h){ moveCam(new THREE.Vector3(h.view.pos.x,h.view.pos.y,h.view.pos.z), h.view.tgt);
+  const p=h.panel; let html=`<button class="x" id="panelX" aria-label="Close">&times;</button>`;
+  html+=`<p class="kicker">${p.kicker}</p><h2>${p.title}</h2><p>${p.body}</p>`;
+  if(p.photos){ html+=`<div class="pgrid">`+p.photos.map(ph=>`<img src="" data-cap="${ph[0]}" data-hue="${ph[1]}" alt="${ph[0]}">`).join('')+`</div>`; }
+  if(p.acts){ html+=`<div class="pacts">`+p.acts.map(a=>`<a href="${a.href}"><i class="fas ${a.i}" aria-hidden="true"></i> ${a.t}</a>`).join('')+`</div>`; }
+  panel.innerHTML=html; panel.classList.add('on'); back.classList.add('on');
+  document.getElementById('panelX').addEventListener('click',closePanel);
+  // fill placeholder photos from canvas + wire lightbox
+  panel.querySelectorAll('.pgrid img').forEach((im,i)=>{ im.src=canvasURL(im.dataset.cap, +im.dataset.hue);
+    im.addEventListener('click',()=>openLB(panel.querySelectorAll('.pgrid img'), i)); });
+}
+function canvasURL(cap,hue){ const c=document.createElement('canvas'); c.width=400;c.height=300;
+  drawPostcard(c.getContext('2d'), 400, 300, cap, hue); return c.toDataURL(); }
+function closePanel(){ panel.classList.remove('on'); back.classList.remove('on'); moveCam(HOME.pos,HOME.tgt,0.9); }
+back.addEventListener('click',closePanel);
+addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(document.getElementById('lb').classList.contains('on')) closeLB(); else if(panel.classList.contains('on')) closePanel(); } });
+
+// ---------- lightbox ----------
+const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'); let lbList=[], lbI=0;
+function openLB(imgs,i){ lbList=[...imgs].map(x=>x.src); lbI=i; lbImg.src=lbList[lbI]; lb.classList.add('on'); }
+function closeLB(){ lb.classList.remove('on'); }
+function stepLB(d){ lbI=(lbI+d+lbList.length)%lbList.length; lbImg.src=lbList[lbI]; }
+document.getElementById('lbX').addEventListener('click',closeLB);
+document.getElementById('lbPrev').addEventListener('click',()=>stepLB(-1));
+document.getElementById('lbNext').addEventListener('click',()=>stepLB(1));
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+
+// ---------- loop ----------
+let idle=!reduce, idleTime=0; const clock=new THREE.Clock(); const UP=new THREE.Vector3(0,1,0);
+function animate(){ requestAnimationFrame(animate); const dt=Math.min(clock.getDelta(),0.05);
+  if(popping){ let done=true;
+    for(const g of pops){ const p=g.userData.pop; p.t+=dt;
+      const u=Math.min(Math.max((p.t-p.delay)/0.55,0),1); if(u<1) done=false;
+      g.scale.y=Math.max(0.012, backOut(u)); }
+    if(done) popping=false; }
+  if(tween){ tween.t=Math.min(tween.t+dt/tween.dur,1); const e=1-Math.pow(1-tween.t,3);
+    camera.position.lerpVectors(tween.fromPos,tween.toPos,e); controls.target.lerpVectors(tween.fromTgt,tween.toTgt,e);
+    if(tween.t>=1) tween=null; }
+  else if(idle){ idleTime+=dt; const off=camera.position.clone().sub(controls.target); off.applyAxisAngle(UP, dt*0.06); camera.position.copy(controls.target).add(off); if(idleTime>14) idle=false; }
+  controls.update();
+  renderer.render(scene,camera); labelRenderer.render(scene,camera);
+}
+animate();
+document.getElementById('loader').classList.add('off');
+window.__roomReady = true;
+// tiny dev/test hook (harmless in prod): drive the camera + hotspots programmatically
+window.__room = { camera, controls, HOME, moveCam, focusHot, closePanel, hotspots, stopIdle:()=>{ idle=false; } };
+
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); labelRenderer.setSize(innerWidth,innerHeight); });
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) idle=false; });
+</script>
+</body>
+</html>
