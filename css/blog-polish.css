@@ -66,3 +66,6 @@ html { scrollbar-width: thin; scrollbar-color: oklch(0.50 0.09 45) transparent; 
     transform: rotate(-0.4deg);
 }
 .blog-footer-hire a { color: var(--blog-maroon-br, #a83232) !important; }
+/* the CV pill stays visible at every size (R4 intent: one click from anywhere;
+   blog.css hides .blog-nav-home on mobile, which this pill inherits) */
+.blog-nav-cv { display: inline-flex !important; align-items: center; }

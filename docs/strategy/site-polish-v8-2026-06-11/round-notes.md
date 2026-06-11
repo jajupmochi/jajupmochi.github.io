@@ -77,6 +77,19 @@ come pat 旺财."), gallery navbar CV link + footer line ("All of these are real
 systems — hiring? read my CV."). Homepage already carries (my cv) in About + footer set.
 Verified: `r4-blog-footer.png`.
 
+## Round 5 — QA lock
+
+Lens: cross-cutting QA on the whole v8 set.
+
+- **Mobile 390×844**: blog (no overflow; nav extras hide, CV pill forced visible —
+  blog.css hides `.blog-nav-home` on phones and the pill inherited it, fixed),
+  gallery (no overflow, full nav set), EN home (no overflow), personal + deck load clean.
+- **Found + fixed a PRE-EXISTING live bug**: the zh page's navbar link row forced the
+  page to 458px on phones (horizontal scroll on the whole site for zh mobile users).
+  Contained the navbar; the link row scrolls inside itself (`clear-polish.css` R5).
+- **Theme spot-check**: `academic` theme keeps the Patrick-Hand reading tier; no breakage.
+- **Console**: 0 errors/warnings across all six v8 pages.
+
 ## Pending locale edits (apply at swap)
 
 - `blog.nav_apps` / `blog.nav_personal` (+ zh/fr/de) if Linlin wants the new blog nav
