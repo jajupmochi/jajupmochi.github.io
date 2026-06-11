@@ -52,6 +52,22 @@ is fully connected.
 **Verified:** blog nav/footer link sets via DOM; gallery drop-cap + nav via screenshot
 (`r2-gallery-head2.png`).
 
+## Round 3 — Personality
+
+Lens: 个性. Tactile micro-details per the 2026 hand-made trend: gilt-highlighter
+`::selection`; parchment-ink page scrollbars (thin dowel, cream border); blog posts
+sign off "— Linlin" with 旺财's ink paw print (SVG data-URI); stat-card pinned-note
+wiggle + skill-tag ink-dip hovers; gallery Personal link wears the paw icon.
+Verified: sign-off + paw render (`r3-signoff.png`); hover transitions live.
+
+## Round 4 — Visitor flow (interviewers)
+
+Lens: 面试官 30-second rule. CV is now ONE click from every chrome surface: blog navbar
+(dashed CV pill) + footer signpost ("Hiring? Read my CV · browse the publications · or
+come pat 旺财."), gallery navbar CV link + footer line ("All of these are real, running
+systems — hiring? read my CV."). Homepage already carries (my cv) in About + footer set.
+Verified: `r4-blog-footer.png`.
+
 ## Pending locale edits (apply at swap)
 
 - `blog.nav_apps` / `blog.nav_personal` (+ zh/fr/de) if Linlin wants the new blog nav

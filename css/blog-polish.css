@@ -54,3 +54,18 @@ html { scrollbar-width: thin; scrollbar-color: oklch(0.50 0.09 45) transparent; 
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%235a4c3a' opacity='0.7'><ellipse cx='20' cy='16' rx='7' ry='9'/><ellipse cx='44' cy='16' rx='7' ry='9'/><ellipse cx='8' cy='31' rx='6' ry='8'/><ellipse cx='56' cy='31' rx='6' ry='8'/><path d='M32 26c10 0 18 9 18 17 0 7-7 12-18 12s-18-5-18-12c0-8 8-17 18-17z'/></g></svg>")
       no-repeat right 0.55em / 30px 30px;
 }
+
+/* ============================================================
+   R4 — VISITOR FLOW: the hiring signpost + CV always one click away
+   ============================================================ */
+.blog-nav-cv {
+    border: 1px dashed rgba(140,30,30,0.5); border-radius: 999px;
+    padding: 0.05em 0.7em !important; color: var(--blog-maroon, #8c1e1e) !important;
+}
+.blog-footer-hire {
+    margin-top: 0.9em;
+    font-family: 'Patrick Hand', 'LXGW WenKai', cursive;
+    font-size: 1.08rem; color: var(--blog-ink-soft, #6f6557);
+    transform: rotate(-0.4deg);
+}
+.blog-footer-hire a { color: var(--blog-maroon-br, #a83232) !important; }
