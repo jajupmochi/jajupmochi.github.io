@@ -595,13 +595,13 @@
 
             // Cross-site redirect:
             //   * EN canonical site = parchment (`index_en.html`, has `data-site="parchment"`)
-            //   * zh/fr/de live on the clear backup (`index_zh_clear.html`, renamed from index_en_clear 2026-06-11).
+            //   * zh/fr/de live on the clear backup (`index_en_clear.html`).
             // Switch sites instead of trying to re-translate parchment in zh/fr/de
             // (parchment HTML has English-only content baked in; non-EN translations
             // are kept on the clear site for now).
             const site = document.documentElement.getAttribute('data-site') || 'clear';
             if (site === 'parchment' && lang !== 'en') {
-                location.href = 'index_zh_clear.html';
+                location.href = 'index_en_clear.html';
                 return;
             }
             if (site === 'clear' && lang === 'en') {
@@ -935,7 +935,7 @@
                 // BEFORE applying translations (avoids briefly rendering the wrong page).
                 const __site = document.documentElement.getAttribute('data-site') || 'clear';
                 if (__site === 'parchment' && savedLang !== 'en') {
-                    location.replace('index_zh_clear.html');
+                    location.replace('index_en_clear.html');
                     return;
                 }
                 if (__site === 'clear' && savedLang === 'en') {

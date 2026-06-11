@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-11](#2026-06-11)
+    - [V6 — site-wide v8 polish swapped live (5 rounds + 2 review rounds)](#v6--site-wide-v8-polish-swapped-live-5-rounds--2-review-rounds) — approval-gated v8 set went live: neat-handwriting reading tier (Patrick Hand ≥17px) across all prose; blog/gallery joined the site nav language (translated ×4); tactile personality (gilt selection, ink scrollbars, blog sign-off + 旺财 paw, footer paw trail); zh homepage renamed `index_en_clear.html`→`index_zh_clear.html` with a redirect stub + router/sitemap updates; pre-existing zh mobile 458px overflow fixed; pre-swap originals archived in `backups/pre-v8-swap-2026-06-11/`.
     - [V5 — 旺财 slinks under the coffee table (height-aware collision)](#v5--旺财-slinks-under-the-coffee-table-height-aware-collision) — a standing cat's head (y≈0.68) clipped through the tabletop (underside y≈0.59); now the table zone triggers a smooth crouch-walk (root −0.105, legs tucked, head down, slower gait) that clears the table by 0.05+, and post-reaction walks route to the NEAREST waypoint (the stale-node shortcut was the path that cut through furniture). Reactions are suppressed under the table (hearts only).
     - [V4 — pet 旺财: focus-follow camera, pat with 3 reactions; cuter eyes; collar fixed](#v4--pet-旺财-focus-follow-camera-pat-with-3-reactions-cuter-eyes-collar-fixed) — click 旺财 → the camera focuses and follows him around; nearby cursor becomes a hand; click = a paper hand pats him with one of 3 random reactions (blissful lean-in + hearts / belly-flop roll / offended shake-then-storm-off); scroll out (or ESC) steps back. Eyes redesigned to Dragon-Li reference (large golden almond, outer corner higher, big round pupil, two glints). Collar now truly wraps the neck and the 旺财 tag chains to it via a link.
     - [V3 — 旺财 gets a real body](#v3--旺财-gets-a-real-body) — the cat refined per Linlin's 4 points: lathed organic body (no more capsule-pill) + haunches/shoulder/scruff/cheeks; tail properly rooted (was floating 0.27 above the back); layered eyes (dark rim, amber iris, vertical slit pupil, glint) with random blinking; cinnabar collar + gilt tag engraved 旺财. Sleep tail flattened; fallback image re-shot.
@@ -84,6 +85,32 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-11
+
+## V6 — site-wide v8 polish swapped live (5 rounds + 2 review rounds)
+
+Linlin approved the v8 candidate (built entirely in new files, originals untouched
+during review — full docs in `docs/strategy/site-polish-v8-2026-06-11/`). Swapped live:
+
+- **R1 可读性** — two-tier type: reading tier = **Patrick Hand** (the neatest loaded
+  handwriting; Linlin's correction — readability must stay handwritten, no serif) at
+  ≥17px / lh 1.66–1.7 for all sustained prose (blog body 17.3px + excerpts, home
+  research/news/timeline/projects/pub-meta, gallery card descs); voice tier
+  (Reenie/Indie/Caveat) keeps headings/labels/hero. zh body keeps its own calligraphy.
+- **R2 主题** — blog navbar/footer carry Home·Apps·Personal (translated ×4 via
+  js/blog.js dicts); gallery nav/footer + paw icon for Personal.
+- **R3 个性** — gilt-highlighter `::selection`; parchment-ink page scrollbars; blog
+  posts sign off "— Linlin" + 旺财 ink paw; footer paw trail (home + gallery);
+  stat-card wiggle + skill-tag ink-dip hovers. (Title swashes were tried and removed
+  per review; CV links on blog/gallery likewise removed.)
+- **R5 QA** — mobile pass all pages; **fixed a pre-existing live bug**: the zh page's
+  navbar link row forced 458px page width on phones (site-wide horizontal scroll).
+- **zh homepage renamed** — history (38117b6) confirmed `index_en_clear.html` is the
+  pre-parchment OLD EN homepage kept to serve zh/fr/de via i18n. Now properly named
+  `index_zh_clear.html`; old URL keeps a redirect stub (meta refresh + JS, preserves
+  `?lang=`); `js/main.js` router ×2, `index_en.html` hreflangs ×3, `sitemap.xml` ×7
+  updated. Remaining old-name mentions are explanatory comments.
+- **Backups** — exact pre-swap versions of all replaced/edited files archived in
+  `backups/pre-v8-swap-2026-06-11/` (also in git history). v8 working files kept.
 
 ## V5 — 旺财 slinks under the coffee table (height-aware collision)
 
