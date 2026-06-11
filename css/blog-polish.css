@@ -52,20 +52,3 @@ html { scrollbar-width: thin; scrollbar-color: oklch(0.50 0.09 45) transparent; 
       no-repeat right 0.55em / 30px 30px;
 }
 
-/* ============================================================
-   R4 — VISITOR FLOW: the hiring signpost + CV always one click away
-   ============================================================ */
-.blog-nav-cv {
-    border: 1px dashed rgba(140,30,30,0.5); border-radius: 999px;
-    padding: 0.05em 0.7em !important; color: var(--blog-maroon, #8c1e1e) !important;
-}
-.blog-footer-hire {
-    margin-top: 0.9em;
-    font-family: 'Patrick Hand', 'LXGW WenKai', cursive;
-    font-size: 1.08rem; color: var(--blog-ink-soft, #6f6557);
-    transform: rotate(-0.4deg);
-}
-.blog-footer-hire a { color: var(--blog-maroon-br, #a83232) !important; }
-/* the CV pill stays visible at every size (R4 intent: one click from anywhere;
-   blog.css hides .blog-nav-home on mobile, which this pill inherits) */
-.blog-nav-cv { display: inline-flex !important; align-items: center; }

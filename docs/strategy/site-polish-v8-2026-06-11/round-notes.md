@@ -108,7 +108,33 @@ Lens: cross-cutting QA on the whole v8 set.
    (`fix1-experience.png`), paw trail (`fix4-paws-final.png`), gilt selection
    (`fix4-selection-demo.png`); the sign-off paw was already in `r3-signoff.png`.
 
+## Review fixes round 2 (Linlin, 2026-06-11)
+
+1. **Title swash removed** — the hand-drawn wavy underline under homepage section titles
+   is gone (`.section-title::after` deleted from polish.css).
+2. **index_en_clear → index_zh_clear** — history confirmed (commit 38117b6): the clear
+   page is the pre-parchment OLD EN homepage, kept to serve zh/fr/de via i18n (its inline
+   content is English; the loader renders zh — hence "打开是中文"). No lost English
+   version exists to restore. Renamed in v8: `index_zh_clear_v8.html` (self-refs fixed),
+   `index_en_v8.html` hreflangs now point at `index_zh_clear.html`. Shared-file edits
+   (js/main.js router ×2, sitemap.xml ×3) + an `index_en_clear.html` redirect stub are
+   in the swap checklist below.
+3. **Fluff lines deleted** — gallery "All of these are real, running systems…" and blog
+   "More of me: …" footer lines removed (plus their CSS); swept other pages — no other
+   added filler remains (pre-existing original copy untouched).
+4. **Gallery title + spacing reverted** — back to the original plain `pf-title`
+   (drop-cap/section-title treatment removed, head spacing back to compact).
+
 ## Pending locale edits (apply at swap)
 
 - `blog.nav_apps` / `blog.nav_personal` (+ zh/fr/de) if Linlin wants the new blog nav
   links translated (currently plain English text without data-i18n).
+
+## Swap checklist additions (shared files, apply at swap)
+
+- `js/main.js` lines ~604 + ~938: `'index_en_clear.html'` → `'index_zh_clear.html'`.
+- `sitemap.xml`: 3 hreflang URLs + comment → `index_zh_clear.html`.
+- Keep a redirect stub at `index_en_clear.html` (meta refresh → `index_zh_clear.html`)
+  so old indexed/bookmarked URLs survive.
+- `cp index_zh_clear_v8.html index_zh_clear.html` (new file) instead of overwriting the
+  old name.

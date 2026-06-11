@@ -76,30 +76,11 @@ html { scrollbar-width: thin; scrollbar-color: oklch(0.50 0.09 45) transparent; 
     transform: translateY(-1px);
 }
 
-/* ============================================================
-   R4 — VISITOR FLOW: gallery hiring signpost
-   ============================================================ */
-.pf-hire {
-    margin: 0 0 0.8em;
-    font-family: 'Patrick Hand', cursive;
-    font-size: 1.12rem; color: #6b5436;
-    transform: rotate(-0.4deg);
-}
-.pf-hire a { color: #9a2b1e !important; }
 
 /* ============================================================
    R3b — PERSONALITY, VISIBLY (Linlin: "R3 我咋都没看到") — two
    always-visible hand-made signatures, on top of the micro ones.
    ============================================================ */
-/* 1) every homepage section title gets a hand-drawn ink swash */
-.section-title::after {
-    content: '';
-    display: block;
-    width: 215px; height: 11px;
-    margin-top: 3px;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 12'><path d='M3 8 Q 30 2 60 7 T 120 6 T 180 7 T 217 5' fill='none' stroke='%23b1442f' stroke-width='2.6' stroke-linecap='round' opacity='0.5'/></svg>") no-repeat left center / contain;
-    transform: rotate(-0.6deg);
-}
 /* 2) 旺财 walked across the footer: a fading paw trail at the very end
    (.footer-legal::after — under .footer-bottom it hid behind the legal text) */
 .footer-legal::after, .pf-foot .copy::after {
