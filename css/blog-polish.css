@@ -26,3 +26,9 @@
 .blog-card-title { font-size: 1.32rem !important; }
 /* intro line under the Blog washi tab reads as prose too */
 .blog-intro, .blog-sub { font-family: var(--read-font) !important; }
+
+/* ============================================================
+   R2 — COHERENCE: blog joins the site's nav set (Home·Apps·Personal)
+   ============================================================ */
+.blog-nav-extra { opacity: 0.88; }
+@media (max-width: 640px){ .blog-nav-extra { display: none; } }

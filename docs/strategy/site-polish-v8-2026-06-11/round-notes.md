@@ -35,6 +35,24 @@ Deck already used Spectral for prose (no change); personal page has no prose sur
 Critique → next: blog list still lacks site-navbar coherence; gallery header plain;
 footers inconsistent — that's R2 (theme coherence).
 
+## Round 2 — Theme coherence
+
+Lens: 主题. The secondary pages now speak the homepage's language and the four-page web
+is fully connected.
+
+**Changed:**
+- `blog_v8`: navbar + footer gain Apps · Personal (full site set: Home·Apps·Personal·Blog
+  ·GitHub·RSS); nav extras hidden ≤640px (`blog-polish.css` R2).
+- `apps-gallery_v8`: nav + footer gain Personal; the page title now carries the homepage's
+  illuminated drop-cap treatment (`section-title` + an inert `data-i18n` span as the CSS
+  hook — no i18n loader on this page, documented inline).
+- Deck + personal pages intentionally keep their immersive minimal chrome (by design);
+  zh clear page stays within its own system.
+
+**Verified:** blog nav/footer link sets via DOM; gallery drop-cap + nav via screenshot
+(`r2-gallery-head2.png`).
+
 ## Pending locale edits (apply at swap)
 
-(none yet)
+- `blog.nav_apps` / `blog.nav_personal` (+ zh/fr/de) if Linlin wants the new blog nav
+  links translated (currently plain English text without data-i18n).
