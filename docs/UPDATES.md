@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-16](#2026-06-16)
+    - [V2 — Living-room TV with real video playback in the 3D personal room](#v2--living-room-tv-with-real-video-playback-in-the-3d-personal-room) — `personal.html` gains a wall-mounted 4K TV that plays Linlin's own videos: a real `<iframe>` in a CSS3DRenderer layer behind a depth-only WebGL hole (correct occlusion, the cat can pass in front), 19 shuffled Bilibili/YouTube channels + a test-card slate for non-embeddable 小红书/微信视频号, a paper remote (power / channel / volume / brightness / watch-on-site + keyboard), and an old-set snow→black→picture tune transition.
     - [V1 — Homepage social-preview image swapped to the parchment hero](#v1--homepage-social-preview-image-swapped-to-the-parchment-hero) — `index_en.html` OG/Twitter card → new `images/og-hero.jpg` (1200×630 capture of the live parchment notebook hero) instead of the old blue studio card; `alt` text refreshed; zh page + JSON-LD portrait left unchanged; re-scrape needed after deploy.
 - [2026-06-11](#2026-06-11)
     - [V6 — site-wide v8 polish swapped live (5 rounds + 2 review rounds)](#v6--site-wide-v8-polish-swapped-live-5-rounds--2-review-rounds) — approval-gated v8 set went live: neat-handwriting reading tier (Patrick Hand ≥17px) across all prose; blog/gallery joined the site nav language (translated ×4); tactile personality (gilt selection, ink scrollbars, blog sign-off + 旺财 paw, footer paw trail); zh homepage renamed `index_en_clear.html`→`index_zh_clear.html` with a redirect stub + router/sitemap updates; pre-existing zh mobile 458px overflow fixed; pre-swap originals archived in `backups/pre-v8-swap-2026-06-11/`.
@@ -87,6 +88,14 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-16
+
+## V2 — Living-room TV with real video playback in the 3D personal room
+
+- `personal.html` gains a wall-mounted slim 4K **TV** that actually plays Linlin's own videos. The screen is a real `<iframe>` living in a `CSS3DRenderer` layer behind the transparent WebGL canvas; a depth-only "hole" mesh (`colorWrite:false`, `renderOrder:-1`) punches through the scene so occlusion is correct — the 旺财 cat can walk in front of a playing video. (The renderer became `alpha:true` with `scene.background=null` for the mix; the fog stays.)
+- **19 channels**, deliberately shuffled (not chronological): Bilibili + YouTube embeds, plus non-embeddable stations (小红书 / 微信视频号) rendered as `type:'ext'` — a classic colour-bar test card + the title + a "watch on site" remote link. Channel 1 is a strong playable video. Short links were resolved up front (b23.tv → BV id; YouTube oEmbed for titles).
+- **Paper remote** (parchment style, bottom-right): power, channel ±, volume ± (YouTube via the iframe postMessage API; Bilibili/ext show a note instead), brightness (CSS `filter` on the screen element), and a per-channel "watch on site" link. Keyboard: ←→ channel, ↑↓ volume. Channel changes play the old-set tune transition (snow → black + source swap → snow → picture) with a green channel OSD; `prefers-reduced-motion` skips the snow.
+- Layout fits: the TV is centred on the back wall (curtains narrowed, photo wall slid right to make room). The focus camera pulls in for a sit-on-the-sofa view, and on narrow / portrait viewports it auto-pulls back (fov-based) so the whole set fits. Exit (power button / ESC / click the cream backdrop) stops playback (`src='about:blank'` — never `''`, which would reload the page) and restores orbit controls. 0 own console errors (the only console error is from Bilibili's own iframe script).
+- The channel list is a `TV_CHANNELS` array at the top of the TV logic for easy editing; future video links get **shuffled in**, not appended. Built 2026-06-11..16; committed today.
 
 ## V1 — Homepage social-preview image swapped to the parchment hero
 
