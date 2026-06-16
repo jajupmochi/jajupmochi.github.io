@@ -367,6 +367,7 @@ periodic checks. This Horizon tracks both.
 #### G3 — OG card rotation (optional)
 - `[ ]` H2.M2.G3.T1 — Enable `.github/workflows/rotate-og-card.yml` Mondays cron.
 - `[x]` H2.M2.G3.T2 — Per-request randomization — cancelled (impossible on pure GH Pages, would need edge worker).
+- `[✓]` H2.M2.G3.T3 — (2026-06-16 V1) Homepage `index_en.html` social preview switched from the rotating `og-card.jpg` to a static `images/og-hero.jpg` (a 1200×630 capture of the live parchment notebook hero). Effect on T1: the rotation cron would now only matter for pages still on `og-card.jpg` (the zh/fr/de `index_zh_clear.html`) — reconsider whether weekly rotation is still wanted, or retire G3.
 
 #### G4 — Spam mitigation (welcome form)
 - `[ ]` H2.M2.G4.T1 — Cloudflare Turnstile (low-effort, free) — only if spam appears.

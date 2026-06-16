@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-16](#2026-06-16)
+    - [V1 — Homepage social-preview image swapped to the parchment hero](#v1--homepage-social-preview-image-swapped-to-the-parchment-hero) — `index_en.html` OG/Twitter card → new `images/og-hero.jpg` (1200×630 capture of the live parchment notebook hero) instead of the old blue studio card; `alt` text refreshed; zh page + JSON-LD portrait left unchanged; re-scrape needed after deploy.
 - [2026-06-11](#2026-06-11)
     - [V6 — site-wide v8 polish swapped live (5 rounds + 2 review rounds)](#v6--site-wide-v8-polish-swapped-live-5-rounds--2-review-rounds) — approval-gated v8 set went live: neat-handwriting reading tier (Patrick Hand ≥17px) across all prose; blog/gallery joined the site nav language (translated ×4); tactile personality (gilt selection, ink scrollbars, blog sign-off + 旺财 paw, footer paw trail); zh homepage renamed `index_en_clear.html`→`index_zh_clear.html` with a redirect stub + router/sitemap updates; pre-existing zh mobile 458px overflow fixed; pre-swap originals archived in `backups/pre-v8-swap-2026-06-11/`.
     - [V5 — 旺财 slinks under the coffee table (height-aware collision)](#v5--旺财-slinks-under-the-coffee-table-height-aware-collision) — a standing cat's head (y≈0.68) clipped through the tabletop (underside y≈0.59); now the table zone triggers a smooth crouch-walk (root −0.105, legs tucked, head down, slower gait) that clears the table by 0.05+, and post-reaction walks route to the NEAREST waypoint (the stale-node shortcut was the path that cut through furniture). Reactions are suppressed under the table (hearts only).
@@ -83,6 +85,15 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-06-16
+
+## V1 — Homepage social-preview image swapped to the parchment hero
+
+- The Open Graph / Twitter card image for `index_en.html` (what LinkedIn, X, Slack, etc. scrape) changed from the old blue-on-white studio card (`images/og-card.jpg`) to **`images/og-hero.jpg`** — a 1200×630 capture of the live parchment notebook hero (name, portrait, the "today's research" Graph-ML mindmap), so the share preview now matches the actual site instead of a separate design.
+- How the image was made: screenshotted the real hero at a 1200×630 viewport with the navbar / welcome overlay / howl button / coming-soon toast / "open to opportunities" pill hidden, then saved JPEG q92 with 4:4:4 sampling (185 KB) so the thin red handwriting stays crisp.
+- `index_en.html` edits: `og:image`, `og:image:secure_url`, `twitter:image` → `og-hero.jpg`; `og:image:alt` + `twitter:image:alt` rewritten to describe the parchment page. Dimensions stay 1200×630, type stays `image/jpeg`. The old `images/og-card*.jpg` files are kept untouched as a revert path.
+- Out of scope / notes: the zh/fr/de `index_zh_clear.html` still uses `og-card.jpg` (old "clear" design — a parchment preview there would mismatch); the JSON-LD `Person.image` (portrait `photo.jpg`) is unchanged. Social platforms cache OG images, so after deploy the new card must be re-fetched via LinkedIn Post Inspector / X Card Validator to refresh. See PLAN `H2.M2.G3.T3`.
 
 # 2026-06-11
 
