@@ -29,21 +29,27 @@
 
   /* --- the TV screen element (lives in the CSS3D layer) --- */
   .tv-screen{ position:relative; overflow:hidden; background:#0b0b0d; }
-  .tv-screen iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .tv-screen iframe{ position:absolute; inset:0; width:100%; height:100%; border:0;
+    transform:scale(1.14); transform-origin:center center;   /* overscan: crop the player's own chrome off-screen for a clean full-bleed picture */
+    transition:transform .3s cubic-bezier(.22,1,.36,1); }
+  .tv-screen:hover iframe{ transform:scale(1); }              /* mouse over the screen reveals the native controls; leaving re-crops them */
   .tv-noise{ position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; display:none; }
   .tv-black{ position:absolute; inset:0; background:#000; display:none; }
   /* test-card slate for stations this set can't tune (rednote / WeChat) */
   .tv-slate{ position:absolute; inset:0; display:none; background:#101014; }
+  .tv-slate .cover{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
   .tv-slate .bars{ display:flex; height:52%; }
   .tv-slate .bars i{ flex:1; }
   .tv-slate .bars i:nth-child(1){ background:#b8b8b8; } .tv-slate .bars i:nth-child(2){ background:#b8b800; }
   .tv-slate .bars i:nth-child(3){ background:#00b8b8; } .tv-slate .bars i:nth-child(4){ background:#00b800; }
   .tv-slate .bars i:nth-child(5){ background:#b800b8; } .tv-slate .bars i:nth-child(6){ background:#b80000; }
   .tv-slate .bars i:nth-child(7){ background:#0000b8; }
-  .tv-slate .meta{ padding:32px 48px; font-family:'JetBrains Mono',monospace; color:#ece4d2; }
-  .tv-slate .meta .t{ font-size:46px; line-height:1.25; }
+  .tv-slate .meta{ position:absolute; left:0; right:0; bottom:0; padding:54px 48px 38px;
+    font-family:'JetBrains Mono',monospace; color:#fff;
+    background:linear-gradient(to top, rgba(7,8,10,0.9) 0%, rgba(7,8,10,0.55) 52%, transparent 100%); }
+  .tv-slate .meta .t{ font-size:46px; line-height:1.2; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
   .tv-slate .meta .s{ margin-top:10px; font-size:27px; color:#9fe8a8; }
-  .tv-slate .meta .h{ margin-top:16px; font-size:22px; opacity:0.75; }
+  .tv-slate .meta .h{ margin-top:14px; font-size:22px; opacity:0.82; }
   .tv-off{ position:absolute; inset:0; display:block;
     background:linear-gradient(155deg, #16161a 0%, #0a0a0c 55%, #131318 100%); }
   .tv-off::after{ content:''; position:absolute; left:8%; top:6%; width:36%; height:22%;
@@ -1091,22 +1097,22 @@ function flip(dir){ if(flipping||!albOpen) return;
 const TV_CHANNELS=[
   { type:'bili', bvid:'BV1mk4y1V7oe', site:'Bilibili',  title:'Aletsch 阿莱奇冰川徒步',            url:'https://www.bilibili.com/video/BV1mk4y1V7oe/' },
   { type:'bili', bvid:'BV1cx4y1C7wJ', site:'Bilibili',  title:'格林德瓦四倍速滑雪',                url:'https://www.bilibili.com/video/BV1cx4y1C7wJ/' },
-  { type:'ext',                       site:'小红书',     title:'瑞士直升机试驾 · Bern-Belp',       url:'http://xhslink.com/o/7HatBw6lQDO' },
+  { type:'ext',  cover:'images/tv-ext/heli.jpg',                site:'小红书',     title:'瑞士直升机试驾 · Bern-Belp',       url:'http://xhslink.com/o/7HatBw6lQDO' },
   { type:'bili', bvid:'BV13RRrYSEUq', site:'Bilibili',  title:'跨国购物 · 康斯坦茨半日游',         url:'https://www.bilibili.com/video/BV13RRrYSEUq/' },
   { type:'bili', bvid:'BV15q4y1W7ki', site:'Bilibili',  title:'我的博士答辩 · graph pre-image',    url:'https://www.bilibili.com/video/BV15q4y1W7ki/' },
   { type:'yt',   id:'lSljOtSz02M',    site:'YouTube',   title:'2015 交大迎新晚会 · dance 慢三',    url:'https://youtu.be/lSljOtSz02M' },
   { type:'bili', bvid:'BV1fZ421j7dH', site:'Bilibili',  title:'人间仙境日内瓦湖',                  url:'https://www.bilibili.com/video/BV1fZ421j7dH/' },
-  { type:'ext',                       site:'小红书',     title:'因特拉肯滑翔伞',                    url:'http://xhslink.com/o/4hm7dW1moNe' },
+  { type:'ext',  cover:'images/tv-ext/paraglide-interlaken.jpg', site:'小红书',     title:'因特拉肯滑翔伞',                    url:'http://xhslink.com/o/4hm7dW1moNe' },
   { type:'bili', bvid:'BV15SXKYEE7T', site:'Bilibili',  title:'凌晨五点的瑞士 · 早早早班车',       url:'https://www.bilibili.com/video/BV15SXKYEE7T/' },
   { type:'bili', bvid:'BV1M5411W7L4', site:'Bilibili',  title:'黄焖鸡',                            url:'https://www.bilibili.com/video/BV1M5411W7L4/' },
-  { type:'ext',                       site:'小红书',     title:'戚风蛋糕',                          url:'http://xhslink.com/o/8vtWwmzsqsw' },
+  { type:'ext',  cover:'images/tv-ext/chiffon.jpg',             site:'小红书',     title:'戚风蛋糕',                          url:'http://xhslink.com/o/8vtWwmzsqsw' },
   { type:'bili', bvid:'BV1nFHceEEDd', site:'Bilibili',  title:'索洛图恩龙舟比赛',                  url:'https://www.bilibili.com/video/BV1nFHceEEDd/' },
   { type:'bili', bvid:'BV1EF411r7f8', site:'Bilibili',  title:'MSC Grandiosa 游轮 · 巴塞罗那',     url:'https://www.bilibili.com/video/BV1EF411r7f8/' },
-  { type:'ext',                       site:'微信视频号', title:'我的视频号',                        url:'https://weixin.qq.com/sph/AoD302Zim7' },
+  { type:'ext',  cover:'images/tv-ext/skydive-bcn.jpg',         site:'微信视频号', title:'巴塞罗那高空跳伞',                  url:'https://weixin.qq.com/sph/AoD302Zim7' },
   { type:'bili', bvid:'BV1ka4y1o7pw', site:'Bilibili',  title:'逃离慕尼黑',                        url:'https://www.bilibili.com/video/BV1ka4y1o7pw/' },
-  { type:'ext',                       site:'小红书',     title:'尼斯海上滑翔伞',                    url:'http://xhslink.com/o/4jlrKY2u0eq' },
+  { type:'ext',  cover:'images/tv-ext/paraglide-nice.jpg',      site:'小红书',     title:'尼斯海上滑翔伞',                    url:'http://xhslink.com/o/4jlrKY2u0eq' },
   { type:'bili', bvid:'BV11CQhYvEVD', site:'Bilibili',  title:'读书会 · 周恩来邓颖超通信集',       url:'https://www.bilibili.com/video/BV11CQhYvEVD/' },
-  { type:'ext',                       site:'小红书',     title:'烤肋排',                            url:'http://xhslink.com/o/2livJq9VOFk' },
+  { type:'ext',  cover:'images/tv-ext/ribs.jpg',                site:'小红书',     title:'烤肋排',                            url:'http://xhslink.com/o/2livJq9VOFk' },
   { type:'bili', bvid:'BV1hLhdzBEzG', site:'Bilibili',  title:'七夕 · 给妈妈打金镯子',             url:'https://www.bilibili.com/video/BV1hLhdzBEzG/' }
 ];
 const tvFrame=tvScreenEl.querySelector('#tvFrame'),
@@ -1118,16 +1124,19 @@ const tvFrame=tvScreenEl.querySelector('#tvFrame'),
       tvRemoteEl=document.getElementById('tvRemote');
 let tvOn=false, tvCh=0, tvVol=55, tvBrt=100, tvNoiseRAF=0, tvOSDTimer=0;
 function tvSrc(c){
+  // both start MUTED (autoplay policy); the remote's VOL turns sound on (YouTube via the iframe API).
   return c.type==='yt'
-    ? `https://www.youtube-nocookie.com/embed/${c.id}?enablejsapi=1&autoplay=1&mute=1&rel=0&playsinline=1`
+    ? `https://www.youtube-nocookie.com/embed/${c.id}?enablejsapi=1&autoplay=1&mute=1&rel=0&playsinline=1&origin=${encodeURIComponent(location.origin)}`
     : `https://player.bilibili.com/player.html?bvid=${c.bvid}&autoplay=1&muted=true&danmaku=0&high_quality=1`;
 }
 function tvSetChannel(c){
-  if(c.type==='ext'){       // station with no embeddable player: classic test card + remote link
+  if(c.type==='ext'){       // station with no embeddable player: cover screenshot + remote link
     tvFrame.src='about:blank';   // never '' (empty src resolves to the page itself)
-    tvSlateEl.innerHTML='<div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>'
+    tvSlateEl.innerHTML=(c.cover
+        ? '<img class="cover" src="'+c.cover+'" alt="">'
+        : '<div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>')
       +'<div class="meta"><div class="t">'+c.title+'</div><div class="s">'+c.site+'</div>'
-      +'<div class="h">this set cannot tune that station: press &ldquo;watch on site&rdquo; on the remote</div></div>';
+      +'<div class="h">press &ldquo;watch on site&rdquo; on the remote to play this one</div></div>';
     tvSlateEl.style.display='block';
   } else {
     tvSlateEl.style.display='none';
@@ -1181,7 +1190,7 @@ function tvVolume(d){ tvVol=Math.max(0, Math.min(100, tvVol+d));
     cmd({n: tvVol>0?'unMute':'mute'}); cmd({n:'setVolume', a:[tvVol]});
   }
   tvShowOSD(`VOL <span class="bar"><i style="width:${tvVol}%"></i></span> ${tvVol}`
-    + (c.type==='bili' ? '<br><span style="font-size:0.6em;opacity:0.8">Bilibili: use the player\'s own volume</span>'
+    + (c.type==='bili' ? '<br><span style="font-size:0.6em;opacity:0.8">Bilibili: hover the screen for the player\'s own volume</span>'
      : c.type==='ext' ? '<br><span style="font-size:0.6em;opacity:0.8">external station: sound plays on its site</span>' : ''));
 }
 function tvBright(d){ tvBrt=Math.max(40, Math.min(135, tvBrt+d));

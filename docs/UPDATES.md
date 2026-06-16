@@ -9,6 +9,7 @@
 ## Master TOC
 
 - [2026-06-16](#2026-06-16)
+    - [V3 — TV follow-ups: muted by default + remote sound, control overscan auto-hide, cover art for non-embeddable channels](#v3--tv-follow-ups-muted-by-default--remote-sound-control-overscan-auto-hide-cover-art-for-non-embeddable-channels) — per Linlin's review: the TV stays muted until the remote VOL turns sound on (YouTube via the iframe API + `origin`; Bilibili via its own control); the player's chrome is overscanned off by default and revealed only on hover (CSS `:hover`, re-hides when the mouse leaves); the 6 non-embeddable 小红书/微信 channels now show the real video's cover screenshot as the slate background instead of bare colour bars.
     - [V2 — Living-room TV with real video playback in the 3D personal room](#v2--living-room-tv-with-real-video-playback-in-the-3d-personal-room) — `personal.html` gains a wall-mounted 4K TV that plays Linlin's own videos: a real `<iframe>` in a CSS3DRenderer layer behind a depth-only WebGL hole (correct occlusion, the cat can pass in front), 19 shuffled Bilibili/YouTube channels + a test-card slate for non-embeddable 小红书/微信视频号, a paper remote (power / channel / volume / brightness / watch-on-site + keyboard), and an old-set snow→black→picture tune transition.
     - [V1 — Homepage social-preview image swapped to the parchment hero](#v1--homepage-social-preview-image-swapped-to-the-parchment-hero) — `index_en.html` OG/Twitter card → new `images/og-hero.jpg` (1200×630 capture of the live parchment notebook hero) instead of the old blue studio card; `alt` text refreshed; zh page + JSON-LD portrait left unchanged; re-scrape needed after deploy.
 - [2026-06-11](#2026-06-11)
@@ -88,6 +89,13 @@
 - [2023-09-27](#2023-09-27) — new papers + CV update.
 
 # 2026-06-16
+
+## V3 — TV follow-ups: muted by default + remote sound, control overscan auto-hide, cover art for non-embeddable channels
+
+- Per Linlin's review of the new TV, three fixes:
+- **Sound**: the set stays muted on tune-in (browser autoplay policy) and the remote's VOL turns sound on. YouTube unmutes via the iframe API (added `&origin=` for reliable cross-origin control); Bilibili has no public volume API, so its sound is adjusted on the player's own control (now reachable, see overscan below). OSD notes guide each case.
+- **Control chrome auto-hide**: the embedded player's own UI (Bilibili / YouTube control bar, title, borders) is "overscanned" off-screen by default (`transform:scale(1.14)` on the iframe inside the `overflow:hidden` screen) for a clean full-bleed picture; moving the mouse onto the screen reveals the native controls (`scale(1)`), and leaving re-crops them. Pure CSS `:hover`, which stays active over a cross-origin iframe (JS mouse events do not fire from inside one).
+- **Cover art for non-embeddable channels**: 小红书 / 微信视频号 cannot be iframed, so they stay as test-card channels, but each now uses the real video's cover screenshot as the slate background (6 covers pulled from each note's `og:image` / video poster and self-hosted under `images/tv-ext/` to avoid mixed-content) with a bottom gradient + title + "watch on site" prompt. The WeChat channel is retitled to its actual video ("巴塞罗那高空跳伞"). Falls back to colour bars if a cover is ever missing.
 
 ## V2 — Living-room TV with real video playback in the 3D personal room
 
