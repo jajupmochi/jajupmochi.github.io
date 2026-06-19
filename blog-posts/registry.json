@@ -311,6 +311,9 @@
         "ubuntu",
         "fcitx5",
         "input-method",
+        "vscode",
+        "snap",
+        "electron",
         "tooling",
         "human×AI"
       ],
@@ -320,11 +323,11 @@
         "fr": "pending",
         "de": "pending"
       },
-      "author": "jajupmochi × Claude Code (Opus 4.7)",
+      "author": "jajupmochi × Claude Code (Opus 4.7/4.8)",
       "cover": "assets/final-with-dog.png",
       "readingMinutes": {
-        "zh": 12,
-        "en": 13
+        "zh": 14,
+        "en": 15
       },
       "title": {
         "zh": "Ubuntu 上把搜狗换成 fcitx5：云拼音、模糊音，外加一只跑动的狗",

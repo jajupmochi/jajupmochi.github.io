@@ -1,8 +1,8 @@
 # Ubuntu 上把搜狗换成 fcitx5：云拼音、模糊音，外加一只跑动的狗
 
-作者：jajupmochi（人类） × Claude Code（Opus 4.7）
+作者：jajupmochi（人类） × Claude Code（Opus 4.7/4.8）
 
-> 说明：这套配置是本文的人类作者（这时在伯尔尼大学工作）和 Claude（Claude Code，模型 Opus 4.7）一起做的。下文为了分清谁干了什么，**「作者」指人类**（拍板需求、定审美、踩坑判断），**「Claude」指 AI**（动手配置、写代码、画图）。
+> 说明：这套配置是本文的人类作者（这时在伯尔尼大学工作）和 Claude（Claude Code，模型 Opus 4.7/4.8）一起做的。下文为了分清谁干了什么，**「作者」指人类**（拍板需求、定审美、踩坑判断），**「Claude」指 AI**（动手配置、写代码、画图）。
 
 搜狗在 Wayland 下打不出字了，作者不想退回 Xorg，于是整套换成 fcitx5，过程中顺手做了点自己的东西。命令都能直接复制。
 
@@ -64,6 +64,7 @@
   - [7.4 Lua 小工具](#74-lua-小工具)
 - [八、自己改：所有可配置项](#八自己改所有可配置项)
 - [九、踩坑速查](#九踩坑速查)
+- [九·五、应用层的坑：snap 版 VS Code 连不上 fcitx5](#九五应用层的坑snap-版-vs-code-连不上-fcitx5)
 - [十、资源下载](#十资源下载)
 - [十一、附录：词库（向搜狗看齐）](#十一附录词库向搜狗看齐)
 - [十二、附录：完整命令与脚本](#十二附录完整命令与脚本)
@@ -574,6 +575,63 @@ ime.register_command("xq", "custom_weekday", "星期",   "alpha", "今天星期�
 | `js`/`xq`（Lua）没反应 | 没装 `fcitx5-module-lua` | `sudo apt install fcitx5-module-lua`（四） |
 | 刚启动 `fcitx5-remote` 报 “Failed to get reply” | 还在加载大词库 | 正常，等几秒再试（十一） |
 | 候选不如搜狗 | 只加载了默认词库 | 导入词库（附录十一） |
+| VS Code（snap）打不出中文 | snap 自带运行时没 fcitx 桥；GNOME Wayland 原生 text-input 只认 ibus | 换官方 .deb，走 XWayland（九·五） |
+
+## 九·五、应用层的坑：snap 版 VS Code 连不上 fcitx5
+
+前面几节配完，作者以为全系统都能打中文了。结果在 **VS Code 里偏偏打不出**——浏览器、终端、文件管理器都正常，唯独它。根因不在 fcitx5，而在**这个应用是怎么打包的**，所以单拎一节出来。（作者后来在新机器上用 VS Code 时又踩到，索性补进来。）
+
+**症状。** VS Code 里敲拼音直接出英文字母，候选框不弹；按惯用的中英切换键也没反应。
+
+**先排查三件事**，判断是 fcitx5 的问题还是这个应用的问题：
+
+```bash
+echo "$XDG_SESSION_TYPE"                              # 这台是 wayland
+echo "$GTK_IM_MODULE / $QT_IM_MODULE / $XMODIFIERS"   # fcitx / fcitx / @im=fcitx，系统层没问题
+ls -l "$(which code)"                                 # /snap/bin/code -> ... 说明是 snap 版
+```
+
+别的程序能打、环境变量也对，就说明 fcitx5 没毛病，是 VS Code 这个进程拿不到输入法。
+
+**根因（两层叠加）：**
+
+- **snap 自带运行时，没有 fcitx 的输入法桥。** snap 版 VS Code 把一整套库捆在沙箱里，Chromium/Electron 接输入法靠的是系统的 fcitx GTK 桥接模块（`im-fcitx5.so`），snap 里既没打包、又因路径隔离加载不到系统那份。所以你把 `GTK_IM_MODULE=fcitx` 设得再对，它内部也用不上。
+- **GNOME Wayland 的原生 text-input 只认 ibus。** 就算绕过 snap，GNOME 的 `text-input-v3` 在合成器侧只接自带的 ibus，**不转给 fcitx5**（这点和 KDE 不同）。所以在 GNOME 上，fcitx5 给应用喂字得走 **XWayland 通道**（X11 应用用 `XMODIFIERS=@im=fcitx`），而不是原生 Wayland。
+
+```mermaid
+flowchart TB
+    q1{"应用是 snap / flatpak 打包的吗？"}
+    fix1["换系统原生包（.deb / apt）"]
+    q2{"桌面是 GNOME Wayland？"}
+    route["走 XWayland：ozone-platform=x11 + XMODIFIERS=@im=fcitx"]
+    ok(["fcitx5 可用"])
+    q1 -->|是| fix1
+    q1 -->|否| q2
+    fix1 --> q2
+    q2 -->|是| route
+    q2 -->|否| ok
+    route --> ok
+```
+
+**解法：snap 版换微软官方 `.deb` 版。** 作者试过给 snap 版强行传 `--ozone-platform=x11` 并带上输入法环境变量，仍然不行——snap 的隔离是死结。换成 deb 版后，默认就走 XWayland、自动接上系统 fcitx5，**不需要任何启动参数**。设置和扩展都在 `~/.config/Code`、`~/.vscode`，两版共用，换过去自动继承。完整命令见 12.8。
+
+换完直接 `code` 启动，点进编辑器敲拼音，候选框就正常弹出了：
+
+![在 VS Code 里打中文：换成 deb 版后 fcitx5 候选框正常弹出](assets/vscode-fcitx5-pinyin.webp)
+
+**换源时真踩到的两个坑：**
+
+- **apt 源那一行必须是单行。** 往 `/etc/apt/sources.list.d/vscode.list` 写 `deb [...] https://...` 时，如果在 `]` 和 URL 之间断了行，apt 会把它当成非法的跨行条目，`apt update` 直接报错。复制时别手动换行。
+- **不相干的坏源会顺带搞砸安装。** 作者机器上有条早先加的第三方源失效了（`apt update` 报 “no longer has a Release file”），它让 `apt-get update` 返回非零，于是 `update && install` 的 `&&` 链被中断、`code` 没装上。`apt-cache policy code` 能看到微软源其实已经抓到包，直接 `apt-get install -y code` 即可；坏源单独禁用：`sudo sed -i 's/^deb/#deb/' /etc/apt/sources.list.d/那个.list`。
+
+**顺手修中英切换键。** 作者这台的 `~/.config/fcitx5/config` 里 `[Hotkey/TriggerKeys]` 不知何时被写成了怪组合 `Control+Shift+Control_L`（还混着日文 `Zenkaku_Hankaku`、韩文 `Hangul`），根本不触发——这也是「Ctrl+Shift 没反应」的一半原因。换回干净的 `Ctrl+Space`：
+
+```ini
+[Hotkey/TriggerKeys]
+0=Control+space
+```
+
+改完 `fcitx5-remote -r` 重载即可（这处不必整段重启 fcitx5）。注意 `Ctrl+Space` 在 VS Code 里也是补全键，但 fcitx5 在 XWayland 下会全局抢先，多半切的是输入法；真冲突就把 VS Code 那个键解绑，或换 `Super+space`。
 
 ## 十、资源下载
 
@@ -812,3 +870,25 @@ fcitx5-remote -n                                              # 当前输入法�
 ```
 
 > 如果刚启动时 `fcitx5-remote` 打印 **“Failed to get reply”**，那是还在加载词库（~74 MB 那套要几秒）——等一下再试，不是错误。
+
+### 12.8 snap 版应用换 deb（VS Code，见九·五）
+
+snap 版 VS Code 连不上 fcitx5，换微软官方 deb 版。全是 **[root]**；设置/扩展共用 `~/.config/Code`、`~/.vscode`，不丢：
+
+```bash
+# [root] 卸载 snap 版
+sudo snap remove code
+
+# [root] 加微软官方 apt 源（注意 source 必须写成一行）
+sudo apt-get install -y wget gpg apt-transport-https
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/ms.gpg
+sudo install -D -o root -g root -m 644 /tmp/ms.gpg /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+rm -f /tmp/ms.gpg
+
+# [root] 装 deb 版（若 apt update 因别的坏源报错，包其实已抓到，直接 install）
+sudo apt-get update
+sudo apt-get install -y code
+```
+
+装完普通 `code` 启动即可（deb 版默认走 XWayland，自动接 fcitx5）。中英切换键改成 `Ctrl+Space` 见九·五。

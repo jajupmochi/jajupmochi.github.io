@@ -1,8 +1,8 @@
 # Replacing Sogou with fcitx5 on Ubuntu: cloud pinyin, fuzzy pinyin, and a running dog
 
-Author: jajupmochi (human) × Claude Code (Opus 4.7)
+Author: jajupmochi (human) × Claude Code (Opus 4.7/4.8)
 
-> Note: this setup was done by the article's human author (working at the University of Bern at the time) together with Claude (Claude Code, model Opus 4.7). To keep clear who did what, below **"the author" means the human** (decides requirements, taste, judgment calls) and **"Claude" means the AI** (does the hands-on config, code, drawing).
+> Note: this setup was done by the article's human author (working at the University of Bern at the time) together with Claude (Claude Code, model Opus 4.7/4.8). To keep clear who did what, below **"the author" means the human** (decides requirements, taste, judgment calls) and **"Claude" means the AI** (does the hands-on config, code, drawing).
 
 Sogou stopped typing under Wayland, the author didn't want to fall back to Xorg, so the whole thing moved to fcitx5 — and picked up a few custom touches along the way. Commands are copy-paste ready.
 
@@ -68,6 +68,7 @@ Then:
   - [7.4 Lua extras](#74-lua-extras)
 - [8. Make it yours: every configurable knob](#8-make-it-yours-every-configurable-knob)
 - [9. Troubleshooting](#9-troubleshooting)
+- [9.5 The app-layer trap: snap VS Code cannot reach fcitx5](#95-the-app-layer-trap-snap-vs-code-cannot-reach-fcitx5)
 - [10. Downloads](#10-downloads)
 - [11. Appendix: dictionaries (getting close to Sogou)](#11-appendix-dictionaries-getting-close-to-sogou)
 - [12. Appendix: full commands and scripts](#12-appendix-full-commands-and-scripts)
@@ -578,6 +579,63 @@ The value here is swapping in your own. First, everything you can change; then h
 | `js`/`xq` (Lua) do nothing | `fcitx5-module-lua` not installed | `sudo apt install fcitx5-module-lua` (4) |
 | `fcitx5-remote` says "Failed to get reply" right after start | still loading large dictionaries | normal — wait a few seconds (11) |
 | Candidates feel weaker than Sogou | only the default dictionary loaded | import dictionaries (appendix 11) |
+| VS Code (snap) can't type Chinese | snap's bundled runtime has no fcitx bridge; GNOME Wayland native text-input only talks to ibus | switch to the official .deb, via XWayland (9.5) |
+
+## 9.5 The app-layer trap: snap VS Code cannot reach fcitx5
+
+After the sections above, the author assumed Chinese now worked everywhere. It didn't, in **VS Code**: the browser, the terminal, and the file manager all typed fine, but that one app would not. The cause isn't fcitx5, it's **how the app is packaged**, so it gets its own section. (The author hit it again setting up VS Code on a new machine, hence this addition.)
+
+**Symptom.** Typing pinyin in VS Code produces Latin letters with no candidate window; the usual switch key does nothing.
+
+**Check three things first**, to tell whether it's fcitx5 or the app:
+
+```bash
+echo "$XDG_SESSION_TYPE"                              # wayland here
+echo "$GTK_IM_MODULE / $QT_IM_MODULE / $XMODIFIERS"   # fcitx / fcitx / @im=fcitx, the system side is fine
+ls -l "$(which code)"                                 # /snap/bin/code -> ... means the snap build
+```
+
+If other apps work and the vars are set, fcitx5 is fine; it's the VS Code process not getting the input method.
+
+**Root cause (two layers):**
+
+- **The snap bundles its own runtime, without the fcitx bridge.** The snap build ships a whole library set inside its sandbox. Chromium/Electron reach an input method through the system's fcitx GTK bridge module (`im-fcitx5.so`), which the snap neither bundles nor can load from the system because of path isolation. So however correctly you set `GTK_IM_MODULE=fcitx`, the process can't use it.
+- **GNOME Wayland's native text-input only talks to ibus.** Even past the snap, GNOME wires `text-input-v3` on the compositor side to its own ibus, **not** fcitx5 (unlike KDE). So on GNOME, fcitx5 feeds apps through the **XWayland path** (X11 apps use `XMODIFIERS=@im=fcitx`), not native Wayland.
+
+```mermaid
+flowchart TB
+    q1{"App packaged as snap / flatpak?"}
+    fix1["switch to a native package (.deb / apt)"]
+    q2{"Desktop is GNOME Wayland?"}
+    route["use XWayland: ozone-platform=x11 + XMODIFIERS=@im=fcitx"]
+    ok(["fcitx5 works"])
+    q1 -->|yes| fix1
+    q1 -->|no| q2
+    fix1 --> q2
+    q2 -->|yes| route
+    q2 -->|no| ok
+    route --> ok
+```
+
+**Fix: swap the snap for Microsoft's official `.deb`.** The author tried forcing the snap with `--ozone-platform=x11` plus the IM env vars, and it still failed: the snap's isolation is a dead end. The deb build uses XWayland by default and reaches the system fcitx5 automatically, with **no launch flags needed**. Settings and extensions live in `~/.config/Code` and `~/.vscode`, shared by both builds, so the switch carries them over. Full commands in 12.8.
+
+After switching, launch `code`, click into the editor, type pinyin, and the candidate window appears:
+
+![Typing Chinese in VS Code: with the deb build, the fcitx5 candidate window appears](assets/vscode-fcitx5-pinyin.webp)
+
+**Two real traps when adding the repo:**
+
+- **The apt source must be one line.** Writing `deb [...] https://...` into `/etc/apt/sources.list.d/vscode.list` with a line break between `]` and the URL makes apt read it as an illegal multi-line entry, and `apt update` errors out. Don't hand-wrap it when copying.
+- **An unrelated broken repo can sink the install.** This machine had an old third-party repo that had gone stale (`apt update` reported "no longer has a Release file"). It made `apt-get update` return non-zero, so the `update && install` chain short-circuited and `code` never installed. `apt-cache policy code` showed the Microsoft repo had in fact fetched the package, so `apt-get install -y code` works directly; disable the bad repo on its own: `sudo sed -i 's/^deb/#deb/' /etc/apt/sources.list.d/that-one.list`.
+
+**While here, fix the switch key.** This machine's `~/.config/fcitx5/config` had `[Hotkey/TriggerKeys]` set to an odd combo `Control+Shift+Control_L` (mixed with Japanese `Zenkaku_Hankaku` and Korean `Hangul`) that never fired, which is half the reason "Ctrl+Shift does nothing." Set it back to a clean `Ctrl+Space`:
+
+```ini
+[Hotkey/TriggerKeys]
+0=Control+space
+```
+
+Reload with `fcitx5-remote -r` (this one needs no full restart). Note `Ctrl+Space` is also VS Code's autocomplete key, but fcitx5 grabs it globally under XWayland, so it usually switches the input method; if it truly clashes, unbind VS Code's key or use `Super+space`.
 
 ## 10. Downloads
 
@@ -818,3 +876,25 @@ fcitx5-remote -n                                              # current IM (keyb
 ```
 
 > If `fcitx5-remote` prints **"Failed to get reply"** right after launch, it's still loading the dictionaries (the ~74 MB set can take a few seconds) — wait and retry, it's not an error.
+
+### 12.8 Swap a snap app for the deb (VS Code, see 9.5)
+
+The snap VS Code can't reach fcitx5; switch to Microsoft's deb build. All **[root]**; settings/extensions are shared via `~/.config/Code` and `~/.vscode`, so nothing is lost:
+
+```bash
+# [root] remove the snap
+sudo snap remove code
+
+# [root] add Microsoft's official apt repo (the source line MUST be a single line)
+sudo apt-get install -y wget gpg apt-transport-https
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/ms.gpg
+sudo install -D -o root -g root -m 644 /tmp/ms.gpg /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+rm -f /tmp/ms.gpg
+
+# [root] install the deb (if apt update errors on some OTHER bad repo, the package is already fetched, just install)
+sudo apt-get update
+sudo apt-get install -y code
+```
+
+Then launch with plain `code` (the deb build uses XWayland by default and reaches fcitx5). For the `Ctrl+Space` switch key, see 9.5.
