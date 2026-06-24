@@ -252,8 +252,17 @@
     },
     {
       "slug": "ubuntu-fcitx5-pinyin",
-      "updated": "2026-05-31",
+      "updated": "2026-06-19",
       "revisions": [
+        {
+          "date": "2026-06-19",
+          "sha": "c4a866c",
+          "by": "Linlin × Claude",
+          "summary": {
+            "zh": "feat(blog): ubuntu-fcitx5-pinyin add 9.5 snap VS Code vs fcitx5 + deb fix",
+            "en": "feat(blog): ubuntu-fcitx5-pinyin add 9.5 snap VS Code vs fcitx5 + deb fix"
+          }
+        },
         {
           "date": "2026-05-31",
           "sha": "dfd47dc",
