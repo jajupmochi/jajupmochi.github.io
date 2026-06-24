@@ -23,11 +23,11 @@ window.PROJECTS = [
       { src: 'res/portfolio/img/liulian_studio.webp', alt: 'LIULIAN Studio data platform UI' },
       { src: 'res/portfolio/img/liulian_mobile.webp', alt: 'LIULIAN mobile forecast view' }
     ],
-    blurb: 'Spatio-temporal data platform with LLM-driven interfaces and BI agent systems. Live web app.',
+    blurb: 'Spatio-temporal data platform under active development: LLM-driven interfaces and multimodal scientific graph benchmarks. Live demo.',
     bullets: [
-      '<strong>Spatio-temporal data platform</strong>: collection, processing, analysis, and visualization.',
-      '<strong>Multimodal scientific graph benchmarks</strong> and <strong>LLM-driven data interfaces + BI agent systems</strong>.',
-      'Consolidates years of graph-ML research into one productizable Python codebase.'
+      '<strong>Spatio-temporal data platform</strong> under active development: collection, processing, analysis, and visualization (time-series pipeline working; graph-structure support next).',
+      '<strong>Multimodal scientific graph benchmarks</strong> and <strong>LLM-driven data interfaces</strong>.',
+      'Consolidates years of graph-ML research into one open-source Python codebase; Innosuisse Innovation Project in preparation.'
     ],
     primaryHref: 'https://liulian-ai.github.io/liulian-web/',
     links: [
@@ -55,7 +55,8 @@ window.PROJECTS = [
     bullets: [
       '<strong>SNSF-funded</strong> graph-based Swiss river water-temperature forecasting.',
       'Built <strong>spatio-temporal transformer + LLM architectures</strong> with entity embeddings + graph structure.',
-      '<strong>Benchmark open-sourced</strong>; paper accepted at ICPR 2026.'
+      '<strong>Benchmark open-sourced</strong>; paper accepted at ICPR 2026.',
+      'Currently exploring <strong>spatio-temporal LLMs</strong> (fine-tuning + structure-based GRPO); research stage.'
     ],
     primaryHref: 'https://github.com/jajupmochi/swiss-river-network-benchmark',
     links: [
@@ -164,7 +165,7 @@ window.PROJECTS = [
     bullets: [
       '<strong>Fully offline, privacy-first document translation</strong> powered by local LLMs.',
       '<strong>MIT-licensed open source</strong>, deployable via a single Docker command.',
-      'Built end-to-end via AI-assisted (vibe) coding; MVP in testing.'
+      'Built end-to-end via AI-assisted (vibe) coding; MVP1 public.'
     ],
     primaryHref: 'https://github.com/jajupmochi/confidential-translator',
     links: [{ label: 'Code', href: 'https://github.com/jajupmochi/confidential-translator', icon: 'fab fa-github' }],
@@ -208,7 +209,7 @@ window.PROJECTS = [
     blurb: 'Innosuisse AI auditing HVAC concepts from engineering drawings (symbol / topology extraction).',
     bullets: [
       '<strong>Innosuisse-funded</strong> AI audit + optimization of HVAC concepts on engineering drawings.',
-      'Built the ML pipeline: <strong>data preprocessing, symbol / edge / topology extraction</strong>, training.'
+      'Built the ML pipeline: <strong>symbol detection (YOLO + Vision Transformer)</strong>, <strong>edge detection (Segment Anything)</strong>, graph topology extraction, custom HVAC block recognition, and semantic graph reconstruction.'
     ],
     why: 'Industrial NDA project — code and data are private.',
     links: [{ label: 'Funding', href: 'https://www.aramis.admin.ch/Grunddaten/?ProjectID=53900', icon: 'fas fa-file-signature' }],

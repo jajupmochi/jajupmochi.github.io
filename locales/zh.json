@@ -9,7 +9,8 @@
     "services": "服务",
     "personal": "个人",
     "blog": "博客",
-    "brand": "贾林林"
+    "brand": "贾林林",
+    "talks": "报告"
   },
   "hero": {
     "badge": "寻求机器学习研究科学家 / 工程师职位",
@@ -60,7 +61,12 @@
     "c_jcc": "论文 <i>基于图的氧化还原电位预测</i> 发表于 <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a>。",
     "c_acpr": "🇯🇵 于 <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a> 大会作口头报告，日本北九州。",
     "c_eswa": "论文 <i>核模式对比研究</i> 发表于 <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a>。",
-    "c_phd_defense": "🇫🇷 在法国 <strong>INSA Rouen</strong> 完成博士论文答辩。"
+    "c_phd_defense": "🇫🇷 在法国 <strong>INSA Rouen</strong> 完成博士论文答辩。",
+    "d_2026_06": "2026年6月",
+    "d_2026_05": "2026年5月",
+    "c_talk_cssa": "🇨🇭 受邀在<strong>伯尔尼中国学生学者联谊会（CSSABern）</strong>学术沙龙演讲。<i>从对话框到智能体：一个科研人的 AI 工具实践之路</i>。[<a href=\"res/slides/2026.06.19_CSSABern_from-dialogue-box-to-agent.pdf\" target=\"_blank\" rel=\"noopener\">幻灯片</a>]",
+    "c_talk_sino": "🇨🇭 受邀在<strong>瑞中科学俱乐部</strong>（苏黎世）演讲。<i>图如何理解世界：水文、数字人文与化学的统一建模</i>。[<a href=\"res/slides/2026.05.08_Swiss-Sino_Science_Club_graphs.pdf\" target=\"_blank\" rel=\"noopener\">幻灯片</a>]",
+    "c_startup_training": "🇨🇭 完成<strong>瑞士创新署创业培训</strong>（商业概念·模块二），伯尔尼大学。"
   },
   "proj_badge": {
     "academia": "学术界",
@@ -262,7 +268,8 @@
     "contact": "联系方式",
     "beyond": "研究之外",
     "blog": "博客",
-    "awards": "精选奖项与基金"
+    "awards": "精选奖项与基金",
+    "talks": "特邀报告与演讲"
   },
   "beyond": {
     "subtitle": "爱好、志愿服务与实验室之外的生活",
@@ -448,7 +455,13 @@
     "desc_msc": "面向服务的软件定义网络（SDN）可编程控制；应用<strong>极限学习机（ELM）</strong>预测网络移动性。形成<strong>中国发明专利 1 项（CN106376041B）</strong>。",
     "role_bs": "信息工程学士",
     "org_bs": "🇨🇳 西安交通大学，中国",
-    "desc_bs": "信号处理、计算机网络、软件工程基础课程。"
+    "desc_bs": "信号处理、计算机网络、软件工程基础课程。",
+    "role_nbanker": "AI 负责人（产业合作）",
+    "org_nbanker": "🇭🇰 N-Banker，数字金融服务研究中心，香港",
+    "desc_nbanker": "主导 AI 战略，以及面向该新银行研究中心的 <strong>LLM 智能体系统</strong>（聊天机器人、AI Studio 概念验证、数据融合平台设计）的架构与开发，合作方为香港理工大学。已在 <strong>InnoEX 2026</strong> 上演示。",
+    "role_startup_training": "瑞士创新署创业培训：商业概念（模块二）",
+    "org_startup_training": "🇨🇭 伯尔尼大学，瑞士",
+    "desc_startup_training": "为期十晚的课程（2025年10月至12月），围绕创办与成长一家初创公司：创意打磨、团队组建、财务规划与融资、知识产权保护、创业生态，以及项目路演。"
   },
   "thesis": {
     "badge": "博士论文 · 2021",
@@ -469,11 +482,7 @@
     "association_i3": "LITIS 实验室附属会员 (2022)",
     "reviewing_title": "审稿",
     "reviewing_i1": "International Conference on Pattern Recognition 2024",
-    "talks_title": "受邀演讲",
-    "talks_i1": "🇫🇷 受邀讲者，<a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON 暑期学校</strong></a>（法国鲁昂），报告 <em>跨越图空间：新算法及其应用</em>（2024 年 6 月）。",
-    "talks_i2": "🇯🇵 口头报告，<a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>，日本北九州（2023 年 11 月）。",
-    "talks_i3": "🇫🇷 <strong>S+SSPR Workshops 2020</strong> 视频报告：<em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href=\"https://www.bilibili.com/video/BV1A54y1s7zJ/\" target=\"_blank\" rel=\"noopener\">Bilibili</a> · <a href=\"https://youtu.be/GnzBXM3L3pQ\" target=\"_blank\" rel=\"noopener\">YT</a>] 与 <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href=\"https://www.bilibili.com/video/BV1ho4y1o7Bk/\" target=\"_blank\" rel=\"noopener\">Bilibili</a> · <a href=\"https://youtu.be/-NGWQYLFa6k\" target=\"_blank\" rel=\"noopener\">YT</a>]（2021 年 1 月）。",
-    "talks_i4": "🇩🇪🇫🇷 受邀演讲，<strong>2020 年德-法地区中国公派学者在线学术研讨会</strong>，报告 <em>基于图编辑距离的图预映射方法</em>（获奖；2020 年 9 月）[<a href=\"res/slides/Report_CSC_Seminar_2020.pdf\" target=\"_blank\" rel=\"noopener\">演示</a> · <a href=\"res/awards/2020_online_CSC-Seminar_in_DE_and_Fr_Excellent_Scholar_Award.pdf\" target=\"_blank\" rel=\"noopener\">证书</a>]。"
+    "supervision_i3": "负责技术招聘面板：面试 20+ 名候选人"
   },
   "skills_cats": {
     "programming": "编程",
@@ -582,5 +591,22 @@
     "t3": "🎓 🇫🇷 <strong>2024 年 6 月</strong> · 受邀于 <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\">GRAPHADON 暑期学校</a> 演讲。",
     "t4": "💰 🇨🇭 <strong>2025 年</strong> · <strong>SNSF Virtual Bodmer</strong> 项目获批。",
     "t5": "🤝 🇭🇰 <strong>2026 年 1 月</strong> · 与 <strong>N-Banker</strong> 启动合作，主导 AI 战略与 LLM Agent 研发。"
+  },
+  "talks": {
+    "cssa_title": "从对话框到智能体：一个科研人的 AI 工具实践之路",
+    "cssa_org": "🇨🇭 伯尔尼中国学生学者联谊会（CSSABern）学术沙龙，瑞士伯尔尼",
+    "sino_title": "图如何理解世界：水文、数字人文与化学的统一建模",
+    "sino_org": "🇨🇭 瑞中科学俱乐部，瑞士苏黎世",
+    "graphadon_title": "跨越图空间：新算法及其应用",
+    "graphadon_org": "🇫🇷 <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\">GRAPHADON 暑期学校</a>, 法国鲁昂",
+    "acpr_title": "在基于图的机器学习中连接不同空间",
+    "acpr_org": "🇯🇵 口头报告, <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\">ACPR 2023</a>, 日本北九州",
+    "sspr_title": "视频报告，S+SSPR 2020 研讨会",
+    "sspr_org": "🇮🇹 IAPR S+SSPR 研讨会，意大利威尼斯（线上）",
+    "sspr_papers": "<em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href=\"https://youtu.be/GnzBXM3L3pQ\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1A54y1s7zJ/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] · <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href=\"https://youtu.be/-NGWQYLFa6k\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1ho4y1o7Bk/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>]",
+    "csc_title": "基于图编辑距离的图预映射方法",
+    "csc_org": "🇩🇪🇫🇷 2020 线上 CSC 研讨会（德法），获奖",
+    "slides": "幻灯片",
+    "certificate": "证书"
   }
 }

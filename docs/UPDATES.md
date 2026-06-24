@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-06-24](#2026-06-24)
+    - [V1 — Homepage synced to the job-hunt CV: talks section, startup training, N-Banker AI Lead, content + truthfulness pass](#v1--homepage-synced-to-the-job-hunt-cv-talks-section-startup-training-n-banker-ai-lead-content--truthfulness-pass) — promoted Invited Talks to a dedicated `#talks` timeline section (navbar link, 2 new 2026 talks with slides, S+SSPR flag → 🇮🇹); added N-Banker **AI Lead** (experience) + **Innosuisse Entrepreneurship Training** (education) + 2 News rows; PLANALYSER method stack, swiss-river ST-LLM research line, AI-Tools skills, translator MVP1, recruitment-panel; truthfulness pass (foundations-for-drug-discovery, industry 8+→2+, honest LIULIAN). 4-locale i18n in parity.
 - [2026-06-16](#2026-06-16)
     - [V3 — TV follow-ups: muted by default + remote sound, control overscan auto-hide, cover art for non-embeddable channels](#v3--tv-follow-ups-muted-by-default--remote-sound-control-overscan-auto-hide-cover-art-for-non-embeddable-channels) — per Linlin's review: the TV stays muted until the remote VOL turns sound on (YouTube via the iframe API + `origin`; Bilibili via its own control); the player's chrome is overscanned off by default and revealed only on hover (CSS `:hover`, re-hides when the mouse leaves); the 6 non-embeddable 小红书/微信 channels now show the real video's cover screenshot as the slate background instead of bare colour bars.
     - [V2 — Living-room TV with real video playback in the 3D personal room](#v2--living-room-tv-with-real-video-playback-in-the-3d-personal-room) — `personal.html` gains a wall-mounted 4K TV that plays Linlin's own videos: a real `<iframe>` in a CSS3DRenderer layer behind a depth-only WebGL hole (correct occlusion, the cat can pass in front), 19 shuffled Bilibili/YouTube channels + a test-card slate for non-embeddable 小红书/微信视频号, a paper remote (power / channel / volume / brightness / watch-on-site + keyboard), and an old-set snow→black→picture tune transition.
@@ -87,6 +89,18 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-06-24
+
+## V1 — Homepage synced to the job-hunt CV: talks section, startup training, N-Banker AI Lead, content + truthfulness pass
+
+Compared `index_en.html` against the canonical job-hunt profile (`modes/_profile.md` + `research_scientist_en.tex` in the job-hunter workspace) and brought the live site up to date. Every claim traces to the CV / profile (no fabrication).
+
+- **Invited Talks promoted to its own section.** The Invited Talks `.service-card` became a dedicated `#talks` section (`Invited Talks & Presentations`, placed after Experience) in the Experience-style **timeline format with the date pulled to the front**, plus a navbar `Talks` link. Two 2026 talks added with slide PDFs self-hosted in `res/slides/`: CSSABern academic salon, Bern (*From Dialogue Box to Agent: A Researcher's Path with AI Tools*, Jun 2026) and the Swiss-Sino Science Club, Zurich (*How Graphs Understand the World*, May 2026). The S+SSPR 2020 entry's flag was corrected 🇫🇷 → 🇮🇹 (the workshops were in Venice, Italy).
+- **Experience + Education.** New **N-Banker AI Lead** entry (2024–Present, Hong Kong: led the AI strategy + an LLM-agent system, AI Studio PoC, data-fusion-platform design, demonstrated at InnoEX 2026) at position 2; new **Innosuisse Entrepreneurship Training** (Business Concept, Module 2, University of Bern, 2025) education entry. Both also added as News rows.
+- **Content depth (from the profile):** PLANALYSER method stack (YOLO + Vision Transformer symbol detection, Segment Anything edge detection, graph topology extraction, custom HVAC block recognition, semantic graph reconstruction); swiss-river current-research line (spatio-temporal LLMs, fine-tuning + structure-based GRPO, research stage); AI-Tools skills (Claude Code, Codex, OpenCode, Gemini, GPT-5-Codex); `confidential-translator` marked MVP1 public; Supervision card gains the technical recruitment panel (20+ candidates interviewed).
+- **Truthfulness pass:** bare "drug discovery" claims qualified to "foundations for drug discovery" in the OG / JSON-LD prose (the literal phrase kept intact for SEO); the Industry-Experience stat `8+` → `2+`; the LIULIAN description pulled back to "under active development" (dropped "live web app / BI agent systems / productizable").
+- **i18n:** new `talks.*` group (14 keys) + `nav.talks` + `sections.talks` + `services_cards.supervision_i3` + 5 News keys across en/zh/fr/de; the 6 old `services_cards.talks_*` keys removed; all 4 locales verified in parity. See PLAN `H1.M1.G11.T2`.
 
 # 2026-06-16
 

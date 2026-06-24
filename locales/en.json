@@ -9,7 +9,8 @@
     "services": "Services",
     "personal": "Personal",
     "blog": "Blog",
-    "brand": "Linlin Jia"
+    "brand": "Linlin Jia",
+    "talks": "Talks"
   },
   "hero": {
     "badge": "Open to ML Research Scientist & Engineer Opportunities",
@@ -60,7 +61,12 @@
     "c_jcc": "Paper published in <a href=\"https://doi.org/10.1002/jcc.27380\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>J. Computational Chemistry</strong></a> - <i>Graph-based redox potential prediction</i>.",
     "c_acpr": "🇯🇵 Oral presentation at <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan.",
     "c_eswa": "Paper published in <a href=\"https://doi.org/10.1016/j.eswa.2021.116095\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Expert Systems with Applications</strong></a> - <i>Kernel pattern comparisons</i>.",
-    "c_phd_defense": "🇫🇷 Ph.D. thesis defended at <strong>INSA Rouen</strong>, France."
+    "c_phd_defense": "🇫🇷 Ph.D. thesis defended at <strong>INSA Rouen</strong>, France.",
+    "d_2026_06": "Jun 2026",
+    "d_2026_05": "May 2026",
+    "c_talk_cssa": "🇨🇭 Invited talk at the <strong>CSSABern</strong> academic salon, Bern. <i>From Dialogue Box to Agent: A Researcher's Path with AI Tools</i>. [<a href=\"res/slides/2026.06.19_CSSABern_from-dialogue-box-to-agent.pdf\" target=\"_blank\" rel=\"noopener\">Slides</a>]",
+    "c_talk_sino": "🇨🇭 Invited talk at the <strong>Swiss-Sino Science Club</strong>, Zurich. <i>How Graphs Understand the World: Unified Modelling across Hydrology, Digital Humanities, and Chemistry</i>. [<a href=\"res/slides/2026.05.08_Swiss-Sino_Science_Club_graphs.pdf\" target=\"_blank\" rel=\"noopener\">Slides</a>]",
+    "c_startup_training": "🇨🇭 Completed the <strong>Innosuisse Entrepreneurship Training</strong> (Business Concept, Module 2) at the University of Bern."
   },
   "proj_badge": {
     "academia": "Academia",
@@ -262,7 +268,8 @@
     "contact": "Contact",
     "beyond": "Beyond Research",
     "blog": "Blog",
-    "awards": "Selected Awards & Grants"
+    "awards": "Selected Awards & Grants",
+    "talks": "Invited Talks & Presentations"
   },
   "beyond": {
     "subtitle": "Hobbies, volunteer work, and life outside the lab",
@@ -448,7 +455,13 @@
     "desc_msc": "Service-oriented programmable control for Software-Defined Networks; applied <strong>extreme learning machine (ELM)</strong> to network mobility prediction. Resulted in <strong>1 China patent (CN106376041B)</strong>.",
     "role_bs": "B.S. in Information Engineering",
     "org_bs": "🇨🇳 Xi'an Jiaotong University, China",
-    "desc_bs": "Foundations in signal processing, networks, and software engineering."
+    "desc_bs": "Foundations in signal processing, networks, and software engineering.",
+    "role_nbanker": "AI Lead (Industry Collaboration)",
+    "org_nbanker": "🇭🇰 N-Banker, Digital Financial Services Research Center Ltd., Hong Kong",
+    "desc_nbanker": "Led the AI strategy and the architecture and development of an <strong>LLM-agent system</strong> (chatbot, AI Studio proof-of-concept, and a data-fusion-platform design) for the neobank research center, with The Hong Kong Polytechnic University. Demonstrated at <strong>InnoEX 2026</strong>.",
+    "role_startup_training": "Innosuisse Entrepreneurship Training: Business Concept (Module 2)",
+    "org_startup_training": "🇨🇭 University of Bern, Switzerland",
+    "desc_startup_training": "Ten-evening programme (October to December 2025) on founding and growing a start-up: idea development, team building, financial planning and fundraising, IP protection, the start-up ecosystem, and pitching own projects."
   },
   "thesis": {
     "badge": "Ph.D. Dissertation · 2021",
@@ -469,11 +482,7 @@
     "association_i3": "Associated member of the LITIS lab (2022)",
     "reviewing_title": "Reviewing",
     "reviewing_i1": "International Conference on Pattern Recognition 2024",
-    "talks_title": "Invited Talks",
-    "talks_i1": "🇫🇷 Invited speaker, <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>GRAPHADON Summer School</strong></a>, Rouen, France: <em>Bridging Graph Spaces: Novel Algorithms and Their Applications</em> (Jun 2024).",
-    "talks_i2": "🇯🇵 Oral presentation, <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ACPR 2023</strong></a>, Kitakyushu, Japan (Nov 2023).",
-    "talks_i3": "🇫🇷 Video presentations at <strong>S+SSPR Workshops 2020</strong>: <em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href=\"https://youtu.be/GnzBXM3L3pQ\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1A54y1s7zJ/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] &amp; <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href=\"https://youtu.be/-NGWQYLFa6k\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1ho4y1o7Bk/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] (Jan 2021).",
-    "talks_i4": "🇩🇪🇫🇷 Invited talk, <strong>2020 Online CSC-Seminar in DE. and FR.</strong>: <em>A Graph Pre-image Method Based on Graph Edit Distances</em> (awarded; Sep 2020) [<a href=\"res/slides/Report_CSC_Seminar_2020.pdf\" target=\"_blank\" rel=\"noopener\">Slides</a> · <a href=\"res/awards/2020_online_CSC-Seminar_in_DE_and_Fr_Excellent_Scholar_Award.pdf\" target=\"_blank\" rel=\"noopener\">Certificate</a>]."
+    "supervision_i3": "Ran the technical recruitment panel: 20+ candidates interviewed"
   },
   "skills_cats": {
     "programming": "Programming",
@@ -582,5 +591,22 @@
     "t3": "🎓 🇫🇷 <strong>Jun 2024</strong> · Invited speaker at <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\">GRAPHADON Summer School</a>.",
     "t4": "💰 🇨🇭 <strong>2025</strong> · <strong>SNSF Virtual Bodmer</strong> project accepted.",
     "t5": "🤝 🇭🇰 <strong>Jan 2026</strong> · Started cooperation with <strong>N-Banker</strong>: leading AI strategy and LLM agent development."
+  },
+  "talks": {
+    "cssa_title": "From Dialogue Box to Agent: A Researcher's Path with AI Tools",
+    "cssa_org": "🇨🇭 CSSABern academic salon, Bern, Switzerland",
+    "sino_title": "How Graphs Understand the World: Unified Modelling across Hydrology, Digital Humanities, and Chemistry",
+    "sino_org": "🇨🇭 Swiss-Sino Science Club, Zurich, Switzerland",
+    "graphadon_title": "Bridging Graph Spaces: Novel Algorithms and Their Applications",
+    "graphadon_org": "🇫🇷 <a href=\"https://www.normastic.fr/summer-school-on-graphs-for-data-analysis/\" target=\"_blank\" rel=\"noopener noreferrer\">GRAPHADON Summer School</a>, Rouen, France",
+    "acpr_title": "Bridging Distinct Spaces in Graph-based Machine Learning",
+    "acpr_org": "🇯🇵 Oral presentation, <a href=\"https://ericlab.org/program/\" target=\"_blank\" rel=\"noopener noreferrer\">ACPR 2023</a>, Kitakyushu, Japan",
+    "sspr_title": "Video presentations, S+SSPR 2020 Workshops",
+    "sspr_org": "🇮🇹 IAPR S+SSPR Workshops, Venice, Italy (online)",
+    "sspr_papers": "<em>A Graph Pre-image Method Based on Graph Edit Distances</em> [<a href=\"https://youtu.be/GnzBXM3L3pQ\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1A54y1s7zJ/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>] · <em>A Metric Learning Approach to Graph Edit Costs for Regression</em> [<a href=\"https://youtu.be/-NGWQYLFa6k\" target=\"_blank\" rel=\"noopener\">YT</a> · <a href=\"https://www.bilibili.com/video/BV1ho4y1o7Bk/\" target=\"_blank\" rel=\"noopener\">Bilibili</a>]",
+    "csc_title": "A Graph Pre-image Method Based on Graph Edit Distances",
+    "csc_org": "🇩🇪🇫🇷 2020 Online CSC-Seminar (DE & FR), awarded",
+    "slides": "Slides",
+    "certificate": "Certificate"
   }
 }
