@@ -1,0 +1,352 @@
+{
+  "fetched_at": "2026-06-28",
+  "source": "clarity.microsoft.com/export-data/api/v1/project-live-insights",
+  "num_days": 3,
+  "data": [
+    {
+      "metricName": "DeadClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ExcessiveScroll",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "RageClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "QuickbackClick",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ScriptErrorCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ErrorClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "sessionsCount": "5",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ScrollDepth",
+      "information": [
+        {
+          "averageScrollDepth": 13.5,
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "averageScrollDepth": 9,
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "averageScrollDepth": 100,
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "averageScrollDepth": 3,
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "Traffic",
+      "information": [
+        {
+          "totalSessionCount": "2",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "2",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 2,
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 2,
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "totalSessionCount": "5",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "5",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "EngagementTime",
+      "information": [
+        {
+          "totalTime": "589",
+          "activeTime": "15",
+          "Browser": "Chrome",
+          "Country": "Belgium"
+        },
+        {
+          "totalTime": "15",
+          "activeTime": "15",
+          "Browser": "Chrome",
+          "Country": "China"
+        },
+        {
+          "totalTime": "25",
+          "activeTime": "24",
+          "Browser": "Chrome",
+          "Country": "Switzerland"
+        },
+        {
+          "totalTime": "1",
+          "activeTime": "1",
+          "Browser": "Chrome",
+          "Country": "United States"
+        }
+      ]
+    }
+  ]
+}
