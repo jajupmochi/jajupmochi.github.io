@@ -58,6 +58,15 @@ def main() -> int:
     }
     out_path.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"wrote {out_path.relative_to(OUT_DIR.parents[1])}")
+
+    # Regenerate the snapshot manifest so the visit-map can discover every
+    # snapshot (for its past-month / past-year / all-time windows) with a
+    # single fetch instead of probing many dates.
+    dates = sorted(p.stem[len("clarity-"):] for p in OUT_DIR.glob("clarity-*.json"))
+    (OUT_DIR / "index.json").write_text(
+        json.dumps({"snapshots": dates}, indent=2) + "\n", encoding="utf-8"
+    )
+    print(f"wrote index.json ({len(dates)} snapshots)")
     return 0
 
 

@@ -115,7 +115,7 @@
     "United States of America": "美国",
     "United Kingdom": "英国",
     "China": "中国",
-    "Taiwan": "台湾",
+    "Taiwan": "台湾（中国）",
     "Hong Kong S.A.R.": "中国香港",
     "Switzerland": "瑞士",
     "Germany": "德国",
@@ -558,11 +558,15 @@
   "visitMap": {
     "title": "全球访客分布",
     "totalVisits": "总访问数",
-    "countries": "个国家/地区",
-    "window": "过去 3 天",
+    "countries": "地区",
     "source": "数据来自 Microsoft Clarity",
-    "topCountries": "访问最多的国家/地区",
-    "svgTitle": "访客所在国家/地区世界地图"
+    "topCountries": "热门地区",
+    "svgTitle": "访客地区世界地图",
+    "win_month": "近一月",
+    "win_year": "近一年",
+    "win_all": "全部",
+    "showAll": "查看全部",
+    "showLess": "仅前 5"
   },
   "footer": {
     "tagline": "贾林林 博士",

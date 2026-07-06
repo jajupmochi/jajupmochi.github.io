@@ -115,7 +115,7 @@
     "United States of America": "Vereinigte Staaten",
     "United Kingdom": "Vereinigtes Königreich",
     "China": "China",
-    "Taiwan": "Taiwan",
+    "Taiwan": "Taiwan (China)",
     "Hong Kong S.A.R.": "Hongkong",
     "Switzerland": "Schweiz",
     "Germany": "Deutschland",
@@ -558,11 +558,15 @@
   "visitMap": {
     "title": "Besucher weltweit",
     "totalVisits": "Besuche insgesamt",
-    "countries": "Länder",
-    "window": "letzte 3 Tage",
+    "countries": "Regionen",
     "source": "via Microsoft Clarity",
-    "topCountries": "Top-Länder",
-    "svgTitle": "Weltkarte der Besucherländer"
+    "topCountries": "Top-Regionen",
+    "svgTitle": "Weltkarte der Besucherregionen",
+    "win_month": "letzter Monat",
+    "win_year": "letztes Jahr",
+    "win_all": "gesamt",
+    "showAll": "alle anzeigen",
+    "showLess": "Top 5"
   },
   "footer": {
     "tagline": "Linlin Jia, Ph.D.",

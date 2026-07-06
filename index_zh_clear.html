@@ -2065,7 +2065,11 @@
                             <span class="visit-map-sep" aria-hidden="true">·</span>
                             <span class="visit-map-stat"><strong id="visitCountriesCount">—</strong> <span data-i18n="visitMap.countries">countries</span></span>
                             <span class="visit-map-sep" aria-hidden="true">·</span>
-                            <span class="visit-map-window" data-i18n="visitMap.window">past 3 days</span>
+                            <span class="visit-map-window" role="group" aria-label="visit time window">
+                                <button type="button" class="visit-map-win-btn" data-win="month" aria-pressed="false" data-i18n="visitMap.win_month">past month</button>
+                                <button type="button" class="visit-map-win-btn" data-win="year" aria-pressed="false" data-i18n="visitMap.win_year">past year</button>
+                                <button type="button" class="visit-map-win-btn active" data-win="all" aria-pressed="true" data-i18n="visitMap.win_all">all time</button>
+                            </span>
                             <span class="visit-map-sep" aria-hidden="true">·</span>
                             <span class="visit-map-source" data-i18n="visitMap.source">via Microsoft Clarity</span>
                         </p>
@@ -2077,8 +2081,9 @@
                             </svg>
                         </div>
                         <div class="visit-map-top">
-                            <h4 data-i18n="visitMap.topCountries">Top Countries</h4>
+                            <h4 data-i18n="visitMap.topCountries">Top Regions</h4>
                             <ol id="visitTopList"></ol>
+                            <button type="button" id="visitToggleAll" class="visit-toggle-all" hidden aria-expanded="false">show all</button>
                         </div>
                     </div>
                 </div>

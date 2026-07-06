@@ -1835,7 +1835,7 @@
             const COUNTRY_ALIAS = {
                 'US': 'United States of America', 'USA': 'United States of America', 'United States': 'United States of America',
                 'UK': 'United Kingdom', 'GB': 'United Kingdom',
-                'CN': 'China', 'TW': 'Taiwan', 'HK': 'Hong Kong S.A.R.',
+                'CN': 'China', 'TW': 'Taiwan', 'Taiwan, Province of China': 'Taiwan', 'HK': 'Hong Kong S.A.R.',
                 'CH': 'Switzerland', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain',
                 'NL': 'Netherlands', 'BE': 'Belgium', 'AT': 'Austria', 'PT': 'Portugal',
                 'PL': 'Poland', 'CZ': 'Czechia', 'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland', 'DK': 'Denmark',
@@ -1907,14 +1907,26 @@
                 const features = window.topojson.feature(world, world.objects.countries).features;
                 const maxCount = Math.max(...countries.values(), 1);
 
-                // Lighten/darken from CSS var --primary so the choropleth picks up the theme.
-                // Fallback: a calm steel-blue.
-                const themeColor = (getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
-                    || getComputedStyle(document.body).getPropertyValue('--primary').trim()
-                    || '#3b82f6');
-                const colorScale = window.d3.scaleSequential()
+                // Choropleth colour from CSS var --primary so it picks up the theme.
+                // --primary may be an oklch() value, which d3 v7's rgb parser can't read;
+                // normalize it to rgb/hex via canvas first, otherwise the interpolator
+                // degenerates to the start colour and every country renders faint.
+                function toRgb(c) {
+                    try {
+                        const ctx = document.createElement('canvas').getContext('2d');
+                        ctx.fillStyle = '#000'; ctx.fillStyle = c;
+                        const out = ctx.fillStyle;
+                        return /^(#|rgb)/i.test(out) ? out : null;
+                    } catch (_) { return null; }
+                }
+                const rawPrimary = (getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
+                    || getComputedStyle(document.body).getPropertyValue('--primary').trim());
+                const themeColor = toRgb(rawPrimary) || '#7c3a2e';
+                // Tinted, semi-opaque start + a sqrt scale so even a single visit reads clearly.
+                const startTint = (() => { const b = window.d3.rgb(themeColor); b.opacity = 0.32; return b + ''; })();
+                const colorScale = window.d3.scaleSequentialSqrt()
                     .domain([0, maxCount])
-                    .interpolator(window.d3.interpolateRgb('rgba(120,144,180,0.18)', themeColor));
+                    .interpolator(window.d3.interpolateRgb(startTint, themeColor));
 
                 const projection = window.d3.geoNaturalEarth1().fitSize([width, height - 10], { type: 'Sphere' });
                 const path = window.d3.geoPath(projection);
@@ -1938,7 +1950,7 @@
                     .text(d => {
                         const name = d.properties && d.properties.name;
                         const c = countries.get(name);
-                        return name + (c ? ` — ${c}` : '');
+                        return localizeCountry(name) + (c ? ` — ${c}` : '');
                     });
             }
 
@@ -1950,6 +1962,7 @@
                 } catch (e) { return name; }
             }
 
+            let visitShowAll = false;   // Top-regions list: collapsed (top 5) vs all regions
             function renderStats(countries) {
                 const total = Array.from(countries.values()).reduce((a, b) => a + b, 0);
                 const totalEl = document.getElementById('visitTotalCount');
@@ -1959,32 +1972,103 @@
 
                 const ol = document.getElementById('visitTopList');
                 if (!ol) return;
+                const entries = Array.from(countries.entries()).sort((a, b) => b[1] - a[1]);
+                const shown = visitShowAll ? entries : entries.slice(0, 5);
                 ol.innerHTML = '';
-                Array.from(countries.entries())
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 5)
-                    .forEach(([name, count]) => {
-                        const li = document.createElement('li');
-                        li.innerHTML =
-                            `<span class="country-name">${escapeHtml(localizeCountry(name))}</span>` +
-                            `<span class="country-count">${count.toLocaleString()}</span>`;
-                        ol.appendChild(li);
-                    });
+                shown.forEach(([name, count]) => {
+                    const li = document.createElement('li');
+                    li.innerHTML =
+                        `<span class="country-name">${escapeHtml(localizeCountry(name))}</span>` +
+                        `<span class="country-count">${count.toLocaleString()}</span>`;
+                    ol.appendChild(li);
+                });
+
+                // "view all regions" toggle — only shown when there are more than 5.
+                const btn = document.getElementById('visitToggleAll');
+                if (btn) {
+                    const t = (translationsCache && translationsCache[currentLang]) || {};
+                    if (entries.length <= 5) {
+                        btn.hidden = true;
+                    } else {
+                        btn.hidden = false;
+                        btn.textContent = visitShowAll
+                            ? (t['visitMap.showLess'] || 'show top 5')
+                            : `${t['visitMap.showAll'] || 'show all'} (${entries.length})`;
+                        btn.setAttribute('aria-expanded', visitShowAll ? 'true' : 'false');
+                    }
+                }
+            }
+
+            // ---- multi-snapshot windows: past month / past year / all time ----
+            const MANIFEST = `${SNAPSHOT_DIR}index.json`;
+            const WINDOW_DAYS = { month: 31, year: 366, all: Infinity };
+            const DEFAULT_WINDOW = 'all';
+            let snapCache = [];          // [{ date, counts: Map }] for snapshots that carry data
+            let curCountries = new Map();
+            let curWindow = DEFAULT_WINDOW;
+
+            // Discover every snapshot date from the manifest; fall back to probing for the
+            // single latest snapshot (legacy behaviour) if the manifest is missing.
+            async function loadSnapshotDates() {
+                try {
+                    const r = await fetch(MANIFEST, { cache: 'no-store' });
+                    if (r.ok) {
+                        const j = await r.json();
+                        if (j && Array.isArray(j.snapshots) && j.snapshots.length) return j.snapshots;
+                    }
+                } catch (_) { /* fall through to probe */ }
+                const p = await findLatestSnapshotPath();
+                const m = p && p.match(/clarity-(\d{4}-\d{2}-\d{2})\.json/);
+                return m ? [m[1]] : [];
+            }
+
+            async function fetchSnapshotCounts(dateStr) {
+                try {
+                    const r = await fetch(`${SNAPSHOT_DIR}clarity-${dateStr}.json`, { cache: 'no-store' });
+                    if (!r.ok) return null;
+                    return extractCountryCounts(await r.json());
+                } catch (_) { return null; }
+            }
+
+            // Sum cached per-snapshot country counts for every snapshot inside the window.
+            // (Weekly snapshots are non-overlapping 3-day Clarity samples, so summing is additive.)
+            function aggregate(win) {
+                const days = WINDOW_DAYS[win] ?? Infinity;
+                const now = Date.now();
+                const total = new Map();
+                for (const s of snapCache) {
+                    if (days !== Infinity) {
+                        const age = (now - Date.parse(`${s.date}T00:00:00Z`)) / 86400000;
+                        if (age > days) continue;
+                    }
+                    for (const [name, n] of s.counts) total.set(name, (total.get(name) || 0) + n);
+                }
+                return total;
+            }
+
+            function renderWindow(win, world) {
+                curWindow = win;
+                curCountries = aggregate(win);
+                renderChoropleth(world, curCountries);
+                renderStats(curCountries);
+                block.querySelectorAll('.visit-map-win-btn').forEach(b => {
+                    const on = b.dataset.win === win;
+                    b.classList.toggle('active', on);
+                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
             }
 
             async function run() {
-                const snapshotPath = await findLatestSnapshotPath();
-                if (!snapshotPath) return;
+                const dates = await loadSnapshotDates();
+                if (!dates.length) return;
 
-                let snapshot;
-                try {
-                    const r = await fetch(snapshotPath, { cache: 'no-store' });
-                    if (!r.ok) return;
-                    snapshot = await r.json();
-                } catch (_) { return; }
-
-                const countries = extractCountryCounts(snapshot);
-                if (!countries.size) return;
+                // Snapshots are tiny (~1 KB); fetch all once and cache, so switching
+                // windows is instant (re-sum in memory, no re-fetch).
+                const loaded = await Promise.all(
+                    dates.map(async d => ({ date: d, counts: await fetchSnapshotCounts(d) }))
+                );
+                snapCache = loaded.filter(s => s.counts && s.counts.size);
+                if (!snapCache.length) return;
 
                 try {
                     await loadScriptOnce(D3_URL);
@@ -2001,11 +2085,18 @@
                     world = await r.json();
                 } catch (_) { return; }
 
-                renderChoropleth(world, countries);
-                renderStats(countries);
-                // Expose a hook so language switches re-translate the top-countries list
-                // (choropleth tooltips re-render naturally on next hover; the side-panel list does not).
-                window.__refreshVisitStats = () => renderStats(countries);
+                block.querySelectorAll('.visit-map-win-btn').forEach(btn =>
+                    btn.addEventListener('click', () => renderWindow(btn.dataset.win, world)));
+
+                const toggleAll = document.getElementById('visitToggleAll');
+                if (toggleAll) toggleAll.addEventListener('click', () => {
+                    visitShowAll = !visitShowAll;
+                    renderStats(curCountries);
+                });
+
+                renderWindow(DEFAULT_WINDOW, world);
+                // Re-render the side list on language switch (uses the current window's data).
+                window.__refreshVisitStats = () => renderStats(curCountries);
                 block.hidden = false;
             }
 

@@ -8,6 +8,8 @@
 
 ## Master TOC
 
+- [2026-07-06](#2026-07-06)
+    - [V1 — Visit map: time-window selector (past month / year / all), region relabel, choropleth colour fix](#v1--visit-map-time-window-selector-past-month--year--all-region-relabel-choropleth-colour-fix) — visit map now aggregates all weekly Clarity snapshots via a `data/analytics/index.json` manifest with a past-month / past-year / all-time selector (default all, replacing "past 3 days"); "Top Countries" → "Top Regions" + "Taiwan (China)" relabel; a show-all-regions toggle; and a choropleth colour fix (oklch `--primary` normalized via canvas so regions no longer render faint). Mirrored on `index_zh_clear.html`.
 - [2026-06-24](#2026-06-24)
     - [V1 — Homepage synced to the job-hunt CV: talks section, startup training, N-Banker AI Lead, content + truthfulness pass](#v1--homepage-synced-to-the-job-hunt-cv-talks-section-startup-training-n-banker-ai-lead-content--truthfulness-pass) — promoted Invited Talks to a dedicated `#talks` timeline section (navbar link, 2 new 2026 talks with slides, S+SSPR flag → 🇮🇹); added N-Banker **AI Lead** (experience) + **Innosuisse Entrepreneurship Training** (education) + 2 News rows; PLANALYSER method stack, swiss-river ST-LLM research line, AI-Tools skills, translator MVP1, recruitment-panel; truthfulness pass (foundations-for-drug-discovery, industry 8+→2+, honest LIULIAN). 4-locale i18n in parity.
 - [2026-06-16](#2026-06-16)
@@ -89,6 +91,16 @@
 - [2023-12-13](#2023-12-13) — heavy CV refresh.
 - [2023-10-24](#2023-10-24) — new paper + CV update.
 - [2023-09-27](#2023-09-27) — new papers + CV update.
+
+# 2026-07-06
+
+## V1 — Visit map: time-window selector (past month / year / all), region relabel, choropleth colour fix
+
+- The Contact-section visit map (Microsoft Clarity choropleth) gained a **time-window selector** (`past month` / `past year` / `all time`, default **all time**), replacing the fixed "past 3 days" label. It now aggregates **all** weekly Clarity snapshots, not just the latest: a new `data/analytics/index.json` manifest lists every snapshot, the front-end loads it once, caches each snapshot's per-region counts, and re-sums in memory on window change. `scripts/fetch_clarity.py` regenerates the manifest on every weekly run (self-maintaining).
+- **Region relabel (per Linlin's China stance):** "Top Countries" → **Top Regions**, the `N countries` stat → `N regions`, and "Taiwan" now displays as **Taiwan (China)** in both the list and the map tooltip (a `countries.Taiwan` locale-value override; the atlas key stays "Taiwan" for map matching). Added a `Taiwan, Province of China` → `Taiwan` alias so Clarity's long form maps + aggregates.
+- **Show-all-regions toggle:** the Top-Regions list shows the top 5 with a `show all (N)` / `show top 5` button that appears only when a window has more than 5 regions (verified end-to-end).
+- **Choropleth colour fix (the map looked faint):** the theme `--primary` is now an `oklch()` value, which d3 v7's rgb parser can't read, so the colour interpolator degenerated to its faint start colour and every region rendered washed out. Now `--primary` is normalized to rgb via a canvas, and the scale is `scaleSequentialSqrt` from a semi-opaque theme tint to full `--primary`, so even a single visit reads clearly.
+- Applied identically to `index_en.html` and the zh/fr/de `index_zh_clear.html` (both load `js/main.js`); the selector / toggle CSS lives in shared `css/main.css`. Bonus: moving from daily HEAD-probing to the manifest removed the old 8×/page analytics 404 console noise. i18n: added `visitMap.win_month/win_year/win_all/showAll/showLess`, removed `visitMap.window`, reworded `topCountries/countries/svgTitle`, `countries.Taiwan`; 4 locales in parity. See PLAN `H1.M4.G6.T5`.
 
 # 2026-06-24
 
