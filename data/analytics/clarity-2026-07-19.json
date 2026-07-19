@@ -1,0 +1,149 @@
+{
+  "fetched_at": "2026-07-19",
+  "source": "clarity.microsoft.com/export-data/api/v1/project-live-insights",
+  "num_days": 3,
+  "data": [
+    {
+      "metricName": "DeadClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "ExcessiveScroll",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "RageClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "QuickbackClick",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "ScriptErrorCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "ErrorClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "ScrollDepth",
+      "information": [
+        {
+          "averageScrollDepth": 100,
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    },
+    {
+      "metricName": "Traffic",
+      "information": [
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "7",
+          "distinctUserCount": "7",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "2",
+          "distinctUserCount": "2",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "ChromeMobile",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Safari",
+          "Country": "Finland"
+        },
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "EngagementTime",
+      "information": [
+        {
+          "totalTime": "13",
+          "activeTime": "13",
+          "Browser": "Safari",
+          "Country": "Finland"
+        }
+      ]
+    }
+  ]
+}
