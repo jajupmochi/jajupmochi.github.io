@@ -1,0 +1,149 @@
+{
+  "fetched_at": "2026-07-26",
+  "source": "clarity.microsoft.com/export-data/api/v1/project-live-insights",
+  "num_days": 3,
+  "data": [
+    {
+      "metricName": "DeadClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "ExcessiveScroll",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "RageClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "QuickbackClick",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "ScriptErrorCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "ErrorClickCount",
+      "information": [
+        {
+          "sessionsCount": "2",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "ScrollDepth",
+      "information": [
+        {
+          "averageScrollDepth": 12.5,
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    },
+    {
+      "metricName": "Traffic",
+      "information": [
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "ChromeMobile",
+          "Country": "Australia"
+        },
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "2",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "2",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Safari",
+          "Country": "France"
+        },
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "GoogleApp",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "EngagementTime",
+      "information": [
+        {
+          "totalTime": "14",
+          "activeTime": "14",
+          "Browser": "Safari",
+          "Country": "France"
+        }
+      ]
+    }
+  ]
+}
