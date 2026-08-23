@@ -1,0 +1,279 @@
+{
+  "fetched_at": "2026-08-23",
+  "source": "clarity.microsoft.com/export-data/api/v1/project-live-insights",
+  "num_days": 3,
+  "data": [
+    {
+      "metricName": "DeadClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ExcessiveScroll",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "RageClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "QuickbackClick",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ScriptErrorCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ErrorClickCount",
+      "information": [
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "sessionsCount": "1",
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": "0",
+          "subTotal": "0",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "ScrollDepth",
+      "information": [
+        {
+          "averageScrollDepth": 21,
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "averageScrollDepth": 13,
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "averageScrollDepth": 3,
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "Traffic",
+      "information": [
+        {
+          "totalSessionCount": "0",
+          "totalBotSessionCount": "3",
+          "distinctUserCount": "3",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "1",
+          "distinctUserCount": "2",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "totalSessionCount": "1",
+          "totalBotSessionCount": "0",
+          "distinctUserCount": "1",
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    },
+    {
+      "metricName": "EngagementTime",
+      "information": [
+        {
+          "totalTime": "285",
+          "activeTime": "44",
+          "Browser": "Chrome",
+          "Country": "Macao"
+        },
+        {
+          "totalTime": "6",
+          "activeTime": "0",
+          "Browser": "Chrome",
+          "Country": "United States"
+        },
+        {
+          "totalTime": "9",
+          "activeTime": "9",
+          "Browser": "Edge",
+          "Country": "United States"
+        }
+      ]
+    }
+  ]
+}
