@@ -1,0 +1,149 @@
+{
+  "fetched_at": "2026-09-20",
+  "source": "clarity.microsoft.com/export-data/api/v1/project-live-insights",
+  "num_days": 3,
+  "data": [
+    {
+      "metricName": "DeadClickCount",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "ExcessiveScroll",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "RageClickCount",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "QuickbackClick",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "ScriptErrorCount",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "ErrorClickCount",
+      "information": [
+        {
+          "sessionsCount": 1,
+          "sessionsWithMetricPercentage": 0,
+          "sessionsWithoutMetricPercentage": 100,
+          "pagesViews": 0,
+          "subTotal": 0,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "ScrollDepth",
+      "information": [
+        {
+          "averageScrollDepth": 31,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "Traffic",
+      "information": [
+        {
+          "totalSessionCount": 0,
+          "totalBotSessionCount": 5,
+          "distinctUserCount": 5,
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": 0,
+          "totalBotSessionCount": 4,
+          "distinctUserCount": 4,
+          "pagesPerSessionPercentage": 1,
+          "Browser": "ChromeMobile",
+          "Country": "China"
+        },
+        {
+          "totalSessionCount": 0,
+          "totalBotSessionCount": 0,
+          "distinctUserCount": 1,
+          "pagesPerSessionPercentage": 1,
+          "Browser": "Other",
+          "Country": "Singapore"
+        },
+        {
+          "totalSessionCount": 1,
+          "totalBotSessionCount": 0,
+          "distinctUserCount": 1,
+          "pagesPerSessionPercentage": 2,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    },
+    {
+      "metricName": "EngagementTime",
+      "information": [
+        {
+          "totalTime": 74,
+          "activeTime": 14,
+          "Browser": "Chrome",
+          "Country": "Singapore"
+        }
+      ]
+    }
+  ]
+}
